@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageType.cs
+/// EncryptionMethod.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -22,17 +22,28 @@ namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageType
+    /// EncryptionMethod
     /// 
     /// <summary>
-    /// Page オブジェクトの種類を定義した列挙型です。
+    /// PDF の暗号化の際に使用可能な暗号化方式を定義した列挙型です。
     /// </summary>
+    /// 
+    /// <remarks>
+    /// 現在のところ、以下の暗号化方式を使用する事ができます（括弧内の値は、
+    /// 最初にサポートされた PDF バージョンを表します）。
+    /// -  40bit RC4 (PDF 1.1)
+    /// - 128bit RC4 (PDF 1.4)
+    /// - 128bit AES (PDF 1.5)
+    /// - 256bit AES (PDF 1.7 ExtensionLevel 3)
+    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public enum PageType
+    public enum EncryptionMethod
     {
-        Pdf,
-        Image,
-        Unknown = -1
+        Standard40,     //  40bit RC4
+        Standard128,    // 128bit RC4
+        Aes128,         // 128bit AES
+        Aes256,         // 256bit AES
+        Unknown = -1,
     }
 }
