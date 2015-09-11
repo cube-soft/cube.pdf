@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Encryption.cs" />
     <Compile Include="EncryptionMethod.cs" />
+    <Compile Include="EncryptionStatus.cs" />
+    <Compile Include="IDocumentReader.cs" />
     <Compile Include="IPage.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Page.cs" />
