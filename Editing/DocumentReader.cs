@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ReaderImpl = iTextSharp.text.pdf.PdfReader;
 
 namespace Cube.Pdf.Editing
 {
@@ -73,7 +74,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string FileName { get; } = string.Empty;
+        public string FileName { get; private set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -84,7 +85,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; } = new Metadata();
+        public Metadata Metadata { get; private set; } = new Metadata();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -95,7 +96,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Encryption Encryption { get; } = new Encryption();
+        public Encryption Encryption { get; private set; } = new Encryption();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -106,7 +107,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionStatus EncryptionStatus { get; } = EncryptionStatus.NotEncrypted;
+        public EncryptionStatus EncryptionStatus { get; private set; } = EncryptionStatus.NotEncrypted;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -117,10 +118,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICollection<IPage> Pages
-        {
-            get { return _pages.AsReadOnly(); }
-        }
+        public IReadOnlyCollection<IPage> Pages { get; private set; } = new ReadOnlyPageCollection();
 
         #endregion
 
@@ -135,9 +133,9 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Task OpenAsync(string path, string password)
+        public Task OpenAsync(string filename, string password)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => { Open(filename, password); });
         }
 
         /* ----------------------------------------------------------------- */
@@ -151,7 +149,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public void Close()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         /* ----------------------------------------------------------------- */
@@ -205,8 +203,37 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
+        #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Open(string filename, string password)
+        {
+            try
+            {
+                var bytes = !string.IsNullOrEmpty(password) ? System.Text.Encoding.UTF8.GetBytes(password) : null;
+                _impl = new ReaderImpl(filename, bytes, true);
+                FileName = filename;
+                Pages = new ReadOnlyPageCollection(_impl);
+            }
+            catch (iTextSharp.text.exceptions.BadPasswordException err)
+            {
+                throw new EncryptionException(err.Message, err);
+            }
+        }
+
+        #endregion
+
         #region Fields
         private bool _disposed = false;
+        private ReaderImpl _impl = null;
         private List<IPage> _pages = new List<IPage>();
         #endregion
     }

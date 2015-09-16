@@ -53,7 +53,7 @@ namespace Cube.Tests.Pdf.Editing
             {
                 var src = IO.Path.Combine(Examples, filename);
                 await doc.OpenAsync(src, password);
-                Assert.That(doc.FileName, Is.EqualTo(filename));
+                Assert.That(doc.FileName, Is.EqualTo(src));
                 Assert.That(doc.Metadata.Version.Major, Is.EqualTo(1));
                 Assert.That(doc.Metadata.Version.Minor, Is.AtLeast(2));
                 Assert.That(doc.Pages.Count, Is.AtLeast(1));

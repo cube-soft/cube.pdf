@@ -90,7 +90,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ICollection<IPage> Pages { get; }
+        IReadOnlyCollection<IPage> Pages { get; }
 
         #endregion
 
