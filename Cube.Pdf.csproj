@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Encryption.cs" />
+    <Compile Include="EncryptionException.cs" />
     <Compile Include="EncryptionMethod.cs" />
     <Compile Include="EncryptionStatus.cs" />
     <Compile Include="IDocumentReader.cs" />
