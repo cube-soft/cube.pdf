@@ -113,11 +113,14 @@ namespace Cube.Pdf.Editing
         /// Pages
         /// 
         /// <summary>
-        /// PDF ファイルの各ページ情報へアクセスするための反復子を取得します。
+        /// PDF ファイルのページ一覧を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICollection<IPage> Pages { get; } = new List<IPage>();
+        public ICollection<IPage> Pages
+        {
+            get { return _pages.AsReadOnly(); }
+        }
 
         #endregion
 
@@ -204,6 +207,7 @@ namespace Cube.Pdf.Editing
 
         #region Fields
         private bool _disposed = false;
+        private List<IPage> _pages = new List<IPage>();
         #endregion
     }
 }
