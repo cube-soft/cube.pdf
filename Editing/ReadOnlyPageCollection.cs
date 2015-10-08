@@ -17,7 +17,6 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using ReaderImpl = iTextSharp.text.pdf.PdfReader;
@@ -37,8 +36,26 @@ namespace Cube.Pdf.Editing
     {
         #region Constructors
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReadOnlyPageCollection
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public ReadOnlyPageCollection() : this(null) { }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReadOnlyPageCollection
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public ReadOnlyPageCollection(ReaderImpl impl)
         {
             _impl = impl;
@@ -48,6 +65,15 @@ namespace Cube.Pdf.Editing
 
         #region Properties
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Count
+        /// 
+        /// <summary>
+        /// ページ数を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public int Count
         {
             get { return (_impl != null) ? _impl.NumberOfPages : 0; }
@@ -57,14 +83,29 @@ namespace Cube.Pdf.Editing
 
         #region Methods
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEnumerator
+        /// 
+        /// <summary>
+        /// 各ページオブジェクトへアクセスするための反復子を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public IEnumerator<IPage> GetEnumerator()
         {
-            for (int i = 0; i < Count; ++i)
-            {
-                yield return null;
-            }
+            throw new KeyNotFoundException();
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEnumerator
+        /// 
+        /// <summary>
+        /// 各ページオブジェクトへアクセスするための反復子を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

@@ -149,7 +149,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public void Close()
         {
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         /* ----------------------------------------------------------------- */
