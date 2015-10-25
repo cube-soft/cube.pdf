@@ -14,7 +14,6 @@
 *_i.c
 *_p.c
 *.ncb
-*.sln
 *.suo
 *.tlb
 *.tlh
