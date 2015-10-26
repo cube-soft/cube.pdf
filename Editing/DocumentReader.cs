@@ -29,7 +29,7 @@ namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.DocumentReader
+    /// Cube.Pdf.Editing.DocumentReader
     /// 
     /// <summary>
     /// PDF ファイルを読み込んで各種情報を保持するためのクラスです。
@@ -147,11 +147,22 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// 現在、開いている PDF ファイルを閉じます。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: Pages オブジェクトの破棄方法を検討する。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         public void Close()
         {
             if (_impl == null) return;
+
+            _impl.Close();
+            _impl = null;
+            Metadata = null;
+            Encryption = null;
+            EncryptionStatus = EncryptionStatus.NotEncrypted;
+            Pages = null;
         }
 
         /* ----------------------------------------------------------------- */
@@ -257,7 +268,6 @@ namespace Cube.Pdf.Editing
         #region Fields
         private bool _disposed = false;
         private ReaderImpl _impl = null;
-        private List<IPage> _pages = new List<IPage>();
         #endregion
     }
 }
