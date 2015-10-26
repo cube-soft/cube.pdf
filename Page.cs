@@ -33,7 +33,7 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     public class Page : IPage
     {
-        #region Properties
+        #region IPage properties
 
         /* ----------------------------------------------------------------- */
         ///
@@ -51,15 +51,55 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileName
+        /// Path
         /// 
         /// <summary>
-        /// リソースとなる PDF ファイルのファイル名 (パス) を取得または
-        /// 設定します。
+        /// PDF ファイルのパスを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string FileName { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Size
+        /// 
+        /// <summary>
+        /// 対象ページのオリジナルサイズを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Size Size { get; set; } = Size.Empty;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotation
+        /// 
+        /// <summary>
+        /// 該当ページを表示する際の回転角を取得または設定します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 値は度単位 (degree) で設定して下さい。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Rotation { get; set; } = 0;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Power
+        /// 
+        /// <summary>
+        /// 該当ページの表示倍率を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public double Power { get; set; } = 1.0;
+
+        #endregion
+
+        #region Extended properties
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,74 +117,16 @@ namespace Cube.Pdf
         /// PageNumber
         /// 
         /// <summary>
-        /// 対象としているページのページ番号を取得または設定します。
+        /// リソースとなる PDF ファイルの対象としてるページ番号を取得
+        /// または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public uint PageNumber { get; set; } = 0;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Size
-        /// 
-        /// <summary>
-        /// 対象としているページのサイズを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Size Size { get; set; } = Size.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotation
-        /// 
-        /// <summary>
-        /// 該当ページを表示する際の回転角を取得または設定します (degree)。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Rotation { get; set; } = 0;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Power
-        /// 
-        /// <summary>
-        /// 該当ページを表示する際の倍率を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public double Power { get; set; } = 1.0;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewSize
-        /// 
-        /// <summary>
-        /// 該当ページを表示する際のサイズを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Size ViewSize
-        {
-            get
-            {
-                var degree = Rotation;
-                if (degree < 0) degree += 360;
-                else if (degree >= 360) degree -= 360;
-
-                var radian = Math.PI * degree / 180.0;
-                var sin = Math.Abs(Math.Sin(radian));
-                var cos = Math.Abs(Math.Cos(radian));
-                var width = Size.Width * cos + Size.Height * sin;
-                var height = Size.Width * sin + Size.Height * cos;
-                return new Size((int)(width * Power), (int)(height * Power));
-            }
-        }
-
         #endregion
 
-        #region Implementations for IEquatable<IPage>
+        #region IEquatable<IPage> methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -159,7 +141,7 @@ namespace Cube.Pdf
         {
             var other = obj as Page;
             if (other == null) return false;
-            return FileName == other.FileName && PageNumber == other.PageNumber;
+            return Path == other.Path && PageNumber == other.PageNumber;
         }
 
         /* ----------------------------------------------------------------- */
