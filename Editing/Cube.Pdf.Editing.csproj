@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Details\ImageRenderListener.cs" />
     <Compile Include="Extensions\PdfReaderExtensions.cs" />
     <Compile Include="ReadOnlyPageCollection.cs" />
     <Compile Include="DocumentReader.cs" />

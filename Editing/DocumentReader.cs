@@ -19,10 +19,12 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cube.Pdf.Editing.Extensions;
 using ReaderImpl = iTextSharp.text.pdf.PdfReader;
+using ImageParser = iTextSharp.text.pdf.parser.PdfReaderContentParser;
 using BadPasswordException = iTextSharp.text.exceptions.BadPasswordException;
 
 namespace Cube.Pdf.Editing
@@ -194,6 +196,20 @@ namespace Cube.Pdf.Editing
             return _impl != null ? _impl.CreatePage(Path, GetInputPassword(), pagenum) : null;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImagesAsync
+        /// 
+        /// <summary>
+        /// 指定されたページ中に存在する画像を非同期で取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public Task<IList<Image>> GetImagesAsync(int pagenum)
+        {
+            return Task.Run(() => { return GetImages(pagenum); });
+        }
+
         #endregion
 
         #region Override methods
@@ -237,6 +253,25 @@ namespace Cube.Pdf.Editing
                 Pages = new ReadOnlyPageCollection(_impl, Path, GetInputPassword());
             }
             catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImages
+        /// 
+        /// <summary>
+        /// 指定されたページ中に存在する画像を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private IList<Image> GetImages(int pagenum)
+        {
+            if (pagenum < 0 || pagenum > Pages.Count) throw new IndexOutOfRangeException();
+
+            var parser = new ImageParser(_impl);
+            var listener = new ImageRenderListener();
+            parser.ProcessContent(pagenum, listener);
+            return listener.Images;
         }
 
         #endregion
