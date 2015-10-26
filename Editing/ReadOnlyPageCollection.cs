@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections;
 using System.Collections.Generic;
+using Cube.Pdf.Editing.Extensions;
 using ReaderImpl = iTextSharp.text.pdf.PdfReader;
 
 namespace Cube.Pdf.Editing
@@ -46,7 +47,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection() : this(null) { }
+        public ReadOnlyPageCollection() : this(null, string.Empty, string.Empty) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -57,9 +58,11 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(ReaderImpl impl)
+        public ReadOnlyPageCollection(ReaderImpl impl, string path, string password)
         {
             _impl = impl;
+            _path = path;
+            _password = password;
         }
 
         #endregion
@@ -95,7 +98,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public IEnumerator<IPage> GetEnumerator()
         {
-            throw new KeyNotFoundException();
+            for (var i = 0; i < _impl.NumberOfPages; ++i)
+            {
+                var pagenum = i + 1;
+                yield return _impl.CreatePage(_path, _password, pagenum);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -116,6 +123,8 @@ namespace Cube.Pdf.Editing
 
         #region Fields
         private ReaderImpl _impl = null;
+        private string _path = string.Empty;
+        private string _password = string.Empty;
         #endregion
     }
 }

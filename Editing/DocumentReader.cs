@@ -21,7 +21,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cube.Pdf.Editing.Extensions;
 using ReaderImpl = iTextSharp.text.pdf.PdfReader;
+using BadPasswordException = iTextSharp.text.exceptions.BadPasswordException;
 
 namespace Cube.Pdf.Editing
 {
@@ -67,15 +69,14 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileName
+        /// Path
         /// 
         /// <summary>
-        /// リソースとなる PDF ファイルのファイル名 (パス) を取得または
-        /// 設定します。
+        /// PDF ファイルのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string FileName { get; private set; } = string.Empty;
+        public string Path { get; private set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -86,7 +87,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; private set; } = new Metadata();
+        public Metadata Metadata { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -97,7 +98,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Encryption Encryption { get; private set; } = new Encryption();
+        public Encryption Encryption { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -150,7 +151,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public void Close()
         {
-            throw new NotImplementedException();
+            if (_impl == null) return;
         }
 
         /* ----------------------------------------------------------------- */
@@ -179,7 +180,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public Page GetPage(int pagenum)
         {
-            throw new NotImplementedException();
+            return _impl != null ? _impl.CreatePage(Path, GetInputPassword(), pagenum) : null;
         }
 
         #endregion
@@ -215,19 +216,40 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Open(string filename, string password)
+        private void Open(string path, string password)
         {
             try
             {
                 var bytes = !string.IsNullOrEmpty(password) ? System.Text.Encoding.UTF8.GetBytes(password) : null;
-                _impl = new ReaderImpl(filename, bytes, true);
-                FileName = filename;
-                Pages = new ReadOnlyPageCollection(_impl);
+                _impl = new ReaderImpl(path, bytes, true);
+                Path = path;
+                Pages = new ReadOnlyPageCollection(_impl, Path, GetInputPassword());
             }
-            catch (iTextSharp.text.exceptions.BadPasswordException err)
+            catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
+        }
+
+        #endregion
+
+        #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetInputPassword
+        /// 
+        /// <summary>
+        /// ユーザの入力したパスワードを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetInputPassword()
+        {
+            if (Encryption == null || !Encryption.IsEnabled) return string.Empty;
+            else if (!string.IsNullOrEmpty(Encryption.OwnerPassword)) return Encryption.OwnerPassword;
+            else if (Encryption.IsUserPasswordEnabled && !string.IsNullOrEmpty(Encryption.UserPassword))
             {
-                throw new EncryptionException(err.Message, err);
+                return Encryption.UserPassword;
             }
+            else return string.Empty;
         }
 
         #endregion

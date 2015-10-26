@@ -17,7 +17,6 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using Size = System.Drawing.Size;
 
 namespace Cube.Pdf
@@ -106,7 +105,7 @@ namespace Cube.Pdf
         /// Password
         /// 
         /// <summary>
-        /// リソースとなる PDF ファイルのパスワードを取得または設定します。
+        /// PDF ファイルを開くためのパスワードを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -117,12 +116,11 @@ namespace Cube.Pdf
         /// PageNumber
         /// 
         /// <summary>
-        /// リソースとなる PDF ファイルの対象としてるページ番号を取得
-        /// または設定します。
+        /// PDF ファイル内でのページ番号を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public uint PageNumber { get; set; } = 0;
+        public int PageNumber { get; set; } = 0;
 
         #endregion
 
