@@ -21,6 +21,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using DocumentReader = Cube.Pdf.Editing.DocumentReader;
@@ -78,7 +79,7 @@ namespace Cube.Pdf.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public ObservableCollection<System.Drawing.Image> Images { get; } = new ObservableCollection<System.Drawing.Image>();
+        public ObservableCollection<Image> Images { get; } = new ObservableCollection<Image>();
 
         #endregion
 
@@ -114,6 +115,38 @@ namespace Cube.Pdf.ImageEx
                 }
             }
         }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// GetImage
+        /// 
+        /// <summary>
+        /// 指定されたインデックスに対応する画像を upper に応じてリサイズして
+        /// 返します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public Image GetImage(int index, Size upper)
+        {
+            if (index < 0 || index >= Images.Count) return null;
+
+            var original = Images[index];
+            var ratio = original.Width > original.Height ?
+                Math.Min(upper.Width / (double)original.Width, 1.0) :
+                Math.Min(upper.Height / (double)original.Height, 1.0);
+            var width = (int)(original.Width * ratio);
+            var height = (int)(original.Height * ratio);
+            var x = (upper.Width - width) / 2;
+            var y = (upper.Height - height) / 2;
+
+            var dest = new Bitmap(upper.Width, upper.Height);
+            using (var gs = Graphics.FromImage(dest))
+            {
+                gs.DrawImage(original, x, y, width, height);
+            }
+            return dest;
+        }
+
 
         #endregion
 

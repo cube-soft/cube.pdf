@@ -74,6 +74,7 @@
     <Compile Include="NativeApi\UxTheme.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Presenters\ProgressPresenter.cs" />
+    <Compile Include="Presenters\ThumbnailPresenter.cs" />
     <Compile Include="PreviewForm.cs">
       <SubType>Form</SubType>
     </Compile>

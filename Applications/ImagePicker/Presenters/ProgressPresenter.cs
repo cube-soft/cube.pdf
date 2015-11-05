@@ -117,10 +117,10 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         private void View_Preview(object sender, EventArgs ev)
         {
-            var dialog = new ThumbnailForm();
-            dialog.FileName = System.IO.Path.GetFileName(Model.Path);
-            dialog.Show();
+            var preview   = new ThumbnailForm();
+            var presenter = new ThumbnailPresenter(preview, Model);
 
+            preview.Show();
             View.Close();
         }
 

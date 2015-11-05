@@ -153,7 +153,7 @@ namespace Cube.Pdf.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public EventHandler<Cube.DataEventArgs<string>> Preview;
+        public EventHandler Preview;
 
         #endregion
 
@@ -218,7 +218,7 @@ namespace Cube.Pdf.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPreview(Cube.DataEventArgs<string> e)
+        protected virtual void OnPreview(EventArgs e)
         {
             if (Preview != null) Preview(this, e);
         }
@@ -227,6 +227,15 @@ namespace Cube.Pdf.ImageEx
 
         #region Other private methods
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeLayout
+        /// 
+        /// <summary>
+        /// レイアウトを初期化します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
             ListView.LargeImageList = new ImageList();
