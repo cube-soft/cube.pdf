@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Editing", "Editing
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests", "Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.ImagePicker", "Applications\ImagePicker\Cube.Pdf.ImagePicker.csproj", "{C60D1DD1-1A53-4BFF-97F9-FD9902689336}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
