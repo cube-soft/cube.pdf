@@ -144,5 +144,14 @@ namespace Cube.Pdf.ImageEx.Properties {
                 return ResourceManager.GetString("ProcessMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   抽出画像を保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SaveFolder {
+            get {
+                return ResourceManager.GetString("SaveFolder", resourceCulture);
+            }
+        }
     }
 }

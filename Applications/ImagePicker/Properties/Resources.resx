@@ -145,4 +145,7 @@
   <data name="ProcessMessage" xml:space="preserve">
     <value>{0} の {1}/{2} ページ目から画像を抽出しています...</value>
   </data>
+  <data name="SaveFolder" xml:space="preserve">
+    <value>抽出画像を保存するフォルダを選択して下さい。</value>
+  </data>
 </root>

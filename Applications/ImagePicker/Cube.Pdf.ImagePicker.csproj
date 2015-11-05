@@ -68,8 +68,12 @@
     <Compile Include="DropForm.Designer.cs">
       <DependentUpon>DropForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\PickTask.cs" />
+    <Compile Include="Models\ProgressEventArgs.cs" />
+    <Compile Include="Models\SaveTask.cs" />
     <Compile Include="NativeApi\UxTheme.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
+    <Compile Include="Presenters\ProgressPresenter.cs" />
     <Compile Include="PreviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,8 +145,16 @@
   <ItemGroup>
     <None Include="Resources\HeaderLogo.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\..\Cube.Pdf.csproj">
+      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
+      <Name>Cube.Pdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Editing\Cube.Pdf.Editing.csproj">
+      <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
+      <Name>Cube.Pdf.Editing</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
