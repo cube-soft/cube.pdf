@@ -30,30 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PreviewForm));
             this.LayoutPanel = new System.Windows.Forms.Panel();
-            this.PreviewPictureBox = new System.Windows.Forms.PictureBox();
-            this.LayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
             // 
             this.LayoutPanel.AutoScroll = true;
             this.LayoutPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.LayoutPanel.Controls.Add(this.PreviewPictureBox);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.Size = new System.Drawing.Size(384, 411);
             this.LayoutPanel.TabIndex = 0;
-            // 
-            // PreviewPictureBox
-            // 
-            this.PreviewPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.PreviewPictureBox.Name = "PreviewPictureBox";
-            this.PreviewPictureBox.Size = new System.Drawing.Size(100, 100);
-            this.PreviewPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PreviewPictureBox.TabIndex = 0;
-            this.PreviewPictureBox.TabStop = false;
             // 
             // PreviewForm
             // 
@@ -62,8 +49,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PreviewForm";
             this.Text = "PreviewForm";
-            this.LayoutPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -71,6 +56,5 @@
         #endregion
 
         private System.Windows.Forms.Panel LayoutPanel;
-        private System.Windows.Forms.PictureBox PreviewPictureBox;
     }
 }

@@ -31,12 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThumbnailForm));
             this.LayoutContainer = new System.Windows.Forms.SplitContainer();
             this.HeaderContainer = new System.Windows.Forms.SplitContainer();
+            this.HeaderView = new Cube.Pdf.ImageEx.HeaderView();
             this.ListView = new System.Windows.Forms.ListView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.SaveAllButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
+            this.SaveAllButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.HeaderView = new Cube.Pdf.ImageEx.HeaderView();
             ((System.ComponentModel.ISupportInitialize)(this.LayoutContainer)).BeginInit();
             this.LayoutContainer.Panel1.SuspendLayout();
             this.LayoutContainer.Panel2.SuspendLayout();
@@ -94,6 +94,17 @@
             this.HeaderContainer.SplitterWidth = 1;
             this.HeaderContainer.TabIndex = 0;
             // 
+            // HeaderView
+            // 
+            this.HeaderView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.HeaderView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HeaderView.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.HeaderView.Location = new System.Drawing.Point(0, 0);
+            this.HeaderView.Margin = new System.Windows.Forms.Padding(0);
+            this.HeaderView.Name = "HeaderView";
+            this.HeaderView.Size = new System.Drawing.Size(634, 35);
+            this.HeaderView.TabIndex = 0;
+            // 
             // ListView
             // 
             this.ListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -117,19 +128,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(634, 60);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // SaveAllButton
-            // 
-            this.SaveAllButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.SaveAllButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.SaveAllButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveAllButton.ForeColor = System.Drawing.Color.White;
-            this.SaveAllButton.Location = new System.Drawing.Point(387, 13);
-            this.SaveAllButton.Name = "SaveAllButton";
-            this.SaveAllButton.Size = new System.Drawing.Size(130, 35);
-            this.SaveAllButton.TabIndex = 1;
-            this.SaveAllButton.Text = "全て保存";
-            this.SaveAllButton.UseVisualStyleBackColor = false;
-            // 
             // ExitButton
             // 
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
@@ -142,6 +140,19 @@
             this.ExitButton.TabIndex = 0;
             this.ExitButton.Text = "キャンセル";
             this.ExitButton.UseVisualStyleBackColor = false;
+            // 
+            // SaveAllButton
+            // 
+            this.SaveAllButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.SaveAllButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.SaveAllButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveAllButton.ForeColor = System.Drawing.Color.White;
+            this.SaveAllButton.Location = new System.Drawing.Point(387, 13);
+            this.SaveAllButton.Name = "SaveAllButton";
+            this.SaveAllButton.Size = new System.Drawing.Size(130, 35);
+            this.SaveAllButton.TabIndex = 1;
+            this.SaveAllButton.Text = "全て保存";
+            this.SaveAllButton.UseVisualStyleBackColor = false;
             // 
             // SaveButton
             // 
@@ -156,22 +167,12 @@
             this.SaveButton.Text = "選択範囲の保存";
             this.SaveButton.UseVisualStyleBackColor = false;
             // 
-            // HeaderView
-            // 
-            this.HeaderView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.HeaderView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HeaderView.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.HeaderView.Location = new System.Drawing.Point(0, 0);
-            this.HeaderView.Margin = new System.Windows.Forms.Padding(0);
-            this.HeaderView.Name = "HeaderView";
-            this.HeaderView.Size = new System.Drawing.Size(634, 35);
-            this.HeaderView.TabIndex = 0;
-            // 
             // ThumbnailForm
             // 
             this.ClientSize = new System.Drawing.Size(634, 361);
             this.Controls.Add(this.LayoutContainer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "ThumbnailForm";
             this.Text = "Thumbnail List";
             this.LayoutContainer.Panel1.ResumeLayout(false);

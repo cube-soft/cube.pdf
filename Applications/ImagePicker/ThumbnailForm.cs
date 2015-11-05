@@ -53,9 +53,12 @@ namespace Cube.Pdf.ImageEx
             InitializeComponent();
             InitializeLayout();
 
+            ListView.ContextMenuStrip = CreateContextMenu();
+
             ExitButton.Click += (s, e) => Close();
             SaveAllButton.Click += (s, e) => OnSaveAll(e);
             SaveButton.Click += (s, e) => OnSave(e);
+            ListView.DoubleClick += (s, e) => OnPreview(e);
         }
 
         #endregion
@@ -177,6 +180,23 @@ namespace Cube.Pdf.ImageEx
             ));
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectAll
+        /// 
+        /// <summary>
+        /// 全てのサムネイルを選択します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void SelectAll()
+        {
+            foreach (ListViewItem item in ListView.Items)
+            {
+                item.Selected = true;
+            }
+        }
+
         #endregion
 
         #region Virtual methods
@@ -225,6 +245,32 @@ namespace Cube.Pdf.ImageEx
 
         #endregion
 
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnKeyDown
+        /// 
+        /// <summary>
+        /// キーボードのキーが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                    if (e.Control) SelectAll();
+                    break;
+                default:
+                    break;
+            }
+            base.OnKeyDown(e);
+        }
+
+        #endregion
+
         #region Other private methods
 
         /* ----------------------------------------------------------------- */
@@ -243,6 +289,49 @@ namespace Cube.Pdf.ImageEx
             ListView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
 
             UxTheme.SetWindowTheme(ListView.Handle, "Explorer", null);
+        }
+
+        private ContextMenuStrip CreateContextMenu()
+        {
+            var dest = new ContextMenuStrip();
+
+
+            var preview = new ToolStripMenuItem
+            {
+                Name = "Preview",
+                Text = "プレビュー"
+            };
+            preview.Click += (s, e) => OnPreview(e);
+            dest.Items.Add(preview);
+
+            dest.Items.Add("-");
+
+            var save = new ToolStripMenuItem
+            {
+                Name = "Save",
+                Text = "保存"
+            };
+            save.Click += (s, e) => OnSave(e);
+            dest.Items.Add(save);
+
+            var remove = new ToolStripMenuItem
+            {
+                Name = "Remove",
+                Text = "削除"
+            };
+            dest.Items.Add(remove);
+
+            dest.Items.Add("-");
+
+            var selectall = new ToolStripMenuItem
+            {
+                Name = "SelectAll",
+                Text = "全て選択"
+            };
+            selectall.Click += (s, e) => SelectAll();
+            dest.Items.Add(selectall);
+
+            return dest;
         }
 
         #endregion

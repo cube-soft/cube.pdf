@@ -56,21 +56,10 @@ namespace Cube.Pdf.ImageEx
             View.SaveAll += View_SaveAll;
             View.Preview += View_Preview;
 
-            var _ = AddImagesAsync();
+            AddImages();
         }
 
         #endregion
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// SynchronizationContext
-        /// 
-        /// <summary>
-        /// オブジェクト初期化時のコンテキストを取得します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        public SynchronizationContext SynchronizationContext { get; } = System.Threading.SynchronizationContext.Current;
 
         #region Event handlers
 
@@ -135,7 +124,12 @@ namespace Cube.Pdf.ImageEx
         /* --------------------------------------------------------------------- */
         private void View_Preview(object sender, EventArgs ev)
         {
+            var indices = View.SelectedIndices;
+            if (indices == null || indices.Count <= 0) return;
 
+            var dialog = new PreviewForm();
+            dialog.Image = Model.Images[indices[0]];
+            dialog.ShowDialog();
         }
 
         #endregion
@@ -147,20 +141,18 @@ namespace Cube.Pdf.ImageEx
         /// AddImagesAsync
         /// 
         /// <summary>
-        /// 画像を非同期で View に追加します。
+        /// 画像を View に追加します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private Task AddImagesAsync()
+        private void AddImages()
         {
-            return TaskEx.Run(() =>
+            var upper = View.ImageSize;
+            for (var i = 0; i < Model.Images.Count; ++i)
             {
-                var upper = View.ImageSize;
-                for (var i = 0; i < Model.Images.Count; ++i)
-                {
-                    SynchronizationContext.Post(_ => View.Add(Model.GetImage(i, upper)), null);
-                }
-            });
+                var image = Model.GetImage(i, upper);
+                if (image != null) View.Add(image);
+            }
         }
 
         #endregion

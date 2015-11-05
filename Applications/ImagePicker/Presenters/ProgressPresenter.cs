@@ -121,7 +121,6 @@ namespace Cube.Pdf.ImageEx
             var presenter = new ThumbnailPresenter(preview, Model);
 
             preview.Show();
-            View.Close();
         }
 
         #endregion

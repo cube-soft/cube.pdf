@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Cube.Pdf.ImageEx
 {
@@ -47,6 +48,7 @@ namespace Cube.Pdf.ImageEx
         public PreviewForm()
         {
             InitializeComponent();
+            _frame.Click += (s, e) => Close();
         }
 
         #endregion
@@ -64,10 +66,20 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public Image Image
         {
-            get { return PreviewPictureBox.Image; }
-            set { PreviewPictureBox.Image = value; }
+            get { return _frame.Image; }
+            set
+            {
+                _frame.Location = new Point(0, 0);
+                _frame.SizeMode = PictureBoxSizeMode.AutoSize;
+                _frame.Image = value;
+                LayoutPanel.Controls.Add(_frame);
+            }
         }
 
+        #endregion
+
+        #region Fields
+        private PictureBox _frame = new PictureBox();
         #endregion
     }
 }
