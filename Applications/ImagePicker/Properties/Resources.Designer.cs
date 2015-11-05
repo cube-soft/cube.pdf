@@ -61,6 +61,24 @@ namespace Cube.Pdf.ImageEx.Properties {
         }
         
         /// <summary>
+        ///   {0} のファイル構造を解析中です... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string BeginMessage {
+            get {
+                return ResourceManager.GetString("BeginMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   処理をキャンセルしました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CancelMessage {
+            get {
+                return ResourceManager.GetString("CancelMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap CloseButton {
@@ -90,6 +108,15 @@ namespace Cube.Pdf.ImageEx.Properties {
         }
         
         /// <summary>
+        ///   {0} ({1} ページ) から {2} 個の画像を抽出しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string EndMessage {
+            get {
+                return ResourceManager.GetString("EndMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap HeaderImage {
@@ -106,6 +133,15 @@ namespace Cube.Pdf.ImageEx.Properties {
             get {
                 object obj = ResourceManager.GetObject("HeaderLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   {0} の {1}/{2} ページ目から画像を抽出しています... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ProcessMessage {
+            get {
+                return ResourceManager.GetString("ProcessMessage", resourceCulture);
             }
         }
     }
