@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -51,10 +52,27 @@ namespace Cube.Pdf.ImageEx
             InitializeComponent();
             InitializeToolTip();
 
+            AllowExtensions.Add(".pdf");
+
             ExitButton.Click += (s, e) => Close();
             ExitButton.MouseEnter += (s, e) => ShowCloseButton(Cursors.Hand);
             ExitButton.MouseLeave += (s, e) => HideCloseButton();
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowExtensions
+        /// 
+        /// <summary>
+        /// ドラッグ&ドロップを受け付けるファイルの拡張子一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IList<string> AllowExtensions { get; } = new List<string>();
 
         #endregion
 
@@ -103,6 +121,41 @@ namespace Cube.Pdf.ImageEx
         {
             HideCloseButton();
             base.OnMouseLeave(e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragEnter
+        /// 
+        /// <summary>
+        /// ファイルがドラッグされた時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ?
+                       DragDropEffects.Copy :
+                       DragDropEffects.None;
+            base.OnDragEnter(e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragDrop
+        /// 
+        /// <summary>
+        /// ファイルがドロップされた時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragDrop(DragEventArgs e)
+        {
+            base.OnDragDrop(e);
+
+            var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+            if (files == null) return;
+            Create(files);
         }
 
         #endregion
@@ -154,6 +207,33 @@ namespace Cube.Pdf.ImageEx
             tips.ShowAlways   = true;
 
             tips.SetToolTip(this, Properties.Resources.DragDropMessage);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        /// 
+        /// <summary>
+        /// 画像抽出用の Model/View/Presenter を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Create(string[] files)
+        {
+            foreach (var path in files)
+            {
+                try
+                {
+                    var ext = System.IO.Path.GetExtension(path).ToLower();
+                    if (!AllowExtensions.Contains(ext) || !System.IO.File.Exists(path)) continue;
+
+                    var model     = new PickTask(path);
+                    var view      = new ProgressForm();
+                    var presenter = new ProgressPresenter(view, model);
+                    view.Show();
+                }
+                catch (Exception /* err */) { continue; }
+            }
         }
 
         /* ----------------------------------------------------------------- */

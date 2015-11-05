@@ -49,15 +49,16 @@
             this.ExitButton.TabIndex = 0;
             this.ExitButton.UseVisualStyleBackColor = false;
             // 
-            // MainForm
+            // DropForm
             // 
+            this.AllowDrop = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.BackgroundImage = global::Cube.Pdf.ImageEx.Properties.Resources.DragDrop;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(100, 100);
             this.Controls.Add(this.ExitButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "MainForm";
+            this.Name = "DropForm";
             this.ShowInTaskbar = false;
             this.Text = "CubePDF ImagePicker";
             this.TopMost = true;
