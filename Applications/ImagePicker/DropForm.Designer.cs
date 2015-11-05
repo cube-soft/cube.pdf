@@ -1,6 +1,6 @@
 ﻿namespace Cube.Pdf.ImageEx
 {
-    partial class MainForm
+    partial class DropForm
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DropForm));
             this.ExitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 

@@ -62,13 +62,14 @@
     <Compile Include="HeaderView.Designer.cs">
       <DependentUpon>HeaderView.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="DropForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="DropForm.Designer.cs">
+      <DependentUpon>DropForm.cs</DependentUpon>
     </Compile>
     <Compile Include="NativeApi\UxTheme.cs" />
+    <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="PreviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,8 +93,8 @@
     <EmbeddedResource Include="HeaderView.resx">
       <DependentUpon>HeaderView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="DropForm.resx">
+      <DependentUpon>DropForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PreviewForm.resx">
       <DependentUpon>PreviewForm.cs</DependentUpon>
@@ -139,6 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\HeaderLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

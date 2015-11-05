@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// MainForm.cs
+/// DropForm.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -26,27 +26,27 @@ namespace Cube.Pdf.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.MainForm
+    /// Cube.Pdf.ImageEx.DropForm
     ///
     /// <summary>
     /// メイン画面を表示するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.WidgetForm
+    public partial class DropForm : Cube.Forms.WidgetForm
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainForm
+        /// DropForm
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainForm()
+        public DropForm()
         {
             InitializeComponent();
             InitializeToolTip();
