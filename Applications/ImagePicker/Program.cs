@@ -44,11 +44,23 @@ namespace Cube.Pdf.ImageEx
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DropForm());
+            var name = Application.ProductName.ToLower();
+            using (var bootstrap = new IpcBootstrap(name))
+            {
+                if (bootstrap.Exists())
+                {
+                    bootstrap.Activate(args);
+                    return;
+                }
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                var form = new DropForm(args);
+                form.Bootstrap = bootstrap;
+                Application.Run(form);
+            }
         }
     }
 }

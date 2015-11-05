@@ -47,7 +47,7 @@ namespace Cube.Pdf.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DropForm()
+        public DropForm(string[] src)
         {
             InitializeComponent();
             InitializeToolTip();
@@ -57,6 +57,9 @@ namespace Cube.Pdf.ImageEx
             ExitButton.Click += (s, e) => Close();
             ExitButton.MouseEnter += (s, e) => ShowCloseButton(Cursors.Hand);
             ExitButton.MouseLeave += (s, e) => HideCloseButton();
+
+            if (src.Length == 0) return;
+            Create(src);
         }
 
         #endregion
@@ -73,6 +76,30 @@ namespace Cube.Pdf.ImageEx
         ///
         /* ----------------------------------------------------------------- */
         public IList<string> AllowExtensions { get; } = new List<string>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Bootstrap
+        /// 
+        /// <summary>
+        /// プロセス間通信を介した起動およびアクティブ化を制御するための
+        /// オブジェクトを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IpcBootstrap Bootstrap
+        {
+            get { return _bootstrap; }
+            set
+            {
+                if (_bootstrap != null) _bootstrap.Activated -= Bootstrap_Activated;
+
+                _bootstrap = value;
+                _bootstrap.Activated -= Bootstrap_Activated;
+                _bootstrap.Activated += Bootstrap_Activated;
+                _bootstrap.Register();
+            }
+        }
 
         #endregion
 
@@ -156,6 +183,31 @@ namespace Cube.Pdf.ImageEx
             var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
             if (files == null) return;
             Create(files);
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Bootstrap_Activated
+        /// 
+        /// <summary>
+        /// Bootstrap オブジェクトを介して、他のプロセスからアクティブ化
+        /// された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Bootstrap_Activated(object sender, DataEventArgs<object> e)
+        {
+            if (InvokeRequired) Invoke(new Action(() => Bootstrap_Activated(sender, e)));
+            else
+            {
+                Show();
+                var args = e.Value as string[];
+                Create(args);
+            }
         }
 
         #endregion
@@ -266,6 +318,10 @@ namespace Cube.Pdf.ImageEx
             Cursor = Cursors.Default;
         }
 
+        #endregion
+
+        #region Fields
+        private IpcBootstrap _bootstrap = null;
         #endregion
     }
 }
