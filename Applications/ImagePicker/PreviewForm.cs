@@ -49,7 +49,10 @@ namespace Cube.Pdf.ImageEx
         {
             InitializeComponent();
             _frame.Click += (s, e) => Close();
+            this.ClientSizeChanged += PreviewForm_ClientSizeChanged;
         }
+
+        
 
         #endregion
 
@@ -69,11 +72,26 @@ namespace Cube.Pdf.ImageEx
             get { return _frame.Image; }
             set
             {
-                _frame.Location = new Point(0, 0);
-                _frame.SizeMode = PictureBoxSizeMode.AutoSize;
                 _frame.Image = value;
+                _frame.Location =new Point(0,0) ;
+
+                ClientSize = Image.Size;
+                _frame.SizeMode = PictureBoxSizeMode.Zoom;
+                
                 LayoutPanel.Controls.Add(_frame);
             }
+        }
+
+        #endregion
+
+        #region EventHandler
+
+        private void PreviewForm_ClientSizeChanged(object sender, System.EventArgs e)
+        {
+
+            _frame.Location = new Point(0, 0);
+            _frame.Width = ClientSize.Width;
+            _frame.Height = ClientSize.Height;
         }
 
         #endregion
