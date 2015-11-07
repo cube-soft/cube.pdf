@@ -1,8 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-using System;
 ///
-/// ProgressForm.cs
+/// PreviewForm.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -19,6 +17,8 @@ using System;
 /// You should have received a copy of the GNU Affero General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
+/* ------------------------------------------------------------------------- */
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -49,7 +49,7 @@ namespace Cube.Pdf.ImageEx
         public PreviewForm()
         {
             InitializeComponent();
-            _frame.Click += (s, e) => Close();
+            PictureBox.Click += (s, e) => Close();
         }
 
         #endregion
@@ -67,18 +67,14 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public Image Image
         {
-            get { return _frame.Image; }
+            get { return PictureBox.Image; }
             set
             {
-                if (LayoutPanel.Controls.Contains(_frame)) LayoutPanel.Controls.Remove(_frame);
-
-                _frame.Image = value;
-                _frame.Location = new Point(0, 0);
-
-                ClientSize = Image.Size;
-                _frame.SizeMode = PictureBoxSizeMode.Zoom;
-
-                LayoutPanel.Controls.Add(_frame);
+                if (PictureBox.Image != value)
+                {
+                    PictureBox.Image = value;
+                    ResizeForm(value.Size);
+                }
             }
         }
 
@@ -97,25 +93,56 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         protected override void OnClientSizeChanged(EventArgs e)
         {
-            var width  = ClientSize.Width;
-            var height = (_frame.Image != null) ?
-                         (int)(ClientSize.Width * (_frame.Image.Height / (double)_frame.Image.Width)) :
-                         ClientSize.Height;
-
-            var x = 0;
-            var y = Math.Max(ClientSize.Height - height, 0) / 2;
-
-            _frame.Location = new Point(x, y);
-            _frame.Width  = width;
-            _frame.Height = height;
-
+            ResizeImage();
             base.OnClientSizeChanged(e);
         }
 
         #endregion
 
-        #region Fields
-        private PictureBox _frame = new PictureBox();
+        #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResizeForm
+        /// 
+        /// <summary>
+        /// プレビュー画面をリサイズします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResizeForm(Size size)
+        {
+            var area   = Screen.GetWorkingArea(this);
+            var width  = Math.Min(Math.Max(size.Width, MinimumSize.Width), area.Width);
+            var height = Math.Min(Math.Max(size.Height, MinimumSize.Height), area.Height);
+
+            ClientSize = new Size(width, height);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResizeImage
+        /// 
+        /// <summary>
+        /// 画像を表示する PictureBox をリサイズします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResizeImage()
+        {
+            var width  = LayoutPanel.ClientSize.Width;
+            var height = (PictureBox.Image != null) ?
+                         (int)(LayoutPanel.ClientSize.Width * (PictureBox.Image.Height / (double)PictureBox.Image.Width)) :
+                         LayoutPanel.ClientSize.Height;
+
+            var x = 0;
+            var y = Math.Max(ClientSize.Height - height, 0) / 2;
+
+            PictureBox.Location = new Point(x, y);
+            PictureBox.Width    = width;
+            PictureBox.Height   = height;
+        }
+
         #endregion
     }
 }
