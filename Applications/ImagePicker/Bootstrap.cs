@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// IpcBootstrap.cs
+/// Bootstrap.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -29,7 +29,7 @@ namespace Cube
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.IpcBootstrap
+    /// Cube.Bootstrap
     ///
     /// <summary>
     /// プロセス間通信 (IPC: Inter-Process Communication) によって
@@ -42,20 +42,20 @@ namespace Cube
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class IpcBootstrap : IDisposable
+    public class Bootstrap : IDisposable
     {
         #region Constructors and the destructor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IpcBootstrap
+        /// Bootstrap
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IpcBootstrap(string name)
+        public Bootstrap(string name)
         {
             Name = name;
             Logger = LogManager.GetLogger(GetType());
@@ -75,7 +75,7 @@ namespace Cube
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~IpcBootstrap()
+        ~Bootstrap()
         {
             Dispose(false);
         }

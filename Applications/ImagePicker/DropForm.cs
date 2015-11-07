@@ -87,7 +87,7 @@ namespace Cube.Pdf.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IpcBootstrap Bootstrap
+        public Bootstrap Bootstrap
         {
             get { return _bootstrap; }
             set
@@ -206,7 +206,7 @@ namespace Cube.Pdf.ImageEx
             {
                 Show();
                 var args = e.Value as string[];
-                Create(args);
+                if (args != null) Create(args);
             }
         }
 
@@ -321,7 +321,7 @@ namespace Cube.Pdf.ImageEx
         #endregion
 
         #region Fields
-        private IpcBootstrap _bootstrap = null;
+        private Bootstrap _bootstrap = null;
         #endregion
     }
 }

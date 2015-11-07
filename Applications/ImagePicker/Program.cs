@@ -47,7 +47,7 @@ namespace Cube.Pdf.ImageEx
         static void Main(string[] args)
         {
             var name = Application.ProductName.ToLower();
-            using (var bootstrap = new IpcBootstrap(name))
+            using (var bootstrap = new Bootstrap(name))
             {
                 if (bootstrap.Exists())
                 {
