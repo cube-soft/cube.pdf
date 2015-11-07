@@ -1,4 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------- */
+using System;
 ///
 /// ProgressForm.cs
 ///
@@ -17,7 +19,6 @@
 /// You should have received a copy of the GNU Affero General Public License
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
-/* ------------------------------------------------------------------------- */
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -49,10 +50,7 @@ namespace Cube.Pdf.ImageEx
         {
             InitializeComponent();
             _frame.Click += (s, e) => Close();
-            this.ClientSizeChanged += PreviewForm_ClientSizeChanged;
         }
-
-        
 
         #endregion
 
@@ -72,26 +70,46 @@ namespace Cube.Pdf.ImageEx
             get { return _frame.Image; }
             set
             {
+                if (LayoutPanel.Controls.Contains(_frame)) LayoutPanel.Controls.Remove(_frame);
+
                 _frame.Image = value;
-                _frame.Location =new Point(0,0) ;
+                _frame.Location = new Point(0, 0);
 
                 ClientSize = Image.Size;
                 _frame.SizeMode = PictureBoxSizeMode.Zoom;
-                
+
                 LayoutPanel.Controls.Add(_frame);
             }
         }
 
         #endregion
 
-        #region EventHandler
+        #region Override methods
 
-        private void PreviewForm_ClientSizeChanged(object sender, System.EventArgs e)
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnClientSizeChanged
+        /// 
+        /// <summary>
+        /// プレビュー画面サイズが変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnClientSizeChanged(EventArgs e)
         {
+            var width  = ClientSize.Width;
+            var height = (_frame.Image != null) ?
+                         (int)(ClientSize.Width * (_frame.Image.Height / (double)_frame.Image.Width)) :
+                         ClientSize.Height;
 
-            _frame.Location = new Point(0, 0);
-            _frame.Width = ClientSize.Width;
-            _frame.Height = ClientSize.Height;
+            var x = 0;
+            var y = Math.Max(ClientSize.Height - height, 0) / 2;
+
+            _frame.Location = new Point(x, y);
+            _frame.Width  = width;
+            _frame.Height = height;
+
+            base.OnClientSizeChanged(e);
         }
 
         #endregion
