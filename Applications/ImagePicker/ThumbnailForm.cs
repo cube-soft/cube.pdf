@@ -54,11 +54,14 @@ namespace Cube.Pdf.ImageEx
             InitializeLayout();
 
             ListView.ContextMenuStrip = CreateContextMenu();
+            SaveButton.UpdateAppearance();
 
-            ExitButton.Click += (s, e) => Close();
-            SaveAllButton.Click += (s, e) => OnSaveAll(e);
-            SaveButton.Click += (s, e) => OnSave(e);
+            ExitButton.Click     += (s, e) => Close();
+            SaveAllButton.Click  += (s, e) => OnSaveAll(e);
+            SaveButton.Click     += (s, e) => OnSave(e);
             ListView.DoubleClick += (s, e) => OnPreview(e);
+
+            ListView.SelectedIndexChanged += ListView_SelectedIndexChanged;
         }
 
         #endregion
@@ -267,6 +270,26 @@ namespace Cube.Pdf.ImageEx
                     break;
             }
             base.OnKeyDown(e);
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ListView_SelectedIndexChanged
+        /// 
+        /// <summary>
+        /// サムネイル一覧の選択項目が変更された時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void ListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var indices = ListView.SelectedIndices;
+            SaveButton.Enabled = (indices != null && indices.Count > 0);
+            SaveButton.UpdateAppearance();
         }
 
         #endregion
