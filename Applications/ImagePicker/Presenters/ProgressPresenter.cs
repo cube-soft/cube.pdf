@@ -120,6 +120,15 @@ namespace Cube.Pdf.ImageEx
             var preview   = new ThumbnailForm();
             var presenter = new ThumbnailPresenter(preview, Model);
 
+            var done = false;
+            presenter.Completed += (s, e) => { done = true; };
+            preview.FormClosed += (s, e) =>
+            {
+                if (done) View.Close();
+                else View.Show();
+            };
+
+            View.Hide();
             preview.Show();
         }
 

@@ -62,6 +62,44 @@ namespace Cube.Pdf.ImageEx
 
         #endregion
 
+        #region Events
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Completed
+        /// 
+        /// <summary>
+        /// 操作が完了した時に発生するイベントです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// このイベントは View.Save, View.SaveAll いずれかのイベントで
+        /// 画像の保存処理が正常に完了した時に発生します。
+        /// </remarks>
+        ///
+        /* --------------------------------------------------------------------- */
+        public EventHandler Completed;
+
+        #endregion
+
+        #region Virtual methods
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// OnCompleted
+        /// 
+        /// <summary>
+        /// 操作が完了した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        protected virtual void OnCompleted(EventArgs e)
+        {
+            if (Completed != null) Completed(this, e);
+        }
+
+        #endregion
+
         #region Event handlers
 
         /* --------------------------------------------------------------------- */
@@ -84,6 +122,7 @@ namespace Cube.Pdf.ImageEx
             task.Folder = folder;
             await task.RunAsync(basename, View.SelectedIndices);
 
+            OnCompleted(new EventArgs());
             View.Close();
         }
 
@@ -107,6 +146,7 @@ namespace Cube.Pdf.ImageEx
             task.Folder = folder;
             await task.RunAsync(basename);
 
+            OnCompleted(new EventArgs());
             View.Close();
         }
 
