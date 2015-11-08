@@ -135,12 +135,19 @@ namespace Cube.Pdf.ImageEx
             var preview   = new ThumbnailForm();
             var presenter = new ThumbnailPresenter(preview, Model);
 
-            var done = false;
-            presenter.Completed += (s, e) => { done = true; };
+            var completed = false;
+            presenter.Completed += (s, e) => { completed = true; };
+
+            var removed = false;
+            preview.Removed += (s, e) => { removed = true; };
             preview.FormClosed += (s, e) =>
             {
-                if (done) View.Close();
-                else View.Show();
+                if (completed) View.Close();
+                else
+                {
+                    View.Show();
+                    if (removed) Model.Restore();
+                }
             };
 
             View.Hide();
