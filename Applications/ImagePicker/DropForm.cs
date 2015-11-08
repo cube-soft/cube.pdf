@@ -48,7 +48,7 @@ namespace Cube.Pdf.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DropForm(string[] src)
+        public DropForm()
         {
             InitializeComponent();
             InitializeLayout();
@@ -59,9 +59,21 @@ namespace Cube.Pdf.ImageEx
             ExitButton.Click += (s, e) => Close();
             ExitButton.MouseEnter += (s, e) => ShowCloseButton(Cursors.Hand);
             ExitButton.MouseLeave += (s, e) => HideCloseButton();
+        }
 
-            if (src.Length == 0) return;
-            Create(src);
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DropForm
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DropForm(string[] args)
+            : this()
+        {
+            Create(args);
         }
 
         #endregion
