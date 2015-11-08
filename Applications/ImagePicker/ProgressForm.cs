@@ -50,7 +50,6 @@ namespace Cube.Pdf.ImageEx
         {
             InitializeComponent();
 
-            AllowOperation = false;
             ExitButton.Click += (s, e) => Close();
             SaveButton.Click += (s, e) => OnSave(e);
             PreviewButton.Click += (s, e) => OnPreview(e);
@@ -73,7 +72,12 @@ namespace Cube.Pdf.ImageEx
         public bool AllowOperation
         {
             get { return _op; }
-            set { _op = value; }
+            set
+            {
+                _op = value;
+                PreviewButton.UpdateAppearance(value);
+                SaveButton.UpdateAppearance(value);
+            }
         }
 
         /* ----------------------------------------------------------------- */

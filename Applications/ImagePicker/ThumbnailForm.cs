@@ -54,7 +54,7 @@ namespace Cube.Pdf.ImageEx
             InitializeLayout();
 
             ListView.ContextMenuStrip = CreateContextMenu();
-            SaveButton.UpdateAppearance();
+            SaveButton.UpdateAppearance(false);
 
             ExitButton.Click     += (s, e) => Close();
             SaveAllButton.Click  += (s, e) => OnSaveAll(e);
@@ -288,8 +288,7 @@ namespace Cube.Pdf.ImageEx
         private void ListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             var indices = ListView.SelectedIndices;
-            SaveButton.Enabled = (indices != null && indices.Count > 0);
-            SaveButton.UpdateAppearance();
+            SaveButton.UpdateAppearance(indices != null && indices.Count > 0);
         }
 
         #endregion

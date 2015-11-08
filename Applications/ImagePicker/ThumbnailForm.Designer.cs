@@ -157,7 +157,6 @@
             // SaveButton
             // 
             this.SaveButton.BackColor = System.Drawing.SystemColors.Highlight;
-            this.SaveButton.Enabled = false;
             this.SaveButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Highlight;
             this.SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SaveButton.ForeColor = System.Drawing.Color.White;

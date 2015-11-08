@@ -45,10 +45,11 @@ namespace Cube.Pdf.ImageEx.Extensions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void UpdateAppearance(this Button button)
+        public static void UpdateAppearance(this Button button, bool enabled)
         {
-            if (button.Enabled) Enable(button);
+            if (enabled) Enable(button);
             else Disable(button);
+            button.Enabled = enabled;
         }
 
         #region Implementations
@@ -64,6 +65,8 @@ namespace Cube.Pdf.ImageEx.Extensions
         /* ----------------------------------------------------------------- */
         private static void Enable(Button button)
         {
+            if (button.Enabled) return;
+
             try {
                 var colors = (KeyValuePair<Color, Color>)button.Tag;
                 button.BackColor = colors.Key;
@@ -83,6 +86,8 @@ namespace Cube.Pdf.ImageEx.Extensions
         /* ----------------------------------------------------------------- */
         private static void Disable(Button button)
         {
+            if (!button.Enabled) return;
+
             var colors = new KeyValuePair<Color, Color>(button.BackColor, button.FlatAppearance.BorderColor);
             button.Tag = colors;
             button.BackColor = SystemColors.Control;
