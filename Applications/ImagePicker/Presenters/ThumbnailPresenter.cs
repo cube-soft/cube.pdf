@@ -55,6 +55,7 @@ namespace Cube.Pdf.ImageEx
             View.Save    += View_Save;
             View.SaveAll += View_SaveAll;
             View.Preview += View_Preview;
+            View.Removed += View_Removed;
 
             AddImages();
         }
@@ -74,15 +75,13 @@ namespace Cube.Pdf.ImageEx
         /* --------------------------------------------------------------------- */
         private async void View_Save(object sender, EventArgs ev)
         {
-            var fb = new FolderBrowserDialog();
-            fb.Description = Properties.Resources.SaveFolder;
-            fb.SelectedPath = System.IO.Path.GetDirectoryName(Model.Path);
-            if (fb.ShowDialog() == DialogResult.Cancel) return;
+            var folder = GetFolder();
+            if (string.IsNullOrEmpty(folder)) return;
 
             var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
             var task = new SaveTask();
             task.Images = Model.Images;
-            task.Folder = fb.SelectedPath;
+            task.Folder = folder;
             await task.RunAsync(basename, View.SelectedIndices);
 
             View.Close();
@@ -99,15 +98,13 @@ namespace Cube.Pdf.ImageEx
         /* --------------------------------------------------------------------- */
         private async void View_SaveAll(object sender, EventArgs ev)
         {
-            var fb = new FolderBrowserDialog();
-            fb.Description = Properties.Resources.SaveFolder;
-            fb.SelectedPath = System.IO.Path.GetDirectoryName(Model.Path);
-            if (fb.ShowDialog() == DialogResult.Cancel) return;
+            var folder = GetFolder();
+            if (string.IsNullOrEmpty(folder)) return;
 
             var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
             var task = new SaveTask();
             task.Images = Model.Images;
-            task.Folder = fb.SelectedPath;
+            task.Folder = folder;
             await task.RunAsync(basename);
 
             View.Close();
@@ -132,6 +129,20 @@ namespace Cube.Pdf.ImageEx
             dialog.ShowDialog();
         }
 
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_Removed
+        /// 
+        /// <summary>
+        /// 画像が削除された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void View_Removed(object sender, DataEventArgs<int> ev)
+        {
+            Model.Images.RemoveAt(ev.Value);
+        }
+
         #endregion
 
         #region Other private methods
@@ -153,6 +164,23 @@ namespace Cube.Pdf.ImageEx
                 var image = Model.GetImage(i, upper);
                 if (image != null) View.Add(image);
             }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// GetFolder
+        /// 
+        /// <summary>
+        /// 出力先フォルダを取得します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private string GetFolder()
+        {
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFolder;
+            dialog.SelectedPath = System.IO.Path.GetDirectoryName(Model.Path);
+            return (dialog.ShowDialog() == DialogResult.Cancel) ? string.Empty : dialog.SelectedPath;
         }
 
         #endregion

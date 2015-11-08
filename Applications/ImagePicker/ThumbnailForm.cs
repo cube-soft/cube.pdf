@@ -19,6 +19,8 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Linq;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -54,14 +56,14 @@ namespace Cube.Pdf.ImageEx
             InitializeLayout();
 
             ListView.ContextMenuStrip = CreateContextMenu();
-            SaveButton.UpdateStatus(false);
+            SaveButton.UpdateStatus(AnyItemsSelected);
 
             ExitButton.Click     += (s, e) => Close();
             SaveAllButton.Click  += (s, e) => OnSaveAll(e);
             SaveButton.Click     += (s, e) => OnSave(e);
             ListView.DoubleClick += (s, e) => OnPreview(e);
 
-            ListView.SelectedIndexChanged += ListView_SelectedIndexChanged;
+            ListView.SelectedIndexChanged += (s, e) => SaveButton.UpdateStatus(AnyItemsSelected);
         }
 
         #endregion
@@ -124,6 +126,24 @@ namespace Cube.Pdf.ImageEx
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AnyItemsSelected
+        /// 
+        /// <summary>
+        /// サムネイルが一つでも選択されているかどうかを示す値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AnyItemsSelected
+        {
+            get
+            {
+                var items = ListView.SelectedItems;
+                return items != null && items.Count > 0;
+            }
+        }
+
         #endregion
 
         #region Events
@@ -161,6 +181,17 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public EventHandler Preview;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Removed
+        /// 
+        /// <summary>
+        /// 画像をが削除された時に発生するイベントです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public EventHandler<DataEventArgs<int>> Removed;
+
         #endregion
 
         #region Methods
@@ -176,11 +207,47 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public void Add(Image image)
         {
+            _images.Add(image);
             ListView.LargeImageList.Images.Add(image);
             ListView.Items.Add(new ListViewItem(
                 string.Empty,
                 ListView.LargeImageList.Images.Count - 1
             ));
+            Debug.Assert(_images.Count == ListView.Items.Count);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        /// 
+        /// <summary>
+        /// サムネイルを削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove(Image image)
+        {
+            RemoveAt(_images.IndexOf(image));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveAt
+        /// 
+        /// <summary>
+        /// 指定されたインデックスに対応するサムネイルを削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void RemoveAt(int index)
+        {
+            Debug.Assert(_images.Count == ListView.Items.Count);
+
+            if (index < 0 || index >= _images.Count) return;
+            _images.RemoveAt(index);
+            ListView.Items.RemoveAt(index);
+
+            OnRemoved(new DataEventArgs<int>(index));
         }
 
         /* ----------------------------------------------------------------- */
@@ -194,10 +261,7 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public void SelectAll()
         {
-            foreach (ListViewItem item in ListView.Items)
-            {
-                item.Selected = true;
-            }
+            foreach (ListViewItem item in ListView.Items) item.Selected = true;
         }
 
         #endregion
@@ -246,6 +310,20 @@ namespace Cube.Pdf.ImageEx
             if (Preview != null) Preview(this, e);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnRemove
+        /// 
+        /// <summary>
+        /// 選択画像を削除する時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnRemoved(DataEventArgs<int> e)
+        {
+            if (Removed != null) Removed(this, e);
+        }
+
         #endregion
 
         #region Override methods
@@ -272,23 +350,24 @@ namespace Cube.Pdf.ImageEx
             base.OnKeyDown(e);
         }
 
-        #endregion
-
-        #region Event handlers
-
         /* ----------------------------------------------------------------- */
         ///
-        /// ListView_SelectedIndexChanged
+        /// OnFormClosed
         /// 
         /// <summary>
-        /// サムネイル一覧の選択項目が変更された時に実行されるハンドラです。
+        /// フォームが閉じた時に実行されるハンドラです。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void ListView_SelectedIndexChanged(object sender, EventArgs e)
+        protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            var indices = ListView.SelectedIndices;
-            SaveButton.UpdateStatus(indices != null && indices.Count > 0);
+            base.OnFormClosed(e);
+
+            _images.Clear();
+            ListView.Items.Clear();
+            ListView.LargeImageList.Images.Clear();
+            ListView.LargeImageList.Dispose();
+            ListView.LargeImageList = null;
         }
 
         #endregion
@@ -313,53 +392,59 @@ namespace Cube.Pdf.ImageEx
             UxTheme.SetWindowTheme(ListView.Handle, "Explorer", null);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateContextMenu
+        /// 
+        /// <summary>
+        /// コンテキストメニューを生成します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
         private ContextMenuStrip CreateContextMenu()
         {
             var dest = new ContextMenuStrip();
 
+            var preview = dest.Items.Add(Properties.Resources.PreviewMenu, null, (s, e) => OnPreview(e));
+            var hr0     = dest.Items.Add("-");
+            var save    = dest.Items.Add(Properties.Resources.SaveMenu, null, (s, e) => OnSave(e));
+            var remove  = dest.Items.Add(Properties.Resources.RemoveMenu, null, (s, e) => RemoveSelectedItems());
+            var hr1     = dest.Items.Add("-");
+            var select  = dest.Items.Add(Properties.Resources.SelectAllMenu, null, (s, e) => SelectAll());
 
-            var preview = new ToolStripMenuItem
+            Action action = () =>
             {
-                Name = "Preview",
-                Text = "プレビュー"
+                preview.Enabled = AnyItemsSelected;
+                save.Enabled    = AnyItemsSelected;
+                remove.Enabled  = AnyItemsSelected;
             };
-            preview.Click += (s, e) => OnPreview(e);
-            dest.Items.Add(preview);
 
-            dest.Items.Add("-");
-
-            var save = new ToolStripMenuItem
-            {
-                Name = "Save",
-                Text = "保存"
-            };
-            save.Click += (s, e) => OnSave(e);
-            dest.Items.Add(save);
-
-            var remove = new ToolStripMenuItem
-            {
-                Name = "Remove",
-                Text = "削除"
-            };
-            dest.Items.Add(remove);
-
-            dest.Items.Add("-");
-
-            var selectall = new ToolStripMenuItem
-            {
-                Name = "SelectAll",
-                Text = "全て選択"
-            };
-            selectall.Click += (s, e) => SelectAll();
-            dest.Items.Add(selectall);
+            action();
+            ListView.SelectedIndexChanged += (s, e) => action();
 
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveSelectedItems
+        /// 
+        /// <summary>
+        /// 選択されている項目を削除します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void RemoveSelectedItems()
+        {
+            if (!AnyItemsSelected) return;
+            foreach (var index in SelectedIndices.Reverse()) RemoveAt(index);
         }
 
         #endregion
 
         #region Fields
         private string _filename = string.Empty;
+        private IList<Image> _images = new List<Image>();
         #endregion
     }
 }

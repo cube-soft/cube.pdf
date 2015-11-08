@@ -137,6 +137,15 @@ namespace Cube.Pdf.ImageEx.Properties {
         }
         
         /// <summary>
+        ///   プレビュー画面を表示 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PreviewMenu {
+            get {
+                return ResourceManager.GetString("PreviewMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0} の {1}/{2} ページ目から画像を抽出しています... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ProcessMessage {
@@ -146,11 +155,38 @@ namespace Cube.Pdf.ImageEx.Properties {
         }
         
         /// <summary>
+        ///   選択項目を一覧から削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string RemoveMenu {
+            get {
+                return ResourceManager.GetString("RemoveMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   抽出画像を保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SaveFolder {
             get {
                 return ResourceManager.GetString("SaveFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   選択項目を保存 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SaveMenu {
+            get {
+                return ResourceManager.GetString("SaveMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   全ての項目を選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectAllMenu {
+            get {
+                return ResourceManager.GetString("SelectAllMenu", resourceCulture);
             }
         }
     }
