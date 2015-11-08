@@ -91,7 +91,7 @@ namespace Cube.Pdf.ImageEx.Extensions
             var colors = new KeyValuePair<Color, Color>(button.BackColor, button.FlatAppearance.BorderColor);
             button.Tag = colors;
             button.BackColor = SystemColors.Control;
-            button.FlatAppearance.BorderColor = SystemColors.ControlDark;
+            button.FlatAppearance.BorderColor = SystemColors.ControlLight;
         }
 
         #endregion
