@@ -221,7 +221,22 @@ namespace Cube.Pdf.ImageEx
         /// Remove
         /// 
         /// <summary>
-        /// サムネイルを削除します。
+        /// 選択項目を削除します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public void Remove()
+        {
+            if (!AnyItemsSelected) return;
+            foreach (var index in SelectedIndices.Reverse()) RemoveAt(index);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        /// 
+        /// <summary>
+        /// 指定されたサムネイルを削除します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -330,28 +345,6 @@ namespace Cube.Pdf.ImageEx
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnKeyDown
-        /// 
-        /// <summary>
-        /// キーボードのキーが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.A:
-                    if (e.Control) SelectAll();
-                    break;
-                default:
-                    break;
-            }
-            base.OnKeyDown(e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// OnFormClosed
         /// 
         /// <summary>
@@ -408,7 +401,7 @@ namespace Cube.Pdf.ImageEx
             var preview = dest.Items.Add(Properties.Resources.PreviewMenu, null, (s, e) => OnPreview(e));
             var hr0     = dest.Items.Add("-");
             var save    = dest.Items.Add(Properties.Resources.SaveMenu, null, (s, e) => OnSave(e));
-            var remove  = dest.Items.Add(Properties.Resources.RemoveMenu, null, (s, e) => RemoveSelectedItems());
+            var remove  = dest.Items.Add(Properties.Resources.RemoveMenu, null, (s, e) => Remove());
             var hr1     = dest.Items.Add("-");
             var select  = dest.Items.Add(Properties.Resources.SelectAllMenu, null, (s, e) => SelectAll());
 
@@ -423,21 +416,6 @@ namespace Cube.Pdf.ImageEx
             ListView.SelectedIndexChanged += (s, e) => action();
 
             return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RemoveSelectedItems
-        /// 
-        /// <summary>
-        /// 選択されている項目を削除します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private void RemoveSelectedItems()
-        {
-            if (!AnyItemsSelected) return;
-            foreach (var index in SelectedIndices.Reverse()) RemoveAt(index);
         }
 
         #endregion

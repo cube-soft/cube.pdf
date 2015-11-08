@@ -56,6 +56,7 @@ namespace Cube.Pdf.ImageEx
             View.SaveAll += View_SaveAll;
             View.Preview += View_Preview;
             View.Removed += View_Removed;
+            View.KeyDown += View_KeyDown;
 
             AddImages();
         }
@@ -177,6 +178,40 @@ namespace Cube.Pdf.ImageEx
         private void View_Removed(object sender, DataEventArgs<int> ev)
         {
             Model.Images.RemoveAt(ev.Value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_KeyDown
+        /// 
+        /// <summary>
+        /// キーボードのキーが押下された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void View_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                    if (e.Control) View.SelectAll();
+                    break;
+                case Keys.D:
+                    if (e.Control) View.Remove();
+                    break;
+                case Keys.S:
+                    if (e.Control)
+                    {
+                        if (e.Shift) View_SaveAll(sender, e);
+                        else if (View.AnyItemsSelected) View_Save(sender, e);
+                    }
+                    break;
+                case Keys.Delete:
+                    View.Remove();
+                    break;
+                default:
+                    break;
+            }
         }
 
         #endregion
