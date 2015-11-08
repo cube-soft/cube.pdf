@@ -50,7 +50,7 @@ namespace Cube.Pdf
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public Version Version { get; set; } = new Version(1, 7);
+        public Version Version { get; set; } = new Version(0, 0);
 
         /* ----------------------------------------------------------------- */
         ///

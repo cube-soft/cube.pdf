@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5D742956-06A5-40F9-939D-5EFF66B78D8D}</ProjectGuid>
+    <ProjectGuid>{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Pdf</RootNamespace>
-    <AssemblyName>Cube.Pdf</AssemblyName>
+    <RootNamespace>Cube.Tests.Pdf</RootNamespace>
+    <AssemblyName>Cube.Pdf.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,34 +29,43 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Encryption.cs" />
-    <Compile Include="EncryptionException.cs" />
-    <Compile Include="EncryptionMethod.cs" />
-    <Compile Include="EncryptionStatus.cs" />
-    <Compile Include="Extensions\PageExtensions.cs" />
-    <Compile Include="IDocumentReader.cs" />
-    <Compile Include="IPage.cs" />
-    <Compile Include="Metadata.cs" />
-    <Compile Include="Page.cs" />
-    <Compile Include="PageType.cs" />
-    <Compile Include="Permission.cs" />
+    <Compile Include="Editing\DocumentReaderTest.cs" />
+    <Compile Include="FileResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewLayout.cs" />
-    <Compile Include="ViewMode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cube.Pdf.csproj">
+      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
+      <Name>Cube.Pdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Editing\Cube.Pdf.Editing.csproj">
+      <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
+      <Name>Cube.Pdf.Editing</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y /I /S "$(ProjectDir)Examples" "$(TargetDir)\Examples"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
