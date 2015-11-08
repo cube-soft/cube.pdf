@@ -114,7 +114,7 @@ namespace Cube.Pdf.ImageEx
             {
                 try
                 {
-                    var filename = System.IO.Path.GetFileName(Path);
+                    var filename = System.IO.Path.GetFileNameWithoutExtension(Path);
                     var start = string.Format(Properties.Resources.BeginMessage, filename);
                     progress.Report(new ProgressEventArgs(-1, start));
 
@@ -242,7 +242,7 @@ namespace Cube.Pdf.ImageEx
             {
                 await reader.OpenAsync(Path, string.Empty);
 
-                var filename = System.IO.Path.GetFileName(Path);
+                var filename = System.IO.Path.GetFileNameWithoutExtension(Path);
                 var n = reader.Pages.Count;
                 for (var i = 0; i < n; ++i)
                 {

@@ -51,7 +51,7 @@ namespace Cube.Pdf.ImageEx
         public ThumbnailPresenter(ThumbnailForm view, PickTask model)
             : base(view, model)
         {
-            View.FileName = System.IO.Path.GetFileName(Model.Path);
+            View.FileName = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
             View.Save    += View_Save;
             View.SaveAll += View_SaveAll;
             View.Preview += View_Preview;

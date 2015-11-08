@@ -48,7 +48,7 @@ namespace Cube.Pdf.ImageEx
         public ProgressPresenter(ProgressForm view, PickTask model)
             : base(view, model)
         {
-            View.FileName = System.IO.Path.GetFileName(Model.Path);
+            View.FileName = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
             View.Shown      += View_Shown;
             View.FormClosed += View_Closed;
             View.Save       += View_Save;
