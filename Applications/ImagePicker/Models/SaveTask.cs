@@ -166,7 +166,7 @@ namespace Cube.Pdf.ImageEx
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Uniqu
+        /// Unique
         /// 
         /// <summary>
         /// 一意のパス名を取得します。
@@ -175,11 +175,12 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         private string Unique(string basename, int index)
         {
+            var digit = string.Format("D{0}", Images.Count.ToString("D").Length);
             for (var i = 1; i < 1000; ++i)
             {
                 var filename = (i == 1) ?
-                               string.Format("{0}-{1:D03}.png", basename, index) :
-                               string.Format("{0}-{1:D03} ({2}).png", basename, index, i);
+                               string.Format("{0}-{1}.png", basename, index.ToString(digit)) :
+                               string.Format("{0}-{1} ({2}).png", basename, index.ToString(digit), i);
                 var dest = System.IO.Path.Combine(Folder, filename);
                 if (!System.IO.File.Exists(dest)) return dest;
             }
