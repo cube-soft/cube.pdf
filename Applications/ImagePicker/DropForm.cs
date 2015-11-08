@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -50,6 +51,7 @@ namespace Cube.Pdf.ImageEx
         public DropForm(string[] src)
         {
             InitializeComponent();
+            InitializeLayout();
             InitializeToolTip();
 
             AllowExtensions.Add(".pdf");
@@ -107,17 +109,24 @@ namespace Cube.Pdf.ImageEx
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnShown
+        /// OnShowing
         /// 
         /// <summary>
-        /// フォームが表示された時に実行されます。
+        /// フォームが表示される直前に実行されます。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: コンストラクタ時に InitializeLayout を実行した場合、
+        /// 実際にフォームが表示された時に幅がおかしくなると言う問題が
+        /// 発生しているので OnShowing で暫定的な回避処理を行っている。
+        /// 修正方法を要調査。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnShown(EventArgs e)
+        protected override void OnShowing(CancelEventArgs e)
         {
             InitializeLayout();
-            base.OnShown(e);
+            base.OnShowing(e);
         }
 
         /* ----------------------------------------------------------------- */
