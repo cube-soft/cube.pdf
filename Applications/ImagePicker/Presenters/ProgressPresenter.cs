@@ -107,15 +107,11 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         private async void View_Save(object sender, EventArgs ev)
         {
-            var fb = new FolderBrowserDialog();
-            fb.Description = Properties.Resources.SaveFolder;
-            fb.SelectedPath = System.IO.Path.GetDirectoryName(Model.Path);
-            if (fb.ShowDialog() == DialogResult.Cancel) return;
+            var task = new SaveTask();
+            if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
 
             var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            var task = new SaveTask();
             task.Images = Model.Images;
-            task.Folder = fb.SelectedPath;
             await task.RunAsync(basename);
 
             View.Close();

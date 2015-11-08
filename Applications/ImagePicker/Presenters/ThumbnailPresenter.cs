@@ -113,13 +113,11 @@ namespace Cube.Pdf.ImageEx
         /* --------------------------------------------------------------------- */
         private async void View_Save(object sender, EventArgs ev)
         {
-            var folder = GetFolder();
-            if (string.IsNullOrEmpty(folder)) return;
+            var task = new SaveTask();
+            if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
 
             var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            var task = new SaveTask();
             task.Images = Model.Images;
-            task.Folder = folder;
             await task.RunAsync(basename, View.SelectedIndices);
 
             OnCompleted(new EventArgs());
@@ -137,13 +135,11 @@ namespace Cube.Pdf.ImageEx
         /* --------------------------------------------------------------------- */
         private async void View_SaveAll(object sender, EventArgs ev)
         {
-            var folder = GetFolder();
-            if (string.IsNullOrEmpty(folder)) return;
+            var task = new SaveTask();
+            if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
 
             var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            var task = new SaveTask();
             task.Images = Model.Images;
-            task.Folder = folder;
             await task.RunAsync(basename);
 
             OnCompleted(new EventArgs());
@@ -204,23 +200,6 @@ namespace Cube.Pdf.ImageEx
                 var image = Model.GetImage(i, upper);
                 if (image != null) View.Add(image);
             }
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// GetFolder
-        /// 
-        /// <summary>
-        /// 出力先フォルダを取得します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private string GetFolder()
-        {
-            var dialog = new FolderBrowserDialog();
-            dialog.Description = Properties.Resources.SaveFolder;
-            dialog.SelectedPath = System.IO.Path.GetDirectoryName(Model.Path);
-            return (dialog.ShowDialog() == DialogResult.Cancel) ? string.Empty : dialog.SelectedPath;
         }
 
         #endregion

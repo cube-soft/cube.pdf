@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using System.Threading.Tasks;
 using TaskEx = System.Threading.Tasks.Task;
 
@@ -112,6 +113,33 @@ namespace Cube.Pdf.ImageEx
         {
             if (Folder == null || Images == null) return;
             for (var i = 0; i < Images.Count; ++i) await SaveAsync(Images[i], basename, i);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AskFolder
+        /// 
+        /// <summary>
+        /// 保存場所をユーザに尋ねて設定します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// ダイアログを表示してユーザに保存場所を尋ねます。ユーザが保存場所を
+        /// 指定した場合は Folder にその値を設定します。ユーザが操作を
+        /// キャンセルした場合は string.Empty が返ります。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public string AskFolder(string initpath)
+        {
+            var dir = System.IO.Directory.Exists(initpath) ? initpath : System.IO.Path.GetDirectoryName(initpath);
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFolder;
+            dialog.SelectedPath = dir;
+            if (dialog.ShowDialog() == DialogResult.Cancel) return string.Empty;
+
+            Folder = dialog.SelectedPath;
+            return Folder;
         }
 
         #endregion
