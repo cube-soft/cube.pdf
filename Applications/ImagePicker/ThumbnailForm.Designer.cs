@@ -37,11 +37,9 @@
             this.ExitButton = new System.Windows.Forms.Button();
             this.SaveAllButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.LayoutContainer)).BeginInit();
             this.LayoutContainer.Panel1.SuspendLayout();
             this.LayoutContainer.Panel2.SuspendLayout();
             this.LayoutContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.HeaderContainer)).BeginInit();
             this.HeaderContainer.Panel1.SuspendLayout();
             this.HeaderContainer.Panel2.SuspendLayout();
             this.HeaderContainer.SuspendLayout();
@@ -177,11 +175,9 @@
             this.Text = "Thumbnail List";
             this.LayoutContainer.Panel1.ResumeLayout(false);
             this.LayoutContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.LayoutContainer)).EndInit();
             this.LayoutContainer.ResumeLayout(false);
             this.HeaderContainer.Panel1.ResumeLayout(false);
             this.HeaderContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.HeaderContainer)).EndInit();
             this.HeaderContainer.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
