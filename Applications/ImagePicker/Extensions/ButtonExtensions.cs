@@ -38,14 +38,14 @@ namespace Cube.Pdf.ImageEx.Extensions
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateAppearance
+        /// UpdateStatus
         /// 
         /// <summary>
-        /// ボタンの外観を更新します。
+        /// ボタンの有効/無効状態を更新し、対応する外観に変更します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void UpdateAppearance(this Button button, bool enabled)
+        public static void UpdateStatus(this Button button, bool enabled)
         {
             if (enabled) Enable(button);
             else Disable(button);

@@ -75,8 +75,8 @@ namespace Cube.Pdf.ImageEx
             set
             {
                 _op = value;
-                PreviewButton.UpdateAppearance(value);
-                SaveButton.UpdateAppearance(value);
+                PreviewButton.UpdateStatus(value);
+                SaveButton.UpdateStatus(value);
             }
         }
 
