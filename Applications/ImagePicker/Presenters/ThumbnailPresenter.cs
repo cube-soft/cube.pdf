@@ -161,8 +161,11 @@ namespace Cube.Pdf.ImageEx
             var indices = View.SelectedIndices;
             if (indices == null || indices.Count <= 0) return;
 
+            var index = indices[0];
+            var filename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
             var dialog = new PreviewForm();
-            dialog.Image = Model.Images[indices[0]];
+            dialog.FileName = string.Format("{0} ({1}/{2})", filename, index, Model.Images.Count);
+            dialog.Image = Model.Images[index];
             dialog.ShowDialog();
         }
 

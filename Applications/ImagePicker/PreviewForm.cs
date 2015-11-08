@@ -21,6 +21,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.Pdf.ImageEx.Extensions;
 
 namespace Cube.Pdf.ImageEx
 {
@@ -74,6 +75,28 @@ namespace Cube.Pdf.ImageEx
                 {
                     PictureBox.Image = value;
                     ResizeForm(value.Size);
+                }
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileName
+        /// 
+        /// <summary>
+        /// ファイル名を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string FileName
+        {
+            get { return _filename; }
+            set
+            {
+                if (_filename != value)
+                {
+                    _filename = value;
+                    this.UpdateTitle(value);
                 }
             }
         }
@@ -143,6 +166,10 @@ namespace Cube.Pdf.ImageEx
             PictureBox.Height   = height;
         }
 
+        #endregion
+
+        #region Fields
+        private string _filename = string.Empty;
         #endregion
     }
 }
