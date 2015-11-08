@@ -164,7 +164,7 @@
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(130, 35);
             this.SaveButton.TabIndex = 2;
-            this.SaveButton.Text = "選択範囲の保存";
+            this.SaveButton.Text = "選択画像の保存";
             this.SaveButton.UseVisualStyleBackColor = false;
             // 
             // ThumbnailForm
