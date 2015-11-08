@@ -110,26 +110,14 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public async Task RunAsync(IProgress<ProgressEventArgs> progress)
         {
-            using (_source = new CancellationTokenSource())
+            try
             {
-                try
+                using (_source = new CancellationTokenSource())
                 {
-                    var filename = System.IO.Path.GetFileNameWithoutExtension(Path);
-                    var start = string.Format(Properties.Resources.BeginMessage, filename);
-                    progress.Report(new ProgressEventArgs(-1, start));
-
-                    var result = await PickImagesAsync(progress);
-                    var done = result.Value > 0 ?
-                               string.Format(Properties.Resources.EndMessage, filename, result.Key, result.Value) :
-                               string.Format(Properties.Resources.NotFoundMessage, filename, result.Key);
-                    progress.Report(new ProgressEventArgs(100, done));
-                }
-                catch (OperationCanceledException /* err */)
-                {
-                    progress.Report(new ProgressEventArgs(0, Properties.Resources.CancelMessage));
-                    return;
+                    await RunTaskAsync(progress);
                 }
             }
+            finally { _source = null; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -144,8 +132,11 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public void Restore()
         {
-            Images.Clear();
-            foreach (var image in _all) Images.Add(image);
+            lock (_lock)
+            {
+                Images.Clear();
+                foreach (var image in _all) Images.Add(image);
+            }
         }
 
         /* --------------------------------------------------------------------- */
@@ -209,13 +200,14 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         protected virtual void Dispose(bool disposing)
         {
-            lock (this)
+            lock (_lock)
             {
                 if (_disposed) return;
                 _disposed = true;
 
                 if (disposing)
                 {
+                    if (_source != null) _source.Cancel();
                     Images.Clear();
                     foreach (var image in _all) image.Dispose();
                     _all.Clear();
@@ -226,6 +218,36 @@ namespace Cube.Pdf.ImageEx
         #endregion
 
         #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RunTaskAsync
+        /// 
+        /// <summary>
+        /// 抽出処理を非同期で実行します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private async Task RunTaskAsync(IProgress<ProgressEventArgs> progress)
+        {
+            try
+            {
+                var filename = System.IO.Path.GetFileNameWithoutExtension(Path);
+                var start = string.Format(Properties.Resources.BeginMessage, filename);
+                progress.Report(new ProgressEventArgs(-1, start));
+
+                var result = await PickImagesAsync(progress);
+                var done = result.Value > 0 ?
+                           string.Format(Properties.Resources.EndMessage, filename, result.Key, result.Value) :
+                           string.Format(Properties.Resources.NotFoundMessage, filename, result.Key);
+                progress.Report(new ProgressEventArgs(100, done));
+            }
+            catch (OperationCanceledException /* err */)
+            {
+                progress.Report(new ProgressEventArgs(0, Properties.Resources.CancelMessage));
+                return;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -254,8 +276,12 @@ namespace Cube.Pdf.ImageEx
                     progress.Report(new ProgressEventArgs(value, message));
 
                     var src = await reader.GetImagesAsync(pagenum);
+                    _source.Token.ThrowIfCancellationRequested();
+
+                    lock (_lock)
                     foreach (var image in src)
                     {
+                        _source.Token.ThrowIfCancellationRequested();
                         _all.Add(image);
                         Images.Add(image);
                     }
@@ -269,6 +295,7 @@ namespace Cube.Pdf.ImageEx
 
         #region Fields
         private bool _disposed = false;
+        private object _lock = new object();
         private CancellationTokenSource _source;
         private IList<Image> _all = new List<Image>();
         #endregion
