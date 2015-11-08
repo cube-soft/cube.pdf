@@ -31,7 +31,7 @@ namespace Cube
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ProgressEventArgs
+    public class ProgressEventArgs : EventArgs
     {
         #region Constructors
 

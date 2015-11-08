@@ -23,6 +23,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cube.Pdf.Editing.Extensions;
+using TaskEx = Cube.TaskEx;
 using ReaderImpl = iTextSharp.text.pdf.PdfReader;
 using ImageParser = iTextSharp.text.pdf.parser.PdfReaderContentParser;
 using BadPasswordException = iTextSharp.text.exceptions.BadPasswordException;
@@ -139,7 +140,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public Task OpenAsync(string filename, string password)
         {
-            return Task.Run(() => { Open(filename, password); });
+            return TaskEx.Run(() => { Open(filename, password); });
         }
 
         /* ----------------------------------------------------------------- */
@@ -207,7 +208,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public Task<IList<Image>> GetImagesAsync(int pagenum)
         {
-            return Task.Run(() => { return GetImages(pagenum); });
+            return TaskEx.Run(() => { return GetImages(pagenum); });
         }
 
         #endregion
