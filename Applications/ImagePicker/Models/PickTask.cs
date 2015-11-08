@@ -119,7 +119,9 @@ namespace Cube.Pdf.ImageEx
                     progress.Report(new ProgressEventArgs(-1, start));
 
                     var result = await PickImagesAsync(progress);
-                    var done = string.Format(Properties.Resources.EndMessage, filename, result.Key, result.Value);
+                    var done = result.Value > 0 ?
+                               string.Format(Properties.Resources.EndMessage, filename, result.Key, result.Value) :
+                               string.Format(Properties.Resources.NotFoundMessage, filename, result.Key);
                     progress.Report(new ProgressEventArgs(100, done));
                 }
                 catch (OperationCanceledException /* err */)

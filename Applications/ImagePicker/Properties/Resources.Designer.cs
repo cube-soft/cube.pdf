@@ -137,6 +137,15 @@ namespace Cube.Pdf.ImageEx.Properties {
         }
         
         /// <summary>
+        ///   {0} ({1} ページ) から画像を見つける事ができませんでした。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotFoundMessage {
+            get {
+                return ResourceManager.GetString("NotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   プレビュー画面を表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PreviewMenu {

@@ -77,7 +77,7 @@ namespace Cube.Pdf.ImageEx
             {
                 View.AllowOperation = false;
                 await Model.RunAsync(progress);
-                View.AllowOperation = true;
+                if (Model.Images.Count > 0) View.AllowOperation = true;
             }
             catch (Exception err) { Update(0, err.Message); }
         }
