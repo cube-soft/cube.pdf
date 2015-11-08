@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
@@ -149,7 +152,9 @@
   <ItemGroup>
     <None Include="Resources\HeaderLogo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="App.ico" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Cube.Pdf.csproj">
       <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>

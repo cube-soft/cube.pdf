@@ -37,7 +37,7 @@ namespace Cube.Pdf.ImageEx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PickTask
+    public class PickTask : IDisposable
     {
         #region Constructors
 
@@ -53,6 +53,20 @@ namespace Cube.Pdf.ImageEx
         public PickTask(string path)
         {
             Path = path;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~PickTask
+        /// 
+        /// <summary>
+        /// オブジェクトを解放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~PickTask()
+        {
+            Dispose(false);
         }
 
         #endregion
@@ -147,6 +161,49 @@ namespace Cube.Pdf.ImageEx
             return dest;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        /// 
+        /// <summary>
+        /// オブジェクトを解放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        /// 
+        /// <summary>
+        /// オブジェクトを解放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            lock (this)
+            {
+                if (_disposed) return;
+                _disposed = true;
+
+                if (disposing)
+                {
+                    Images.Clear();
+                    foreach (var image in _all) image.Dispose();
+                    _all.Clear();
+                }
+            }
+        }
 
         #endregion
 
@@ -179,7 +236,11 @@ namespace Cube.Pdf.ImageEx
                     progress.Report(new ProgressEventArgs(value, message));
 
                     var src = await reader.GetImagesAsync(pagenum);
-                    foreach (var image in src) Images.Add(image);
+                    foreach (var image in src)
+                    {
+                        _all.Add(image);
+                        Images.Add(image);
+                    }
                 }
 
                 return new KeyValuePair<int, int>(n, Images.Count);
@@ -189,7 +250,9 @@ namespace Cube.Pdf.ImageEx
         #endregion
 
         #region Fields
+        private bool _disposed = false;
         private CancellationTokenSource _source;
+        private IList<Image> _all = new List<Image>();
         #endregion
     }
 }

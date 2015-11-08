@@ -49,9 +49,10 @@ namespace Cube.Pdf.ImageEx
             : base(view, model)
         {
             View.FileName = System.IO.Path.GetFileName(Model.Path);
-            View.Shown   += View_Shown;
-            View.Save    += View_Save;
-            View.Preview += View_Preview;
+            View.Shown      += View_Shown;
+            View.FormClosed += View_Closed;
+            View.Save       += View_Save;
+            View.Preview    += View_Preview;
         }
 
         #endregion
@@ -79,6 +80,20 @@ namespace Cube.Pdf.ImageEx
                 View.AllowOperation = true;
             }
             catch (Exception err) { Update(0, err.Message); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View_Closed
+        /// 
+        /// <summary>
+        /// 画面が閉じられた時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void View_Closed(object sender, EventArgs ev)
+        {
+            Model.Dispose();
         }
 
         /* ----------------------------------------------------------------- */
