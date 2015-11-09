@@ -39,6 +39,11 @@ namespace Cube.Pdf.ImageEx
     {
         #region Constructors
 
+        public DropForm()
+        {
+            InitializeComponent();
+        }
+
         /* ----------------------------------------------------------------- */
         ///
         /// DropForm
@@ -49,18 +54,8 @@ namespace Cube.Pdf.ImageEx
         ///
         /* ----------------------------------------------------------------- */
         public DropForm(string[] src)
+            : this()
         {
-            InitializeComponent();
-            InitializeLayout();
-            InitializeToolTip();
-
-            AllowExtensions.Add(".pdf");
-
-            ExitButton.Click += (s, e) => Close();
-            ExitButton.MouseEnter += (s, e) => ShowCloseButton(Cursors.Hand);
-            ExitButton.MouseLeave += (s, e) => HideCloseButton();
-
-            if (src.Length == 0) return;
             Create(src);
         }
 
@@ -125,7 +120,6 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         protected override void OnShowing(CancelEventArgs e)
         {
-            InitializeLayout();
             base.OnShowing(e);
         }
 
@@ -194,6 +188,29 @@ namespace Cube.Pdf.ImageEx
             Create(files);
         }
 
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLoad
+        /// 
+        /// <summary>
+        /// フォームが表示される直前(OnShowingより前)に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnLoad(EventArgs arg)
+        {
+            base.OnLoad(arg);
+            InitializeLayout();
+            InitializeToolTip();
+
+            AllowExtensions.Add(".pdf");
+
+            ExitButton.Click += (s, e) => Close();
+            ExitButton.MouseEnter += (s, e) => ShowCloseButton(Cursors.Hand);
+            ExitButton.MouseLeave += (s, e) => HideCloseButton();
+        }
+
         #endregion
 
         #region Event handlers
@@ -222,6 +239,7 @@ namespace Cube.Pdf.ImageEx
         #endregion
 
         #region Other private methods
+
 
         /* ----------------------------------------------------------------- */
         ///
