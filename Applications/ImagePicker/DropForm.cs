@@ -51,7 +51,6 @@ namespace Cube.Pdf.ImageEx
         public DropForm()
         {
             InitializeComponent();
-            InitializeLayout();
             InitializeToolTip();
 
             AllowExtensions.Add(".pdf");
@@ -121,28 +120,6 @@ namespace Cube.Pdf.ImageEx
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnShowing
-        /// 
-        /// <summary>
-        /// フォームが表示される直前に実行されます。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// TODO: コンストラクタ時に InitializeLayout を実行した場合、
-        /// 実際にフォームが表示された時に幅がおかしくなると言う問題が
-        /// 発生しているので OnShowing で暫定的な回避処理を行っている。
-        /// 修正方法を要調査。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnShowing(CancelEventArgs e)
-        {
-            InitializeLayout();
-            base.OnShowing(e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// OnMouseEnter
         /// 
         /// <summary>
@@ -206,6 +183,22 @@ namespace Cube.Pdf.ImageEx
             Create(files);
         }
 
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLoad
+        /// 
+        /// <summary>
+        /// フォームが表示される直前に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnLoad(EventArgs arg)
+        {
+            InitializeLayout();
+            base.OnLoad(arg);
+        }
+
         #endregion
 
         #region Event handlers
@@ -234,6 +227,7 @@ namespace Cube.Pdf.ImageEx
         #endregion
 
         #region Other private methods
+
 
         /* ----------------------------------------------------------------- */
         ///
