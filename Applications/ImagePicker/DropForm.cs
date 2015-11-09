@@ -39,9 +39,25 @@ namespace Cube.Pdf.ImageEx
     {
         #region Constructors
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DropForm
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public DropForm()
         {
             InitializeComponent();
+            InitializeToolTip();
+
+            AllowExtensions.Add(".pdf");
+
+            ExitButton.Click += (s, e) => Close();
+            ExitButton.MouseEnter += (s, e) => ShowCloseButton(Cursors.Hand);
+            ExitButton.MouseLeave += (s, e) => HideCloseButton();
         }
 
         /* ----------------------------------------------------------------- */
@@ -101,27 +117,6 @@ namespace Cube.Pdf.ImageEx
         #endregion
 
         #region Override methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnShowing
-        /// 
-        /// <summary>
-        /// フォームが表示される直前に実行されます。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// TODO: コンストラクタ時に InitializeLayout を実行した場合、
-        /// 実際にフォームが表示された時に幅がおかしくなると言う問題が
-        /// 発生しているので OnShowing で暫定的な回避処理を行っている。
-        /// 修正方法を要調査。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnShowing(CancelEventArgs e)
-        {
-            base.OnShowing(e);
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -194,21 +189,14 @@ namespace Cube.Pdf.ImageEx
         /// OnLoad
         /// 
         /// <summary>
-        /// フォームが表示される直前(OnShowingより前)に実行されます。
+        /// フォームが表示される直前に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         protected override void OnLoad(EventArgs arg)
         {
-            base.OnLoad(arg);
             InitializeLayout();
-            InitializeToolTip();
-
-            AllowExtensions.Add(".pdf");
-
-            ExitButton.Click += (s, e) => Close();
-            ExitButton.MouseEnter += (s, e) => ShowCloseButton(Cursors.Hand);
-            ExitButton.MouseLeave += (s, e) => HideCloseButton();
+            base.OnLoad(arg);
         }
 
         #endregion
