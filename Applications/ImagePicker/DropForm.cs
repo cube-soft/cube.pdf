@@ -69,10 +69,10 @@ namespace Cube.Pdf.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DropForm(string[] args)
+        public DropForm(string[] src)
             : this()
         {
-            Create(args);
+            Create(src);
         }
 
         #endregion
