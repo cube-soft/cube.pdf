@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgressForm));
             this.MessageLabel = new System.Windows.Forms.Label();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
-            this.ExitButton = new System.Windows.Forms.Button();
-            this.SaveButton = new System.Windows.Forms.Button();
-            this.PreviewButton = new System.Windows.Forms.Button();
+            this.ExitButton = new NoFocusCueButton();
+            this.SaveButton = new NoFocusCueButton();
+            this.PreviewButton = new NoFocusCueButton();
             this.HeaderView = new Cube.Pdf.ImageEx.HeaderView();
             this.SuspendLayout();
             // 
@@ -131,8 +131,8 @@
         private HeaderView HeaderView;
         private System.Windows.Forms.Label MessageLabel;
         private System.Windows.Forms.ProgressBar ProgressBar;
-        private System.Windows.Forms.Button ExitButton;
-        private System.Windows.Forms.Button SaveButton;
-        private System.Windows.Forms.Button PreviewButton;
+        private NoFocusCueButton ExitButton;
+        private NoFocusCueButton SaveButton;
+        private NoFocusCueButton PreviewButton;
     }
 }

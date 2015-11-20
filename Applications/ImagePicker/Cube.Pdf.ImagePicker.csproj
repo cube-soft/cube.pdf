@@ -86,6 +86,9 @@
     <Compile Include="Models\ProgressEventArgs.cs" />
     <Compile Include="Models\SaveTask.cs" />
     <Compile Include="NativeApi\UxTheme.cs" />
+    <Compile Include="NoFocusCueButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Presenters\ProgressPresenter.cs" />
     <Compile Include="Presenters\ThumbnailPresenter.cs" />

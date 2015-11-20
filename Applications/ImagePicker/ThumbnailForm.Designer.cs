@@ -34,9 +34,9 @@
             this.HeaderView = new Cube.Pdf.ImageEx.HeaderView();
             this.ListView = new System.Windows.Forms.ListView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.ExitButton = new System.Windows.Forms.Button();
-            this.SaveAllButton = new System.Windows.Forms.Button();
-            this.SaveButton = new System.Windows.Forms.Button();
+            this.ExitButton = new NoFocusCueButton();
+            this.SaveAllButton = new NoFocusCueButton();
+            this.SaveButton = new NoFocusCueButton();
             this.LayoutContainer.Panel1.SuspendLayout();
             this.LayoutContainer.Panel2.SuspendLayout();
             this.LayoutContainer.SuspendLayout();
@@ -191,8 +191,8 @@
         private HeaderView HeaderView;
         private System.Windows.Forms.ListView ListView;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button SaveAllButton;
-        private System.Windows.Forms.Button ExitButton;
-        private System.Windows.Forms.Button SaveButton;
+        private NoFocusCueButton SaveAllButton;
+        private NoFocusCueButton ExitButton;
+        private NoFocusCueButton SaveButton;
     }
 }
