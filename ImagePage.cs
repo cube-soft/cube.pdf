@@ -21,6 +21,15 @@ using Size = System.Drawing.Size;
 
 namespace Cube.Pdf
 {
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ImagePage
+    /// 
+    /// <summary>
+    /// 単一イメージのみが存在する PDF のページを表すクラスです。
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
     public class ImagePage : IPage
     {
         #region IPage properties
