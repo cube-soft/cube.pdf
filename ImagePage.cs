@@ -45,7 +45,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PageType Type
         {
-            get { return PageType.Pdf; }
+            get { return PageType.Image; }
         }
 
         /* ----------------------------------------------------------------- */
