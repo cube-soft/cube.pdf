@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.IO;
 using System.Text.RegularExpressions;
 using iTextSharp.text.pdf;
@@ -144,7 +145,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save(string path)
+        public async Task SaveAsync(string path)
         {
             throw new NotImplementedException();
         }

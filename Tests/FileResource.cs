@@ -20,11 +20,11 @@
 using System;
 using IO = System.IO;
 
-namespace Cube.Tests
+namespace Cube.Pdf.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Tests.FileResource
+    /// Cube.Pdf.Tests.FileResource
     /// 
     /// <summary>
     /// テストでファイルを使用するためのクラスです。

@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentReaderTest.cs
+/// PageBinderTest.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -21,22 +21,20 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.Tests.Editing
+namespace Cube.Pdf.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Tests.Editing.DocumentReaderTest
+    /// Cube.Pdf.Tests.Editing.PageBinderTest
     /// 
     /// <summary>
-    /// DocumentReader のテストを行うクラスです。
+    /// PageBinder のテストを行うクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    public class DocumentReaderTest : FileResource
+    public class PageBinderTest : FileResource
     {
-        #region Test methods
-
         /* ----------------------------------------------------------------- */
         ///
         /// OpenAsyncTest
@@ -46,20 +44,21 @@ namespace Cube.Pdf.Tests.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("readme.pdf", "")]
-        public async Task OpenAsyncTest(string filename, string password)
+        [TestCase("readme.pdf", "", true)]
+        public async Task TestCopy(string filename, string password, bool smart)
         {
-            using (var doc = new Cube.Pdf.Editing.DocumentReader())
+            using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
                 var src = IoEx.Path.Combine(Examples, filename);
-                await doc.OpenAsync(src, password);
-                Assert.That(doc.Path, Is.EqualTo(src));
-                Assert.That(doc.Metadata.Version.Major, Is.EqualTo(1));
-                Assert.That(doc.Metadata.Version.Minor, Is.AtLeast(2));
-                Assert.That(doc.Pages.Count, Is.AtLeast(1));
+                await reader.OpenAsync(src, password);
+
+                var binder = new Cube.Pdf.Editing.PageBinder();
+                binder.UseSmartCopy = true;
+                foreach (var page in reader.Pages) binder.Pages.Add(page);
+
+                var dest = string.Format("TestCopy-{1}", filename);
+                await binder.SaveAsync(IoEx.Path.Combine(Results, dest));
             }
         }
-
-        #endregion
     }
 }

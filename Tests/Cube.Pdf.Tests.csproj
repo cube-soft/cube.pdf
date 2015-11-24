@@ -7,7 +7,7 @@
     <ProjectGuid>{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Tests.Pdf</RootNamespace>
+    <RootNamespace>Cube.Pdf.Tests</RootNamespace>
     <AssemblyName>Cube.Pdf.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Editing\DocumentReaderTest.cs" />
+    <Compile Include="Editing\PageBinderTest.cs" />
     <Compile Include="FileResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
