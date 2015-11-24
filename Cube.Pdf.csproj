@@ -48,6 +48,7 @@
     <Compile Include="EncryptionStatus.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />
     <Compile Include="IDocumentReader.cs" />
+    <Compile Include="IDocumentWriter.cs" />
     <Compile Include="ImagePage.cs" />
     <Compile Include="IPage.cs" />
     <Compile Include="Metadata.cs" />
