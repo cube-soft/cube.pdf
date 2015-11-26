@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Details\ImageRenderListener.cs" />
+    <Compile Include="Details\Translator.cs" />
     <Compile Include="Extensions\PdfReaderExtensions.cs" />
     <Compile Include="PageBinder.cs" />
     <Compile Include="ReadOnlyPageCollection.cs" />

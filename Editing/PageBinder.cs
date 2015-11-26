@@ -20,10 +20,10 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using iTextSharp.text.pdf;
+using iTextSharp.text.exceptions;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing
@@ -136,6 +136,24 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SaveAsync
+        /// 
+        /// <summary>
+        /// PDF ファイルを指定されたパスに非同期で保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Task SaveAsync(string path)
+        {
+            return Task.Run(() => Save(path));
+        }
+
+        #endregion
+
+        #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Save
         /// 
         /// <summary>
@@ -145,11 +163,191 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public async Task SaveAsync(string path)
+        private void Save(string path)
         {
-            throw new NotImplementedException();
+            var tmp = IoEx.Path.GetTempFileName();
+
+            try
+            {
+                Bind(tmp);
+                using (var reader = new PdfReader(tmp))
+                using (var writer = new PdfStamper(reader, new IoEx.FileStream(path, IoEx.FileMode.Create)))
+                {
+                    AddMetadata(reader, writer);
+                    AddEncryption(writer);
+                    if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
+                    writer.Writer.Outlines = _bookmarks;
+                }
+            }
+            catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
+            finally { IoEx.File.Delete(tmp); }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Bind
+        /// 
+        /// <summary>
+        /// 指定された各ページを結合し、新たな PDF ファイルを生成します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 注釈等を含めて完全にページ内容をコピーするためにいったん
+        /// PdfCopy クラスを用いて全ページを結合します。
+        /// セキュリティ設定や文書プロパティ等の情報は生成された PDF に
+        /// 対して付加します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Bind(string dest)
+        {
+            if (IoEx.File.Exists(dest)) IoEx.File.Delete(dest);
+
+            var readers  = new Dictionary<string, PdfReader>();
+            var document = new iTextSharp.text.Document();
+            var writer   = UseSmartCopy ?
+                           new PdfSmartCopy(document, new IoEx.FileStream(dest, IoEx.FileMode.Create)) :
+                           new PdfCopy(document, new IoEx.FileStream(dest, IoEx.FileMode.Create));
+
+            writer.PdfVersion = Metadata.Version.Minor.ToString()[0];
+            writer.ViewerPreferences = Metadata.ViewPreferences;
+
+            document.Open();
+            _bookmarks.Clear();
+            foreach (var page in Pages)
+            {
+                if (page.Type == PageType.Pdf) BindPage(page as Page, readers, writer);
+                else continue;
+            }
+
+            document.Close();
+            writer.Close();
+            foreach (var reader in readers.Values) reader.Close();
+            readers.Clear();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BindPage
+        /// 
+        /// <summary>
+        /// PDF ページを結合します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void BindPage(Page page, Dictionary<string, PdfReader> readers, PdfCopy writer)
+        {
+            if (page == null) return;
+
+            if (!readers.ContainsKey(page.Path))
+            {
+                var item = page.Password.Length > 0 ?
+                           new PdfReader(page.Path, System.Text.Encoding.UTF8.GetBytes(page.Password)) :
+                           new PdfReader(page.Path);
+                readers.Add(page.Path, item);
+            }
+
+            var reader = readers[page.Path];
+            var rot    = reader.GetPageRotation(page.PageNumber);
+            var dic    = reader.GetPageN(page.PageNumber);
+            if (rot != page.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(page.Rotation));
+
+            writer.AddPage(writer.GetImportedPage(reader, page.PageNumber));
+            StockBookmarks(reader, page.PageNumber, writer.PageNumber);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddMetadata
+        /// 
+        /// <summary>
+        /// タイトル、著者名等の各種メタデータを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddMetadata(PdfReader reader, PdfStamper writer)
+        {
+            var info = reader.Info;
+            info.Add("Title",    Metadata.Title);
+            info.Add("Subject",  Metadata.Subtitle);
+            info.Add("Keywords", Metadata.Keywords);
+            info.Add("Creator",  Metadata.Creator);
+            info.Add("Author",   Metadata.Author);
+            writer.MoreInfo = info;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddEncryption
+        /// 
+        /// <summary>
+        /// 各種セキュリティ情報を付加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddEncryption(PdfStamper writer)
+        {
+            if (Encryption.IsEnabled && Encryption.OwnerPassword.Length > 0)
+            {
+                var method     = Translator.ToIText(Encryption.Method);
+                var permission = Translator.ToIText(Encryption.Permission);
+                var userpass   = Encryption.IsUserPasswordEnabled ?
+                                 GetUserPassword(Encryption.UserPassword, Encryption.OwnerPassword) :
+                                 string.Empty;
+                writer.Writer.SetEncryption(method, userpass, Encryption.OwnerPassword, permission);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// StockBookmarks
+        /// 
+        /// <summary>
+        /// PDF ファイルに存在するしおり情報を取得して保存しておきます。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 実際にしおりを PDF に追加するには PdfWriter クラスの Outlines
+        /// プロパティに代入する必要があります。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void StockBookmarks(PdfReader reader, int srcPage, int destPage)
+        {
+            var bookmarks = SimpleBookmark.GetBookmark(reader);
+            if (bookmarks == null) return;
+
+            var pattern = string.Format("^{0} (XYZ|Fit|FitH|FitBH)", destPage);
+            SimpleBookmark.ShiftPageNumbers(bookmarks, destPage - srcPage, null);
+            foreach (var bm in bookmarks)
+            {
+                if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern)) _bookmarks.Add(bm);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetUserPassword
+        /// 
+        /// <summary>
+        /// ユーザパスワードを取得します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// ユーザから明示的にユーザパスワードが指定されていない場合、
+        /// オーナパスワードと同じ文字列を使用します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetUserPassword(string userPassword, string ownerPassword)
+        {
+            return !string.IsNullOrEmpty(userPassword) ? userPassword : ownerPassword;
+        }
+
+        #endregion
+
+        #region Fields
+        private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
         #endregion
     }
 }
