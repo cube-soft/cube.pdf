@@ -111,7 +111,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public bool Equals(IPage obj)
         {
-            var other = obj as Page;
+            var other = obj as ImagePage;
             if (other == null) return false;
             return Path == other.Path;
         }
