@@ -30,7 +30,6 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Flags]
     public enum ViewLayout
     {
         SinglePage     = 0x0001,

@@ -142,6 +142,34 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public ViewLayout ViewLayout { get; set; } = ViewLayout.OneColumn;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewPreferences
+        ///
+        /// <summary>
+        /// PDF ファイルの表示方法に関する値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int ViewPreferences
+        {
+            get
+            {
+                var mode   = (int)ViewMode;
+                var layout = (int)ViewLayout;
+                return mode & layout;
+            }
+
+            set
+            {
+                var layout = value & 0x003f;
+                if (Enum.IsDefined(typeof(ViewLayout), layout)) ViewLayout = (ViewLayout)layout;
+
+                var mode = value & 0x0fc0;
+                if (Enum.IsDefined(typeof(ViewMode), mode)) ViewMode = (ViewMode)mode;
+            }
+        }
+
         #endregion
     }
 }

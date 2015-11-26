@@ -30,7 +30,6 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Flags]
     public enum ViewMode
     {
         None       = 0x0040,
