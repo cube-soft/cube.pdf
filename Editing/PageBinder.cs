@@ -18,7 +18,6 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -216,7 +215,7 @@ namespace Cube.Pdf.Editing
             _bookmarks.Clear();
             foreach (var page in Pages)
             {
-                if (page.Type == PageType.Pdf) BindPage(page as Page, readers, writer);
+                if (page.Type == PageType.Pdf) AddPage(page as Page, readers, writer);
                 else continue;
             }
 
@@ -228,14 +227,14 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// BindPage
+        /// AddPage
         /// 
         /// <summary>
-        /// PDF ページを結合します。
+        /// PDF ページを追加します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void BindPage(Page page, Dictionary<string, PdfReader> readers, PdfCopy writer)
+        private void AddPage(Page page, Dictionary<string, PdfReader> readers, PdfCopy writer)
         {
             if (page == null) return;
 
