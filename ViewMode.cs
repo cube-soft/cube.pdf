@@ -28,15 +28,15 @@ namespace Cube.Pdf
     /// <summary>
     /// PDF ファイルの表示方法を定義した列挙型です。
     /// </summary>
-    ///
+    /// 
     /* --------------------------------------------------------------------- */
     public enum ViewMode
     {
-        None       = 0x0040,
-        Outline    = 0x0080,
-        Thumbnail  = 0x0100,
-        FullScreen = 0x0200,
-        OC         = 0x0400,
-        Attachment = 0x0800
+        None            = 0x0040,
+        Outline         = 0x0080,
+        Thumbnail       = 0x0100,
+        FullScreen      = 0x0200,
+        OptionalContent = 0x0400,
+        Attachment      = 0x0800
     }
 }

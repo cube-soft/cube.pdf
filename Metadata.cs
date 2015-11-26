@@ -140,7 +140,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ViewLayout ViewLayout { get; set; } = ViewLayout.OneColumn;
+        public ViewLayout ViewLayout { get; set; } = ViewLayout.SinglePage;
 
         /* ----------------------------------------------------------------- */
         ///
