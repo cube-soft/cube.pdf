@@ -18,11 +18,13 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
+using Cube.Pdf.Editing.Extensions;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing
@@ -179,7 +181,7 @@ namespace Cube.Pdf.Editing
                 }
             }
             catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
-            finally { IoEx.File.Delete(tmp); }
+            finally { TryDelete(tmp); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -215,8 +217,17 @@ namespace Cube.Pdf.Editing
             _bookmarks.Clear();
             foreach (var page in Pages)
             {
-                if (page.Type == PageType.Pdf) AddPage(page as Page, readers, writer);
-                else continue;
+                switch (page.Type)
+                {
+                    case PageType.Image:
+                        AddImagePage(page as ImagePage, writer);
+                        break;
+                    case PageType.Pdf:
+                        AddPage(page as Page, writer, readers);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             document.Close();
@@ -234,25 +245,62 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddPage(Page page, Dictionary<string, PdfReader> readers, PdfCopy writer)
+        private void AddPage(Page src, PdfCopy dest, Dictionary<string, PdfReader> readers)
         {
-            if (page == null) return;
+            if (src == null) return;
 
-            if (!readers.ContainsKey(page.Path))
+            if (!readers.ContainsKey(src.Path))
             {
-                var item = page.Password.Length > 0 ?
-                           new PdfReader(page.Path, System.Text.Encoding.UTF8.GetBytes(page.Password)) :
-                           new PdfReader(page.Path);
-                readers.Add(page.Path, item);
+                var item = src.Password.Length > 0 ?
+                           new PdfReader(src.Path, System.Text.Encoding.UTF8.GetBytes(src.Password)) :
+                           new PdfReader(src.Path);
+                readers.Add(src.Path, item);
             }
 
-            var reader = readers[page.Path];
-            var rot    = reader.GetPageRotation(page.PageNumber);
-            var dic    = reader.GetPageN(page.PageNumber);
-            if (rot != page.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(page.Rotation));
+            var reader = readers[src.Path];
+            var rot    = reader.GetPageRotation(src.PageNumber);
+            var dic    = reader.GetPageN(src.PageNumber);
+            if (rot != src.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(src.Rotation));
 
-            writer.AddPage(writer.GetImportedPage(reader, page.PageNumber));
-            StockBookmarks(reader, page.PageNumber, writer.PageNumber);
+            dest.AddPage(dest.GetImportedPage(reader, src.PageNumber));
+            StockBookmarks(reader, src.PageNumber, dest.PageNumber);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddImagePage
+        /// 
+        /// <summary>
+        /// 画像ファイルを 1 ページの PDF として追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddImagePage(ImagePage src, PdfCopy dest)
+        {
+            if (src == null) return;
+
+            var tmp = IoEx.Path.GetTempFileName();
+
+            try {
+                using (var image = new System.Drawing.Bitmap(src.Path))
+                {
+                    var obj = iTextSharp.text.Image.GetInstance(image, image.GuessImageFormat());
+                    var document = new iTextSharp.text.Document();
+                    var writer = PdfWriter.GetInstance(document, new IoEx.FileStream(tmp, IoEx.FileMode.Create));
+
+                    document.Open();
+                    document.SetPageSize(new iTextSharp.text.Rectangle(src.Size.Width, src.Size.Height));
+                    document.NewPage();
+                    obj.SetAbsolutePosition(0, 0);
+                    document.Add(obj);
+
+                    document.Close();
+                    writer.Close();
+
+                    using (var reader = new PdfReader(tmp)) dest.AddPage(dest.GetImportedPage(reader, 1));
+                }
+            }
+            finally { TryDelete(tmp); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -341,6 +389,25 @@ namespace Cube.Pdf.Editing
         private string GetUserPassword(string userPassword, string ownerPassword)
         {
             return !string.IsNullOrEmpty(userPassword) ? userPassword : ownerPassword;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TryDelete
+        /// 
+        /// <summary>
+        /// ファイルの削除を試行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool TryDelete(string path)
+        {
+            try
+            {
+                IoEx.File.Delete(path);
+                return true;
+            }
+            catch (Exception /* err */) { return false; }
         }
 
         #endregion

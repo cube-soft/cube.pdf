@@ -60,11 +60,44 @@ namespace Cube.Pdf.Tests
                 foreach (var page in reader.Pages) binder.Pages.Add(page);
 
                 var sn = smart ? "Smart" : "Normal";
-                var dest = IoEx.Path.Combine(Results, string.Format("SaveTheSameContents-{0}-{1}", sn, filename));
+                var dest = IoEx.Path.Combine(Results, string.Format("Bind-{0}-{1}", sn, filename));
                 await binder.SaveAsync(dest);
 
                 Assert.That(IoEx.File.Exists(dest), Is.True);
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BindPagesAndImage
+        ///
+        /// <summary>
+        /// PDF ファイルと画像ファイルを結合するテストです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public async Task BindPagesAndImages()
+        {
+            var binder = new Cube.Pdf.Editing.PageBinder();
+            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            {
+                var src = IoEx.Path.Combine(Examples, "readme.pdf");
+                await reader.OpenAsync(src, string.Empty);
+
+                binder.Pages.Add(reader.GetPage(1));
+                binder.Pages.Add(new ImagePage
+                {
+                    Path = IoEx.Path.Combine(Examples, "cubepdf.png"),
+                    Size = new System.Drawing.Size(430, 530)
+                });
+                binder.Pages.Add(reader.GetPage(2));
+            }
+
+            var dest = IoEx.Path.Combine(Results, "Bind-readme-cubepdf.pdf");
+            await binder.SaveAsync(dest);
+
+            Assert.That(IoEx.File.Exists(dest));
         }
     }
 }

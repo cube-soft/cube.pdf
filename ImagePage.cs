@@ -18,6 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using Size = System.Drawing.Size;
+using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
 namespace Cube.Pdf
 {
