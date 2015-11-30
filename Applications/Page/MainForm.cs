@@ -55,8 +55,13 @@ namespace Cube.Pdf.Page
             MergeButton.Click += (s, e) => OnMerge(e);
             SplitButton.Click += (s, e) => OnSplit(e);
 
+            ButtonsPanel.DragEnter += Control_DragEnter;
+            FooterPanel.DragEnter  += Control_DragEnter;
             PageListView.DragEnter += Control_DragEnter;
-            PageListView.DragDrop += Control_DragDrop;
+
+            ButtonsPanel.DragDrop  += Control_DragDrop;
+            FooterPanel.DragDrop   += Control_DragDrop;
+            PageListView.DragDrop  += Control_DragDrop;
         }
 
         #endregion
