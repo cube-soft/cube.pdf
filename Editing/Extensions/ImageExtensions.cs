@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PdfReaderExtensions.cs
+/// ImageExtensions.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
@@ -18,41 +18,44 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using iTextSharp.text.pdf;
-using Size = System.Drawing.Size;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Cube.Pdf.Editing.Extensions
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.Extensions.PdfReaderExtensions
+    /// Cube.Pdf.Editing.Extensions.ImageExtensions
     /// 
     /// <summary>
-    /// iTextSharp の PdfReader に関する拡張メソッド群を定義するクラスです。
+    /// System.Drawing.Image に関する拡張メソッド群を定義するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PdfReaderExtensions
+    internal static class ImageExtensions
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// CreatePage
+        /// GuessImageFormat
         /// 
         /// <summary>
-        /// Page オブジェクトを生成します。
+        /// ImageFormat を推測します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public static Page CreatePage(this PdfReader reader, string path, string password, int pagenum)
+        public static ImageFormat GuessImageFormat(this Image image)
         {
-            var size = reader.GetPageSize(pagenum);
-            var dest = new Page();
-            dest.Path = path;
-            dest.Size = new Size((int)size.Width, (int)size.Height);
-            dest.Rotation = reader.GetPageRotation(pagenum);
-            dest.Password = password;
-            dest.PageNumber = pagenum;
-            return dest;
+            return image.RawFormat.Equals(ImageFormat.Bmp)       ? ImageFormat.Bmp       :
+                   image.RawFormat.Equals(ImageFormat.Emf)       ? ImageFormat.Emf       :
+                   image.RawFormat.Equals(ImageFormat.Exif)      ? ImageFormat.Exif      :
+                   image.RawFormat.Equals(ImageFormat.Gif)       ? ImageFormat.Gif       :
+                   image.RawFormat.Equals(ImageFormat.Icon)      ? ImageFormat.Icon      :
+                   image.RawFormat.Equals(ImageFormat.Jpeg)      ? ImageFormat.Jpeg      :
+                   image.RawFormat.Equals(ImageFormat.MemoryBmp) ? ImageFormat.MemoryBmp :
+                   image.RawFormat.Equals(ImageFormat.Png)       ? ImageFormat.Png       :
+                   image.RawFormat.Equals(ImageFormat.Tiff)      ? ImageFormat.Tiff      :
+                   image.RawFormat.Equals(ImageFormat.Wmf)       ? ImageFormat.Wmf       :
+                                                                   ImageFormat.Bmp       ;
         }
     }
 }
