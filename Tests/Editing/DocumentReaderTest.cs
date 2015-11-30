@@ -39,24 +39,38 @@ namespace Cube.Pdf.Tests.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OpenAsyncTest
+        /// MetadataTest
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// PDF のメタデータを取得するテストです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("readme.pdf", "")]
-        public async Task OpenAsyncTest(string filename, string password)
+        [Test]
+        public async Task MetadataTest()
         {
+            var src = IoEx.Path.Combine(Examples, "readme.pdf");
+            Assert.That(IoEx.File.Exists(src), Is.True);
+
             using (var doc = new Cube.Pdf.Editing.DocumentReader())
             {
-                var src = IoEx.Path.Combine(Examples, filename);
-                await doc.OpenAsync(src, password);
-                Assert.That(doc.Path, Is.EqualTo(src));
-                Assert.That(doc.Metadata.Version.Major, Is.EqualTo(1));
-                Assert.That(doc.Metadata.Version.Minor, Is.AtLeast(2));
-                Assert.That(doc.Pages.Count, Is.AtLeast(1));
+                await doc.OpenAsync(src, string.Empty);
+                var metadata = doc.Metadata;
+                Assert.That(metadata, Is.Not.Null);
+
+                // Version
+                Assert.That(metadata.Version.Major, Is.EqualTo(1));
+                Assert.That(metadata.Version.Minor, Is.EqualTo(7));
+
+                // ViewLayout and ViewMode
+                Assert.That(metadata.ViewLayout, Is.EqualTo(ViewLayout.TwoPageLeft));
+                Assert.That(metadata.ViewMode,   Is.EqualTo(ViewMode.Thumbnail));
+
+                // Others
+                Assert.That(metadata.Title,    Is.EqualTo("README"));
+                Assert.That(metadata.Author,   Is.EqualTo("株式会社キューブ・ソフト"));
+                Assert.That(metadata.Subtitle, Is.EqualTo("CubePDF"));
+                Assert.That(metadata.Keywords, Is.EqualTo("CubeSoft,CubePDF,更新履歴"));
             }
         }
 
