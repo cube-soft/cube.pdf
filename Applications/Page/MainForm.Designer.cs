@@ -33,24 +33,21 @@
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.SplitButton = new System.Windows.Forms.Button();
             this.MergeButton = new System.Windows.Forms.Button();
-            this.ContentsContainer = new System.Windows.Forms.SplitContainer();
-            this.PageListView = new System.Windows.Forms.ListView();
-            this.FileColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.PageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ContentsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.FileButton = new System.Windows.Forms.Button();
             this.UpButton = new System.Windows.Forms.Button();
             this.DownButton = new System.Windows.Forms.Button();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.RemoveAllButton = new System.Windows.Forms.Button();
+            this.PageListView = new System.Windows.Forms.ListView();
+            this.FileColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.PageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ContentsContainer)).BeginInit();
-            this.ContentsContainer.Panel1.SuspendLayout();
-            this.ContentsContainer.Panel2.SuspendLayout();
-            this.ContentsContainer.SuspendLayout();
+            this.ContentsPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +56,7 @@
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.Controls.Add(this.FooterPanel, 0, 1);
-            this.LayoutPanel.Controls.Add(this.ContentsContainer, 0, 0);
+            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 0);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -71,6 +68,7 @@
             // 
             // FooterPanel
             // 
+            this.FooterPanel.AllowDrop = true;
             this.FooterPanel.Controls.Add(this.SplitButton);
             this.FooterPanel.Controls.Add(this.MergeButton);
             this.FooterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -102,68 +100,25 @@
             this.MergeButton.Text = "結合";
             this.MergeButton.UseVisualStyleBackColor = true;
             // 
-            // ContentsContainer
+            // ContentsPanel
             // 
-            this.ContentsContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentsContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.ContentsContainer.IsSplitterFixed = true;
-            this.ContentsContainer.Location = new System.Drawing.Point(0, 0);
-            this.ContentsContainer.Margin = new System.Windows.Forms.Padding(0);
-            this.ContentsContainer.Name = "ContentsContainer";
-            // 
-            // ContentsContainer.Panel1
-            // 
-            this.ContentsContainer.Panel1.Controls.Add(this.PageListView);
-            this.ContentsContainer.Panel1MinSize = 0;
-            // 
-            // ContentsContainer.Panel2
-            // 
-            this.ContentsContainer.Panel2.Controls.Add(this.ButtonsPanel);
-            this.ContentsContainer.Panel2MinSize = 0;
-            this.ContentsContainer.Size = new System.Drawing.Size(684, 251);
-            this.ContentsContainer.SplitterDistance = 558;
-            this.ContentsContainer.SplitterWidth = 1;
-            this.ContentsContainer.TabIndex = 0;
-            // 
-            // PageListView
-            // 
-            this.PageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.FileColumnHeader,
-            this.PageColumnHeader,
-            this.SizeColumnHeader,
-            this.DateColumnHeader});
-            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageListView.FullRowSelect = true;
-            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.PageListView.Location = new System.Drawing.Point(0, 0);
-            this.PageListView.Name = "PageListView";
-            this.PageListView.Size = new System.Drawing.Size(558, 251);
-            this.PageListView.TabIndex = 1;
-            this.PageListView.UseCompatibleStateImageBehavior = false;
-            this.PageListView.View = System.Windows.Forms.View.Details;
-            // 
-            // FileColumnHeader
-            // 
-            this.FileColumnHeader.Text = "ファイル名";
-            this.FileColumnHeader.Width = 200;
-            // 
-            // PageColumnHeader
-            // 
-            this.PageColumnHeader.Text = "ページ数";
-            this.PageColumnHeader.Width = 120;
-            // 
-            // SizeColumnHeader
-            // 
-            this.SizeColumnHeader.Text = "サイズ";
-            this.SizeColumnHeader.Width = 120;
-            // 
-            // DateColumnHeader
-            // 
-            this.DateColumnHeader.Text = "更新日時";
-            this.DateColumnHeader.Width = 120;
+            this.ContentsPanel.ColumnCount = 2;
+            this.ContentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ContentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124F));
+            this.ContentsPanel.Controls.Add(this.ButtonsPanel, 0, 0);
+            this.ContentsPanel.Controls.Add(this.PageListView, 0, 0);
+            this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ContentsPanel.Location = new System.Drawing.Point(0, 0);
+            this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.ContentsPanel.Name = "ContentsPanel";
+            this.ContentsPanel.RowCount = 1;
+            this.ContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ContentsPanel.Size = new System.Drawing.Size(684, 251);
+            this.ContentsPanel.TabIndex = 2;
             // 
             // ButtonsPanel
             // 
+            this.ButtonsPanel.AllowDrop = true;
             this.ButtonsPanel.Controls.Add(this.FileButton);
             this.ButtonsPanel.Controls.Add(this.UpButton);
             this.ButtonsPanel.Controls.Add(this.DownButton);
@@ -171,12 +126,12 @@
             this.ButtonsPanel.Controls.Add(this.RemoveAllButton);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.ButtonsPanel.Location = new System.Drawing.Point(0, 0);
+            this.ButtonsPanel.Location = new System.Drawing.Point(560, 0);
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(10, 2, 10, 0);
-            this.ButtonsPanel.Size = new System.Drawing.Size(125, 251);
-            this.ButtonsPanel.TabIndex = 0;
+            this.ButtonsPanel.Size = new System.Drawing.Size(124, 251);
+            this.ButtonsPanel.TabIndex = 2;
             // 
             // FileButton
             // 
@@ -229,6 +184,46 @@
             this.RemoveAllButton.Text = "すべて削除";
             this.RemoveAllButton.UseVisualStyleBackColor = true;
             // 
+            // PageListView
+            // 
+            this.PageListView.AllowDrop = true;
+            this.PageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.FileColumnHeader,
+            this.PageColumnHeader,
+            this.SizeColumnHeader,
+            this.DateColumnHeader});
+            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PageListView.FullRowSelect = true;
+            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.PageListView.Location = new System.Drawing.Point(0, 0);
+            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
+            this.PageListView.Name = "PageListView";
+            this.PageListView.ShowItemToolTips = true;
+            this.PageListView.Size = new System.Drawing.Size(560, 251);
+            this.PageListView.TabIndex = 3;
+            this.PageListView.UseCompatibleStateImageBehavior = false;
+            this.PageListView.View = System.Windows.Forms.View.Details;
+            // 
+            // FileColumnHeader
+            // 
+            this.FileColumnHeader.Text = "ファイル名";
+            this.FileColumnHeader.Width = 200;
+            // 
+            // PageColumnHeader
+            // 
+            this.PageColumnHeader.Text = "ページ数";
+            this.PageColumnHeader.Width = 120;
+            // 
+            // SizeColumnHeader
+            // 
+            this.SizeColumnHeader.Text = "サイズ";
+            this.SizeColumnHeader.Width = 120;
+            // 
+            // DateColumnHeader
+            // 
+            this.DateColumnHeader.Text = "更新日時";
+            this.DateColumnHeader.Width = 120;
+            // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(684, 311);
@@ -239,10 +234,7 @@
             this.Text = "CubePDF Page";
             this.LayoutPanel.ResumeLayout(false);
             this.FooterPanel.ResumeLayout(false);
-            this.ContentsContainer.Panel1.ResumeLayout(false);
-            this.ContentsContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ContentsContainer)).EndInit();
-            this.ContentsContainer.ResumeLayout(false);
+            this.ContentsPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -254,14 +246,14 @@
         private System.Windows.Forms.FlowLayoutPanel FooterPanel;
         private System.Windows.Forms.Button SplitButton;
         private System.Windows.Forms.Button MergeButton;
-        private System.Windows.Forms.SplitContainer ContentsContainer;
-        private System.Windows.Forms.ListView PageListView;
+        private System.Windows.Forms.TableLayoutPanel ContentsPanel;
         private System.Windows.Forms.FlowLayoutPanel ButtonsPanel;
         private System.Windows.Forms.Button FileButton;
         private System.Windows.Forms.Button UpButton;
         private System.Windows.Forms.Button DownButton;
         private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.Button RemoveAllButton;
+        private System.Windows.Forms.ListView PageListView;
         private System.Windows.Forms.ColumnHeader FileColumnHeader;
         private System.Windows.Forms.ColumnHeader PageColumnHeader;
         private System.Windows.Forms.ColumnHeader SizeColumnHeader;
