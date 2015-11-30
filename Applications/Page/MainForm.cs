@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.Page
@@ -53,6 +54,9 @@ namespace Cube.Pdf.Page
             FileButton.Click  += (s, e) => RaiseRegisterEvent();
             MergeButton.Click += (s, e) => OnMerge(e);
             SplitButton.Click += (s, e) => OnSplit(e);
+
+            PageListView.DragEnter += Control_DragEnter;
+            PageListView.DragDrop += Control_DragDrop;
         }
 
         #endregion
@@ -140,6 +144,45 @@ namespace Cube.Pdf.Page
 
         #endregion
 
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Control_DragEnter
+        /// 
+        /// <summary>
+        /// 何らかのコントロールでドラッグ操作が開始された時に実行される
+        /// ハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Control_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.All;
+            else if (e.Data.GetDataPresent(typeof(ListViewItem))) e.Effect = DragDropEffects.Move;
+            else e.Effect = DragDropEffects.None;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Control_DragDrop
+        /// 
+        /// <summary>
+        /// 何らかのコントロールでドロップ操作が行われた時に実行される
+        /// ハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Control_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                RaiseRegisterEvent(e.Data.GetData(DataFormats.FileDrop, false));
+            }
+        }
+
+        #endregion
+
         #region Other private methods
 
         /* ----------------------------------------------------------------- */
@@ -174,7 +217,23 @@ namespace Cube.Pdf.Page
             dialog.Filter = Properties.Resources.FileFilter;
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-            OnRegister(new DataEventArgs<string[]>(dialog.FileNames));
+            RaiseRegisterEvent(dialog.FileNames);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseRegisterEvent
+        /// 
+        /// <summary>
+        /// Register イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseRegisterEvent(object obj)
+        {
+            var files = obj as string[];
+            if (files == null) return;
+            OnRegister(new DataEventArgs<string[]>(files));
         }
 
         #endregion
