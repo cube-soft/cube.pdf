@@ -39,7 +39,7 @@ namespace Cube.Pdf.Tests.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MetadataTest
+        /// Metadata
         ///
         /// <summary>
         /// PDF のメタデータを取得するテストです。
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Tests.Editing
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public async Task MetadataTest()
+        public async Task Metadata()
         {
             var src = IoEx.Path.Combine(Examples, "readme.pdf");
             Assert.That(IoEx.File.Exists(src), Is.True);

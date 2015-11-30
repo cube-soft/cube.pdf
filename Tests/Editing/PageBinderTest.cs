@@ -37,15 +37,16 @@ namespace Cube.Pdf.Tests
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// OpenAsyncTest
+        /// SaveTheSameContents
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// PDF の内容を変更せずに別のファイルに保存するテストです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("readme.pdf", "", true)]
-        public async Task TestCopy(string filename, string password, bool smart)
+        [TestCase("readme.pdf", "",  true)]
+        [TestCase("readme.pdf", "", false)]
+        public async Task SaveTheSameContents(string filename, string password, bool smart)
         {
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
@@ -54,10 +55,15 @@ namespace Cube.Pdf.Tests
 
                 var binder = new Cube.Pdf.Editing.PageBinder();
                 binder.UseSmartCopy = true;
+                binder.Metadata     = reader.Metadata;
+                binder.Encryption   = reader.Encryption;
                 foreach (var page in reader.Pages) binder.Pages.Add(page);
 
-                var dest = string.Format("TestCopy-{1}", filename);
-                await binder.SaveAsync(IoEx.Path.Combine(Results, dest));
+                var sn = smart ? "Smart" : "Normal";
+                var dest = IoEx.Path.Combine(Results, string.Format("SaveTheSameContents-{0}-{1}", sn, filename));
+                await binder.SaveAsync(dest);
+
+                Assert.That(IoEx.File.Exists(dest), Is.True);
             }
         }
     }
