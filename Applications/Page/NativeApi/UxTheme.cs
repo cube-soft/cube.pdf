@@ -1,8 +1,8 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PdfReaderExtensions.cs
+/// UxTheme.cs
 ///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -18,41 +18,32 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using iTextSharp.text.pdf;
-using Size = System.Drawing.Size;
+using System;
+using System.Runtime.InteropServices;
 
-namespace Cube.Pdf.Editing.Extensions
+namespace Cube.Pdf.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.Extensions.PdfReaderExtensions
-    /// 
+    /// Cube.Pdf.Page.UxTheme
+    ///
     /// <summary>
-    /// iTextSharp の PdfReader に関する拡張メソッド群を定義するクラスです。
+    /// uxtheme.dll で提供されている API を宣言するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PdfReaderExtensions
+    internal static class UxTheme
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// CreatePage
+        /// SetWindowTheme
         /// 
         /// <summary>
-        /// Page オブジェクトを生成します。
+        /// https://msdn.microsoft.com/en-us/library/windows/desktop/bb759827.aspx
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        public static Page CreatePage(this PdfReader reader, string path, string password, int pagenum)
-        {
-            var size = reader.GetPageSize(pagenum);
-            var dest = new Page();
-            dest.Path = path;
-            dest.Size = new Size((int)size.Width, (int)size.Height);
-            dest.Rotation = reader.GetPageRotation(pagenum);
-            dest.Password = password;
-            dest.PageNumber = pagenum;
-            return dest;
-        }
+        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+        internal static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
     }
 }

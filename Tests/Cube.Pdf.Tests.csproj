@@ -7,7 +7,7 @@
     <ProjectGuid>{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Tests.Pdf</RootNamespace>
+    <RootNamespace>Cube.Pdf.Tests</RootNamespace>
     <AssemblyName>Cube.Pdf.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -38,8 +38,9 @@
     <Reference Include="Cube.Core">
       <HintPath>..\..\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.0.5797.27542, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NUnit.3.0.0\lib\net20\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -48,6 +49,7 @@
       <HintPath>..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -55,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Editing\DocumentReaderTest.cs" />
+    <Compile Include="Editing\PageBinderTest.cs" />
     <Compile Include="FileResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

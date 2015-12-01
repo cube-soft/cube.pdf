@@ -20,8 +20,8 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections;
 using System.Collections.Generic;
+using iTextSharp.text.pdf;
 using Cube.Pdf.Editing.Extensions;
-using ReaderImpl = iTextSharp.text.pdf.PdfReader;
 
 namespace Cube.Pdf.Editing
 {
@@ -58,7 +58,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(ReaderImpl impl, string path, string password)
+        public ReadOnlyPageCollection(PdfReader impl, string path, string password)
         {
             _impl = impl;
             _path = path;
@@ -122,7 +122,7 @@ namespace Cube.Pdf.Editing
         #endregion
 
         #region Fields
-        private ReaderImpl _impl = null;
+        private PdfReader _impl = null;
         private string _path = string.Empty;
         private string _password = string.Empty;
         #endregion

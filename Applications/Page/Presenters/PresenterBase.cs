@@ -1,8 +1,8 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PdfReaderExtensions.cs
+/// PresenterBase.cs
 ///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -18,41 +18,63 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using iTextSharp.text.pdf;
-using Size = System.Drawing.Size;
-
-namespace Cube.Pdf.Editing.Extensions
+namespace Cube.Pdf.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.Extensions.PdfReaderExtensions
-    /// 
+    /// Cube.Pdf.Page.PresenterBase
+    ///
     /// <summary>
-    /// iTextSharp の PdfReader に関する拡張メソッド群を定義するクラスです。
+    /// Model と View が 1 対 1 対応している Presenter の基底となる
+    /// クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PdfReaderExtensions
+    public class PresenterBase<ViewType, ModelType>
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// CreatePage
+        /// PresenterBase
         /// 
         /// <summary>
-        /// Page オブジェクトを生成します。
+        /// オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        public static Page CreatePage(this PdfReader reader, string path, string password, int pagenum)
+        protected PresenterBase(ViewType view, ModelType model)
         {
-            var size = reader.GetPageSize(pagenum);
-            var dest = new Page();
-            dest.Path = path;
-            dest.Size = new Size((int)size.Width, (int)size.Height);
-            dest.Rotation = reader.GetPageRotation(pagenum);
-            dest.Password = password;
-            dest.PageNumber = pagenum;
-            return dest;
+            View = view;
+            Model = model;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model
+        /// 
+        /// <summary>
+        /// Model オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ModelType Model { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View
+        /// 
+        /// <summary>
+        /// View オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ViewType View { get; private set; }
+
+        #endregion
     }
 }

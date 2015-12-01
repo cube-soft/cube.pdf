@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 
 namespace Cube.Pdf
 {
@@ -27,15 +28,15 @@ namespace Cube.Pdf
     /// <summary>
     /// PDF ファイルの表示方法を定義した列挙型です。
     /// </summary>
-    ///
+    /// 
     /* --------------------------------------------------------------------- */
     public enum ViewMode
     {
-        None       =   64,
-        Outline    =  128,
-        Thumbnail  =  256,
-        FullScreen =  512,
-        OC         = 1024,
-        Attachment = 2048
+        None            = 0x0040,
+        Outline         = 0x0080,
+        Thumbnail       = 0x0100,
+        FullScreen      = 0x0200,
+        OptionalContent = 0x0400,
+        Attachment      = 0x0800
     }
 }

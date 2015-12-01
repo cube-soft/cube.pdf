@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 
 namespace Cube.Pdf
 {
@@ -31,11 +32,11 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     public enum ViewLayout
     {
-        SinglePage     = 1,
-        OneColumn      = 2,
-        TwoColumnLeft  = 4,
-        TwoColumnRight = 8,
-        TwoPageLeft    = 16,
-        TwoPageRight   = 32
+        SinglePage     = 0x0001,
+        OneColumn      = 0x0002,
+        TwoColumnLeft  = 0x0004,
+        TwoColumnRight = 0x0008,
+        TwoPageLeft    = 0x0010,
+        TwoPageRight   = 0x0020
     }
 }

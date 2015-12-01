@@ -1,8 +1,8 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PdfReaderExtensions.cs
+/// Program.cs
 ///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -18,41 +18,37 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using iTextSharp.text.pdf;
-using Size = System.Drawing.Size;
+using System;
+using System.Windows.Forms;
 
-namespace Cube.Pdf.Editing.Extensions
+namespace Cube.Pdf.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.Extensions.PdfReaderExtensions
-    /// 
+    /// Cube.Pdf.Page.Program
+    ///
     /// <summary>
-    /// iTextSharp の PdfReader に関する拡張メソッド群を定義するクラスです。
+    /// メインプログラムを表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PdfReaderExtensions
+    static class Program
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// CreatePage
+        /// Main
         /// 
         /// <summary>
-        /// Page オブジェクトを生成します。
+        /// アプリケーションのメイン エントリ ポイントです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        public static Page CreatePage(this PdfReader reader, string path, string password, int pagenum)
+        [STAThread]
+        static void Main()
         {
-            var size = reader.GetPageSize(pagenum);
-            var dest = new Page();
-            dest.Path = path;
-            dest.Size = new Size((int)size.Width, (int)size.Height);
-            dest.Rotation = reader.GetPageRotation(pagenum);
-            dest.Password = password;
-            dest.PageNumber = pagenum;
-            return dest;
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
         }
     }
 }
