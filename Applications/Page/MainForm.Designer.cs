@@ -187,6 +187,7 @@
             // PageListView
             // 
             this.PageListView.AllowDrop = true;
+            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.FileColumnHeader,
             this.PageColumnHeader,
