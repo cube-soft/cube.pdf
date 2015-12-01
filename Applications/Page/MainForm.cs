@@ -377,6 +377,24 @@ namespace Cube.Pdf.Page
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageListView_SelectedIndexChanged
+        /// 
+        /// <summary>
+        /// 項目の選択状況が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PageListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selected = PageListView.SelectedIndices != null && PageListView.SelectedIndices.Count > 0;
+            UpButton.Enabled = selected;
+            DownButton.Enabled = selected;
+            RemoveButton.Enabled = selected;
+        }
+
+
         #endregion
 
         #region Other private methods
