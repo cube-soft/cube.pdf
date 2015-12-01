@@ -56,10 +56,10 @@ namespace Cube.Pdf.Page
             CollectionWrapper = new ItemCollection(model);
             SynchronizationContext = SynchronizationContext.Current;
 
-            View.Adding += View_Adding;
-            View.Removing += View_Removing;
-            View.Clearing += View_Clearing;
-            View.Merging += View_Merging;
+            View.Adding    += View_Adding;
+            View.Removing  += View_Removing;
+            View.Clearing  += View_Clearing;
+            View.Merging   += View_Merging;
             View.Splitting += View_Splitting;
             Model.CollectionChanged += Model_CollectionChanged;
         }
@@ -114,6 +114,7 @@ namespace Cube.Pdf.Page
                     await CollectionWrapper.AddAsync(path);
                 }
             }
+            catch (Exception err) { ShowSync(err); }
             finally { Sync(() => { View.Cursor = Cursors.Default; }); }
         }
 
@@ -172,6 +173,7 @@ namespace Cube.Pdf.Page
 
                 CollectionWrapper.Clear();
             }
+            catch (Exception err) { ShowSync(err); }
             finally { Sync(() => { View.Cursor = Cursors.Default; }); }
         }
 
@@ -269,6 +271,27 @@ namespace Cube.Pdf.Page
         private void Sync(Action action)
         {
             SynchronizationContext.Post(_ => action(), null);
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// ShowSync
+        /// 
+        /// <summary>
+        /// 例外メッセージをメッセージボックスに表示します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void ShowSync(Exception err)
+        {
+            Sync(() =>
+            {
+                MessageBox.Show(err.Message,
+                    Properties.Resources.ErrorTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            });
         }
 
         #endregion
