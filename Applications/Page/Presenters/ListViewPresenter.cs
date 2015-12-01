@@ -20,7 +20,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Specialized;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -191,7 +190,11 @@ namespace Cube.Pdf.Page
         /* --------------------------------------------------------------------- */
         private void View_Splitting(object sender, DataEventArgs<string> e)
         {
-
+            try
+            {
+                Sync(() => { View.Cursor = Cursors.WaitCursor; });
+            }
+            finally { Sync(() => { View.Cursor = Cursors.Default; }); }
         }
 
         /* --------------------------------------------------------------------- */
