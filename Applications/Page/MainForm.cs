@@ -58,6 +58,8 @@ namespace Cube.Pdf.Page
             FileButton.Click   += (s, e) => RaiseAddingEvent();
             RemoveButton.Click += (s, e) => OnRemoving(e);
             ClearButton.Click  += (s, e) => OnClearing(e);
+            UpButton.Click     += (s, e) => OnMoving(new DataEventArgs<int>(-1));
+            DownButton.Click   += (s, e) => OnMoving(new DataEventArgs<int>(1));
             MergeButton.Click  += (s, e) => RaiseMergingEvent();
             SplitButton.Click  += (s, e) => RaiseSplittingEvent();
 
@@ -70,8 +72,6 @@ namespace Cube.Pdf.Page
             PageListView.DragDrop  += Control_DragDrop;
 
             // 未実装のため無効化
-            UpButton.Enabled = false;
-            DownButton.Enabled = false;
             SplitButton.Enabled = false;
         }
 
@@ -135,6 +135,17 @@ namespace Cube.Pdf.Page
         ///
         /* ----------------------------------------------------------------- */
         public EventHandler Clearing;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Moving
+        /// 
+        /// <summary>
+        /// 項目を移動させる時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler<DataEventArgs<int>> Moving;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -264,6 +275,20 @@ namespace Cube.Pdf.Page
         protected virtual void OnClearing(EventArgs e)
         {
             if (Clearing != null) Clearing(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnMoving
+        /// 
+        /// <summary>
+        /// 項目を移動させる時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnMoving(DataEventArgs<int> e)
+        {
+            if (Moving != null) Moving(this, e);
         }
 
         /* ----------------------------------------------------------------- */

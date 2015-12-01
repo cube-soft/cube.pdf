@@ -59,6 +59,7 @@ namespace Cube.Pdf.Page
             View.Adding    += View_Adding;
             View.Removing  += View_Removing;
             View.Clearing  += View_Clearing;
+            View.Moving    += View_Moving;
             View.Merging   += View_Merging;
             View.Splitting += View_Splitting;
             Model.CollectionChanged += Model_CollectionChanged;
@@ -151,6 +152,22 @@ namespace Cube.Pdf.Page
 
         /* --------------------------------------------------------------------- */
         ///
+        /// View_Moving
+        /// 
+        /// <summary>
+        /// 項目の移動要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void View_Moving(object sender, DataEventArgs<int> e)
+        {
+            var indices = View.SelectedIndices;
+            if (indices == null || indices.Count == 0) return;
+            CollectionWrapper.Move(indices, e.Value);
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
         /// View_Merging
         /// 
         /// <summary>
@@ -207,7 +224,7 @@ namespace Cube.Pdf.Page
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
-                        View.Add(Model[e.NewStartingIndex]);
+                        View.Insert(e.NewStartingIndex, Model[e.NewStartingIndex]);
                         break;
                     case NotifyCollectionChangedAction.Remove:
                         View.RemoveAt(e.OldStartingIndex);
