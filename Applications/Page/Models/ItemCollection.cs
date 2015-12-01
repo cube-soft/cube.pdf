@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -147,6 +148,22 @@ namespace Cube.Pdf.Page
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        /// 
+        /// <summary>
+        /// 項目を移動します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Move(IList<int> indices, int offset)
+        {
+            if (offset == 0) return;
+            else if (offset < 0) Forward(indices, offset);
+            else Back(indices, offset);
+        }
+
         #endregion
 
         #region Other private methods
@@ -189,6 +206,52 @@ namespace Cube.Pdf.Page
             item.PageCount = 1;
             item.ViewSize = image.Size;
             lock (_lock) InnerCollection.Add(item);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Forward
+        /// 
+        /// <summary>
+        /// 項目を前に移動します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Forward(IList<int> indices, int offset)
+        {
+            lock (_lock)
+            {
+                foreach (var index in indices)
+                {
+                    if (index < 0 || index >= InnerCollection.Count) continue;
+                    var item = InnerCollection[index];
+                    InnerCollection.RemoveAt(index);
+                    InnerCollection.Insert(index + offset, item);
+                }
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Back
+        /// 
+        /// <summary>
+        /// 項目を後ろに移動します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Back(IList<int> indices, int offset)
+        {
+            lock (_lock)
+            {
+                foreach (var index in indices.Reverse())
+                {
+                    if (index < 0 || index >= InnerCollection.Count) continue;
+                    var item = InnerCollection[index];
+                    InnerCollection.RemoveAt(index);
+                    InnerCollection.Insert(index + offset, item);
+                }
+            }
         }
 
         #endregion

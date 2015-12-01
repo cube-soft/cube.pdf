@@ -58,6 +58,8 @@ namespace Cube.Pdf.Page
             FileButton.Click   += (s, e) => RaiseAddingEvent();
             RemoveButton.Click += (s, e) => OnRemoving(e);
             ClearButton.Click  += (s, e) => OnClearing(e);
+            UpButton.Click     += (s, e) => OnMoving(new DataEventArgs<int>(-1));
+            DownButton.Click   += (s, e) => OnMoving(new DataEventArgs<int>(1));
             MergeButton.Click  += (s, e) => RaiseMergingEvent();
             SplitButton.Click  += (s, e) => RaiseSplittingEvent();
 
@@ -70,8 +72,6 @@ namespace Cube.Pdf.Page
             PageListView.DragDrop  += Control_DragDrop;
 
             // 未実装のため無効化
-            UpButton.Enabled = false;
-            DownButton.Enabled = false;
             SplitButton.Enabled = false;
         }
 
@@ -138,6 +138,17 @@ namespace Cube.Pdf.Page
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Moving
+        /// 
+        /// <summary>
+        /// 項目を移動させる時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler<DataEventArgs<int>> Moving;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Merging
         /// 
         /// <summary>
@@ -174,6 +185,22 @@ namespace Cube.Pdf.Page
         public void Add(Item item)
         {
             PageListView.Items.Add(Convert(item));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        /// 
+        /// <summary>
+        /// 指定された位置に項目を追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Insert(int index, Item item)
+        {
+            var i = Math.Max(Math.Min(index, PageListView.Items.Count), 0);
+            if (i == PageListView.Items.Count) PageListView.Items.Add(Convert(item));
+            else PageListView.Items.Insert(i, Convert(item));
         }
 
         /* ----------------------------------------------------------------- */
@@ -248,6 +275,20 @@ namespace Cube.Pdf.Page
         protected virtual void OnClearing(EventArgs e)
         {
             if (Clearing != null) Clearing(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnMoving
+        /// 
+        /// <summary>
+        /// 項目を移動させる時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnMoving(DataEventArgs<int> e)
+        {
+            if (Moving != null) Moving(this, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -335,6 +376,24 @@ namespace Cube.Pdf.Page
                 RaiseAddingEvent(e.Data.GetData(DataFormats.FileDrop, false));
             }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageListView_SelectedIndexChanged
+        /// 
+        /// <summary>
+        /// 項目の選択状況が変更された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PageListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selected = PageListView.SelectedIndices != null && PageListView.SelectedIndices.Count > 0;
+            UpButton.Enabled = selected;
+            DownButton.Enabled = selected;
+            RemoveButton.Enabled = selected;
+        }
+
 
         #endregion
 

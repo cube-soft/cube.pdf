@@ -83,6 +83,7 @@
             // 
             // SplitButton
             // 
+            this.SplitButton.Enabled = false;
             this.SplitButton.Location = new System.Drawing.Point(542, 12);
             this.SplitButton.Margin = new System.Windows.Forms.Padding(2);
             this.SplitButton.Name = "SplitButton";
@@ -146,6 +147,7 @@
             // 
             // UpButton
             // 
+            this.UpButton.Enabled = false;
             this.UpButton.Location = new System.Drawing.Point(12, 38);
             this.UpButton.Margin = new System.Windows.Forms.Padding(2);
             this.UpButton.Name = "UpButton";
@@ -157,6 +159,7 @@
             // 
             // DownButton
             // 
+            this.DownButton.Enabled = false;
             this.DownButton.Location = new System.Drawing.Point(12, 72);
             this.DownButton.Margin = new System.Windows.Forms.Padding(2);
             this.DownButton.Name = "DownButton";
@@ -167,6 +170,7 @@
             // 
             // RemoveButton
             // 
+            this.RemoveButton.Enabled = false;
             this.RemoveButton.Location = new System.Drawing.Point(12, 106);
             this.RemoveButton.Margin = new System.Windows.Forms.Padding(2);
             this.RemoveButton.Name = "RemoveButton";
@@ -205,6 +209,7 @@
             this.PageListView.TabIndex = 3;
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Details;
+            this.PageListView.SelectedIndexChanged += new System.EventHandler(this.PageListView_SelectedIndexChanged);
             // 
             // FileColumnHeader
             // 
