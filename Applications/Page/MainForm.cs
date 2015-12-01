@@ -71,8 +71,7 @@ namespace Cube.Pdf.Page
             FooterPanel.DragDrop   += Control_DragDrop;
             PageListView.DragDrop  += Control_DragDrop;
 
-            // 未実装のため無効化
-            SplitButton.Enabled = false;
+            PageListView.SelectedIndexChanged += (s, e) => UpdateControls();
         }
 
         #endregion
@@ -184,7 +183,8 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         public void AddItem(Item item)
         {
-            PageListView.Items.Add(Convert(item));
+            try { PageListView.Items.Add(Convert(item)); }
+            finally { UpdateControls(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -198,9 +198,13 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         public void InsertItem(int index, Item item)
         {
-            var i = Math.Max(Math.Min(index, PageListView.Items.Count), 0);
-            if (i == PageListView.Items.Count) PageListView.Items.Add(Convert(item));
-            else PageListView.Items.Insert(i, Convert(item));
+            try
+            {
+                var i = Math.Max(Math.Min(index, PageListView.Items.Count), 0);
+                if (i == PageListView.Items.Count) PageListView.Items.Add(Convert(item));
+                else PageListView.Items.Insert(i, Convert(item));
+            }
+            finally { UpdateControls(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -214,12 +218,16 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         public void MoveItem(int oldindex, int newindex)
         {
-            if (oldindex < 0 || oldindex >= PageListView.Items.Count) return;
+            try
+            {
+                if (oldindex < 0 || oldindex >= PageListView.Items.Count) return;
 
-            var item = PageListView.Items[oldindex];
-            PageListView.Items.RemoveAt(oldindex);
-            var result = PageListView.Items.Insert(newindex, item);
-            if (result != null) result.Selected = true;
+                var item = PageListView.Items[oldindex];
+                PageListView.Items.RemoveAt(oldindex);
+                var result = PageListView.Items.Insert(newindex, item);
+                if (result != null) result.Selected = true;
+            }
+            finally { UpdateControls(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -233,7 +241,8 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         public void RemoveItem(int index)
         {
-            PageListView.Items.RemoveAt(index);
+            try { PageListView.Items.RemoveAt(index); }
+            finally { UpdateControls(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -247,7 +256,8 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         public void ClearItems()
         {
-            PageListView.Items.Clear();
+            try { PageListView.Items.Clear(); }
+            finally { UpdateControls(); }
         }
 
         #endregion
@@ -353,6 +363,7 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         protected override void OnLoad(EventArgs e)
         {
+            UpdateControls();
             MergeButton.Select();
             base.OnLoad(e);
         }
@@ -515,6 +526,27 @@ namespace Cube.Pdf.Page
         private void RaiseSplittingEvent()
         {
             OnSplitting(new DataEventArgs<string>(string.Empty));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateControls
+        /// 
+        /// <summary>
+        /// 各種コントロールの状態を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateControls()
+        {
+            var some = PageListView.Items.Count > 0;
+            MergeButton.Enabled = some;
+            SplitButton.Enabled = some;
+
+            var selected = PageListView.SelectedIndices.Count > 0;
+            UpButton.Enabled     = selected;
+            DownButton.Enabled   = selected;
+            RemoveButton.Enabled = selected;
         }
 
         /* ----------------------------------------------------------------- */
