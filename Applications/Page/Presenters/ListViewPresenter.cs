@@ -213,7 +213,9 @@ namespace Cube.Pdf.Page
                         View.RemoveAt(e.OldStartingIndex);
                         break;
                     case NotifyCollectionChangedAction.Reset:
-                        if (Model.Count == 0) View.Clear();
+                        View.Clear();
+                        if (Model.Count == 0) break;
+                        foreach (var item in Model) View.Add(item);
                         break;
                     default:
                         break;
