@@ -178,6 +178,22 @@ namespace Cube.Pdf.Page
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Insert
+        /// 
+        /// <summary>
+        /// 指定された位置に項目を追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Insert(int index, Item item)
+        {
+            var i = Math.Max(Math.Min(index, PageListView.Items.Count), 0);
+            if (i == PageListView.Items.Count) PageListView.Items.Add(Convert(item));
+            else PageListView.Items.Insert(i, Convert(item));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// RemoveAt
         /// 
         /// <summary>
