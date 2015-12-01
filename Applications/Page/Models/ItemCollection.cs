@@ -22,6 +22,7 @@ using System;
 using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using IoEx = System.IO;
 
@@ -36,7 +37,7 @@ namespace Cube.Pdf.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ItemCollection
+    public class ItemCollection : ObservableCollection<Item>
     {
         #region Constructors
 
@@ -49,25 +50,7 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ItemCollection(IList<Item> inner)
-        {
-            InnerCollection = inner;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InnerCollection
-        /// 
-        /// <summary>
-        /// 内部で使用しているコレクションオブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IList<Item> InnerCollection { get; }
+        public ItemCollection() : base() { }
 
         #endregion
 
@@ -101,51 +84,7 @@ namespace Cube.Pdf.Page
         public bool Contains(string path)
         {
             var check = new Item(PageType.Unknown, path);
-            return InnerCollection.Contains(check);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Clear
-        /// 
-        /// <summary>
-        /// 全ての項目を削除します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Clear()
-        {
-            lock (_lock)
-            {
-                foreach (var item in InnerCollection)
-                {
-                    var dispose = item.Value as IDisposable;
-                    if (dispose != null) dispose.Dispose();
-                    item.Value = null;
-                }
-                InnerCollection.Clear();
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RemoveAt
-        /// 
-        /// <summary>
-        /// 指定されたインデックスに対応する項目を削除します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void RemoveAt(int index)
-        {
-            lock (_lock)
-            {
-                var item = InnerCollection[index];
-                InnerCollection.RemoveAt(index);
-
-                var dispose = item.Value as IDisposable;
-                if (dispose != null) dispose.Dispose();
-            }
+            return Contains(check);
         }
 
         /* ----------------------------------------------------------------- */
@@ -160,8 +99,55 @@ namespace Cube.Pdf.Page
         public void Move(IList<int> indices, int offset)
         {
             if (offset == 0) return;
-            else if (offset < 0) Forward(indices, offset);
-            else Back(indices, offset);
+            MoveItems(offset < 0 ? indices : indices.Reverse(), offset);
+        }
+
+        #endregion
+
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ClearItems
+        /// 
+        /// <summary>
+        /// 全ての項目を削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void ClearItems()
+        {
+            lock (_lock)
+            {
+                foreach (var item in Items)
+                {
+                    var dispose = item.Value as IDisposable;
+                    if (dispose != null) dispose.Dispose();
+                    item.Value = null;
+                }
+                base.ClearItems();
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveItem
+        /// 
+        /// <summary>
+        /// 指定されたインデックスに対応する項目を削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void RemoveItem(int index)
+        {
+            lock (_lock)
+            {
+                var item = this[index];
+                base.RemoveItem(index);
+
+                var dispose = item.Value as IDisposable;
+                if (dispose != null) dispose.Dispose();
+            }
         }
 
         #endregion
@@ -186,7 +172,7 @@ namespace Cube.Pdf.Page
             item.Value = reader;
             item.PageCount = reader.Pages.Count;
             item.ViewSize = reader.GetPage(1).Size;
-            lock (_lock) InnerCollection.Add(item);
+            lock (_lock) Add(item);
         }
 
         /* ----------------------------------------------------------------- */
@@ -205,51 +191,27 @@ namespace Cube.Pdf.Page
             item.Value = image;
             item.PageCount = 1;
             item.ViewSize = image.Size;
-            lock (_lock) InnerCollection.Add(item);
+            lock (_lock) Add(item);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Forward
+        /// MoveItems
         /// 
         /// <summary>
-        /// 項目を前に移動します。
+        /// 項目を移動します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Forward(IList<int> indices, int offset)
+        private void MoveItems(IEnumerable<int> indices, int offset)
         {
             lock (_lock)
             {
                 foreach (var index in indices)
                 {
-                    if (index < 0 || index >= InnerCollection.Count) continue;
-                    var item = InnerCollection[index];
-                    InnerCollection.RemoveAt(index);
-                    InnerCollection.Insert(index + offset, item);
-                }
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Back
-        /// 
-        /// <summary>
-        /// 項目を後ろに移動します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Back(IList<int> indices, int offset)
-        {
-            lock (_lock)
-            {
-                foreach (var index in indices.Reverse())
-                {
-                    if (index < 0 || index >= InnerCollection.Count) continue;
-                    var item = InnerCollection[index];
-                    InnerCollection.RemoveAt(index);
-                    InnerCollection.Insert(index + offset, item);
+                    var newindex = index + offset;
+                    if (newindex < 0 || newindex >= Count) break;
+                    Move(index, newindex);
                 }
             }
         }

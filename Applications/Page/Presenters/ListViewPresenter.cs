@@ -37,7 +37,7 @@ namespace Cube.Pdf.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ListViewPresenter : PresenterBase<MainForm, ObservableCollection<Item>>
+    public class ListViewPresenter : PresenterBase<MainForm, ItemCollection>
     {
         #region Constructors
 
@@ -50,35 +50,24 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ListViewPresenter(MainForm view, ObservableCollection<Item> model)
+        public ListViewPresenter(MainForm view, ItemCollection model)
             : base(view, model)
         {
-            CollectionWrapper = new ItemCollection(model);
             SynchronizationContext = SynchronizationContext.Current;
-
+            
             View.Adding    += View_Adding;
             View.Removing  += View_Removing;
             View.Clearing  += View_Clearing;
             View.Moving    += View_Moving;
             View.Merging   += View_Merging;
             View.Splitting += View_Splitting;
+
             Model.CollectionChanged += Model_CollectionChanged;
         }
 
         #endregion
 
         #region Properties
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// CollectionWrapper
-        /// 
-        /// <summary>
-        /// コレクションに対して各種操作を行うためのオブジェクトを取得します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        public ItemCollection CollectionWrapper { get; }
 
         /* --------------------------------------------------------------------- */
         ///
@@ -111,8 +100,8 @@ namespace Cube.Pdf.Page
 
                 foreach (var path in e.Value)
                 {
-                    if (IoEx.Directory.Exists(path) || CollectionWrapper.Contains(path)) continue;
-                    await CollectionWrapper.AddAsync(path);
+                    if (IoEx.Directory.Exists(path) || Model.Contains(path)) continue;
+                    await Model.AddAsync(path);
                 }
             }
             catch (Exception err) { ShowSync(err); }
@@ -130,10 +119,7 @@ namespace Cube.Pdf.Page
         /* --------------------------------------------------------------------- */
         private void View_Removing(object sender, EventArgs e)
         {
-            foreach (var index in View.SelectedIndices.Reverse())
-            {
-                CollectionWrapper.RemoveAt(index);
-            }
+            foreach (var index in View.SelectedIndices.Reverse()) Model.RemoveAt(index);
         }
 
         /* --------------------------------------------------------------------- */
@@ -147,7 +133,7 @@ namespace Cube.Pdf.Page
         /* --------------------------------------------------------------------- */
         private void View_Clearing(object sender, EventArgs e)
         {
-            CollectionWrapper.Clear();
+            Model.Clear();
         }
 
         /* --------------------------------------------------------------------- */
@@ -162,8 +148,8 @@ namespace Cube.Pdf.Page
         private void View_Moving(object sender, DataEventArgs<int> e)
         {
             var indices = View.SelectedIndices;
-            if (indices == null || indices.Count == 0) return;
-            CollectionWrapper.Move(indices, e.Value);
+            if (indices.Count == 0) return;
+            Model.Move(indices, e.Value);
         }
 
         /* --------------------------------------------------------------------- */
@@ -188,7 +174,7 @@ namespace Cube.Pdf.Page
                 }
                 await binder.SaveAsync(e.Value);
 
-                CollectionWrapper.Clear();
+                Model.Clear();
             }
             catch (Exception err) { ShowSync(err); }
             finally { Sync(() => { View.Cursor = Cursors.Default; }); }
@@ -224,15 +210,18 @@ namespace Cube.Pdf.Page
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
-                        View.Insert(e.NewStartingIndex, Model[e.NewStartingIndex]);
+                        View.InsertItem(e.NewStartingIndex, Model[e.NewStartingIndex]);
+                        break;
+                    case NotifyCollectionChangedAction.Move:
+                        View.MoveItem(e.OldStartingIndex, e.NewStartingIndex);
                         break;
                     case NotifyCollectionChangedAction.Remove:
-                        View.RemoveAt(e.OldStartingIndex);
+                        View.RemoveItem(e.OldStartingIndex);
                         break;
                     case NotifyCollectionChangedAction.Reset:
-                        View.Clear();
+                        View.ClearItems();
                         if (Model.Count == 0) break;
-                        foreach (var item in Model) View.Add(item);
+                        foreach (var item in Model) View.AddItem(item);
                         break;
                     default:
                         break;

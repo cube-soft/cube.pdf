@@ -182,7 +182,7 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(Item item)
+        public void AddItem(Item item)
         {
             PageListView.Items.Add(Convert(item));
         }
@@ -196,11 +196,30 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, Item item)
+        public void InsertItem(int index, Item item)
         {
             var i = Math.Max(Math.Min(index, PageListView.Items.Count), 0);
             if (i == PageListView.Items.Count) PageListView.Items.Add(Convert(item));
             else PageListView.Items.Insert(i, Convert(item));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        /// 
+        /// <summary>
+        /// 項目を移動します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void MoveItem(int oldindex, int newindex)
+        {
+            if (oldindex < 0 || oldindex >= PageListView.Items.Count) return;
+
+            var item = PageListView.Items[oldindex];
+            PageListView.Items.RemoveAt(oldindex);
+            var result = PageListView.Items.Insert(newindex, item);
+            if (result != null) result.Selected = true;
         }
 
         /* ----------------------------------------------------------------- */
@@ -212,7 +231,7 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void RemoveAt(int index)
+        public void RemoveItem(int index)
         {
             PageListView.Items.RemoveAt(index);
         }
@@ -226,7 +245,7 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear()
+        public void ClearItems()
         {
             PageListView.Items.Clear();
         }
@@ -424,7 +443,7 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new ListViewPresenter(this, new ObservableCollection<Item>());
+            new ListViewPresenter(this, new ItemCollection());
         }
 
         /* ----------------------------------------------------------------- */
