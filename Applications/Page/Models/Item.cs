@@ -33,7 +33,7 @@ namespace Cube.Pdf.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Item
+    public class Item : IEquatable<Item>
     {
         #region Constructors
 
@@ -150,5 +150,58 @@ namespace Cube.Pdf.Page
         public DateTime LastWriteTime { get; set; } = DateTime.MinValue;
 
         #endregion
+
+        #region IEquatable<Item> methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Equals
+        ///
+        /// <summary>
+        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Equals(Item other)
+        {
+            return Path == other.Path;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Equals
+        ///
+        /// <summary>
+        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override bool Equals(object obj)
+        {
+            if (object.ReferenceEquals(obj, null)) return false;
+            if (object.ReferenceEquals(this, obj)) return true;
+
+            var other = obj as Item;
+            if (other == null) return false;
+
+            return Equals(other);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetHashCode
+        ///
+        /// <summary>
+        /// 特定の型のハッシュ関数として機能します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        #endregion
+
     }
 }
