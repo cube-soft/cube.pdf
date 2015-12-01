@@ -117,10 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FileFilter" xml:space="preserve">
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>CubePDF エラー</value>
+  </data>
+  <data name="OpenFileFilter" xml:space="preserve">
     <value>PDF ファイル (*.pdf)|*.pdf;*.PDF|画像ファイル (*.bmp, *.emf, *.gif, *.ico, *.jpg, *.png, *.tiff, *.wmf)|*.bmp;*.BMP;*.emf;*.EMF;*.gif;*.GIF;*.ico;*.ICO;*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.tiff;*.TIFF;*.wmf;*.WMF|すべてのファイル|*.*</value>
   </data>
-  <data name="FileTitle" xml:space="preserve">
+  <data name="OpenFileTitle" xml:space="preserve">
     <value>ファイルを追加</value>
+  </data>
+  <data name="SaveFileFilter" xml:space="preserve">
+    <value>PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.*</value>
+  </data>
+  <data name="SaveFileTitle" xml:space="preserve">
+    <value>ファイルを保存</value>
   </data>
 </root>

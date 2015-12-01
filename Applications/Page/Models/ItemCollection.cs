@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IoEx = System.IO;
@@ -80,9 +81,26 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Task AddAsync(string path)
+        public async Task AddAsync(string path)
         {
-            return Task.Run(() => Add(path));
+            var ext = IoEx.Path.GetExtension(path).ToLower();
+            if (ext == ".pdf") await AddPdfAsync(path);
+            else AddImage(path);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Contains
+        /// 
+        /// <summary>
+        /// 指定されたパスを表す項目が既に存在しているかどうか判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Contains(string path)
+        {
+            var check = new Item(PageType.Unknown, path);
+            return InnerCollection.Contains(check);
         }
 
         /* ----------------------------------------------------------------- */
@@ -96,7 +114,16 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         public void Clear()
         {
-            lock (_lock) InnerCollection.Clear();
+            lock (_lock)
+            {
+                foreach (var item in InnerCollection)
+                {
+                    var dispose = item.Value as IDisposable;
+                    if (dispose != null) dispose.Dispose();
+                    item.Value = null;
+                }
+                InnerCollection.Clear();
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -110,7 +137,14 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         public void RemoveAt(int index)
         {
-            lock (_lock) InnerCollection.RemoveAt(index);
+            lock (_lock)
+            {
+                var item = InnerCollection[index];
+                InnerCollection.RemoveAt(index);
+
+                var dispose = item.Value as IDisposable;
+                if (dispose != null) dispose.Dispose();
+            }
         }
 
         #endregion
@@ -119,32 +153,22 @@ namespace Cube.Pdf.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Add
+        /// AddPdfAsync
         /// 
         /// <summary>
-        /// 指定されたファイルを追加します。
+        /// PDF ファイルを非同期で追加します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Add(string path)
+        private async Task AddPdfAsync(string path)
         {
-            var ext = IoEx.Path.GetExtension(path).ToLower();
-            if (ext == ".pdf") AddPdf(path);
-            else AddImage(path);
-        }
+            var reader = new Cube.Pdf.Editing.DocumentReader();
+            await reader.OpenAsync(path, string.Empty);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddPdf
-        /// 
-        /// <summary>
-        /// PDF ファイルを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddPdf(string path)
-        {
             var item = new Item(PageType.Pdf, path);
+            item.Value = reader;
+            item.PageCount = reader.Pages.Count;
+            item.ViewSize = reader.GetPage(1).Size;
             lock (_lock) InnerCollection.Add(item);
         }
 
@@ -159,7 +183,11 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private void AddImage(string path)
         {
+            var image = new Bitmap(path);
             var item = new Item(PageType.Image, path);
+            item.Value = image;
+            item.PageCount = 1;
+            item.ViewSize = image.Size;
             lock (_lock) InnerCollection.Add(item);
         }
 

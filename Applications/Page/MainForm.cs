@@ -19,7 +19,8 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Drawing;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Cube.Extensions;
 using IoEx = System.IO;
@@ -52,10 +53,13 @@ namespace Cube.Pdf.Page
         {
             InitializeComponent();
             InitializeLayout();
+            InitializePresenters();
 
-            FileButton.Click  += (s, e) => RaiseRegisterEvent();
-            MergeButton.Click += (s, e) => OnMerge(e);
-            SplitButton.Click += (s, e) => OnSplit(e);
+            FileButton.Click   += (s, e) => RaiseAddingEvent();
+            RemoveButton.Click += (s, e) => OnRemoving(e);
+            ClearButton.Click  += (s, e) => OnClearing(e);
+            MergeButton.Click  += (s, e) => RaiseMergingEvent();
+            SplitButton.Click  += (s, e) => RaiseSplittingEvent();
 
             ButtonsPanel.DragEnter += Control_DragEnter;
             FooterPanel.DragEnter  += Control_DragEnter;
@@ -64,6 +68,26 @@ namespace Cube.Pdf.Page
             ButtonsPanel.DragDrop  += Control_DragDrop;
             FooterPanel.DragDrop   += Control_DragDrop;
             PageListView.DragDrop  += Control_DragDrop;
+
+            // 未実装のため無効化
+            UpButton.Enabled = false;
+            DownButton.Enabled = false;
+            SplitButton.Enabled = false;
+        }
+
+        #endregion
+
+        #region Properties
+
+        public IList<int> SelectedIndices
+        {
+            get
+            {
+                var dest = new List<int>();
+                foreach (int index in PageListView.SelectedIndices) dest.Add(index);
+                dest.Sort();
+                return dest;
+            }
         }
 
         #endregion
@@ -72,36 +96,58 @@ namespace Cube.Pdf.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Register
+        /// Adding
         /// 
         /// <summary>
         /// 新しいファイルの追加時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<string[]>> Regsiter;
+        public EventHandler<DataEventArgs<string[]>> Adding;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Merge
+        /// Removing
+        /// 
+        /// <summary>
+        /// 項目を削除する時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler Removing;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clearing
+        /// 
+        /// <summary>
+        /// 全項目を削除する時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler Clearing;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Merging
         /// 
         /// <summary>
         /// 結合処理の実行時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler Merge;
+        public EventHandler<DataEventArgs<string>> Merging;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Split
+        /// Splitting
         /// 
         /// <summary>
         /// 分割処理の実行時に発生するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler Split;
+        public EventHandler<DataEventArgs<string>> Splitting;
 
         #endregion
 
@@ -121,50 +167,125 @@ namespace Cube.Pdf.Page
             PageListView.Items.Add(Convert(item));
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveAt
+        /// 
+        /// <summary>
+        /// 指定されたインデックスに対応する項目を削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void RemoveAt(int index)
+        {
+            PageListView.Items.RemoveAt(index);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        /// 
+        /// <summary>
+        /// 全ての項目を削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Clear()
+        {
+            PageListView.Items.Clear();
+        }
+
         #endregion
 
         #region Virtual methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnRegister
+        /// OnAdding
         /// 
         /// <summary>
         /// 新しいファイルの追加時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnRegister(DataEventArgs<string[]> e)
+        protected virtual void OnAdding(DataEventArgs<string[]> e)
         {
-            if (Regsiter != null) Regsiter(this, e);
+            if (Adding != null) Adding(this, e);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnMerge
+        /// OnRemoving
+        /// 
+        /// <summary>
+        /// 項目を削除する時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnRemoving(EventArgs e)
+        {
+            if (Removing != null) Removing(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnClearing
+        /// 
+        /// <summary>
+        /// 全項目を削除する時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnClearing(EventArgs e)
+        {
+            if (Clearing != null) Clearing(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnMerging
         /// 
         /// <summary>
         /// 結合処理の実行時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnMerge(EventArgs e)
+        protected virtual void OnMerging(DataEventArgs<string> e)
         {
-            if (Merge != null) Merge(this, e);
+            if (Merging != null) Merging(this, e);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnSplit
+        /// OnSplitting
         /// 
         /// <summary>
         /// 分割処理の実行時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnSplit(EventArgs e)
+        protected virtual void OnSplitting(DataEventArgs<string> e)
         {
-            if (Split != null) Split(this, e);
+            if (Splitting != null) Splitting(this, e);
+        }
+
+        #endregion
+
+        #region Override methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLoad
+        /// 
+        /// <summary>
+        /// フォームのロード時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnLoad(EventArgs e)
+        {
+            MergeButton.Select();
+            base.OnLoad(e);
         }
 
         #endregion
@@ -202,7 +323,7 @@ namespace Cube.Pdf.Page
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                RaiseRegisterEvent(e.Data.GetData(DataFormats.FileDrop, false));
+                RaiseAddingEvent(e.Data.GetData(DataFormats.FileDrop, false));
             }
         }
 
@@ -226,39 +347,87 @@ namespace Cube.Pdf.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RaiseRegisterEvent
+        /// InitializePresenters
         /// 
         /// <summary>
-        /// Register イベントを発生させます。
+        /// 各種 Presenter を初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseRegisterEvent()
+        private void InitializePresenters()
         {
-            var dialog = new OpenFileDialog();
-            dialog.CheckFileExists = true;
-            dialog.Multiselect = true;
-            dialog.Title = Properties.Resources.FileTitle;
-            dialog.Filter = Properties.Resources.FileFilter;
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
-
-            RaiseRegisterEvent(dialog.FileNames);
+            new ListViewPresenter(this, new ObservableCollection<Item>());
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RaiseRegisterEvent
+        /// RaiseAddingEvent
+        /// 
+        /// <summary>
+        /// Adding イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseAddingEvent()
+        {
+            var dialog = new OpenFileDialog();
+            dialog.CheckFileExists = true;
+            dialog.Multiselect = true;
+            dialog.Title = Properties.Resources.OpenFileTitle;
+            dialog.Filter = Properties.Resources.OpenFileFilter;
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            RaiseAddingEvent(dialog.FileNames);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseAddingEvent
         /// 
         /// <summary>
         /// Register イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseRegisterEvent(object obj)
+        private void RaiseAddingEvent(object obj)
         {
             var files = obj as string[];
             if (files == null) return;
-            OnRegister(new DataEventArgs<string[]>(files));
+            OnAdding(new DataEventArgs<string[]>(files));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseMergingEvent
+        /// 
+        /// <summary>
+        /// Merging イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseMergingEvent()
+        {
+            var dialog = new SaveFileDialog();
+            dialog.OverwritePrompt = true;
+            dialog.Title = Properties.Resources.SaveFileTitle;
+            dialog.Filter = Properties.Resources.SaveFileFilter;
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            OnMerging(new DataEventArgs<string>(dialog.FileName));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseSplittingEvent
+        /// 
+        /// <summary>
+        /// Splitting イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseSplittingEvent()
+        {
+            OnSplitting(new DataEventArgs<string>(string.Empty));
         }
 
         /* ----------------------------------------------------------------- */

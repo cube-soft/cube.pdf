@@ -39,13 +39,13 @@
             this.UpButton = new System.Windows.Forms.Button();
             this.DownButton = new System.Windows.Forms.Button();
             this.RemoveButton = new System.Windows.Forms.Button();
-            this.RemoveAllButton = new System.Windows.Forms.Button();
+            this.ClearButton = new System.Windows.Forms.Button();
             this.PageListView = new System.Windows.Forms.ListView();
             this.FileColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.TypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
@@ -124,7 +124,7 @@
             this.ButtonsPanel.Controls.Add(this.UpButton);
             this.ButtonsPanel.Controls.Add(this.DownButton);
             this.ButtonsPanel.Controls.Add(this.RemoveButton);
-            this.ButtonsPanel.Controls.Add(this.RemoveAllButton);
+            this.ButtonsPanel.Controls.Add(this.ClearButton);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.ButtonsPanel.Location = new System.Drawing.Point(560, 0);
@@ -175,20 +175,19 @@
             this.RemoveButton.Text = "削除";
             this.RemoveButton.UseVisualStyleBackColor = true;
             // 
-            // RemoveAllButton
+            // ClearButton
             // 
-            this.RemoveAllButton.Location = new System.Drawing.Point(12, 140);
-            this.RemoveAllButton.Margin = new System.Windows.Forms.Padding(2);
-            this.RemoveAllButton.Name = "RemoveAllButton";
-            this.RemoveAllButton.Size = new System.Drawing.Size(100, 30);
-            this.RemoveAllButton.TabIndex = 4;
-            this.RemoveAllButton.Text = "すべて削除";
-            this.RemoveAllButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Location = new System.Drawing.Point(12, 140);
+            this.ClearButton.Margin = new System.Windows.Forms.Padding(2);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(100, 30);
+            this.ClearButton.TabIndex = 4;
+            this.ClearButton.Text = "すべて削除";
+            this.ClearButton.UseVisualStyleBackColor = true;
             // 
             // PageListView
             // 
             this.PageListView.AllowDrop = true;
-            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.FileColumnHeader,
             this.TypeColumnHeader,
@@ -212,6 +211,11 @@
             this.FileColumnHeader.Text = "ファイル名";
             this.FileColumnHeader.Width = 180;
             // 
+            // TypeColumnHeader
+            // 
+            this.TypeColumnHeader.Text = "種類";
+            this.TypeColumnHeader.Width = 100;
+            // 
             // PageColumnHeader
             // 
             this.PageColumnHeader.Text = "ページ数";
@@ -226,11 +230,6 @@
             // 
             this.DateColumnHeader.Text = "更新日時";
             this.DateColumnHeader.Width = 120;
-            // 
-            // TypeColumnHeader
-            // 
-            this.TypeColumnHeader.Text = "種類";
-            this.TypeColumnHeader.Width = 100;
             // 
             // MainForm
             // 
@@ -260,7 +259,7 @@
         private System.Windows.Forms.Button UpButton;
         private System.Windows.Forms.Button DownButton;
         private System.Windows.Forms.Button RemoveButton;
-        private System.Windows.Forms.Button RemoveAllButton;
+        private System.Windows.Forms.Button ClearButton;
         private System.Windows.Forms.ListView PageListView;
         private System.Windows.Forms.ColumnHeader FileColumnHeader;
         private System.Windows.Forms.ColumnHeader PageColumnHeader;

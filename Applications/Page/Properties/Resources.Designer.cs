@@ -61,20 +61,47 @@ namespace Cube.Pdf.Page.Properties {
         }
         
         /// <summary>
+        ///   CubePDF エラー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorTitle {
+            get {
+                return ResourceManager.GetString("ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|画像ファイル (*.bmp, *.emf, *.gif, *.ico, *.jpg, *.png, *.tiff, *.wmf)|*.bmp;*.BMP;*.emf;*.EMF;*.gif;*.GIF;*.ico;*.ICO;*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.tiff;*.TIFF;*.wmf;*.WMF|すべてのファイル|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string FileFilter {
+        internal static string OpenFileFilter {
             get {
-                return ResourceManager.GetString("FileFilter", resourceCulture);
+                return ResourceManager.GetString("OpenFileFilter", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ファイルを追加 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string FileTitle {
+        internal static string OpenFileTitle {
             get {
-                return ResourceManager.GetString("FileTitle", resourceCulture);
+                return ResourceManager.GetString("OpenFileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SaveFileFilter {
+            get {
+                return ResourceManager.GetString("SaveFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルを保存 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SaveFileTitle {
+            get {
+                return ResourceManager.GetString("SaveFileTitle", resourceCulture);
             }
         }
     }
