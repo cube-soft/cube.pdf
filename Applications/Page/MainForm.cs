@@ -79,6 +79,15 @@ namespace Cube.Pdf.Page
 
         #region Properties
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedIndices
+        /// 
+        /// <summary>
+        /// 選択されている項目一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public IList<int> SelectedIndices
         {
             get
@@ -445,7 +454,7 @@ namespace Cube.Pdf.Page
             var type = item.Type == PageType.Pdf ? "PDF" : "Image";
             var pages = item.PageCount.ToString();
             var bytes = ((ulong)item.FileSize).ToPrettyBytes();
-            var date = item.LastWriteTime.ToString("yyyy/mm/dd");
+            var date = item.LastWriteTime.ToString("yyyy/MM/dd");
 
             var dest = new ListViewItem(new string[] { filename, type, pages, bytes, date });
             dest.ToolTipText = item.Path;
