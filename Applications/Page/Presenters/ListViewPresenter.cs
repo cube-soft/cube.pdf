@@ -207,7 +207,7 @@ namespace Cube.Pdf.Page
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
-                        View.Add(Model.Last());
+                        View.Add(Model[e.NewStartingIndex]);
                         break;
                     case NotifyCollectionChangedAction.Remove:
                         View.RemoveAt(e.OldStartingIndex);
