@@ -21,6 +21,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.Extensions;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.Page
 {
@@ -100,6 +102,24 @@ namespace Cube.Pdf.Page
         ///
         /* ----------------------------------------------------------------- */
         public EventHandler Split;
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        /// 
+        /// <summary>
+        /// 項目を追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Add(Item item)
+        {
+            PageListView.Items.Add(Convert(item));
+        }
 
         #endregion
 
@@ -239,6 +259,28 @@ namespace Cube.Pdf.Page
             var files = obj as string[];
             if (files == null) return;
             OnRegister(new DataEventArgs<string[]>(files));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        /// 
+        /// <summary>
+        /// Item から ListViewItem オブジェクトへ変換します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ListViewItem Convert(Item item)
+        {
+            var filename = IoEx.Path.GetFileNameWithoutExtension(item.Path);
+            var type = item.Type == PageType.Pdf ? "PDF" : "Image";
+            var pages = item.PageCount.ToString();
+            var bytes = ((ulong)item.FileSize).ToPrettyBytes();
+            var date = item.LastWriteTime.ToString("yyyy/mm/dd");
+
+            var dest = new ListViewItem(new string[] { filename, type, pages, bytes, date });
+            dest.ToolTipText = item.Path;
+            return dest;
         }
 
         #endregion

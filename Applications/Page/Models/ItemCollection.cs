@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.Page
 {
@@ -125,7 +126,42 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Add(string path) { }
+        private void Add(string path)
+        {
+            var ext = IoEx.Path.GetExtension(path).ToLower();
+            if (ext == ".pdf") AddPdf(path);
+            else AddImage(path);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddPdf
+        /// 
+        /// <summary>
+        /// PDF ファイルを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddPdf(string path)
+        {
+            var item = new Item(PageType.Pdf, path);
+            lock (_lock) InnerCollection.Add(item);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddImage
+        /// 
+        /// <summary>
+        /// 画像ファイルを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddImage(string path)
+        {
+            var item = new Item(PageType.Image, path);
+            lock (_lock) InnerCollection.Add(item);
+        }
 
         #endregion
 

@@ -45,6 +45,7 @@
             this.PageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
@@ -190,6 +191,7 @@
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.FileColumnHeader,
+            this.TypeColumnHeader,
             this.PageColumnHeader,
             this.SizeColumnHeader,
             this.DateColumnHeader});
@@ -208,22 +210,27 @@
             // FileColumnHeader
             // 
             this.FileColumnHeader.Text = "ファイル名";
-            this.FileColumnHeader.Width = 200;
+            this.FileColumnHeader.Width = 180;
             // 
             // PageColumnHeader
             // 
             this.PageColumnHeader.Text = "ページ数";
-            this.PageColumnHeader.Width = 120;
+            this.PageColumnHeader.Width = 100;
             // 
             // SizeColumnHeader
             // 
             this.SizeColumnHeader.Text = "サイズ";
-            this.SizeColumnHeader.Width = 120;
+            this.SizeColumnHeader.Width = 100;
             // 
             // DateColumnHeader
             // 
             this.DateColumnHeader.Text = "更新日時";
             this.DateColumnHeader.Width = 120;
+            // 
+            // TypeColumnHeader
+            // 
+            this.TypeColumnHeader.Text = "種類";
+            this.TypeColumnHeader.Width = 100;
             // 
             // MainForm
             // 
@@ -259,6 +266,7 @@
         private System.Windows.Forms.ColumnHeader PageColumnHeader;
         private System.Windows.Forms.ColumnHeader SizeColumnHeader;
         private System.Windows.Forms.ColumnHeader DateColumnHeader;
+        private System.Windows.Forms.ColumnHeader TypeColumnHeader;
     }
 }
 

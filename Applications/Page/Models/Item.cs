@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.Page
 {
@@ -34,6 +35,40 @@ namespace Cube.Pdf.Page
     /* --------------------------------------------------------------------- */
     public class Item
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Item
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Item() { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Item
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Item(PageType type, string path)
+        {
+            Type = type;
+
+            var info = new IoEx.FileInfo(path);
+            Path = info.FullName;
+            FileSize = info.Length;
+            LastWriteTime = info.LastWriteTime;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -45,7 +80,7 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageType Type { get; set; }
+        public PageType Type { get; set; } = PageType.Unknown;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -56,7 +91,7 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Path { get; set; }
+        public string Path { get; set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -67,7 +102,7 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public object Value { get; set; }
+        public object Value { get; set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -78,7 +113,7 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Size ViewSize { get; set; }
+        public Size ViewSize { get; set; } = Size.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,7 +124,18 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ulong FileSize { get; set; }
+        public long FileSize { get; set; } = 0;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageCount
+        /// 
+        /// <summary>
+        /// ファイルに含まれるページ数を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int PageCount { get; set; } = 0;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,7 +147,7 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DateTime LastWriteTime { get; set; }
+        public DateTime LastWriteTime { get; set; } = DateTime.MinValue;
 
         #endregion
     }
