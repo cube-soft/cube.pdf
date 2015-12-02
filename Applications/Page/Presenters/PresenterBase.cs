@@ -18,6 +18,9 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Threading;
+
 namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
@@ -45,7 +48,9 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected PresenterBase(ViewType view, ModelType model)
         {
-            View = view;
+            SynchronizationContext = SynchronizationContext.Current;
+
+            View  = view;
             Model = model;
         }
 
@@ -74,6 +79,35 @@ namespace Cube.Pdf.App.Page
         ///
         /* ----------------------------------------------------------------- */
         public ViewType View { get; private set; }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// SynchronizationContext
+        /// 
+        /// <summary>
+        /// オブジェクト初期化時のコンテキストを取得します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public SynchronizationContext SynchronizationContext { get; }
+
+        #endregion
+
+        #region Methods
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Sync
+        /// 
+        /// <summary>
+        /// オブジェクト初期化時のスレッド上で各種操作を実行します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Sync(Action action)
+        {
+            SynchronizationContext.Post(_ => action(), null);
+        }
 
         #endregion
     }

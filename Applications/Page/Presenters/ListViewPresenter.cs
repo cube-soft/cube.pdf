@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using IoEx = System.IO;
 
@@ -52,8 +51,6 @@ namespace Cube.Pdf.App.Page
         public ListViewPresenter(MainForm view, ItemCollection model)
             : base(view, model)
         {
-            SynchronizationContext = SynchronizationContext.Current;
-            
             View.Adding    += View_Adding;
             View.Removing  += View_Removing;
             View.Clearing  += View_Clearing;
@@ -63,21 +60,6 @@ namespace Cube.Pdf.App.Page
 
             Model.CollectionChanged += Model_CollectionChanged;
         }
-
-        #endregion
-
-        #region Properties
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// SynchronizationContext
-        /// 
-        /// <summary>
-        /// オブジェクト初期化時のコンテキストを取得します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        public SynchronizationContext SynchronizationContext { get; }
 
         #endregion
 
@@ -94,8 +76,9 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private async void View_Adding(object sender, DataEventArgs<string[]> e)
         {
-            try {
-                Sync(() => { View.Cursor = Cursors.WaitCursor; });
+            try
+            {
+                Sync(() => { View.AllowOperation = false; });
 
                 foreach (var path in e.Value)
                 {
@@ -104,7 +87,7 @@ namespace Cube.Pdf.App.Page
                 }
             }
             catch (Exception err) { ShowSync(err); }
-            finally { Sync(() => { View.Cursor = Cursors.Default; }); }
+            finally { Sync(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -162,8 +145,9 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private async void View_Merging(object sender, DataEventArgs<string> e)
         {
-            try {
-                Sync(() => { View.Cursor = Cursors.WaitCursor; });
+            try
+            {
+                Sync(() => { View.AllowOperation = false; ; });
 
                 var binder = new Cube.Pdf.Editing.PageBinder();
                 foreach (var item in Model)
@@ -176,7 +160,7 @@ namespace Cube.Pdf.App.Page
                 Model.Clear();
             }
             catch (Exception err) { ShowSync(err); }
-            finally { Sync(() => { View.Cursor = Cursors.Default; }); }
+            finally { Sync(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -192,9 +176,9 @@ namespace Cube.Pdf.App.Page
         {
             try
             {
-                Sync(() => { View.Cursor = Cursors.WaitCursor; });
+                Sync(() => { View.AllowOperation = false; });
             }
-            finally { Sync(() => { View.Cursor = Cursors.Default; }); }
+            finally { Sync(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -272,16 +256,23 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Sync
+        /// ShowSync
         /// 
         /// <summary>
-        /// 指定された Action を UI スレッドで実行します。
+        /// メッセージをメッセージボックスに表示します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Sync(Action action)
+        private void ShowSync(string message, MessageBoxIcon icon)
         {
-            SynchronizationContext.Post(_ => action(), null);
+            Sync(() =>
+            {
+                MessageBox.Show(message, 
+                    Properties.Resources.MessageTitle,
+                    MessageBoxButtons.OK,
+                    icon
+                );
+            });
         }
 
         /* --------------------------------------------------------------------- */
@@ -298,7 +289,7 @@ namespace Cube.Pdf.App.Page
             Sync(() =>
             {
                 MessageBox.Show(err.Message,
-                    Properties.Resources.ErrorTitle,
+                    Properties.Resources.ErrorMessageTitle,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
