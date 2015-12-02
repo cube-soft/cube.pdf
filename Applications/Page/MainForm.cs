@@ -203,8 +203,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void AddItem(Item item)
         {
-            try { PageListView.Items.Add(Convert(item)); }
-            finally { UpdateControls(); }
+            Execute(() => PageListView.Items.Add(Convert(item)));
         }
 
         /* ----------------------------------------------------------------- */
@@ -218,13 +217,12 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void InsertItem(int index, Item item)
         {
-            try
+            Execute(() =>
             {
                 var i = Math.Max(Math.Min(index, PageListView.Items.Count), 0);
                 if (i == PageListView.Items.Count) PageListView.Items.Add(Convert(item));
                 else PageListView.Items.Insert(i, Convert(item));
-            }
-            finally { UpdateControls(); }
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -238,7 +236,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void MoveItem(int oldindex, int newindex)
         {
-            try
+            Execute(() =>
             {
                 if (oldindex < 0 || oldindex >= PageListView.Items.Count) return;
 
@@ -246,8 +244,7 @@ namespace Cube.Pdf.App.Page
                 PageListView.Items.RemoveAt(oldindex);
                 var result = PageListView.Items.Insert(newindex, item);
                 if (result != null) result.Selected = true;
-            }
-            finally { UpdateControls(); }
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -261,8 +258,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void RemoveItem(int index)
         {
-            try { PageListView.Items.RemoveAt(index); }
-            finally { UpdateControls(); }
+            Execute(() => PageListView.Items.RemoveAt(index));
         }
 
         /* ----------------------------------------------------------------- */
@@ -276,8 +272,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void ClearItems()
         {
-            try { PageListView.Items.Clear(); }
-            finally { UpdateControls(); }
+            Execute(() => PageListView.Items.Clear());
         }
 
         #endregion
@@ -383,8 +378,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected override void OnLoad(EventArgs e)
         {
-            UpdateControls();
-            MergeButton.Select();
+            Execute(() => MergeButton.Select());
             base.OnLoad(e);
         }
 
@@ -423,7 +417,6 @@ namespace Cube.Pdf.App.Page
         private void Control_DragDrop(object sender, DragEventArgs e)
         {
             if (!AllowOperation) return;
-
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 RaiseAddingEvent(e.Data.GetData(DataFormats.FileDrop, false));
@@ -531,6 +524,25 @@ namespace Cube.Pdf.App.Page
         private void RaiseSplittingEvent()
         {
             OnSplitting(new DataEventArgs<string>(string.Empty));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Execute
+        /// 
+        /// <summary>
+        /// 各種操作を実行します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 各種操作の共通に行われる処理をここに記述します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Execute(Action op)
+        {
+            try { op(); }
+            finally { UpdateControls(); }
         }
 
         /* ----------------------------------------------------------------- */
