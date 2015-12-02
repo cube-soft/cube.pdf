@@ -26,11 +26,11 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.Page
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.ItemCollection
+    /// Cube.Pdf.App.Page.ItemCollection
     ///
     /// <summary>
     /// Item 一覧を管理するクラスです。

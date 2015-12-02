@@ -18,11 +18,11 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Page
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.PresenterBase
+    /// Cube.Pdf.App.Page.PresenterBase
     ///
     /// <summary>
     /// Model と View が 1 対 1 対応している Presenter の基底となる

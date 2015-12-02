@@ -25,11 +25,11 @@ using System.Windows.Forms;
 using Cube.Extensions;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.Page
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.MainForm
+    /// Cube.Pdf.App.Page.MainForm
     ///
     /// <summary>
     /// CubePDF Page メイン画面を表示するクラスです。
@@ -77,6 +77,26 @@ namespace Cube.Pdf.Page
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowOperation
+        /// 
+        /// <summary>
+        /// 各種操作を受け付けるかどうかを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AllowOperation
+        {
+            get { return ButtonsPanel.Enabled && FooterPanel.Enabled; }
+            set
+            {
+                ButtonsPanel.Enabled = value;
+                FooterPanel.Enabled  = value;
+                Cursor = value ? Cursors.Default : Cursors.WaitCursor;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -384,7 +404,8 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private void Control_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.All;
+            if (!AllowOperation) e.Effect = DragDropEffects.None;
+            else if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.All;
             else if (e.Data.GetDataPresent(typeof(ListViewItem))) e.Effect = DragDropEffects.Move;
             else e.Effect = DragDropEffects.None;
         }
@@ -401,29 +422,13 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private void Control_DragDrop(object sender, DragEventArgs e)
         {
+            if (!AllowOperation) return;
+
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 RaiseAddingEvent(e.Data.GetData(DataFormats.FileDrop, false));
             }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageListView_SelectedIndexChanged
-        /// 
-        /// <summary>
-        /// 項目の選択状況が変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PageListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var selected = PageListView.SelectedIndices != null && PageListView.SelectedIndices.Count > 0;
-            UpButton.Enabled = selected;
-            DownButton.Enabled = selected;
-            RemoveButton.Enabled = selected;
-        }
-
 
         #endregion
 

@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.Page
+﻿namespace Cube.Pdf.App.Page
 {
     partial class MainForm
     {
@@ -275,7 +275,7 @@
             // LogoPictureBox
             // 
             this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LogoPictureBox.Image = global::Cube.Pdf.Page.Properties.Resources.HeaderLogo;
+            this.LogoPictureBox.Image = global::Cube.Pdf.App.Page.Properties.Resources.HeaderLogo;
             this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
             this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.LogoPictureBox.Name = "LogoPictureBox";
@@ -286,7 +286,7 @@
             // 
             // ImagePictureBox
             // 
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Page.Properties.Resources.HeaderImage;
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.ImagePictureBox.Location = new System.Drawing.Point(467, 0);

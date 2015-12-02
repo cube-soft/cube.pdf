@@ -25,11 +25,11 @@ using System.Threading;
 using System.Windows.Forms;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.Page
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.ListViewPresenter
+    /// Cube.Pdf.App.Page.ListViewPresenter
     ///
     /// <summary>
     /// MainForm とファイルリストを対応付けるためのクラスです。

@@ -22,11 +22,11 @@ using System;
 using System.Drawing;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.Page
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.Item
+    /// Cube.Pdf.App.Page.Item
     ///
     /// <summary>
     /// 各項目の情報を保持するクラスです。

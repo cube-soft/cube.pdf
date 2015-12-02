@@ -21,11 +21,11 @@
 using System;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.Page
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.Program
+    /// Cube.Pdf.App.Page.Program
     ///
     /// <summary>
     /// メインプログラムを表すクラスです。

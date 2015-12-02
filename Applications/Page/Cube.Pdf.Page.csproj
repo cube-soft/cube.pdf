@@ -7,7 +7,7 @@
     <ProjectGuid>{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Pdf.Page</RootNamespace>
+    <RootNamespace>Cube.Pdf.App.Page</RootNamespace>
     <AssemblyName>CubePdfPage</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

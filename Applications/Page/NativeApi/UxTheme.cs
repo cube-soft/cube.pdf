@@ -21,11 +21,11 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Cube.Pdf.Page
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.UxTheme
+    /// Cube.Pdf.App.Page.UxTheme
     ///
     /// <summary>
     /// uxtheme.dll で提供されている API を宣言するためのクラスです。
