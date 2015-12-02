@@ -42,26 +42,33 @@
             this.ClearButton = new System.Windows.Forms.Button();
             this.PageListView = new System.Windows.Forms.ListView();
             this.FileColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.TypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.HeaderPanel = new System.Windows.Forms.Panel();
+            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
+            this.HeaderPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
             // 
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.Controls.Add(this.FooterPanel, 0, 1);
-            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 0);
+            this.LayoutPanel.Controls.Add(this.FooterPanel, 0, 2);
+            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 1);
+            this.LayoutPanel.Controls.Add(this.HeaderPanel, 0, 0);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.RowCount = 2;
+            this.LayoutPanel.RowCount = 3;
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.LayoutPanel.Size = new System.Drawing.Size(684, 311);
@@ -83,23 +90,31 @@
             // 
             // SplitButton
             // 
+            this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.SplitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.SplitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SplitButton.ForeColor = System.Drawing.Color.White;
             this.SplitButton.Location = new System.Drawing.Point(542, 12);
             this.SplitButton.Margin = new System.Windows.Forms.Padding(2);
             this.SplitButton.Name = "SplitButton";
             this.SplitButton.Size = new System.Drawing.Size(130, 35);
             this.SplitButton.TabIndex = 0;
             this.SplitButton.Text = "分割";
-            this.SplitButton.UseVisualStyleBackColor = true;
+            this.SplitButton.UseVisualStyleBackColor = false;
             // 
             // MergeButton
             // 
+            this.MergeButton.BackColor = System.Drawing.SystemColors.Highlight;
+            this.MergeButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Highlight;
+            this.MergeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MergeButton.ForeColor = System.Drawing.Color.White;
             this.MergeButton.Location = new System.Drawing.Point(408, 12);
             this.MergeButton.Margin = new System.Windows.Forms.Padding(2);
             this.MergeButton.Name = "MergeButton";
             this.MergeButton.Size = new System.Drawing.Size(130, 35);
             this.MergeButton.TabIndex = 1;
             this.MergeButton.Text = "結合";
-            this.MergeButton.UseVisualStyleBackColor = true;
+            this.MergeButton.UseVisualStyleBackColor = false;
             // 
             // ContentsPanel
             // 
@@ -109,12 +124,12 @@
             this.ContentsPanel.Controls.Add(this.ButtonsPanel, 0, 0);
             this.ContentsPanel.Controls.Add(this.PageListView, 0, 0);
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentsPanel.Location = new System.Drawing.Point(0, 0);
+            this.ContentsPanel.Location = new System.Drawing.Point(0, 35);
             this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ContentsPanel.Name = "ContentsPanel";
             this.ContentsPanel.RowCount = 1;
             this.ContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ContentsPanel.Size = new System.Drawing.Size(684, 251);
+            this.ContentsPanel.Size = new System.Drawing.Size(684, 216);
             this.ContentsPanel.TabIndex = 2;
             // 
             // ButtonsPanel
@@ -130,70 +145,86 @@
             this.ButtonsPanel.Location = new System.Drawing.Point(560, 0);
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
-            this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(10, 2, 10, 0);
-            this.ButtonsPanel.Size = new System.Drawing.Size(124, 251);
+            this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(10, 8, 10, 0);
+            this.ButtonsPanel.Size = new System.Drawing.Size(124, 216);
             this.ButtonsPanel.TabIndex = 2;
             // 
             // FileButton
             // 
-            this.FileButton.Location = new System.Drawing.Point(12, 4);
+            this.FileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.FileButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.FileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.FileButton.ForeColor = System.Drawing.Color.White;
+            this.FileButton.Location = new System.Drawing.Point(12, 10);
             this.FileButton.Margin = new System.Windows.Forms.Padding(2);
             this.FileButton.Name = "FileButton";
             this.FileButton.Size = new System.Drawing.Size(100, 30);
             this.FileButton.TabIndex = 0;
             this.FileButton.Text = "追加...";
-            this.FileButton.UseVisualStyleBackColor = true;
+            this.FileButton.UseVisualStyleBackColor = false;
             // 
             // UpButton
             // 
-            this.UpButton.Enabled = false;
-            this.UpButton.Location = new System.Drawing.Point(12, 38);
+            this.UpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.UpButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.UpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpButton.ForeColor = System.Drawing.Color.White;
+            this.UpButton.Location = new System.Drawing.Point(12, 44);
             this.UpButton.Margin = new System.Windows.Forms.Padding(2);
             this.UpButton.Name = "UpButton";
             this.UpButton.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.UpButton.Size = new System.Drawing.Size(100, 30);
             this.UpButton.TabIndex = 1;
             this.UpButton.Text = "上へ";
-            this.UpButton.UseVisualStyleBackColor = true;
+            this.UpButton.UseVisualStyleBackColor = false;
             // 
             // DownButton
             // 
-            this.DownButton.Enabled = false;
-            this.DownButton.Location = new System.Drawing.Point(12, 72);
+            this.DownButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.DownButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.DownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DownButton.ForeColor = System.Drawing.Color.White;
+            this.DownButton.Location = new System.Drawing.Point(12, 78);
             this.DownButton.Margin = new System.Windows.Forms.Padding(2);
             this.DownButton.Name = "DownButton";
             this.DownButton.Size = new System.Drawing.Size(100, 30);
             this.DownButton.TabIndex = 2;
             this.DownButton.Text = "下へ";
-            this.DownButton.UseVisualStyleBackColor = true;
+            this.DownButton.UseVisualStyleBackColor = false;
             // 
             // RemoveButton
             // 
-            this.RemoveButton.Enabled = false;
-            this.RemoveButton.Location = new System.Drawing.Point(12, 106);
+            this.RemoveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.RemoveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RemoveButton.ForeColor = System.Drawing.Color.White;
+            this.RemoveButton.Location = new System.Drawing.Point(12, 112);
             this.RemoveButton.Margin = new System.Windows.Forms.Padding(2);
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(100, 30);
             this.RemoveButton.TabIndex = 3;
             this.RemoveButton.Text = "削除";
-            this.RemoveButton.UseVisualStyleBackColor = true;
+            this.RemoveButton.UseVisualStyleBackColor = false;
             // 
             // ClearButton
             // 
-            this.ClearButton.Location = new System.Drawing.Point(12, 140);
+            this.ClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.ClearButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.ClearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ClearButton.ForeColor = System.Drawing.Color.White;
+            this.ClearButton.Location = new System.Drawing.Point(12, 146);
             this.ClearButton.Margin = new System.Windows.Forms.Padding(2);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(100, 30);
             this.ClearButton.TabIndex = 4;
             this.ClearButton.Text = "すべて削除";
-            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.UseVisualStyleBackColor = false;
             // 
             // PageListView
             // 
             this.PageListView.AllowDrop = true;
+            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.FileColumnHeader,
-            this.TypeColumnHeader,
             this.PageColumnHeader,
             this.SizeColumnHeader,
             this.DateColumnHeader});
@@ -204,7 +235,7 @@
             this.PageListView.Margin = new System.Windows.Forms.Padding(0);
             this.PageListView.Name = "PageListView";
             this.PageListView.ShowItemToolTips = true;
-            this.PageListView.Size = new System.Drawing.Size(560, 251);
+            this.PageListView.Size = new System.Drawing.Size(560, 216);
             this.PageListView.TabIndex = 3;
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Details;
@@ -212,17 +243,12 @@
             // FileColumnHeader
             // 
             this.FileColumnHeader.Text = "ファイル名";
-            this.FileColumnHeader.Width = 180;
-            // 
-            // TypeColumnHeader
-            // 
-            this.TypeColumnHeader.Text = "種類";
-            this.TypeColumnHeader.Width = 100;
+            this.FileColumnHeader.Width = 200;
             // 
             // PageColumnHeader
             // 
             this.PageColumnHeader.Text = "ページ数";
-            this.PageColumnHeader.Width = 100;
+            this.PageColumnHeader.Width = 80;
             // 
             // SizeColumnHeader
             // 
@@ -232,7 +258,42 @@
             // DateColumnHeader
             // 
             this.DateColumnHeader.Text = "更新日時";
-            this.DateColumnHeader.Width = 120;
+            this.DateColumnHeader.Width = 130;
+            // 
+            // HeaderPanel
+            // 
+            this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.HeaderPanel.Controls.Add(this.ImagePictureBox);
+            this.HeaderPanel.Controls.Add(this.LogoPictureBox);
+            this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
+            this.HeaderPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.HeaderPanel.Name = "HeaderPanel";
+            this.HeaderPanel.Size = new System.Drawing.Size(684, 35);
+            this.HeaderPanel.TabIndex = 3;
+            // 
+            // LogoPictureBox
+            // 
+            this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LogoPictureBox.Image = global::Cube.Pdf.Page.Properties.Resources.HeaderLogo;
+            this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.LogoPictureBox.Name = "LogoPictureBox";
+            this.LogoPictureBox.Size = new System.Drawing.Size(190, 35);
+            this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.LogoPictureBox.TabIndex = 0;
+            this.LogoPictureBox.TabStop = false;
+            // 
+            // ImagePictureBox
+            // 
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Page.Properties.Resources.HeaderImage;
+            this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ImagePictureBox.Location = new System.Drawing.Point(467, 0);
+            this.ImagePictureBox.Name = "ImagePictureBox";
+            this.ImagePictureBox.Size = new System.Drawing.Size(217, 35);
+            this.ImagePictureBox.TabIndex = 1;
+            this.ImagePictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -246,6 +307,9 @@
             this.FooterPanel.ResumeLayout(false);
             this.ContentsPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
+            this.HeaderPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -268,7 +332,9 @@
         private System.Windows.Forms.ColumnHeader PageColumnHeader;
         private System.Windows.Forms.ColumnHeader SizeColumnHeader;
         private System.Windows.Forms.ColumnHeader DateColumnHeader;
-        private System.Windows.Forms.ColumnHeader TypeColumnHeader;
+        private System.Windows.Forms.Panel HeaderPanel;
+        private System.Windows.Forms.PictureBox LogoPictureBox;
+        private System.Windows.Forms.PictureBox ImagePictureBox;
     }
 }
 

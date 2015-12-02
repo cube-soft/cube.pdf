@@ -70,6 +70,26 @@ namespace Cube.Pdf.Page.Properties {
         }
         
         /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap HeaderImage {
+            get {
+                object obj = ResourceManager.GetObject("HeaderImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap HeaderLogo {
+            get {
+                object obj = ResourceManager.GetObject("HeaderLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|画像ファイル (*.bmp, *.emf, *.gif, *.ico, *.jpg, *.png, *.tiff, *.wmf)|*.bmp;*.BMP;*.emf;*.EMF;*.gif;*.GIF;*.ico;*.ICO;*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.tiff;*.TIFF;*.wmf;*.WMF|すべてのファイル|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string OpenFileFilter {

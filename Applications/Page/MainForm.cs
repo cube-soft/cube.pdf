@@ -560,13 +560,12 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private ListViewItem Convert(Item item)
         {
-            var filename = IoEx.Path.GetFileNameWithoutExtension(item.Path);
-            var type = item.Type == PageType.Pdf ? "PDF" : "Image";
+            var filename = IoEx.Path.GetFileName(item.Path);
             var pages = item.PageCount.ToString();
             var bytes = ((ulong)item.FileSize).ToPrettyBytes();
-            var date = item.LastWriteTime.ToString("yyyy/MM/dd");
+            var date = item.LastWriteTime.ToString("yyyy/MM/dd hh:mm");
 
-            var dest = new ListViewItem(new string[] { filename, type, pages, bytes, date });
+            var dest = new ListViewItem(new string[] { filename, pages, bytes, date });
             dest.ToolTipText = item.Path;
             return dest;
         }
