@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThumbnailForm));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.ImageListView = new System.Windows.Forms.ListView();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ExitButton = new System.Windows.Forms.Button();
             this.SaveAllButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
-            this.ImageListView = new System.Windows.Forms.ListView();
             this.HeaderPanel = new Cube.Pdf.ImageEx.HeaderView();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
@@ -56,6 +56,17 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.LayoutPanel.Size = new System.Drawing.Size(634, 361);
             this.LayoutPanel.TabIndex = 0;
+            // 
+            // ImageListView
+            // 
+            this.ImageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ImageListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImageListView.Location = new System.Drawing.Point(0, 35);
+            this.ImageListView.Margin = new System.Windows.Forms.Padding(0);
+            this.ImageListView.Name = "ImageListView";
+            this.ImageListView.Size = new System.Drawing.Size(634, 266);
+            this.ImageListView.TabIndex = 5;
+            this.ImageListView.UseCompatibleStateImageBehavior = false;
             // 
             // FooterPanel
             // 
@@ -110,17 +121,6 @@
             this.SaveButton.Text = "選択画像の保存";
             this.SaveButton.UseVisualStyleBackColor = false;
             // 
-            // ImageListView
-            // 
-            this.ImageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ImageListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImageListView.Location = new System.Drawing.Point(0, 35);
-            this.ImageListView.Margin = new System.Windows.Forms.Padding(0);
-            this.ImageListView.Name = "ImageListView";
-            this.ImageListView.Size = new System.Drawing.Size(634, 266);
-            this.ImageListView.TabIndex = 5;
-            this.ImageListView.UseCompatibleStateImageBehavior = false;
-            // 
             // HeaderPanel
             // 
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
@@ -138,6 +138,7 @@
             this.Controls.Add(this.LayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MinimumSize = new System.Drawing.Size(450, 200);
             this.Name = "ThumbnailForm";
             this.Text = "Thumbnail List";
             this.LayoutPanel.ResumeLayout(false);
