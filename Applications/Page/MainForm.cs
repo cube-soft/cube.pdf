@@ -579,7 +579,7 @@ namespace Cube.Pdf.App.Page
         {
             var filename = IoEx.Path.GetFileName(item.Path);
             var pages = item.PageCount.ToString();
-            var bytes = ((ulong)item.FileSize).ToPrettyBytes();
+            var bytes = item.FileSize.ToPrettyBytes();
             var date = item.LastWriteTime.ToString("yyyy/MM/dd hh:mm");
 
             var dest = new ListViewItem(new string[] { filename, pages, bytes, date });
