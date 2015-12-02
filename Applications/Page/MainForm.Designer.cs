@@ -46,15 +46,15 @@
             this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.HeaderPanel = new System.Windows.Forms.Panel();
-            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
+            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.HeaderPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -90,8 +90,8 @@
             // 
             // SplitButton
             // 
-            this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.SplitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.SplitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(151)))), ((int)(((byte)(253)))));
             this.SplitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SplitButton.ForeColor = System.Drawing.Color.White;
             this.SplitButton.Location = new System.Drawing.Point(542, 12);
@@ -104,8 +104,8 @@
             // 
             // MergeButton
             // 
-            this.MergeButton.BackColor = System.Drawing.SystemColors.Highlight;
-            this.MergeButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.Highlight;
+            this.MergeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.MergeButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.MergeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MergeButton.ForeColor = System.Drawing.Color.White;
             this.MergeButton.Location = new System.Drawing.Point(408, 12);
@@ -151,8 +151,8 @@
             // 
             // FileButton
             // 
-            this.FileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.FileButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.FileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.FileButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.FileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.FileButton.ForeColor = System.Drawing.Color.White;
             this.FileButton.Location = new System.Drawing.Point(12, 10);
@@ -165,8 +165,8 @@
             // 
             // UpButton
             // 
-            this.UpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.UpButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.UpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.UpButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.UpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.UpButton.ForeColor = System.Drawing.Color.White;
             this.UpButton.Location = new System.Drawing.Point(12, 44);
@@ -180,8 +180,8 @@
             // 
             // DownButton
             // 
-            this.DownButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.DownButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.DownButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.DownButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.DownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.DownButton.ForeColor = System.Drawing.Color.White;
             this.DownButton.Location = new System.Drawing.Point(12, 78);
@@ -194,7 +194,8 @@
             // 
             // RemoveButton
             // 
-            this.RemoveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.RemoveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.RemoveButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.RemoveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RemoveButton.ForeColor = System.Drawing.Color.White;
             this.RemoveButton.Location = new System.Drawing.Point(12, 112);
@@ -207,8 +208,8 @@
             // 
             // ClearButton
             // 
-            this.ClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.ClearButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.ClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.ClearButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.ClearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ClearButton.ForeColor = System.Drawing.Color.White;
             this.ClearButton.Location = new System.Drawing.Point(12, 146);
@@ -272,6 +273,17 @@
             this.HeaderPanel.Size = new System.Drawing.Size(684, 35);
             this.HeaderPanel.TabIndex = 3;
             // 
+            // ImagePictureBox
+            // 
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.HeaderImage;
+            this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ImagePictureBox.Location = new System.Drawing.Point(467, 0);
+            this.ImagePictureBox.Name = "ImagePictureBox";
+            this.ImagePictureBox.Size = new System.Drawing.Size(217, 35);
+            this.ImagePictureBox.TabIndex = 1;
+            this.ImagePictureBox.TabStop = false;
+            // 
             // LogoPictureBox
             // 
             this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
@@ -283,17 +295,6 @@
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.LogoPictureBox.TabIndex = 0;
             this.LogoPictureBox.TabStop = false;
-            // 
-            // ImagePictureBox
-            // 
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.HeaderImage;
-            this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ImagePictureBox.Location = new System.Drawing.Point(467, 0);
-            this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(217, 35);
-            this.ImagePictureBox.TabIndex = 1;
-            this.ImagePictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -308,8 +309,8 @@
             this.ContentsPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
             this.HeaderPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
