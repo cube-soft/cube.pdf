@@ -71,7 +71,6 @@
     <Compile Include="Models\ItemCollection.cs" />
     <Compile Include="NativeApi\UxTheme.cs" />
     <Compile Include="Presenters\ListViewPresenter.cs" />
-    <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">

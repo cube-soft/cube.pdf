@@ -35,7 +35,7 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ListViewPresenter : PresenterBase<MainForm, ItemCollection>
+    public class ListViewPresenter : Cube.Forms.PresenterBase<MainForm, ItemCollection>
     {
         #region Constructors
 
