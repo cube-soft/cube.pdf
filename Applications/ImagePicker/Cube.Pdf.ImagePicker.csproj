@@ -60,7 +60,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\ButtonExtensions.cs" />
     <Compile Include="Extensions\FormExtensions.cs" />
     <Compile Include="HeaderView.cs">
       <SubType>UserControl</SubType>
@@ -77,7 +76,6 @@
     <Compile Include="Models\PickTask.cs" />
     <Compile Include="Models\SaveTask.cs" />
     <Compile Include="NativeApi\UxTheme.cs" />
-    <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Presenters\ProgressPresenter.cs" />
     <Compile Include="Presenters\ThumbnailPresenter.cs" />
     <Compile Include="PreviewForm.cs">

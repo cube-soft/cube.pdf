@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DropForm));
-            this.ExitButton = new System.Windows.Forms.Button();
+            this.ExitButton = new Cube.Forms.Button();
             this.SuspendLayout();
             // 
             // ExitButton
@@ -68,7 +68,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button ExitButton;
+        private Cube.Forms.Button ExitButton;
     }
 }
 

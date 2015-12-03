@@ -56,14 +56,14 @@ namespace Cube.Pdf.ImageEx
             InitializeLayout();
 
             ImageListView.ContextMenuStrip = CreateContextMenu();
-            SaveButton.UpdateStatus(AnyItemsSelected);
+            SaveButton.Enabled = AnyItemsSelected;
 
             ExitButton.Click     += (s, e) => Close();
             SaveAllButton.Click  += (s, e) => OnSaveAll(e);
             SaveButton.Click     += (s, e) => OnSave(e);
             ImageListView.DoubleClick += (s, e) => OnPreview(e);
 
-            ImageListView.SelectedIndexChanged += (s, e) => SaveButton.UpdateStatus(AnyItemsSelected);
+            ImageListView.SelectedIndexChanged += (s, e) => { SaveButton.Enabled = AnyItemsSelected; };
         }
 
         #endregion

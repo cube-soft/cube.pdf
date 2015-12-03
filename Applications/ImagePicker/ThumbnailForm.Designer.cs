@@ -32,9 +32,9 @@
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ImageListView = new System.Windows.Forms.ListView();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.ExitButton = new System.Windows.Forms.Button();
-            this.SaveAllButton = new System.Windows.Forms.Button();
-            this.SaveButton = new System.Windows.Forms.Button();
+            this.ExitButton = new Cube.Forms.Button();
+            this.SaveAllButton = new Cube.Forms.Button();
+            this.SaveButton = new Cube.Forms.Button();
             this.HeaderPanel = new Cube.Pdf.ImageEx.HeaderView();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
@@ -152,9 +152,9 @@
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         private HeaderView HeaderPanel;
         private System.Windows.Forms.FlowLayoutPanel FooterPanel;
-        private System.Windows.Forms.Button ExitButton;
-        private System.Windows.Forms.Button SaveAllButton;
-        private System.Windows.Forms.Button SaveButton;
+        private Cube.Forms.Button ExitButton;
+        private Cube.Forms.Button SaveAllButton;
+        private Cube.Forms.Button SaveButton;
         private System.Windows.Forms.ListView ImageListView;
     }
 }

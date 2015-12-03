@@ -74,9 +74,12 @@ namespace Cube.Pdf.ImageEx
             get { return _op; }
             set
             {
-                _op = value;
-                PreviewButton.UpdateStatus(value);
-                SaveButton.UpdateStatus(value);
+                if (_op != value)
+                {
+                    _op = value;
+                    PreviewButton.Enabled = value;
+                    SaveButton.Enabled = value;
+                }
             }
         }
 
