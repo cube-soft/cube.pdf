@@ -32,7 +32,7 @@ namespace Cube.Pdf.ImageEx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ProgressPresenter : PresenterBase<ProgressForm, PickTask>
+    public class ProgressPresenter : Cube.Forms.PresenterBase<ProgressForm, PickTask>
     {
         #region Constructors
 

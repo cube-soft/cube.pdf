@@ -35,7 +35,7 @@ namespace Cube.Pdf.ImageEx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ThumbnailPresenter : PresenterBase<ThumbnailForm, PickTask>
+    public class ThumbnailPresenter : Cube.Forms.PresenterBase<ThumbnailForm, PickTask>
     {
         #region Constructors
 
