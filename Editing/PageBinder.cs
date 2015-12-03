@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Pdf.Editing.Extensions;
@@ -279,28 +280,25 @@ namespace Cube.Pdf.Editing
         {
             if (src == null) return;
 
-            var tmp = IoEx.Path.GetTempFileName();
 
-            try {
-                using (var image = new System.Drawing.Bitmap(src.Path))
-                {
-                    var obj = iTextSharp.text.Image.GetInstance(image, image.GuessImageFormat());
-                    var document = new iTextSharp.text.Document();
-                    var writer = PdfWriter.GetInstance(document, new IoEx.FileStream(tmp, IoEx.FileMode.Create));
+            using (var image = new System.Drawing.Bitmap(src.Path))
+            using (var stream = new IoEx.MemoryStream())
+            {
+                var obj = iTextSharp.text.Image.GetInstance(image, image.GuessImageFormat());
+                var document = new iTextSharp.text.Document();
+                var writer = PdfWriter.GetInstance(document, stream);
 
-                    document.Open();
-                    document.SetPageSize(new iTextSharp.text.Rectangle(src.Size.Width, src.Size.Height));
-                    document.NewPage();
-                    obj.SetAbsolutePosition(0, 0);
-                    document.Add(obj);
+                document.Open();
+                document.SetPageSize(new iTextSharp.text.Rectangle(src.Size.Width, src.Size.Height));
+                document.NewPage();
+                obj.SetAbsolutePosition(0, 0);
+                document.Add(obj);
 
-                    document.Close();
-                    writer.Close();
+                document.Close();
+                writer.Close();
 
-                    using (var reader = new PdfReader(tmp)) dest.AddPage(dest.GetImportedPage(reader, 1));
-                }
+                using (var reader = new PdfReader(stream.ToArray())) dest.AddPage(dest.GetImportedPage(reader, 1));
             }
-            finally { TryDelete(tmp); }
         }
 
         /* ----------------------------------------------------------------- */
