@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using Cube.Extensions;
 using IoEx = System.IO;
@@ -54,6 +55,7 @@ namespace Cube.Pdf.App.Page
             InitializeLayout();
             InitializePresenters();
 
+            TitleButton.Click  += (s, e) => ShowVersion();
             FileButton.Click   += (s, e) => RaiseAddingEvent();
             RemoveButton.Click += (s, e) => OnRemoving(e);
             ClearButton.Click  += (s, e) => OnClearing(e);
@@ -70,7 +72,6 @@ namespace Cube.Pdf.App.Page
             FooterPanel.DragDrop   += Control_DragDrop;
             PageListView.DragDrop  += Control_DragDrop;
 
-            TitleLogoPictureBox.Click += (s, e) => ShowVersion();
             PageListView.SelectedIndexChanged += (s, e) => UpdateControls();
         }
 
@@ -287,7 +288,7 @@ namespace Cube.Pdf.App.Page
         public void ShowVersion()
         {
             var dialog = new Cube.Forms.VersionForm();
-            dialog.Assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            dialog.Assembly = Assembly.GetExecutingAssembly();
             dialog.Logo = Properties.Resources.Logo;
             dialog.Description = string.Empty;
             dialog.Height = 320;
@@ -397,7 +398,13 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected override void OnLoad(EventArgs e)
         {
-            Execute(() => MergeButton.Select());
+            Execute(() =>
+            {
+                var arch = (IntPtr.Size == 4) ? "x86" : "x64";
+                var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
+                Text = string.Format("{0} {1} ({2})", asm.Product, asm.Version.ToString(3), arch);
+                MergeButton.Select();
+            });
             base.OnLoad(e);
         }
 
@@ -457,13 +464,13 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            UxTheme.SetWindowTheme(PageListView.Handle, "Explorer", null);
-
             var tips = new ToolTip();
             tips.InitialDelay =  200;
             tips.AutoPopDelay = 5000;
             tips.ReshowDelay  = 1000;
-            tips.SetToolTip(TitleLogoPictureBox, Properties.Resources.About);
+            tips.SetToolTip(TitleButton, Properties.Resources.About);
+
+            UxTheme.SetWindowTheme(PageListView.Handle, "Explorer", null);
         }
 
         /* ----------------------------------------------------------------- */

@@ -91,9 +91,9 @@ namespace Cube.Pdf.App.Page.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap HeaderLogo {
+        internal static System.Drawing.Bitmap HeaderTitle {
             get {
-                object obj = ResourceManager.GetObject("HeaderLogo", resourceCulture);
+                object obj = ResourceManager.GetObject("HeaderTitle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

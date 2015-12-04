@@ -127,8 +127,8 @@
   <data name="HeaderImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HeaderImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="HeaderLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HeaderLogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="HeaderTitle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HeaderTitle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
