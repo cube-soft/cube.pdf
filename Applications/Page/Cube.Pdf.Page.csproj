@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Logo.png" />
     <None Include="Resources\HeaderLogo.png" />
     <None Include="Resources\HeaderImage.png" />
   </ItemGroup>

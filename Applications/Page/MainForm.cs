@@ -70,6 +70,7 @@ namespace Cube.Pdf.App.Page
             FooterPanel.DragDrop   += Control_DragDrop;
             PageListView.DragDrop  += Control_DragDrop;
 
+            TitleLogoPictureBox.Click += (s, e) => ShowVersion();
             PageListView.SelectedIndexChanged += (s, e) => UpdateControls();
         }
 
@@ -274,6 +275,25 @@ namespace Cube.Pdf.App.Page
             Execute(() => PageListView.Items.Clear());
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowVersion
+        /// 
+        /// <summary>
+        /// バージョン情報を表示します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ShowVersion()
+        {
+            var dialog = new Cube.Forms.VersionForm();
+            dialog.Assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            dialog.Logo = Properties.Resources.Logo;
+            dialog.Description = string.Empty;
+            dialog.Height = 320;
+            dialog.ShowDialog();
+        }
+
         #endregion
 
         #region Virtual methods
@@ -438,6 +458,12 @@ namespace Cube.Pdf.App.Page
         private void InitializeLayout()
         {
             UxTheme.SetWindowTheme(PageListView.Handle, "Explorer", null);
+
+            var tips = new ToolTip();
+            tips.InitialDelay =  200;
+            tips.AutoPopDelay = 5000;
+            tips.ReshowDelay  = 1000;
+            tips.SetToolTip(TitleLogoPictureBox, Properties.Resources.About);
         }
 
         /* ----------------------------------------------------------------- */

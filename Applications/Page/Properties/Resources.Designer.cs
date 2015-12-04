@@ -61,6 +61,15 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
+        ///   CubePDF Page について に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   CubePDF Page エラー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ErrorMessageTitle {
@@ -85,6 +94,16 @@ namespace Cube.Pdf.App.Page.Properties {
         internal static System.Drawing.Bitmap HeaderLogo {
             get {
                 object obj = ResourceManager.GetObject("HeaderLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo {
+            get {
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

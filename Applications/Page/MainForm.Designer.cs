@@ -47,14 +47,14 @@
             this.DateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
-            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            this.TitleLogoPictureBox = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.HeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleLogoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -265,7 +265,7 @@
             // 
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.HeaderPanel.Controls.Add(this.ImagePictureBox);
-            this.HeaderPanel.Controls.Add(this.LogoPictureBox);
+            this.HeaderPanel.Controls.Add(this.TitleLogoPictureBox);
             this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
             this.HeaderPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -284,17 +284,18 @@
             this.ImagePictureBox.TabIndex = 1;
             this.ImagePictureBox.TabStop = false;
             // 
-            // LogoPictureBox
+            // TitleLogoPictureBox
             // 
-            this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LogoPictureBox.Image = global::Cube.Pdf.App.Page.Properties.Resources.HeaderLogo;
-            this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
-            this.LogoPictureBox.Name = "LogoPictureBox";
-            this.LogoPictureBox.Size = new System.Drawing.Size(150, 35);
-            this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.LogoPictureBox.TabIndex = 0;
-            this.LogoPictureBox.TabStop = false;
+            this.TitleLogoPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TitleLogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.TitleLogoPictureBox.Image = global::Cube.Pdf.App.Page.Properties.Resources.HeaderLogo;
+            this.TitleLogoPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.TitleLogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.TitleLogoPictureBox.Name = "TitleLogoPictureBox";
+            this.TitleLogoPictureBox.Size = new System.Drawing.Size(150, 35);
+            this.TitleLogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.TitleLogoPictureBox.TabIndex = 0;
+            this.TitleLogoPictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -310,7 +311,7 @@
             this.ButtonsPanel.ResumeLayout(false);
             this.HeaderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleLogoPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -327,7 +328,7 @@
         private System.Windows.Forms.ColumnHeader SizeColumnHeader;
         private System.Windows.Forms.ColumnHeader DateColumnHeader;
         private System.Windows.Forms.Panel HeaderPanel;
-        private System.Windows.Forms.PictureBox LogoPictureBox;
+        private System.Windows.Forms.PictureBox TitleLogoPictureBox;
         private System.Windows.Forms.PictureBox ImagePictureBox;
         private Cube.Forms.Button FileButton;
         private Cube.Forms.Button UpButton;
