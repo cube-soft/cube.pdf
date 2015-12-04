@@ -291,7 +291,7 @@
             this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
             this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.LogoPictureBox.Name = "LogoPictureBox";
-            this.LogoPictureBox.Size = new System.Drawing.Size(190, 35);
+            this.LogoPictureBox.Size = new System.Drawing.Size(150, 35);
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.LogoPictureBox.TabIndex = 0;
             this.LogoPictureBox.TabStop = false;
