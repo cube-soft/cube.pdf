@@ -19,12 +19,12 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.IO;
 using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
 {
@@ -67,7 +67,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public async Task AddAsync(string path)
         {
-            var ext = IoEx.Path.GetExtension(path).ToLower();
+            var ext = Path.GetExtension(path).ToLower();
             if (ext == ".pdf") await AddPdfAsync(path);
             else AddImage(path);
         }

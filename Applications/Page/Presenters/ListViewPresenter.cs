@@ -19,11 +19,12 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
 {
@@ -95,6 +96,10 @@ namespace Cube.Pdf.App.Page
         /// <summary>
         /// ファイルの追加要求が発生した時に実行されるハンドラです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// フォルダを指定された場合、直下のファイルのみを対象とします。
+        /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
         private async void View_Adding(object sender, DataEventArgs<string[]> e)
@@ -102,14 +107,8 @@ namespace Cube.Pdf.App.Page
             try
             {
                 Sync(() => { View.AllowOperation = false; });
-
-                foreach (var path in e.Value)
-                {
-                    if (IoEx.Directory.Exists(path) || Model.Contains(path)) continue;
-                    await Model.AddAsync(path);
-                }
+                await AddFileAsync(e.Value, 1); // 1 階層下のみ対象
             }
-            catch (Exception err) { ShowSync(err); }
             finally { Sync(() => { View.AllowOperation = true; }); }
         }
 
@@ -257,6 +256,38 @@ namespace Cube.Pdf.App.Page
         #endregion
 
         #region Other private methods
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// AddFileAsync
+        /// 
+        /// <summary>
+        /// ファイルを非同期で追加します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 追加不可能なファイルに関しては読み飛ばします。
+        /// ただし、パスワード付の PDF ファイルに関しては要対応。
+        /// </remarks>
+        ///
+        /* --------------------------------------------------------------------- */
+        private async Task AddFileAsync(string[] files, int hierarchy)
+        {
+            foreach (var path in files)
+            {
+                if (Model.Contains(path)) continue;
+                if (Directory.Exists(path))
+                {
+                    if (hierarchy > 0) await AddFileAsync(Directory.GetFiles(path), hierarchy - 1);
+                    continue;
+                }
+                else if (!File.Exists(path)) continue;
+
+                try { await Model.AddAsync(path); }
+                catch (EncryptionException /* err */) { /* see remarks */ }
+                catch (Exception /* err */) { /* see remarks */ }
+            }
+        }
 
         /* --------------------------------------------------------------------- */
         ///
