@@ -133,6 +133,10 @@
   <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MergeSuccess" xml:space="preserve">
+    <value>{0} 個のファイルを結合しました。
+結合されたファイルをファイルリストに登録しますか？</value>
+  </data>
   <data name="MessageTitle" xml:space="preserve">
     <value>CubePDF Page</value>
   </data>
@@ -142,10 +146,17 @@
   <data name="OpenFileTitle" xml:space="preserve">
     <value>ファイルを追加</value>
   </data>
+  <data name="SaveFileDescription" xml:space="preserve">
+    <value>ファイルを保存するフォルダを選択して下さい。</value>
+  </data>
   <data name="SaveFileFilter" xml:space="preserve">
     <value>PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="SaveFileTitle" xml:space="preserve">
     <value>ファイルを保存</value>
+  </data>
+  <data name="SplitSuccess" xml:space="preserve">
+    <value>{0} 個のファイルを分割しました。
+分割されたすべてのファイルをファイルリストに登録しますか？</value>
   </data>
 </root>

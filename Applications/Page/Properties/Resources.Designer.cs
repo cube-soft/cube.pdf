@@ -109,6 +109,16 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
+        ///   {0} 個のファイルを結合しました。
+        ///結合されたファイルをファイルリストに登録しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MergeSuccess {
+            get {
+                return ResourceManager.GetString("MergeSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   CubePDF Page に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageTitle {
@@ -136,6 +146,15 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
+        ///   ファイルを保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SaveFileDescription {
+            get {
+                return ResourceManager.GetString("SaveFileDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SaveFileFilter {
@@ -150,6 +169,16 @@ namespace Cube.Pdf.App.Page.Properties {
         internal static string SaveFileTitle {
             get {
                 return ResourceManager.GetString("SaveFileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} 個のファイルを分割しました。
+        ///分割されたすべてのファイルをファイルリストに登録しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SplitSuccess {
+            get {
+                return ResourceManager.GetString("SplitSuccess", resourceCulture);
             }
         }
     }

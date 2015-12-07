@@ -626,7 +626,12 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void RaiseSplittingEvent()
         {
-            OnSplitting(new DataEventArgs<string>(string.Empty));
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFileDescription;
+            dialog.ShowNewFolderButton = true;
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            OnSplitting(new DataEventArgs<string>(dialog.SelectedPath));
         }
 
         /* ----------------------------------------------------------------- */

@@ -179,7 +179,9 @@ namespace Cube.Pdf.App.Page
                 }
                 await binder.SaveAsync(e.Value);
 
+                var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
                 Model.Clear();
+                FinalizeSync(new string[] { e.Value }, message);
             }
             catch (Exception err) { ShowSync(err); }
             finally { Sync(() => { View.AllowOperation = true; }); }
@@ -199,6 +201,12 @@ namespace Cube.Pdf.App.Page
             try
             {
                 Sync(() => { View.AllowOperation = false; });
+
+                // TODO: Split
+
+                var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
+                Model.Clear();
+                FinalizeSync(new string[] { }, message);
             }
             finally { Sync(() => { View.AllowOperation = true; }); }
         }
@@ -274,6 +282,29 @@ namespace Cube.Pdf.App.Page
             page.Path = src.FullName;
             page.Size = src.ViewSize;
             dest.Pages.Add(page);
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// FinalizeSync
+        /// 
+        /// <summary>
+        /// 終了時に行う処理を UI スレッドで実行します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void FinalizeSync(string[] files, string message)
+        {
+            Sync(() =>
+            {
+                View.AllowOperation = true;
+
+                var result = MessageBox.Show(message, Properties.Resources.MessageTitle,
+                MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (result == DialogResult.No) return;
+
+                View_Adding(this, new DataEventArgs<string[]>(files));
+            });
         }
 
         /* --------------------------------------------------------------------- */
