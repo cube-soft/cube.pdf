@@ -70,6 +70,15 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
+        ///   下へ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DownMenu {
+            get {
+                return ResourceManager.GetString("DownMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   CubePDF Page エラー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ErrorMessageTitle {
@@ -146,6 +155,24 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
+        ///   開く に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string OpenMenu {
+            get {
+                return ResourceManager.GetString("OpenMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルリストから削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string RemoveMenu {
+            get {
+                return ResourceManager.GetString("RemoveMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイルを保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SaveFileDescription {
@@ -179,6 +206,15 @@ namespace Cube.Pdf.App.Page.Properties {
         internal static string SplitSuccess {
             get {
                 return ResourceManager.GetString("SplitSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上へ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpMenu {
+            get {
+                return ResourceManager.GetString("UpMenu", resourceCulture);
             }
         }
     }

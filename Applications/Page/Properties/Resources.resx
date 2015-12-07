@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>CubePDF Page について</value>
   </data>
+  <data name="DownMenu" xml:space="preserve">
+    <value>下へ</value>
+  </data>
   <data name="ErrorMessageTitle" xml:space="preserve">
     <value>CubePDF Page エラー</value>
   </data>
@@ -146,6 +149,12 @@
   <data name="OpenFileTitle" xml:space="preserve">
     <value>ファイルを追加</value>
   </data>
+  <data name="OpenMenu" xml:space="preserve">
+    <value>開く</value>
+  </data>
+  <data name="RemoveMenu" xml:space="preserve">
+    <value>ファイルリストから削除</value>
+  </data>
   <data name="SaveFileDescription" xml:space="preserve">
     <value>ファイルを保存するフォルダを選択して下さい。</value>
   </data>
@@ -158,5 +167,8 @@
   <data name="SplitSuccess" xml:space="preserve">
     <value>{0} 個のファイルを分割しました。
 分割されたすべてのファイルをファイルリストに登録しますか？</value>
+  </data>
+  <data name="UpMenu" xml:space="preserve">
+    <value>上へ</value>
   </data>
 </root>

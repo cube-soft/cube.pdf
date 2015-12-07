@@ -72,6 +72,7 @@ namespace Cube.Pdf.App.Page
             FooterPanel.DragDrop   += Control_DragDrop;
             PageListView.DragDrop  += Control_DragDrop;
 
+            PageListView.ContextMenuStrip = CreateContextMenu();
             PageListView.SelectedIndexChanged += (s, e) => UpdateControls();
             PageListView.MouseDoubleClick += (s, e) => RaiseOpeningEvent();
         }
@@ -132,6 +133,24 @@ namespace Cube.Pdf.App.Page
                 foreach (int index in PageListView.SelectedIndices) dest.Add(index);
                 dest.Sort();
                 return dest;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AnyItemsSelected
+        /// 
+        /// <summary>
+        /// 項目が一つでも選択されているかどうかを示す値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AnyItemsSelected
+        {
+            get
+            {
+                var items = PageListView.SelectedItems;
+                return items != null && items.Count > 0;
             }
         }
 
@@ -695,6 +714,40 @@ namespace Cube.Pdf.App.Page
 
             dest.ToolTipText = item.FullName;
             dest.ImageIndex = _icons.Register(item);
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateContextMenu
+        /// 
+        /// <summary>
+        /// コンテキストメニューを生成します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private ContextMenuStrip CreateContextMenu()
+        {
+            var dest = new ContextMenuStrip();
+
+            var open   = dest.Items.Add(Properties.Resources.OpenMenu, null, (s, e) => RaiseOpeningEvent());
+            var hr0    = dest.Items.Add("-");
+            var up     = dest.Items.Add(Properties.Resources.UpMenu, null, (s, e) => OnMoving(new DataEventArgs<int>(-1)));
+            var down   = dest.Items.Add(Properties.Resources.DownMenu, null, (s, e) => OnMoving(new DataEventArgs<int>(1)));
+            var hr1    = dest.Items.Add("-");
+            var remove = dest.Items.Add(Properties.Resources.RemoveMenu, null, (s, e) => OnRemoving(e));
+
+            Action action = () =>
+            {
+                open.Enabled   = AnyItemsSelected;
+                up.Enabled     = AnyItemsSelected;
+                down.Enabled   = AnyItemsSelected;
+                remove.Enabled = AnyItemsSelected;
+            };
+
+            action();
+            PageListView.SelectedIndexChanged += (s, e) => action();
+
             return dest;
         }
 
