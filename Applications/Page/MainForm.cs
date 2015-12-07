@@ -434,6 +434,21 @@ namespace Cube.Pdf.App.Page
             base.OnLoad(e);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnReceived
+        /// 
+        /// <summary>
+        /// 他プロセスからデータ受信時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnReceived(DataEventArgs<object> e)
+        {
+            RaiseAddingEvent(e.Value);
+            base.OnReceived(e);
+        }
+
         #endregion
 
         #region Event handlers
