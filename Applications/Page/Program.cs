@@ -44,11 +44,24 @@ namespace Cube.Pdf.App.Page
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            var name = Application.ProductName.ToLower();
+            using (var bootstrap = new Bootstrap(name))
+            {
+                if (bootstrap.Exists())
+                {
+                    bootstrap.Activate(args);
+                    return;
+                }
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                var form = new MainForm(args);
+                form.Bootstrap = bootstrap;
+                Application.Run(form);
+            }
+
         }
     }
 }

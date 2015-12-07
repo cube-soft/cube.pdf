@@ -76,6 +76,21 @@ namespace Cube.Pdf.App.Page
             PageListView.MouseDoubleClick += (s, e) => RaiseOpeningEvent();
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MainForm
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainForm(string[] args)
+            : this()
+        {
+            RaiseAddingEvent(args);
+        }
+
         #endregion
 
         #region Properties
