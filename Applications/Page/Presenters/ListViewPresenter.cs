@@ -82,7 +82,7 @@ namespace Cube.Pdf.App.Page
                 var indices = View.SelectedIndices;
                 var index = (indices.Count > 0) ? indices[0] : -1;
                 if (index < 0 || index >= Model.Count) return;
-                System.Diagnostics.Process.Start(Model[index].Path);
+                System.Diagnostics.Process.Start(Model[index].FullName);
             }
             catch (Exception /* err */) { /* ignore errors */ }
         }
@@ -271,7 +271,7 @@ namespace Cube.Pdf.App.Page
         private void AddImage(Item src, Cube.Pdf.Editing.PageBinder dest)
         {
             var page = new ImagePage();
-            page.Path = src.Path;
+            page.Path = src.FullName;
             page.Size = src.ViewSize;
             dest.Pages.Add(page);
         }

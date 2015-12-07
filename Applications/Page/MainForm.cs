@@ -525,6 +525,8 @@ namespace Cube.Pdf.App.Page
             tips.AutoPopDelay = 5000;
             tips.ReshowDelay  = 1000;
             tips.SetToolTip(TitleButton, Properties.Resources.About);
+
+            PageListView.SmallImageList = _icons.ImageList;
         }
 
         /* ----------------------------------------------------------------- */
@@ -678,16 +680,23 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private ListViewItem Convert(Item item)
         {
-            var filename = IoEx.Path.GetFileName(item.Path);
-            var pages = item.PageCount.ToString();
-            var bytes = item.FileSize.ToPrettyBytes();
-            var date = item.LastWriteTime.ToString("yyyy/MM/dd hh:mm");
+            var space    = " ";
+            var filename = IoEx.Path.GetFileName(item.FullName);
+            var type     = item.TypeName;
+            var pages    = item.PageCount.ToString();
+            var date     = item.LastWriteTime.ToString("yyyy/MM/dd hh:mm");
+            var bytes    = item.Length.ToPrettyBytes();
+            var dest     = new ListViewItem(new string[] { space + filename, type, pages, date, bytes });
 
-            var dest = new ListViewItem(new string[] { filename, pages, bytes, date });
-            dest.ToolTipText = item.Path;
+            dest.ToolTipText = item.FullName;
+            dest.ImageIndex = _icons.Register(item);
             return dest;
         }
 
+        #endregion
+
+        #region Fields
+        private IconCollection _icons = new IconCollection();
         #endregion
     }
 }

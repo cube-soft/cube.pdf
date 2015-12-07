@@ -42,9 +42,10 @@
             this.ClearButton = new Cube.Forms.Button();
             this.PageListView = new Cube.Forms.ListView();
             this.FileColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.TitleButton = new System.Windows.Forms.PictureBox();
@@ -226,9 +227,10 @@
             this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.FileColumnHeader,
+            this.TypeColumnHeader,
             this.PageColumnHeader,
-            this.SizeColumnHeader,
-            this.DateColumnHeader});
+            this.DateColumnHeader,
+            this.SizeColumnHeader});
             this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PageListView.FullRowSelect = true;
             this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -245,22 +247,27 @@
             // FileColumnHeader
             // 
             this.FileColumnHeader.Text = "ファイル名";
-            this.FileColumnHeader.Width = 200;
+            this.FileColumnHeader.Width = 180;
+            // 
+            // TypeColumnHeader
+            // 
+            this.TypeColumnHeader.Text = "種類";
+            this.TypeColumnHeader.Width = 90;
             // 
             // PageColumnHeader
             // 
             this.PageColumnHeader.Text = "ページ数";
-            this.PageColumnHeader.Width = 80;
-            // 
-            // SizeColumnHeader
-            // 
-            this.SizeColumnHeader.Text = "サイズ";
-            this.SizeColumnHeader.Width = 100;
+            this.PageColumnHeader.Width = 70;
             // 
             // DateColumnHeader
             // 
             this.DateColumnHeader.Text = "更新日時";
-            this.DateColumnHeader.Width = 130;
+            this.DateColumnHeader.Width = 120;
+            // 
+            // SizeColumnHeader
+            // 
+            this.SizeColumnHeader.Text = "サイズ";
+            this.SizeColumnHeader.Width = 80;
             // 
             // HeaderPanel
             // 
@@ -338,6 +345,7 @@
         private Cube.Forms.Button ClearButton;
         private Cube.Forms.Button SplitButton;
         private Cube.Forms.Button MergeButton;
+        private System.Windows.Forms.ColumnHeader TypeColumnHeader;
     }
 }
 
