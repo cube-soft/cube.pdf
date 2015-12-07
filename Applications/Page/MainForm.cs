@@ -73,6 +73,7 @@ namespace Cube.Pdf.App.Page
             PageListView.DragDrop  += Control_DragDrop;
 
             PageListView.SelectedIndexChanged += (s, e) => UpdateControls();
+            PageListView.MouseDoubleClick += (s, e) => RaiseOpeningEvent();
         }
 
         #endregion
@@ -122,6 +123,17 @@ namespace Cube.Pdf.App.Page
         #endregion
 
         #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Opening
+        /// 
+        /// <summary>
+        /// 項目を開く時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler Opening;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -301,6 +313,20 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnOpening
+        /// 
+        /// <summary>
+        /// 項目を開く時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnOpening(EventArgs e)
+        {
+            if (Opening != null) Opening(this, e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OnAdding
         /// 
         /// <summary>
@@ -469,8 +495,6 @@ namespace Cube.Pdf.App.Page
             tips.AutoPopDelay = 5000;
             tips.ReshowDelay  = 1000;
             tips.SetToolTip(TitleButton, Properties.Resources.About);
-
-            UxTheme.SetWindowTheme(PageListView.Handle, "Explorer", null);
         }
 
         /* ----------------------------------------------------------------- */
@@ -485,6 +509,21 @@ namespace Cube.Pdf.App.Page
         private void InitializePresenters()
         {
             new ListViewPresenter(this, new ItemCollection());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseOpeningEvent
+        /// 
+        /// <summary>
+        /// Opening イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseOpeningEvent()
+        {
+            if (PageListView.SelectedIndices.Count <= 0) return;
+            OnOpening(new EventArgs());
         }
 
         /* ----------------------------------------------------------------- */

@@ -381,8 +381,6 @@ namespace Cube.Pdf.ImageEx
             ImageListView.LargeImageList = new ImageList();
             ImageListView.LargeImageList.ImageSize = new Size(128, 128);
             ImageListView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
-
-            UxTheme.SetWindowTheme(ImageListView.Handle, "Explorer", null);
         }
 
         /* ----------------------------------------------------------------- */

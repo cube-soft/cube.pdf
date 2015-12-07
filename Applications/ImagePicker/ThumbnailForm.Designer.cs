@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThumbnailForm));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ImageListView = new System.Windows.Forms.ListView();
+            this.ImageListView = new Cube.Forms.ListView();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ExitButton = new Cube.Forms.Button();
             this.SaveAllButton = new Cube.Forms.Button();
@@ -66,6 +66,7 @@
             this.ImageListView.Name = "ImageListView";
             this.ImageListView.Size = new System.Drawing.Size(634, 266);
             this.ImageListView.TabIndex = 5;
+            this.ImageListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.ImageListView.UseCompatibleStateImageBehavior = false;
             // 
             // FooterPanel
@@ -155,6 +156,6 @@
         private Cube.Forms.Button ExitButton;
         private Cube.Forms.Button SaveAllButton;
         private Cube.Forms.Button SaveButton;
-        private System.Windows.Forms.ListView ImageListView;
+        private Cube.Forms.ListView ImageListView;
     }
 }

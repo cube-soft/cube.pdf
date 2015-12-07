@@ -69,7 +69,6 @@
     </Compile>
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemCollection.cs" />
-    <Compile Include="NativeApi\UxTheme.cs" />
     <Compile Include="Presenters\ListViewPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

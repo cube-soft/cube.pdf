@@ -40,7 +40,7 @@
             this.DownButton = new Cube.Forms.Button();
             this.RemoveButton = new Cube.Forms.Button();
             this.ClearButton = new Cube.Forms.Button();
-            this.PageListView = new System.Windows.Forms.ListView();
+            this.PageListView = new Cube.Forms.ListView();
             this.FileColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -238,6 +238,7 @@
             this.PageListView.ShowItemToolTips = true;
             this.PageListView.Size = new System.Drawing.Size(560, 216);
             this.PageListView.TabIndex = 3;
+            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.PageListView.UseCompatibleStateImageBehavior = false;
             this.PageListView.View = System.Windows.Forms.View.Details;
             // 
@@ -322,7 +323,6 @@
         private System.Windows.Forms.FlowLayoutPanel FooterPanel;
         private System.Windows.Forms.TableLayoutPanel ContentsPanel;
         private System.Windows.Forms.FlowLayoutPanel ButtonsPanel;
-        private System.Windows.Forms.ListView PageListView;
         private System.Windows.Forms.ColumnHeader FileColumnHeader;
         private System.Windows.Forms.ColumnHeader PageColumnHeader;
         private System.Windows.Forms.ColumnHeader SizeColumnHeader;
@@ -330,6 +330,7 @@
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox TitleButton;
         private System.Windows.Forms.PictureBox ImagePictureBox;
+        private Cube.Forms.ListView PageListView;
         private Cube.Forms.Button FileButton;
         private Cube.Forms.Button UpButton;
         private Cube.Forms.Button DownButton;

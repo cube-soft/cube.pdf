@@ -57,6 +57,7 @@ namespace Cube.Pdf.App.Page
             View.Moving    += View_Moving;
             View.Merging   += View_Merging;
             View.Splitting += View_Splitting;
+            View.Opening   += View_Opening;
 
             Model.CollectionChanged += Model_CollectionChanged;
         }
@@ -64,6 +65,27 @@ namespace Cube.Pdf.App.Page
         #endregion
 
         #region Event handlers
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_Opening
+        /// 
+        /// <summary>
+        /// 項目を開く時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void View_Opening(object sender, EventArgs e)
+        {
+            try
+            {
+                var indices = View.SelectedIndices;
+                var index = (indices.Count > 0) ? indices[0] : -1;
+                if (index < 0 || index >= Model.Count) return;
+                System.Diagnostics.Process.Start(Model[index].Path);
+            }
+            catch (Exception /* err */) { /* ignore errors */ }
+        }
 
         /* --------------------------------------------------------------------- */
         ///
