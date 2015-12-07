@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Forms;
@@ -171,13 +172,13 @@ namespace Cube.Pdf.App.Page
             {
                 Sync(() => { View.AllowOperation = false; ; });
 
-                var binder = new Cube.Pdf.Editing.PageBinder();
+                var task = new Cube.Pdf.Editing.PageBinder();
                 foreach (var item in Model)
                 {
-                    if (item.Type == PageType.Pdf) AddPdf(item, binder);
-                    else if (item.Type == PageType.Image) AddImage(item, binder);
+                    if (item.Type == PageType.Pdf) AddPdf(item, task);
+                    else if (item.Type == PageType.Image) AddImage(item, task);
                 }
-                await binder.SaveAsync(e.Value);
+                await task.SaveAsync(e.Value);
 
                 var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
                 Model.Clear();
@@ -196,17 +197,24 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_Splitting(object sender, DataEventArgs<string> e)
+        private async void View_Splitting(object sender, DataEventArgs<string> e)
         {
             try
             {
                 Sync(() => { View.AllowOperation = false; });
 
-                // TODO: Split
+                var results = new List<string>();
+                var task = new Cube.Pdf.Editing.PageSplitter();
+                foreach (var item in Model)
+                {
+                    if (item.Type == PageType.Pdf) AddPdf(item, task);
+                    else if (item.Type == PageType.Image) AddImage(item, task);
+                }
+                await task.SaveAsync(e.Value, results);
 
                 var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
                 Model.Clear();
-                FinalizeSync(new string[] { }, message);
+                FinalizeSync(results.ToArray(), message);
             }
             finally { Sync(() => { View.AllowOperation = true; }); }
         }
@@ -259,7 +267,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void AddPdf(Item src, Cube.Pdf.Editing.PageBinder dest)
+        private void AddPdf(Item src, IDocumentWriter dest)
         {
             var reader = src.Value as Cube.Pdf.Editing.DocumentReader;
             if (reader == null) return;
@@ -276,7 +284,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void AddImage(Item src, Cube.Pdf.Editing.PageBinder dest)
+        private void AddImage(Item src, IDocumentWriter dest)
         {
             var page = new ImagePage();
             page.Path = src.FullName;

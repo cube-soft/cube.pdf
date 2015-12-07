@@ -35,7 +35,7 @@ namespace Cube.Pdf.Editing
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    class PageSplitter : IDocumentWriter
+    public class PageSplitter : IDocumentWriter
     {
         #region Constructors
 
