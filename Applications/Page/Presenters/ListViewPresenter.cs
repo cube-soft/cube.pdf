@@ -172,6 +172,9 @@ namespace Cube.Pdf.App.Page
                 Sync(() => { View.AllowOperation = false; ; });
 
                 var task = new Cube.Pdf.Editing.PageBinder();
+                task.Metadata.Version = new Version(1, 7);
+                task.Metadata.Creator = Application.ProductName;
+
                 foreach (var item in Model)
                 {
                     if (item.Type == PageType.Pdf) AddPdf(item, task);
@@ -204,6 +207,9 @@ namespace Cube.Pdf.App.Page
 
                 var results = new List<string>();
                 var task = new Cube.Pdf.Editing.PageSplitter();
+                task.Metadata.Version = new Version(1, 7);
+                task.Metadata.Creator = Application.ProductName;
+
                 foreach (var item in Model)
                 {
                     if (item.Type == PageType.Pdf) AddPdf(item, task);
