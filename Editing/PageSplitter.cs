@@ -261,6 +261,7 @@ namespace Cube.Pdf.Editing
                     document.NewPage();
                     document.Add(obj);
                 }
+
                 document.Close();
                 writer.Close();
 
@@ -312,6 +313,8 @@ namespace Cube.Pdf.Editing
 
             writer.AddPage(writer.GetImportedPage(reader, pagenum));
             AddMetadata(document);
+            AddEncryption(writer);
+            if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
 
             document.Close();
             writer.Close();
@@ -333,6 +336,47 @@ namespace Cube.Pdf.Editing
             document.AddKeywords(Metadata.Keywords);
             document.AddCreator(Metadata.Creator);
             document.AddAuthor(Metadata.Author);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddEncryption
+        /// 
+        /// <summary>
+        /// 各種セキュリティ情報を付加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddEncryption(PdfCopy writer)
+        {
+            if (Encryption.IsEnabled && Encryption.OwnerPassword.Length > 0)
+            {
+                var method     = Translator.ToIText(Encryption.Method);
+                var permission = Translator.ToIText(Encryption.Permission);
+                var userpass   = Encryption.IsUserPasswordEnabled ?
+                                 GetUserPassword(Encryption.UserPassword, Encryption.OwnerPassword) :
+                                 string.Empty;
+                writer.SetEncryption(method, userpass, Encryption.OwnerPassword, permission);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetUserPassword
+        /// 
+        /// <summary>
+        /// ユーザパスワードを取得します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// ユーザから明示的にユーザパスワードが指定されていない場合、
+        /// オーナパスワードと同じ文字列を使用します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetUserPassword(string userPassword, string ownerPassword)
+        {
+            return !string.IsNullOrEmpty(userPassword) ? userPassword : ownerPassword;
         }
 
         /* ----------------------------------------------------------------- */
