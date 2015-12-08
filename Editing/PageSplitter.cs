@@ -314,7 +314,6 @@ namespace Cube.Pdf.Editing
             writer.AddPage(writer.GetImportedPage(reader, pagenum));
             AddMetadata(document);
             AddEncryption(writer);
-            if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
 
             document.Close();
             writer.Close();
