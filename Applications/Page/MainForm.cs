@@ -683,9 +683,8 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void UpdateControls()
         {
-            var some = PageListView.Items.Count > 0;
-            MergeButton.Enabled = some;
-            SplitButton.Enabled = some;
+            MergeButton.Enabled = PageListView.Items.Count > 1;
+            SplitButton.Enabled = PageListView.Items.Count > 0;
 
             var selected = PageListView.SelectedIndices.Count > 0;
             UpButton.Enabled     = selected;
