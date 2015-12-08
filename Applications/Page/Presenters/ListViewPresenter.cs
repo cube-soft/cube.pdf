@@ -171,15 +171,26 @@ namespace Cube.Pdf.App.Page
             {
                 Sync(() => { View.AllowOperation = false; ; });
 
+                Metadata metadata = null;
                 var task = new Cube.Pdf.Editing.PageBinder();
-                task.Metadata.Version = new Version(1, 7);
-                task.Metadata.Creator = Application.ProductName;
-
                 foreach (var item in Model)
                 {
-                    if (item.Type == PageType.Pdf) AddPdf(item, task);
+                    if (item.Type == PageType.Pdf)
+                    {
+                        AddPdf(item, task);
+                        var reader = item.Value as IDocumentReader;
+                        if (metadata == null && reader != null && reader.Metadata != null) metadata = reader.Metadata;
+                    }
                     else if (item.Type == PageType.Image) AddImage(item, task);
                 }
+                
+                if (metadata == null)
+                {
+                    metadata = new Metadata();
+                    metadata.Version = new Version(1, 7);
+                }
+                task.Metadata = metadata;
+                task.Metadata.Creator = Application.ProductName;
                 await task.SaveAsync(e.Value);
 
                 var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
