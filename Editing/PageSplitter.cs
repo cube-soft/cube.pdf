@@ -253,7 +253,7 @@ namespace Cube.Pdf.Editing
                     image.SelectActiveFrame(dimension, i);
                     var obj = iTextSharp.text.Image.GetInstance(image, image.GuessImageFormat());
 
-                    document.SetPageSize(new iTextSharp.text.Rectangle(src.Size.Width, src.Size.Height));
+                    document.SetPageSize(new iTextSharp.text.Rectangle(image.Width, image.Height));
                     document.NewPage();
                     obj.SetAbsolutePosition(0, 0);
                     document.Add(obj);

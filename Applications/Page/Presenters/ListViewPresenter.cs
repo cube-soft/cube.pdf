@@ -319,7 +319,6 @@ namespace Cube.Pdf.App.Page
         {
             var page = new ImagePage();
             page.Path = src.FullName;
-            page.Size = src.ViewSize;
             dest.Pages.Add(page);
         }
 

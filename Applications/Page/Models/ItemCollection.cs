@@ -171,7 +171,6 @@ namespace Cube.Pdf.App.Page
             var item = new Item(PageType.Pdf, path);
             item.Value = reader;
             item.PageCount = reader.Pages.Count;
-            item.ViewSize = reader.GetPage(1).Size;
             lock (_lock) Add(item);
         }
 
@@ -187,10 +186,12 @@ namespace Cube.Pdf.App.Page
         private void AddImage(string path)
         {
             var image = new Bitmap(path);
+            var guid = image.FrameDimensionsList[0];
+            var dimension = new System.Drawing.Imaging.FrameDimension(guid);
+
             var item = new Item(PageType.Image, path);
             item.Value = image;
-            item.PageCount = 1;
-            item.ViewSize = image.Size;
+            item.PageCount = image.GetFrameCount(dimension);
             lock (_lock) Add(item);
         }
 
