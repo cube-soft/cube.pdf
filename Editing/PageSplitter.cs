@@ -152,7 +152,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public Task SaveAsync(string folder, IList<string> results)
         {
-            return Task.Run(() => Save(folder, results));
+            return TaskEx.Run(() => Save(folder, results));
         }
 
         #endregion
