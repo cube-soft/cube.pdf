@@ -231,7 +231,7 @@ namespace Cube.Pdf.Editing
         /// Save
         /// 
         /// <summary>
-        /// 画像ファイルを 1 ぺーじの PDF ファイルに変換して保存します。
+        /// 画像ファイルを 1 ページの PDF ファイルに変換して保存します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -251,29 +251,42 @@ namespace Cube.Pdf.Editing
                 for (var i = 0; i < image.GetFrameCount(dimension); ++i)
                 {
                     image.SelectActiveFrame(dimension, i);
-                    var obj = iTextSharp.text.Image.GetInstance(image, image.GuessImageFormat());
 
-                    document.SetPageSize(new iTextSharp.text.Rectangle(image.Width, image.Height));
-                    document.NewPage();
+                    var dpi = 72f / image.HorizontalResolution;
+                    var obj = iTextSharp.text.Image.GetInstance(image, image.GuessImageFormat());
                     obj.SetAbsolutePosition(0, 0);
+                    obj.ScalePercent(dpi * 100f);
+
+                    document.SetPageSize(new iTextSharp.text.Rectangle(image.Width * dpi, image.Height * dpi));
+                    document.NewPage();
                     document.Add(obj);
                 }
                 document.Close();
                 writer.Close();
 
-                using (var reader = new PdfReader(stream.ToArray()))
-                {
-                    for (var i = 0; i < reader.NumberOfPages; ++i)
-                    {
-                        var basename = Path.GetFileNameWithoutExtension(src.Path);
-                        var pagenum = i + 1;
-                        var dest = Unique(folder, basename, pagenum, reader.NumberOfPages);
-                        SaveOne(reader, pagenum, dest);
-                        results.Add(dest);
-                    }
-                }
+                using (var reader = new PdfReader(stream.ToArray())) Save(src, folder, results, reader);
             }
+        }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        /// 
+        /// <summary>
+        /// 画像ファイルを 1 ページの PDF ファイルに変換して保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Save(ImagePage src, string folder, IList<string> results, PdfReader reader)
+        {
+            for (var i = 0; i < reader.NumberOfPages; ++i)
+            {
+                var basename = Path.GetFileNameWithoutExtension(src.Path);
+                var pagenum = i + 1;
+                var dest = Unique(folder, basename, pagenum, reader.NumberOfPages);
+                SaveOne(reader, pagenum, dest);
+                results.Add(dest);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -296,9 +309,30 @@ namespace Cube.Pdf.Editing
             writer.ViewerPreferences = Metadata.ViewPreferences;
 
             document.Open();
+
             writer.AddPage(writer.GetImportedPage(reader, pagenum));
+            AddMetadata(document);
+
             document.Close();
             writer.Close();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddMetadata
+        /// 
+        /// <summary>
+        /// タイトル、著者名等の各種メタデータを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddMetadata(iTextSharp.text.Document document)
+        {
+            document.AddTitle(Metadata.Title);
+            document.AddSubject(Metadata.Subtitle);
+            document.AddKeywords(Metadata.Keywords);
+            document.AddCreator(Metadata.Creator);
+            document.AddAuthor(Metadata.Author);
         }
 
         /* ----------------------------------------------------------------- */
