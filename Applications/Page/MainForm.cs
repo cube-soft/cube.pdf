@@ -19,17 +19,17 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using Cube.Extensions;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.Page
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.MainForm
+    /// Cube.Pdf.App.Page.MainForm
     ///
     /// <summary>
     /// CubePDF Page メイン画面を表示するクラスです。
@@ -55,6 +55,7 @@ namespace Cube.Pdf.Page
             InitializeLayout();
             InitializePresenters();
 
+            TitleButton.Click  += (s, e) => ShowVersion();
             FileButton.Click   += (s, e) => RaiseAddingEvent();
             RemoveButton.Click += (s, e) => OnRemoving(e);
             ClearButton.Click  += (s, e) => OnClearing(e);
@@ -71,13 +72,49 @@ namespace Cube.Pdf.Page
             FooterPanel.DragDrop   += Control_DragDrop;
             PageListView.DragDrop  += Control_DragDrop;
 
-            // 未実装のため無効化
-            SplitButton.Enabled = false;
+            PageListView.ContextMenuStrip = CreateContextMenu();
+            PageListView.SelectedIndexChanged += (s, e) => UpdateControls();
+            PageListView.MouseDoubleClick += (s, e) => RaiseOpeningEvent();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MainForm
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainForm(string[] args)
+            : this()
+        {
+            RaiseAddingEvent(args);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowOperation
+        /// 
+        /// <summary>
+        /// 各種操作を受け付けるかどうかを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AllowOperation
+        {
+            get { return ButtonsPanel.Enabled && FooterPanel.Enabled; }
+            set
+            {
+                ButtonsPanel.Enabled = value;
+                FooterPanel.Enabled  = value;
+                Cursor = value ? Cursors.Default : Cursors.WaitCursor;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,9 +136,38 @@ namespace Cube.Pdf.Page
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AnyItemsSelected
+        /// 
+        /// <summary>
+        /// 項目が一つでも選択されているかどうかを示す値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AnyItemsSelected
+        {
+            get
+            {
+                var items = PageListView.SelectedItems;
+                return items != null && items.Count > 0;
+            }
+        }
+
         #endregion
 
         #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Opening
+        /// 
+        /// <summary>
+        /// 項目を開く時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler Opening;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -182,9 +248,9 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(Item item)
+        public void AddItem(Item item)
         {
-            PageListView.Items.Add(Convert(item));
+            Execute(() => PageListView.Items.Add(Convert(item)));
         }
 
         /* ----------------------------------------------------------------- */
@@ -196,11 +262,36 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, Item item)
+        public void InsertItem(int index, Item item)
         {
-            var i = Math.Max(Math.Min(index, PageListView.Items.Count), 0);
-            if (i == PageListView.Items.Count) PageListView.Items.Add(Convert(item));
-            else PageListView.Items.Insert(i, Convert(item));
+            Execute(() =>
+            {
+                var i = Math.Max(Math.Min(index, PageListView.Items.Count), 0);
+                if (i == PageListView.Items.Count) PageListView.Items.Add(Convert(item));
+                else PageListView.Items.Insert(i, Convert(item));
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        /// 
+        /// <summary>
+        /// 項目を移動します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void MoveItem(int oldindex, int newindex)
+        {
+            Execute(() =>
+            {
+                if (oldindex < 0 || oldindex >= PageListView.Items.Count) return;
+
+                var item = PageListView.Items[oldindex];
+                PageListView.Items.RemoveAt(oldindex);
+                var result = PageListView.Items.Insert(newindex, item);
+                if (result != null) result.Selected = true;
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -212,9 +303,9 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void RemoveAt(int index)
+        public void RemoveItem(int index)
         {
-            PageListView.Items.RemoveAt(index);
+            Execute(() => PageListView.Items.RemoveAt(index));
         }
 
         /* ----------------------------------------------------------------- */
@@ -226,14 +317,47 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear()
+        public void ClearItems()
         {
-            PageListView.Items.Clear();
+            Execute(() => PageListView.Items.Clear());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowVersion
+        /// 
+        /// <summary>
+        /// バージョン情報を表示します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ShowVersion()
+        {
+            var dialog = new Cube.Forms.VersionForm();
+            dialog.Assembly = Assembly.GetExecutingAssembly();
+            dialog.Logo = Properties.Resources.Logo;
+            dialog.Description = string.Empty;
+            dialog.Height = 320;
+            dialog.ShowDialog();
         }
 
         #endregion
 
         #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnOpening
+        /// 
+        /// <summary>
+        /// 項目を開く時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnOpening(EventArgs e)
+        {
+            if (Opening != null) Opening(this, e);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -334,8 +458,29 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         protected override void OnLoad(EventArgs e)
         {
-            MergeButton.Select();
+            Execute(() =>
+            {
+                var arch = (IntPtr.Size == 4) ? "x86" : "x64";
+                var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
+                Text = string.Format("{0} {1} ({2})", asm.Product, asm.Version.ToString(3), arch);
+                MergeButton.Select();
+            });
             base.OnLoad(e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnReceived
+        /// 
+        /// <summary>
+        /// 他プロセスからデータ受信時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnReceived(DataEventArgs<object> e)
+        {
+            RaiseAddingEvent(e.Value);
+            base.OnReceived(e);
         }
 
         #endregion
@@ -354,7 +499,8 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private void Control_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.All;
+            if (!AllowOperation) e.Effect = DragDropEffects.None;
+            else if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.All;
             else if (e.Data.GetDataPresent(typeof(ListViewItem))) e.Effect = DragDropEffects.Move;
             else e.Effect = DragDropEffects.None;
         }
@@ -371,29 +517,12 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private void Control_DragDrop(object sender, DragEventArgs e)
         {
+            if (!AllowOperation) return;
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 RaiseAddingEvent(e.Data.GetData(DataFormats.FileDrop, false));
             }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageListView_SelectedIndexChanged
-        /// 
-        /// <summary>
-        /// 項目の選択状況が変更された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PageListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var selected = PageListView.SelectedIndices != null && PageListView.SelectedIndices.Count > 0;
-            UpButton.Enabled = selected;
-            DownButton.Enabled = selected;
-            RemoveButton.Enabled = selected;
-        }
-
 
         #endregion
 
@@ -410,7 +539,13 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            UxTheme.SetWindowTheme(PageListView.Handle, "Explorer", null);
+            var tips = new ToolTip();
+            tips.InitialDelay =  200;
+            tips.AutoPopDelay = 5000;
+            tips.ReshowDelay  = 1000;
+            tips.SetToolTip(TitleButton, Properties.Resources.About);
+
+            PageListView.SmallImageList = _icons.ImageList;
         }
 
         /* ----------------------------------------------------------------- */
@@ -424,7 +559,22 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new ListViewPresenter(this, new ObservableCollection<Item>());
+            new ListViewPresenter(this, new ItemCollection());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseOpeningEvent
+        /// 
+        /// <summary>
+        /// Opening イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseOpeningEvent()
+        {
+            if (PageListView.SelectedIndices.Count <= 0) return;
+            OnOpening(new EventArgs());
         }
 
         /* ----------------------------------------------------------------- */
@@ -495,7 +645,51 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private void RaiseSplittingEvent()
         {
-            OnSplitting(new DataEventArgs<string>(string.Empty));
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFileDescription;
+            dialog.ShowNewFolderButton = true;
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+            OnSplitting(new DataEventArgs<string>(dialog.SelectedPath));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Execute
+        /// 
+        /// <summary>
+        /// 各種操作を実行します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 各種操作の共通に行われる処理をここに記述します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Execute(Action op)
+        {
+            try { op(); }
+            finally { UpdateControls(); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateControls
+        /// 
+        /// <summary>
+        /// 各種コントロールの状態を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateControls()
+        {
+            MergeButton.Enabled = PageListView.Items.Count > 1;
+            SplitButton.Enabled = PageListView.Items.Count > 0;
+
+            var selected = PageListView.SelectedIndices.Count > 0;
+            UpButton.Enabled     = selected;
+            DownButton.Enabled   = selected;
+            RemoveButton.Enabled = selected;
         }
 
         /* ----------------------------------------------------------------- */
@@ -509,17 +703,57 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         private ListViewItem Convert(Item item)
         {
-            var filename = IoEx.Path.GetFileNameWithoutExtension(item.Path);
-            var type = item.Type == PageType.Pdf ? "PDF" : "Image";
-            var pages = item.PageCount.ToString();
-            var bytes = ((ulong)item.FileSize).ToPrettyBytes();
-            var date = item.LastWriteTime.ToString("yyyy/MM/dd");
+            var space    = " ";
+            var filename = IoEx.Path.GetFileName(item.FullName);
+            var type     = item.TypeName;
+            var pages    = item.PageCount.ToString();
+            var date     = item.LastWriteTime.ToString("yyyy/MM/dd hh:mm");
+            var bytes    = item.Length.ToPrettyBytes();
+            var dest     = new ListViewItem(new string[] { space + filename, type, pages, date, bytes });
 
-            var dest = new ListViewItem(new string[] { filename, type, pages, bytes, date });
-            dest.ToolTipText = item.Path;
+            dest.ToolTipText = item.FullName;
+            dest.ImageIndex = _icons.Register(item);
             return dest;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateContextMenu
+        /// 
+        /// <summary>
+        /// コンテキストメニューを生成します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private ContextMenuStrip CreateContextMenu()
+        {
+            var dest = new ContextMenuStrip();
+
+            var open   = dest.Items.Add(Properties.Resources.OpenMenu, null, (s, e) => RaiseOpeningEvent());
+            var hr0    = dest.Items.Add("-");
+            var up     = dest.Items.Add(Properties.Resources.UpMenu, null, (s, e) => OnMoving(new DataEventArgs<int>(-1)));
+            var down   = dest.Items.Add(Properties.Resources.DownMenu, null, (s, e) => OnMoving(new DataEventArgs<int>(1)));
+            var hr1    = dest.Items.Add("-");
+            var remove = dest.Items.Add(Properties.Resources.RemoveMenu, null, (s, e) => OnRemoving(e));
+
+            Action action = () =>
+            {
+                open.Enabled   = AnyItemsSelected;
+                up.Enabled     = AnyItemsSelected;
+                down.Enabled   = AnyItemsSelected;
+                remove.Enabled = AnyItemsSelected;
+            };
+
+            action();
+            PageListView.SelectedIndexChanged += (s, e) => action();
+
+            return dest;
+        }
+
+        #endregion
+
+        #region Fields
+        private IconCollection _icons = new IconCollection();
         #endregion
     }
 }

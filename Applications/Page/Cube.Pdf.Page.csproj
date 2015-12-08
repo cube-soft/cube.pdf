@@ -7,7 +7,7 @@
     <ProjectGuid>{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Pdf.Page</RootNamespace>
+    <RootNamespace>Cube.Pdf.App.Page</RootNamespace>
     <AssemblyName>CubePdfPage</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -75,11 +75,10 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\IconCollection.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemCollection.cs" />
-    <Compile Include="NativeApi\UxTheme.cs" />
     <Compile Include="Presenters\ListViewPresenter.cs" />
-    <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -112,6 +111,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
+    <None Include="Resources\Logo.png" />
+    <None Include="Resources\HeaderTitle.png" />
+    <None Include="Resources\HeaderImage.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Cube.Pdf.csproj">

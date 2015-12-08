@@ -31,10 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgressForm));
             this.MessageLabel = new System.Windows.Forms.Label();
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
-            this.ExitButton = new System.Windows.Forms.Button();
-            this.SaveButton = new System.Windows.Forms.Button();
-            this.PreviewButton = new System.Windows.Forms.Button();
-            this.HeaderView = new Cube.Pdf.ImageEx.HeaderView();
+            this.ExitButton = new Cube.Forms.Button();
+            this.SaveButton = new Cube.Forms.Button();
+            this.PreviewButton = new Cube.Forms.Button();
+            this.HeaderPanel = new Cube.Pdf.ImageEx.HeaderView();
             this.SuspendLayout();
             // 
             // MessageLabel
@@ -95,17 +95,17 @@
             this.PreviewButton.Text = "プレビュー";
             this.PreviewButton.UseVisualStyleBackColor = false;
             // 
-            // HeaderView
+            // HeaderPanel
             // 
-            this.HeaderView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.HeaderView.Dock = System.Windows.Forms.DockStyle.Top;
-            this.HeaderView.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.HeaderView.Location = new System.Drawing.Point(0, 0);
-            this.HeaderView.Margin = new System.Windows.Forms.Padding(0);
-            this.HeaderView.Name = "HeaderView";
-            this.HeaderView.Size = new System.Drawing.Size(434, 35);
-            this.HeaderView.TabIndex = 999;
-            this.HeaderView.TabStop = false;
+            this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.HeaderPanel.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
+            this.HeaderPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.HeaderPanel.Name = "HeaderPanel";
+            this.HeaderPanel.Size = new System.Drawing.Size(434, 35);
+            this.HeaderPanel.TabIndex = 999;
+            this.HeaderPanel.TabStop = false;
             // 
             // ProgressForm
             // 
@@ -115,7 +115,7 @@
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.ProgressBar);
             this.Controls.Add(this.MessageLabel);
-            this.Controls.Add(this.HeaderView);
+            this.Controls.Add(this.HeaderPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -128,11 +128,11 @@
 
         #endregion
 
-        private HeaderView HeaderView;
+        private HeaderView HeaderPanel;
         private System.Windows.Forms.Label MessageLabel;
         private System.Windows.Forms.ProgressBar ProgressBar;
-        private System.Windows.Forms.Button ExitButton;
-        private System.Windows.Forms.Button SaveButton;
-        private System.Windows.Forms.Button PreviewButton;
+        private Cube.Forms.Button ExitButton;
+        private Cube.Forms.Button SaveButton;
+        private Cube.Forms.Button PreviewButton;
     }
 }

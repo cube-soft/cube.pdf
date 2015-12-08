@@ -20,20 +20,19 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
-using IoEx = System.IO;
 
-namespace Cube.Pdf.Page
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.Item
+    /// Cube.Pdf.App.Page.Item
     ///
     /// <summary>
     /// 各項目の情報を保持するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Item : IEquatable<Item>
+    public class Item : Cube.FileSystem.FileInfo, IEquatable<Item>
     {
         #region Constructors
 
@@ -46,25 +45,10 @@ namespace Cube.Pdf.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Item() { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Item
-        /// 
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Item(PageType type, string path)
+        public Item(PageType type, string filename)
+            : base(filename)
         {
             Type = type;
-
-            var info = new IoEx.FileInfo(path);
-            Path = info.FullName;
-            FileSize = info.Length;
-            LastWriteTime = info.LastWriteTime;
         }
 
         #endregion
@@ -84,17 +68,6 @@ namespace Cube.Pdf.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
-        /// 
-        /// <summary>
-        /// オリジナルのファイルへのパスを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Path { get; set; } = string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Value
         /// 
         /// <summary>
@@ -106,28 +79,6 @@ namespace Cube.Pdf.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Size
-        /// 
-        /// <summary>
-        /// 表示サイズを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Size ViewSize { get; set; } = Size.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FileSize
-        /// 
-        /// <summary>
-        /// ファイルサイズを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public long FileSize { get; set; } = 0;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// PageCount
         /// 
         /// <summary>
@@ -136,18 +87,6 @@ namespace Cube.Pdf.Page
         ///
         /* ----------------------------------------------------------------- */
         public int PageCount { get; set; } = 0;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LastWriteTime
-        /// 
-        /// <summary>
-        /// 現在のファイルに最後に書き込みが行われた時刻を取得または
-        /// 設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DateTime LastWriteTime { get; set; } = DateTime.MinValue;
 
         #endregion
 
@@ -164,7 +103,7 @@ namespace Cube.Pdf.Page
         /* ----------------------------------------------------------------- */
         public bool Equals(Item other)
         {
-            return Path == other.Path;
+            return FullName == other.FullName;
         }
 
         /* ----------------------------------------------------------------- */

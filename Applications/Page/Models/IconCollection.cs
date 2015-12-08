@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ProgressEventArgs.cs
+/// IconCollection.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -18,36 +18,42 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
 
-namespace Cube
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.ProgressEventArgs
+    /// Cube.Pdf.App.Page.IconCollection
     ///
     /// <summary>
-    /// 進捗情報を保持するためのクラスです。
+    /// ListView に表示するアイコンを管理するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ProgressEventArgs : EventArgs
+    public class IconCollection
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ProgressEventArgs
+        /// IconCollection
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        public ProgressEventArgs(int value, string message)
+        public IconCollection()
         {
-            Value = value;
-            Message = message;
+            var icon = Cube.IconFactory.Create(StockIcons.DocumentNotAssociated, IconSize.Small);
+
+            ImageList = new ImageList();
+            ImageList.ImageSize = new Size(16, 16);
+            ImageList.ColorDepth = ColorDepth.Depth32Bit;
+            ImageList.Images.Add(icon);
         }
 
         #endregion
@@ -56,26 +62,45 @@ namespace Cube
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Value
+        /// ImageList
         /// 
         /// <summary>
-        /// 進捗状況を取得します。
+        /// ListView 用の ImageList を取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        public int Value { get; private set; }
+        public ImageList ImageList { get; }
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Message
+        /// Register
         /// 
         /// <summary>
-        /// 進捗に関するメッセージを取得します。
+        /// 新しい項目のアイコンを登録します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        public string Message { get; private set; }
+        public int Register(Item item)
+        {
+            if (item.Icon == null) return 0;
 
+            var extension = item.Extension.ToLower();
+            if (_map.ContainsKey(extension)) return _map[extension];
+
+            var index = ImageList.Images.Count;
+            ImageList.Images.Add(item.Icon);
+            _map.Add(extension, index);
+            return index;
+        }
+
+        #endregion
+
+        #region Fields
+        private Dictionary<string, int> _map = new Dictionary<string, int>();
         #endregion
     }
 }

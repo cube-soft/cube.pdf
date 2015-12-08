@@ -61,6 +61,7 @@
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Extensions\PdfReaderExtensions.cs" />
     <Compile Include="PageBinder.cs" />
+    <Compile Include="PageSplitter.cs" />
     <Compile Include="ReadOnlyPageCollection.cs" />
     <Compile Include="DocumentReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,7 +73,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="Packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

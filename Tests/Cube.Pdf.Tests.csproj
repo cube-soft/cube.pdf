@@ -38,9 +38,9 @@
     <Reference Include="Cube.Core">
       <HintPath>..\..\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=3.0.5797.27542, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=3.0.5813.39031, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\NUnit.3.0.0\lib\net20\nunit.framework.dll</HintPath>
+      <HintPath>..\..\packages\NUnit.3.0.1\lib\net20\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
