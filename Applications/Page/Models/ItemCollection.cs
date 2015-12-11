@@ -165,8 +165,57 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private async Task AddPdfAsync(string path)
         {
+            //var reader = new Cube.Pdf.Editing.DocumentReader();
+            //await reader.OpenAsync(path, string.Empty);
+
             var reader = new Cube.Pdf.Editing.DocumentReader();
-            await reader.OpenAsync(path, string.Empty);
+            try
+            {
+                await reader.OpenAsync(path, String.Empty);
+                if (reader.EncryptionStatus==EncryptionStatus.RestrictedAccess) throw new Cube.Pdf.EncryptionException();
+                    
+            }
+            catch (Cube.Pdf.EncryptionException /* err */)
+            {
+                reader.Dispose();
+                System.Threading.SynchronizationContext.Current.Send(_=> 
+                {
+                    while (true)
+                    {
+                        reader = new Cube.Pdf.Editing.DocumentReader();
+                        var dialog = new PasswordForm(path);
+                        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            try
+                            {
+                                reader.OpenAsync(path, dialog.Password).Wait();
+                                if (reader.EncryptionStatus == EncryptionStatus.RestrictedAccess) throw new Cube.Pdf.EncryptionException();
+                                break;
+                            }
+                            catch (Cube.Pdf.EncryptionException)
+                            {
+                                reader.Dispose();
+                                continue;
+                            }
+                        }
+                        else {
+                            reader = null;
+                            break;
+                        }
+                    }
+                },null);
+            }
+            catch (Exception err)
+            {
+                reader.Dispose();
+                reader = null;
+                //Dispatcher.BeginInvoke(new Action(() =>
+                //{
+                //    ShowErrorMessage(Properties.Resources.OpenError, err);
+                //}));
+            }
+
+            if (reader == null) return;
 
             var item = new Item(PageType.Pdf, path);
             item.Value = reader;
