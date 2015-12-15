@@ -106,10 +106,10 @@ namespace Cube.Pdf.App.Page
         {
             try
             {
-                Sync(() => { View.AllowOperation = false; });
+                Send(() => { View.AllowOperation = false; });
                 await AddFileAsync(e.Value, 1); // 1 階層下のみ対象
             }
-            finally { Sync(() => { View.AllowOperation = true; }); }
+            finally { Send(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -169,7 +169,7 @@ namespace Cube.Pdf.App.Page
         {
             try
             {
-                Sync(() => { View.AllowOperation = false; ; });
+                Send(() => { View.AllowOperation = false; ; });
 
                 Metadata metadata = null;
                 var task = new Cube.Pdf.Editing.PageBinder();
@@ -198,7 +198,7 @@ namespace Cube.Pdf.App.Page
                 FinalizeSync(new string[] { e.Value }, message);
             }
             catch (Exception err) { ShowSync(err); }
-            finally { Sync(() => { View.AllowOperation = true; }); }
+            finally { Send(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -214,7 +214,7 @@ namespace Cube.Pdf.App.Page
         {
             try
             {
-                Sync(() => { View.AllowOperation = false; });
+                Send(() => { View.AllowOperation = false; });
 
                 var results = new List<string>();
                 var task = new Cube.Pdf.Editing.PageSplitter();
@@ -232,7 +232,7 @@ namespace Cube.Pdf.App.Page
                 Model.Clear();
                 FinalizeSync(results.ToArray(), message);
             }
-            finally { Sync(() => { View.AllowOperation = true; }); }
+            finally { Send(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -246,7 +246,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Sync(() =>
+            Send(() =>
             {
                 switch (e.Action)
                 {
@@ -350,7 +350,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void FinalizeSync(string[] files, string message)
         {
-            Sync(() =>
+            Send(() =>
             {
                 View.AllowOperation = true;
 
@@ -373,7 +373,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void ShowSync(string message, MessageBoxIcon icon)
         {
-            Sync(() =>
+            Send(() =>
             {
                 MessageBox.Show(message, 
                     Properties.Resources.MessageTitle,
@@ -394,7 +394,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void ShowSync(Exception err)
         {
-            Sync(() =>
+            Send(() =>
             {
                 MessageBox.Show(err.Message,
                     Properties.Resources.ErrorMessageTitle,
