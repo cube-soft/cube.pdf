@@ -45,7 +45,7 @@
       <HintPath>..\..\..\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.4\lib\net45-full\log4net.dll</HintPath>
+      <HintPath>..\..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -70,11 +70,21 @@
     <Compile Include="Models\IconCollection.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemCollection.cs" />
+    <Compile Include="Models\PasswordEventArgs.cs" />
+    <Compile Include="PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presenters\ListViewPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PasswordForm.resx">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -164,6 +164,15 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
+        ///   {0} はパスワードで保護されています。編集するためにはオーナーパスワードを入力して下さい。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasswordRequired {
+            get {
+                return ResourceManager.GetString("PasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイルリストから削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string RemoveMenu {
