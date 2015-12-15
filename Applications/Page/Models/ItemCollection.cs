@@ -54,6 +54,21 @@ namespace Cube.Pdf.App.Page
 
         #endregion
 
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PasswordRequired
+        /// 
+        /// <summary>
+        /// パスワードが要求された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler<PasswordEventArgs> PasswordRequired;
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -65,10 +80,10 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public async Task AddAsync(string path)
+        public async Task AddAsync(string path, string password = "")
         {
             var ext = Path.GetExtension(path).ToLower();
-            if (ext == ".pdf") await AddPdfAsync(path);
+            if (ext == ".pdf") await AddPdfAsync(path, password);
             else AddImage(path);
         }
 
@@ -100,6 +115,30 @@ namespace Cube.Pdf.App.Page
         {
             if (offset == 0) return;
             MoveItems(offset < 0 ? indices : indices.Reverse(), offset);
+        }
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPasswordRequired
+        /// 
+        /// <summary>
+        /// パスワードが要求された時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// イベントハンドラが設定されていない場合は、無限ループを防ぐ
+        /// ために操作をキャンセルします。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPasswordRequired(PasswordEventArgs e)
+        {
+            if (PasswordRequired != null) PasswordRequired(this, e);
+            else e.Cancel = true;
         }
 
         #endregion
@@ -163,64 +202,28 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async Task AddPdfAsync(string path)
+        private async Task AddPdfAsync(string path, string password)
         {
-            //var reader = new Cube.Pdf.Editing.DocumentReader();
-            //await reader.OpenAsync(path, string.Empty);
-
             var reader = new Cube.Pdf.Editing.DocumentReader();
+
             try
             {
-                await reader.OpenAsync(path, String.Empty);
-                if (reader.EncryptionStatus==EncryptionStatus.RestrictedAccess) throw new Cube.Pdf.EncryptionException();
-                    
+                await reader.OpenAsync(path, password);
+                var encrypt = (reader.EncryptionStatus == EncryptionStatus.RestrictedAccess);
+                if (encrypt) throw new EncryptionException();
+
+                var item = new Item(PageType.Pdf, path);
+                item.Value = reader;
+                item.PageCount = reader.Pages.Count;
+                lock (_lock) Add(item);
             }
-            catch (Cube.Pdf.EncryptionException /* err */)
+            catch (EncryptionException /* err */)
             {
                 reader.Dispose();
-                System.Threading.SynchronizationContext.Current.Send(_=> 
-                {
-                    while (true)
-                    {
-                        reader = new Cube.Pdf.Editing.DocumentReader();
-                        var dialog = new PasswordForm(path);
-                        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        {
-                            try
-                            {
-                                reader.OpenAsync(path, dialog.Password).Wait();
-                                if (reader.EncryptionStatus == EncryptionStatus.RestrictedAccess) throw new Cube.Pdf.EncryptionException();
-                                break;
-                            }
-                            catch (Cube.Pdf.EncryptionException)
-                            {
-                                reader.Dispose();
-                                continue;
-                            }
-                        }
-                        else {
-                            reader = null;
-                            break;
-                        }
-                    }
-                },null);
+                var e = new PasswordEventArgs(path);
+                OnPasswordRequired(e);
+                if (!e.Cancel) await AddPdfAsync(path, e.Password);
             }
-            catch (Exception err)
-            {
-                reader.Dispose();
-                reader = null;
-                //Dispatcher.BeginInvoke(new Action(() =>
-                //{
-                //    ShowErrorMessage(Properties.Resources.OpenError, err);
-                //}));
-            }
-
-            if (reader == null) return;
-
-            var item = new Item(PageType.Pdf, path);
-            item.Value = reader;
-            item.PageCount = reader.Pages.Count;
-            lock (_lock) Add(item);
         }
 
         /* ----------------------------------------------------------------- */

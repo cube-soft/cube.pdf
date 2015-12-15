@@ -152,6 +152,9 @@
   <data name="OpenMenu" xml:space="preserve">
     <value>開く</value>
   </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>{0} はパスワードで保護されています。編集するためにはオーナーパスワードを入力して下さい。</value>
+  </data>
   <data name="RemoveMenu" xml:space="preserve">
     <value>ファイルリストから削除</value>
   </data>

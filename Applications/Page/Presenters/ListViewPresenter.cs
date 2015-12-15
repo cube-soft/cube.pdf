@@ -62,6 +62,7 @@ namespace Cube.Pdf.App.Page
             View.Opening   += View_Opening;
 
             Model.CollectionChanged += Model_CollectionChanged;
+            Model.PasswordRequired += Model_PasswordRequired;
         }
 
         #endregion
@@ -270,6 +271,26 @@ namespace Cube.Pdf.App.Page
             });
         }
 
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Model_PasswordRequired
+        /// 
+        /// <summary>
+        /// パスワードの要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void Model_PasswordRequired(object sender, PasswordEventArgs e)
+        {
+            var dialog = new PasswordForm();
+            dialog.Path = e.Path;
+            dialog.StartPosition = FormStartPosition.CenterParent;
+            var result = dialog.ShowDialog(View);
+
+            e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
+            if (!e.Cancel) e.Password = dialog.Password;
+        }
+
         #endregion
 
         #region Other private methods
@@ -301,7 +322,6 @@ namespace Cube.Pdf.App.Page
                 else if (!File.Exists(path)) continue;
 
                 try { await Model.AddAsync(path); }
-                catch (EncryptionException /* err */) { /* see remarks */ }
                 catch (Exception /* err */) { /* see remarks */ }
             }
         }
