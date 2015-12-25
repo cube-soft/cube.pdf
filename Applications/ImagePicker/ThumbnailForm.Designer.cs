@@ -35,9 +35,14 @@
             this.ExitButton = new Cube.Forms.Button();
             this.SaveAllButton = new Cube.Forms.Button();
             this.SaveButton = new Cube.Forms.Button();
-            this.HeaderPanel = new Cube.Pdf.App.ImageEx.HeaderView();
+            this.HeaderPanel = new System.Windows.Forms.Panel();
+            this.ImagePictureBox = new System.Windows.Forms.PictureBox();
+            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
+            this.HeaderPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -125,13 +130,38 @@
             // HeaderPanel
             // 
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.HeaderPanel.Controls.Add(this.ImagePictureBox);
+            this.HeaderPanel.Controls.Add(this.LogoPictureBox);
             this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HeaderPanel.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
             this.HeaderPanel.Margin = new System.Windows.Forms.Padding(0);
             this.HeaderPanel.Name = "HeaderPanel";
             this.HeaderPanel.Size = new System.Drawing.Size(634, 35);
-            this.HeaderPanel.TabIndex = 1;
+            this.HeaderPanel.TabIndex = 6;
+            // 
+            // ImagePictureBox
+            // 
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.ImageEx.Properties.Resources.HeaderImage;
+            this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.ImagePictureBox.Location = new System.Drawing.Point(417, 0);
+            this.ImagePictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.ImagePictureBox.Name = "ImagePictureBox";
+            this.ImagePictureBox.Size = new System.Drawing.Size(217, 35);
+            this.ImagePictureBox.TabIndex = 5;
+            this.ImagePictureBox.TabStop = false;
+            // 
+            // LogoPictureBox
+            // 
+            this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.LogoPictureBox.Image = global::Cube.Pdf.App.ImageEx.Properties.Resources.HeaderLogo;
+            this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.LogoPictureBox.Name = "LogoPictureBox";
+            this.LogoPictureBox.Size = new System.Drawing.Size(190, 35);
+            this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.LogoPictureBox.TabIndex = 4;
+            this.LogoPictureBox.TabStop = false;
             // 
             // ThumbnailForm
             // 
@@ -144,6 +174,9 @@
             this.Text = "Thumbnail List";
             this.LayoutPanel.ResumeLayout(false);
             this.FooterPanel.ResumeLayout(false);
+            this.HeaderPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -151,11 +184,13 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
-        private HeaderView HeaderPanel;
         private System.Windows.Forms.FlowLayoutPanel FooterPanel;
         private Cube.Forms.Button ExitButton;
         private Cube.Forms.Button SaveAllButton;
         private Cube.Forms.Button SaveButton;
         private Cube.Forms.ListView ImageListView;
+        private System.Windows.Forms.Panel HeaderPanel;
+        private System.Windows.Forms.PictureBox ImagePictureBox;
+        private System.Windows.Forms.PictureBox LogoPictureBox;
     }
 }
