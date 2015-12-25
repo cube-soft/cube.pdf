@@ -22,11 +22,11 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.ImageEx.Extensions
+namespace Cube.Pdf.App.ImageEx.Extensions
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.Extensions.FormExtensions
+    /// Cube.Pdf.App.ImageEx.Extensions.FormExtensions
     ///
     /// <summary>
     /// フォームに対する拡張メソッド群を定義するクラスです。
@@ -46,14 +46,11 @@ namespace Cube.Pdf.ImageEx.Extensions
         /* ----------------------------------------------------------------- */
         public static void UpdateTitle(this Form form, string str)
         {
-            var asm  = Assembly.GetExecutingAssembly();
-            var attr = Attribute.GetCustomAttribute(asm, typeof(AssemblyTitleAttribute)) as AssemblyTitleAttribute;
-            var app  = (attr != null) ? attr.Title : string.Empty;
-
-            var ss = new System.Text.StringBuilder();
+            var asm = new Cube.AssemblyReader(Assembly.GetExecutingAssembly());
+            var ss  = new System.Text.StringBuilder();
             ss.Append(str);
-            if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(app)) ss.Append(" - ");
-            ss.Append(app);
+            if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(asm.Title)) ss.Append(" - ");
+            ss.Append(asm.Title);
 
             form.Text = ss.ToString();
         }

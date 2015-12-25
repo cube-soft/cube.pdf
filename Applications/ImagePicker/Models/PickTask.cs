@@ -24,13 +24,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
-using DocumentReader = Cube.Pdf.Editing.DocumentReader;
+using Cube.Pdf.Editing;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.PickTask
+    /// Cube.Pdf.App.ImageEx.PickTask
     ///
     /// <summary>
     /// 画像を抽出する処理を非同期で実行するためのクラスです。

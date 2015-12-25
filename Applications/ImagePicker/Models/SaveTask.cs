@@ -24,11 +24,11 @@ using System.Windows.Forms;
 using System.Threading.Tasks;
 using TaskEx = System.Threading.Tasks.Task;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.SaveTask
+    /// Cube.Pdf.App.ImageEx.SaveTask
     ///
     /// <summary>
     /// 抽出画像を保存する処理を非同期で実行するためのクラスです。

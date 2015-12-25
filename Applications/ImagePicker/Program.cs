@@ -21,11 +21,11 @@
 using System;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.Program
+    /// Cube.Pdf.App.ImageEx.Program
     ///
     /// <summary>
     /// メインプログラムを表すクラスです。

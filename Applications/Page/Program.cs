@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// UxTheme.cs
+/// Program.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -19,31 +19,49 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.UxTheme
+    /// Cube.Pdf.App.Page.Program
     ///
     /// <summary>
-    /// uxtheme.dll で提供されている API を宣言するためのクラスです。
+    /// メインプログラムを表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class UxTheme
+    static class Program
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// SetWindowTheme
+        /// Main
         /// 
         /// <summary>
-        /// https://msdn.microsoft.com/en-us/library/windows/desktop/bb759827.aspx
+        /// アプリケーションのメイン エントリ ポイントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
-        internal static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
+        [STAThread]
+        static void Main(string[] args)
+        {
+            var name = Application.ProductName.ToLower();
+            using (var bootstrap = new Bootstrap(name))
+            {
+                if (bootstrap.Exists())
+                {
+                    bootstrap.Activate(args);
+                    return;
+                }
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                var form = new MainForm(args);
+                form.Bootstrap = bootstrap;
+                Application.Run(form);
+            }
+
+        }
     }
 }

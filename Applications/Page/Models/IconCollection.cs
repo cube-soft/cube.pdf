@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ButtonExtensions.cs
+/// IconCollection.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -18,82 +18,89 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.ImageEx.Extensions
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.Extensions.ButtonExtensions
+    /// Cube.Pdf.App.Page.IconCollection
     ///
     /// <summary>
-    /// ボタンに対する拡張メソッド群を定義するクラスです。
+    /// ListView に表示するアイコンを管理するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class ButtonExtensions
+    public class IconCollection
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateStatus
+        /// IconCollection
         /// 
         /// <summary>
-        /// ボタンの有効/無効状態を更新し、対応する外観に変更します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void UpdateStatus(this Button button, bool enabled)
+        public IconCollection()
         {
-            if (enabled) Enable(button);
-            else Disable(button);
-            button.Enabled = enabled;
+            var icon = Cube.IconFactory.Create(StockIcons.DocumentNotAssociated, IconSize.Small);
+
+            ImageList = new ImageList();
+            ImageList.ImageSize = new Size(16, 16);
+            ImageList.ColorDepth = ColorDepth.Depth32Bit;
+            ImageList.Images.Add(icon);
         }
 
-        #region Implementations
+        #endregion
+
+        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Enable
+        /// ImageList
         /// 
         /// <summary>
-        /// ボタンの外観を有効状態に更新します。
+        /// ListView 用の ImageList を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Enable(Button button)
-        {
-            if (button.Enabled) return;
+        public ImageList ImageList { get; }
 
-            try {
-                var colors = (KeyValuePair<Color, Color>)button.Tag;
-                button.BackColor = colors.Key;
-                button.FlatAppearance.BorderColor = colors.Value;
-            }
-            catch (Exception) { /* ignore exception */ }
-        }
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Disable
+        /// Register
         /// 
         /// <summary>
-        /// ボタンの外観を無効状態に更新します。
+        /// 新しい項目のアイコンを登録します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Disable(Button button)
+        public int Register(Item item)
         {
-            if (!button.Enabled) return;
+            if (item.Icon == null) return 0;
 
-            var colors = new KeyValuePair<Color, Color>(button.BackColor, button.FlatAppearance.BorderColor);
-            button.Tag = colors;
-            button.BackColor = SystemColors.Control;
-            button.FlatAppearance.BorderColor = SystemColors.ControlLight;
+            var extension = item.Extension.ToLower();
+            if (_map.ContainsKey(extension)) return _map[extension];
+
+            var index = ImageList.Images.Count;
+            ImageList.Images.Add(item.Icon);
+            _map.Add(extension, index);
+            return index;
         }
 
+        #endregion
+
+        #region Fields
+        private Dictionary<string, int> _map = new Dictionary<string, int>();
         #endregion
     }
 }

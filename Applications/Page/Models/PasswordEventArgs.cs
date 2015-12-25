@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// HeaderView.cs
+/// PasswordEventArgs.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -18,35 +18,63 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System.ComponentModel;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.HeaderView
+    /// Cube.Pdf.App.Page.PasswordEventArgs
     ///
     /// <summary>
-    /// 各種フォームのヘッダ部の外観を定義したクラスです。
+    /// パスワードに関するイベントの引数を保持するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class HeaderView : Cube.Forms.NtsUserControl
+    public class PasswordEventArgs : CancelEventArgs
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// HeaderView
+        /// PasswordEventArgs
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public HeaderView()
+        public PasswordEventArgs(string path, bool cancel = false)
+            : base(cancel)
         {
-            InitializeComponent();
+            Path = path;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Path
+        /// 
+        /// <summary>
+        /// パスワードを要求するファイルへのパスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Path { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Password
+        /// 
+        /// <summary>
+        /// パスワードを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Password { get; set; } = string.Empty;
 
         #endregion
     }

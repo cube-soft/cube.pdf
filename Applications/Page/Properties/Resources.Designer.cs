@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cube.Pdf.App.ImageEx.Properties {
+namespace Cube.Pdf.App.Page.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cube.Pdf.App.ImageEx.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cube.Pdf.App.ImageEx.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cube.Pdf.App.Page.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Cube.Pdf.App.ImageEx.Properties {
         }
         
         /// <summary>
-        ///   CubePDF ImagePicker について に類似しているローカライズされた文字列を検索します。
+        ///   CubePDF Page について に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string About {
             get {
@@ -70,58 +70,20 @@ namespace Cube.Pdf.App.ImageEx.Properties {
         }
         
         /// <summary>
-        ///   {0} のファイル構造を解析中です... に類似しているローカライズされた文字列を検索します。
+        ///   下へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string BeginMessage {
+        internal static string DownMenu {
             get {
-                return ResourceManager.GetString("BeginMessage", resourceCulture);
+                return ResourceManager.GetString("DownMenu", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   処理をキャンセルしました。 に類似しているローカライズされた文字列を検索します。
+        ///   CubePDF Page エラー に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string CancelMessage {
+        internal static string ErrorMessageTitle {
             get {
-                return ResourceManager.GetString("CancelMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap CloseButton {
-            get {
-                object obj = ResourceManager.GetObject("CloseButton", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap DragDrop {
-            get {
-                object obj = ResourceManager.GetObject("DragDrop", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   PDF ファイルをドラッグ&amp;ドロップ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string DragDropMessage {
-            get {
-                return ResourceManager.GetString("DragDropMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   {0} ({1} ページ) から {2} 個の画像を抽出しました。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string EndMessage {
-            get {
-                return ResourceManager.GetString("EndMessage", resourceCulture);
+                return ResourceManager.GetString("ErrorMessageTitle", resourceCulture);
             }
         }
         
@@ -138,9 +100,9 @@ namespace Cube.Pdf.App.ImageEx.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap HeaderLogo {
+        internal static System.Drawing.Bitmap HeaderTitle {
             get {
-                object obj = ResourceManager.GetObject("HeaderLogo", resourceCulture);
+                object obj = ResourceManager.GetObject("HeaderTitle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -156,34 +118,62 @@ namespace Cube.Pdf.App.ImageEx.Properties {
         }
         
         /// <summary>
-        ///   {0} ({1} ページ) から画像を見つける事ができませんでした。 に類似しているローカライズされた文字列を検索します。
+        ///   {0} 個のファイルを結合しました。
+        ///結合されたファイルをファイルリストに登録しますか？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string NotFoundMessage {
+        internal static string MergeSuccess {
             get {
-                return ResourceManager.GetString("NotFoundMessage", resourceCulture);
+                return ResourceManager.GetString("MergeSuccess", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   プレビュー画面を表示 に類似しているローカライズされた文字列を検索します。
+        ///   CubePDF Page に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string PreviewMenu {
+        internal static string MessageTitle {
             get {
-                return ResourceManager.GetString("PreviewMenu", resourceCulture);
+                return ResourceManager.GetString("MessageTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   {0} の {1}/{2} ページ目から画像を抽出しています... に類似しているローカライズされた文字列を検索します。
+        ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|画像ファイル (*.bmp, *.emf, *.gif, *.ico, *.jpg, *.png, *.tiff, *.wmf)|*.bmp;*.BMP;*.emf;*.EMF;*.gif;*.GIF;*.ico;*.ICO;*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.tiff;*.TIFF;*.wmf;*.WMF|すべてのファイル|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ProcessMessage {
+        internal static string OpenFileFilter {
             get {
-                return ResourceManager.GetString("ProcessMessage", resourceCulture);
+                return ResourceManager.GetString("OpenFileFilter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   選択項目を一覧から削除 に類似しているローカライズされた文字列を検索します。
+        ///   ファイルを追加 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string OpenFileTitle {
+            get {
+                return ResourceManager.GetString("OpenFileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   開く に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string OpenMenu {
+            get {
+                return ResourceManager.GetString("OpenMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} はパスワードで保護されています。編集するためにはオーナーパスワードを入力して下さい。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasswordRequired {
+            get {
+                return ResourceManager.GetString("PasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルリストから削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string RemoveMenu {
             get {
@@ -192,29 +182,48 @@ namespace Cube.Pdf.App.ImageEx.Properties {
         }
         
         /// <summary>
-        ///   抽出画像を保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        ///   ファイルを保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SaveFolder {
+        internal static string SaveFileDescription {
             get {
-                return ResourceManager.GetString("SaveFolder", resourceCulture);
+                return ResourceManager.GetString("SaveFileDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   選択項目を保存 に類似しているローカライズされた文字列を検索します。
+        ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SaveMenu {
+        internal static string SaveFileFilter {
             get {
-                return ResourceManager.GetString("SaveMenu", resourceCulture);
+                return ResourceManager.GetString("SaveFileFilter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   全ての項目を選択 に類似しているローカライズされた文字列を検索します。
+        ///   ファイルを保存 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SelectAllMenu {
+        internal static string SaveFileTitle {
             get {
-                return ResourceManager.GetString("SelectAllMenu", resourceCulture);
+                return ResourceManager.GetString("SaveFileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} 個のファイルを分割しました。
+        ///分割されたすべてのファイルをファイルリストに登録しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SplitSuccess {
+            get {
+                return ResourceManager.GetString("SplitSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上へ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpMenu {
+            get {
+                return ResourceManager.GetString("UpMenu", resourceCulture);
             }
         }
     }

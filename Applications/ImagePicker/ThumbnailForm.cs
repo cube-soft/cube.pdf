@@ -19,18 +19,19 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Reflection;
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Cube.Pdf.ImageEx.Extensions;
+using Cube.Pdf.App.ImageEx.Extensions;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.ThumbnailForm
+    /// Cube.Pdf.ImageEx.App.ThumbnailForm
     ///
     /// <summary>
     /// サムネイル一覧を表示するクラスです。
@@ -55,15 +56,16 @@ namespace Cube.Pdf.ImageEx
             InitializeComponent();
             InitializeLayout();
 
-            ListView.ContextMenuStrip = CreateContextMenu();
-            SaveButton.UpdateStatus(AnyItemsSelected);
+            ImageListView.ContextMenuStrip = CreateContextMenu();
+            SaveButton.Enabled = AnyItemsSelected;
 
+            TitleButton.Click    += (s, e) => ShowVersion();
             ExitButton.Click     += (s, e) => Close();
             SaveAllButton.Click  += (s, e) => OnSaveAll(e);
             SaveButton.Click     += (s, e) => OnSave(e);
-            ListView.DoubleClick += (s, e) => OnPreview(e);
+            ImageListView.DoubleClick += (s, e) => OnPreview(e);
 
-            ListView.SelectedIndexChanged += (s, e) => SaveButton.UpdateStatus(AnyItemsSelected);
+            ImageListView.SelectedIndexChanged += (s, e) => { SaveButton.Enabled = AnyItemsSelected; };
         }
 
         #endregion
@@ -103,7 +105,7 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public Size ImageSize
         {
-            get { return ListView.LargeImageList.ImageSize; }
+            get { return ImageListView.LargeImageList.ImageSize; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -120,7 +122,7 @@ namespace Cube.Pdf.ImageEx
             get
             {
                 var dest = new List<int>();
-                foreach (int index in ListView.SelectedIndices) dest.Add(index);
+                foreach (int index in ImageListView.SelectedIndices) dest.Add(index);
                 dest.Sort();
                 return dest;
             }
@@ -139,7 +141,7 @@ namespace Cube.Pdf.ImageEx
         {
             get
             {
-                var items = ListView.SelectedItems;
+                var items = ImageListView.SelectedItems;
                 return items != null && items.Count > 0;
             }
         }
@@ -208,12 +210,12 @@ namespace Cube.Pdf.ImageEx
         public void Add(Image image)
         {
             _images.Add(image);
-            ListView.LargeImageList.Images.Add(image);
-            ListView.Items.Add(new ListViewItem(
+            ImageListView.LargeImageList.Images.Add(image);
+            ImageListView.Items.Add(new ListViewItem(
                 string.Empty,
-                ListView.LargeImageList.Images.Count - 1
+                ImageListView.LargeImageList.Images.Count - 1
             ));
-            Debug.Assert(_images.Count == ListView.Items.Count);
+            Debug.Assert(_images.Count == ImageListView.Items.Count);
         }
 
         /* ----------------------------------------------------------------- */
@@ -256,11 +258,11 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public void RemoveAt(int index)
         {
-            Debug.Assert(_images.Count == ListView.Items.Count);
+            Debug.Assert(_images.Count == ImageListView.Items.Count);
 
             if (index < 0 || index >= _images.Count) return;
             _images.RemoveAt(index);
-            ListView.Items.RemoveAt(index);
+            ImageListView.Items.RemoveAt(index);
 
             OnRemoved(new DataEventArgs<int>(index));
         }
@@ -276,7 +278,26 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         public void SelectAll()
         {
-            foreach (ListViewItem item in ListView.Items) item.Selected = true;
+            foreach (ListViewItem item in ImageListView.Items) item.Selected = true;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowVersion
+        /// 
+        /// <summary>
+        /// バージョン情報を表示します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ShowVersion()
+        {
+            var dialog = new Cube.Forms.VersionForm();
+            dialog.Assembly = Assembly.GetExecutingAssembly();
+            dialog.Logo = Properties.Resources.Logo;
+            dialog.Description = string.Empty;
+            dialog.Height = 320;
+            dialog.ShowDialog();
         }
 
         #endregion
@@ -357,10 +378,10 @@ namespace Cube.Pdf.ImageEx
             base.OnFormClosed(e);
 
             _images.Clear();
-            ListView.Items.Clear();
-            ListView.LargeImageList.Images.Clear();
-            ListView.LargeImageList.Dispose();
-            ListView.LargeImageList = null;
+            ImageListView.Items.Clear();
+            ImageListView.LargeImageList.Images.Clear();
+            ImageListView.LargeImageList.Dispose();
+            ImageListView.LargeImageList = null;
         }
 
         #endregion
@@ -378,11 +399,15 @@ namespace Cube.Pdf.ImageEx
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            ListView.LargeImageList = new ImageList();
-            ListView.LargeImageList.ImageSize = new Size(128, 128);
-            ListView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
+            var tips = new ToolTip();
+            tips.InitialDelay = 200;
+            tips.AutoPopDelay = 5000;
+            tips.ReshowDelay = 1000;
+            tips.SetToolTip(TitleButton, Properties.Resources.About);
 
-            UxTheme.SetWindowTheme(ListView.Handle, "Explorer", null);
+            ImageListView.LargeImageList = new ImageList();
+            ImageListView.LargeImageList.ImageSize = new Size(128, 128);
+            ImageListView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
         }
 
         /* ----------------------------------------------------------------- */
@@ -413,7 +438,7 @@ namespace Cube.Pdf.ImageEx
             };
 
             action();
-            ListView.SelectedIndexChanged += (s, e) => action();
+            ImageListView.SelectedIndexChanged += (s, e) => action();
 
             return dest;
         }

@@ -19,20 +19,19 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Windows.Forms;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.ProgressPresenter
+    /// Cube.Pdf.App.ImageEx.ProgressPresenter
     ///
     /// <summary>
     /// ProgressForm をモデルを関連付けるためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ProgressPresenter : PresenterBase<ProgressForm, PickTask>
+    public class ProgressPresenter : Cube.Forms.PresenterBase<ProgressForm, PickTask>
     {
         #region Constructors
 

@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.ImageEx
+﻿namespace Cube.Pdf.App.ImageEx
 {
     partial class PreviewForm
     {

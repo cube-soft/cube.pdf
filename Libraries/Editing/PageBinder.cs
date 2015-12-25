@@ -245,6 +245,24 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        private void AddPage(PdfReader src, PdfCopy dest)
+        {
+            for (var i = 0; i < src.NumberOfPages; ++i)
+            {
+                var page = dest.GetImportedPage(src, i + 1);
+                dest.AddPage(page);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddPage
+        /// 
+        /// <summary>
+        /// PDF ページを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         private void AddPage(Page src, PdfCopy dest, Dictionary<string, PdfReader> readers)
         {
             if (src == null) return;
@@ -261,7 +279,7 @@ namespace Cube.Pdf.Editing
             var rot    = reader.GetPageRotation(src.PageNumber);
             var dic    = reader.GetPageN(src.PageNumber);
             if (rot != src.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(src.Rotation));
-
+            
             dest.AddPage(dest.GetImportedPage(reader, src.PageNumber));
             StockBookmarks(reader, src.PageNumber, dest.PageNumber);
         }
@@ -279,28 +297,34 @@ namespace Cube.Pdf.Editing
         {
             if (src == null) return;
 
-            var tmp = IoEx.Path.GetTempFileName();
+            using (var image = new System.Drawing.Bitmap(src.Path))
+            using (var stream = new IoEx.MemoryStream())
+            {
+                var document = new iTextSharp.text.Document();
+                var writer = PdfWriter.GetInstance(document, stream);
+                document.Open();
 
-            try {
-                using (var image = new System.Drawing.Bitmap(src.Path))
+                var guid = image.FrameDimensionsList[0];
+                var dimension = new System.Drawing.Imaging.FrameDimension(guid);
+                for (var i = 0; i < image.GetFrameCount(dimension); ++i)
                 {
-                    var obj = iTextSharp.text.Image.GetInstance(image, image.GuessImageFormat());
-                    var document = new iTextSharp.text.Document();
-                    var writer = PdfWriter.GetInstance(document, new IoEx.FileStream(tmp, IoEx.FileMode.Create));
+                    image.SelectActiveFrame(dimension, i);
 
-                    document.Open();
-                    document.SetPageSize(new iTextSharp.text.Rectangle(src.Size.Width, src.Size.Height));
+                    var dpi    = GetImageDpiScale(image);
+                    var width  = src.Size.IsEmpty ? (int)(image.Width * dpi) : src.Size.Width;
+                    var height = src.Size.IsEmpty ? (int)(image.Height * dpi) : src.Size.Height;
+                    var obj    = CreateImage(src, image);
+
+                    document.SetPageSize(new iTextSharp.text.Rectangle(width, height));
                     document.NewPage();
-                    obj.SetAbsolutePosition(0, 0);
                     document.Add(obj);
-
-                    document.Close();
-                    writer.Close();
-
-                    using (var reader = new PdfReader(tmp)) dest.AddPage(dest.GetImportedPage(reader, 1));
                 }
+
+                document.Close();
+                writer.Close();
+
+                using (var reader = new PdfReader(stream.ToArray())) AddPage(reader, dest);
             }
-            finally { TryDelete(tmp); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -370,6 +394,79 @@ namespace Cube.Pdf.Editing
             {
                 if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern)) _bookmarks.Add(bm);
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateImage
+        /// 
+        /// <summary>
+        /// イメージオブジェクトを生成します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private iTextSharp.text.Image CreateImage(ImagePage src, System.Drawing.Image image)
+        {
+            var width  = src.Size.IsEmpty ? image.Width : src.Size.Width;
+            var height = src.Size.IsEmpty ? image.Height : src.Size.Height;
+            var dpi    = GetImageDpiScale(image);
+            var scale  = GetImageScale(image, width, height);
+            var pos    = src.Size.IsEmpty ?
+                         new System.Drawing.Point(0, 0) :
+                         GetImagePosition(image, width, height, scale * dpi);
+
+            var dest = iTextSharp.text.Image.GetInstance(image, image.GuessImageFormat());
+            dest.SetAbsolutePosition(pos.X, pos.Y);
+            dest.ScalePercent((float)(scale * dpi * 100.0));
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImageDpiScale
+        /// 
+        /// <summary>
+        /// イメージの解像度の差を考慮した縮小倍率を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private double GetImageDpiScale(System.Drawing.Image image)
+        {
+            var w = 72.0 / image.HorizontalResolution;
+            var h = 72.0 / image.VerticalResolution;
+            return Math.Min(w, h);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImageScale
+        /// 
+        /// <summary>
+        /// イメージの縮小倍率を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private double GetImageScale(System.Drawing.Image image, int width, int height)
+        {
+            var x = width / (double)image.Width;
+            var y = height / (double)image.Height;
+            return Math.Min(Math.Min(x, y), 1.0);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImagePosition
+        /// 
+        /// <summary>
+        /// イメージの表示位置を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private System.Drawing.Point GetImagePosition(System.Drawing.Image image, int width, int height, double ratio)
+        {
+            var x = (width - image.Width * ratio) / 2.0;
+            var y = (height - image.Height * ratio) / 2.0;
+            return new System.Drawing.Point((int)x, (int)y);
         }
 
         /* ----------------------------------------------------------------- */

@@ -20,15 +20,14 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.DropForm
+    /// Cube.Pdf.ImageEx.App.DropForm
     ///
     /// <summary>
     /// メイン画面を表示するクラスです。
@@ -89,30 +88,6 @@ namespace Cube.Pdf.ImageEx
         ///
         /* ----------------------------------------------------------------- */
         public IList<string> AllowExtensions { get; } = new List<string>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Bootstrap
-        /// 
-        /// <summary>
-        /// プロセス間通信を介した起動およびアクティブ化を制御するための
-        /// オブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bootstrap Bootstrap
-        {
-            get { return _bootstrap; }
-            set
-            {
-                if (_bootstrap != null) _bootstrap.Activated -= Bootstrap_Activated;
-
-                _bootstrap = value;
-                _bootstrap.Activated -= Bootstrap_Activated;
-                _bootstrap.Activated += Bootstrap_Activated;
-                _bootstrap.Register();
-            }
-        }
 
         #endregion
 
@@ -199,29 +174,21 @@ namespace Cube.Pdf.ImageEx
             base.OnLoad(arg);
         }
 
-        #endregion
-
-        #region Event handlers
-
         /* ----------------------------------------------------------------- */
         ///
-        /// Bootstrap_Activated
+        /// OnReceived
         /// 
         /// <summary>
-        /// Bootstrap オブジェクトを介して、他のプロセスからアクティブ化
-        /// された時に実行されるハンドラです。
+        /// 他プロセスからデータ受信時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Bootstrap_Activated(object sender, DataEventArgs<object> e)
+        protected override void OnReceived(DataEventArgs<object> e)
         {
-            if (InvokeRequired) Invoke(new Action(() => Bootstrap_Activated(sender, e)));
-            else
-            {
-                Show();
-                var args = e.Value as string[];
-                if (args != null) Create(args);
-            }
+            base.OnReceived(e);
+
+            var args = e.Value as string[];
+            if (args != null) Create(args);
         }
 
         #endregion
@@ -333,10 +300,6 @@ namespace Cube.Pdf.ImageEx
             Cursor = Cursors.Default;
         }
 
-        #endregion
-
-        #region Fields
-        private Bootstrap _bootstrap = null;
         #endregion
     }
 }
