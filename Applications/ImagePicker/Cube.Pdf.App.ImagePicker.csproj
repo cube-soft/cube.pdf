@@ -61,12 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\FormExtensions.cs" />
-    <Compile Include="HeaderView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="HeaderView.Designer.cs">
-      <DependentUpon>HeaderView.cs</DependentUpon>
-    </Compile>
     <Compile Include="DropForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,9 +91,6 @@
     <Compile Include="ThumbnailForm.Designer.cs">
       <DependentUpon>ThumbnailForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="HeaderView.resx">
-      <DependentUpon>HeaderView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DropForm.resx">
       <DependentUpon>DropForm.cs</DependentUpon>
     </EmbeddedResource>
