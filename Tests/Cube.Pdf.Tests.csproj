@@ -53,11 +53,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cube.Pdf.csproj">
+    <ProjectReference Include="..\Libraries\Cube.Pdf.csproj">
       <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
       <Name>Cube.Pdf</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Editing\Cube.Pdf.Editing.csproj">
+    <ProjectReference Include="..\Libraries\Editing\Cube.Pdf.Editing.csproj">
       <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
       <Name>Cube.Pdf.Editing</Name>
     </ProjectReference>
