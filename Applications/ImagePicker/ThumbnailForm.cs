@@ -24,13 +24,13 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Cube.Pdf.ImageEx.Extensions;
+using Cube.Pdf.App.ImageEx.Extensions;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.ThumbnailForm
+    /// Cube.Pdf.ImageEx.App.ThumbnailForm
     ///
     /// <summary>
     /// サムネイル一覧を表示するクラスです。

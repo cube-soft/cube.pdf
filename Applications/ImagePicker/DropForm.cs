@@ -23,11 +23,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.DropForm
+    /// Cube.Pdf.ImageEx.App.DropForm
     ///
     /// <summary>
     /// メイン画面を表示するクラスです。

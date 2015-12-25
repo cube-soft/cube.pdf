@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.ImageEx
+﻿namespace Cube.Pdf.App.ImageEx
 {
     partial class ThumbnailForm
     {
@@ -35,7 +35,7 @@
             this.ExitButton = new Cube.Forms.Button();
             this.SaveAllButton = new Cube.Forms.Button();
             this.SaveButton = new Cube.Forms.Button();
-            this.HeaderPanel = new Cube.Pdf.ImageEx.HeaderView();
+            this.HeaderPanel = new Cube.Pdf.App.ImageEx.HeaderView();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.SuspendLayout();

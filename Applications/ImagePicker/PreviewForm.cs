@@ -21,13 +21,13 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Cube.Pdf.ImageEx.Extensions;
+using Cube.Pdf.App.ImageEx.Extensions;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.PreviewForm
+    /// Cube.Pdf.App.ImageEx.PreviewForm
     ///
     /// <summary>
     /// 画像のプレビュー画面を表示するクラスです。

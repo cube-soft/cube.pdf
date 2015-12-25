@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cube.Pdf.ImageEx.Properties {
+namespace Cube.Pdf.App.ImageEx.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

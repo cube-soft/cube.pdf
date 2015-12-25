@@ -7,7 +7,7 @@
     <ProjectGuid>{C60D1DD1-1A53-4BFF-97F9-FD9902689336}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Pdf.ImageEx</RootNamespace>
+    <RootNamespace>Cube.Pdf.App.ImageEx</RootNamespace>
     <AssemblyName>CubePdfImagePicker</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

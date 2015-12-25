@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.ImageEx
+﻿namespace Cube.Pdf.App.ImageEx
 {
     partial class DropForm
     {
@@ -41,7 +41,7 @@
             this.ExitButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExitButton.ForeColor = System.Drawing.Color.Transparent;
-            this.ExitButton.Image = global::Cube.Pdf.ImageEx.Properties.Resources.CloseButton;
+            this.ExitButton.Image = global::Cube.Pdf.App.ImageEx.Properties.Resources.CloseButton;
             this.ExitButton.Location = new System.Drawing.Point(83, 1);
             this.ExitButton.Margin = new System.Windows.Forms.Padding(0);
             this.ExitButton.Name = "ExitButton";
@@ -53,7 +53,7 @@
             // 
             this.AllowDrop = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.BackgroundImage = global::Cube.Pdf.ImageEx.Properties.Resources.DragDrop;
+            this.BackgroundImage = global::Cube.Pdf.App.ImageEx.Properties.Resources.DragDrop;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(100, 100);
             this.Controls.Add(this.ExitButton);

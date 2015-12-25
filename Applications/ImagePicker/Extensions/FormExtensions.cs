@@ -22,11 +22,11 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.ImageEx.Extensions
+namespace Cube.Pdf.App.ImageEx.Extensions
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.Extensions.FormExtensions
+    /// Cube.Pdf.App.ImageEx.Extensions.FormExtensions
     ///
     /// <summary>
     /// フォームに対する拡張メソッド群を定義するクラスです。

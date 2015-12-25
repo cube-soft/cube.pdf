@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.ImageEx
+﻿namespace Cube.Pdf.App.ImageEx
 {
     partial class HeaderView
     {
@@ -36,7 +36,7 @@
             // 
             // ImagePictureBox
             // 
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.ImageEx.Properties.Resources.HeaderImage;
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.ImageEx.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.ImagePictureBox.Location = new System.Drawing.Point(217, 0);
@@ -49,7 +49,7 @@
             // LogoPictureBox
             // 
             this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LogoPictureBox.Image = global::Cube.Pdf.ImageEx.Properties.Resources.HeaderLogo;
+            this.LogoPictureBox.Image = global::Cube.Pdf.App.ImageEx.Properties.Resources.HeaderLogo;
             this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
             this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.LogoPictureBox.Name = "LogoPictureBox";

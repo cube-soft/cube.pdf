@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.ImageEx
+﻿namespace Cube.Pdf.App.ImageEx
 {
     partial class ProgressForm
     {
@@ -34,7 +34,7 @@
             this.ExitButton = new Cube.Forms.Button();
             this.SaveButton = new Cube.Forms.Button();
             this.PreviewButton = new Cube.Forms.Button();
-            this.HeaderPanel = new Cube.Pdf.ImageEx.HeaderView();
+            this.HeaderPanel = new Cube.Pdf.App.ImageEx.HeaderView();
             this.SuspendLayout();
             // 
             // MessageLabel
