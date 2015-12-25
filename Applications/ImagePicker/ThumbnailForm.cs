@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Reflection;
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -58,6 +59,7 @@ namespace Cube.Pdf.App.ImageEx
             ImageListView.ContextMenuStrip = CreateContextMenu();
             SaveButton.Enabled = AnyItemsSelected;
 
+            TitleButton.Click    += (s, e) => ShowVersion();
             ExitButton.Click     += (s, e) => Close();
             SaveAllButton.Click  += (s, e) => OnSaveAll(e);
             SaveButton.Click     += (s, e) => OnSave(e);
@@ -279,6 +281,25 @@ namespace Cube.Pdf.App.ImageEx
             foreach (ListViewItem item in ImageListView.Items) item.Selected = true;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowVersion
+        /// 
+        /// <summary>
+        /// バージョン情報を表示します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ShowVersion()
+        {
+            var dialog = new Cube.Forms.VersionForm();
+            dialog.Assembly = Assembly.GetExecutingAssembly();
+            dialog.Logo = Properties.Resources.Logo;
+            dialog.Description = string.Empty;
+            dialog.Height = 320;
+            dialog.ShowDialog();
+        }
+
         #endregion
 
         #region Virtual methods
@@ -378,6 +399,12 @@ namespace Cube.Pdf.App.ImageEx
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
+            var tips = new ToolTip();
+            tips.InitialDelay = 200;
+            tips.AutoPopDelay = 5000;
+            tips.ReshowDelay = 1000;
+            tips.SetToolTip(TitleButton, Properties.Resources.About);
+
             ImageListView.LargeImageList = new ImageList();
             ImageListView.LargeImageList.ImageSize = new Size(128, 128);
             ImageListView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;

@@ -61,6 +61,15 @@ namespace Cube.Pdf.App.ImageEx.Properties {
         }
         
         /// <summary>
+        ///   CubePDF ImagePicker について に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0} のファイル構造を解析中です... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string BeginMessage {
@@ -132,6 +141,16 @@ namespace Cube.Pdf.App.ImageEx.Properties {
         internal static System.Drawing.Bitmap HeaderLogo {
             get {
                 object obj = ResourceManager.GetObject("HeaderLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo {
+            get {
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

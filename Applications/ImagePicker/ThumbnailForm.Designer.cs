@@ -37,12 +37,12 @@
             this.SaveButton = new Cube.Forms.Button();
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
-            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            this.TitleButton = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.HeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -131,7 +131,7 @@
             // 
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.HeaderPanel.Controls.Add(this.ImagePictureBox);
-            this.HeaderPanel.Controls.Add(this.LogoPictureBox);
+            this.HeaderPanel.Controls.Add(this.TitleButton);
             this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
             this.HeaderPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -151,17 +151,18 @@
             this.ImagePictureBox.TabIndex = 5;
             this.ImagePictureBox.TabStop = false;
             // 
-            // LogoPictureBox
+            // TitleButton
             // 
-            this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LogoPictureBox.Image = global::Cube.Pdf.App.ImageEx.Properties.Resources.HeaderLogo;
-            this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
-            this.LogoPictureBox.Name = "LogoPictureBox";
-            this.LogoPictureBox.Size = new System.Drawing.Size(190, 35);
-            this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.LogoPictureBox.TabIndex = 4;
-            this.LogoPictureBox.TabStop = false;
+            this.TitleButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TitleButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.TitleButton.Image = global::Cube.Pdf.App.ImageEx.Properties.Resources.HeaderLogo;
+            this.TitleButton.Location = new System.Drawing.Point(0, 0);
+            this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
+            this.TitleButton.Name = "TitleButton";
+            this.TitleButton.Size = new System.Drawing.Size(190, 35);
+            this.TitleButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.TitleButton.TabIndex = 4;
+            this.TitleButton.TabStop = false;
             // 
             // ThumbnailForm
             // 
@@ -176,7 +177,7 @@
             this.FooterPanel.ResumeLayout(false);
             this.HeaderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -191,6 +192,6 @@
         private Cube.Forms.ListView ImageListView;
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox ImagePictureBox;
-        private System.Windows.Forms.PictureBox LogoPictureBox;
+        private System.Windows.Forms.PictureBox TitleButton;
     }
 }
