@@ -17,9 +17,9 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.Tests
 {
@@ -50,7 +50,7 @@ namespace Cube.Pdf.Tests
         {
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                var src = IoEx.Path.Combine(Examples, filename);
+                var src = Path.Combine(Examples, filename);
                 await reader.OpenAsync(src, password);
 
                 var binder = new Cube.Pdf.Editing.PageBinder();
@@ -60,10 +60,10 @@ namespace Cube.Pdf.Tests
                 foreach (var page in reader.Pages) binder.Pages.Add(page);
 
                 var sn = smart ? "Smart" : "Normal";
-                var dest = IoEx.Path.Combine(Results, string.Format("Bind-{0}-{1}", sn, filename));
+                var dest = Path.Combine(Results, string.Format("Bind-{0}-{1}", sn, filename));
                 await binder.SaveAsync(dest);
 
-                Assert.That(IoEx.File.Exists(dest), Is.True);
+                Assert.That(File.Exists(dest), Is.True);
             }
         }
 
@@ -82,22 +82,22 @@ namespace Cube.Pdf.Tests
             var binder = new Cube.Pdf.Editing.PageBinder();
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                var src = IoEx.Path.Combine(Examples, "readme.pdf");
+                var src = Path.Combine(Examples, "readme.pdf");
                 await reader.OpenAsync(src, string.Empty);
 
                 binder.Pages.Add(reader.GetPage(1));
                 binder.Pages.Add(new ImagePage
                 {
-                    Path = IoEx.Path.Combine(Examples, "cubepdf.png"),
+                    FilePath = Path.Combine(Examples, "cubepdf.png"),
                     Size = new System.Drawing.Size(430, 530)
                 });
                 binder.Pages.Add(reader.GetPage(2));
             }
 
-            var dest = IoEx.Path.Combine(Results, "Bind-readme-cubepdf.pdf");
+            var dest = Path.Combine(Results, "Bind-readme-cubepdf.pdf");
             await binder.SaveAsync(dest);
 
-            Assert.That(IoEx.File.Exists(dest));
+            Assert.That(File.Exists(dest));
         }
     }
 }

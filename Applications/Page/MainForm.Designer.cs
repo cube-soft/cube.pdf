@@ -101,7 +101,7 @@
             this.ExitButton.Margin = new System.Windows.Forms.Padding(2);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(100, 35);
-            this.ExitButton.TabIndex = 2;
+            this.ExitButton.TabIndex = 0;
             this.ExitButton.Text = "キャンセル";
             this.ExitButton.UseVisualStyleBackColor = false;
             // 
@@ -115,7 +115,7 @@
             this.SplitButton.Margin = new System.Windows.Forms.Padding(2);
             this.SplitButton.Name = "SplitButton";
             this.SplitButton.Size = new System.Drawing.Size(130, 35);
-            this.SplitButton.TabIndex = 0;
+            this.SplitButton.TabIndex = 1;
             this.SplitButton.Text = "分割";
             this.SplitButton.UseVisualStyleBackColor = false;
             // 
@@ -129,7 +129,7 @@
             this.MergeButton.Margin = new System.Windows.Forms.Padding(2);
             this.MergeButton.Name = "MergeButton";
             this.MergeButton.Size = new System.Drawing.Size(130, 35);
-            this.MergeButton.TabIndex = 1;
+            this.MergeButton.TabIndex = 2;
             this.MergeButton.Text = "結合";
             this.MergeButton.UseVisualStyleBackColor = false;
             // 
@@ -326,6 +326,7 @@
             this.ClientSize = new System.Drawing.Size(684, 311);
             this.Controls.Add(this.LayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(300, 280);
             this.Name = "MainForm";
             this.Text = "CubePDF Page";

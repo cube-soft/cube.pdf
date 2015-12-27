@@ -355,7 +355,7 @@ namespace Cube.Pdf.App.Page
         private void AddImage(Item src, IDocumentWriter dest)
         {
             var page = new ImagePage();
-            page.Path = src.FullName;
+            page.FilePath = src.FullName;
             dest.Pages.Add(page);
         }
 

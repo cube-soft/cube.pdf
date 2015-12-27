@@ -47,7 +47,7 @@ namespace Cube.Pdf.Editing.Extensions
         {
             var size = reader.GetPageSize(pagenum);
             var dest = new Page();
-            dest.Path = path;
+            dest.FilePath = path;
             dest.Size = new Size((int)size.Width, (int)size.Height);
             dest.Rotation = reader.GetPageRotation(pagenum);
             dest.Password = password;

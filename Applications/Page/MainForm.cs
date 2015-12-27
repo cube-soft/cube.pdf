@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 using Cube.Extensions;
-using IoEx = System.IO;
+using System.IO;
 
 namespace Cube.Pdf.App.Page
 {
@@ -705,7 +705,7 @@ namespace Cube.Pdf.App.Page
         private ListViewItem Convert(Item item)
         {
             var space    = " ";
-            var filename = IoEx.Path.GetFileName(item.FullName);
+            var filename = Path.GetFileName(item.FullName);
             var type     = item.TypeName;
             var pages    = item.PageCount.ToString();
             var date     = item.LastWriteTime.ToString("yyyy/MM/dd hh:mm");

@@ -57,7 +57,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Path { get; set; } = string.Empty;
+        public string FilePath { get; set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -139,7 +139,7 @@ namespace Cube.Pdf
         {
             var other = obj as Page;
             if (other == null) return false;
-            return Path == other.Path && PageNumber == other.PageNumber;
+            return FilePath == other.FilePath && PageNumber == other.PageNumber;
         }
 
         /* ----------------------------------------------------------------- */
