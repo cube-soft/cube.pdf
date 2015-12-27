@@ -195,7 +195,6 @@ namespace Cube.Pdf.App.ImageEx
 
         #region Other private methods
 
-
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeLayout
