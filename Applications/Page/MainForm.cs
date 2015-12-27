@@ -464,7 +464,7 @@ namespace Cube.Pdf.App.Page
                 var arch = (IntPtr.Size == 4) ? "x86" : "x64";
                 var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
                 Text = string.Format("{0} {1} ({2})", asm.Product, asm.Version.ToString(3), arch);
-                MergeButton.Select();
+                ExitButton.Select();
             });
             base.OnLoad(e);
         }
