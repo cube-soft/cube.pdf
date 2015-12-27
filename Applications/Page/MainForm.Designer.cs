@@ -116,7 +116,7 @@
             this.SplitButton.Name = "SplitButton";
             this.SplitButton.Size = new System.Drawing.Size(130, 35);
             this.SplitButton.TabIndex = 1;
-            this.SplitButton.Text = "分割";
+            this.SplitButton.Text = "分割(&S)";
             this.SplitButton.UseVisualStyleBackColor = false;
             // 
             // MergeButton
@@ -130,7 +130,7 @@
             this.MergeButton.Name = "MergeButton";
             this.MergeButton.Size = new System.Drawing.Size(130, 35);
             this.MergeButton.TabIndex = 2;
-            this.MergeButton.Text = "結合";
+            this.MergeButton.Text = "結合(&M)";
             this.MergeButton.UseVisualStyleBackColor = false;
             // 
             // ContentsPanel
@@ -177,7 +177,7 @@
             this.FileButton.Name = "FileButton";
             this.FileButton.Size = new System.Drawing.Size(100, 30);
             this.FileButton.TabIndex = 0;
-            this.FileButton.Text = "追加...";
+            this.FileButton.Text = "追加(&O)...";
             this.FileButton.UseVisualStyleBackColor = false;
             // 
             // UpButton
@@ -220,7 +220,7 @@
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(100, 30);
             this.RemoveButton.TabIndex = 3;
-            this.RemoveButton.Text = "削除";
+            this.RemoveButton.Text = "削除(&D)";
             this.RemoveButton.UseVisualStyleBackColor = false;
             // 
             // ClearButton

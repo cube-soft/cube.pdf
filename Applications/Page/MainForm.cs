@@ -484,6 +484,59 @@ namespace Cube.Pdf.App.Page
             base.OnReceived(e);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnKeyDown
+        /// 
+        /// <summary>
+        /// キーボードのキーが押下された時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// ショートカットキーは以下の通りです。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            try
+            {
+                if (!e.Control) return;
+
+                switch (e.KeyCode)
+                {
+                    case Keys.A:
+                        foreach (ListViewItem item in PageListView.Items) item.Selected = true;
+                        break;
+                    case Keys.D:
+                        if (e.Alt) OnClearing(e);
+                        else OnRemoving(e);
+                        break;
+                    case Keys.H:
+                        ShowVersion();
+                        break;
+                    case Keys.M:
+                        RaiseMergingEvent();
+                        break;
+                    case Keys.O:
+                        RaiseAddingEvent();
+                        break;
+                    case Keys.S:
+                        RaiseSplittingEvent();
+                        break;
+                    case Keys.Up:
+                        OnMoving(new DataEventArgs<int>(-1));
+                        break;
+                    case Keys.Down:
+                        OnMoving(new DataEventArgs<int>(1));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            finally { base.OnKeyDown(e); }
+        }
+
         #endregion
 
         #region Event handlers
