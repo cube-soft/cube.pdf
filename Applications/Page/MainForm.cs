@@ -63,6 +63,7 @@ namespace Cube.Pdf.App.Page
             DownButton.Click   += (s, e) => OnMoving(new DataEventArgs<int>(1));
             MergeButton.Click  += (s, e) => RaiseMergingEvent();
             SplitButton.Click  += (s, e) => RaiseSplittingEvent();
+            ExitButton.Click   += (s, e) => Close();
 
             ButtonsPanel.DragEnter += Control_DragEnter;
             FooterPanel.DragEnter  += Control_DragEnter;

@@ -97,7 +97,7 @@
             this.TitleButton.Location = new System.Drawing.Point(0, 0);
             this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
             this.TitleButton.Name = "TitleButton";
-            this.TitleButton.Size = new System.Drawing.Size(150, 35);
+            this.TitleButton.Size = new System.Drawing.Size(170, 35);
             this.TitleButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.TitleButton.TabIndex = 0;
             this.TitleButton.TabStop = false;

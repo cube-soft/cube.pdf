@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ExitButton = new Cube.Forms.Button();
             this.SplitButton = new Cube.Forms.Button();
             this.MergeButton = new Cube.Forms.Button();
             this.ContentsPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -78,6 +79,7 @@
             // FooterPanel
             // 
             this.FooterPanel.AllowDrop = true;
+            this.FooterPanel.Controls.Add(this.ExitButton);
             this.FooterPanel.Controls.Add(this.SplitButton);
             this.FooterPanel.Controls.Add(this.MergeButton);
             this.FooterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -89,13 +91,27 @@
             this.FooterPanel.Size = new System.Drawing.Size(684, 60);
             this.FooterPanel.TabIndex = 1;
             // 
+            // ExitButton
+            // 
+            this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExitButton.ForeColor = System.Drawing.Color.White;
+            this.ExitButton.Location = new System.Drawing.Point(572, 12);
+            this.ExitButton.Margin = new System.Windows.Forms.Padding(2);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(100, 35);
+            this.ExitButton.TabIndex = 2;
+            this.ExitButton.Text = "キャンセル";
+            this.ExitButton.UseVisualStyleBackColor = false;
+            // 
             // SplitButton
             // 
-            this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.SplitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(151)))), ((int)(((byte)(253)))));
+            this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(49)))), ((int)(((byte)(146)))));
+            this.SplitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(47)))), ((int)(((byte)(144)))));
             this.SplitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SplitButton.ForeColor = System.Drawing.Color.White;
-            this.SplitButton.Location = new System.Drawing.Point(542, 12);
+            this.SplitButton.Location = new System.Drawing.Point(438, 12);
             this.SplitButton.Margin = new System.Windows.Forms.Padding(2);
             this.SplitButton.Name = "SplitButton";
             this.SplitButton.Size = new System.Drawing.Size(130, 35);
@@ -109,7 +125,7 @@
             this.MergeButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.MergeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MergeButton.ForeColor = System.Drawing.Color.White;
-            this.MergeButton.Location = new System.Drawing.Point(408, 12);
+            this.MergeButton.Location = new System.Drawing.Point(304, 12);
             this.MergeButton.Margin = new System.Windows.Forms.Padding(2);
             this.MergeButton.Name = "MergeButton";
             this.MergeButton.Size = new System.Drawing.Size(130, 35);
@@ -286,9 +302,9 @@
             this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ImagePictureBox.Location = new System.Drawing.Point(467, 0);
+            this.ImagePictureBox.Location = new System.Drawing.Point(418, 0);
             this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(217, 35);
+            this.ImagePictureBox.Size = new System.Drawing.Size(266, 35);
             this.ImagePictureBox.TabIndex = 1;
             this.ImagePictureBox.TabStop = false;
             // 
@@ -300,7 +316,7 @@
             this.TitleButton.Location = new System.Drawing.Point(0, 0);
             this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
             this.TitleButton.Name = "TitleButton";
-            this.TitleButton.Size = new System.Drawing.Size(150, 35);
+            this.TitleButton.Size = new System.Drawing.Size(160, 35);
             this.TitleButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.TitleButton.TabIndex = 0;
             this.TitleButton.TabStop = false;
@@ -346,6 +362,7 @@
         private Cube.Forms.Button SplitButton;
         private Cube.Forms.Button MergeButton;
         private System.Windows.Forms.ColumnHeader TypeColumnHeader;
+        private Forms.Button ExitButton;
     }
 }
 
