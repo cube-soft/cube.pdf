@@ -681,7 +681,7 @@ namespace Cube.Pdf.App.Page
         {
             var dialog = new SaveFileDialog();
             dialog.OverwritePrompt = true;
-            dialog.Title = Properties.Resources.SaveFileTitle;
+            dialog.Title = Properties.Resources.MergeTitle;
             dialog.Filter = Properties.Resources.SaveFileFilter;
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
@@ -700,7 +700,7 @@ namespace Cube.Pdf.App.Page
         private void RaiseSplittingEvent()
         {
             var dialog = new FolderBrowserDialog();
-            dialog.Description = Properties.Resources.SaveFileDescription;
+            dialog.Description = Properties.Resources.SplitDescription;
             dialog.ShowNewFolderButton = true;
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
 

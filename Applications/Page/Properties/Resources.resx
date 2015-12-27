@@ -140,11 +140,14 @@
     <value>{0} 個のファイルを結合しました。
 結合されたファイルをファイルリストに登録しますか？</value>
   </data>
+  <data name="MergeTitle" xml:space="preserve">
+    <value>結合したファイルの保存</value>
+  </data>
   <data name="MessageTitle" xml:space="preserve">
     <value>CubePDF Page</value>
   </data>
   <data name="OpenFileFilter" xml:space="preserve">
-    <value>PDF ファイル (*.pdf)|*.pdf;*.PDF|画像ファイル (*.bmp, *.emf, *.gif, *.ico, *.jpg, *.png, *.tiff, *.wmf)|*.bmp;*.BMP;*.emf;*.EMF;*.gif;*.GIF;*.ico;*.ICO;*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.tiff;*.TIFF;*.wmf;*.WMF|すべてのファイル|*.*</value>
+    <value>追加可能なファイル (*.pdf, *.bmp, *.emf, *.gif, *.ico, *.jpg, *.png, *.tiff, *.wmf)|*.pdf;*.PDF;*.bmp;*.BMP;*.emf;*.EMF;*.gif;*.GIF;*.ico;*.ICO;*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.tiff;*.TIFF;*.wmf;*.WMF|すべてのファイル|*.*</value>
   </data>
   <data name="OpenFileTitle" xml:space="preserve">
     <value>ファイルを追加</value>
@@ -158,14 +161,11 @@
   <data name="RemoveMenu" xml:space="preserve">
     <value>ファイルリストから削除</value>
   </data>
-  <data name="SaveFileDescription" xml:space="preserve">
-    <value>ファイルを保存するフォルダを選択して下さい。</value>
-  </data>
   <data name="SaveFileFilter" xml:space="preserve">
     <value>PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.*</value>
   </data>
-  <data name="SaveFileTitle" xml:space="preserve">
-    <value>ファイルを保存</value>
+  <data name="SplitDescription" xml:space="preserve">
+    <value>分割したファイルを保存するフォルダを選択して下さい。</value>
   </data>
   <data name="SplitSuccess" xml:space="preserve">
     <value>{0} 個のファイルを分割しました。
