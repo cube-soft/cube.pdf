@@ -206,6 +206,7 @@
             // 
             // PasswordForm
             // 
+            this.AcceptButton = this.ExecButton;
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.ClientSize = new System.Drawing.Size(482, 223);
             this.Controls.Add(this.LayoutPanel);
