@@ -233,6 +233,7 @@ namespace Cube.Pdf.App.Page
                 Model.Clear();
                 FinalizeSync(results.ToArray(), message);
             }
+            catch (Exception err) { ShowSync(err); }
             finally { Send(() => { View.AllowOperation = true; }); }
         }
 
