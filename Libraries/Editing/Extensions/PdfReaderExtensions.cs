@@ -1,8 +1,8 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// HeaderView.cs
+/// PdfReaderExtensions.cs
 ///
-/// Copyright (c) 2010 CubeSoft, Inc.
+/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -18,36 +18,41 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using iTextSharp.text.pdf;
+using Size = System.Drawing.Size;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.Editing.Extensions
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.HeaderView
-    ///
+    /// Cube.Pdf.Editing.Extensions.PdfReaderExtensions
+    /// 
     /// <summary>
-    /// 各種フォームのヘッダ部の外観を定義したクラスです。
+    /// iTextSharp の PdfReader に関する拡張メソッド群を定義するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class HeaderView : Cube.Forms.NtsUserControl
+    internal static class PdfReaderExtensions
     {
-        #region Constructors
-
         /* ----------------------------------------------------------------- */
         ///
-        /// HeaderView
+        /// CreatePage
         /// 
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Page オブジェクトを生成します。
         /// </summary>
-        ///
+        /// 
         /* ----------------------------------------------------------------- */
-        public HeaderView()
+        public static Page CreatePage(this PdfReader reader, string path, string password, int pagenum)
         {
-            InitializeComponent();
+            var size = reader.GetPageSize(pagenum);
+            var dest = new Page();
+            dest.FilePath = path;
+            dest.Size = new Size((int)size.Width, (int)size.Height);
+            dest.Rotation = reader.GetPageRotation(pagenum);
+            dest.Password = password;
+            dest.PageNumber = pagenum;
+            return dest;
         }
-
-        #endregion
     }
 }

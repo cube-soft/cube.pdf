@@ -24,11 +24,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskEx = System.Threading.Tasks.Task;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.ThumbnailPresenter
+    /// Cube.Pdf.App.ImageEx.ThumbnailPresenter
     ///
     /// <summary>
     /// ThumbnailForm をモデルを関連付けるためのクラスです。

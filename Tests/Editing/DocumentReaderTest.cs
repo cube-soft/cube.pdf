@@ -17,9 +17,9 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.Tests.Editing
 {
@@ -49,8 +49,8 @@ namespace Cube.Pdf.Tests.Editing
         [Test]
         public async Task Metadata()
         {
-            var src = IoEx.Path.Combine(Examples, "readme.pdf");
-            Assert.That(IoEx.File.Exists(src), Is.True);
+            var src = Path.Combine(Examples, "readme.pdf");
+            Assert.That(File.Exists(src), Is.True);
 
             using (var doc = new Cube.Pdf.Editing.DocumentReader())
             {

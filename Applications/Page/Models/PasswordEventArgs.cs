@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FormExtensions.cs
+/// PasswordEventArgs.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -18,41 +18,64 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Reflection;
-using System.Windows.Forms;
+using System.ComponentModel;
 
-namespace Cube.Pdf.App.ImageEx.Extensions
+namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.Extensions.FormExtensions
+    /// Cube.Pdf.App.Page.PasswordEventArgs
     ///
     /// <summary>
-    /// フォームに対する拡張メソッド群を定義するクラスです。
+    /// パスワードに関するイベントの引数を保持するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class FormExtensions
+    public class PasswordEventArgs : CancelEventArgs
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateTitle
+        /// PasswordEventArgs
         /// 
         /// <summary>
-        /// フォームのタイトルを更新します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void UpdateTitle(this Form form, string str)
+        public PasswordEventArgs(string path, bool cancel = false)
+            : base(cancel)
         {
-            var asm = new Cube.AssemblyReader(Assembly.GetExecutingAssembly());
-            var ss  = new System.Text.StringBuilder();
-            ss.Append(str);
-            if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(asm.Title)) ss.Append(" - ");
-            ss.Append(asm.Title);
-
-            form.Text = ss.ToString();
+            Path = path;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Path
+        /// 
+        /// <summary>
+        /// パスワードを要求するファイルへのパスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Path { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Password
+        /// 
+        /// <summary>
+        /// パスワードを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Password { get; set; } = string.Empty;
+
+        #endregion
     }
 }

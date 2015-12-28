@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 using Cube.Extensions;
-using IoEx = System.IO;
+using System.IO;
 
 namespace Cube.Pdf.App.Page
 {
@@ -63,6 +63,7 @@ namespace Cube.Pdf.App.Page
             DownButton.Click   += (s, e) => OnMoving(new DataEventArgs<int>(1));
             MergeButton.Click  += (s, e) => RaiseMergingEvent();
             SplitButton.Click  += (s, e) => RaiseSplittingEvent();
+            ExitButton.Click   += (s, e) => Close();
 
             ButtonsPanel.DragEnter += Control_DragEnter;
             FooterPanel.DragEnter  += Control_DragEnter;
@@ -463,7 +464,7 @@ namespace Cube.Pdf.App.Page
                 var arch = (IntPtr.Size == 4) ? "x86" : "x64";
                 var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
                 Text = string.Format("{0} {1} ({2})", asm.Product, asm.Version.ToString(3), arch);
-                MergeButton.Select();
+                ExitButton.Select();
             });
             base.OnLoad(e);
         }
@@ -481,6 +482,59 @@ namespace Cube.Pdf.App.Page
         {
             RaiseAddingEvent(e.Value);
             base.OnReceived(e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnKeyDown
+        /// 
+        /// <summary>
+        /// キーボードのキーが押下された時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// ショートカットキーは以下の通りです。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            try
+            {
+                if (!e.Control) return;
+
+                switch (e.KeyCode)
+                {
+                    case Keys.A:
+                        foreach (ListViewItem item in PageListView.Items) item.Selected = true;
+                        break;
+                    case Keys.D:
+                        if (e.Alt) OnClearing(e);
+                        else OnRemoving(e);
+                        break;
+                    case Keys.H:
+                        ShowVersion();
+                        break;
+                    case Keys.M:
+                        RaiseMergingEvent();
+                        break;
+                    case Keys.O:
+                        RaiseAddingEvent();
+                        break;
+                    case Keys.S:
+                        RaiseSplittingEvent();
+                        break;
+                    case Keys.Up:
+                        OnMoving(new DataEventArgs<int>(-1));
+                        break;
+                    case Keys.Down:
+                        OnMoving(new DataEventArgs<int>(1));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            finally { base.OnKeyDown(e); }
         }
 
         #endregion
@@ -627,7 +681,7 @@ namespace Cube.Pdf.App.Page
         {
             var dialog = new SaveFileDialog();
             dialog.OverwritePrompt = true;
-            dialog.Title = Properties.Resources.SaveFileTitle;
+            dialog.Title = Properties.Resources.MergeTitle;
             dialog.Filter = Properties.Resources.SaveFileFilter;
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
@@ -646,7 +700,7 @@ namespace Cube.Pdf.App.Page
         private void RaiseSplittingEvent()
         {
             var dialog = new FolderBrowserDialog();
-            dialog.Description = Properties.Resources.SaveFileDescription;
+            dialog.Description = Properties.Resources.SplitDescription;
             dialog.ShowNewFolderButton = true;
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
@@ -704,7 +758,7 @@ namespace Cube.Pdf.App.Page
         private ListViewItem Convert(Item item)
         {
             var space    = " ";
-            var filename = IoEx.Path.GetFileName(item.FullName);
+            var filename = Path.GetFileName(item.FullName);
             var type     = item.TypeName;
             var pages    = item.PageCount.ToString();
             var date     = item.LastWriteTime.ToString("yyyy/MM/dd hh:mm");

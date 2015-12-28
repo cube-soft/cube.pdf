@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Page.cs
+/// ImagePage.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -18,19 +18,20 @@
 ///
 /* ------------------------------------------------------------------------- */
 using Size = System.Drawing.Size;
+using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Page
+    /// ImagePage
     /// 
     /// <summary>
-    /// PDF のページを表すクラスです。
+    /// 単一イメージのみが存在する PDF のページを表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Page : IPage
+    public class ImagePage : IPage
     {
         #region IPage properties
 
@@ -45,7 +46,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PageType Type
         {
-            get { return PageType.Pdf; }
+            get { return PageType.Image; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -57,7 +58,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Path { get; set; } = string.Empty;
+        public string FilePath { get; set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -98,32 +99,6 @@ namespace Cube.Pdf
 
         #endregion
 
-        #region Extended properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Password
-        /// 
-        /// <summary>
-        /// PDF ファイルを開くためのパスワードを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Password { get; set; } = string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageNumber
-        /// 
-        /// <summary>
-        /// PDF ファイル内でのページ番号を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int PageNumber { get; set; } = 0;
-
-        #endregion
-
         #region IEquatable<IPage> methods
 
         /* ----------------------------------------------------------------- */
@@ -137,9 +112,9 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public bool Equals(IPage obj)
         {
-            var other = obj as Page;
+            var other = obj as ImagePage;
             if (other == null) return false;
-            return Path == other.Path && PageNumber == other.PageNumber;
+            return FilePath == other.FilePath;
         }
 
         /* ----------------------------------------------------------------- */

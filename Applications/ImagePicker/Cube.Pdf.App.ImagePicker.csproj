@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}</ProjectGuid>
+    <ProjectGuid>{C60D1DD1-1A53-4BFF-97F9-FD9902689336}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Pdf.App.Page</RootNamespace>
-    <AssemblyName>CubePdfPage</AssemblyName>
+    <RootNamespace>Cube.Pdf.App.ImageEx</RootNamespace>
+    <AssemblyName>CubePdfImagePicker</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -35,9 +35,6 @@
   <PropertyGroup>
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>App.manifest</ApplicationManifest>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AsyncBridge.Net35">
       <HintPath>..\..\..\packages\AsyncBridge.Net35.0.2.0\lib\net35-Client\AsyncBridge.Net35.dll</HintPath>
@@ -49,13 +46,13 @@
     <Reference Include="Cube.Forms">
       <HintPath>..\..\..\lib\net35\Cube.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\log4net.2.0.4\lib\net35-full\log4net.dll</HintPath>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\packages\log4net.2.0.5\lib\net35-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Threading">
       <HintPath>..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
       <Private>True</Private>
@@ -70,20 +67,45 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Extensions\FormExtensions.cs" />
+    <Compile Include="DropForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="DropForm.Designer.cs">
+      <DependentUpon>DropForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\IconCollection.cs" />
-    <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\ItemCollection.cs" />
-    <Compile Include="Presenters\ListViewPresenter.cs" />
+    <Compile Include="Models\PickTask.cs" />
+    <Compile Include="Models\SaveTask.cs" />
+    <Compile Include="Presenters\ProgressPresenter.cs" />
+    <Compile Include="Presenters\ThumbnailPresenter.cs" />
+    <Compile Include="PreviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PreviewForm.Designer.cs">
+      <DependentUpon>PreviewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="ThumbnailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThumbnailForm.Designer.cs">
+      <DependentUpon>ThumbnailForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DropForm.resx">
+      <DependentUpon>DropForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PreviewForm.resx">
+      <DependentUpon>PreviewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -95,7 +117,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="App.manifest" />
+    <EmbeddedResource Include="ThumbnailForm.resx">
+      <DependentUpon>ThumbnailForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -111,17 +135,27 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.ico" />
-    <None Include="Resources\Logo.png" />
-    <None Include="Resources\HeaderTitle.png" />
+    <None Include="Resources\CloseButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DragDrop.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\HeaderImage.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Cube.Pdf.csproj">
+    <None Include="Resources\HeaderLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.ico" />
+    <None Include="Resources\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Cube.Pdf.csproj">
       <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
       <Name>Cube.Pdf</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Editing\Cube.Pdf.Editing.csproj">
+    <ProjectReference Include="..\..\Libraries\Editing\Cube.Pdf.Editing.csproj">
       <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
       <Name>Cube.Pdf.Editing</Name>
     </ProjectReference>

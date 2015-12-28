@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cube.Pdf.ImageEx.Properties {
+namespace Cube.Pdf.App.ImageEx.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cube.Pdf.ImageEx.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cube.Pdf.ImageEx.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cube.Pdf.App.ImageEx.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace Cube.Pdf.ImageEx.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   CubePDF ImagePicker について に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
             }
         }
         
@@ -132,6 +141,16 @@ namespace Cube.Pdf.ImageEx.Properties {
         internal static System.Drawing.Bitmap HeaderLogo {
             get {
                 object obj = ResourceManager.GetObject("HeaderLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo {
+            get {
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

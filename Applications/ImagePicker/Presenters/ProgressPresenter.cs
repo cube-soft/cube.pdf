@@ -19,13 +19,12 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Windows.Forms;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.ProgressPresenter
+    /// Cube.Pdf.App.ImageEx.ProgressPresenter
     ///
     /// <summary>
     /// ProgressForm をモデルを関連付けるためのクラスです。

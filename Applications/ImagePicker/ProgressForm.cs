@@ -20,13 +20,13 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Windows.Forms;
-using Cube.Pdf.ImageEx.Extensions;
+using Cube.Pdf.App.ImageEx.Extensions;
 
-namespace Cube.Pdf.ImageEx
+namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.ProgressForm
+    /// Cube.Pdf.App.ImageEx.ProgressForm
     ///
     /// <summary>
     /// 進捗状況を表示するクラスです。

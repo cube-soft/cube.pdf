@@ -62,6 +62,7 @@ namespace Cube.Pdf.App.Page
             View.Opening   += View_Opening;
 
             Model.CollectionChanged += Model_CollectionChanged;
+            Model.PasswordRequired += Model_PasswordRequired;
         }
 
         #endregion
@@ -106,10 +107,10 @@ namespace Cube.Pdf.App.Page
         {
             try
             {
-                Sync(() => { View.AllowOperation = false; });
+                Send(() => { View.AllowOperation = false; });
                 await AddFileAsync(e.Value, 1); // 1 階層下のみ対象
             }
-            finally { Sync(() => { View.AllowOperation = true; }); }
+            finally { Send(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -169,7 +170,7 @@ namespace Cube.Pdf.App.Page
         {
             try
             {
-                Sync(() => { View.AllowOperation = false; ; });
+                Send(() => { View.AllowOperation = false; ; });
 
                 Metadata metadata = null;
                 var task = new Cube.Pdf.Editing.PageBinder();
@@ -198,7 +199,7 @@ namespace Cube.Pdf.App.Page
                 FinalizeSync(new string[] { e.Value }, message);
             }
             catch (Exception err) { ShowSync(err); }
-            finally { Sync(() => { View.AllowOperation = true; }); }
+            finally { Send(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -214,7 +215,7 @@ namespace Cube.Pdf.App.Page
         {
             try
             {
-                Sync(() => { View.AllowOperation = false; });
+                Send(() => { View.AllowOperation = false; });
 
                 var results = new List<string>();
                 var task = new Cube.Pdf.Editing.PageSplitter();
@@ -232,7 +233,7 @@ namespace Cube.Pdf.App.Page
                 Model.Clear();
                 FinalizeSync(results.ToArray(), message);
             }
-            finally { Sync(() => { View.AllowOperation = true; }); }
+            finally { Send(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -246,7 +247,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Sync(() =>
+            Send(() =>
             {
                 switch (e.Action)
                 {
@@ -268,6 +269,26 @@ namespace Cube.Pdf.App.Page
                         break;
                 }
             });
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Model_PasswordRequired
+        /// 
+        /// <summary>
+        /// パスワードの要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void Model_PasswordRequired(object sender, PasswordEventArgs e)
+        {
+            var dialog = new PasswordForm();
+            dialog.Path = e.Path;
+            dialog.StartPosition = FormStartPosition.CenterParent;
+            var result = dialog.ShowDialog(View);
+
+            e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
+            if (!e.Cancel) e.Password = dialog.Password;
         }
 
         #endregion
@@ -301,7 +322,6 @@ namespace Cube.Pdf.App.Page
                 else if (!File.Exists(path)) continue;
 
                 try { await Model.AddAsync(path); }
-                catch (EncryptionException /* err */) { /* see remarks */ }
                 catch (Exception /* err */) { /* see remarks */ }
             }
         }
@@ -335,7 +355,7 @@ namespace Cube.Pdf.App.Page
         private void AddImage(Item src, IDocumentWriter dest)
         {
             var page = new ImagePage();
-            page.Path = src.FullName;
+            page.FilePath = src.FullName;
             dest.Pages.Add(page);
         }
 
@@ -350,7 +370,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void FinalizeSync(string[] files, string message)
         {
-            Sync(() =>
+            Send(() =>
             {
                 View.AllowOperation = true;
 
@@ -373,7 +393,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void ShowSync(string message, MessageBoxIcon icon)
         {
-            Sync(() =>
+            Send(() =>
             {
                 MessageBox.Show(message, 
                     Properties.Resources.MessageTitle,
@@ -394,7 +414,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void ShowSync(Exception err)
         {
-            Sync(() =>
+            Send(() =>
             {
                 MessageBox.Show(err.Message,
                     Properties.Resources.ErrorMessageTitle,

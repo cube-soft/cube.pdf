@@ -34,17 +34,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AsyncBridge.Net35">
-      <HintPath>..\packages\AsyncBridge.Net35.0.2.0\lib\net35-Client\AsyncBridge.Net35.dll</HintPath>
+      <HintPath>..\..\packages\AsyncBridge.Net35.0.2.0\lib\net35-Client\AsyncBridge.Net35.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\lib\net35\Cube.Core.dll</HintPath>
+      <HintPath>..\..\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Threading">
-      <HintPath>..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+      <HintPath>..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
