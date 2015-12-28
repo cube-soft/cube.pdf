@@ -250,7 +250,7 @@ namespace Cube.Pdf.Editing
                 var bytes = !string.IsNullOrEmpty(password) ? System.Text.Encoding.UTF8.GetBytes(password) : null;
                 _impl = new PdfReader(path, bytes, true);
                 Path = path;
-                Pages = new ReadOnlyPageCollection(_impl, Path, GetInputPassword());
+                Pages = new ReadOnlyPageCollection(_impl, Path, password);
                 Metadata = GetMetadata(_impl);
                 EncryptionStatus = GetEncryptionStatus(_impl, password);
                 Encryption = GetEncryption(_impl, password, EncryptionStatus);
