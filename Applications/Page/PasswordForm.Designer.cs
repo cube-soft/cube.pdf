@@ -37,7 +37,7 @@
             this.ButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ExitButton = new Cube.Forms.Button();
             this.ExecButton = new Cube.Forms.Button();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.ContentsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
             this.PasswordKeyLabel = new System.Windows.Forms.Label();
             this.ShowPasswordCheckBox = new System.Windows.Forms.CheckBox();
@@ -46,7 +46,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
             this.ButtonsPanel.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.ContentsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -56,7 +56,7 @@
             this.LayoutPanel.Controls.Add(this.PasswordLabel, 0, 1);
             this.LayoutPanel.Controls.Add(this.HeaderPanel, 0, 0);
             this.LayoutPanel.Controls.Add(this.ButtonsPanel, 0, 3);
-            this.LayoutPanel.Controls.Add(this.flowLayoutPanel1, 0, 2);
+            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 2);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -160,18 +160,18 @@
             this.ExecButton.Text = "OK";
             this.ExecButton.UseVisualStyleBackColor = false;
             // 
-            // flowLayoutPanel1
+            // ContentsPanel
             // 
-            this.flowLayoutPanel1.Controls.Add(this.PasswordTextBox);
-            this.flowLayoutPanel1.Controls.Add(this.PasswordKeyLabel);
-            this.flowLayoutPanel1.Controls.Add(this.ShowPasswordCheckBox);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 95);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(482, 68);
-            this.flowLayoutPanel1.TabIndex = 1000;
+            this.ContentsPanel.Controls.Add(this.PasswordTextBox);
+            this.ContentsPanel.Controls.Add(this.PasswordKeyLabel);
+            this.ContentsPanel.Controls.Add(this.ShowPasswordCheckBox);
+            this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ContentsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.ContentsPanel.Location = new System.Drawing.Point(0, 95);
+            this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.ContentsPanel.Name = "ContentsPanel";
+            this.ContentsPanel.Size = new System.Drawing.Size(482, 68);
+            this.ContentsPanel.TabIndex = 1000;
             // 
             // PasswordTextBox
             // 
@@ -185,21 +185,21 @@
             // PasswordKeyLabel
             // 
             this.PasswordKeyLabel.AutoSize = true;
-            this.flowLayoutPanel1.SetFlowBreak(this.PasswordKeyLabel, true);
-            this.PasswordKeyLabel.Location = new System.Drawing.Point(54, 8);
+            this.ContentsPanel.SetFlowBreak(this.PasswordKeyLabel, true);
+            this.PasswordKeyLabel.Location = new System.Drawing.Point(64, 8);
             this.PasswordKeyLabel.Margin = new System.Windows.Forms.Padding(3, 8, 8, 0);
             this.PasswordKeyLabel.Name = "PasswordKeyLabel";
-            this.PasswordKeyLabel.Size = new System.Drawing.Size(108, 17);
+            this.PasswordKeyLabel.Size = new System.Drawing.Size(98, 15);
             this.PasswordKeyLabel.TabIndex = 8;
             this.PasswordKeyLabel.Text = "パスワードを入力：";
             // 
             // ShowPasswordCheckBox
             // 
             this.ShowPasswordCheckBox.AutoSize = true;
-            this.ShowPasswordCheckBox.Location = new System.Drawing.Point(353, 33);
+            this.ShowPasswordCheckBox.Location = new System.Drawing.Point(365, 33);
             this.ShowPasswordCheckBox.Margin = new System.Windows.Forms.Padding(0, 6, 12, 0);
             this.ShowPasswordCheckBox.Name = "ShowPasswordCheckBox";
-            this.ShowPasswordCheckBox.Size = new System.Drawing.Size(117, 21);
+            this.ShowPasswordCheckBox.Size = new System.Drawing.Size(105, 19);
             this.ShowPasswordCheckBox.TabIndex = 7;
             this.ShowPasswordCheckBox.Text = "パスワードを表示";
             this.ShowPasswordCheckBox.UseVisualStyleBackColor = true;
@@ -221,8 +221,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).EndInit();
             this.ButtonsPanel.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
+            this.ContentsPanel.ResumeLayout(false);
+            this.ContentsPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -236,7 +236,7 @@
         private Forms.Button ExitButton;
         private Forms.Button ExecButton;
         private System.Windows.Forms.Label PasswordLabel;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel ContentsPanel;
         private System.Windows.Forms.TextBox PasswordTextBox;
         private System.Windows.Forms.Label PasswordKeyLabel;
         private System.Windows.Forms.CheckBox ShowPasswordCheckBox;
