@@ -147,7 +147,7 @@
     <value>CubePDF Page</value>
   </data>
   <data name="OpenFileFilter" xml:space="preserve">
-    <value>追加可能なファイル (*.pdf, *.bmp, *.emf, *.gif, *.ico, *.jpg, *.png, *.tiff, *.wmf)|*.pdf;*.PDF;*.bmp;*.BMP;*.emf;*.EMF;*.gif;*.GIF;*.ico;*.ICO;*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.tiff;*.TIFF;*.wmf;*.WMF|すべてのファイル|*.*</value>
+    <value>追加可能なファイル (*.pdf, *.bmp, *.gif, *.jpg, *.png, *.tiff)|*.pdf;*.PDF;*.bmp;*.BMP;*.dib;*.DIB;*.gif;*.GIF;*.jpg;*.JPG;*.jpeg;*.JPEG;*.jpe;*.JPE;*.png;*.PNG;*.tiff;*.TIFF|すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="OpenFileTitle" xml:space="preserve">
     <value>ファイルを追加</value>

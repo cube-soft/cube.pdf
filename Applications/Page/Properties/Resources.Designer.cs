@@ -146,7 +146,7 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   追加可能なファイル (*.pdf, *.bmp, *.emf, *.gif, *.ico, *.jpg, *.png, *.tiff, *.wmf)|*.pdf;*.PDF;*.bmp;*.BMP;*.emf;*.EMF;*.gif;*.GIF;*.ico;*.ICO;*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.tiff;*.TIFF;*.wmf;*.WMF|すべてのファイル|*.* に類似しているローカライズされた文字列を検索します。
+        ///   追加可能なファイル (*.pdf, *.bmp, *.gif, *.jpg, *.png, *.tiff)|*.pdf;*.PDF;*.bmp;*.BMP;*.dib;*.DIB;*.gif;*.GIF;*.jpg;*.JPG;*.jpeg;*.JPEG;*.jpe;*.JPE;*.png;*.PNG;*.tiff;*.TIFF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string OpenFileFilter {
             get {
