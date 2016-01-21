@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.NtsForm
+    public partial class MainForm : Cube.Forms.Form
     {
         #region Constructors
 

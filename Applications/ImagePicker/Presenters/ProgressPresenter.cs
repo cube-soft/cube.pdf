@@ -69,7 +69,7 @@ namespace Cube.Pdf.App.ImageEx
         /* ----------------------------------------------------------------- */
         private async void View_Shown(object sender, EventArgs ev)
         {
-            var progress = new Progress<ProgressEventArgs>();
+            var progress = new Progress<ProgressEventArgs<string>>();
             progress.ProgressChanged += (s, e) => Update(e);
 
             try
@@ -160,10 +160,10 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Update(ProgressEventArgs e) { Update(e.Value, e.Message); }
-        private void Update(int value, string message)
+        private void Update(ProgressEventArgs<string> e) { Update(e.Percentage, e.Value); }
+        private void Update(double pecentage, string message)
         {
-            View.Value = value;
+            View.Value = (int)pecentage;
             View.Message = message;
         }
     }

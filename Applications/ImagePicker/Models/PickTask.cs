@@ -108,7 +108,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public async Task RunAsync(IProgress<ProgressEventArgs> progress)
+        public async Task RunAsync(IProgress<ProgressEventArgs<string>> progress)
         {
             try
             {
@@ -228,23 +228,23 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private async Task RunTaskAsync(IProgress<ProgressEventArgs> progress)
+        private async Task RunTaskAsync(IProgress<ProgressEventArgs<string>> progress)
         {
             try
             {
                 var filename = System.IO.Path.GetFileNameWithoutExtension(Path);
                 var start = string.Format(Properties.Resources.BeginMessage, filename);
-                progress.Report(new ProgressEventArgs(-1, start));
+                progress.Report(new ProgressEventArgs<string>(-1, start));
 
                 var result = await PickImagesAsync(progress);
                 var done = result.Value > 0 ?
                            string.Format(Properties.Resources.EndMessage, filename, result.Key, result.Value) :
                            string.Format(Properties.Resources.NotFoundMessage, filename, result.Key);
-                progress.Report(new ProgressEventArgs(100, done));
+                progress.Report(new ProgressEventArgs<string>(100, done));
             }
             catch (OperationCanceledException /* err */)
             {
-                progress.Report(new ProgressEventArgs(0, Properties.Resources.CancelMessage));
+                progress.Report(new ProgressEventArgs<string>(0, Properties.Resources.CancelMessage));
                 return;
             }
         }
@@ -258,7 +258,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private async Task<KeyValuePair<int, int>> PickImagesAsync(IProgress<ProgressEventArgs> progress)
+        private async Task<KeyValuePair<int, int>> PickImagesAsync(IProgress<ProgressEventArgs<string>> progress)
         {
             using (var reader = new DocumentReader())
             {
@@ -273,7 +273,7 @@ namespace Cube.Pdf.App.ImageEx
                     var pagenum = i + 1;
                     var value = (int)(i / (double)reader.Pages.Count * 100.0);
                     var message = string.Format(Properties.Resources.ProcessMessage, filename, pagenum, n);
-                    progress.Report(new ProgressEventArgs(value, message));
+                    progress.Report(new ProgressEventArgs<string>(value, message));
 
                     var src = await reader.GetImagesAsync(pagenum);
                     _source.Token.ThrowIfCancellationRequested();

@@ -38,7 +38,7 @@ namespace Cube.Pdf.App.ImageEx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class ThumbnailForm : Cube.Forms.NtsForm
+    public partial class ThumbnailForm : Cube.Forms.Form
     {
         #region Constructors
 
