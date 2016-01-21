@@ -18,7 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Cube.Pdf
 {
@@ -49,11 +48,11 @@ namespace Cube.Pdf
         /// Save
         /// 
         /// <summary>
-        /// 指定されたパスに PDF ファイルを非同期で保存します。
+        /// 指定されたパスに PDF ファイルを保存します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        Task SaveAsync(string path);
+        void Save(string path);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -86,6 +85,6 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ICollection<IPage> Pages { get; }
+        ICollection<Page> Pages { get; }
     }
 }

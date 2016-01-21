@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// IPage.cs
+/// ImageFile.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,79 +17,88 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Drawing;
 
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IPage
+    /// ImageFile
     /// 
     /// <summary>
-    /// PDF のページを表すインターフェースです。
+    /// 画像ファイルの情報を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IPage : IEquatable<IPage>
+    public class ImageFile : FileBase
     {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Type
-        /// 
-        /// <summary>
-        /// オブジェクトの種類を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        PageType Type { get; }
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FilePath
+        /// ImageFile
         /// 
         /// <summary>
-        /// オブジェクト元となるファイルのパスを取得または設定します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        string FilePath { get; set; }
+        public ImageFile(string path) : this(path, IconSize.Small) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Size
+        /// ImageFile
         /// 
         /// <summary>
-        /// オブジェクトのオリジナルサイズを取得または設定します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        Size Size { get; set; }
+        public ImageFile(string path, IconSize size)
+            : base(path, size)
+        {
+            using (var image = Bitmap.FromFile(path))
+            {
+                InitializeValues(image);
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Rotation
+        /// ImageFile
         /// 
         /// <summary>
-        /// オブジェクトを表示する際の回転角を取得または設定します。
+        /// オブジェクトを初期化します。
         /// </summary>
-        /// 
-        /// <remarks>
-        /// 値は度単位 (degree) で設定して下さい。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        int Rotation { get; set; }
+        public ImageFile(string path, Image image, IconSize size)
+            : base(path, size)
+        {
+            InitializeValues(image);
+        }
+
+        #endregion
+
+        #region Other private methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Power
+        /// InitializeValues
         /// 
         /// <summary>
-        /// 表示倍率を取得または設定します。
+        /// 各種プロパティを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        double Power { get; set; }
+        private void InitializeValues(Image image)
+        {
+            var guid = image.FrameDimensionsList[0];
+            var dim = new System.Drawing.Imaging.FrameDimension(guid);
+            PageCount = image.GetFrameCount(dim);
+            Resolution = new Point((int)image.HorizontalResolution, (int)image.VerticalResolution);
+        }
+
+        #endregion
     }
 }

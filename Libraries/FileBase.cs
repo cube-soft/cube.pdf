@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ImagePage.cs
+/// FileBase.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,89 +17,64 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using Size = System.Drawing.Size;
-using ImageFormat = System.Drawing.Imaging.ImageFormat;
+using System;
+using System.Drawing;
 
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImagePage
+    /// FileBase
     /// 
     /// <summary>
-    /// 単一イメージのみが存在する PDF のページを表すクラスです。
+    /// ファイル情報を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImagePage : IPage
+    public class FileBase : Cube.FileSystem.FileInfo, IEquatable<FileBase>
     {
-        #region IPage properties
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Type
+        /// FileBase
         /// 
         /// <summary>
-        /// オブジェクトの種類を取得します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageType Type
-        {
-            get { return PageType.Image; }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Path
-        /// 
-        /// <summary>
-        /// PDF ファイルのパスを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string FilePath { get; set; } = string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Size
-        /// 
-        /// <summary>
-        /// 対象ページのオリジナルサイズを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Size Size { get; set; } = Size.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotation
-        /// 
-        /// <summary>
-        /// 該当ページを表示する際の回転角を取得または設定します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// 値は度単位 (degree) で設定して下さい。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Rotation { get; set; } = 0;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Power
-        /// 
-        /// <summary>
-        /// 該当ページの表示倍率を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public double Power { get; set; } = 1.0;
+        protected FileBase(string path, IconSize size) : base(path, size) { }
 
         #endregion
 
-        #region IEquatable<IPage> methods
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageCount
+        /// 
+        /// <summary>
+        /// ページ数を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int PageCount { get; set; } = 0;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Resolution
+        /// 
+        /// <summary>
+        /// ファイルの解像度を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Point Resolution { get; set; } = Point.Empty;
+
+        #endregion
+
+        #region IEquatable<FileBase> methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -110,11 +85,9 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Equals(IPage obj)
+        public bool Equals(FileBase other)
         {
-            var other = obj as ImagePage;
-            if (other == null) return false;
-            return FilePath == other.FilePath;
+            return FullName == other.FullName;
         }
 
         /* ----------------------------------------------------------------- */
@@ -131,7 +104,7 @@ namespace Cube.Pdf
             if (object.ReferenceEquals(obj, null)) return false;
             if (object.ReferenceEquals(this, obj)) return true;
 
-            var other = obj as IPage;
+            var other = obj as Page;
             if (other == null) return false;
 
             return Equals(other);

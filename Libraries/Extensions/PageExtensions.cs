@@ -42,7 +42,7 @@ namespace Cube.Pdf.Extensions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Size ViewSize(this IPage page)
+        public static Size ViewSize(this Page page)
         {
             var degree = page.Rotation;
             if (degree < 0) degree += 360;
@@ -53,7 +53,7 @@ namespace Cube.Pdf.Extensions
             var cos = Math.Abs(Math.Cos(radian));
             var width  = page.Size.Width * cos + page.Size.Height * sin;
             var height = page.Size.Width * sin + page.Size.Height * cos;
-            return new Size((int)(width * page.Power), (int)(height * page.Power));
+            return new Size((int)width, (int)height);
         }
     }
 }
