@@ -206,20 +206,20 @@ namespace Cube.Pdf.Editing
         {
             if (src == null) return;
 
-            if (!readers.ContainsKey(src.FilePath))
+            if (!readers.ContainsKey(src.Path))
             {
                 var item = src.Password.Length > 0 ?
-                           new PdfReader(src.FilePath, System.Text.Encoding.UTF8.GetBytes(src.Password)) :
-                           new PdfReader(src.FilePath);
-                readers.Add(src.FilePath, item);
+                           new PdfReader(src.Path, System.Text.Encoding.UTF8.GetBytes(src.Password)) :
+                           new PdfReader(src.Path);
+                readers.Add(src.Path, item);
             }
 
-            var reader = readers[src.FilePath];
+            var reader = readers[src.Path];
             var rot = reader.GetPageRotation(src.PageNumber);
             var dic = reader.GetPageN(src.PageNumber);
             if (rot != src.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(src.Rotation));
 
-            var basename = Path.GetFileNameWithoutExtension(src.FilePath);
+            var basename = Path.GetFileNameWithoutExtension(src.Path);
             var pagenum = src.PageNumber;
             var dest = Unique(folder, basename, pagenum, reader.NumberOfPages);
             SaveOne(reader, pagenum, dest);
@@ -239,7 +239,7 @@ namespace Cube.Pdf.Editing
         {
             if (src == null) return;
 
-            using (var image = new System.Drawing.Bitmap(src.FilePath))
+            using (var image = new System.Drawing.Bitmap(src.Path))
             using (var stream = new MemoryStream())
             {
                 var document = new iTextSharp.text.Document();
@@ -282,7 +282,7 @@ namespace Cube.Pdf.Editing
         {
             for (var i = 0; i < reader.NumberOfPages; ++i)
             {
-                var basename = Path.GetFileNameWithoutExtension(src.FilePath);
+                var basename = Path.GetFileNameWithoutExtension(src.Path);
                 var pagenum = i + 1;
                 var dest = Unique(folder, basename, pagenum, reader.NumberOfPages);
                 SaveOne(reader, pagenum, dest);

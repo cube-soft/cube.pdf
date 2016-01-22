@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PdfReaderExtensions.cs
+/// PdfReaderEx.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
@@ -18,21 +18,21 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System.Drawing;
 using iTextSharp.text.pdf;
-using Size = System.Drawing.Size;
 
 namespace Cube.Pdf.Editing.Extensions
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.Extensions.PdfReaderExtensions
+    /// PdfReaderEx
     /// 
     /// <summary>
-    /// iTextSharp の PdfReader に関する拡張メソッド群を定義するクラスです。
+    /// iTextSharp.text.pdf.PdfReader の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PdfReaderExtensions
+    internal static class PdfReaderEx
     {
         /* ----------------------------------------------------------------- */
         ///
@@ -43,15 +43,14 @@ namespace Cube.Pdf.Editing.Extensions
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public static Page CreatePage(this PdfReader reader, string path, string password, int pagenum)
+        public static Page CreatePage(this PdfReader reader, FileBase file, int pagenum)
         {
             var size = reader.GetPageSize(pagenum);
             var dest = new Page();
-            dest.FilePath = path;
+            dest.File = file;
+            dest.Number = pagenum;
             dest.Size = new Size((int)size.Width, (int)size.Height);
             dest.Rotation = reader.GetPageRotation(pagenum);
-            dest.Password = password;
-            dest.PageNumber = pagenum;
             return dest;
         }
     }

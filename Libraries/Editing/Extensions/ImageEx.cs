@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ImageExtensions.cs
+/// ImageEx.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
@@ -25,14 +25,14 @@ namespace Cube.Pdf.Editing.Extensions
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.Extensions.ImageExtensions
+    /// ImageEx
     /// 
     /// <summary>
-    /// System.Drawing.Image に関する拡張メソッド群を定義するクラスです。
+    /// System.Drawing.Image の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class ImageExtensions
+    internal static class ImageEx
     {
         /* ----------------------------------------------------------------- */
         ///

@@ -70,21 +70,21 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
+        /// File
         /// 
         /// <summary>
-        /// PDF ファイルのパスを取得します。
+        /// ファイル情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Path { get; private set; } = string.Empty;
+        public FileBase File { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
         /// Metadata
         /// 
         /// <summary>
-        /// PDF ファイルに関するメタデータを取得します。
+        /// PDF ファイルに関するメタ情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -92,7 +92,7 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Metadata
+        /// Encryption
         /// 
         /// <summary>
         /// PDF ファイルに関する暗号化情報を取得します。
@@ -103,17 +103,6 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EncryptionStatus
-        /// 
-        /// <summary>
-        /// 暗号化されている PDF ファイルへのアクセス状態を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EncryptionStatus EncryptionStatus { get; private set; } = EncryptionStatus.NotEncrypted;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Pages
         /// 
         /// <summary>
@@ -121,24 +110,53 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IReadOnlyCollection<IPage> Pages { get; private set; } = null;
+        public IReadOnlyCollection<Page> Pages { get; private set; } = null;
 
         #endregion
 
         #region Methods
 
+        #region IDocumentReader
+
         /* ----------------------------------------------------------------- */
         ///
-        /// OpenAsync
+        /// Open
         /// 
         /// <summary>
-        /// PDF ファイルを非同期で開きます。
+        /// PDF ファイルを開きます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Task OpenAsync(string filename, string password)
+        public void Open(string path)
         {
-            return Task.Run(() => { Open(filename, password); });
+            Open(path, string.Empty);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(string path, string password)
+        {
+            try
+            {
+                var bytes = !string.IsNullOrEmpty(password) ? System.Text.Encoding.UTF8.GetBytes(password) : null;
+                _core = new PdfReader(path, bytes, true);
+
+                var file = new Cube.Pdf.File(path, password);
+                file.FullAccess = _core.IsOpenedWithFullPermissions;
+
+                File = file;
+                Pages = new ReadOnlyPageCollection(_core, file);
+                Metadata = GetMetadata(_core);
+                Encryption = GetEncryption(_core, password, file.FullAccess);
+            }
+            catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -156,13 +174,12 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public void Close()
         {
-            if (_impl == null) return;
+            if (_core == null) return;
 
-            _impl.Close();
-            _impl = null;
+            _core.Close();
+            _core = null;
             Metadata = null;
             Encryption = null;
-            EncryptionStatus = EncryptionStatus.NotEncrypted;
             Pages = null;
         }
 
@@ -192,26 +209,39 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public Page GetPage(int pagenum)
         {
-            return _impl != null ? _impl.CreatePage(Path, GetInputPassword(), pagenum) : null;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImagesAsync
-        /// 
-        /// <summary>
-        /// 指定されたページ中に存在する画像を非同期で取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public Task<IList<Image>> GetImagesAsync(int pagenum)
-        {
-            return Task.Run(() => { return GetImages(pagenum); });
+            return _core != null && File != null ?
+                   _core.CreatePage(File, pagenum) :
+                   null;
         }
 
         #endregion
 
-        #region Override methods
+        #region Extended
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImages
+        /// 
+        /// <summary>
+        /// 指定されたページ中に存在する画像を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private IList<Image> GetImages(int pagenum)
+        {
+            if (pagenum < 0 || pagenum > Pages.Count) throw new IndexOutOfRangeException();
+
+            var parser = new iTextSharp.text.pdf.parser.PdfReaderContentParser(_core);
+            var listener = new ImageRenderListener();
+            parser.ProcessContent(pagenum, listener);
+            return listener.Images;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Virtual methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -232,30 +262,6 @@ namespace Cube.Pdf.Editing
         #endregion
 
         #region Other private methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        /// 
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Open(string path, string password)
-        {
-            try
-            {
-                var bytes = !string.IsNullOrEmpty(password) ? System.Text.Encoding.UTF8.GetBytes(password) : null;
-                _impl = new PdfReader(path, bytes, true);
-                Path = path;
-                Pages = new ReadOnlyPageCollection(_impl, Path, password);
-                Metadata = GetMetadata(_impl);
-                EncryptionStatus = GetEncryptionStatus(_impl, password);
-                Encryption = GetEncryption(_impl, password, EncryptionStatus);
-            }
-            catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -287,7 +293,31 @@ namespace Cube.Pdf.Editing
         /// GetEncryption
         /// 
         /// <summary>
-        /// PDF ファイルの暗号化に関わる情報を抽出して返します。
+        /// Encryption オブジェクトを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private Encryption GetEncryption(PdfReader src, string password, bool access)
+        {
+            var dest = new Encryption();
+            if (access && string.IsNullOrEmpty(password)) return dest;
+
+            dest.IsEnabled     = true;
+            dest.Method        = Translator.ToEncryptionMethod(src.GetCryptoMode());
+            dest.Permission    = Translator.ToPermission(src.Permissions);
+            dest.OwnerPassword = access ? password : string.Empty;
+            dest.UserPassword  = GetUserPassword(src, password, access, dest.Method);
+            dest.IsUserPasswordEnabled = !string.IsNullOrEmpty(dest.UserPassword);
+
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetUserPassword
+        /// 
+        /// <summary>
+        /// ユーザパスワードを取得します。
         /// </summary>
         /// 
         /// <remarks>
@@ -296,115 +326,22 @@ namespace Cube.Pdf.Editing
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private Encryption GetEncryption(PdfReader src, string password, EncryptionStatus status)
+        private string GetUserPassword(PdfReader src, string password, bool access, EncryptionMethod method)
         {
-            var dest = new Encryption();
-            if (status == EncryptionStatus.NotEncrypted) return dest;
-
-            dest.IsEnabled     = true;
-            dest.OwnerPassword = (status == EncryptionStatus.FullAccess) ? password : string.Empty;
-            dest.Method        = Translator.ToEncryptionMethod(src.GetCryptoMode());
-            dest.Permission    = Translator.ToPermission(src.Permissions);
-
-            switch (status)
+            if (access)
             {
-                case EncryptionStatus.FullAccess:
-                    if (dest.Method == EncryptionMethod.Aes256) break; // see remarks
-
-                    var bytes = src.ComputeUserPassword();
-                    if (bytes != null && bytes.Length > 0)
-                    {
-                        dest.IsUserPasswordEnabled = true;
-                        dest.UserPassword = System.Text.Encoding.UTF8.GetString(bytes);
-                    }
-                    break;
-                case EncryptionStatus.RestrictedAccess:
-                    if (string.IsNullOrEmpty(password))
-                    {
-                        dest.IsUserPasswordEnabled = true;
-                        dest.UserPassword = password;
-                    }
-                    break;
-                default:
-                    break;
+                if (method == EncryptionMethod.Aes256) return string.Empty; // see remarks
+                var bytes = src.ComputeUserPassword();
+                if (bytes != null && bytes.Length > 0) return System.Text.Encoding.UTF8.GetString(bytes);
             }
-
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEncryptionStatus
-        /// 
-        /// <summary>
-        /// PDF ファイルの複合状態に関わる情報を抽出して返します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// パスワードは、オーナパスワードとユーザパスワードのどちらかが
-        /// 指定されます。どちらが指定されたのかについては、
-        /// PdfReader.IsOpenedWithFullPermissions プロパティから判断します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private EncryptionStatus GetEncryptionStatus(PdfReader src, string password)
-        {
-            if (src.IsOpenedWithFullPermissions)
-            {
-                if (string.IsNullOrEmpty(password)) return EncryptionStatus.NotEncrypted;
-                else return EncryptionStatus.FullAccess;
-            }
-            else return EncryptionStatus.RestrictedAccess;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImages
-        /// 
-        /// <summary>
-        /// 指定されたページ中に存在する画像を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private IList<Image> GetImages(int pagenum)
-        {
-            if (pagenum < 0 || pagenum > Pages.Count) throw new IndexOutOfRangeException();
-
-            var parser = new iTextSharp.text.pdf.parser.PdfReaderContentParser(_impl);
-            var listener = new ImageRenderListener();
-            parser.ProcessContent(pagenum, listener);
-            return listener.Images;
-        }
-
-        #endregion
-
-        #region Other private methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetInputPassword
-        /// 
-        /// <summary>
-        /// ユーザの入力したパスワードを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetInputPassword()
-        {
-            if (Encryption == null || !Encryption.IsEnabled) return string.Empty;
-            else if (!string.IsNullOrEmpty(Encryption.OwnerPassword)) return Encryption.OwnerPassword;
-            else if (Encryption.IsUserPasswordEnabled && !string.IsNullOrEmpty(Encryption.UserPassword))
-            {
-                return Encryption.UserPassword;
-            }
-            else return string.Empty;
+            return password;
         }
 
         #endregion
 
         #region Fields
         private bool _disposed = false;
-        private PdfReader _impl = null;
+        private PdfReader _core = null;
         #endregion
     }
 }
