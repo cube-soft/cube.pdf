@@ -48,7 +48,6 @@
     <Compile Include="Encryption.cs" />
     <Compile Include="EncryptionException.cs" />
     <Compile Include="EncryptionMethod.cs" />
-    <Compile Include="EncryptionStatus.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FileBase.cs" />

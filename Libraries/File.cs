@@ -91,14 +91,21 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Status
+        /// IsRestricted
         /// 
         /// <summary>
-        /// PDF ファイルへのアクセス状態を取得または設定します。
+        /// ファイル内容へのアクセスが制限されているかどうかを示す値を
+        /// 取得または設定します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// このプロパティは、PDF ファイルにパスワードによる暗号化が
+        /// 施されており、かつユーザパスワードを用いてファイルを開いた
+        /// 場合に true になります。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        EncryptionStatus Status { get; set; } = EncryptionStatus.NotEncrypted;
+        public bool IsRestricted { get; set; } = false;
 
         #endregion
     }
