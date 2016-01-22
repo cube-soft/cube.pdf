@@ -65,9 +65,23 @@ namespace Cube.Pdf
         /// ページオブジェクト表示時の回転角を度 (degree) 単位で取得
         /// または設定します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// 設定時に [0, 360) で正規化されます。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public int Rotation { get; set; } = 0;
+        public int Rotation
+        {
+            get { return _rotation; }
+            set
+            {
+                var degree = value;
+                while (degree <    0) degree += 360;
+                while (degree >= 360) degree -= 360;
+                _rotation = degree;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -91,6 +105,59 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         public Size Size { get; set; } = Size.Empty;
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewSize
+        /// 
+        /// <summary>
+        /// ページオブジェクトの表示サイズを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public Size ViewSize()
+        {
+            return ViewSize(Resolution);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewSize
+        /// 
+        /// <summary>
+        /// ページオブジェクトの表示サイズを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public Size ViewSize(int dpi)
+        {
+            return ViewSize(new Point(dpi, dpi));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewSize
+        /// 
+        /// <summary>
+        /// ページオブジェクトの表示サイズを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public Size ViewSize(Point dpi)
+        {
+            var radian = Math.PI * Rotation / 180.0;
+            var sin = Math.Abs(Math.Sin(radian));
+            var cos = Math.Abs(Math.Cos(radian));
+            var width = Size.Width * cos + Size.Height * sin;
+            var height = Size.Width * sin + Size.Height * cos;
+            var horizontal = dpi.X / (double)Resolution.X;
+            var vertical = dpi.Y / (double)Resolution.Y;
+            return new Size((int)(width * horizontal), (int)(height * vertical));
+        }
 
         #endregion
 
@@ -144,6 +211,10 @@ namespace Cube.Pdf
             return base.GetHashCode();
         }
 
+        #endregion
+
+        #region Fields
+        private int _rotation = 0;
         #endregion
     }
 }
