@@ -33,12 +33,12 @@ namespace Cube.Pdf
     [Flags]
     public enum ViewLayout
     {
-        SinglePage = 0x0001,
-        OneColumn = 0x0002,
-        TwoColumnLeft = 0x0004,
+        SinglePage     = 0x0001,
+        OneColumn      = 0x0002,
+        TwoColumnLeft  = 0x0004,
         TwoColumnRight = 0x0008,
-        TwoPageLeft = 0x0010,
-        TwoPageRight = 0x0020
+        TwoPageLeft    = 0x0010,
+        TwoPageRight   = 0x0020
     }
 
     /* --------------------------------------------------------------------- */
