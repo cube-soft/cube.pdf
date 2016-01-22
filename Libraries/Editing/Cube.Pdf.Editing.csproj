@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cube.Core">
+      <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.8.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\iTextSharp.5.5.8\lib\itextsharp.dll</HintPath>
@@ -49,8 +52,8 @@
   <ItemGroup>
     <Compile Include="Details\ImageRenderListener.cs" />
     <Compile Include="Details\Translator.cs" />
-    <Compile Include="Extensions\ImageExtensions.cs" />
-    <Compile Include="Extensions\PdfReaderExtensions.cs" />
+    <Compile Include="Extensions\ImageEx.cs" />
+    <Compile Include="Extensions\PdfReaderEx.cs" />
     <Compile Include="PageBinder.cs" />
     <Compile Include="PageSplitter.cs" />
     <Compile Include="ReadOnlyPageCollection.cs" />
