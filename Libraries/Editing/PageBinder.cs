@@ -19,13 +19,12 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Pdf.Editing.Extensions;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing
 {
@@ -53,6 +52,25 @@ namespace Cube.Pdf.Editing
         ///
         /* ----------------------------------------------------------------- */
         public PageBinder() { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~PageBinder
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
+        /// に記述して下さい。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~PageBinder()
+        {
+            Dispose(false);
+        }
 
         #endregion
 
@@ -89,7 +107,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICollection<IPage> Pages { get; } = new List<IPage>();
+        public ICollection<Page> Pages { get; } = new List<Page>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -133,25 +151,8 @@ namespace Cube.Pdf.Editing
             Metadata   = new Metadata();
             Encryption = new Encryption();
             Pages.Clear();
+            _bookmarks.Clear();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveAsync
-        /// 
-        /// <summary>
-        /// PDF ファイルを指定されたパスに非同期で保存します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Task SaveAsync(string path)
-        {
-            return Task.Run(() => Save(path));
-        }
-
-        #endregion
-
-        #region Other private methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -164,15 +165,15 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Save(string path)
+        public void Save(string path)
         {
-            var tmp = Path.GetTempFileName();
+            var tmp = IoEx.Path.GetTempFileName();
 
             try
             {
                 Bind(tmp);
                 using (var reader = new PdfReader(tmp))
-                using (var writer = new PdfStamper(reader, new FileStream(path, FileMode.Create)))
+                using (var writer = new PdfStamper(reader, new IoEx.FileStream(path, IoEx.FileMode.Create)))
                 {
                     AddMetadata(reader, writer);
                     AddEncryption(writer);
@@ -183,6 +184,45 @@ namespace Cube.Pdf.Editing
             catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
             finally { TryDelete(tmp); }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            _disposed = true;
+            if (disposing) Reset();
+        }
+
+        #endregion
+
+        #region Other private methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -202,32 +242,24 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         private void Bind(string dest)
         {
-            if (File.Exists(dest)) File.Delete(dest);
+            if (IoEx.File.Exists(dest)) IoEx.File.Delete(dest);
 
             var readers  = new Dictionary<string, PdfReader>();
             var document = new iTextSharp.text.Document();
             var writer   = UseSmartCopy ?
-                           new PdfSmartCopy(document, new FileStream(dest, FileMode.Create)) :
-                           new PdfCopy(document, new FileStream(dest, FileMode.Create));
+                           new PdfSmartCopy(document, new IoEx.FileStream(dest, IoEx.FileMode.Create)) :
+                           new PdfCopy(document, new IoEx.FileStream(dest, IoEx.FileMode.Create));
 
             writer.PdfVersion = Metadata.Version.Minor.ToString()[0];
             writer.ViewerPreferences = Metadata.ViewPreferences;
 
             document.Open();
             _bookmarks.Clear();
+
             foreach (var page in Pages)
             {
-                switch (page.Type)
-                {
-                    case PageType.Image:
-                        AddImagePage(page as ImagePage, writer);
-                        break;
-                    case PageType.Pdf:
-                        AddPage(page as Page, writer, readers);
-                        break;
-                    default:
-                        break;
-                }
+                if (page.File is File) AddPage(page, writer, readers);
+                else if (page.File is ImageFile) AddImagePage(page, writer);
             }
 
             document.Close();
@@ -267,21 +299,16 @@ namespace Cube.Pdf.Editing
         {
             if (src == null) return;
 
-            if (!readers.ContainsKey(src.Path))
-            {
-                var item = src.Password.Length > 0 ?
-                           new PdfReader(src.Path, System.Text.Encoding.UTF8.GetBytes(src.Password)) :
-                           new PdfReader(src.Path);
-                readers.Add(src.Path, item);
-            }
+            if (!readers.ContainsKey(src.File.FullName)) AddReader(src.File as File, readers);
+            if (!readers.ContainsKey(src.File.FullName)) return;
 
-            var reader = readers[src.Path];
-            var rot    = reader.GetPageRotation(src.PageNumber);
-            var dic    = reader.GetPageN(src.PageNumber);
+            var reader = readers[src.File.FullName];
+            var rot    = reader.GetPageRotation(src.Number);
+            var dic    = reader.GetPageN(src.Number);
             if (rot != src.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(src.Rotation));
             
-            dest.AddPage(dest.GetImportedPage(reader, src.PageNumber));
-            StockBookmarks(reader, src.PageNumber, dest.PageNumber);
+            dest.AddPage(dest.GetImportedPage(reader, src.Number));
+            StockBookmarks(reader, src.Number, dest.PageNumber);
         }
 
         /* ----------------------------------------------------------------- */
@@ -293,12 +320,12 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddImagePage(ImagePage src, PdfCopy dest)
+        private void AddImagePage(Page src, PdfCopy dest)
         {
             if (src == null) return;
 
-            using (var image = new System.Drawing.Bitmap(src.Path))
-            using (var stream = new MemoryStream())
+            using (var image = new System.Drawing.Bitmap(src.File.FullName))
+            using (var stream = new IoEx.MemoryStream())
             {
                 var document = new iTextSharp.text.Document();
                 var writer = PdfWriter.GetInstance(document, stream);
@@ -360,13 +387,33 @@ namespace Cube.Pdf.Editing
         {
             if (Encryption.IsEnabled && Encryption.OwnerPassword.Length > 0)
             {
-                var method     = Translator.ToIText(Encryption.Method);
-                var permission = Translator.ToIText(Encryption.Permission);
+                var method     = Transform.ToIText(Encryption.Method);
+                var permission = Transform.ToIText(Encryption.Permission);
                 var userpass   = Encryption.IsUserPasswordEnabled ?
                                  GetUserPassword(Encryption.UserPassword, Encryption.OwnerPassword) :
                                  string.Empty;
                 writer.Writer.SetEncryption(method, userpass, Encryption.OwnerPassword, permission);
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddReader
+        /// 
+        /// <summary>
+        /// ファイル情報を基に PdfReader オブジェクトを生成し、一覧に
+        /// 追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddReader(File src, Dictionary<string, PdfReader> dest)
+        {
+            if (src == null) return;
+
+            var item = src.Password.Length > 0 ?
+                       new PdfReader(src.FullName, System.Text.Encoding.UTF8.GetBytes(src.Password)) :
+                       new PdfReader(src.FullName);
+            dest.Add(src.FullName, item);
         }
 
         /* ----------------------------------------------------------------- */
@@ -405,7 +452,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private iTextSharp.text.Image CreateImage(ImagePage src, System.Drawing.Image image)
+        private iTextSharp.text.Image CreateImage(Page src, System.Drawing.Image image)
         {
             var width  = src.Size.IsEmpty ? image.Width : src.Size.Width;
             var height = src.Size.IsEmpty ? image.Height : src.Size.Height;
@@ -501,7 +548,7 @@ namespace Cube.Pdf.Editing
         {
             try
             {
-                File.Delete(path);
+                IoEx.File.Delete(path);
                 return true;
             }
             catch (Exception /* err */) { return false; }
@@ -510,6 +557,7 @@ namespace Cube.Pdf.Editing
         #endregion
 
         #region Fields
+        private bool _disposed = false;
         private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
         #endregion
     }
