@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Translator.cs
+/// Transform.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -25,7 +25,7 @@ namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Translator
+    /// Transform
     /// 
     /// <summary>
     /// Cube.Pdf の各データ型と iTextSharp 内部で使用されている型（または値）
@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editing
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class Translator
+    internal static class Transform
     {
         #region Translate Cube.Pdf to iText object
 
@@ -72,17 +72,17 @@ namespace Cube.Pdf.Editing
         {
             int dest = 0;
 
-            if (value.Printing)          dest |= PdfWriter.AllowPrinting;
-            // if (value.DePrinting)     dest |= PdfWriter.AllowDegradedPrinting;
-            if (value.Assembly)          dest |= PdfWriter.AllowAssembly;
-            if (value.ModifyContents)    dest |= PdfWriter.AllowModifyContents;
-            if (value.CopyContents)      dest |= PdfWriter.AllowCopy;
-            if (value.InputFormFields)   dest |= PdfWriter.AllowFillIn;
-            if (value.ModifyAnnotations) dest |= PdfWriter.AllowModifyAnnotations;
-            if (value.Accessibility)     dest |= PdfWriter.AllowScreenReaders;
-            // if (value.ExtractPage)    dest |= ???
-            // if (value.Signature)      dest |= ???
-            // if (value.TemplatePage)   dest |= ???
+            if (value.Printing.IsAllow())          dest |= PdfWriter.AllowPrinting;
+            if (!value.Printing.IsDeny())          dest |= PdfWriter.AllowDegradedPrinting;
+            if (value.Assembly.IsAllow())          dest |= PdfWriter.AllowAssembly;
+            if (value.ModifyContents.IsAllow())    dest |= PdfWriter.AllowModifyContents;
+            if (value.CopyContents.IsAllow())      dest |= PdfWriter.AllowCopy;
+            if (value.InputFormFields.IsAllow())   dest |= PdfWriter.AllowFillIn;
+            if (value.ModifyAnnotations.IsAllow()) dest |= PdfWriter.AllowModifyAnnotations;
+            if (value.Accessibility.IsAllow())     dest |= PdfWriter.AllowScreenReaders;
+            // if (value.ExtractPage.IsAllow())    dest |= ???
+            // if (value.Signature.IsAllow())      dest |= ???
+            // if (value.TemplatePage.IsAllow())   dest |= ???
 
             return dest;
         }
@@ -140,19 +140,37 @@ namespace Cube.Pdf.Editing
         public static Permission ToPermission(long value)
         {
             var dest = new Permission();
-            if ((value & PdfWriter.AllowPrinting) != 0) dest.Printing = true;
-            // if ((value & PdfWriter.AllowDegradedPrinting) != 0) dest.DePrinting = true;
-            if ((value & PdfWriter.AllowAssembly) != 0) dest.Assembly = true;
-            if ((value & PdfWriter.AllowModifyContents) != 0) dest.ModifyContents = true;
-            if ((value & PdfWriter.AllowCopy) != 0) dest.CopyContents = true;
-            if ((value & PdfWriter.AllowFillIn) != 0) dest.InputFormFields = true;
-            if ((value & PdfWriter.AllowModifyAnnotations) != 0) dest.ModifyAnnotations = true;
-            if ((value & PdfWriter.AllowScreenReaders) != 0) dest.Accessibility = true;
-            // if ((value & ???) != 0) dest.ExtractPage = false;
-            // if ((value & ???) != 0) dest.Signature = true;
-            // if ((value & ???) != 0) dest.TemplatePage = true;
 
+            dest.Printing          = ToPermissionMethod(value, PdfWriter.AllowPrinting);
+            dest.Assembly          = ToPermissionMethod(value, PdfWriter.AllowAssembly);
+            dest.ModifyContents    = ToPermissionMethod(value, PdfWriter.AllowModifyContents);
+            dest.CopyContents      = ToPermissionMethod(value, PdfWriter.AllowCopy);
+            dest.InputFormFields   = ToPermissionMethod(value, PdfWriter.AllowFillIn);
+            dest.ModifyAnnotations = ToPermissionMethod(value, PdfWriter.AllowModifyAnnotations);
+            dest.Accessibility     = ToPermissionMethod(value, PdfWriter.AllowScreenReaders);
+            // dest.ExtractPage    = ToPermissionMethod(value, ???);
+            // dest.Signature      = ToPermissionMethod(value, ???);
+            // dest.TemplatePage   = ToPermissionMethod(value, ???);
+
+            if (dest.Printing.IsDeny() && (value & PdfWriter.AllowDegradedPrinting) != 0)
+            {
+                dest.Printing = PermissionMethod.Restrict;
+            }
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ToPermissionMethod
+        /// 
+        /// <summary>
+        /// 値を Cube.Pdf.PermissionMethod オブジェクトに変換します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static PermissionMethod ToPermissionMethod(long value, int mask)
+        {
+            return ((value & mask) != 0) ? PermissionMethod.Allow : PermissionMethod.Deny;
         }
 
         #endregion

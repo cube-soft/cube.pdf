@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Details\ImageRenderListener.cs" />
-    <Compile Include="Details\Translator.cs" />
+    <Compile Include="Details\Transform.cs" />
     <Compile Include="Extensions\ImageEx.cs" />
     <Compile Include="Extensions\PdfReaderEx.cs" />
     <Compile Include="PageBinder.cs" />
