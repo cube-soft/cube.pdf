@@ -354,8 +354,8 @@ namespace Cube.Pdf.Editing
             if (access && string.IsNullOrEmpty(password)) return dest;
 
             dest.IsEnabled     = true;
-            dest.Method        = Translator.ToEncryptionMethod(src.GetCryptoMode());
-            dest.Permission    = Translator.ToPermission(src.Permissions);
+            dest.Method        = Transform.ToEncryptionMethod(src.GetCryptoMode());
+            dest.Permission    = Transform.ToPermission(src.Permissions);
             dest.OwnerPassword = access ? password : string.Empty;
             dest.UserPassword  = GetUserPassword(src, password, access, dest.Method);
             dest.IsUserPasswordEnabled = !string.IsNullOrEmpty(dest.UserPassword);
