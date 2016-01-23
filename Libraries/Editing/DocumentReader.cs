@@ -21,7 +21,6 @@
 using System;
 using System.Drawing;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Pdf.Editing.Extensions;
@@ -112,6 +111,42 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public IReadOnlyCollection<Page> Pages { get; private set; } = null;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsOpen
+        /// 
+        /// <summary>
+        /// ファイルが正常に開いているかどうかを示す値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsOpen
+        {
+            get
+            {
+                return _core      != null &&
+                       File       != null &&
+                       Metadata   != null &&
+                       Encryption != null &&
+                       Pages      != null ;
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PasswordRequired
+        /// 
+        /// <summary>
+        /// パスワードが要求された時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event EventHandler<PasswordEventArgs> PasswordRequired;
+
         #endregion
 
         #region Methods
@@ -156,7 +191,12 @@ namespace Cube.Pdf.Editing
                 Metadata = GetMetadata(_core);
                 Encryption = GetEncryption(_core, password, file.FullAccess);
             }
-            catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
+            catch (BadPasswordException /* err */)
+            {
+                var e = new PasswordEventArgs(path);
+                OnPasswordRequired(e);
+                if (!e.Cancel) Open(path, e.Password);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -167,10 +207,6 @@ namespace Cube.Pdf.Editing
         /// 現在、開いている PDF ファイルを閉じます。
         /// </summary>
         /// 
-        /// <remarks>
-        /// TODO: Pages オブジェクトの破棄方法を検討する。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         public void Close()
         {
@@ -259,6 +295,21 @@ namespace Cube.Pdf.Editing
             if (disposing) Close();
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPasswordRequired
+        /// 
+        /// <summary>
+        /// パスワードが要求された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPasswordRequired(PasswordEventArgs e)
+        {
+            if (PasswordRequired != null) PasswordRequired(this, e);
+            else e.Cancel = true;
+        }
+
         #endregion
 
         #region Other private methods
@@ -276,13 +327,13 @@ namespace Cube.Pdf.Editing
         {
             var dest = new Metadata();
 
-            dest.Version         = new Version(1, Int32.Parse(src.PdfVersion.ToString()), 0, 0);
-            dest.Author          = src.Info.ContainsKey("Author") ? src.Info["Author"] : "";
-            dest.Title           = src.Info.ContainsKey("Title") ? src.Info["Title"] : "";
-            dest.Subtitle        = src.Info.ContainsKey("Subject") ? src.Info["Subject"] : "";
-            dest.Keywords        = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : "";
-            dest.Creator         = src.Info.ContainsKey("Creator") ? src.Info["Creator"] : "";
-            dest.Producer        = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : "";
+            dest.Version  = new Version(1, Int32.Parse(src.PdfVersion.ToString()), 0, 0);
+            dest.Author   = src.Info.ContainsKey("Author") ? src.Info["Author"] : "";
+            dest.Title    = src.Info.ContainsKey("Title") ? src.Info["Title"] : "";
+            dest.Subtitle = src.Info.ContainsKey("Subject") ? src.Info["Subject"] : "";
+            dest.Keywords = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : "";
+            dest.Creator  = src.Info.ContainsKey("Creator") ? src.Info["Creator"] : "";
+            dest.Producer = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : "";
             dest.ViewPreferences = src.SimpleViewerPreferences;
 
             return dest;
