@@ -18,11 +18,11 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System.IO;
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using iTextSharp.text.pdf;
 using Cube.Pdf.Editing.Extensions;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing
 {
@@ -39,7 +39,35 @@ namespace Cube.Pdf.Editing
     {
         #region Constructors
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageSplitter
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public PageSplitter() { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~DocumentWriter
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
+        /// に記述して下さい。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~PageSplitter()
+        {
+            Dispose(false);
+        }
 
         #endregion
 
@@ -76,7 +104,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICollection<IPage> Pages { get; } = new List<IPage>();
+        public ICollection<Page> Pages { get; } = new List<Page>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -124,35 +152,77 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveAsync
+        /// Save
         /// 
         /// <summary>
-        /// PDF ファイルを指定されたパスに非同期で保存します。
+        /// PDF ファイルを指定されたパスに保存します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Task SaveAsync(string folder)
+        public void Save(string folder)
         {
             var results = new List<string>();
-            return SaveAsync(folder, results);
+            Save(folder, results);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveAsync
+        /// Save
         /// 
         /// <summary>
-        /// PDF ファイルを指定されたパスに非同期で保存します。
+        /// PDF ファイルを指定されたパスに保存します。
         /// </summary>
-        /// 
-        /// <remarks>
-        /// results には、保存された PDF ファイルのパス一覧が格納されます。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public Task SaveAsync(string folder, IList<string> results)
+        public void Save(string folder, IList<string> results)
         {
-            return Task.Run(() => Save(folder, results));
+            if (!IoEx.Directory.Exists(folder)) IoEx.Directory.CreateDirectory(folder);
+
+            var readers = new Dictionary<string, PdfReader>();
+
+            foreach (var page in Pages)
+            {
+                if (page.File is File) SavePage(page, folder, results, readers);
+                else if (page.File is ImageFile) SaveImagePage(page, folder, results);
+            }
+
+            foreach (var reader in readers.Values) reader.Close();
+            readers.Clear();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            _disposed = true;
+            if (disposing) Reset();
         }
 
         #endregion
@@ -164,63 +234,24 @@ namespace Cube.Pdf.Editing
         /// Save
         /// 
         /// <summary>
-        /// PDF ファイルを指定されたパスに保存します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Save(string folder, IList<string> results)
-        {
-            if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
-
-            var readers = new Dictionary<string, PdfReader>();
-
-            foreach (var page in Pages)
-            {
-                switch (page.Type)
-                {
-                    case PageType.Image:
-                        Save(page as ImagePage, folder, results);
-                        break;
-                    case PageType.Pdf:
-                        Save(page as Page, folder, results, readers);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            foreach (var reader in readers.Values) reader.Close();
-            readers.Clear();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Save
-        /// 
-        /// <summary>
         /// PDF ファイルを分割して保存します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Save(Page src, string folder, IList<string> results, Dictionary<string, PdfReader> readers)
+        private void SavePage(Page src, string folder, IList<string> results, Dictionary<string, PdfReader> readers)
         {
             if (src == null) return;
 
-            if (!readers.ContainsKey(src.Path))
-            {
-                var item = src.Password.Length > 0 ?
-                           new PdfReader(src.Path, System.Text.Encoding.UTF8.GetBytes(src.Password)) :
-                           new PdfReader(src.Path);
-                readers.Add(src.Path, item);
-            }
+            if (!readers.ContainsKey(src.File.FullName)) AddReader(src.File as File, readers);
+            if (!readers.ContainsKey(src.File.FullName)) return;
 
-            var reader = readers[src.Path];
-            var rot = reader.GetPageRotation(src.PageNumber);
-            var dic = reader.GetPageN(src.PageNumber);
+            var reader = readers[src.File.FullName];
+            var rot = reader.GetPageRotation(src.Number);
+            var dic = reader.GetPageN(src.Number);
             if (rot != src.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(src.Rotation));
 
-            var basename = Path.GetFileNameWithoutExtension(src.Path);
-            var pagenum = src.PageNumber;
+            var basename = IoEx.Path.GetFileNameWithoutExtension(src.File.FullName);
+            var pagenum = src.Number;
             var dest = Unique(folder, basename, pagenum, reader.NumberOfPages);
             SaveOne(reader, pagenum, dest);
             results.Add(dest);
@@ -235,12 +266,12 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Save(ImagePage src, string folder, IList<string> results)
+        private void SaveImagePage(Page src, string folder, IList<string> results)
         {
             if (src == null) return;
 
-            using (var image = new System.Drawing.Bitmap(src.Path))
-            using (var stream = new MemoryStream())
+            using (var image = new System.Drawing.Bitmap(src.File.FullName))
+            using (var stream = new IoEx.MemoryStream())
             {
                 var document = new iTextSharp.text.Document();
                 var writer = PdfWriter.GetInstance(document, stream);
@@ -265,7 +296,7 @@ namespace Cube.Pdf.Editing
                 document.Close();
                 writer.Close();
 
-                using (var reader = new PdfReader(stream.ToArray())) Save(src, folder, results, reader);
+                using (var reader = new PdfReader(stream.ToArray())) SaveImagePage(src, folder, results, reader);
             }
         }
 
@@ -278,11 +309,11 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Save(ImagePage src, string folder, IList<string> results, PdfReader reader)
+        private void SaveImagePage(Page src, string folder, IList<string> results, PdfReader reader)
         {
             for (var i = 0; i < reader.NumberOfPages; ++i)
             {
-                var basename = Path.GetFileNameWithoutExtension(src.Path);
+                var basename = IoEx.Path.GetFileNameWithoutExtension(src.File.FullName);
                 var pagenum = i + 1;
                 var dest = Unique(folder, basename, pagenum, reader.NumberOfPages);
                 SaveOne(reader, pagenum, dest);
@@ -303,8 +334,8 @@ namespace Cube.Pdf.Editing
         {
             var document = new iTextSharp.text.Document();
             var writer   = UseSmartCopy ?
-                           new PdfSmartCopy(document, new FileStream(dest, FileMode.Create)) :
-                           new PdfCopy(document, new FileStream(dest, FileMode.Create));
+                           new PdfSmartCopy(document, new IoEx.FileStream(dest, IoEx.FileMode.Create)) :
+                           new PdfCopy(document, new IoEx.FileStream(dest, IoEx.FileMode.Create));
 
             writer.PdfVersion = Metadata.Version.Minor.ToString()[0];
             writer.ViewerPreferences = Metadata.ViewPreferences;
@@ -350,13 +381,33 @@ namespace Cube.Pdf.Editing
         {
             if (Encryption.IsEnabled && Encryption.OwnerPassword.Length > 0)
             {
-                var method     = Translator.ToIText(Encryption.Method);
-                var permission = Translator.ToIText(Encryption.Permission);
+                var method     = Transform.ToIText(Encryption.Method);
+                var permission = Transform.ToIText(Encryption.Permission);
                 var userpass   = Encryption.IsUserPasswordEnabled ?
                                  GetUserPassword(Encryption.UserPassword, Encryption.OwnerPassword) :
                                  string.Empty;
                 writer.SetEncryption(method, userpass, Encryption.OwnerPassword, permission);
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddReader
+        /// 
+        /// <summary>
+        /// ファイル情報を基に PdfReader オブジェクトを生成し、一覧に
+        /// 追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddReader(File src, Dictionary<string, PdfReader> dest)
+        {
+            if (src == null) return;
+
+            var item = src.Password.Length > 0 ?
+                       new PdfReader(src.FullName, System.Text.Encoding.UTF8.GetBytes(src.Password)) :
+                       new PdfReader(src.FullName);
+            dest.Add(src.FullName, item);
         }
 
         /* ----------------------------------------------------------------- */
@@ -395,13 +446,17 @@ namespace Cube.Pdf.Editing
                 var filename = (i == 1) ?
                                string.Format("{0}-{1}.pdf", basename, pagenum.ToString(digit)) :
                                string.Format("{0}-{1} ({2}).pdf", basename, pagenum.ToString(digit), i);
-                var dest = Path.Combine(folder, filename);
-                if (!File.Exists(dest)) return dest;
+                var dest = IoEx.Path.Combine(folder, filename);
+                if (!IoEx.File.Exists(dest)) return dest;
             }
 
-            return Path.Combine(folder, Path.GetRandomFileName());
+            return IoEx.Path.Combine(folder, IoEx.Path.GetRandomFileName());
         }
 
+        #endregion
+
+        #region Fields
+        private bool _disposed = false;
         #endregion
     }
 }

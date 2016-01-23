@@ -43,7 +43,7 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageBinder
+        /// DocumentWriter
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~PageBinder
+        /// ~DocumentWriter
         /// 
         /// <summary>
         /// オブジェクトを破棄します。
