@@ -177,102 +177,102 @@ namespace Cube.Pdf.Tests.Editing
 
         [TestCase("password.pdf", "password", EncryptionMethod.Standard128)]
         [TestCase("password-aes256.pdf", "password", EncryptionMethod.Aes256)]
-        public void Encryption_Method(string filename, string password, Cube.Pdf.EncryptionMethod method)
+        public void Encryption_Method(string filename, string password, EncryptionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Method,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
         [TestCase("password.pdf", "password", "view")]
         [TestCase("password-aes256.pdf", "password", "" /* "view" */)]
-        public void Encryption_UserPassword(string filename, string password, string userPassword)
+        public void Encryption_UserPassword(string filename, string password, string expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.UserPassword,
-                Is.EqualTo(userPassword)
+                Is.EqualTo(expected)
             );
         }
         
         [TestCase("password.pdf", "password", PermissionMethod.Deny)]
-        public void Encryption_Accessibility(string filename, string password, PermissionMethod method)
+        public void Encryption_Accessibility(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Permission.Accessibility,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
         [TestCase("password.pdf", "password", PermissionMethod.Allow)]
-        public void Encryption_Assembly(string filename, string password, PermissionMethod method)
+        public void Encryption_Assembly(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Permission.Assembly,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
         [TestCase("password.pdf", "password", PermissionMethod.Deny)]
-        public void Encryption_CopyContents(string filename, string password, PermissionMethod method)
+        public void Encryption_CopyContents(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Permission.CopyContents,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
         [TestCase("password.pdf", "password", PermissionMethod.Deny)]
-        public void Encryption_InputFormFields(string filename, string password, PermissionMethod method)
+        public void Encryption_InputFormFields(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Permission.InputFormFields,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
         [TestCase("password.pdf", "password", PermissionMethod.Deny)]
-        public void Encryption_ModifyAnnotations(string filename, string password, PermissionMethod method)
+        public void Encryption_ModifyAnnotations(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Permission.ModifyAnnotations,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
         [TestCase("password.pdf", "password", PermissionMethod.Deny)]
-        public void Encryption_ModifyContents(string filename, string password, PermissionMethod method)
+        public void Encryption_ModifyContents(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Permission.ModifyContents,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
         [TestCase("password.pdf", "password", PermissionMethod.Allow)]
-        public void Encryption_Printing(string filename, string password, PermissionMethod method)
+        public void Encryption_Printing(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Permission.Printing,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
         [TestCase("password.pdf", "password", PermissionMethod.Allow)]
-        public void Encryption_Signature(string filename, string password, PermissionMethod method)
+        public void Encryption_Signature(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Permission.Signature,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
         [TestCase("password.pdf", "password", PermissionMethod.Allow)]
-        public void Encryption_TemplatePage(string filename, string password, PermissionMethod method)
+        public void Encryption_TemplatePage(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
                 Create(filename, password).Encryption.Permission.TemplatePage,
-                Is.EqualTo(method)
+                Is.EqualTo(expected)
             );
         }
 
