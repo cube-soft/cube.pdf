@@ -302,7 +302,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private IList<Image> GetImages(int pagenum)
+        public IList<Image> GetImages(int pagenum)
         {
             if (pagenum < 0 || pagenum > Pages.Count) throw new IndexOutOfRangeException();
 
