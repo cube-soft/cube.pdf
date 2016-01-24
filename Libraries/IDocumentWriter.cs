@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf
@@ -30,7 +31,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IDocumentWriter
+    public interface IDocumentWriter : IDisposable
     {
         /* ----------------------------------------------------------------- */
         ///
