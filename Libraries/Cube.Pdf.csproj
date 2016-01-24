@@ -53,6 +53,7 @@
     <Compile Include="IDocumentReader.cs" />
     <Compile Include="IDocumentWriter.cs" />
     <Compile Include="ImageFile.cs" />
+    <Compile Include="ImagePage.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Permission.cs" />
