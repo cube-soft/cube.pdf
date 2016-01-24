@@ -18,7 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Reflection;
 using System.Collections.Generic;
 using Cube.Pdf.Editing;
 using IoEx = System.IO;
@@ -34,13 +33,24 @@ namespace Cube.Pdf.Tests
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    class DocumentResource : IDisposable
+    class DocumentResource : FileResource, IDisposable
     {
         #region Constructors and destructors
 
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentResource
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentResource() : base() { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~DocumentResource
         ///
         /// <summary>
         /// オブジェクトを破棄します。
@@ -50,62 +60,6 @@ namespace Cube.Pdf.Tests
         ~DocumentResource()
         {
             Dispose(false);
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentHelper
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentResource()
-            : this(IoEx.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentHelper
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentResource(string root)
-        {
-            Root = root;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Root
-        ///
-        /// <summary>
-        /// テスト用リソースの存在するディレクトリへのパスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Root { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Examples
-        /// 
-        /// <summary>
-        /// テストを行うためのダミーファイルの存在するディレクトリへの
-        /// パスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Examples
-        {
-            get { return IoEx.Path.Combine(Root, "Examples"); }
         }
 
         #endregion

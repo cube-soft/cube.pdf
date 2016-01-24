@@ -17,21 +17,21 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
+using System.Reflection;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Tests.FileResource
+    /// FileResource
     /// 
     /// <summary>
     /// テストでファイルを使用するためのクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class FileResource
+    class FileResource
     {
         #region Constructors
 
@@ -44,21 +44,11 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileResource() : this(Environment.CurrentDirectory) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FileResource
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public FileResource(string root)
+        public FileResource()
         {
-            Root = root;
-            if (!IoEx.Directory.Exists(Results)) IoEx.Directory.CreateDirectory(Results);
+            var exec = Assembly.GetExecutingAssembly().Location;
+            Root = IoEx.Path.GetDirectoryName(exec);
+            Initialize();
         }
 
         #endregion
@@ -75,15 +65,14 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Root { get; set; }
+        public string Root { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Examples
         /// 
         /// <summary>
-        /// テストを行うためのダミーファイルの存在するディレクトリへの
-        /// パスを取得します。
+        /// テスト用ファイルの存在するフォルダへのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -97,13 +86,60 @@ namespace Cube.Pdf.Tests
         /// Results
         /// 
         /// <summary>
-        /// テスト結果を格納するためのディレクトリへのパスを取得します。
+        /// テスト結果を格納するためのフォルダへのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public string Results
         {
-            get { return IoEx.Path.Combine(Root, "Results"); }
+            get
+            {
+                var classname = GetType().FullName.Replace("Cube.Pdf.Tests.", "");
+                var folder = string.Format(@"Results\{0}", classname);
+                return IoEx.Path.Combine(Root, folder);
+            }
+        }
+
+        #endregion
+
+        #region Other private methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Initialize
+        /// 
+        /// <summary>
+        /// リソースファイルを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Initialize()
+        {
+            if (!IoEx.Directory.Exists(Results)) IoEx.Directory.CreateDirectory(Results);
+            Clean(Results);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clean
+        /// 
+        /// <summary>
+        /// 指定されたフォルダ内に存在する全てのファイルを削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Clean(string folder)
+        {
+            foreach (string file in IoEx.Directory.GetFiles(folder))
+            {
+                IoEx.File.SetAttributes(file, IoEx.FileAttributes.Normal);
+                IoEx.File.Delete(file);
+            }
+
+            foreach (string sub in IoEx.Directory.GetDirectories(folder))
+            {
+                Clean(sub);
+            }
         }
 
         #endregion

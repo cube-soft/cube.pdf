@@ -54,6 +54,7 @@
     <Compile Include="Detail\DocumentResource.cs" />
     <Compile Include="Editing\DocumentReaderTest.cs" />
     <Compile Include="Detail\FileResource.cs" />
+    <Compile Include="Editing\DocumentWriterTest.cs" />
     <Compile Include="PageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
