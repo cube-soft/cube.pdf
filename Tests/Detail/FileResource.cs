@@ -18,7 +18,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using IO = System.IO;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.Tests
 {
@@ -58,7 +58,7 @@ namespace Cube.Pdf.Tests
         public FileResource(string root)
         {
             Root = root;
-            if (!IO.Directory.Exists(Results)) IO.Directory.CreateDirectory(Results);
+            if (!IoEx.Directory.Exists(Results)) IoEx.Directory.CreateDirectory(Results);
         }
 
         #endregion
@@ -89,7 +89,7 @@ namespace Cube.Pdf.Tests
         /* ----------------------------------------------------------------- */
         public string Examples
         {
-            get { return IO.Path.Combine(Root, "Examples"); }
+            get { return IoEx.Path.Combine(Root, "Examples"); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -103,7 +103,7 @@ namespace Cube.Pdf.Tests
         /* ----------------------------------------------------------------- */
         public string Results
         {
-            get { return IO.Path.Combine(Root, "Results"); }
+            get { return IoEx.Path.Combine(Root, "Results"); }
         }
 
         #endregion
