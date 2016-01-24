@@ -43,7 +43,6 @@ namespace Cube.Pdf.Tests.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("annotation.pdf", "")]
         [TestCase("bookmark.pdf", "")]
         [TestCase("password.pdf", "password")]
         public void Save_SameContents(string filename, string password)

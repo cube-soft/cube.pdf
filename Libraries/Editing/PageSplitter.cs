@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~DocumentWriter
+        /// ~PageSplitter
         /// 
         /// <summary>
         /// オブジェクトを破棄します。
