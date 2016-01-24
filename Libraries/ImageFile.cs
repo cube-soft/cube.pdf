@@ -57,7 +57,7 @@ namespace Cube.Pdf
         public ImageFile(string path, IconSize size)
             : base(path, size)
         {
-            using (var image = Bitmap.FromFile(path))
+            using (var image = Image.FromFile(path))
             {
                 InitializeValues(image);
             }
