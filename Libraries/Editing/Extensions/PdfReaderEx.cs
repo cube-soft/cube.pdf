@@ -51,6 +51,7 @@ namespace Cube.Pdf.Editing.Extensions
             dest.Number = pagenum;
             dest.Size = new Size((int)size.Width, (int)size.Height);
             dest.Rotation = reader.GetPageRotation(pagenum);
+            dest.Resolution = new Point(72, 72);
             return dest;
         }
     }
