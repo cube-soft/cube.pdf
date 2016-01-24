@@ -258,6 +258,24 @@ namespace Cube.Pdf.Tests.Editing
             );
         }
 
+        [TestCase("password.pdf", "password", PermissionMethod.Allow)]
+        public void Encryption_Signature(string filename, string password, PermissionMethod method)
+        {
+            Assert.That(
+                Create(filename, password).Encryption.Permission.Signature,
+                Is.EqualTo(method)
+            );
+        }
+
+        [TestCase("password.pdf", "password", PermissionMethod.Allow)]
+        public void Encryption_TemplatePage(string filename, string password, PermissionMethod method)
+        {
+            Assert.That(
+                Create(filename, password).Encryption.Permission.TemplatePage,
+                Is.EqualTo(method)
+            );
+        }
+
         #endregion
 
         /* ----------------------------------------------------------------- */
@@ -321,6 +339,29 @@ namespace Cube.Pdf.Tests.Editing
         {
             Assert.That(
                 Create(filename).GetPage(number).Rotation,
+                Is.EqualTo(expected)
+            );
+        }
+
+        #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImages
+        ///
+        /// <summary>
+        /// 各ページ内に存在する画像の抽出テストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        #region GetImages
+
+        [TestCase("image.pdf", 1, 2)]
+        [TestCase("image.pdf", 2, 0)]
+        public void GetImages_Count(string filename, int number, int expected)
+        {
+            Assert.That(
+                Create(filename).GetImages(number).Count,
                 Is.EqualTo(expected)
             );
         }
