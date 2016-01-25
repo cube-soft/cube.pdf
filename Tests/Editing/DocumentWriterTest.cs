@@ -88,7 +88,7 @@ namespace Cube.Pdf.Tests.Editing
                 writer.Encryption = reader.Encryption;
                 writer.UseSmartCopy = true;
                 writer.Pages.Add(reader.GetPage(1));
-                writer.Pages.Add(ImagePage.Create(IoEx.Path.Combine(Examples, image)));
+                writer.Pages.Add(ImagePage.Create(IoEx.Path.Combine(Examples, image), 0));
                 writer.Save(dest);
             }
 

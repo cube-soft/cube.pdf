@@ -18,6 +18,8 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Collections.Generic;
 
 namespace Cube.Pdf
 {
@@ -32,6 +34,8 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     public static class ImagePage
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// Create
@@ -41,7 +45,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page Create(string path, int index = 0)
+        public static Page Create(string path, int index)
         {
             using (var image = Image.FromFile(path))
             {
@@ -58,11 +62,67 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page Create(string path, Image image, int index = 0)
+        public static Page Create(string path, Image image, int index)
         {
             var guid = image.FrameDimensionsList[0];
-            var dim  = new System.Drawing.Imaging.FrameDimension(guid);
-            image.SelectActiveFrame(dim, index);
+            return CreatePage(path, image, index, new FrameDimension(guid));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        /// 
+        /// <summary>
+        /// ページオブジェクト一覧を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Page[] Create(string path)
+        {
+            using (var image = Image.FromFile(path))
+            {
+                return Create(path, image);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        /// 
+        /// <summary>
+        /// ページオブジェクト一覧を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Page[] Create(string path, Image image)
+        {
+            var dest = new List<Page>();
+            var dimension = new FrameDimension(image.FrameDimensionsList[0]);
+
+            for (var i = 0; i < image.GetFrameCount(dimension); ++i)
+            {
+                dest.Add(CreatePage(path, image, i, dimension));
+            }
+
+            return dest.ToArray();
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreatePage
+        /// 
+        /// <summary>
+        /// ページオブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static Page CreatePage(string path, Image image, int index, FrameDimension dimension)
+        {
+            image.SelectActiveFrame(dimension, index);
 
             var x = (int)image.HorizontalResolution;
             var y = (int)image.VerticalResolution;
@@ -76,5 +136,7 @@ namespace Cube.Pdf
                 Rotation   = 0
             };
         }
+
+        #endregion
     }
 }
