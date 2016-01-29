@@ -222,7 +222,7 @@ namespace Cube.Pdf.Editing
                 var bytes = !string.IsNullOrEmpty(password) ? System.Text.Encoding.UTF8.GetBytes(password) : null;
                 _core = new PdfReader(path, bytes, true);
 
-                var file = new Cube.Pdf.File(path, password);
+                var file = new File(path, password);
                 file.FullAccess = _core.IsOpenedWithFullPermissions;
 
                 File = file;
