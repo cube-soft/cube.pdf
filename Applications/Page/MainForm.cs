@@ -22,8 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
-using Cube.Extensions;
-using System.IO;
 
 namespace Cube.Pdf.App.Page
 {
@@ -53,29 +51,8 @@ namespace Cube.Pdf.App.Page
         {
             InitializeComponent();
             InitializeLayout();
+            InitializeEvents();
             InitializePresenters();
-
-            TitleButton.Click  += (s, e) => ShowVersion();
-            FileButton.Click   += (s, e) => RaiseAddingEvent();
-            RemoveButton.Click += (s, e) => OnRemoving(e);
-            ClearButton.Click  += (s, e) => OnClearing(e);
-            UpButton.Click     += (s, e) => OnMoving(new DataEventArgs<int>(-1));
-            DownButton.Click   += (s, e) => OnMoving(new DataEventArgs<int>(1));
-            MergeButton.Click  += (s, e) => RaiseMergingEvent();
-            SplitButton.Click  += (s, e) => RaiseSplittingEvent();
-            ExitButton.Click   += (s, e) => Close();
-
-            ButtonsPanel.DragEnter += Control_DragEnter;
-            FooterPanel.DragEnter  += Control_DragEnter;
-            PageListView.DragEnter += Control_DragEnter;
-
-            ButtonsPanel.DragDrop  += Control_DragDrop;
-            FooterPanel.DragDrop   += Control_DragDrop;
-            PageListView.DragDrop  += Control_DragDrop;
-
-            PageListView.ContextMenuStrip = CreateContextMenu();
-            PageListView.SelectedIndexChanged += (s, e) => UpdateControls();
-            PageListView.MouseDoubleClick += (s, e) => RaiseOpeningEvent();
         }
 
         /* ----------------------------------------------------------------- */
@@ -91,6 +68,79 @@ namespace Cube.Pdf.App.Page
             : this()
         {
             RaiseAddingEvent(args);
+        }
+
+        #endregion
+
+        #region Initialize methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeLayout
+        /// 
+        /// <summary>
+        /// レイアウトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeLayout()
+        {
+            var tips = new ToolTip();
+            tips.InitialDelay = 200;
+            tips.AutoPopDelay = 5000;
+            tips.ReshowDelay = 1000;
+            tips.SetToolTip(TitleButton, Properties.Resources.About);
+
+            PageListView.SmallImageList = Icons.ImageList;
+            PageListView.Converter = new FileConverter(Icons);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializeEvents
+        /// 
+        /// <summary>
+        /// イベントを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializeEvents()
+        {
+            TitleButton.Click  += (s, e) => ShowVersion();
+            FileButton.Click   += (s, e) => RaiseAddingEvent();
+            RemoveButton.Click += (s, e) => OnRemoving(e);
+            ClearButton.Click  += (s, e) => OnClearing(e);
+            UpButton.Click     += (s, e) => OnMoving(new DataEventArgs<int>(-1));
+            DownButton.Click   += (s, e) => OnMoving(new DataEventArgs<int>(1));
+            MergeButton.Click  += (s, e) => RaiseMergingEvent();
+            SplitButton.Click  += (s, e) => RaiseSplittingEvent();
+            ExitButton.Click   += (s, e) => Close();
+
+            ButtonsPanel.DragEnter += Control_DragEnter;
+            FooterPanel.DragEnter  += Control_DragEnter;
+            PageListView.DragEnter += Control_DragEnter;
+
+            ButtonsPanel.DragDrop += Control_DragDrop;
+            FooterPanel.DragDrop  += Control_DragDrop;
+            PageListView.DragDrop += Control_DragDrop;
+
+            PageListView.ContextMenuStrip = CreateContextMenu();
+            PageListView.SelectedIndexChanged += (s, e) => UpdateControls();
+            PageListView.MouseDoubleClick += (s, e) => RaiseOpeningEvent();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitializePresenters
+        /// 
+        /// <summary>
+        /// 各種 Presenter を初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InitializePresenters()
+        {
+            new ListViewPresenter(this, new FileCollection());
         }
 
         #endregion
@@ -249,9 +299,9 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void AddItem(Item item)
+        public void AddItem(FileBase item)
         {
-            Execute(() => PageListView.Items.Add(Convert(item)));
+            Execute(() => PageListView.Add(item));
         }
 
         /* ----------------------------------------------------------------- */
@@ -263,13 +313,12 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void InsertItem(int index, Item item)
+        public void InsertItem(int index, FileBase item)
         {
             Execute(() =>
             {
                 var i = Math.Max(Math.Min(index, PageListView.Items.Count), 0);
-                if (i == PageListView.Items.Count) PageListView.Items.Add(Convert(item));
-                else PageListView.Items.Insert(i, Convert(item));
+                PageListView.Insert(i, item);
             });
         }
 
@@ -584,40 +633,6 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitializeLayout
-        /// 
-        /// <summary>
-        /// レイアウトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeLayout()
-        {
-            var tips = new ToolTip();
-            tips.InitialDelay =  200;
-            tips.AutoPopDelay = 5000;
-            tips.ReshowDelay  = 1000;
-            tips.SetToolTip(TitleButton, Properties.Resources.About);
-
-            PageListView.SmallImageList = _icons.ImageList;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializePresenters
-        /// 
-        /// <summary>
-        /// 各種 Presenter を初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializePresenters()
-        {
-            new ListViewPresenter(this, new ItemCollection());
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// RaiseOpeningEvent
         /// 
         /// <summary>
@@ -748,30 +763,6 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
-        /// 
-        /// <summary>
-        /// Item から ListViewItem オブジェクトへ変換します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ListViewItem Convert(Item item)
-        {
-            var space    = " ";
-            var filename = Path.GetFileName(item.FullName);
-            var type     = item.TypeName;
-            var pages    = item.PageCount.ToString();
-            var date     = item.LastWriteTime.ToString("yyyy/MM/dd hh:mm");
-            var bytes    = item.Length.ToPrettyBytes();
-            var dest     = new ListViewItem(new string[] { space + filename, type, pages, date, bytes });
-
-            dest.ToolTipText = item.FullName;
-            dest.ImageIndex = _icons.Register(item);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// CreateContextMenu
         /// 
         /// <summary>
@@ -806,8 +797,8 @@ namespace Cube.Pdf.App.Page
 
         #endregion
 
-        #region Fields
-        private IconCollection _icons = new IconCollection();
+        #region Models
+        private IconCollection Icons = new IconCollection();
         #endregion
     }
 }

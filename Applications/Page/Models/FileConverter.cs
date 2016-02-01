@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PasswordEventArgs.cs
+/// FileConverter.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -18,36 +18,37 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System.ComponentModel;
+using System.Windows.Forms;
+using Cube.Extensions;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.Page.PasswordEventArgs
+    /// FileConverter
     ///
     /// <summary>
-    /// パスワードに関するイベントの引数を保持するクラスです。
+    /// FileBase から ListViewItem へ変換するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PasswordEventArgs : CancelEventArgs
+    public class FileConverter : Cube.Forms.IListViewItemConverter
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PasswordEventArgs
+        /// FileConverte
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PasswordEventArgs(string path, bool cancel = false)
-            : base(cancel)
+        public FileConverter(IconCollection icons)
         {
-            Path = path;
+            Icons = icons;
         }
 
         #endregion
@@ -56,25 +57,45 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
+        /// Icons
         /// 
         /// <summary>
-        /// パスワードを要求するファイルへのパスを取得します。
+        /// ListView で使用するアイコン一覧を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Path { get; }
+        public IconCollection Icons { get; }
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Password
+        /// Convert
         /// 
         /// <summary>
-        /// パスワードを取得または設定します。
+        /// ListViewItem オブジェクトに変換します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Password { get; set; } = string.Empty;
+        public ListViewItem Convert<T>(T src)
+        {
+            var file = src as FileBase;
+            if (file == null) return new ListViewItem(src.ToString());
+
+            var space    = " ";
+            var filename = IoEx.Path.GetFileName(file.FullName);
+            var type     = file.TypeName;
+            var pages    = file.PageCount.ToString();
+            var date     = file.LastWriteTime.ToString("yyyy/MM/dd hh:mm");
+            var bytes    = file.Length.ToRoughBytes();
+
+            var dest = new ListViewItem(new string[] { space + filename, type, pages, date, bytes });
+            dest.ToolTipText = file.FullName;
+            dest.ImageIndex = Icons.Register(file);
+            return dest;
+        }
 
         #endregion
     }

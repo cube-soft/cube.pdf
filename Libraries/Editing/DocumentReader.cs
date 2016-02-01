@@ -217,60 +217,49 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public void Open(string path, string password)
         {
+            Open(path, password, false);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(string path, string password, bool onlyFullAccess)
+        {
             try
             {
                 var bytes = !string.IsNullOrEmpty(password) ? System.Text.Encoding.UTF8.GetBytes(password) : null;
                 _core = new PdfReader(path, bytes, true);
+                if (onlyFullAccess && !_core.IsOpenedWithFullPermissions)
+                {
+                    throw new BadPasswordException("allow only owner password");
+                }
 
                 var file = new File(path, password);
                 file.FullAccess = _core.IsOpenedWithFullPermissions;
 
                 File = file;
-                Pages = new ReadOnlyPageCollection(_core, file);
                 Metadata = GetMetadata(_core);
                 Encryption = GetEncryption(_core, password, file.FullAccess);
+                Pages = new ReadOnlyPageCollection(_core, file);
             }
             catch (BadPasswordException /* err */)
             {
+                if (_core != null)
+                {
+                    _core.Dispose();
+                    _core = null;
+                }
+
                 var e = new PasswordEventArgs(path);
                 OnPasswordRequired(e);
                 if (!e.Cancel) Open(path, e.Password);
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Close
-        /// 
-        /// <summary>
-        /// 現在、開いている PDF ファイルを閉じます。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public void Close()
-        {
-            if (_core == null) return;
-
-            _core.Close();
-            _core = null;
-            Metadata = null;
-            Encryption = null;
-            Pages = null;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /* ----------------------------------------------------------------- */
@@ -287,6 +276,21 @@ namespace Cube.Pdf.Editing
             return _core != null && File != null ?
                    _core.CreatePage(File, pagenum) :
                    null;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
@@ -331,7 +335,19 @@ namespace Cube.Pdf.Editing
         {
             if (_disposed) return;
             _disposed = true;
-            if (disposing) Close();
+
+            if (_core == null) return;
+
+            if (disposing)
+            {
+                _core.Dispose();
+                _core = null;
+
+                File       = null;
+                Metadata   = null;
+                Encryption = null;
+                Pages      = null;
+            }
         }
 
         /* ----------------------------------------------------------------- */

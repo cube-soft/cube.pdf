@@ -23,8 +23,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
 {
@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ListViewPresenter : Cube.Forms.PresenterBase<MainForm, ItemCollection>
+    public class ListViewPresenter : Cube.Forms.PresenterBase<MainForm, FileCollection>
     {
         #region Constructors
 
@@ -50,7 +50,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ListViewPresenter(MainForm view, ItemCollection model)
+        public ListViewPresenter(MainForm view, FileCollection model)
             : base(view, model)
         {
             View.Adding    += View_Adding;
@@ -103,14 +103,14 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private async void View_Adding(object sender, DataEventArgs<string[]> e)
+        private void View_Adding(object sender, DataEventArgs<string[]> e)
         {
             try
             {
-                Send(() => { View.AllowOperation = false; });
-                await AddFileAsync(e.Value, 1); // 1 階層下のみ対象
+                SyncWait(() => { View.AllowOperation = false; });
+                AddFile(e.Value, 1); // 1 階層下のみ対象
             }
-            finally { Send(() => { View.AllowOperation = true; }); }
+            finally { SyncWait(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -166,23 +166,22 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void View_Merging(object sender, DataEventArgs<string> e)
+        private void View_Merging(object sender, DataEventArgs<string> e)
         {
             try
             {
-                Send(() => { View.AllowOperation = false; ; });
+                SyncWait(() => { View.AllowOperation = false; ; });
 
                 Metadata metadata = null;
-                var task = new Cube.Pdf.Editing.PageBinder();
+                var writer = new Cube.Pdf.Editing.DocumentWriter();
                 foreach (var item in Model)
                 {
-                    if (item.Type == PageType.Pdf)
+                    if (item is File)
                     {
-                        AddPdf(item, task);
-                        var reader = item.Value as IDocumentReader;
-                        if (metadata == null && reader != null && reader.Metadata != null) metadata = reader.Metadata;
+                        AddPdf(item as File, writer);
+                        //if (metadata == null) metadata = reader.Metadata;
                     }
-                    else if (item.Type == PageType.Image) AddImage(item, task);
+                    else AddImage(item as ImageFile, writer);
                 }
                 
                 if (metadata == null)
@@ -190,16 +189,16 @@ namespace Cube.Pdf.App.Page
                     metadata = new Metadata();
                     metadata.Version = new Version(1, 7);
                 }
-                task.Metadata = metadata;
-                task.Metadata.Creator = Application.ProductName;
-                await task.SaveAsync(e.Value);
+                writer.Metadata = metadata;
+                writer.Metadata.Creator = Application.ProductName;
+                writer.Save(e.Value);
 
                 var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
                 Model.Clear();
                 FinalizeSync(new string[] { e.Value }, message);
             }
             catch (Exception err) { ShowSync(err); }
-            finally { Send(() => { View.AllowOperation = true; }); }
+            finally { SyncWait(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -211,30 +210,30 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void View_Splitting(object sender, DataEventArgs<string> e)
+        private void View_Splitting(object sender, DataEventArgs<string> e)
         {
             try
             {
-                Send(() => { View.AllowOperation = false; });
+                SyncWait(() => { View.AllowOperation = false; });
 
                 var results = new List<string>();
-                var task = new Cube.Pdf.Editing.PageSplitter();
-                task.Metadata.Version = new Version(1, 7);
-                task.Metadata.Creator = Application.ProductName;
+                var writer = new Cube.Pdf.Editing.PageSplitter();
+                writer.Metadata.Version = new Version(1, 7);
+                writer.Metadata.Creator = Application.ProductName;
 
                 foreach (var item in Model)
                 {
-                    if (item.Type == PageType.Pdf) AddPdf(item, task);
-                    else if (item.Type == PageType.Image) AddImage(item, task);
+                    if (item is File) AddPdf(item as File, writer);
+                    else AddImage(item as ImageFile, writer);
                 }
-                await task.SaveAsync(e.Value, results);
+                writer.Save(e.Value, results);
 
                 var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
                 Model.Clear();
                 FinalizeSync(results.ToArray(), message);
             }
             catch (Exception err) { ShowSync(err); }
-            finally { Send(() => { View.AllowOperation = true; }); }
+            finally { SyncWait(() => { View.AllowOperation = true; }); }
         }
 
         /* --------------------------------------------------------------------- */
@@ -248,7 +247,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Send(() =>
+            SyncWait(() =>
             {
                 switch (e.Action)
                 {
@@ -298,10 +297,10 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// AddFileAsync
+        /// AddFile
         /// 
         /// <summary>
-        /// ファイルを非同期で追加します。
+        /// ファイルを追加します。
         /// </summary>
         /// 
         /// <remarks>
@@ -310,19 +309,19 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private async Task AddFileAsync(string[] files, int hierarchy)
+        private void AddFile(string[] files, int hierarchy)
         {
             foreach (var path in files)
             {
                 if (Model.Contains(path)) continue;
                 if (Directory.Exists(path))
                 {
-                    if (hierarchy > 0) await AddFileAsync(Directory.GetFiles(path), hierarchy - 1);
+                    if (hierarchy > 0) AddFile(Directory.GetFiles(path), hierarchy - 1);
                     continue;
                 }
-                else if (!File.Exists(path)) continue;
+                else if (!IoEx.File.Exists(path)) continue;
 
-                try { await Model.AddAsync(path); }
+                try { Model.Add(path); }
                 catch (Exception /* err */) { /* see remarks */ }
             }
         }
@@ -336,12 +335,16 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void AddPdf(Item src, IDocumentWriter dest)
+        private void AddPdf(File src, IDocumentWriter dest)
         {
-            var reader = src.Value as Cube.Pdf.Editing.DocumentReader;
-            if (reader == null) return;
+            if (src == null) return;
 
-            foreach (var page in reader.Pages) dest.Pages.Add(page);
+            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            {
+                reader.PasswordRequired += (s, e) => { e.Cancel = true; };
+                reader.Open(src.FullName, src.Password, true);
+                foreach (var page in reader.Pages) dest.Pages.Add(page);
+            }            
         }
 
         /* --------------------------------------------------------------------- */
@@ -353,11 +356,10 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void AddImage(Item src, IDocumentWriter dest)
+        private void AddImage(ImageFile src, IDocumentWriter dest)
         {
-            var page = new ImagePage();
-            page.FilePath = src.FullName;
-            dest.Pages.Add(page);
+            if (src == null) return;
+            foreach (var page in ImagePage.Create(src.FullName)) dest.Pages.Add(page);
         }
 
         /* --------------------------------------------------------------------- */
@@ -371,7 +373,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void FinalizeSync(string[] files, string message)
         {
-            Send(() =>
+            SyncWait(() =>
             {
                 View.AllowOperation = true;
 
@@ -394,7 +396,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void ShowSync(string message, MessageBoxIcon icon)
         {
-            Send(() =>
+            SyncWait(() =>
             {
                 MessageBox.Show(message, 
                     Properties.Resources.MessageTitle,
@@ -415,7 +417,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void ShowSync(Exception err)
         {
-            Send(() =>
+            SyncWait(() =>
             {
                 MessageBox.Show(err.Message,
                     Properties.Resources.ErrorMessageTitle,

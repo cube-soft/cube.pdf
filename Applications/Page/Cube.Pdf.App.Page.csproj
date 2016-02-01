@@ -67,10 +67,9 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\FileConverter.cs" />
     <Compile Include="Models\IconCollection.cs" />
-    <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\ItemCollection.cs" />
-    <Compile Include="Models\PasswordEventArgs.cs" />
+    <Compile Include="Models\FileCollection.cs" />
     <Compile Include="PasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
