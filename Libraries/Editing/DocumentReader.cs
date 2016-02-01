@@ -242,6 +242,7 @@ namespace Cube.Pdf.Editing
 
                 var file = new File(path, password);
                 file.FullAccess = _core.IsOpenedWithFullPermissions;
+                file.PageCount = _core.NumberOfPages;
 
                 File = file;
                 Metadata = GetMetadata(_core);
