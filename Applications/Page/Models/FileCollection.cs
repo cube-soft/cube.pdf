@@ -19,10 +19,10 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
 {
@@ -49,6 +49,21 @@ namespace Cube.Pdf.App.Page
         ///
         /* ----------------------------------------------------------------- */
         public FileCollection() : base() { }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        /// 
+        /// <summary>
+        /// PDF のメタ情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata Metadata { get; } = new Metadata();
 
         #endregion
 
@@ -80,9 +95,41 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void Add(string path, string password = "")
         {
-            var ext = Path.GetExtension(path).ToLower();
+            var ext = IoEx.Path.GetExtension(path).ToLower();
             if (ext == ".pdf") AddDocument(path, password);
             else lock (_lock) Add(new ImageFile(path));
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Add
+        /// 
+        /// <summary>
+        /// ファイルを追加します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 追加不可能なファイルに関しては読み飛ばします。
+        /// </remarks>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Add(string[] files, int hierarchy)
+        {
+            foreach (var path in files)
+            {
+                if (Contains(path)) continue;
+
+                if (IoEx.Directory.Exists(path))
+                {
+                    if (hierarchy <= 0) continue;
+                    Add(IoEx.Directory.GetFiles(path), hierarchy - 1);
+                }
+                else if (IoEx.File.Exists(path))
+                {
+                    try { Add(path); }
+                    catch (Exception /* err */) { /* see remarks */ }
+                }
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -112,6 +159,48 @@ namespace Cube.Pdf.App.Page
         {
             if (offset == 0) return;
             MoveItems(offset < 0 ? indices : indices.Reverse(), offset);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Merge
+        /// 
+        /// <summary>
+        /// ファイルを結合します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Merge(string path)
+        {
+            var writer = new Cube.Pdf.Editing.DocumentWriter();
+            foreach (var file in Items)
+            {
+                if (file is File) AddDocument(file as File, writer);
+                else AddImage(file as ImageFile, writer);
+            }
+            writer.Metadata = Metadata;
+            writer.Save(path);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Split
+        /// 
+        /// <summary>
+        /// ファイルを分割します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Split(string directory, IList<string> results)
+        {
+            var writer = new Cube.Pdf.Editing.PageSplitter();
+            foreach (var item in Items)
+            {
+                if (item is File) AddDocument(item as File, writer);
+                else AddImage(item as ImageFile, writer);
+            }
+            writer.Metadata = Metadata;
+            writer.Save(directory, results);
         }
 
         #endregion
@@ -155,10 +244,54 @@ namespace Cube.Pdf.App.Page
         {
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.PasswordRequired += (s, e) => OnPasswordRequired(new PasswordEventArgs(path));
+                reader.PasswordRequired += (s, e) => OnPasswordRequired(e);
                 reader.Open(path, password, true);
+                if (!reader.IsOpen) return;
+
                 lock (_lock) Add(reader.File);
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddDocument
+        /// 
+        /// <summary>
+        /// PDF ファイルを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddDocument(File src, IDocumentWriter dest)
+        {
+            if (src == null) return;
+
+            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            {
+                reader.PasswordRequired += (s, e) => { e.Cancel = true; };
+                reader.Open(src.FullName, src.Password, true);
+                if (!reader.IsOpen) return;
+
+                foreach (var page in reader.Pages) dest.Pages.Add(page);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddImage
+        /// 
+        /// <summary>
+        /// 画像ファイルを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddImage(ImageFile src, IDocumentWriter dest)
+        {
+            if (src == null) return;
+
+            var pages = ImagePage.Create(src.FullName);
+            if (pages == null) return;
+
+            foreach (var page in pages) dest.Pages.Add(page);
         }
 
         /* ----------------------------------------------------------------- */

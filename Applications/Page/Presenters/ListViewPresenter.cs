@@ -19,12 +19,10 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows.Forms;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
 {
@@ -53,13 +51,14 @@ namespace Cube.Pdf.App.Page
         public ListViewPresenter(MainForm view, FileCollection model)
             : base(view, model)
         {
-            View.Adding    += View_Adding;
+            View.AddRequired   += View_AddRequired;
+            View.MergeRequired += View_MergeRequired;
+            View.SplitRequired += View_SplitRequired;
+
             View.Removing  += View_Removing;
             View.Clearing  += View_Clearing;
             View.Moving    += View_Moving;
-            View.Merging   += View_Merging;
-            View.Splitting += View_Splitting;
-            View.Opening   += View_Opening;
+            View.Previewed += View_Previewed;
 
             Model.CollectionChanged += Model_CollectionChanged;
             Model.PasswordRequired += Model_PasswordRequired;
@@ -71,28 +70,7 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_Opening
-        /// 
-        /// <summary>
-        /// 項目を開く時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void View_Opening(object sender, EventArgs e)
-        {
-            try
-            {
-                var indices = View.SelectedIndices;
-                var index = (indices.Count > 0) ? indices[0] : -1;
-                if (index < 0 || index >= Model.Count) return;
-                System.Diagnostics.Process.Start(Model[index].FullName);
-            }
-            catch (Exception /* err */) { /* ignore errors */ }
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// View_Adding
+        /// View_AddRequired
         /// 
         /// <summary>
         /// ファイルの追加要求が発生した時に実行されるハンドラです。
@@ -103,14 +81,86 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_Adding(object sender, DataEventArgs<string[]> e)
+        private async void View_AddRequired(object sender, DataEventArgs<string[]> e)
         {
             try
             {
                 SyncWait(() => { View.AllowOperation = false; });
-                AddFile(e.Value, 1); // 1 階層下のみ対象
+                await Async(() => Model.Add(e.Value, 1)); // 1 階層下のみ対象
             }
             finally { SyncWait(() => { View.AllowOperation = true; }); }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_MergeRequired
+        /// 
+        /// <summary>
+        /// ファイルの結合要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private async void View_MergeRequired(object sender, DataEventArgs<string> e)
+        {
+            try
+            {
+                SyncWait(() => { View.AllowOperation = false; ; });
+
+                await Async(() => Model.Merge(e.Value));
+
+                var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
+                Model.Clear();
+                FinalizeSync(new string[] { e.Value }, message);
+            }
+            catch (Exception err) { ShowSync(err); }
+            finally { SyncWait(() => { View.AllowOperation = true; }); }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_SplitRequired
+        /// 
+        /// <summary>
+        /// ファイルの分割要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private async void View_SplitRequired(object sender, DataEventArgs<string> e)
+        {
+            try
+            {
+                SyncWait(() => { View.AllowOperation = false; });
+
+                var results = new List<string>();
+                await Async(() => Model.Split(e.Value, results));
+
+                var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
+                Model.Clear();
+                FinalizeSync(results.ToArray(), message);
+            }
+            catch (Exception err) { ShowSync(err); }
+            finally { SyncWait(() => { View.AllowOperation = true; }); }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_Previewed
+        /// 
+        /// <summary>
+        /// 項目を既定のプログラムで開きます。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void View_Previewed(object sender, EventArgs e)
+        {
+            try
+            {
+                var indices = View.SelectedIndices;
+                var index = (indices.Count > 0) ? indices[0] : -1;
+                if (index < 0 || index >= Model.Count) return;
+                System.Diagnostics.Process.Start(Model[index].FullName);
+            }
+            catch (Exception /* err */) { /* ignore errors */ }
         }
 
         /* --------------------------------------------------------------------- */
@@ -159,85 +209,6 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_Merging
-        /// 
-        /// <summary>
-        /// ファイルの結合要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void View_Merging(object sender, DataEventArgs<string> e)
-        {
-            try
-            {
-                SyncWait(() => { View.AllowOperation = false; ; });
-
-                Metadata metadata = null;
-                var writer = new Cube.Pdf.Editing.DocumentWriter();
-                foreach (var item in Model)
-                {
-                    if (item is File)
-                    {
-                        AddPdf(item as File, writer);
-                        //if (metadata == null) metadata = reader.Metadata;
-                    }
-                    else AddImage(item as ImageFile, writer);
-                }
-                
-                if (metadata == null)
-                {
-                    metadata = new Metadata();
-                    metadata.Version = new Version(1, 7);
-                }
-                writer.Metadata = metadata;
-                writer.Metadata.Creator = Application.ProductName;
-                writer.Save(e.Value);
-
-                var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
-                Model.Clear();
-                FinalizeSync(new string[] { e.Value }, message);
-            }
-            catch (Exception err) { ShowSync(err); }
-            finally { SyncWait(() => { View.AllowOperation = true; }); }
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// View_Splitting
-        /// 
-        /// <summary>
-        /// ファイルの分割要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void View_Splitting(object sender, DataEventArgs<string> e)
-        {
-            try
-            {
-                SyncWait(() => { View.AllowOperation = false; });
-
-                var results = new List<string>();
-                var writer = new Cube.Pdf.Editing.PageSplitter();
-                writer.Metadata.Version = new Version(1, 7);
-                writer.Metadata.Creator = Application.ProductName;
-
-                foreach (var item in Model)
-                {
-                    if (item is File) AddPdf(item as File, writer);
-                    else AddImage(item as ImageFile, writer);
-                }
-                writer.Save(e.Value, results);
-
-                var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
-                Model.Clear();
-                FinalizeSync(results.ToArray(), message);
-            }
-            catch (Exception err) { ShowSync(err); }
-            finally { SyncWait(() => { View.AllowOperation = true; }); }
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
         /// Model_CollectionChanged
         /// 
         /// <summary>
@@ -282,85 +253,21 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         private void Model_PasswordRequired(object sender, PasswordEventArgs e)
         {
-            var dialog = new PasswordForm();
-            dialog.Path = e.Path;
-            dialog.StartPosition = FormStartPosition.CenterParent;
-            var result = dialog.ShowDialog(View);
+            SyncWait(() =>
+            {
+                var dialog = new PasswordForm();
+                dialog.Path = e.Path;
+                dialog.StartPosition = FormStartPosition.CenterParent;
+                var result = dialog.ShowDialog(View);
 
-            e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
-            if (!e.Cancel) e.Password = dialog.Password;
+                e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
+                if (!e.Cancel) e.Password = dialog.Password;
+            });
         }
 
         #endregion
 
         #region Other private methods
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// AddFile
-        /// 
-        /// <summary>
-        /// ファイルを追加します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// 追加不可能なファイルに関しては読み飛ばします。
-        /// ただし、パスワード付の PDF ファイルに関しては要対応。
-        /// </remarks>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void AddFile(string[] files, int hierarchy)
-        {
-            foreach (var path in files)
-            {
-                if (Model.Contains(path)) continue;
-                if (Directory.Exists(path))
-                {
-                    if (hierarchy > 0) AddFile(Directory.GetFiles(path), hierarchy - 1);
-                    continue;
-                }
-                else if (!IoEx.File.Exists(path)) continue;
-
-                try { Model.Add(path); }
-                catch (Exception /* err */) { /* see remarks */ }
-            }
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// AddPdf
-        /// 
-        /// <summary>
-        /// PDF ファイルを追加します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void AddPdf(File src, IDocumentWriter dest)
-        {
-            if (src == null) return;
-
-            using (var reader = new Cube.Pdf.Editing.DocumentReader())
-            {
-                reader.PasswordRequired += (s, e) => { e.Cancel = true; };
-                reader.Open(src.FullName, src.Password, true);
-                foreach (var page in reader.Pages) dest.Pages.Add(page);
-            }            
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// AddImage
-        /// 
-        /// <summary>
-        /// 画像ファイルを追加します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void AddImage(ImageFile src, IDocumentWriter dest)
-        {
-            if (src == null) return;
-            foreach (var page in ImagePage.Create(src.FullName)) dest.Pages.Add(page);
-        }
 
         /* --------------------------------------------------------------------- */
         ///
@@ -381,7 +288,7 @@ namespace Cube.Pdf.App.Page
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (result == DialogResult.No) return;
 
-                View_Adding(this, new DataEventArgs<string[]>(files));
+                View_AddRequired(this, new DataEventArgs<string[]>(files));
             });
         }
 

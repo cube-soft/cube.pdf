@@ -218,7 +218,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler Opening;
+        public EventHandler Previewed;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -229,7 +229,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<string[]>> Adding;
+        public EventHandler<DataEventArgs<string[]>> AddRequired;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -273,7 +273,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<string>> Merging;
+        public EventHandler<DataEventArgs<string>> MergeRequired;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -284,7 +284,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<string>> Splitting;
+        public EventHandler<DataEventArgs<string>> SplitRequired;
 
         #endregion
 
@@ -406,7 +406,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected virtual void OnOpening(EventArgs e)
         {
-            if (Opening != null) Opening(this, e);
+            if (Previewed != null) Previewed(this, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -420,7 +420,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected virtual void OnAdding(DataEventArgs<string[]> e)
         {
-            if (Adding != null) Adding(this, e);
+            if (AddRequired != null) AddRequired(this, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -476,7 +476,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected virtual void OnMerging(DataEventArgs<string> e)
         {
-            if (Merging != null) Merging(this, e);
+            if (MergeRequired != null) MergeRequired(this, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -490,7 +490,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected virtual void OnSplitting(DataEventArgs<string> e)
         {
-            if (Splitting != null) Splitting(this, e);
+            if (SplitRequired != null) SplitRequired(this, e);
         }
 
         #endregion
