@@ -81,14 +81,9 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private async void View_AddRequired(object sender, DataEventArgs<string[]> e)
+        private void View_AddRequired(object sender, DataEventArgs<string[]> e)
         {
-            try
-            {
-                SyncWait(() => { View.AllowOperation = false; });
-                await Async(() => Model.Add(e.Value, 1)); // 1 階層下のみ対象
-            }
-            finally { SyncWait(() => { View.AllowOperation = true; }); }
+            Execute(async () => await Async(() => Model.Add(e.Value, 1)));
         }
 
         /* --------------------------------------------------------------------- */
@@ -100,20 +95,16 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void View_MergeRequired(object sender, DataEventArgs<string> e)
+        private void View_MergeRequired(object sender, DataEventArgs<string> e)
         {
-            try
+            Execute(async () =>
             {
-                SyncWait(() => { View.AllowOperation = false; ; });
-
                 await Async(() => Model.Merge(e.Value));
 
                 var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
                 Model.Clear();
-                FinalizeSync(new string[] { e.Value }, message);
-            }
-            catch (Exception err) { ShowSync(err); }
-            finally { SyncWait(() => { View.AllowOperation = true; }); }
+                PostProcess(new string[] { e.Value }, message);
+            });
         }
 
         /* --------------------------------------------------------------------- */
@@ -125,21 +116,17 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void View_SplitRequired(object sender, DataEventArgs<string> e)
+        private void View_SplitRequired(object sender, DataEventArgs<string> e)
         {
-            try
+            Execute(async () =>
             {
-                SyncWait(() => { View.AllowOperation = false; });
-
                 var results = new List<string>();
                 await Async(() => Model.Split(e.Value, results));
 
                 var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
                 Model.Clear();
-                FinalizeSync(results.ToArray(), message);
-            }
-            catch (Exception err) { ShowSync(err); }
-            finally { SyncWait(() => { View.AllowOperation = true; }); }
+                PostProcess(results.ToArray(), message);
+            });
         }
 
         /* --------------------------------------------------------------------- */
@@ -271,19 +258,39 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// FinalizeSync
+        /// Execute
+        /// 
+        /// <summary>
+        /// 処理を実行します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void Execute(Action action)
+        {
+            if (action == null) return;
+
+            try
+            {
+                SyncWait(() => View.AllowOperation = false);
+                action();
+            }
+            catch (Exception err) { ShowMessage(err); }
+            finally { SyncWait(() => View.AllowOperation = true); }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// PostProcess
         /// 
         /// <summary>
         /// 終了時に行う処理を UI スレッドで実行します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void FinalizeSync(string[] files, string message)
+        private void PostProcess(string[] files, string message)
         {
             SyncWait(() =>
             {
-                View.AllowOperation = true;
-
                 var result = MessageBox.Show(message, Properties.Resources.MessageTitle,
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (result == DialogResult.No) return;
@@ -294,14 +301,14 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// ShowSync
+        /// ShowMessage
         /// 
         /// <summary>
         /// メッセージをメッセージボックスに表示します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void ShowSync(string message, MessageBoxIcon icon)
+        private void ShowMessage(string message, MessageBoxIcon icon)
         {
             SyncWait(() =>
             {
@@ -315,14 +322,14 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// ShowSync
+        /// ShowMessage
         /// 
         /// <summary>
         /// 例外メッセージをメッセージボックスに表示します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void ShowSync(Exception err)
+        private void ShowMessage(Exception err)
         {
             SyncWait(() =>
             {
