@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ListViewPresenter.cs
+/// FileCollectionPresenter.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -28,14 +28,14 @@ namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.Page.ListViewPresenter
+    /// FileCollectionPresenter
     ///
     /// <summary>
-    /// MainForm とファイルリストを対応付けるためのクラスです。
+    /// MainForm と FileCollection を対応付けるためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ListViewPresenter : Cube.Forms.PresenterBase<MainForm, FileCollection>
+    public class FileCollectionPresenter : Cube.Forms.PresenterBase<MainForm, FileCollection>
     {
         #region Constructors
 
@@ -48,17 +48,16 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ListViewPresenter(MainForm view, FileCollection model)
+        public FileCollectionPresenter(MainForm view, FileCollection model)
             : base(view, model)
         {
-            View.AddRequired   += View_AddRequired;
-            View.MergeRequired += View_MergeRequired;
-            View.SplitRequired += View_SplitRequired;
-
-            View.Removing  += View_Removing;
-            View.Clearing  += View_Clearing;
-            View.Moving    += View_Moving;
-            View.Previewed += View_Previewed;
+            View.PreviewRequired += View_PreviewRequired;
+            View.AddRequired     += View_AddRequired;
+            View.RemoveRequired  += View_RemoveRequired;
+            View.ClearRequired   += View_ClearRequired;
+            View.MoveRequired    += View_MoveRequired;
+            View.MergeRequired   += View_MergeRequired;
+            View.SplitRequired   += View_SplitRequired;
 
             Model.CollectionChanged += Model_CollectionChanged;
             Model.PasswordRequired += Model_PasswordRequired;
@@ -67,6 +66,29 @@ namespace Cube.Pdf.App.Page
         #endregion
 
         #region Event handlers
+
+        #region View
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_PreviewRequired
+        /// 
+        /// <summary>
+        /// 項目を既定のプログラムで開きます。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void View_PreviewRequired(object sender, EventArgs e)
+        {
+            try
+            {
+                var indices = View.SelectedIndices;
+                var index = (indices.Count > 0) ? indices[0] : -1;
+                if (index < 0 || index >= Model.Count) return;
+                System.Diagnostics.Process.Start(Model[index].FullName);
+            }
+            catch (Exception /* err */) { /* ignore errors */ }
+        }
 
         /* --------------------------------------------------------------------- */
         ///
@@ -84,6 +106,53 @@ namespace Cube.Pdf.App.Page
         private void View_AddRequired(object sender, DataEventArgs<string[]> e)
         {
             Execute(async () => await Async(() => Model.Add(e.Value, 1)));
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_RemoveRequired
+        /// 
+        /// <summary>
+        /// 項目の削除要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private async void View_RemoveRequired(object sender, EventArgs e)
+        {
+            await Async(() =>
+            {
+                foreach (var index in View.SelectedIndices.Reverse()) Model.RemoveAt(index);
+            });
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_ClearRequired
+        /// 
+        /// <summary>
+        /// 全項目の削除要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private async void View_ClearRequired(object sender, EventArgs e)
+        {
+            await Async(() => Model.Clear());
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_MoveRequired
+        /// 
+        /// <summary>
+        /// 項目の移動要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void View_MoveRequired(object sender, DataEventArgs<int> e)
+        {
+            var indices = View.SelectedIndices;
+            if (indices.Count == 0) return;
+            Model.Move(indices, e.Value);
         }
 
         /* --------------------------------------------------------------------- */
@@ -129,70 +198,9 @@ namespace Cube.Pdf.App.Page
             });
         }
 
-        /* --------------------------------------------------------------------- */
-        ///
-        /// View_Previewed
-        /// 
-        /// <summary>
-        /// 項目を既定のプログラムで開きます。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void View_Previewed(object sender, EventArgs e)
-        {
-            try
-            {
-                var indices = View.SelectedIndices;
-                var index = (indices.Count > 0) ? indices[0] : -1;
-                if (index < 0 || index >= Model.Count) return;
-                System.Diagnostics.Process.Start(Model[index].FullName);
-            }
-            catch (Exception /* err */) { /* ignore errors */ }
-        }
+        #endregion
 
-        /* --------------------------------------------------------------------- */
-        ///
-        /// View_Removing
-        /// 
-        /// <summary>
-        /// 項目からの削除要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void View_Removing(object sender, EventArgs e)
-        {
-            foreach (var index in View.SelectedIndices.Reverse()) Model.RemoveAt(index);
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// View_Clearing
-        /// 
-        /// <summary>
-        /// 全項目の削除要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void View_Clearing(object sender, EventArgs e)
-        {
-            Model.Clear();
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// View_Moving
-        /// 
-        /// <summary>
-        /// 項目の移動要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void View_Moving(object sender, DataEventArgs<int> e)
-        {
-            var indices = View.SelectedIndices;
-            if (indices.Count == 0) return;
-            Model.Move(indices, e.Value);
-        }
+        #region Model
 
         /* --------------------------------------------------------------------- */
         ///
@@ -210,18 +218,18 @@ namespace Cube.Pdf.App.Page
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
-                        View.InsertItem(e.NewStartingIndex, Model[e.NewStartingIndex]);
+                        View.Insert(e.NewStartingIndex, Model[e.NewStartingIndex]);
                         break;
                     case NotifyCollectionChangedAction.Move:
                         View.MoveItem(e.OldStartingIndex, e.NewStartingIndex);
                         break;
                     case NotifyCollectionChangedAction.Remove:
-                        View.RemoveItem(e.OldStartingIndex);
+                        View.Remove(e.OldStartingIndex);
                         break;
                     case NotifyCollectionChangedAction.Reset:
                         View.ClearItems();
                         if (Model.Count == 0) break;
-                        foreach (var item in Model) View.AddItem(item);
+                        foreach (var item in Model) View.Add(item);
                         break;
                     default:
                         break;
@@ -254,6 +262,8 @@ namespace Cube.Pdf.App.Page
 
         #endregion
 
+        #endregion
+
         #region Other private methods
 
         /* --------------------------------------------------------------------- */
@@ -274,7 +284,11 @@ namespace Cube.Pdf.App.Page
                 SyncWait(() => View.AllowOperation = false);
                 action();
             }
-            catch (Exception err) { ShowMessage(err); }
+            catch (Exception err)
+            {
+                Logger.Error(err);
+                ShowMessage(err);
+            }
             finally { SyncWait(() => View.AllowOperation = true); }
         }
 
