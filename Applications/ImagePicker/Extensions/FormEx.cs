@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FormExtensions.cs
+/// FormEx.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -18,7 +18,6 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -26,14 +25,14 @@ namespace Cube.Pdf.App.ImageEx.Extensions
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.Extensions.FormExtensions
+    /// FormEx
     ///
     /// <summary>
-    /// フォームに対する拡張メソッド群を定義するクラスです。
+    /// Form の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class FormExtensions
+    public static class FormEx
     {
         /* ----------------------------------------------------------------- */
         ///
