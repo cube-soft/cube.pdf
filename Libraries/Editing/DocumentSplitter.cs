@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageSplitter.cs
+/// DocumentSplitter.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -27,27 +27,27 @@ namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageSplitter
+    /// DocumentSplitter
     /// 
     /// <summary>
     /// PDF ファイルを全て 1 ページの PDF ファイルに分割するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PageSplitter : DocumentWriterBase
+    public class DocumentSplitter : DocumentWriterBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageSplitter
+        /// DocumentSplitter
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageSplitter() : base() { }
+        public DocumentSplitter() : base() { }
 
         #endregion
 

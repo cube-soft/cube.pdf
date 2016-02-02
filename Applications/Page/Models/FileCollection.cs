@@ -193,7 +193,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void Split(string directory, IList<string> results)
         {
-            var writer = new Cube.Pdf.Editing.PageSplitter();
+            var writer = new Cube.Pdf.Editing.DocumentSplitter();
             foreach (var item in Items)
             {
                 if (item is File) AddDocument(item as File, writer);

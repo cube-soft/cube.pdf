@@ -56,7 +56,7 @@
     <Compile Include="Extensions\ImageEx.cs" />
     <Compile Include="Extensions\PdfReaderEx.cs" />
     <Compile Include="DocumentWriter.cs" />
-    <Compile Include="PageSplitter.cs" />
+    <Compile Include="DocumentSplitter.cs" />
     <Compile Include="ReadOnlyPageCollection.cs" />
     <Compile Include="DocumentReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
