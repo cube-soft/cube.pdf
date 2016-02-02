@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Reflection;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -61,6 +62,10 @@ namespace Cube.Pdf.App.Page
 
             Model.CollectionChanged += Model_CollectionChanged;
             Model.PasswordRequired += Model_PasswordRequired;
+
+            var reader = new AssemblyReader(Assembly.GetEntryAssembly());
+            Model.Metadata.Version = new Version(1, 7);
+            Model.Metadata.Creator = reader.Product;
         }
 
         #endregion
