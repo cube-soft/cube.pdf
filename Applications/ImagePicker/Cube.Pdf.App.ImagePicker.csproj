@@ -63,7 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\FormExtensions.cs" />
+    <Compile Include="Extensions\FormEx.cs" />
     <Compile Include="DropForm.cs">
       <SubType>Form</SubType>
     </Compile>
