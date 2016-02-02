@@ -277,15 +277,59 @@ namespace Cube.Pdf.Editing
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        protected PdfReader CreatePdfReader(File src)
+        protected PdfReader CreatePdfReader(Page src)
         {
             try
             {
-                return src.Password.Length > 0 ?
-                       new PdfReader(src.FullName, System.Text.Encoding.UTF8.GetBytes(src.Password)) :
-                       new PdfReader(src.FullName);
+                var file = src.File as File;
+                if (file == null) return null;
+
+                return file.Password.Length > 0 ?
+                       new PdfReader(file.FullName, System.Text.Encoding.UTF8.GetBytes(file.Password)) :
+                       new PdfReader(file.FullName);
             }
             catch (Exception /* err */) { return null; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreatePdfReader
+        /// 
+        /// <summary>
+        /// 画像ファイルから PdfReader オブジェクトを生成します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        protected PdfReader CreatePdfReader(Page src, IoEx.MemoryStream buffer)
+        {
+            if (src == null) return null;
+            if (src.File is File) return CreatePdfReader(src);
+
+            using (var image = Image.FromFile(src.File.FullName))
+            {
+                var document = new iTextSharp.text.Document();
+                var writer = PdfWriter.GetInstance(document, buffer);
+                document.Open();
+
+                var guid = image.FrameDimensionsList[0];
+                var dimension = new System.Drawing.Imaging.FrameDimension(guid);
+                for (var i = 0; i < image.GetFrameCount(dimension); ++i)
+                {
+                    var size = src.ViewSize(Dpi);
+
+                    image.SelectActiveFrame(dimension, i);
+                    image.Rotate(src.Rotation);
+
+                    document.SetPageSize(new iTextSharp.text.Rectangle(size.Width, size.Height));
+                    document.NewPage();
+                    document.Add(CreateImage(image, src));
+                }
+
+                document.Close();
+                writer.Close();
+            }
+
+            return new PdfReader(buffer.ToArray());
         }
 
         /* ----------------------------------------------------------------- */
@@ -340,6 +384,24 @@ namespace Cube.Pdf.Editing
         /// AddMetadata
         /// 
         /// <summary>
+        /// タイトル、著者名等の各種メタデータを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void AddMetadata(iTextSharp.text.Document document)
+        {
+            document.AddTitle(Metadata.Title);
+            document.AddSubject(Metadata.Subtitle);
+            document.AddKeywords(Metadata.Keywords);
+            document.AddCreator(Metadata.Creator);
+            document.AddAuthor(Metadata.Author);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddMetadata
+        /// 
+        /// <summary>
         /// タイトル、著者名等のメタ情報を追加します。
         /// </summary>
         ///
@@ -366,7 +428,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void AddEncryption(PdfStamper dest)
+        protected void AddEncryption(PdfWriter dest)
         {
             if (Encryption.IsEnabled && Encryption.OwnerPassword.Length > 0)
             {
@@ -377,7 +439,7 @@ namespace Cube.Pdf.Editing
                                Encryption.UserPassword;
                 if (Encryption.IsUserPasswordEnabled) password = string.Empty;
 
-                dest.Writer.SetEncryption(method, password, Encryption.OwnerPassword, flags);
+                dest.SetEncryption(method, password, Encryption.OwnerPassword, flags);
             }
         }
 

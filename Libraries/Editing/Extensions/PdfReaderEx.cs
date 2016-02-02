@@ -54,5 +54,27 @@ namespace Cube.Pdf.Editing.Extensions
             dest.Resolution = new Point(72, 72);
             return dest;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        /// 
+        /// <summary>
+        /// Page オブジェクトの情報にしたがって回転します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// PDF ページを回転させる場合、いったん PdfReader オブジェクトの
+        /// 内容を改変した後に PdfCopy オブジェクト等でコピーする方法が
+        /// もっとも容易に実現できます。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public static void Rotate(this PdfReader reader, Page page)
+        {
+            var rot = reader.GetPageRotation(page.Number);
+            var dic = reader.GetPageN(page.Number);
+            if (rot != page.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(page.Rotation));
+        }
     }
 }

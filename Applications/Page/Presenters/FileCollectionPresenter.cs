@@ -122,12 +122,9 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void View_RemoveRequired(object sender, EventArgs e)
+        private void View_RemoveRequired(object sender, EventArgs e)
         {
-            await Async(() =>
-            {
-                foreach (var index in View.SelectedIndices.Reverse()) Model.RemoveAt(index);
-            });
+            foreach (var index in View.SelectedIndices.Reverse()) Model.RemoveAt(index);
         }
 
         /* --------------------------------------------------------------------- */

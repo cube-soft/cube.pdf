@@ -20,7 +20,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Pdf.Editing.Extensions;
@@ -73,14 +72,14 @@ namespace Cube.Pdf.Editing
 
             try
             {
-                Bind(tmp);
+                Merge(tmp);
                 using (var reader = new PdfReader(tmp))
-                using (var writer = new PdfStamper(reader, new IoEx.FileStream(path, IoEx.FileMode.Create)))
+                using (var stamper = new PdfStamper(reader, new IoEx.FileStream(path, IoEx.FileMode.Create)))
                 {
-                    AddMetadata(reader, writer);
-                    AddEncryption(writer);
-                    if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
-                    writer.Writer.Outlines = Bookmarks;
+                    AddMetadata(reader, stamper);
+                    AddEncryption(stamper.Writer);
+                    if (Metadata.Version.Minor >= 5) stamper.SetFullCompression();
+                    stamper.Writer.Outlines = Bookmarks;
                 }
             }
             catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
@@ -89,65 +88,50 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
-        #region Other private methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Bind
+        /// Merge
         /// 
         /// <summary>
-        /// 指定された各ページを結合し、新たな PDF ファイルを生成します。
+        /// ページを結合し、新たな PDF ファイルを生成します。
         /// </summary>
         /// 
         /// <remarks>
-        /// 注釈等を含めて完全にページ内容をコピーするためにいったん
-        /// PdfCopy クラスを用いて全ページを結合します。
-        /// セキュリティ設定や文書プロパティ等の情報は生成された PDF に
-        /// 対して付加します。
+        /// 注釈等を含めて完全にページ内容をコピーするため、いったん
+        /// PdfCopy クラスを用いて全ページを結合します。セキュリティ設定や
+        /// 文書プロパティ等の情報は生成された PDF に対して付加します。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void Bind(string dest)
+        private void Merge(string dest)
         {
             if (IoEx.File.Exists(dest)) IoEx.File.Delete(dest);
 
-            var readers  = new Dictionary<string, PdfReader>();
-            var document = new iTextSharp.text.Document();
-            var writer   = CreatePdfCopy(document, dest);
+            var cache  = new Dictionary<string, PdfReader>();
 
-            document.Open();
-            Bookmarks.Clear();
-
-            foreach (var page in Pages)
+            try
             {
-                if (page.File is File) AddPage(page, writer, readers);
-                else if (page.File is ImageFile) AddImagePage(page, writer);
-            }
+                var document = new iTextSharp.text.Document();
+                var writer = CreatePdfCopy(document, dest);
 
-            document.Close();
-            writer.Close();
-            foreach (var reader in readers.Values) reader.Close();
-            readers.Clear();
-        }
+                document.Open();
+                Bookmarks.Clear();
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddPage
-        /// 
-        /// <summary>
-        /// PDF ページを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddPage(byte[] src, PdfCopy dest)
-        {
-            using (var reader = new PdfReader(src))
-            {
-                for (var i = 0; i < reader.NumberOfPages; ++i)
+                foreach (var page in Pages)
                 {
-                    var page = dest.GetImportedPage(reader, i + 1);
-                    dest.AddPage(page);
+                    if (page.File is File) AddPage(page, writer, cache);
+                    else if (page.File is ImageFile) AddImagePage(page, writer);
                 }
+
+                document.Close();
+                writer.Close();
+            }
+            finally
+            {
+                foreach (var reader in cache.Values) reader.Close();
+                cache.Clear();
             }
         }
 
@@ -162,20 +146,15 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         private void AddPage(Page src, PdfCopy dest, Dictionary<string, PdfReader> cache)
         {
-            if (src == null) return;
-
             if (!cache.ContainsKey(src.File.FullName))
             {
-                var created = CreatePdfReader(src.File as File);
+                var created = CreatePdfReader(src);
                 if (created == null) return;
                 cache.Add(src.File.FullName, created);
             }
 
             var reader = cache[src.File.FullName];
-            var rot    = reader.GetPageRotation(src.Number);
-            var dic    = reader.GetPageN(src.Number);
-            if (rot != src.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(src.Rotation));
-            
+            reader.Rotate(src);
             dest.AddPage(dest.GetImportedPage(reader, src.Number));
             StockBookmarks(reader, src.Number, dest.PageNumber);
         }
@@ -185,39 +164,20 @@ namespace Cube.Pdf.Editing
         /// AddImagePage
         /// 
         /// <summary>
-        /// 画像ファイルを 1 ページの PDF として追加します。
+        /// 画像ファイルを PDF ページとして追加します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private void AddImagePage(Page src, PdfCopy dest)
         {
-            if (src == null) return;
-
-            using (var image = new Bitmap(src.File.FullName))
-            using (var stream = new IoEx.MemoryStream())
+            using (var buffer = new IoEx.MemoryStream())
+            using (var reader = CreatePdfReader(src, buffer))
             {
-                var document = new iTextSharp.text.Document();
-                var writer = PdfWriter.GetInstance(document, stream);
-                document.Open();
-
-                var guid = image.FrameDimensionsList[0];
-                var dimension = new System.Drawing.Imaging.FrameDimension(guid);
-                for (var i = 0; i < image.GetFrameCount(dimension); ++i)
+                for (var i = 0; i < reader.NumberOfPages; ++i)
                 {
-                    var size = src.ViewSize(Dpi);
-
-                    image.SelectActiveFrame(dimension, i);
-                    image.Rotate(src.Rotation);
-
-                    document.SetPageSize(new iTextSharp.text.Rectangle(size.Width, size.Height));
-                    document.NewPage();
-                    document.Add(CreateImage(image, src));
+                    var page = dest.GetImportedPage(reader, i + 1);
+                    dest.AddPage(page);
                 }
-
-                document.Close();
-                writer.Close();
-
-                AddPage(stream.ToArray(), dest);
             }
         }
 

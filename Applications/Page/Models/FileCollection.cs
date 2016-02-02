@@ -200,7 +200,9 @@ namespace Cube.Pdf.App.Page
                 else AddImage(item as ImageFile, writer);
             }
             writer.Metadata = Metadata;
-            writer.Save(directory, results);
+            writer.Save(directory);
+
+            foreach (var result in writer.Results) results.Add(result);
         }
 
         #endregion
