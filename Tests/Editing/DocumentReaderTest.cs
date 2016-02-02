@@ -90,6 +90,42 @@ namespace Cube.Pdf.Tests.Editing
 
         /* ----------------------------------------------------------------- */
         ///
+        /// File
+        ///
+        /// <summary>
+        /// ファイルの情報を取得するテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        #region File
+
+        [TestCase("rotation.pdf", "", 9)]
+        [TestCase("password.pdf", "password", 2)]
+        [TestCase("password-aes256.pdf", "password", 9)]
+        public void File_PageCount(string filename, string password, int expected)
+        {
+            Assert.That(
+                Create(filename, password).File.PageCount,
+                Is.EqualTo(expected)
+            );
+        }
+
+        [TestCase("rotation.pdf", "")]
+        [TestCase("password.pdf", "password")]
+        [TestCase("password-aes256.pdf", "password")]
+        public void File_Password(string filename, string password)
+        {
+            var file = Create(filename, password).File as File;
+            Assert.That(
+                file.Password,
+                Is.EqualTo(password)
+            );
+        }
+
+        #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Metadata
         ///
         /// <summary>
@@ -169,7 +205,7 @@ namespace Cube.Pdf.Tests.Editing
         /// Encryption
         ///
         /// <summary>
-        /// ページ数の情報を取得するテストを行います。
+        /// 暗号化に関する情報を取得するテストを行います。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
