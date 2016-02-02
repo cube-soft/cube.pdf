@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Cube.Pdf")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("CubeSoft, Inc.")]
+[assembly: AssemblyCompany("CubeSoft")]
 [assembly: AssemblyProduct("Cube.Pdf")]
 [assembly: AssemblyCopyright("Copyright © 2010 CubeSoft, Inc.")]
 [assembly: AssemblyTrademark("")]
