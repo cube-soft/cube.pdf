@@ -57,5 +57,29 @@ namespace Cube.Pdf.Editing.Extensions
                    image.RawFormat.Equals(ImageFormat.Wmf)       ? ImageFormat.Wmf       :
                                                                    ImageFormat.Bmp       ;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        /// 
+        /// <summary>
+        /// イメージを degree 度だけ回転させます。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// RotateFlip メソッドは 90 度単位でしか回転させる事ができないので、
+        /// 引数に指定された回転度数を 90 度単位で丸めています。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Rotate(this Image image, int degree)
+        {
+            var value = (degree >=  90 && degree < 180) ? RotateFlipType.Rotate90FlipNone  :
+                        (degree >= 180 && degree < 270) ? RotateFlipType.Rotate180FlipNone :
+                        (degree >= 270 && degree < 360) ? RotateFlipType.Rotate270FlipNone :
+                                                          RotateFlipType.RotateNoneFlipNone;
+
+            if (value != RotateFlipType.RotateNoneFlipNone) image.RotateFlip(value);
+        }
     }
 }

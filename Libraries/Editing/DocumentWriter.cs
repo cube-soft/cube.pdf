@@ -20,7 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using System.Drawing;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Pdf.Editing.Extensions;
@@ -37,7 +37,7 @@ namespace Cube.Pdf.Editing
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentWriter : IDocumentWriter
+    public class DocumentWriter : DocumentWriterBase
     {
         #region Constructors
 
@@ -50,113 +50,15 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentWriter() { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~DocumentWriter
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
-        /// に記述して下さい。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~DocumentWriter()
-        {
-            Dispose(false);
-        }
+        public DocumentWriter() : base() { }
 
         #endregion
 
-        #region Properties
+        #region Override methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Metadata
-        /// 
-        /// <summary>
-        /// PDF ファイルのメタデータを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; set; } = new Metadata();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Encryption
-        /// 
-        /// <summary>
-        /// 暗号化に関する情報をを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Encryption Encryption { get; set; } = new Encryption();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Pages
-        /// 
-        /// <summary>
-        /// PDF ファイルの各ページ情報を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICollection<Page> Pages { get; } = new List<Page>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UseSmartCopy
-        /// 
-        /// <summary>
-        /// ファイルサイズを抑えるための結合方法を使用するかどうかを取得、
-        /// または設定します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// DocumentWriter は通常 iTextSharp の PdfCopy クラスを用いて
-        /// 結合を行っていますが、このクラスは複数の PDF ファイルが同じ
-        /// フォントを使用していたとしても別々のものとして扱うため、
-        /// フォント情報が重複してファイルサイズが増大する場合があります。
-        /// 
-        /// この問題を解決したものとして PdfSmartCopy クラスが存在すします。
-        /// ただし、複雑な注釈が保存されている PDF を結合する際に使用した
-        /// 場合、（別々として扱わなければならないはずの）情報が共有されて
-        /// しまい、注釈の構造が壊れてしまう問題が確認されているので、
-        /// 注意が必要です。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool UseSmartCopy { get; set; } = true;
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        /// 
-        /// <summary>
-        /// 初期状態にリセットします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Reset()
-        {
-            Metadata   = new Metadata();
-            Encryption = new Encryption();
-            Pages.Clear();
-            _bookmarks.Clear();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Save
+        /// OnSave
         /// 
         /// <summary>
         /// メンバ変数が保持している、メタデータ、暗号化に関する情報、
@@ -165,7 +67,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save(string path)
+        protected override void OnSave(string path)
         {
             var tmp = IoEx.Path.GetTempFileName();
 
@@ -178,46 +80,11 @@ namespace Cube.Pdf.Editing
                     AddMetadata(reader, writer);
                     AddEncryption(writer);
                     if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
-                    writer.Writer.Outlines = _bookmarks;
+                    writer.Writer.Outlines = Bookmarks;
                 }
             }
             catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
             finally { TryDelete(tmp); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
-
-        #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed) return;
-            _disposed = true;
-            if (disposing) Reset();
         }
 
         #endregion
@@ -246,15 +113,10 @@ namespace Cube.Pdf.Editing
 
             var readers  = new Dictionary<string, PdfReader>();
             var document = new iTextSharp.text.Document();
-            var writer   = UseSmartCopy ?
-                           new PdfSmartCopy(document, new IoEx.FileStream(dest, IoEx.FileMode.Create)) :
-                           new PdfCopy(document, new IoEx.FileStream(dest, IoEx.FileMode.Create));
-
-            writer.PdfVersion = Metadata.Version.Minor.ToString()[0];
-            writer.ViewerPreferences = Metadata.ViewPreferences;
+            var writer   = CreatePdfCopy(document, dest);
 
             document.Open();
-            _bookmarks.Clear();
+            Bookmarks.Clear();
 
             foreach (var page in Pages)
             {
@@ -277,12 +139,15 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddPage(PdfReader src, PdfCopy dest)
+        private void AddPage(byte[] src, PdfCopy dest)
         {
-            for (var i = 0; i < src.NumberOfPages; ++i)
+            using (var reader = new PdfReader(src))
             {
-                var page = dest.GetImportedPage(src, i + 1);
-                dest.AddPage(page);
+                for (var i = 0; i < reader.NumberOfPages; ++i)
+                {
+                    var page = dest.GetImportedPage(reader, i + 1);
+                    dest.AddPage(page);
+                }
             }
         }
 
@@ -295,14 +160,18 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddPage(Page src, PdfCopy dest, Dictionary<string, PdfReader> readers)
+        private void AddPage(Page src, PdfCopy dest, Dictionary<string, PdfReader> cache)
         {
             if (src == null) return;
 
-            if (!readers.ContainsKey(src.File.FullName)) AddReader(src.File as File, readers);
-            if (!readers.ContainsKey(src.File.FullName)) return;
+            if (!cache.ContainsKey(src.File.FullName))
+            {
+                var created = CreatePdfReader(src.File as File);
+                if (created == null) return;
+                cache.Add(src.File.FullName, created);
+            }
 
-            var reader = readers[src.File.FullName];
+            var reader = cache[src.File.FullName];
             var rot    = reader.GetPageRotation(src.Number);
             var dic    = reader.GetPageN(src.Number);
             if (rot != src.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(src.Rotation));
@@ -324,7 +193,7 @@ namespace Cube.Pdf.Editing
         {
             if (src == null) return;
 
-            using (var image = new System.Drawing.Bitmap(src.File.FullName))
+            using (var image = new Bitmap(src.File.FullName))
             using (var stream = new IoEx.MemoryStream())
             {
                 var document = new iTextSharp.text.Document();
@@ -335,204 +204,21 @@ namespace Cube.Pdf.Editing
                 var dimension = new System.Drawing.Imaging.FrameDimension(guid);
                 for (var i = 0; i < image.GetFrameCount(dimension); ++i)
                 {
+                    var size = src.ViewSize(Dpi);
+
                     image.SelectActiveFrame(dimension, i);
+                    image.Rotate(src.Rotation);
 
-                    var dpi    = GetImageDpiScale(image);
-                    var width  = src.Size.IsEmpty ? (int)(image.Width * dpi) : src.Size.Width;
-                    var height = src.Size.IsEmpty ? (int)(image.Height * dpi) : src.Size.Height;
-                    var obj    = CreateImage(src, image);
-
-                    document.SetPageSize(new iTextSharp.text.Rectangle(width, height));
+                    document.SetPageSize(new iTextSharp.text.Rectangle(size.Width, size.Height));
                     document.NewPage();
-                    document.Add(obj);
+                    document.Add(CreateImage(image, src));
                 }
 
                 document.Close();
                 writer.Close();
 
-                using (var reader = new PdfReader(stream.ToArray())) AddPage(reader, dest);
+                AddPage(stream.ToArray(), dest);
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddMetadata
-        /// 
-        /// <summary>
-        /// タイトル、著者名等の各種メタデータを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddMetadata(PdfReader reader, PdfStamper writer)
-        {
-            var info = reader.Info;
-            info.Add("Title",    Metadata.Title);
-            info.Add("Subject",  Metadata.Subtitle);
-            info.Add("Keywords", Metadata.Keywords);
-            info.Add("Creator",  Metadata.Creator);
-            info.Add("Author",   Metadata.Author);
-            writer.MoreInfo = info;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddEncryption
-        /// 
-        /// <summary>
-        /// 各種セキュリティ情報を付加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddEncryption(PdfStamper writer)
-        {
-            if (Encryption.IsEnabled && Encryption.OwnerPassword.Length > 0)
-            {
-                var method     = Transform.ToIText(Encryption.Method);
-                var permission = Transform.ToIText(Encryption.Permission);
-                var userpass   = Encryption.IsUserPasswordEnabled ?
-                                 GetUserPassword(Encryption.UserPassword, Encryption.OwnerPassword) :
-                                 string.Empty;
-                writer.Writer.SetEncryption(method, userpass, Encryption.OwnerPassword, permission);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddReader
-        /// 
-        /// <summary>
-        /// ファイル情報を基に PdfReader オブジェクトを生成し、一覧に
-        /// 追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddReader(File src, Dictionary<string, PdfReader> dest)
-        {
-            if (src == null) return;
-
-            var item = src.Password.Length > 0 ?
-                       new PdfReader(src.FullName, System.Text.Encoding.UTF8.GetBytes(src.Password)) :
-                       new PdfReader(src.FullName);
-            dest.Add(src.FullName, item);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// StockBookmarks
-        /// 
-        /// <summary>
-        /// PDF ファイルに存在するしおり情報を取得して保存しておきます。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// 実際にしおりを PDF に追加するには PdfWriter クラスの Outlines
-        /// プロパティに代入する必要があります。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void StockBookmarks(PdfReader reader, int srcPage, int destPage)
-        {
-            var bookmarks = SimpleBookmark.GetBookmark(reader);
-            if (bookmarks == null) return;
-
-            var pattern = string.Format("^{0} (XYZ|Fit|FitH|FitBH)", destPage);
-            SimpleBookmark.ShiftPageNumbers(bookmarks, destPage - srcPage, null);
-            foreach (var bm in bookmarks)
-            {
-                if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern)) _bookmarks.Add(bm);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateImage
-        /// 
-        /// <summary>
-        /// イメージオブジェクトを生成します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private iTextSharp.text.Image CreateImage(Page src, System.Drawing.Image image)
-        {
-            var width  = src.Size.IsEmpty ? image.Width : src.Size.Width;
-            var height = src.Size.IsEmpty ? image.Height : src.Size.Height;
-            var dpi    = GetImageDpiScale(image);
-            var scale  = GetImageScale(image, width, height);
-            var pos    = src.Size.IsEmpty ?
-                         new System.Drawing.Point(0, 0) :
-                         GetImagePosition(image, width, height, scale * dpi);
-
-            var dest = iTextSharp.text.Image.GetInstance(image, image.GuessImageFormat());
-            dest.SetAbsolutePosition(pos.X, pos.Y);
-            dest.ScalePercent((float)(scale * dpi * 100.0));
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImageDpiScale
-        /// 
-        /// <summary>
-        /// イメージの解像度の差を考慮した縮小倍率を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private double GetImageDpiScale(System.Drawing.Image image)
-        {
-            var w = 72.0 / image.HorizontalResolution;
-            var h = 72.0 / image.VerticalResolution;
-            return Math.Min(w, h);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImageScale
-        /// 
-        /// <summary>
-        /// イメージの縮小倍率を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private double GetImageScale(System.Drawing.Image image, int width, int height)
-        {
-            var x = width / (double)image.Width;
-            var y = height / (double)image.Height;
-            return Math.Min(Math.Min(x, y), 1.0);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImagePosition
-        /// 
-        /// <summary>
-        /// イメージの表示位置を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private System.Drawing.Point GetImagePosition(System.Drawing.Image image, int width, int height, double ratio)
-        {
-            var x = (width - image.Width * ratio) / 2.0;
-            var y = (height - image.Height * ratio) / 2.0;
-            return new System.Drawing.Point((int)x, (int)y);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetUserPassword
-        /// 
-        /// <summary>
-        /// ユーザパスワードを取得します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// ユーザから明示的にユーザパスワードが指定されていない場合、
-        /// オーナパスワードと同じ文字列を使用します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetUserPassword(string userPassword, string ownerPassword)
-        {
-            return !string.IsNullOrEmpty(userPassword) ? userPassword : ownerPassword;
         }
 
         /* ----------------------------------------------------------------- */
@@ -554,11 +240,6 @@ namespace Cube.Pdf.Editing
             catch (Exception /* err */) { return false; }
         }
 
-        #endregion
-
-        #region Fields
-        private bool _disposed = false;
-        private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
         #endregion
     }
 }

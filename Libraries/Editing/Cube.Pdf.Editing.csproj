@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Details\ImageRenderListener.cs" />
     <Compile Include="Details\Transform.cs" />
+    <Compile Include="DocumentWriterBase.cs" />
     <Compile Include="Extensions\ImageEx.cs" />
     <Compile Include="Extensions\PdfReaderEx.cs" />
     <Compile Include="DocumentWriter.cs" />
