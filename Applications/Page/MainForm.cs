@@ -27,7 +27,7 @@ namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.Page.MainForm
+    /// MainForm
     ///
     /// <summary>
     /// CubePDF Page メイン画面を表示するクラスです。
