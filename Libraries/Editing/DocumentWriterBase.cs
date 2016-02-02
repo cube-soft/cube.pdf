@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using iTextSharp.text.pdf;
@@ -372,7 +373,7 @@ namespace Cube.Pdf.Editing
             var scale = GetScale(src, size);
             var pos   = GetPosition(src, scale, size);
 
-            var dest = iTextSharp.text.Image.GetInstance(src, src.GuessImageFormat());
+            var dest = iTextSharp.text.Image.GetInstance(src, GetFormat(src));
             dest.SetAbsolutePosition(pos.X, pos.Y);
             dest.ScalePercent((float)(scale * 100.0));
 
@@ -461,7 +462,10 @@ namespace Cube.Pdf.Editing
             SimpleBookmark.ShiftPageNumbers(bookmarks, destPageNumber - srcPageNumber, null);
             foreach (var bm in bookmarks)
             {
-                if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern)) Bookmarks.Add(bm);
+                if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern))
+                {
+                    Bookmarks.Add(bm);
+                }
             }
         }
 
@@ -499,6 +503,30 @@ namespace Cube.Pdf.Editing
             var x = (size.Width - image.Width * scale) / 2.0;
             var y = (size.Height - image.Height * scale) / 2.0;
             return new Point((int)x, (int)y);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetFormat
+        /// 
+        /// <summary>
+        /// イメージフォーマットを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private ImageFormat GetFormat(Image image)
+        {
+            var supports = new List<ImageFormat>()
+            {
+                ImageFormat.Bmp,
+                ImageFormat.Gif,
+                ImageFormat.Jpeg,
+                ImageFormat.Png,
+                ImageFormat.Tiff
+            };
+
+            var dest = image.GuessImageFormat();
+            return supports.Contains(dest) ? dest : ImageFormat.Png;
         }
 
         #endregion
