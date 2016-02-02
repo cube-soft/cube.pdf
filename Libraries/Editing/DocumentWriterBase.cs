@@ -151,12 +151,12 @@ namespace Cube.Pdf.Editing
         /// Dpi
         /// 
         /// <summary>
-        /// PDF 内部での DPI を取得します。
+        /// PDF の DPI 値を取得します。
         /// </summary>
         /// 
         /// <remarks>
         /// iTextSharp では、72dpi を基準に用紙サイズ等の大きさを算出して
-        /// ものと推測されます。これが PDF の規格で決まっているのか、
+        /// いるものと推測されます。これが PDF の規格で決まっているのか、
         /// iTextSharp 独自の処理なのかは要調査。
         /// </remarks>
         ///
