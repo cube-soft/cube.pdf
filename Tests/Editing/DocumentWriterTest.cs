@@ -27,7 +27,7 @@ namespace Cube.Pdf.Tests.Editing
     /// DocumentWriterTest
     /// 
     /// <summary>
-    /// DocumentWriter のテストを行うクラスです。
+    /// DocumentWriter および DocumentSplitter のテスト用クラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
@@ -36,18 +36,18 @@ namespace Cube.Pdf.Tests.Editing
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// Save_SameContents
+        /// Merge_File
         ///
         /// <summary>
-        /// PDF の内容を変更せずに別のファイルに保存するテストです。
+        /// PDF を別のファイルに保存するテストです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("bookmark.pdf", "")]
-        [TestCase("password.pdf", "password")]
-        public void Save_SameContents(string filename, string password)
+        [TestCase("bookmark.pdf", "", 90)]
+        [TestCase("password.pdf", "password", 0)]
+        public void Merge_File(string filename, string password, int rotation)
         {
-            var output = string.Format("Save_SameContents_{0}", filename);
+            var output = string.Format("Merge_File_{0}", filename);
             var dest = IoEx.Path.Combine(Results, output);
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
@@ -56,7 +56,11 @@ namespace Cube.Pdf.Tests.Editing
                 writer.Metadata = reader.Metadata;
                 writer.Encryption = reader.Encryption;
                 writer.UseSmartCopy = true;
-                foreach (var page in reader.Pages) writer.Pages.Add(page);
+                foreach (var page in reader.Pages)
+                {
+                    page.Rotation = rotation;
+                    writer.Pages.Add(page);
+                }
                 writer.Save(dest);
             }
 
@@ -65,7 +69,7 @@ namespace Cube.Pdf.Tests.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Save_FileAndImage
+        /// Merge_FileAndImage
         ///
         /// <summary>
         /// PDF ファイルと画像ファイルのそれぞれ 1 ページ目を結合して
@@ -73,13 +77,12 @@ namespace Cube.Pdf.Tests.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("bookmark.pdf", "cubepdf.png", 0)]
         [TestCase("bookmark.pdf", "cubepdf.png", 90)]
-        public void Save_FileAndImage(string file, string image, int rotation)
+        public void Merge_FileAndImage(string file, string image, int rotation)
         {
-            var output = string.Format("Save_FileAndImage_{0}_{1}_{2}.pdf",
+            var output = string.Format("Merge_FileAndImage_{0}_{1}.pdf",
                 IoEx.Path.GetFileNameWithoutExtension(file),
-                IoEx.Path.GetFileNameWithoutExtension(image), rotation);
+                IoEx.Path.GetFileNameWithoutExtension(image));
             var dest = IoEx.Path.Combine(Results, output);
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
@@ -88,8 +91,8 @@ namespace Cube.Pdf.Tests.Editing
                 var p1 = reader.GetPage(1);
                 var p2 = ImagePage.Create(IoEx.Path.Combine(Examples, image), 0);
 
-                //p1.Rotation = rotation;
-                //p2.Rotation = rotation;
+                p1.Rotation = rotation;
+                p2.Rotation = rotation;
 
                 writer.Metadata = reader.Metadata;
                 writer.Encryption = reader.Encryption;
@@ -101,5 +104,32 @@ namespace Cube.Pdf.Tests.Editing
 
             Assert.That(IoEx.File.Exists(dest), Is.True);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Split_File
+        ///
+        /// <summary>
+        /// PDF ファイルを分割保存するテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("bookmark.pdf", "", 9)]
+        [TestCase("password.pdf", "password", 2)]
+        public void Split_File(string filename, string password, int expected)
+        {
+            using (var writer = new Cube.Pdf.Editing.DocumentSplitter())
+            {
+                var reader = Create(filename, password);
+                writer.Metadata = reader.Metadata;
+                writer.Encryption = reader.Encryption;
+                writer.UseSmartCopy = true;
+                foreach (var page in reader.Pages) writer.Pages.Add(page);
+                writer.Save(Results);
+
+                Assert.That(writer.Results.Count, Is.EqualTo(expected));
+            }
+        }
+
     }
 }
