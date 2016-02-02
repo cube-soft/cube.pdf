@@ -122,6 +122,17 @@ namespace Cube.Pdf.Tests.Editing
             );
         }
 
+        [TestCase("rotation.pdf", "", 72)]
+        [TestCase("password.pdf", "password", 72)]
+        [TestCase("password-aes256.pdf", "password", 72)]
+        public void File_Resolution(string filename, string password, int expected)
+        {
+            Assert.That(
+                Create(filename, password).File.Resolution,
+                Is.EqualTo(new Point(expected, expected))
+            );
+        }
+
         #endregion
 
         /* ----------------------------------------------------------------- */
