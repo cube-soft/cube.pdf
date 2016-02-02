@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PickTask.cs
+/// ImagePicker.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -25,46 +25,47 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using Cube.Pdf.Editing;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.PickTask
+    /// ImagePicker
     ///
     /// <summary>
-    /// 画像を抽出する処理を非同期で実行するためのクラスです。
+    /// 画像を抽出するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PickTask : IDisposable
+    public class ImagePicker : IDisposable
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PickTask
+        /// ImagePicker
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public PickTask(string path)
+        public ImagePicker(string path)
         {
             Path = path;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~PickTask
+        /// ~ImagePicker
         /// 
         /// <summary>
         /// オブジェクトを解放します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~PickTask()
+        ~ImagePicker()
         {
             Dispose(false);
         }
@@ -82,7 +83,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public string Path { get; private set; }
+        public string Path { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,10 +115,24 @@ namespace Cube.Pdf.App.ImageEx
             {
                 using (_source = new CancellationTokenSource())
                 {
-                    await RunTaskAsync(progress);
+                    await Task.Run(() => Run(progress));
                 }
             }
             finally { _source = null; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Cancel
+        /// 
+        /// <summary>
+        /// 現在、実行中の処理をキャンセルします。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public void Cancel()
+        {
+            if (_source != null) _source.Cancel();
         }
 
         /* ----------------------------------------------------------------- */
@@ -135,7 +150,7 @@ namespace Cube.Pdf.App.ImageEx
             lock (_lock)
             {
                 Images.Clear();
-                foreach (var image in _all) Images.Add(image);
+                foreach (var image in _allImages) Images.Add(image);
             }
         }
 
@@ -149,23 +164,25 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public Image GetImage(int index, Size upper)
+        public Image GetImage(int index, Size upperSize)
         {
             if (index < 0 || index >= Images.Count) return null;
 
-            var original = Images[index];
-            var ratio = original.Width > original.Height ?
-                Math.Min(upper.Width / (double)original.Width, 1.0) :
-                Math.Min(upper.Height / (double)original.Height, 1.0);
-            var width = (int)(original.Width * ratio);
-            var height = (int)(original.Height * ratio);
-            var x = (upper.Width - width) / 2;
-            var y = (upper.Height - height) / 2;
+            var image  = Images[index];
+            var scale  = image.Width > image.Height ?
+                         Math.Min(upperSize.Width / (double)image.Width, 1.0) :
+                         Math.Min(upperSize.Height / (double)image.Height, 1.0);
 
-            var dest = new Bitmap(upper.Width, upper.Height);
+            var width  = (int)(image.Width * scale);
+            var height = (int)(image.Height * scale);
+
+            var x = (upperSize.Width - width) / 2;
+            var y = (upperSize.Height - height) / 2;
+
+            var dest = new Bitmap(upperSize.Width, upperSize.Height);
             using (var gs = Graphics.FromImage(dest))
             {
-                gs.DrawImage(original, x, y, width, height);
+                gs.DrawImage(image, x, y, width, height);
             }
             return dest;
         }
@@ -207,12 +224,34 @@ namespace Cube.Pdf.App.ImageEx
 
                 if (disposing)
                 {
-                    if (_source != null) _source.Cancel();
+                    Cancel();
                     Images.Clear();
-                    foreach (var image in _all) image.Dispose();
-                    _all.Clear();
+                    foreach (var image in _allImages) image.Dispose();
+                    _allImages.Clear();
                 }
             }
+        }
+
+        #endregion
+
+        #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reader_PasswordRequired
+        /// 
+        /// <summary>
+        /// パスワードの要求が発生した時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Reader_PasswordRequired(object sender, PasswordEventArgs e)
+        {
+            e.Cancel = true;
+            throw new EncryptionException(string.Format(
+                Properties.Resources.PasswordMessage,
+                IoEx.Path.GetFileName(e.Path)
+            ));
         }
 
         #endregion
@@ -221,74 +260,114 @@ namespace Cube.Pdf.App.ImageEx
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RunTaskAsync
+        /// Run
         /// 
         /// <summary>
-        /// 抽出処理を非同期で実行します。
+        /// 処理を実行します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private async Task RunTaskAsync(IProgress<ProgressEventArgs<string>> progress)
+        private void Run(IProgress<ProgressEventArgs<string>> progress)
         {
             try
             {
-                var filename = System.IO.Path.GetFileNameWithoutExtension(Path);
-                var start = string.Format(Properties.Resources.BeginMessage, filename);
-                progress.Report(new ProgressEventArgs<string>(-1, start));
+                var name = IoEx.Path.GetFileNameWithoutExtension(Path);
+                progress.Report(Create(
+                    -1,
+                    string.Format(Properties.Resources.BeginMessage, name)
+                ));
 
-                var result = await PickImagesAsync(progress);
-                var done = result.Value > 0 ?
-                           string.Format(Properties.Resources.EndMessage, filename, result.Key, result.Value) :
-                           string.Format(Properties.Resources.NotFoundMessage, filename, result.Key);
-                progress.Report(new ProgressEventArgs<string>(100, done));
+                var result = Pick(progress);
+
+                progress.Report(Create(
+                    100,
+                    result.Value > 0 ?
+                    string.Format(Properties.Resources.EndMessage, name, result.Key, result.Value) :
+                    string.Format(Properties.Resources.NotFoundMessage, name, result.Key)
+                ));
             }
             catch (OperationCanceledException /* err */)
             {
-                progress.Report(new ProgressEventArgs<string>(0, Properties.Resources.CancelMessage));
-                return;
+                progress.Report(Create(0, Properties.Resources.CancelMessage));
+            }
+            catch (Exception err)
+            {
+                progress.Report(Create(0, err.Message));
             }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PickImagesAsync
+        /// Pick
         /// 
         /// <summary>
-        /// 非同期で PDF ファイルから画像を抽出します。
+        /// PDF ファイルから画像を抽出します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private async Task<KeyValuePair<int, int>> PickImagesAsync(IProgress<ProgressEventArgs<string>> progress)
+        private KeyValuePair<int, int> Pick(IProgress<ProgressEventArgs<string>> progress)
         {
             using (var reader = new DocumentReader())
             {
-                await reader.OpenAsync(Path, string.Empty);
+                reader.PasswordRequired += Reader_PasswordRequired;
+                reader.Open(Path, string.Empty, true);
 
-                var filename = System.IO.Path.GetFileNameWithoutExtension(Path);
-                var n = reader.Pages.Count;
-                for (var i = 0; i < n; ++i)
+                Pick(reader, progress);
+                return new KeyValuePair<int, int>(reader.Pages.Count, Images.Count);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Pick
+        /// 
+        /// <summary>
+        /// PDF ファイルから画像を抽出します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Pick(DocumentReader src, IProgress<ProgressEventArgs<string>> progress)
+        {
+            var name = IoEx.Path.GetFileNameWithoutExtension(Path);
+
+            for (var i = 0; i < src.Pages.Count; ++i)
+            {
+                _source.Token.ThrowIfCancellationRequested();
+
+                var pagenum = i + 1;
+                progress.Report(Create(
+                   (int)(i / (double)src.Pages.Count * 100.0),
+                   string.Format(Properties.Resources.ProcessMessage, name, pagenum, src.Pages.Count)
+                ));
+
+                var images = src.GetImages(pagenum);
+                _source.Token.ThrowIfCancellationRequested();
+
+                lock (_lock)
                 {
-                    _source.Token.ThrowIfCancellationRequested();
-
-                    var pagenum = i + 1;
-                    var value = (int)(i / (double)reader.Pages.Count * 100.0);
-                    var message = string.Format(Properties.Resources.ProcessMessage, filename, pagenum, n);
-                    progress.Report(new ProgressEventArgs<string>(value, message));
-
-                    var src = await reader.GetImagesAsync(pagenum);
-                    _source.Token.ThrowIfCancellationRequested();
-
-                    lock (_lock)
-                    foreach (var image in src)
+                    foreach (var image in images)
                     {
                         _source.Token.ThrowIfCancellationRequested();
-                        _all.Add(image);
+                        _allImages.Add(image);
                         Images.Add(image);
                     }
                 }
-
-                return new KeyValuePair<int, int>(n, Images.Count);
             }
+        }
+
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        /// 
+        /// <summary>
+        /// ProgressEventArgs オブジェクトを生成します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private ProgressEventArgs<string> Create(int percentage, string message)
+        {
+            return new ProgressEventArgs<string>(percentage, message);
         }
 
         #endregion
@@ -297,7 +376,7 @@ namespace Cube.Pdf.App.ImageEx
         private bool _disposed = false;
         private object _lock = new object();
         private CancellationTokenSource _source;
-        private IList<Image> _all = new List<Image>();
+        private IList<Image> _allImages = new List<Image>();
         #endregion
     }
 }

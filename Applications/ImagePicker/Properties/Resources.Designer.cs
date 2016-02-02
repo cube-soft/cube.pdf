@@ -165,6 +165,15 @@ namespace Cube.Pdf.App.ImageEx.Properties {
         }
         
         /// <summary>
+        ///   {0} はパスワードで保護されているため画像を抽出できませんでした。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasswordMessage {
+            get {
+                return ResourceManager.GetString("PasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   プレビュー画面を表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PreviewMenu {

@@ -35,7 +35,7 @@ namespace Cube.Pdf.App.ImageEx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ThumbnailPresenter : Cube.Forms.PresenterBase<ThumbnailForm, PickTask>
+    public class ThumbnailPresenter : Cube.Forms.PresenterBase<ThumbnailForm, ImagePicker>
     {
         #region Constructors
 
@@ -48,7 +48,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ThumbnailPresenter(ThumbnailForm view, PickTask model)
+        public ThumbnailPresenter(ThumbnailForm view, ImagePicker model)
             : base(view, model)
         {
             View.FileName = System.IO.Path.GetFileNameWithoutExtension(Model.Path);

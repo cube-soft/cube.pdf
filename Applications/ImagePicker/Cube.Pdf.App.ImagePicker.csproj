@@ -70,7 +70,7 @@
     <Compile Include="DropForm.Designer.cs">
       <DependentUpon>DropForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\PickTask.cs" />
+    <Compile Include="Models\ImagePicker.cs" />
     <Compile Include="Models\SaveTask.cs" />
     <Compile Include="Presenters\ProgressPresenter.cs" />
     <Compile Include="Presenters\ThumbnailPresenter.cs" />

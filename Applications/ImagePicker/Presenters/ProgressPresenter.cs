@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.ImageEx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ProgressPresenter : Cube.Forms.PresenterBase<ProgressForm, PickTask>
+    public class ProgressPresenter : Cube.Forms.PresenterBase<ProgressForm, ImagePicker>
     {
         #region Constructors
 
@@ -44,7 +44,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ProgressPresenter(ProgressForm view, PickTask model)
+        public ProgressPresenter(ProgressForm view, ImagePicker model)
             : base(view, model)
         {
             View.FileName = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
