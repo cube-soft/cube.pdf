@@ -46,7 +46,7 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentResource() : base() { }
+        protected DocumentResource() : base() { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -75,7 +75,7 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader Create(string filename)
+        protected DocumentReader Create(string filename)
         {
             return Create(filename, string.Empty);
         }
@@ -94,7 +94,7 @@ namespace Cube.Pdf.Tests
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader Create(string filename, string password)
+        protected DocumentReader Create(string filename, string password)
         {
             if (!_cache.ContainsKey(filename))
             {

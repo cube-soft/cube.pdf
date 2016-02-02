@@ -44,10 +44,11 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileResource()
+        protected FileResource()
         {
-            var exec = Assembly.GetExecutingAssembly().Location;
-            Root = IoEx.Path.GetDirectoryName(exec);
+            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
+            Root = IoEx.Path.GetDirectoryName(reader.Location);
+            _folder = GetType().FullName.Replace(string.Format("{0}.", reader.Product), "");
             Initialize();
         }
 
@@ -65,7 +66,7 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Root { get; }
+        protected string Root { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,7 +77,7 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Examples
+        protected string Examples
         {
             get { return IoEx.Path.Combine(Root, "Examples"); }
         }
@@ -90,12 +91,11 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Results
+        protected string Results
         {
             get
             {
-                var classname = GetType().FullName.Replace("Cube.Pdf.Tests.", "");
-                var folder = string.Format(@"Results\{0}", classname);
+                var folder = string.Format(@"Results\{0}", _folder);
                 return IoEx.Path.Combine(Root, folder);
             }
         }
@@ -142,6 +142,10 @@ namespace Cube.Pdf.Tests
             }
         }
 
+        #endregion
+
+        #region Fields
+        private string _folder = string.Empty;
         #endregion
     }
 }
