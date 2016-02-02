@@ -68,27 +68,34 @@ namespace Cube.Pdf.Tests.Editing
         /// Save_FileAndImage
         ///
         /// <summary>
-        /// PDF ファイルの 1 ページ目と画像をページ結合して保存するテストを
-        /// 行います。
+        /// PDF ファイルと画像ファイルのそれぞれ 1 ページ目を結合して
+        /// 保存するテストを行います。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("bookmark.pdf", "cubepdf.png")]
-        public void Save_FileAndImage(string file, string image)
+        [TestCase("bookmark.pdf", "cubepdf.png", 0)]
+        [TestCase("bookmark.pdf", "cubepdf.png", 90)]
+        public void Save_FileAndImage(string file, string image, int rotation)
         {
-            var output = string.Format("Save_FileAndImage_{0}_{1}.pdf",
+            var output = string.Format("Save_FileAndImage_{0}_{1}_{2}.pdf",
                 IoEx.Path.GetFileNameWithoutExtension(file),
-                IoEx.Path.GetFileNameWithoutExtension(image));
+                IoEx.Path.GetFileNameWithoutExtension(image), rotation);
             var dest = IoEx.Path.Combine(Results, output);
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             {
                 var reader = Create(file);
+                var p1 = reader.GetPage(1);
+                var p2 = ImagePage.Create(IoEx.Path.Combine(Examples, image), 0);
+
+                //p1.Rotation = rotation;
+                //p2.Rotation = rotation;
+
                 writer.Metadata = reader.Metadata;
                 writer.Encryption = reader.Encryption;
                 writer.UseSmartCopy = true;
-                writer.Pages.Add(reader.GetPage(1));
-                writer.Pages.Add(ImagePage.Create(IoEx.Path.Combine(Examples, image), 0));
+                writer.Pages.Add(p1);
+                writer.Pages.Add(p2);
                 writer.Save(dest);
             }
 

@@ -437,7 +437,7 @@ namespace Cube.Pdf.Editing
                 var password = string.IsNullOrEmpty(Encryption.UserPassword) ?
                                Encryption.OwnerPassword :
                                Encryption.UserPassword;
-                if (Encryption.IsUserPasswordEnabled) password = string.Empty;
+                if (!Encryption.IsUserPasswordEnabled) password = string.Empty;
 
                 dest.SetEncryption(method, password, Encryption.OwnerPassword, flags);
             }

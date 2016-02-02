@@ -184,11 +184,10 @@ namespace Cube.Pdf.Editing
             var document = new iTextSharp.text.Document();
             var writer = CreatePdfCopy(document, dest);
 
+            AddEncryption(writer);
             document.Open();
-
             writer.AddPage(writer.GetImportedPage(reader, pagenum));
             AddMetadata(document);
-            AddEncryption(writer);
 
             document.Close();
             writer.Close();
