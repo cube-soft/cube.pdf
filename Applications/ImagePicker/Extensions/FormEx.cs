@@ -45,7 +45,7 @@ namespace Cube.Pdf.App.ImageEx.Extensions
         /* ----------------------------------------------------------------- */
         public static void UpdateTitle(this Form form, string str)
         {
-            var asm = new Cube.AssemblyReader(Assembly.GetExecutingAssembly());
+            var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
             var ss  = new System.Text.StringBuilder();
             ss.Append(str);
             if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(asm.Title)) ss.Append(" - ");
