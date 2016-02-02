@@ -140,7 +140,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new FileCollectionPresenter(this, new FileCollection());
+            new FileCollectionPresenter(this, Files);
         }
 
         #endregion
@@ -552,6 +552,8 @@ namespace Cube.Pdf.App.Page
             {
                 if (!e.Control) return;
 
+                var results = true;
+
                 switch (e.KeyCode)
                 {
                     case Keys.A:
@@ -573,15 +575,20 @@ namespace Cube.Pdf.App.Page
                     case Keys.S:
                         RaiseSplitEvent();
                         break;
+                    case Keys.J:
                     case Keys.Up:
                         OnMoveRequired(new DataEventArgs<int>(-1));
                         break;
+                    case Keys.K:
                     case Keys.Down:
                         OnMoveRequired(new DataEventArgs<int>(1));
                         break;
                     default:
+                        results = false;
                         break;
                 }
+
+                e.Handled = results;
             }
             finally { base.OnKeyDown(e); }
         }
@@ -804,6 +811,7 @@ namespace Cube.Pdf.App.Page
         #endregion
 
         #region Models
+        private FileCollection Files = new FileCollection();
         private IconCollection Icons = new IconCollection();
         #endregion
     }
