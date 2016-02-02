@@ -25,7 +25,7 @@ namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.Page.PasswordForm
+    /// PasswordForm
     ///
     /// <summary>
     /// パスワード入力を行うためのフォームです。
@@ -129,6 +129,21 @@ namespace Cube.Pdf.App.Page
                 );
             }
             finally { base.OnLoad(e); }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// OnShown
+        /// 
+        /// <summary>
+        /// フォームが表示された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        protected override void OnShown(EventArgs e)
+        {
+            PasswordTextBox.Focus();
+            base.OnShown(e);
         }
 
         #endregion
