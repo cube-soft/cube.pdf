@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ImagePicker.cs
+/// ImageCollection.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -31,41 +31,41 @@ namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImagePicker
+    /// ImageCollection
     ///
     /// <summary>
-    /// 画像を抽出するクラスです。
+    /// PDF ファイルから抽出したイメージを管理するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImagePicker : IDisposable
+    public class ImageCollection : ObservableCollection<Image>, IDisposable
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ImagePicker
+        /// ImageCollection
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public ImagePicker(string path)
+        public ImageCollection(string path)
         {
             Path = path;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~ImagePicker
+        /// ~ImageCollection
         /// 
         /// <summary>
         /// オブジェクトを解放します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~ImagePicker()
+        ~ImageCollection()
         {
             Dispose(false);
         }
@@ -85,37 +85,26 @@ namespace Cube.Pdf.App.ImageEx
         /* ----------------------------------------------------------------- */
         public string Path { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Images
-        /// 
-        /// <summary>
-        /// 抽出した画像一覧を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public ObservableCollection<Image> Images { get; } = new ObservableCollection<Image>();
-
         #endregion
 
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RunAsync
+        /// ExtractAsync
         /// 
         /// <summary>
         /// 抽出処理を非同期で実行します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public async Task RunAsync(IProgress<ProgressEventArgs<string>> progress)
+        public async Task ExtractAsync(IProgress<ProgressEventArgs<string>> progress)
         {
             try
             {
                 using (_source = new CancellationTokenSource())
                 {
-                    await Task.Run(() => Run(progress));
+                    await Task.Run(() => Extract(progress));
                 }
             }
             finally { _source = null; }
@@ -126,13 +115,50 @@ namespace Cube.Pdf.App.ImageEx
         /// Cancel
         /// 
         /// <summary>
-        /// 現在、実行中の処理をキャンセルします。
+        /// 非同期で実行中の処理をキャンセルします。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
         public void Cancel()
         {
             if (_source != null) _source.Cancel();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        /// 
+        /// <summary>
+        /// 全てのイメージを保存します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public void Save(string directory)
+        {
+            var basename = IoEx.Path.GetFileNameWithoutExtension(Path);
+            for (var index = 0; index < Items.Count; ++index)
+            {
+                Save(Items[index], directory, basename, index);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        /// 
+        /// <summary>
+        /// 選択したイメージを保存します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public void Save(string directory, IEnumerable<int> indices)
+        {
+            var basename = IoEx.Path.GetFileNameWithoutExtension(Path);
+            foreach (var index in indices)
+            {
+                if (index < 0 || index >= Items.Count) continue;
+                Save(Items[index], directory, basename, index);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -149,8 +175,8 @@ namespace Cube.Pdf.App.ImageEx
         {
             lock (_lock)
             {
-                Images.Clear();
-                foreach (var image in _allImages) Images.Add(image);
+                Items.Clear();
+                foreach (var image in _allImages) Items.Add(image);
             }
         }
 
@@ -166,9 +192,9 @@ namespace Cube.Pdf.App.ImageEx
         /* --------------------------------------------------------------------- */
         public Image GetImage(int index, Size upperSize)
         {
-            if (index < 0 || index >= Images.Count) return null;
+            if (index < 0 || index >= Items.Count) return null;
 
-            var image  = Images[index];
+            var image  = Items[index];
             var scale  = image.Width > image.Height ?
                          Math.Min(upperSize.Width / (double)image.Width, 1.0) :
                          Math.Min(upperSize.Height / (double)image.Height, 1.0);
@@ -225,7 +251,7 @@ namespace Cube.Pdf.App.ImageEx
                 if (disposing)
                 {
                     Cancel();
-                    Images.Clear();
+                    Items.Clear();
                     foreach (var image in _allImages) image.Dispose();
                     _allImages.Clear();
                 }
@@ -256,18 +282,18 @@ namespace Cube.Pdf.App.ImageEx
 
         #endregion
 
-        #region Other private methods
+        #region Extract methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Run
+        /// Extract
         /// 
         /// <summary>
-        /// 処理を実行します。
+        /// PDF ファイルからイメージを抽出します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Run(IProgress<ProgressEventArgs<string>> progress)
+        private void Extract(IProgress<ProgressEventArgs<string>> progress)
         {
             try
             {
@@ -277,7 +303,7 @@ namespace Cube.Pdf.App.ImageEx
                     string.Format(Properties.Resources.BeginMessage, name)
                 ));
 
-                var result = Pick(progress);
+                var result = ExtractImages(progress);
 
                 progress.Report(Create(
                     100,
@@ -298,35 +324,35 @@ namespace Cube.Pdf.App.ImageEx
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Pick
+        /// ExtractImages
         /// 
         /// <summary>
-        /// PDF ファイルから画像を抽出します。
+        /// PDF ファイルからイメージを抽出します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private KeyValuePair<int, int> Pick(IProgress<ProgressEventArgs<string>> progress)
+        private KeyValuePair<int, int> ExtractImages(IProgress<ProgressEventArgs<string>> progress)
         {
             using (var reader = new DocumentReader())
             {
                 reader.PasswordRequired += Reader_PasswordRequired;
                 reader.Open(Path, string.Empty, true);
 
-                Pick(reader, progress);
-                return new KeyValuePair<int, int>(reader.Pages.Count, Images.Count);
+                ExtractImages(reader, progress);
+                return new KeyValuePair<int, int>(reader.Pages.Count, Items.Count);
             }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Pick
+        /// ExtractImages
         /// 
         /// <summary>
-        /// PDF ファイルから画像を抽出します。
+        /// PDF ファイルからイメージを抽出します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Pick(DocumentReader src, IProgress<ProgressEventArgs<string>> progress)
+        private void ExtractImages(DocumentReader src, IProgress<ProgressEventArgs<string>> progress)
         {
             var name = IoEx.Path.GetFileNameWithoutExtension(Path);
 
@@ -349,12 +375,54 @@ namespace Cube.Pdf.App.ImageEx
                     {
                         _source.Token.ThrowIfCancellationRequested();
                         _allImages.Add(image);
-                        Images.Add(image);
+                        Items.Add(image);
                     }
                 }
             }
         }
 
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        /// 
+        /// <summary>
+        /// イメージを保存します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Save(Image src, string directory, string basename, int index)
+        {
+            var path = Unique(basename, directory, index);
+            src.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Unique
+        /// 
+        /// <summary>
+        /// 一意のパス名を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private string Unique(string directory, string basename, int index)
+        {
+            var digit = string.Format("D{0}", Items.Count.ToString("D").Length);
+            for (var i = 1; i < 1000; ++i)
+            {
+                var filename = (i == 1) ?
+                               string.Format("{0}-{1}.png", basename, index.ToString(digit)) :
+                               string.Format("{0}-{1} ({2}).png", basename, index.ToString(digit), i);
+                var dest = IoEx.Path.Combine(directory, filename);
+                if (!IoEx.File.Exists(dest)) return dest;
+            }
+
+            return IoEx.Path.Combine(directory, IoEx.Path.GetRandomFileName());
+        }
 
         /* ----------------------------------------------------------------- */
         ///

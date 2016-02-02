@@ -35,7 +35,7 @@ namespace Cube.Pdf.App.ImageEx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ThumbnailPresenter : Cube.Forms.PresenterBase<ThumbnailForm, ImagePicker>
+    public class ThumbnailPresenter : Cube.Forms.PresenterBase<ThumbnailForm, ImageCollection>
     {
         #region Constructors
 
@@ -48,7 +48,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ThumbnailPresenter(ThumbnailForm view, ImagePicker model)
+        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model)
             : base(view, model)
         {
             View.FileName = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
@@ -118,7 +118,7 @@ namespace Cube.Pdf.App.ImageEx
             if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
 
             var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            task.Images = Model.Images;
+            task.Images = Model;
             await task.RunAsync(basename, View.SelectedIndices);
 
             OnCompleted(new EventArgs());
@@ -140,7 +140,7 @@ namespace Cube.Pdf.App.ImageEx
             if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
 
             var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            task.Images = Model.Images;
+            task.Images = Model;
             await task.RunAsync(basename);
 
             OnCompleted(new EventArgs());
@@ -164,8 +164,8 @@ namespace Cube.Pdf.App.ImageEx
             var index = indices[0];
             var filename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
             var dialog = new PreviewForm();
-            dialog.FileName = string.Format("{0} ({1}/{2})", filename, index, Model.Images.Count);
-            dialog.Image = Model.Images[index];
+            dialog.FileName = string.Format("{0} ({1}/{2})", filename, index, Model.Count);
+            dialog.Image = Model[index];
             dialog.ShowDialog();
         }
 
@@ -180,7 +180,7 @@ namespace Cube.Pdf.App.ImageEx
         /* --------------------------------------------------------------------- */
         private void View_Removed(object sender, DataEventArgs<int> ev)
         {
-            Model.Images.RemoveAt(ev.Value);
+            Model.RemoveAt(ev.Value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -233,7 +233,7 @@ namespace Cube.Pdf.App.ImageEx
         private void AddImages()
         {
             var upper = View.ImageSize;
-            for (var i = 0; i < Model.Images.Count; ++i)
+            for (var i = 0; i < Model.Count; ++i)
             {
                 var image = Model.GetImage(i, upper);
                 if (image != null) View.Add(image);

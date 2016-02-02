@@ -74,12 +74,10 @@ namespace Cube.Pdf.App.ImageEx
             get { return _op; }
             set
             {
-                if (_op != value)
-                {
-                    _op = value;
-                    PreviewButton.Enabled = value;
-                    SaveButton.Enabled = value;
-                }
+                if (_op == value) return;
+                _op = value;
+                PreviewButton.Enabled = value;
+                SaveButton.Enabled = value;
             }
         }
 
@@ -97,11 +95,9 @@ namespace Cube.Pdf.App.ImageEx
             get { return _filename; }
             set
             {
-                if (_filename != value)
-                {
-                    _filename = value;
-                    this.UpdateTitle(value);
-                }
+                if (_filename == value) return;
+                _filename = value;
+                this.UpdateTitle(value);
             }
         }
 
@@ -203,7 +199,7 @@ namespace Cube.Pdf.App.ImageEx
 
         #region Fields
         private string _filename = string.Empty;
-        private bool _op = false;
+        private bool _op = true;
         #endregion
     }
 }
