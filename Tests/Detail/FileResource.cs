@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// IDocumentReader.cs
+/// FileResource.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,131 +17,135 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Collections.Generic;
+using System.Reflection;
+using IoEx = System.IO;
 
-namespace Cube.Pdf
+namespace Cube.Pdf.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IDocumentReader
+    /// FileResource
     /// 
     /// <summary>
-    /// PDF ファイルの読み込むためのインターフェースです。
+    /// テストでファイルを使用するためのクラスです。
     /// </summary>
-    ///
+    /// 
     /* --------------------------------------------------------------------- */
-    public interface IDocumentReader : IDisposable
+    class FileResource
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileResource
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected FileResource()
+        {
+            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
+            Root = IoEx.Path.GetDirectoryName(reader.Location);
+            _folder = GetType().FullName.Replace(string.Format("{0}.", reader.Product), "");
+            Initialize();
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileBase
-        /// 
+        /// Root
+        ///
         /// <summary>
-        /// ファイルオブジェクトを取得します。
+        /// テスト用リソースの存在するルートディレクトリへのパスを
+        /// 取得、または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        FileBase File { get; }
+        protected string Root { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Metadata
+        /// Examples
         /// 
         /// <summary>
-        /// PDF ファイルに関するメタ情報を取得します。
+        /// テスト用ファイルの存在するフォルダへのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        Metadata Metadata { get; }
+        protected string Examples
+        {
+            get { return IoEx.Path.Combine(Root, "Examples"); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Encryption
+        /// Results
         /// 
         /// <summary>
-        /// PDF ファイルに関する暗号化情報を取得します。
+        /// テスト結果を格納するためのフォルダへのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        Encryption Encryption { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Pages
-        /// 
-        /// <summary>
-        /// PDF ファイルの各ページ情報へアクセスするための反復子を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        IReadOnlyCollection<Page> Pages { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsOpen
-        /// 
-        /// <summary>
-        /// ファイルが正常に開いているかどうかを示す値を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        bool IsOpen { get; }
+        protected string Results
+        {
+            get
+            {
+                var folder = string.Format(@"Results\{0}", _folder);
+                return IoEx.Path.Combine(Root, folder);
+            }
+        }
 
         #endregion
 
-        #region Events
+        #region Other private methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PasswordRequired
+        /// Initialize
         /// 
         /// <summary>
-        /// パスワードが要求された時に発生するイベントです。
+        /// リソースファイルを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        event EventHandler<PasswordEventArgs> PasswordRequired;
+        private void Initialize()
+        {
+            if (!IoEx.Directory.Exists(Results)) IoEx.Directory.CreateDirectory(Results);
+            Clean(Results);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clean
+        /// 
+        /// <summary>
+        /// 指定されたフォルダ内に存在する全てのファイルを削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Clean(string folder)
+        {
+            foreach (string file in IoEx.Directory.GetFiles(folder))
+            {
+                IoEx.File.SetAttributes(file, IoEx.FileAttributes.Normal);
+                IoEx.File.Delete(file);
+            }
+
+            foreach (string sub in IoEx.Directory.GetDirectories(folder))
+            {
+                Clean(sub);
+            }
+        }
 
         #endregion
 
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        /// 
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Open(string path);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        /// 
-        /// <summary>
-        /// PDF ファイルをパスワードを入力して開きます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Open(string path, string password);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetPage
-        /// 
-        /// <summary>
-        /// 指定されたページ番号に対応するページ情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        Page GetPage(int pagenum);
-
+        #region Fields
+        private string _folder = string.Empty;
         #endregion
     }
 }

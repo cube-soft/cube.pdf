@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// IPage.cs
+/// FileBase.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -24,72 +24,106 @@ namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IPage
+    /// FileBase
     /// 
     /// <summary>
-    /// PDF のページを表すインターフェースです。
+    /// ファイル情報を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IPage : IEquatable<IPage>
+    public class FileBase : Cube.FileSystem.FileInfo, IEquatable<FileBase>
     {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Type
-        /// 
-        /// <summary>
-        /// オブジェクトの種類を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        PageType Type { get; }
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FilePath
+        /// FileBase
         /// 
         /// <summary>
-        /// オブジェクト元となるファイルのパスを取得または設定します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        string FilePath { get; set; }
+        protected FileBase(string path, IconSize size) : base(path, size) { }
+
+        #endregion
+
+        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Size
+        /// PageCount
         /// 
         /// <summary>
-        /// オブジェクトのオリジナルサイズを取得または設定します。
+        /// ページ数を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        Size Size { get; set; }
+        public int PageCount { get; set; } = 0;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Rotation
+        /// Resolution
         /// 
         /// <summary>
-        /// オブジェクトを表示する際の回転角を取得または設定します。
+        /// ファイルの解像度を取得または設定します。
         /// </summary>
-        /// 
-        /// <remarks>
-        /// 値は度単位 (degree) で設定して下さい。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        int Rotation { get; set; }
+        public Point Resolution { get; set; } = Point.Empty;
+
+        #endregion
+
+        #region IEquatable<FileBase> methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Power
-        /// 
+        /// Equals
+        ///
         /// <summary>
-        /// 表示倍率を取得または設定します。
+        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        double Power { get; set; }
+        public bool Equals(FileBase other)
+        {
+            return FullName == other.FullName;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Equals
+        ///
+        /// <summary>
+        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override bool Equals(object obj)
+        {
+            if (object.ReferenceEquals(obj, null)) return false;
+            if (object.ReferenceEquals(this, obj)) return true;
+
+            var other = obj as Page;
+            if (other == null) return false;
+
+            return Equals(other);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetHashCode
+        ///
+        /// <summary>
+        /// 特定の型のハッシュ関数として機能します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        #endregion
     }
 }

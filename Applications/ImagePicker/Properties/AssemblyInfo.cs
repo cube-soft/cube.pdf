@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("CubePDF ImagePicker")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("CubeSoft, Inc.")]
+[assembly: AssemblyCompany("CubeSoft")]
 [assembly: AssemblyProduct("CubePDF ImagePicker")]
 [assembly: AssemblyCopyright("Copyright © 2015 CubeSoft, Inc.")]
 [assembly: AssemblyTrademark("")]

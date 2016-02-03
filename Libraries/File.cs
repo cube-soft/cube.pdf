@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// EncryptionException.cs
+/// File.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,55 +17,95 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
+using System.Drawing;
 
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// EncryptionException
+    /// File
     /// 
     /// <summary>
-    /// 暗号化に関する例外を送出するためのクラスです。
+    /// PDF のファイル情報を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EncryptionException : Exception
+    public class File : FileBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EncryptionException
+        /// File
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionException() : base() { }
+        public File(string path)
+            : this(path, string.Empty) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EncryptionException
+        /// File
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionException(string message) : base(message) { }
+        public File(string path, string password)
+            : this(path, password, IconSize.Small) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EncryptionException
+        /// File
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionException(string message, Exception innerException) : base(message, innerException) { }
+        public File(string path, string password, IconSize size)
+            : base(path, size)
+        {
+            Password = password;
+            Resolution = new Point(72, 72);
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Password
+        /// 
+        /// <summary>
+        /// オーナパスワードまたはユーザパスワードを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Password { get; set; } = string.Empty;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FullAccess
+        /// 
+        /// <summary>
+        /// ファイルの全ての内容にアクセス可能かどうかを示す値を取得または
+        /// 設定します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// このプロパティは、PDF ファイルにパスワードによって暗号化されて
+        /// おり、かつユーザパスワードを用いてファイルを開いた場合 false に
+        /// 設定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool FullAccess { get; set; } = false;
 
         #endregion
     }

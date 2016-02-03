@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageType.cs
+/// PageTest.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,22 +17,41 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using NUnit.Framework;
 
-namespace Cube.Pdf
+namespace Cube.Pdf.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageType
+    /// PageTest
     /// 
     /// <summary>
-    /// Page オブジェクトの種類を定義した列挙型です。
+    /// Page のテストを行うクラスです。
     /// </summary>
-    ///
+    /// 
     /* --------------------------------------------------------------------- */
-    public enum PageType
+    [TestFixture]
+    class PageTest
     {
-        Pdf,
-        Image,
-        Unknown = -1
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotation
+        ///
+        /// <summary>
+        /// 回転角度の正規化テストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(   0,   0)]
+        [TestCase( 359, 359)]
+        [TestCase( 360,   0)]
+        [TestCase(  -1, 359)]
+        [TestCase(1000, 280)]
+        public void Rotation(int input, int expected)
+        {
+            var page = new Page();
+            page.Rotation = input;
+            Assert.That(page.Rotation, Is.EqualTo(expected));
+        }
     }
 }

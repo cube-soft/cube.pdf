@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ImageRenderListener.cs
+/// PdfReaderEx.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
@@ -19,63 +19,62 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Drawing;
-using System.Collections.Generic;
 using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
 
-namespace Cube.Pdf.Editing
+namespace Cube.Pdf.Editing.Extensions
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageRenderListener
+    /// PdfReaderEx
     /// 
     /// <summary>
-    /// PDF ファイル中の画像を抽出するた IRenderListerner 実装クラスです。
+    /// iTextSharp.text.pdf.PdfReader の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class ImageRenderListener : IRenderListener
+    internal static class PdfReaderEx
     {
-        #region Properties
-
         /* ----------------------------------------------------------------- */
         ///
-        /// Images
+        /// CreatePage
         /// 
         /// <summary>
-        /// 抽出した画像一覧を取得します。
+        /// Page オブジェクトを生成します。
         /// </summary>
-        ///
+        /// 
         /* ----------------------------------------------------------------- */
-        public IList<Image> Images { get; } = new List<Image>();
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RenderImage
-        ///
-        /// <summary>
-        /// 画像を抽出します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void RenderImage(ImageRenderInfo info)
+        public static Page CreatePage(this PdfReader reader, FileBase file, int pagenum)
         {
-            var image = info.GetImage();
-            var filter = image.Get(PdfName.FILTER) as PdfName;
-            if (filter == null) return;
-            Images.Add(image.GetDrawingImage());
+            var size = reader.GetPageSize(pagenum);
+            var dest = new Page();
+            dest.File = file;
+            dest.Number = pagenum;
+            dest.Size = new Size((int)size.Width, (int)size.Height);
+            dest.Rotation = reader.GetPageRotation(pagenum);
+            dest.Resolution = new Point(72, 72);
+            return dest;
         }
 
-        #region Other implementations for IRenderListener
-        public void BeginTextBlock() { }
-        public void EndTextBlock() { }
-        public void RenderText(TextRenderInfo info) { }
-        #endregion
-
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        /// 
+        /// <summary>
+        /// Page オブジェクトの情報にしたがって回転します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// PDF ページを回転させる場合、いったん PdfReader オブジェクトの
+        /// 内容を改変した後に PdfCopy オブジェクト等でコピーする方法が
+        /// もっとも容易に実現できます。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public static void Rotate(this PdfReader reader, Page page)
+        {
+            var rot = reader.GetPageRotation(page.Number);
+            var dic = reader.GetPageN(page.Number);
+            if (rot != page.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(page.Rotation));
+        }
     }
 }

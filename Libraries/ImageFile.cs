@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FileResource.cs
+/// ImageFile.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,93 +17,86 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using IO = System.IO;
+using System.Drawing;
 
-namespace Cube.Pdf.Tests
+namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Tests.FileResource
+    /// ImageFile
     /// 
     /// <summary>
-    /// テストでファイルを使用するためのクラスです。
+    /// 画像ファイルの情報を保持するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public class FileResource
+    public class ImageFile : FileBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileResource
-        ///
+        /// ImageFile
+        /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileResource() : this(Environment.CurrentDirectory) { }
+        public ImageFile(string path) : this(path, IconSize.Small) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileResource
-        ///
+        /// ImageFile
+        /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileResource(string root)
+        public ImageFile(string path, IconSize size)
+            : base(path, size)
         {
-            Root = root;
-            if (!IO.Directory.Exists(Results)) IO.Directory.CreateDirectory(Results);
+            using (var image = Image.FromFile(path))
+            {
+                InitializeValues(image);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageFile
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageFile(string path, Image image, IconSize size)
+            : base(path, size)
+        {
+            InitializeValues(image);
         }
 
         #endregion
 
-        #region Properties
+        #region Other private methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Root
-        ///
-        /// <summary>
-        /// テスト用リソースの存在するルートディレクトリへのパスを
-        /// 取得、または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Root { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Examples
+        /// InitializeValues
         /// 
         /// <summary>
-        /// テストを行うためのダミーファイルの存在するディレクトリへの
-        /// パスを取得します。
+        /// 各種プロパティを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Examples
+        private void InitializeValues(Image image)
         {
-            get { return IO.Path.Combine(Root, "Examples"); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Results
-        /// 
-        /// <summary>
-        /// テスト結果を格納するためのディレクトリへのパスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Results
-        {
-            get { return IO.Path.Combine(Root, "Results"); }
+            var guid = image.FrameDimensionsList[0];
+            var dim = new System.Drawing.Imaging.FrameDimension(guid);
+            PageCount = image.GetFrameCount(dim);
+            Resolution = new Point((int)image.HorizontalResolution, (int)image.VerticalResolution);
         }
 
         #endregion

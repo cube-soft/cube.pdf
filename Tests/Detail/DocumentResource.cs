@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Encryption.cs
+/// DocumentResource.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,99 +17,138 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf
+using System;
+using System.Collections.Generic;
+using Cube.Pdf.Editing;
+using IoEx = System.IO;
+
+namespace Cube.Pdf.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Encryption
+    /// DocumentResource
     /// 
     /// <summary>
-    /// PDF の暗号化に関する情報を保持するためのクラスです。
+    /// テストで DocumentReader を使用する際の補助クラスです。
     /// </summary>
-    ///
+    /// 
     /* --------------------------------------------------------------------- */
-    public class Encryption
+    class DocumentResource : FileResource, IDisposable
     {
-        #region Properties
+        #region Constructors and destructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsEnabled
-        /// 
+        /// DocumentResource
+        ///
         /// <summary>
-        /// この暗号化設定を適用するかどうかを取得または設定します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsEnabled { get; set; } = false;
+        protected DocumentResource() : base() { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsUserPasswordEnabled
-        /// 
+        /// ~DocumentResource
+        ///
         /// <summary>
-        /// ユーザパスワードを適用するかどうかを取得または設定します。
+        /// オブジェクトを破棄します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        public bool IsUserPasswordEnabled { get; set; } = false;
+        ~DocumentResource()
+        {
+            Dispose(false);
+        }
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OwnerPassword
+        /// Create
         /// 
         /// <summary>
-        /// 所有者パスワードを取得または設定します。
+        /// DocumentReader オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected DocumentReader Create(string filename)
+        {
+            return Create(filename, string.Empty);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        /// 
+        /// <summary>
+        /// DocumentReader オブジェクトを生成します。
         /// </summary>
         /// 
         /// <remarks>
-        /// 所有者パスワードとは PDF ファイルに設定されているマスター
-        /// パスワードを表し、このパスワードによって再暗号化や各種権限の
-        /// 変更等すべての操作が可能となります。
-        /// </remarks>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public string OwnerPassword { get; set; } = string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UserPassword
-        /// 
-        /// <summary>
-        /// ユーザパスワードを取得または設定します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// ユーザパスワードとは、PDF ファイルを開く際に必要となる
-        /// パスワードを表します。
+        /// 内部に DocumentReader のキャッシュを保持し、同じファイルに
+        /// 対しては 1 回だけ読み込む事とします。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public string UserPassword { get; set; } = string.Empty;
+        protected DocumentReader Create(string filename, string password)
+        {
+            if (!_cache.ContainsKey(filename))
+            {
+                var src = IoEx.Path.Combine(Examples, filename);
+                var reader = new DocumentReader(src, password);
+                _cache.Add(filename, reader);
+            }
+            return _cache[filename];
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Method
+        /// Dispose
         /// 
         /// <summary>
-        /// 適用する暗号化方式を取得または設定します。
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionMethod Method { get; set; } = EncryptionMethod.Unknown;
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region Virtual methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Permission
+        /// Dispose
         /// 
         /// <summary>
-        /// 暗号化された PDF に設定されている各種権限の状態を取得
-        /// または設定します。
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Permission Permission { get; set; } = new Permission();
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            _disposed = true;
+            if (disposing)
+            {
+                foreach (var item in _cache) item.Value.Dispose();
+                _cache.Clear();
+            }
+        }
 
+        #endregion
+
+        #region Fields
+        private bool _disposed = false;
+        private Dictionary<string, DocumentReader> _cache = new Dictionary<string, DocumentReader>();
         #endregion
     }
 }
