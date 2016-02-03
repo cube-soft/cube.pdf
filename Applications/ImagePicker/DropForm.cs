@@ -27,7 +27,7 @@ namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.App.DropForm
+    /// DropForm
     ///
     /// <summary>
     /// メイン画面を表示するクラスです。

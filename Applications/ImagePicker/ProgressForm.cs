@@ -26,7 +26,7 @@ namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.ProgressForm
+    /// ProgressForm
     ///
     /// <summary>
     /// 進捗状況を表示するクラスです。
