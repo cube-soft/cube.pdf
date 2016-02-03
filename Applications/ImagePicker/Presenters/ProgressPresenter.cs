@@ -19,13 +19,14 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Windows.Forms;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.ProgressPresenter
+    /// ProgressPresenter
     ///
     /// <summary>
     /// ProgressForm をモデルを関連付けるためのクラスです。
@@ -111,14 +112,17 @@ namespace Cube.Pdf.App.ImageEx
         /* ----------------------------------------------------------------- */
         private async void View_Save(object sender, EventArgs ev)
         {
-            var task = new SaveTask();
-            if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFolder;
+            dialog.SelectedPath = IoEx.Path.GetDirectoryName(Model.Path);
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-            var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            task.Images = Model;
-            await task.RunAsync(basename);
-
-            View.Close();
+            try
+            {
+                SyncWait(() => View.AllowOperation = false);
+                await Async(() => Model.Save(dialog.SelectedPath));
+            }
+            finally { SyncWait(() => View.Close()); }
         }
 
         /* ----------------------------------------------------------------- */

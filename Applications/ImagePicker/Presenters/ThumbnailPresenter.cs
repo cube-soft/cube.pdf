@@ -19,16 +19,14 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TaskEx = System.Threading.Tasks.Task;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.ThumbnailPresenter
+    /// ThumbnailPresenter
     ///
     /// <summary>
     /// ThumbnailForm をモデルを関連付けるためのクラスです。
@@ -51,7 +49,7 @@ namespace Cube.Pdf.App.ImageEx
         public ThumbnailPresenter(ThumbnailForm view, ImageCollection model)
             : base(view, model)
         {
-            View.FileName = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
+            View.FileName = IoEx.Path.GetFileNameWithoutExtension(Model.Path);
             View.Save    += View_Save;
             View.SaveAll += View_SaveAll;
             View.Preview += View_Preview;
@@ -113,12 +111,13 @@ namespace Cube.Pdf.App.ImageEx
         /* --------------------------------------------------------------------- */
         private async void View_Save(object sender, EventArgs ev)
         {
-            var task = new SaveTask();
-            if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFolder;
+            dialog.SelectedPath = IoEx.Path.GetDirectoryName(Model.Path);
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-            var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            task.Images = Model;
-            await task.RunAsync(basename, View.SelectedIndices);
+            var indices = View.SelectedIndices;
+            await Async(() => Model.Save(dialog.SelectedPath, indices));
 
             OnCompleted(new EventArgs());
             View.Close();
@@ -126,7 +125,7 @@ namespace Cube.Pdf.App.ImageEx
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_Save
+        /// View_SaveAll
         /// 
         /// <summary>
         /// 全ての抽出画像を保存する時に実行されるハンドラです。
@@ -135,12 +134,12 @@ namespace Cube.Pdf.App.ImageEx
         /* --------------------------------------------------------------------- */
         private async void View_SaveAll(object sender, EventArgs ev)
         {
-            var task = new SaveTask();
-            if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFolder;
+            dialog.SelectedPath = IoEx.Path.GetDirectoryName(Model.Path);
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-            var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            task.Images = Model;
-            await task.RunAsync(basename);
+            await Async(() => Model.Save(dialog.SelectedPath));
 
             OnCompleted(new EventArgs());
             View.Close();
@@ -161,7 +160,7 @@ namespace Cube.Pdf.App.ImageEx
             if (indices == null || indices.Count <= 0) return;
 
             var index = indices[0];
-            var filename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
+            var filename = IoEx.Path.GetFileNameWithoutExtension(Model.Path);
             var dialog = new PreviewForm();
             dialog.FileName = string.Format("{0} ({1}/{2})", filename, index, Model.Count);
             dialog.Image = Model[index];

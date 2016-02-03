@@ -396,7 +396,7 @@ namespace Cube.Pdf.App.ImageEx
         /* ----------------------------------------------------------------- */
         private void Save(Image src, string directory, string basename, int index)
         {
-            var path = Unique(basename, directory, index);
+            var path = Unique(directory, basename, index);
             src.Save(path, System.Drawing.Imaging.ImageFormat.Png);
         }
 
