@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.App.ThumbnailForm
+    /// ThumbnailForm
     ///
     /// <summary>
     /// サムネイル一覧を表示するクラスです。
@@ -230,7 +230,7 @@ namespace Cube.Pdf.App.ImageEx
         public void Remove()
         {
             if (!AnyItemsSelected) return;
-            foreach (var index in SelectedIndices.Reverse()) RemoveAt(index);
+            foreach (var index in SelectedIndices.Reverse()) Remove(index);
         }
 
         /* ----------------------------------------------------------------- */
@@ -238,25 +238,11 @@ namespace Cube.Pdf.App.ImageEx
         /// Remove
         /// 
         /// <summary>
-        /// 指定されたサムネイルを削除します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Remove(Image image)
-        {
-            RemoveAt(_images.IndexOf(image));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RemoveAt
-        /// 
-        /// <summary>
         /// 指定されたインデックスに対応するサムネイルを削除します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void RemoveAt(int index)
+        public void Remove(int index)
         {
             Debug.Assert(_images.Count == ImageListView.Items.Count);
 
@@ -369,7 +355,7 @@ namespace Cube.Pdf.App.ImageEx
         /// OnFormClosed
         /// 
         /// <summary>
-        /// フォームが閉じた時に実行されるハンドラです。
+        /// フォームが閉じた時に実行されます。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
@@ -382,6 +368,49 @@ namespace Cube.Pdf.App.ImageEx
             ImageListView.LargeImageList.Images.Clear();
             ImageListView.LargeImageList.Dispose();
             ImageListView.LargeImageList = null;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnKeyDown
+        /// 
+        /// <summary>
+        /// キーが押下された時に実行されます。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            try
+            {
+                var result = true;
+
+                switch (e.KeyCode)
+                {
+                    case Keys.A:
+                        if (e.Control) SelectAll();
+                        break;
+                    case Keys.D:
+                        if (e.Control) Remove();
+                        break;
+                    case Keys.S:
+                        if (e.Control)
+                        {
+                            if (e.Shift) OnSaveAll(e);
+                            else if (AnyItemsSelected) OnSave(e);
+                        }
+                        break;
+                    case Keys.Delete:
+                        Remove();
+                        break;
+                    default:
+                        result = false;
+                        break;
+                }
+
+                e.Handled = result;
+            }
+            finally { base.OnKeyDown(e); }
         }
 
         #endregion
