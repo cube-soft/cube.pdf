@@ -271,12 +271,12 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Reader_PasswordRequired(object sender, PasswordEventArgs e)
+        private void Reader_PasswordRequired(object sender, QueryEventArgs<string, string> e)
         {
             e.Cancel = true;
             throw new EncryptionException(string.Format(
                 Properties.Resources.PasswordMessage,
-                IoEx.Path.GetFileName(e.Path)
+                IoEx.Path.GetFileName(e.Query)
             ));
         }
 

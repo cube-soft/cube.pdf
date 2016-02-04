@@ -184,7 +184,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler<PasswordEventArgs> PasswordRequired;
+        public event EventHandler<QueryEventArgs<string, string>> PasswordRequired;
 
         #endregion
 
@@ -257,9 +257,9 @@ namespace Cube.Pdf.Editing
                     _core = null;
                 }
 
-                var e = new PasswordEventArgs(path);
+                var e = new QueryEventArgs<string, string>(path);
                 OnPasswordRequired(e);
-                if (!e.Cancel) Open(path, e.Password);
+                if (!e.Cancel) Open(path, e.Result);
             }
         }
 
@@ -360,7 +360,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPasswordRequired(PasswordEventArgs e)
+        protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
         {
             if (PasswordRequired != null) PasswordRequired(this, e);
             else e.Cancel = true;

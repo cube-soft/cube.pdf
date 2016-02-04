@@ -248,17 +248,17 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Model_PasswordRequired(object sender, PasswordEventArgs e)
+        private void Model_PasswordRequired(object sender, QueryEventArgs<string, string> e)
         {
             SyncWait(() =>
             {
                 var dialog = new PasswordForm();
-                dialog.Path = e.Path;
+                dialog.Path = e.Query;
                 dialog.StartPosition = FormStartPosition.CenterParent;
                 var result = dialog.ShowDialog(View);
 
                 e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
-                if (!e.Cancel) e.Password = dialog.Password;
+                if (!e.Cancel) e.Result = dialog.Password;
             });
         }
 

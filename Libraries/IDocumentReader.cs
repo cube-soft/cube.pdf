@@ -103,7 +103,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        event EventHandler<PasswordEventArgs> PasswordRequired;
+        event EventHandler<QueryEventArgs<string, string>> PasswordRequired;
 
         #endregion
 

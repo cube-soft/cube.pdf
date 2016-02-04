@@ -78,7 +78,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<PasswordEventArgs> PasswordRequired;
+        public EventHandler<QueryEventArgs<string, string>> PasswordRequired;
 
         #endregion
 
@@ -223,7 +223,7 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPasswordRequired(PasswordEventArgs e)
+        protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
         {
             if (PasswordRequired != null) PasswordRequired(this, e);
             else e.Cancel = true;
