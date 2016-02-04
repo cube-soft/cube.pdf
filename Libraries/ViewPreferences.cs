@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// EncryptionStatus.cs
+/// ViewPreferences.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,31 +17,47 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.EncryptionStatus
+    /// ViewLayout
     /// 
     /// <summary>
-    /// 暗号化されている PDF ファイルへのアクセス（許可）状態を定義した
-    /// 列挙型です。
+    /// PDF ファイルを表示する際の各ページのレイアウトを定義した列挙型です。
     /// </summary>
-    /// 
-    /// <remarks>
-    /// EncriptionStatus の各値の意味は以下の通りです。
-    /// 
-    /// NotEncrypted     : このファイルは暗号化されていません
-    /// RestrictedAccess : ユーザパスワードで開いています
-    /// FullAccess       : オーナパスワードで開いています
-    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public enum EncryptionStatus
+    [Flags]
+    public enum ViewLayout
     {
-        NotEncrypted     = 0,
-        RestrictedAccess = 1,
-        FullAccess       = 2,
+        SinglePage     = 0x0001,
+        OneColumn      = 0x0002,
+        TwoColumnLeft  = 0x0004,
+        TwoColumnRight = 0x0008,
+        TwoPageLeft    = 0x0010,
+        TwoPageRight   = 0x0020
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ViewMode
+    /// 
+    /// <summary>
+    /// PDF ファイルの表示方法を定義した列挙型です。
+    /// </summary>
+    /// 
+    /* --------------------------------------------------------------------- */
+    [Flags]
+    public enum ViewMode
+    {
+        None            = 0x0040,
+        Outline         = 0x0080,
+        Thumbnail       = 0x0100,
+        FullScreen      = 0x0200,
+        OptionalContent = 0x0400,
+        Attachment      = 0x0800
     }
 }

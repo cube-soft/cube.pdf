@@ -128,6 +128,15 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
+        ///   結合したファイルの保存 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MergeTitle {
+            get {
+                return ResourceManager.GetString("MergeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   CubePDF Page に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageTitle {
@@ -137,7 +146,7 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|画像ファイル (*.bmp, *.emf, *.gif, *.ico, *.jpg, *.png, *.tiff, *.wmf)|*.bmp;*.BMP;*.emf;*.EMF;*.gif;*.GIF;*.ico;*.ICO;*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.tiff;*.TIFF;*.wmf;*.WMF|すべてのファイル|*.* に類似しているローカライズされた文字列を検索します。
+        ///   追加可能なファイル (*.pdf, *.bmp, *.gif, *.jpg, *.png, *.tiff)|*.pdf;*.PDF;*.bmp;*.BMP;*.dib;*.DIB;*.gif;*.GIF;*.jpg;*.JPG;*.jpeg;*.JPEG;*.jpe;*.JPE;*.png;*.PNG;*.tiff;*.TIFF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string OpenFileFilter {
             get {
@@ -182,15 +191,6 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   ファイルを保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SaveFileDescription {
-            get {
-                return ResourceManager.GetString("SaveFileDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SaveFileFilter {
@@ -200,11 +200,21 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   ファイルを保存 に類似しているローカライズされた文字列を検索します。
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static string SaveFileTitle {
+        internal static System.Drawing.Bitmap Shadow {
             get {
-                return ResourceManager.GetString("SaveFileTitle", resourceCulture);
+                object obj = ResourceManager.GetObject("Shadow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   分割したファイルを保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SplitDescription {
+            get {
+                return ResourceManager.GetString("SplitDescription", resourceCulture);
             }
         }
         

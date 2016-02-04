@@ -19,19 +19,21 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Windows.Forms;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.ProgressPresenter
+    /// ProgressPresenter
     ///
     /// <summary>
     /// ProgressForm をモデルを関連付けるためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ProgressPresenter : Cube.Forms.PresenterBase<ProgressForm, PickTask>
+    public class ProgressPresenter : Cube.Forms.PresenterBase<ProgressForm, ImageCollection>
     {
         #region Constructors
 
@@ -44,10 +46,10 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ProgressPresenter(ProgressForm view, PickTask model)
+        public ProgressPresenter(ProgressForm view, ImageCollection model)
             : base(view, model)
         {
-            View.FileName = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
+            View.FileName = IoEx.Path.GetFileName(Model.Path);
             View.Shown      += View_Shown;
             View.FormClosed += View_Closed;
             View.Save       += View_Save;
@@ -69,16 +71,20 @@ namespace Cube.Pdf.App.ImageEx
         /* ----------------------------------------------------------------- */
         private async void View_Shown(object sender, EventArgs ev)
         {
-            var progress = new Progress<ProgressEventArgs>();
-            progress.ProgressChanged += (s, e) => Update(e);
+            var progress = new Progress<ProgressEventArgs<string>>();
+            progress.ProgressChanged += (s, e) => Report(e);
 
             try
             {
-                View.AllowOperation = false;
-                await Model.RunAsync(progress);
-                if (Model.Images.Count > 0) View.AllowOperation = true;
+                SyncWait(() => View.AllowOperation = false);
+                await Model.ExtractAsync(progress);
+
             }
-            catch (Exception err) { Update(0, err.Message); }
+            catch (Exception err) { Report(0, err.Message); }
+            finally
+            {
+                if (Model.Count > 0) SyncWait(() => View.AllowOperation = true);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -106,14 +112,17 @@ namespace Cube.Pdf.App.ImageEx
         /* ----------------------------------------------------------------- */
         private async void View_Save(object sender, EventArgs ev)
         {
-            var task = new SaveTask();
-            if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFolder;
+            dialog.SelectedPath = IoEx.Path.GetDirectoryName(Model.Path);
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-            var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            task.Images = Model.Images;
-            await task.RunAsync(basename);
-
-            View.Close();
+            try
+            {
+                SyncWait(() => View.AllowOperation = false);
+                await Async(() => Model.Save(dialog.SelectedPath));
+            }
+            finally { SyncWait(() => View.Close()); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -151,20 +160,24 @@ namespace Cube.Pdf.App.ImageEx
 
         #endregion
 
+        #region Others
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Update
+        /// Report
         /// 
         /// <summary>
-        /// View を更新します。
+        /// 進捗状況を更新します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Update(ProgressEventArgs e) { Update(e.Value, e.Message); }
-        private void Update(int value, string message)
+        private void Report(ProgressEventArgs<string> e) { Report(e.Percentage, e.Value); }
+        private void Report(double pecentage, string message)
         {
-            View.Value = value;
+            View.Value = (int)pecentage;
             View.Message = message;
         }
+
+        #endregion
     }
 }

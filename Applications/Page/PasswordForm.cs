@@ -18,18 +18,21 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Windows.Forms;
+
 namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.Page.PasswordForm
+    /// PasswordForm
     ///
     /// <summary>
     /// パスワード入力を行うためのフォームです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class PasswordForm : Cube.Forms.NtsForm
+    public partial class PasswordForm : Cube.Forms.Form
     {
         #region Constructors
 
@@ -92,6 +95,55 @@ namespace Cube.Pdf.App.Page
         public string Password
         {
             get { return PasswordTextBox.Text; }
+        }
+
+        #endregion
+
+        #region Override methods
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// OnLoad
+        /// 
+        /// <summary>
+        /// フォームがロードされた時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        protected override void OnLoad(EventArgs e)
+        {
+            try
+            {
+                PasswordKeyLabel.Margin = new Padding(
+                    PasswordKeyLabel.Margin.Left,
+                    PasswordTextBox.Margin.Top + Math.Max(PasswordTextBox.Height - PasswordKeyLabel.Height, 0) / 2,
+                    PasswordKeyLabel.Margin.Right,
+                    PasswordKeyLabel.Margin.Bottom
+                );
+
+                ShowPasswordCheckBox.Margin = new Padding(
+                    ShowPasswordCheckBox.Margin.Left,
+                    ShowPasswordCheckBox.Margin.Top,
+                    PasswordTextBox.Width - ShowPasswordCheckBox.Width + PasswordTextBox.Margin.Right,
+                    ShowPasswordCheckBox.Margin.Bottom
+                );
+            }
+            finally { base.OnLoad(e); }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// OnShown
+        /// 
+        /// <summary>
+        /// フォームが表示された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        protected override void OnShown(EventArgs e)
+        {
+            PasswordTextBox.Focus();
+            base.OnShown(e);
         }
 
         #endregion

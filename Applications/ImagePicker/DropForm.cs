@@ -27,7 +27,7 @@ namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.App.DropForm
+    /// DropForm
     ///
     /// <summary>
     /// メイン画面を表示するクラスです。
@@ -195,7 +195,6 @@ namespace Cube.Pdf.App.ImageEx
 
         #region Other private methods
 
-
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeLayout
@@ -261,7 +260,7 @@ namespace Cube.Pdf.App.ImageEx
                     var ext = System.IO.Path.GetExtension(path).ToLower();
                     if (!AllowExtensions.Contains(ext) || !System.IO.File.Exists(path)) continue;
 
-                    var model     = new PickTask(path);
+                    var model     = new ImageCollection(path);
                     var view      = new ProgressForm();
                     var presenter = new ProgressPresenter(view, model);
                     view.Show();

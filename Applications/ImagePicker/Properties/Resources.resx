@@ -151,6 +151,9 @@
   <data name="NotFoundMessage" xml:space="preserve">
     <value>{0} ({1} ページ) から画像を見つける事ができませんでした。</value>
   </data>
+  <data name="PasswordMessage" xml:space="preserve">
+    <value>{0} はパスワードで保護されているため画像を抽出できませんでした。</value>
+  </data>
   <data name="PreviewMenu" xml:space="preserve">
     <value>プレビュー画面を表示</value>
   </data>

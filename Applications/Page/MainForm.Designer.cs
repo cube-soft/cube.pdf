@@ -31,7 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ExitButtonPanel = new System.Windows.Forms.Panel();
+            this.ExitButton = new Cube.Forms.Button();
+            this.SplitButtonPanel = new System.Windows.Forms.Panel();
             this.SplitButton = new Cube.Forms.Button();
+            this.MergeButtonPanel = new System.Windows.Forms.Panel();
             this.MergeButton = new Cube.Forms.Button();
             this.ContentsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -40,7 +44,7 @@
             this.DownButton = new Cube.Forms.Button();
             this.RemoveButton = new Cube.Forms.Button();
             this.ClearButton = new Cube.Forms.Button();
-            this.PageListView = new Cube.Forms.ListView();
+            this.FileListView = new Cube.Forms.ListView();
             this.FileColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -51,6 +55,9 @@
             this.TitleButton = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
+            this.ExitButtonPanel.SuspendLayout();
+            this.SplitButtonPanel.SuspendLayout();
+            this.MergeButtonPanel.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             this.HeaderPanel.SuspendLayout();
@@ -78,8 +85,9 @@
             // FooterPanel
             // 
             this.FooterPanel.AllowDrop = true;
-            this.FooterPanel.Controls.Add(this.SplitButton);
-            this.FooterPanel.Controls.Add(this.MergeButton);
+            this.FooterPanel.Controls.Add(this.ExitButtonPanel);
+            this.FooterPanel.Controls.Add(this.SplitButtonPanel);
+            this.FooterPanel.Controls.Add(this.MergeButtonPanel);
             this.FooterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FooterPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.FooterPanel.Location = new System.Drawing.Point(0, 251);
@@ -89,32 +97,79 @@
             this.FooterPanel.Size = new System.Drawing.Size(684, 60);
             this.FooterPanel.TabIndex = 1;
             // 
+            // ExitButtonPanel
+            // 
+            this.ExitButtonPanel.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.Shadow;
+            this.ExitButtonPanel.Controls.Add(this.ExitButton);
+            this.ExitButtonPanel.Location = new System.Drawing.Point(572, 12);
+            this.ExitButtonPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.ExitButtonPanel.Name = "ExitButtonPanel";
+            this.ExitButtonPanel.Size = new System.Drawing.Size(100, 37);
+            this.ExitButtonPanel.TabIndex = 1000;
+            // 
+            // ExitButton
+            // 
+            this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.ExitButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
+            this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExitButton.ForeColor = System.Drawing.Color.White;
+            this.ExitButton.Location = new System.Drawing.Point(0, 0);
+            this.ExitButton.Margin = new System.Windows.Forms.Padding(0);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(100, 35);
+            this.ExitButton.TabIndex = 0;
+            this.ExitButton.Text = "終了";
+            this.ExitButton.UseVisualStyleBackColor = false;
+            // 
+            // SplitButtonPanel
+            // 
+            this.SplitButtonPanel.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.Shadow;
+            this.SplitButtonPanel.Controls.Add(this.SplitButton);
+            this.SplitButtonPanel.Location = new System.Drawing.Point(433, 12);
+            this.SplitButtonPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.SplitButtonPanel.Name = "SplitButtonPanel";
+            this.SplitButtonPanel.Size = new System.Drawing.Size(135, 37);
+            this.SplitButtonPanel.TabIndex = 1000;
+            // 
             // SplitButton
             // 
-            this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.SplitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(151)))), ((int)(((byte)(253)))));
+            this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(49)))), ((int)(((byte)(146)))));
+            this.SplitButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SplitButton.FlatAppearance.BorderSize = 0;
             this.SplitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SplitButton.ForeColor = System.Drawing.Color.White;
-            this.SplitButton.Location = new System.Drawing.Point(542, 12);
-            this.SplitButton.Margin = new System.Windows.Forms.Padding(2);
+            this.SplitButton.Location = new System.Drawing.Point(0, 0);
+            this.SplitButton.Margin = new System.Windows.Forms.Padding(0);
             this.SplitButton.Name = "SplitButton";
-            this.SplitButton.Size = new System.Drawing.Size(130, 35);
-            this.SplitButton.TabIndex = 0;
-            this.SplitButton.Text = "分割";
+            this.SplitButton.Size = new System.Drawing.Size(135, 35);
+            this.SplitButton.TabIndex = 2;
+            this.SplitButton.Text = "分割(&S)";
             this.SplitButton.UseVisualStyleBackColor = false;
+            // 
+            // MergeButtonPanel
+            // 
+            this.MergeButtonPanel.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.Shadow;
+            this.MergeButtonPanel.Controls.Add(this.MergeButton);
+            this.MergeButtonPanel.Location = new System.Drawing.Point(294, 12);
+            this.MergeButtonPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.MergeButtonPanel.Name = "MergeButtonPanel";
+            this.MergeButtonPanel.Size = new System.Drawing.Size(135, 37);
+            this.MergeButtonPanel.TabIndex = 1000;
             // 
             // MergeButton
             // 
             this.MergeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.MergeButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
+            this.MergeButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.MergeButton.FlatAppearance.BorderSize = 0;
             this.MergeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MergeButton.ForeColor = System.Drawing.Color.White;
-            this.MergeButton.Location = new System.Drawing.Point(408, 12);
-            this.MergeButton.Margin = new System.Windows.Forms.Padding(2);
+            this.MergeButton.Location = new System.Drawing.Point(0, 0);
+            this.MergeButton.Margin = new System.Windows.Forms.Padding(0);
             this.MergeButton.Name = "MergeButton";
-            this.MergeButton.Size = new System.Drawing.Size(130, 35);
+            this.MergeButton.Size = new System.Drawing.Size(135, 35);
             this.MergeButton.TabIndex = 1;
-            this.MergeButton.Text = "結合";
+            this.MergeButton.Text = "結合(&M)";
             this.MergeButton.UseVisualStyleBackColor = false;
             // 
             // ContentsPanel
@@ -123,7 +178,7 @@
             this.ContentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ContentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124F));
             this.ContentsPanel.Controls.Add(this.ButtonsPanel, 0, 0);
-            this.ContentsPanel.Controls.Add(this.PageListView, 0, 0);
+            this.ContentsPanel.Controls.Add(this.FileListView, 0, 0);
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContentsPanel.Location = new System.Drawing.Point(0, 35);
             this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -161,7 +216,7 @@
             this.FileButton.Name = "FileButton";
             this.FileButton.Size = new System.Drawing.Size(100, 30);
             this.FileButton.TabIndex = 0;
-            this.FileButton.Text = "追加...";
+            this.FileButton.Text = "追加(&O)...";
             this.FileButton.UseVisualStyleBackColor = false;
             // 
             // UpButton
@@ -204,7 +259,7 @@
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(100, 30);
             this.RemoveButton.TabIndex = 3;
-            this.RemoveButton.Text = "削除";
+            this.RemoveButton.Text = "削除(&D)";
             this.RemoveButton.UseVisualStyleBackColor = false;
             // 
             // ClearButton
@@ -221,28 +276,29 @@
             this.ClearButton.Text = "すべて削除";
             this.ClearButton.UseVisualStyleBackColor = false;
             // 
-            // PageListView
+            // FileListView
             // 
-            this.PageListView.AllowDrop = true;
-            this.PageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.FileListView.AllowDrop = true;
+            this.FileListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.FileListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.FileColumnHeader,
             this.TypeColumnHeader,
             this.PageColumnHeader,
             this.DateColumnHeader,
             this.SizeColumnHeader});
-            this.PageListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PageListView.FullRowSelect = true;
-            this.PageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.PageListView.Location = new System.Drawing.Point(0, 0);
-            this.PageListView.Margin = new System.Windows.Forms.Padding(0);
-            this.PageListView.Name = "PageListView";
-            this.PageListView.ShowItemToolTips = true;
-            this.PageListView.Size = new System.Drawing.Size(560, 216);
-            this.PageListView.TabIndex = 3;
-            this.PageListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.PageListView.UseCompatibleStateImageBehavior = false;
-            this.PageListView.View = System.Windows.Forms.View.Details;
+            this.FileListView.Converter = null;
+            this.FileListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FileListView.FullRowSelect = true;
+            this.FileListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.FileListView.Location = new System.Drawing.Point(0, 0);
+            this.FileListView.Margin = new System.Windows.Forms.Padding(0);
+            this.FileListView.Name = "FileListView";
+            this.FileListView.ShowItemToolTips = true;
+            this.FileListView.Size = new System.Drawing.Size(560, 216);
+            this.FileListView.TabIndex = 3;
+            this.FileListView.Theme = Cube.Forms.WindowTheme.Explorer;
+            this.FileListView.UseCompatibleStateImageBehavior = false;
+            this.FileListView.View = System.Windows.Forms.View.Details;
             // 
             // FileColumnHeader
             // 
@@ -286,9 +342,9 @@
             this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ImagePictureBox.Location = new System.Drawing.Point(467, 0);
+            this.ImagePictureBox.Location = new System.Drawing.Point(418, 0);
             this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(217, 35);
+            this.ImagePictureBox.Size = new System.Drawing.Size(266, 35);
             this.ImagePictureBox.TabIndex = 1;
             this.ImagePictureBox.TabStop = false;
             // 
@@ -300,7 +356,7 @@
             this.TitleButton.Location = new System.Drawing.Point(0, 0);
             this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
             this.TitleButton.Name = "TitleButton";
-            this.TitleButton.Size = new System.Drawing.Size(150, 35);
+            this.TitleButton.Size = new System.Drawing.Size(160, 35);
             this.TitleButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.TitleButton.TabIndex = 0;
             this.TitleButton.TabStop = false;
@@ -310,11 +366,15 @@
             this.ClientSize = new System.Drawing.Size(684, 311);
             this.Controls.Add(this.LayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(300, 280);
             this.Name = "MainForm";
             this.Text = "CubePDF Page";
             this.LayoutPanel.ResumeLayout(false);
             this.FooterPanel.ResumeLayout(false);
+            this.ExitButtonPanel.ResumeLayout(false);
+            this.SplitButtonPanel.ResumeLayout(false);
+            this.MergeButtonPanel.ResumeLayout(false);
             this.ContentsPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
             this.HeaderPanel.ResumeLayout(false);
@@ -337,15 +397,19 @@
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox TitleButton;
         private System.Windows.Forms.PictureBox ImagePictureBox;
-        private Cube.Forms.ListView PageListView;
+        private Cube.Forms.ListView FileListView;
         private Cube.Forms.Button FileButton;
         private Cube.Forms.Button UpButton;
         private Cube.Forms.Button DownButton;
         private Cube.Forms.Button RemoveButton;
         private Cube.Forms.Button ClearButton;
-        private Cube.Forms.Button SplitButton;
-        private Cube.Forms.Button MergeButton;
         private System.Windows.Forms.ColumnHeader TypeColumnHeader;
+        private System.Windows.Forms.Panel ExitButtonPanel;
+        private Forms.Button ExitButton;
+        private System.Windows.Forms.Panel SplitButtonPanel;
+        private Forms.Button SplitButton;
+        private System.Windows.Forms.Panel MergeButtonPanel;
+        private Forms.Button MergeButton;
     }
 }
 

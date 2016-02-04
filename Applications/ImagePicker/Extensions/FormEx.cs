@@ -1,8 +1,8 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PdfReaderExtensions.cs
+/// FormEx.cs
 ///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -18,41 +18,40 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using iTextSharp.text.pdf;
-using Size = System.Drawing.Size;
+using System.Reflection;
+using System.Windows.Forms;
 
-namespace Cube.Pdf.Editing.Extensions
+namespace Cube.Pdf.App.ImageEx.Extensions
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.Extensions.PdfReaderExtensions
-    /// 
+    /// FormEx
+    ///
     /// <summary>
-    /// iTextSharp の PdfReader に関する拡張メソッド群を定義するクラスです。
+    /// Form の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PdfReaderExtensions
+    public static class FormEx
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// CreatePage
+        /// UpdateTitle
         /// 
         /// <summary>
-        /// Page オブジェクトを生成します。
+        /// フォームのタイトルを更新します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        public static Page CreatePage(this PdfReader reader, string path, string password, int pagenum)
+        public static void UpdateTitle(this Form form, string str)
         {
-            var size = reader.GetPageSize(pagenum);
-            var dest = new Page();
-            dest.Path = path;
-            dest.Size = new Size((int)size.Width, (int)size.Height);
-            dest.Rotation = reader.GetPageRotation(pagenum);
-            dest.Password = password;
-            dest.PageNumber = pagenum;
-            return dest;
+            var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
+            var ss  = new System.Text.StringBuilder();
+            ss.Append(str);
+            if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(asm.Title)) ss.Append(" - ");
+            ss.Append(asm.Title);
+
+            form.Text = ss.ToString();
         }
     }
 }

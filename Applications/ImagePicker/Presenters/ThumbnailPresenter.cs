@@ -19,23 +19,21 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TaskEx = System.Threading.Tasks.Task;
+using IoEx = System.IO;
 
 namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.ThumbnailPresenter
+    /// ThumbnailPresenter
     ///
     /// <summary>
     /// ThumbnailForm をモデルを関連付けるためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ThumbnailPresenter : Cube.Forms.PresenterBase<ThumbnailForm, PickTask>
+    public class ThumbnailPresenter : Cube.Forms.PresenterBase<ThumbnailForm, ImageCollection>
     {
         #region Constructors
 
@@ -48,15 +46,14 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ThumbnailPresenter(ThumbnailForm view, PickTask model)
+        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model)
             : base(view, model)
         {
-            View.FileName = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
+            View.FileName = IoEx.Path.GetFileNameWithoutExtension(Model.Path);
             View.Save    += View_Save;
             View.SaveAll += View_SaveAll;
             View.Preview += View_Preview;
             View.Removed += View_Removed;
-            View.KeyDown += View_KeyDown;
 
             AddImages();
         }
@@ -114,12 +111,13 @@ namespace Cube.Pdf.App.ImageEx
         /* --------------------------------------------------------------------- */
         private async void View_Save(object sender, EventArgs ev)
         {
-            var task = new SaveTask();
-            if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFolder;
+            dialog.SelectedPath = IoEx.Path.GetDirectoryName(Model.Path);
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-            var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            task.Images = Model.Images;
-            await task.RunAsync(basename, View.SelectedIndices);
+            var indices = View.SelectedIndices;
+            await Async(() => Model.Save(dialog.SelectedPath, indices));
 
             OnCompleted(new EventArgs());
             View.Close();
@@ -127,7 +125,7 @@ namespace Cube.Pdf.App.ImageEx
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_Save
+        /// View_SaveAll
         /// 
         /// <summary>
         /// 全ての抽出画像を保存する時に実行されるハンドラです。
@@ -136,12 +134,12 @@ namespace Cube.Pdf.App.ImageEx
         /* --------------------------------------------------------------------- */
         private async void View_SaveAll(object sender, EventArgs ev)
         {
-            var task = new SaveTask();
-            if (string.IsNullOrEmpty(task.AskFolder(Model.Path))) return;
+            var dialog = new FolderBrowserDialog();
+            dialog.Description = Properties.Resources.SaveFolder;
+            dialog.SelectedPath = IoEx.Path.GetDirectoryName(Model.Path);
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-            var basename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
-            task.Images = Model.Images;
-            await task.RunAsync(basename);
+            await Async(() => Model.Save(dialog.SelectedPath));
 
             OnCompleted(new EventArgs());
             View.Close();
@@ -162,10 +160,10 @@ namespace Cube.Pdf.App.ImageEx
             if (indices == null || indices.Count <= 0) return;
 
             var index = indices[0];
-            var filename = System.IO.Path.GetFileNameWithoutExtension(Model.Path);
+            var filename = IoEx.Path.GetFileNameWithoutExtension(Model.Path);
             var dialog = new PreviewForm();
-            dialog.FileName = string.Format("{0} ({1}/{2})", filename, index, Model.Images.Count);
-            dialog.Image = Model.Images[index];
+            dialog.FileName = string.Format("{0} ({1}/{2})", filename, index, Model.Count);
+            dialog.Image = Model[index];
             dialog.ShowDialog();
         }
 
@@ -180,41 +178,7 @@ namespace Cube.Pdf.App.ImageEx
         /* --------------------------------------------------------------------- */
         private void View_Removed(object sender, DataEventArgs<int> ev)
         {
-            Model.Images.RemoveAt(ev.Value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_KeyDown
-        /// 
-        /// <summary>
-        /// キーボードのキーが押下された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void View_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.A:
-                    if (e.Control) View.SelectAll();
-                    break;
-                case Keys.D:
-                    if (e.Control) View.Remove();
-                    break;
-                case Keys.S:
-                    if (e.Control)
-                    {
-                        if (e.Shift) View_SaveAll(sender, e);
-                        else if (View.AnyItemsSelected) View_Save(sender, e);
-                    }
-                    break;
-                case Keys.Delete:
-                    View.Remove();
-                    break;
-                default:
-                    break;
-            }
+            Model.RemoveAt(ev.Value);
         }
 
         #endregion
@@ -233,7 +197,7 @@ namespace Cube.Pdf.App.ImageEx
         private void AddImages()
         {
             var upper = View.ImageSize;
-            for (var i = 0; i < Model.Images.Count; ++i)
+            for (var i = 0; i < Model.Count; ++i)
             {
                 var image = Model.GetImage(i, upper);
                 if (image != null) View.Add(image);

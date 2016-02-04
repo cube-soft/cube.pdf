@@ -27,7 +27,7 @@ namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.ImageRenderListener
+    /// ImageRenderListener
     /// 
     /// <summary>
     /// PDF ファイル中の画像を抽出するた IRenderListerner 実装クラスです。

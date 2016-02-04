@@ -27,14 +27,14 @@ namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.PreviewForm
+    /// PreviewForm
     ///
     /// <summary>
     /// 画像のプレビュー画面を表示するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class PreviewForm : Cube.Forms.NtsForm
+    public partial class PreviewForm : Cube.Forms.Form
     {
         #region Constructors
 

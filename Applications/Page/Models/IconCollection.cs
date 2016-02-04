@@ -26,7 +26,7 @@ namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.Page.IconCollection
+    /// IconCollection
     ///
     /// <summary>
     /// ListView に表示するアイコンを管理するクラスです。
@@ -48,7 +48,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public IconCollection()
         {
-            var icon = Cube.IconFactory.Create(StockIcons.DocumentNotAssociated, IconSize.Small);
+            var icon = IconFactory.Create(StockIcons.DocumentNotAssociated, IconSize.Small);
 
             ImageList = new ImageList();
             ImageList.ImageSize = new Size(16, 16);
@@ -84,15 +84,15 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Register(Item item)
+        public int Register(FileBase file)
         {
-            if (item.Icon == null) return 0;
+            if (file.Icon == null) return 0;
 
-            var extension = item.Extension.ToLower();
+            var extension = file.Extension.ToLower();
             if (_map.ContainsKey(extension)) return _map[extension];
 
             var index = ImageList.Images.Count;
-            ImageList.Images.Add(item.Icon);
+            ImageList.Images.Add(file.Icon);
             _map.Add(extension, index);
             return index;
         }

@@ -34,6 +34,9 @@
   <PropertyGroup>
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>App.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
@@ -60,15 +63,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\FormExtensions.cs" />
+    <Compile Include="Extensions\FormEx.cs" />
     <Compile Include="DropForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DropForm.Designer.cs">
       <DependentUpon>DropForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\PickTask.cs" />
-    <Compile Include="Models\SaveTask.cs" />
+    <Compile Include="Models\ImageCollection.cs" />
     <Compile Include="Presenters\ProgressPresenter.cs" />
     <Compile Include="Presenters\ThumbnailPresenter.cs" />
     <Compile Include="PreviewForm.cs">
@@ -113,7 +115,8 @@
     <EmbeddedResource Include="ThumbnailForm.resx">
       <DependentUpon>ThumbnailForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="App.manifest" />
+    <None Include="Packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

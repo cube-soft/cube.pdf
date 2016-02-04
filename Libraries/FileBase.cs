@@ -1,55 +1,50 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// MainForm.cs
-///
+/// FileBase.cs
+/// 
 /// Copyright (c) 2010 CubeSoft, Inc.
+/// 
+/// Licensed under the Apache License, Version 2.0 (the "License");
+/// you may not use this file except in compliance with the License.
+/// You may obtain a copy of the License at
 ///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
+///  http://www.apache.org/licenses/LICENSE-2.0
 ///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/// Unless required by applicable law or agreed to in writing, software
+/// distributed under the License is distributed on an "AS IS" BASIS,
+/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+/// See the License for the specific language governing permissions and
+/// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
 
-namespace Cube.Pdf.App.Page
+namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.Page.Item
-    ///
+    /// FileBase
+    /// 
     /// <summary>
-    /// 各項目の情報を保持するクラスです。
+    /// ファイル情報を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Item : Cube.FileSystem.FileInfo, IEquatable<Item>
+    public class FileBase : Cube.FileSystem.FileInfo, IEquatable<FileBase>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Item
+        /// FileBase
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Item(PageType type, string filename)
-            : base(filename)
-        {
-            Type = type;
-        }
+        protected FileBase(string path, IconSize size) : base(path, size) { }
 
         #endregion
 
@@ -57,40 +52,29 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Type
-        /// 
-        /// <summary>
-        /// 項目の種類を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PageType Type { get; set; } = PageType.Unknown;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Value
-        /// 
-        /// <summary>
-        /// Type に応じたオブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public object Value { get; set; } = null;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// PageCount
         /// 
         /// <summary>
-        /// ファイルに含まれるページ数を取得または設定します。
+        /// ページ数を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public int PageCount { get; set; } = 0;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Resolution
+        /// 
+        /// <summary>
+        /// ファイルの解像度を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Point Resolution { get; set; } = Point.Empty;
+
         #endregion
 
-        #region IEquatable<Item> methods
+        #region IEquatable<FileBase> methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,7 +85,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Equals(Item other)
+        public bool Equals(FileBase other)
         {
             return FullName == other.FullName;
         }
@@ -120,7 +104,7 @@ namespace Cube.Pdf.App.Page
             if (object.ReferenceEquals(obj, null)) return false;
             if (object.ReferenceEquals(this, obj)) return true;
 
-            var other = obj as Item;
+            var other = obj as Page;
             if (other == null) return false;
 
             return Equals(other);
@@ -141,6 +125,5 @@ namespace Cube.Pdf.App.Page
         }
 
         #endregion
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PageExtensions.cs
+/// PermissionMethod.cs
 /// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
@@ -17,43 +17,61 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Drawing;
-
-namespace Cube.Pdf.Extensions
+namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageExtensions
+    /// PermissionMethod
     /// 
     /// <summary>
-    /// IPage およびその実装クラスの拡張メソッドを定義するクラスです。
+    /// PDF への各種操作に対して設定されている許可状態を示す列挙型です。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class PageExtensions
+    public enum PermissionMethod : uint
+    {
+        Deny     = 0,
+        Restrict = 1,
+        Allow    = 2
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// PermissionMethodEx
+    /// 
+    /// <summary>
+    /// PermissionMethod の拡張用クラスです。
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static class PermissionMethodEx
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewSize
+        /// IsAllow
         /// 
         /// <summary>
-        /// ページオブジェクトを表示する際のサイズを取得します。
+        /// 許可状態かどうかを判別します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Size ViewSize(this IPage page)
+        public static bool IsAllow(this PermissionMethod obj)
         {
-            var degree = page.Rotation;
-            if (degree < 0) degree += 360;
-            else if (degree >= 360) degree -= 360;
+            return obj == PermissionMethod.Allow;
+        }
 
-            var radian = Math.PI * degree / 180.0;
-            var sin = Math.Abs(Math.Sin(radian));
-            var cos = Math.Abs(Math.Cos(radian));
-            var width  = page.Size.Width * cos + page.Size.Height * sin;
-            var height = page.Size.Width * sin + page.Size.Height * cos;
-            return new Size((int)(width * page.Power), (int)(height * page.Power));
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsDeny
+        /// 
+        /// <summary>
+        /// 拒否状態かどうかを判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsDeny(this PermissionMethod obj)
+        {
+            return obj == PermissionMethod.Deny;
         }
     }
 }
