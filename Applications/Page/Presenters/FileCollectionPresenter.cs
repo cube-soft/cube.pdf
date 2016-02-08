@@ -108,7 +108,7 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_AddRequired(object sender, DataEventArgs<string[]> e)
+        private void View_AddRequired(object sender, ValueEventArgs<string[]> e)
         {
             Execute(async () => await Async(() => Model.Add(e.Value, 1)));
         }
@@ -150,7 +150,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_MoveRequired(object sender, DataEventArgs<int> e)
+        private void View_MoveRequired(object sender, ValueEventArgs<int> e)
         {
             var indices = View.SelectedIndices;
             if (indices.Count == 0) return;
@@ -166,7 +166,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_MergeRequired(object sender, DataEventArgs<string> e)
+        private void View_MergeRequired(object sender, ValueEventArgs<string> e)
         {
             Execute(async () =>
             {
@@ -187,7 +187,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_SplitRequired(object sender, DataEventArgs<string> e)
+        private void View_SplitRequired(object sender, ValueEventArgs<string> e)
         {
             Execute(async () =>
             {
@@ -311,7 +311,7 @@ namespace Cube.Pdf.App.Page
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (result == DialogResult.No) return;
 
-                View_AddRequired(this, new DataEventArgs<string[]>(files));
+                View_AddRequired(this, new ValueEventArgs<string[]>(files));
             });
         }
 

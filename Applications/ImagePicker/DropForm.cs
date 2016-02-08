@@ -183,7 +183,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnReceived(DataEventArgs<object> e)
+        protected override void OnReceived(ValueEventArgs<object> e)
         {
             base.OnReceived(e);
 

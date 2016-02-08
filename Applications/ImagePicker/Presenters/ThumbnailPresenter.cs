@@ -176,7 +176,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_Removed(object sender, DataEventArgs<int> ev)
+        private void View_Removed(object sender, ValueEventArgs<int> ev)
         {
             Model.RemoveAt(ev.Value);
         }

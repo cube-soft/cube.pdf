@@ -192,7 +192,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<int>> Removed;
+        public EventHandler<ValueEventArgs<int>> Removed;
 
         #endregion
 
@@ -250,7 +250,7 @@ namespace Cube.Pdf.App.ImageEx
             _images.RemoveAt(index);
             ImageListView.Items.RemoveAt(index);
 
-            OnRemoved(new DataEventArgs<int>(index));
+            OnRemoved(new ValueEventArgs<int>(index));
         }
 
         /* ----------------------------------------------------------------- */
@@ -341,7 +341,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        protected virtual void OnRemoved(DataEventArgs<int> e)
+        protected virtual void OnRemoved(ValueEventArgs<int> e)
         {
             if (Removed != null) Removed(this, e);
         }

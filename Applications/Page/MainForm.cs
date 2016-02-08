@@ -110,8 +110,8 @@ namespace Cube.Pdf.App.Page
             FileButton.Click   += (s, e) => RaiseAddEvent();
             RemoveButton.Click += (s, e) => OnRemoveRequired(e);
             ClearButton.Click  += (s, e) => OnClearRequired(e);
-            UpButton.Click     += (s, e) => OnMoveRequired(new DataEventArgs<int>(-1));
-            DownButton.Click   += (s, e) => OnMoveRequired(new DataEventArgs<int>(1));
+            UpButton.Click     += (s, e) => OnMoveRequired(new ValueEventArgs<int>(-1));
+            DownButton.Click   += (s, e) => OnMoveRequired(new ValueEventArgs<int>(1));
             MergeButton.Click  += (s, e) => RaiseMergeEvent();
             SplitButton.Click  += (s, e) => RaiseSplitEvent();
             ExitButton.Click   += (s, e) => Close();
@@ -218,7 +218,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<int>> PreviewRequired;
+        public EventHandler<ValueEventArgs<int>> PreviewRequired;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -229,7 +229,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<string[]>> AddRequired;
+        public EventHandler<ValueEventArgs<string[]>> AddRequired;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -262,7 +262,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<int>> MoveRequired;
+        public EventHandler<ValueEventArgs<int>> MoveRequired;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -273,7 +273,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<string>> MergeRequired;
+        public EventHandler<ValueEventArgs<string>> MergeRequired;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -284,7 +284,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<DataEventArgs<string>> SplitRequired;
+        public EventHandler<ValueEventArgs<string>> SplitRequired;
 
         #endregion
 
@@ -404,7 +404,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPreviewRequired(DataEventArgs<int> e)
+        protected virtual void OnPreviewRequired(ValueEventArgs<int> e)
         {
             if (PreviewRequired != null) PreviewRequired(this, e);
         }
@@ -418,7 +418,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnAddRequired(DataEventArgs<string[]> e)
+        protected virtual void OnAddRequired(ValueEventArgs<string[]> e)
         {
             if (AddRequired != null) AddRequired(this, e);
         }
@@ -460,7 +460,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnMoveRequired(DataEventArgs<int> e)
+        protected virtual void OnMoveRequired(ValueEventArgs<int> e)
         {
             if (MoveRequired != null) MoveRequired(this, e);
         }
@@ -474,7 +474,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnMergeRequired(DataEventArgs<string> e)
+        protected virtual void OnMergeRequired(ValueEventArgs<string> e)
         {
             if (MergeRequired != null) MergeRequired(this, e);
         }
@@ -488,7 +488,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnSplitRequired(DataEventArgs<string> e)
+        protected virtual void OnSplitRequired(ValueEventArgs<string> e)
         {
             if (SplitRequired != null) SplitRequired(this, e);
         }
@@ -527,7 +527,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnReceived(DataEventArgs<object> e)
+        protected override void OnReceived(ValueEventArgs<object> e)
         {
             RaiseAddEvent(e.Value);
             base.OnReceived(e);
@@ -577,11 +577,11 @@ namespace Cube.Pdf.App.Page
                         break;
                     case Keys.J:
                     case Keys.Up:
-                        OnMoveRequired(new DataEventArgs<int>(-1));
+                        OnMoveRequired(new ValueEventArgs<int>(-1));
                         break;
                     case Keys.K:
                     case Keys.Down:
-                        OnMoveRequired(new DataEventArgs<int>(1));
+                        OnMoveRequired(new ValueEventArgs<int>(1));
                         break;
                     default:
                         results = false;
@@ -652,7 +652,7 @@ namespace Cube.Pdf.App.Page
             var indices = SelectedIndices;
             if (indices.Count <= 0) return;
 
-            OnPreviewRequired(new DataEventArgs<int>(indices[0]));
+            OnPreviewRequired(new ValueEventArgs<int>(indices[0]));
         }
 
         /* ----------------------------------------------------------------- */
@@ -689,7 +689,7 @@ namespace Cube.Pdf.App.Page
         {
             var files = obj as string[];
             if (files == null) return;
-            OnAddRequired(new DataEventArgs<string[]>(files));
+            OnAddRequired(new ValueEventArgs<string[]>(files));
         }
 
         /* ----------------------------------------------------------------- */
@@ -709,7 +709,7 @@ namespace Cube.Pdf.App.Page
             dialog.Filter = Properties.Resources.SaveFileFilter;
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-            OnMergeRequired(new DataEventArgs<string>(dialog.FileName));
+            OnMergeRequired(new ValueEventArgs<string>(dialog.FileName));
         }
 
         /* ----------------------------------------------------------------- */
@@ -728,7 +728,7 @@ namespace Cube.Pdf.App.Page
             dialog.ShowNewFolderButton = true;
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
 
-            OnSplitRequired(new DataEventArgs<string>(dialog.SelectedPath));
+            OnSplitRequired(new ValueEventArgs<string>(dialog.SelectedPath));
         }
 
         #endregion
@@ -789,8 +789,8 @@ namespace Cube.Pdf.App.Page
 
             var open   = dest.Items.Add(Properties.Resources.OpenMenu, null, (s, e) => RaisePreviewEvent());
             var hr0    = dest.Items.Add("-");
-            var up     = dest.Items.Add(Properties.Resources.UpMenu, null, (s, e) => OnMoveRequired(new DataEventArgs<int>(-1)));
-            var down   = dest.Items.Add(Properties.Resources.DownMenu, null, (s, e) => OnMoveRequired(new DataEventArgs<int>(1)));
+            var up     = dest.Items.Add(Properties.Resources.UpMenu, null, (s, e) => OnMoveRequired(new ValueEventArgs<int>(-1)));
+            var down   = dest.Items.Add(Properties.Resources.DownMenu, null, (s, e) => OnMoveRequired(new ValueEventArgs<int>(1)));
             var hr1    = dest.Items.Add("-");
             var remove = dest.Items.Add(Properties.Resources.RemoveMenu, null, (s, e) => OnRemoveRequired(e));
 
