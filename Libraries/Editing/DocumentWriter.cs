@@ -155,8 +155,10 @@ namespace Cube.Pdf.Editing
 
             var reader = cache[src.File.FullName];
             reader.Rotate(src);
+
+            var pagenum = dest.PageNumber;
+            StockBookmarks(reader, src.Number, pagenum);
             dest.AddPage(dest.GetImportedPage(reader, src.Number));
-            StockBookmarks(reader, src.Number, dest.PageNumber);
         }
 
         /* ----------------------------------------------------------------- */
