@@ -70,15 +70,6 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   下へ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string DownMenu {
-            get {
-                return ResourceManager.GetString("DownMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   CubePDF Page エラー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ErrorMessageTitle {
@@ -114,6 +105,42 @@ namespace Cube.Pdf.App.Page.Properties {
             get {
                 object obj = ResourceManager.GetObject("Logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   下へ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuDown {
+            get {
+                return ResourceManager.GetString("MenuDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   開く に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOpen {
+            get {
+                return ResourceManager.GetString("MenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイルリストから削除 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuRemove {
+            get {
+                return ResourceManager.GetString("MenuRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   上へ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuUp {
+            get {
+                return ResourceManager.GetString("MenuUp", resourceCulture);
             }
         }
         
@@ -164,29 +191,11 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   開く に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string OpenMenu {
-            get {
-                return ResourceManager.GetString("OpenMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   {0} はパスワードで保護されています。編集するためにはオーナーパスワードを入力して下さい。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PasswordRequired {
             get {
                 return ResourceManager.GetString("PasswordRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   ファイルリストから削除 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string RemoveMenu {
-            get {
-                return ResourceManager.GetString("RemoveMenu", resourceCulture);
             }
         }
         
@@ -225,15 +234,6 @@ namespace Cube.Pdf.App.Page.Properties {
         internal static string SplitSuccess {
             get {
                 return ResourceManager.GetString("SplitSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   上へ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string UpMenu {
-            get {
-                return ResourceManager.GetString("UpMenu", resourceCulture);
             }
         }
     }
