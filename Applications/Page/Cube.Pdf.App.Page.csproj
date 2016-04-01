@@ -61,6 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\EventAggregator.cs" />
+    <Compile Include="Presenters\PresenterBase.cs" />
+    <Compile Include="Views\FileMenuControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
