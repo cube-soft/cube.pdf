@@ -129,6 +129,9 @@ namespace Cube.Pdf.App.Page
 
             FileMenu.Aggregator = Aggregator;
             FileListView.ContextMenuStrip = FileMenu;
+            FileListView.Added += (s, e) => Refresh();
+            FileListView.Removed += (s, e) => Refresh();
+            FileListView.Cleared += (s, e) => Refresh();
             FileListView.SelectedIndexChanged += (s, e) => Refresh();
             FileListView.MouseDoubleClick += (s, e) => Aggregator.Preview.Raise();
         }
