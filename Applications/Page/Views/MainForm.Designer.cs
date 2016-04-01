@@ -99,7 +99,7 @@
             // 
             // ExitButtonPanel
             // 
-            this.ExitButtonPanel.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.Shadow;
+            this.ExitButtonPanel.BackColor = System.Drawing.Color.Gainsboro;
             this.ExitButtonPanel.Controls.Add(this.ExitButton);
             this.ExitButtonPanel.Location = new System.Drawing.Point(572, 12);
             this.ExitButtonPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -124,7 +124,7 @@
             // 
             // SplitButtonPanel
             // 
-            this.SplitButtonPanel.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.Shadow;
+            this.SplitButtonPanel.BackColor = System.Drawing.Color.Gainsboro;
             this.SplitButtonPanel.Controls.Add(this.SplitButton);
             this.SplitButtonPanel.Location = new System.Drawing.Point(433, 12);
             this.SplitButtonPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -149,7 +149,7 @@
             // 
             // MergeButtonPanel
             // 
-            this.MergeButtonPanel.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.Shadow;
+            this.MergeButtonPanel.BackColor = System.Drawing.Color.Gainsboro;
             this.MergeButtonPanel.Controls.Add(this.MergeButton);
             this.MergeButtonPanel.Location = new System.Drawing.Point(294, 12);
             this.MergeButtonPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -286,7 +286,6 @@
             this.PageColumnHeader,
             this.DateColumnHeader,
             this.SizeColumnHeader});
-            this.FileListView.Converter = null;
             this.FileListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileListView.FullRowSelect = true;
             this.FileListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
