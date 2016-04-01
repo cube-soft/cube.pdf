@@ -120,6 +120,7 @@ namespace Cube.Pdf.App.Page
             ExitButton.Click   += (s, e) => Close();
 
             FileMenu.Aggregator = Aggregator;
+            FileListView.Aggregator = Aggregator;
             FileListView.ContextMenuStrip = FileMenu;
             FileListView.DragEnter += (s, e) => OnDragEnter(e);
             FileListView.DragDrop += (s, e) => OnDragDrop(e);
@@ -161,9 +162,12 @@ namespace Cube.Pdf.App.Page
         [Browsable(true)]
         public bool AllowOperation
         {
-            get { return ButtonsPanel.Enabled && FooterPanel.Enabled; }
+            get { return FileListView.AllowOperation; }
             set
             {
+                if (FileListView.AllowOperation == value) return;
+
+                FileListView.AllowOperation = value;
                 ButtonsPanel.Enabled = value;
                 FooterPanel.Enabled  = value;
                 Cursor = value ? Cursors.Default : Cursors.WaitCursor;
