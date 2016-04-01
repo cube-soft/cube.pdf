@@ -70,6 +70,51 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
+        ///   更新日時 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ColumnDate {
+            get {
+                return ResourceManager.GetString("ColumnDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ファイル名 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ColumnFile {
+            get {
+                return ResourceManager.GetString("ColumnFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ページ数 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ColumnPage {
+            get {
+                return ResourceManager.GetString("ColumnPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   サイズ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ColumnSize {
+            get {
+                return ResourceManager.GetString("ColumnSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   種類 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ColumnType {
+            get {
+                return ResourceManager.GetString("ColumnType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   CubePDF Page エラー に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ErrorMessageTitle {

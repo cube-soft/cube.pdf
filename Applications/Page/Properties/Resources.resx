@@ -120,6 +120,21 @@
   <data name="About" xml:space="preserve">
     <value>CubePDF Page について</value>
   </data>
+  <data name="ColumnDate" xml:space="preserve">
+    <value>更新日時</value>
+  </data>
+  <data name="ColumnFile" xml:space="preserve">
+    <value>ファイル名</value>
+  </data>
+  <data name="ColumnPage" xml:space="preserve">
+    <value>ページ数</value>
+  </data>
+  <data name="ColumnSize" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="ColumnType" xml:space="preserve">
+    <value>種類</value>
+  </data>
   <data name="ErrorMessageTitle" xml:space="preserve">
     <value>CubePDF Page エラー</value>
   </data>
