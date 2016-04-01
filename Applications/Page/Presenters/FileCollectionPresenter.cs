@@ -63,6 +63,12 @@ namespace Cube.Pdf.App.Page
             Events.Split.Handle   += Split_Handle;
             Events.Version.Handle += Version_Handle;
 
+            View.Added                += (s, e) => Refresh();
+            View.Removed              += (s, e) => Refresh();
+            View.Cleared              += (s, e) => Refresh();
+            View.SelectedIndexChanged += (s, e) => Refresh();
+            View.MouseDoubleClick     += (s, e) => Events.Preview.Raise();
+
             Model.CollectionChanged += Model_CollectionChanged;
             Model.PasswordRequired  += Model_PasswordRequired;
 
@@ -396,6 +402,23 @@ namespace Cube.Pdf.App.Page
             });
             return dest;
         }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Refresh
+        /// 
+        /// <summary>
+        /// View を再描画します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void Refresh()
+            => Sync(() =>
+        {
+            var form = View.FindForm();
+            if (form == null) return;
+            form.Refresh();
+        });
 
         /* --------------------------------------------------------------------- */
         ///

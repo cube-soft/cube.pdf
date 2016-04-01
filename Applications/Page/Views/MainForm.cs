@@ -119,21 +119,16 @@ namespace Cube.Pdf.App.Page
             SplitButton.Click  += (s, e) => Aggregator.Split.Raise();
             ExitButton.Click   += (s, e) => Close();
 
-            ButtonsPanel.DragEnter += Control_DragEnter;
-            FooterPanel.DragEnter  += Control_DragEnter;
-            FileListView.DragEnter += Control_DragEnter;
-
-            ButtonsPanel.DragDrop += Control_DragDrop;
-            FooterPanel.DragDrop  += Control_DragDrop;
-            FileListView.DragDrop += Control_DragDrop;
-
             FileMenu.Aggregator = Aggregator;
             FileListView.ContextMenuStrip = FileMenu;
-            FileListView.Added += (s, e) => Refresh();
-            FileListView.Removed += (s, e) => Refresh();
-            FileListView.Cleared += (s, e) => Refresh();
-            FileListView.SelectedIndexChanged += (s, e) => Refresh();
-            FileListView.MouseDoubleClick += (s, e) => Aggregator.Preview.Raise();
+            FileListView.DragEnter += (s, e) => OnDragEnter(e);
+            FileListView.DragDrop += (s, e) => OnDragDrop(e);
+
+            ButtonsPanel.DragEnter += (s, e) => OnDragEnter(e);
+            ButtonsPanel.DragDrop += (s, e) => OnDragDrop(e);
+
+            FooterPanel.DragEnter += (s, e) => OnDragEnter(e);
+            FooterPanel.DragDrop += (s, e) => OnDragDrop(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -258,6 +253,43 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnDragEnter
+        ///
+        /// <summary>
+        /// ファイルがドラッグされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            var prev = e.Effect;
+            base.OnDragEnter(e);
+            if (e.Effect != prev || !e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragDrop
+        ///
+        /// <summary>
+        /// ファイルがドロップされた時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragDrop(DragEventArgs e)
+        {
+            base.OnDragDrop(e);
+
+            var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+            if (files == null) return;
+
+            Aggregator.Add.Raise(ValueEventArgs.Create(files));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OnKeyDown
         /// 
         /// <summary>
@@ -317,49 +349,6 @@ namespace Cube.Pdf.App.Page
                 e.Handled = results;
             }
             finally { base.OnKeyDown(e); }
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Control_DragEnter
-        /// 
-        /// <summary>
-        /// 何らかのコントロールでドラッグ操作が開始された時に実行される
-        /// ハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Control_DragEnter(object sender, DragEventArgs e)
-        {
-            if (!AllowOperation) e.Effect = DragDropEffects.None;
-            else if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.All;
-            else if (e.Data.GetDataPresent(typeof(ListViewItem))) e.Effect = DragDropEffects.Move;
-            else e.Effect = DragDropEffects.None;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Control_DragDrop
-        /// 
-        /// <summary>
-        /// 何らかのコントロールでドロップ操作が行われた時に実行される
-        /// ハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Control_DragDrop(object sender, DragEventArgs e)
-        {
-            if (!AllowOperation) return;
-            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-
-            var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
-            if (files == null) return;
-
-            Aggregator.Add.Raise(ValueEventArgs.Create(files));
         }
 
         #endregion
