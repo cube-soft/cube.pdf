@@ -38,7 +38,7 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileCollectionPresenter : PresenterBase<Cube.Forms.ListView, FileCollection>
+    public class FileCollectionPresenter : PresenterBase<FileListView, FileCollection>
     {
         #region Constructors
 
@@ -51,7 +51,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public FileCollectionPresenter(Cube.Forms.ListView view, FileCollection model, EventAggregator events)
+        public FileCollectionPresenter(FileListView view, FileCollection model, EventAggregator events)
             : base(view, model, events)
         {
             Events.Preview.Handle += Preview_Handle;
@@ -318,7 +318,7 @@ namespace Cube.Pdf.App.Page
 
             try
             {
-                //Sync(() => View.AllowOperation = false);
+                SyncWait(() => View.AllowOperation = false);
                 action();
             }
             catch (Exception err)
@@ -326,7 +326,7 @@ namespace Cube.Pdf.App.Page
                 this.LogError(err.Message, err);
                 ShowMessage(err);
             }
-            //finally { Sync(() => View.AllowOperation = true); }
+            finally { SyncWait(() => View.AllowOperation = true); }
         }
 
         /* --------------------------------------------------------------------- */
