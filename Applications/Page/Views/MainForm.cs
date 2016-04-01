@@ -296,59 +296,68 @@ namespace Cube.Pdf.App.Page
         /// キーボードのキーが押下された時に実行されるハンドラです。
         /// </summary>
         /// 
-        /// <remarks>
-        /// ショートカットキーは以下の通りです。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            try
-            {
-                if (!e.Control) return;
-
-                var results = true;
-
-                switch (e.KeyCode)
-                {
-                    case Keys.A:
-                        foreach (ListViewItem item in FileListView.Items) item.Selected = true;
-                        break;
-                    case Keys.D:
-                        if (e.Shift) Aggregator.Clear.Raise();
-                        else Aggregator.Remove.Raise();
-                        break;
-                    case Keys.H:
-                        Aggregator.Version.Raise();
-                        break;
-                    case Keys.M:
-                        Aggregator.Merge.Raise();
-                        break;
-                    case Keys.O:
-                        Aggregator.Add.Raise(EventAggregator.Empty);
-                        break;
-                    case Keys.R:
-                        Aggregator.Preview.Raise();
-                        break;
-                    case Keys.S:
-                        Aggregator.Split.Raise();
-                        break;
-                    case Keys.J:
-                    case Keys.Up:
-                        Aggregator.Move.Raise(ValueEventArgs.Create(-1));
-                        break;
-                    case Keys.K:
-                    case Keys.Down:
-                        Aggregator.Move.Raise(ValueEventArgs.Create(1));
-                        break;
-                    default:
-                        results = false;
-                        break;
-                }
-
-                e.Handled = results;
-            }
+            try { ShortcutKeys(e); }
             finally { base.OnKeyDown(e); }
+        }
+
+        #endregion
+
+        #region Shortcut keys
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShortcutKeys
+        /// 
+        /// <summary>
+        /// ショートカットキーを処理します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void ShortcutKeys(KeyEventArgs e)
+        {
+            if (!e.Control) return;
+
+            var results = true;
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                    foreach (ListViewItem item in FileListView.Items) item.Selected = true;
+                    break;
+                case Keys.D:
+                    if (e.Shift) Aggregator.Clear.Raise();
+                    else Aggregator.Remove.Raise();
+                    break;
+                case Keys.E:
+                    Aggregator.Preview.Raise();
+                    break;
+                case Keys.H:
+                    Aggregator.Version.Raise();
+                    break;
+                case Keys.M:
+                    Aggregator.Merge.Raise();
+                    break;
+                case Keys.O:
+                    Aggregator.Add.Raise(EventAggregator.Empty);
+                    break;
+                case Keys.S:
+                    Aggregator.Split.Raise();
+                    break;
+                case Keys.J:
+                case Keys.Up:
+                    Aggregator.Move.Raise(ValueEventArgs.Create(-1));
+                    break;
+                case Keys.K:
+                case Keys.Down:
+                    Aggregator.Move.Raise(ValueEventArgs.Create(1));
+                    break;
+                default:
+                    results = false;
+                    break;
+            }
+            e.Handled = results;
         }
 
         #endregion

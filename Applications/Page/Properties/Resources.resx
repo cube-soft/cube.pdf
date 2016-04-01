@@ -136,8 +136,8 @@
   <data name="MenuDown" xml:space="preserve">
     <value>下へ</value>
   </data>
-  <data name="MenuOpen" xml:space="preserve">
-    <value>開く</value>
+  <data name="MenuPreview" xml:space="preserve">
+    <value>プレビュー</value>
   </data>
   <data name="MenuRemove" xml:space="preserve">
     <value>ファイルリストから削除</value>

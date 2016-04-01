@@ -46,7 +46,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public FileMenuControl() : base()
         {
-            PreviewMenu = new ToolStripMenuItem(Properties.Resources.MenuOpen);
+            PreviewMenu = new ToolStripMenuItem(Properties.Resources.MenuPreview);
             UpMenu      = new ToolStripMenuItem(Properties.Resources.MenuUp);
             DownMenu    = new ToolStripMenuItem(Properties.Resources.MenuDown);
             RemoveMenu  = new ToolStripMenuItem(Properties.Resources.MenuRemove);
@@ -130,7 +130,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitialzieShortcutKeys()
         {
-            Menu(PreviewMenu).ShortcutKeys = Keys.Control | Keys.R;
+            Menu(PreviewMenu).ShortcutKeys = Keys.Control | Keys.E;
             Menu(UpMenu).ShortcutKeys      = Keys.Control | Keys.Up;
             Menu(DownMenu).ShortcutKeys    = Keys.Control | Keys.Down;
             Menu(RemoveMenu).ShortcutKeys  = Keys.Control | Keys.D;

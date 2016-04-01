@@ -118,11 +118,11 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   開く に類似しているローカライズされた文字列を検索します。
+        ///   プレビュー に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuOpen {
+        internal static string MenuPreview {
             get {
-                return ResourceManager.GetString("MenuOpen", resourceCulture);
+                return ResourceManager.GetString("MenuPreview", resourceCulture);
             }
         }
         
