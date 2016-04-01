@@ -385,9 +385,10 @@ namespace Cube.Pdf.App.Page
         {
             var dialog = new Cube.Forms.VersionForm();
             dialog.Assembly = Assembly.GetExecutingAssembly();
+            dialog.Version.Digit = 3;
             dialog.Logo = Properties.Resources.Logo;
             dialog.Description = string.Empty;
-            dialog.Height = 320;
+            dialog.Height = 250;
             dialog.ShowDialog();
         }
 
