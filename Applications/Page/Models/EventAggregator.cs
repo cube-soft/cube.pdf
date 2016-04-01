@@ -35,15 +35,15 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Selected
+        /// Empty
         ///
         /// <summary>
-        /// 選択ファイルを表す EventArgs オブジェクトを取得します。
+        /// ファイルが指定されていな事を表す EventArgs オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static ValueEventArgs<int> Selected { get; }
-            = ValueEventArgs.Create(-1);
+        public static ValueEventArgs<string[]> Empty { get; }
+            = ValueEventArgs.Create(new string[] { });
 
         #endregion
 
@@ -70,8 +70,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int>> Preview { get; }
-            = new RelayEvent<ValueEventArgs<int>>();
+        public RelayEvent Preview { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,8 +81,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int>> Remove { get; }
-            = new RelayEvent<ValueEventArgs<int>>();
+        public RelayEvent Remove { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -105,8 +103,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         /// 
         /// <remarks>
-        /// Move イベントの Value に設定される値はインデックスではなく移動量に
-        /// なります。
+        /// Move イベントの Value に設定される値は移動量になります。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
