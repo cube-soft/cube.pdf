@@ -24,6 +24,7 @@ using System.Collections.Specialized;
 using System.Reflection;
 using System.Linq;
 using System.Windows.Forms;
+using Cube.Log;
 
 namespace Cube.Pdf.App.Page
 {
@@ -288,7 +289,7 @@ namespace Cube.Pdf.App.Page
             }
             catch (Exception err)
             {
-                Logger.Error(err);
+                this.LogError(err.Message, err);
                 ShowMessage(err);
             }
             finally { SyncWait(() => View.AllowOperation = true); }

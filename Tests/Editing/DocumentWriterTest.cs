@@ -31,6 +31,7 @@ namespace Cube.Pdf.Tests.Editing
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
+    [Parallelizable]
     [TestFixture]
     class DocumentWriterTest : DocumentResource
     {
