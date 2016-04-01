@@ -2,7 +2,6 @@
 
 Copyright (c) 2013 CubeSoft, Inc.
 
-* 開発・配布：株式会社キューブ・ソフト
 * License: GNU Affero General Public License version 3 (AGPLv3)
 * Mail: support@cube-soft.jp
 * Web: http://www.cube-soft.jp/cubepdf/
@@ -33,8 +32,8 @@ CubePDF Page は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
 * iTextSharp
-  URL: http://sourceforge.net/projects/itextsharp/
-  GNU Affero General Public License ( http://www.gnu.org/licenses/agpl.html )
+  GNU Affero General Public License
+  http://sourceforge.net/projects/itextsharp/
 
 ## バージョン履歴
 
