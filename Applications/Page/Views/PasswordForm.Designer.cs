@@ -208,6 +208,7 @@
             // 
             this.AcceptButton = this.ExecButton;
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.CancelButton = this.ExitButton;
             this.ClientSize = new System.Drawing.Size(482, 223);
             this.Controls.Add(this.LayoutPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

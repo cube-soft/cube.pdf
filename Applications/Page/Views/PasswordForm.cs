@@ -142,6 +142,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         protected override void OnShown(EventArgs e)
         {
+            ActiveControl = PasswordTextBox;
             PasswordTextBox.Focus();
             base.OnShown(e);
         }
