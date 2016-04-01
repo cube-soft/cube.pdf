@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
@@ -156,6 +157,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [Browsable(true)]
         public bool AllowOperation
         {
             get { return ButtonsPanel.Enabled && FooterPanel.Enabled; }
@@ -176,6 +178,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [Browsable(false)]
         public IList<int> SelectedIndices
         {
             get
@@ -196,6 +199,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [Browsable(false)]
         public bool AnyItemsSelected
         {
             get
