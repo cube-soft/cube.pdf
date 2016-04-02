@@ -172,14 +172,29 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void Merge(string path)
         {
-            var writer = new Cube.Pdf.Editing.DocumentWriter();
-            foreach (var file in Items)
+            var dir = IoEx.Path.GetDirectoryName(path);
+            var tmp = IoEx.Path.Combine(dir, Guid.NewGuid().ToString("N"));
+
+            try
             {
-                if (file is File) AddDocument(file as File, writer);
-                else AddImage(file as ImageFile, writer);
+                var writer = new Cube.Pdf.Editing.DocumentWriter();
+                foreach (var file in Items)
+                {
+                    if (file is File) AddDocument(file as File, writer);
+                    else AddImage(file as ImageFile, writer);
+                }
+                writer.Metadata = Metadata;
+                writer.Save(tmp);
+
+                var op = new Cube.FileSystem.FileHandler();
+                op.Failed += (s, e) =>
+                {
+                    e.Cancel = true;
+                    throw e.Value;
+                };
+                op.Move(tmp, path, true);
             }
-            writer.Metadata = Metadata;
-            writer.Save(path);
+            finally { IoEx.File.Delete(tmp); }
         }
 
         /* ----------------------------------------------------------------- */
