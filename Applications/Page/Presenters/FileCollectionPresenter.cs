@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
 using System.Reflection;
 using System.Linq;
 using System.Windows.Forms;
@@ -116,12 +117,12 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private void Add_Handle(object sender, ValueEventArgs<string[]> e)
-            => Execute(async () =>
+        private async void Add_Handle(object sender, ValueEventArgs<string[]> e)
+            => await ExecuteAsync(() =>
         {
             var files = GetFiles(e.Value as string[]);
             if (files == null || files.Length == 0) return;
-            await Async(() => Model.Add(files, 1));
+            Model.Add(files, 1);
         });
 
         /* --------------------------------------------------------------------- */
@@ -133,13 +134,13 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Remove_Handle(object sender, EventArgs e)
-            => Execute(async () =>
+        private async void Remove_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() =>
         {
             int[] indices = null;
             SyncWait(() => indices = View.SelectedIndices.Descend().ToArray());
             if (indices == null || indices.Length == 0) return;
-            await Async(() => { foreach (var index in indices) Model.RemoveAt(index); });
+            foreach (var index in indices) Model.RemoveAt(index);
         });
 
         /* --------------------------------------------------------------------- */
@@ -151,8 +152,8 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Clear_Handle(object sender, EventArgs e)
-            => Execute(async () => await Async(() => Model.Clear()));
+        private async void Clear_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() => Model.Clear());
 
         /* --------------------------------------------------------------------- */
         ///
@@ -163,13 +164,13 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Move_Handle(object sender, ValueEventArgs<int> e)
-            => Execute(async () =>
+        private async void Move_Handle(object sender, ValueEventArgs<int> e)
+            => await ExecuteAsync(() =>
         {
             int[] indices = null;
             SyncWait(() => indices = View.SelectedIndices.Ascend().ToArray());
             if (indices == null || indices.Length == 0) return;
-            await Async(() => Model.Move(indices, e.Value));
+            Model.Move(indices, e.Value);
         });
 
         /* --------------------------------------------------------------------- */
@@ -181,13 +182,13 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Merge_Handle(object sender, EventArgs e)
-            => Execute(async () =>
+        private async void Merge_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() =>
         {
             var dest = GetMergeFile();
             if (string.IsNullOrEmpty(dest)) return;
 
-            await Async(() => Model.Merge(dest));
+            Model.Merge(dest);
 
             var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
             Model.Clear();
@@ -203,14 +204,14 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Split_Handle(object sender, EventArgs e)
-            => Execute(async () =>
+        private async void Split_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() =>
         {
             var dest = GetSplitFolder();
             if (string.IsNullOrEmpty(dest)) return;
 
             var results = new List<string>();
-            await Async(() => Model.Split(dest, results));
+            Model.Split(dest, results);
 
             var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
             Model.Clear();
@@ -305,21 +306,21 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Execute
+        /// ExecuteAsync
         /// 
         /// <summary>
         /// 処理を実行します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Execute(Action action)
+        private async Task ExecuteAsync(Action action)
         {
             if (action == null) return;
 
             try
             {
                 SyncWait(() => View.AllowOperation = false);
-                action();
+                await Async(() => action());
             }
             catch (Exception err)
             {
