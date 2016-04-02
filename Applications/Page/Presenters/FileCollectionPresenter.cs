@@ -234,7 +234,7 @@ namespace Cube.Pdf.App.Page
             dialog.Version.Digit = 3;
             dialog.Logo = Properties.Resources.Logo;
             dialog.Description = string.Empty;
-            dialog.Height = 250;
+            dialog.Height = 280;
             dialog.ShowInTaskbar = false;
             dialog.ShowDialog();
         });
