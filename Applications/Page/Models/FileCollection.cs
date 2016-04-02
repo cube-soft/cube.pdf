@@ -309,11 +309,14 @@ namespace Cube.Pdf.App.Page
         {
             lock (_lock)
             {
+                var inserted = offset < 0 ? -1 : Count;
                 foreach (var index in indices)
                 {
-                    var newindex = index + offset;
-                    if (newindex < 0 || newindex >= Count) break;
+                    var newindex = offset < 0 ?
+                        Math.Max(index + offset, inserted + 1) :
+                        Math.Min(index + offset, inserted - 1);
                     Move(index, newindex);
+                    inserted = newindex;
                 }
             }
         }

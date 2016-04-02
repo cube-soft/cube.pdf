@@ -58,7 +58,7 @@ namespace Cube.Pdf.App.Page
             Events.Add.Handle     += Add_Handle;
             Events.Remove.Handle  += Remove_Handle;
             Events.Clear.Handle   += Clear_Handle;
-            Events.Move.Handle    += View_MoveRequired;
+            Events.Move.Handle    += Move_Handle;
             Events.Merge.Handle   += Merge_Handle;
             Events.Split.Handle   += Split_Handle;
             Events.Version.Handle += Version_Handle;
@@ -156,14 +156,14 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_MoveRequired
+        /// Move_Handle
         /// 
         /// <summary>
         /// 項目の移動要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_MoveRequired(object sender, ValueEventArgs<int> e)
+        private void Move_Handle(object sender, ValueEventArgs<int> e)
             => Execute(async () =>
         {
             int[] indices = null;
