@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>CubePDF Page について</value>
+    <value>CubePDF Page について (H)</value>
   </data>
   <data name="ColumnDate" xml:space="preserve">
     <value>更新日時</value>
@@ -135,7 +135,7 @@
   <data name="ColumnType" xml:space="preserve">
     <value>種類</value>
   </data>
-  <data name="ErrorMessageTitle" xml:space="preserve">
+  <data name="ErrorTitle" xml:space="preserve">
     <value>CubePDF Page エラー</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

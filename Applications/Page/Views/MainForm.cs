@@ -334,9 +334,6 @@ namespace Cube.Pdf.App.Page
                     if (e.Shift) Aggregator.Clear.Raise();
                     else Aggregator.Remove.Raise();
                     break;
-                case Keys.E:
-                    Aggregator.Preview.Raise();
-                    break;
                 case Keys.H:
                     Aggregator.Version.Raise();
                     break;
@@ -346,14 +343,17 @@ namespace Cube.Pdf.App.Page
                 case Keys.O:
                     Aggregator.Add.Raise(EventAggregator.Empty);
                     break;
+                case Keys.R:
+                    Aggregator.Preview.Raise();
+                    break;
                 case Keys.S:
                     Aggregator.Split.Raise();
                     break;
-                case Keys.J:
+                case Keys.K:
                 case Keys.Up:
                     Aggregator.Move.Raise(ValueEventArgs.Create(-1));
                     break;
-                case Keys.K:
+                case Keys.J:
                 case Keys.Down:
                     Aggregator.Move.Raise(ValueEventArgs.Create(1));
                     break;

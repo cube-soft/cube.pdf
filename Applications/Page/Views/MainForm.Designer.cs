@@ -44,10 +44,10 @@
             this.DownButton = new Cube.Forms.Button();
             this.RemoveButton = new Cube.Forms.Button();
             this.ClearButton = new Cube.Forms.Button();
+            this.FileListView = new Cube.Pdf.App.Page.FileListView();
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.TitleButton = new System.Windows.Forms.PictureBox();
-            this.FileListView = new Cube.Pdf.App.Page.FileListView();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ExitButtonPanel.SuspendLayout();
@@ -211,7 +211,7 @@
             this.FileButton.Name = "FileButton";
             this.FileButton.Size = new System.Drawing.Size(100, 30);
             this.FileButton.TabIndex = 0;
-            this.FileButton.Text = "追加(&O)...";
+            this.FileButton.Text = "追加(&O) ...";
             this.FileButton.UseVisualStyleBackColor = false;
             // 
             // UpButton
@@ -271,6 +271,22 @@
             this.ClearButton.Text = "すべて削除";
             this.ClearButton.UseVisualStyleBackColor = false;
             // 
+            // FileListView
+            // 
+            this.FileListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.FileListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FileListView.FullRowSelect = true;
+            this.FileListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.FileListView.Location = new System.Drawing.Point(0, 0);
+            this.FileListView.Margin = new System.Windows.Forms.Padding(0);
+            this.FileListView.Name = "FileListView";
+            this.FileListView.ShowItemToolTips = true;
+            this.FileListView.Size = new System.Drawing.Size(560, 216);
+            this.FileListView.TabIndex = 3;
+            this.FileListView.Theme = Cube.Forms.WindowTheme.Explorer;
+            this.FileListView.UseCompatibleStateImageBehavior = false;
+            this.FileListView.View = System.Windows.Forms.View.Details;
+            // 
             // HeaderPanel
             // 
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
@@ -306,22 +322,6 @@
             this.TitleButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.TitleButton.TabIndex = 0;
             this.TitleButton.TabStop = false;
-            // 
-            // FileListView
-            // 
-            this.FileListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.FileListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FileListView.FullRowSelect = true;
-            this.FileListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.FileListView.Location = new System.Drawing.Point(0, 0);
-            this.FileListView.Margin = new System.Windows.Forms.Padding(0);
-            this.FileListView.Name = "FileListView";
-            this.FileListView.ShowItemToolTips = true;
-            this.FileListView.Size = new System.Drawing.Size(560, 216);
-            this.FileListView.TabIndex = 3;
-            this.FileListView.Theme = Cube.Forms.WindowTheme.Explorer;
-            this.FileListView.UseCompatibleStateImageBehavior = false;
-            this.FileListView.View = System.Windows.Forms.View.Details;
             // 
             // MainForm
             // 

@@ -130,7 +130,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitialzieShortcutKeys()
         {
-            Menu(PreviewMenu).ShortcutKeys = Keys.Control | Keys.E;
+            Menu(PreviewMenu).ShortcutKeys = Keys.Control | Keys.R;
             Menu(UpMenu).ShortcutKeys      = Keys.Control | Keys.Up;
             Menu(DownMenu).ShortcutKeys    = Keys.Control | Keys.Down;
             Menu(RemoveMenu).ShortcutKeys  = Keys.Control | Keys.D;

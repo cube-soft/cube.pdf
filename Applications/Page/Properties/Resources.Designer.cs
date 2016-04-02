@@ -61,7 +61,7 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   CubePDF Page について に類似しているローカライズされた文字列を検索します。
+        ///   CubePDF Page について (H) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string About {
             get {
@@ -117,9 +117,9 @@ namespace Cube.Pdf.App.Page.Properties {
         /// <summary>
         ///   CubePDF Page エラー に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ErrorMessageTitle {
+        internal static string ErrorTitle {
             get {
-                return ResourceManager.GetString("ErrorMessageTitle", resourceCulture);
+                return ResourceManager.GetString("ErrorTitle", resourceCulture);
             }
         }
         

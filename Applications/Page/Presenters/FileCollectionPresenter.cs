@@ -471,7 +471,7 @@ namespace Cube.Pdf.App.Page
             => SyncWait(() =>
         {
             MessageBox.Show(err.Message,
-                Properties.Resources.ErrorMessageTitle,
+                Properties.Resources.ErrorTitle,
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
             );
