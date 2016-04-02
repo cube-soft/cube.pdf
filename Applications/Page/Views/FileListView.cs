@@ -18,6 +18,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -78,6 +79,19 @@ namespace Cube.Pdf.App.Page
         [DefaultValue(true)]
         public bool AllowOperation { get; set; } = true;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MouseDownLocation
+        /// 
+        /// <summary>
+        /// MouseDown イベントが発生した時の Location を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        protected Point MouseDownLocation { get; set; }
+
         #endregion
 
         #region Override methods
@@ -109,6 +123,36 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnMouseDown
+        /// 
+        /// <summary>
+        /// マウスが押下された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            MouseDownLocation = e.Location;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnMouseUp
+        /// 
+        /// <summary>
+        /// マウスが押下された時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+            MouseDownLocation = Point.Empty;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OnMouseMove
         /// 
         /// <summary>
@@ -119,11 +163,8 @@ namespace Cube.Pdf.App.Page
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            if (e.Button != MouseButtons.None)
-            {
-                if (e.Button == MouseButtons.Left) DoDragMove(e.Location);
-                return;
-            }
+            if (e.Button != MouseButtons.Left) return;
+            DoDragMove(e.Location);
         }
 
         /* ----------------------------------------------------------------- */
@@ -157,19 +198,23 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected override void OnDragDrop(DragEventArgs e)
         {
-            base.OnDragDrop(e);
+            try
+            {
+                base.OnDragDrop(e);
 
-            var item = e.Data.GetData(typeof(ListViewItem)) as ListViewItem;
-            if (item == null) return;
+                var item = e.Data.GetData(typeof(ListViewItem)) as ListViewItem;
+                if (item == null) return;
 
-            var src = Items.IndexOf(item);
-            if (src == -1) return;
+                var src = Items.IndexOf(item);
+                if (src == -1) return;
 
-            var point = PointToClient(new Point(e.X, e.Y));
-            int dest = Items.IndexOf(GetItemAt(point.X, point.Y));
-            if (dest == -1) dest = Items.Count - 1;
+                var point = PointToClient(new Point(e.X, e.Y));
+                int dest = Items.IndexOf(GetItemAt(point.X, point.Y));
+                if (dest == -1) dest = Items.Count - 1;
 
-            Aggregator?.Move.Raise(ValueEventArgs.Create(dest - src));
+                Aggregator?.Move.Raise(ValueEventArgs.Create(dest - src));
+            }
+            finally { MouseDownLocation = Point.Empty; }
         }
 
         #endregion
@@ -226,8 +271,16 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void DoDragMove(Point location)
         {
+            if (MouseDownLocation == Point.Empty) return;
+
+            var dx = Math.Abs(location.X - MouseDownLocation.X);
+            var dy = Math.Abs(location.Y - MouseDownLocation.Y);
+            if (dx < SystemInformation.DoubleClickSize.Width &&
+                dy < SystemInformation.DoubleClickSize.Height) return;
+
             var item = GetItemAt(location.X, location.Y);
             if (item == null) return;
+
             DoDragDrop(item, DragDropEffects.Move);
         }
 
