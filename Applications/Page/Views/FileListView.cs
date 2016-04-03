@@ -68,19 +68,6 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// AllowOperation
-        /// 
-        /// <summary>
-        /// 各種操作を受け付けるかどうかを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Browsable(true)]
-        [DefaultValue(true)]
-        public bool AllowOperation { get; set; } = true;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// MouseDownLocation
         /// 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PresenterBase.cs
+/// SettingsValue.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -22,61 +22,41 @@ namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PresenterBase
-    /// 
+    /// SettingsValue
+    ///
     /// <summary>
-    /// CubePDF Page で作成する Presenter の基底となるクラスです。
+    /// 各種設定を保持するクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public class PresenterBase<TView, TModel>
-        : Cube.Forms.PresenterBase<TView, TModel>
+    public class SettingsValue : ObservableSettingsValue
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PresenterBase
-        /// 
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PresenterBase(TView view, TModel model,
-            SettingsValue settings, EventAggregator events)
-            : base(view, model)
-        {
-            Settings = settings;
-            Events = events;
-        }
-
-        #endregion
-
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// AllowOperation
         /// 
         /// <summary>
-        /// 設定情報を取得します。
+        /// ユーザからの操作を受け付けるかどうかを示す値を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue Settings { get; }
+        public bool AllowOperation
+        {
+            get { return _allowOperation; }
+            set
+            {
+                if (_allowOperation == value) return;
+                _allowOperation = value;
+                RaisePropertyChanged(nameof(AllowOperation));
+            }
+        }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Events
-        /// 
-        /// <summary>
-        /// イベント情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EventAggregator Events { get; }
+        #endregion
 
+        #region Fields
+        private bool _allowOperation = true;
         #endregion
     }
 }

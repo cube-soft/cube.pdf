@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\EventAggregator.cs" />
+    <Compile Include="Models\SettingsValue.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Views\FileListView.cs">
       <SubType>Component</SubType>

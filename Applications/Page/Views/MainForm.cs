@@ -143,7 +143,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new FileCollectionPresenter(FileListView, Files, Aggregator);
+            new FileCollectionPresenter(FileListView, Files, Settings, Aggregator);
         }
 
         #endregion
@@ -162,12 +162,9 @@ namespace Cube.Pdf.App.Page
         [Browsable(true)]
         public bool AllowOperation
         {
-            get { return FileListView.AllowOperation; }
+            get { return ButtonsPanel.Enabled && FooterPanel.Enabled; }
             set
             {
-                if (FileListView.AllowOperation == value) return;
-
-                FileListView.AllowOperation = value;
                 ButtonsPanel.Enabled = value;
                 FooterPanel.Enabled  = value;
                 Cursor = value ? Cursors.Default : Cursors.WaitCursor;
@@ -369,6 +366,7 @@ namespace Cube.Pdf.App.Page
         #region Models
         private FileCollection Files = new FileCollection();
         private IconCollection Icons = new IconCollection();
+        private SettingsValue Settings = new SettingsValue();
         private EventAggregator Aggregator = new EventAggregator();
         #endregion
 
