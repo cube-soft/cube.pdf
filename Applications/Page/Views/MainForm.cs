@@ -122,13 +122,13 @@ namespace Cube.Pdf.App.Page
             FileListView.Aggregator = Aggregator;
             FileListView.ContextMenuStrip = FileMenu;
             FileListView.DragEnter += (s, e) => OnDragEnter(e);
-            FileListView.DragDrop += (s, e) => OnDragDrop(e);
+            FileListView.DragDrop  += (s, e) => OnDragDrop(e);
 
             ButtonsPanel.DragEnter += (s, e) => OnDragEnter(e);
-            ButtonsPanel.DragDrop += (s, e) => OnDragDrop(e);
+            ButtonsPanel.DragDrop  += (s, e) => OnDragDrop(e);
 
             FooterPanel.DragEnter += (s, e) => OnDragEnter(e);
-            FooterPanel.DragDrop += (s, e) => OnDragDrop(e);
+            FooterPanel.DragDrop  += (s, e) => OnDragDrop(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -168,7 +168,6 @@ namespace Cube.Pdf.App.Page
                 ButtonsPanel.Enabled = value;
                 FooterPanel.Enabled  = value;
                 Cursor = value ? Cursors.Default : Cursors.WaitCursor;
-                Text = value ? _title : string.Format(Properties.Resources.TitleBusy, _title);
             }
         }
 
@@ -228,7 +227,7 @@ namespace Cube.Pdf.App.Page
             var asm = new AssemblyReader(Settings.Assembly);
             var version = new SoftwareVersion(asm.Assembly);
             version.Digit = 3;
-            Text = _title = $"{asm.Product} {version}";
+            Text = $"{asm.Product} {version}";
             base.OnLoad(e);
             Refresh();
         }
@@ -373,10 +372,6 @@ namespace Cube.Pdf.App.Page
 
         #region Views
         private FileMenuControl FileMenu = new FileMenuControl();
-        #endregion
-
-        #region Fields
-        private string _title = string.Empty;
         #endregion
     }
 }
