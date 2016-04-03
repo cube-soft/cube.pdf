@@ -21,7 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Reflection;
+using System.Threading.Tasks;
 using System.Linq;
 using System.Windows.Forms;
 using Cube.Log;
@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Page
     /// FileCollectionPresenter
     ///
     /// <summary>
-    /// MainForm と FileCollection を対応付けるためのクラスです。
+    /// FileListView と FileCollection を対応付けるためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -51,8 +51,9 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public FileCollectionPresenter(FileListView view, FileCollection model, EventAggregator events)
-            : base(view, model, events)
+        public FileCollectionPresenter(FileListView view, FileCollection model,
+            SettingsValue settings, EventAggregator events)
+            : base(view, model, settings, events)
         {
             Events.Preview.Handle += Preview_Handle;
             Events.Add.Handle     += Add_Handle;
@@ -61,18 +62,17 @@ namespace Cube.Pdf.App.Page
             Events.Move.Handle    += Move_Handle;
             Events.Merge.Handle   += Merge_Handle;
             Events.Split.Handle   += Split_Handle;
-            Events.Version.Handle += Version_Handle;
 
-            View.Added                += (s, e) => Refresh();
-            View.Removed              += (s, e) => Refresh();
-            View.Cleared              += (s, e) => Refresh();
-            View.SelectedIndexChanged += (s, e) => Refresh();
+            View.Added                += (s, e) => Events.Refresh.Raise();
+            View.Removed              += (s, e) => Events.Refresh.Raise();
+            View.Cleared              += (s, e) => Events.Refresh.Raise();
+            View.SelectedIndexChanged += (s, e) => Events.Refresh.Raise();
             View.MouseDoubleClick     += (s, e) => Events.Preview.Raise();
 
             Model.CollectionChanged += Model_CollectionChanged;
             Model.PasswordRequired  += Model_PasswordRequired;
 
-            var reader = new AssemblyReader(Assembly.GetEntryAssembly());
+            var reader = new AssemblyReader(Settings.Assembly);
             Model.Metadata.Version = new Version(1, 7);
             Model.Metadata.Creator = reader.Product;
         }
@@ -116,12 +116,12 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private void Add_Handle(object sender, ValueEventArgs<string[]> e)
-            => Execute(async () =>
+        private async void Add_Handle(object sender, ValueEventArgs<string[]> e)
+            => await ExecuteAsync(() =>
         {
             var files = GetFiles(e.Value as string[]);
             if (files == null || files.Length == 0) return;
-            await Async(() => Model.Add(files, 1));
+            Model.Add(files, 1);
         });
 
         /* --------------------------------------------------------------------- */
@@ -133,13 +133,13 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Remove_Handle(object sender, EventArgs e)
-            => Execute(async () =>
+        private async void Remove_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() =>
         {
             int[] indices = null;
             SyncWait(() => indices = View.SelectedIndices.Descend().ToArray());
             if (indices == null || indices.Length == 0) return;
-            await Async(() => { foreach (var index in indices) Model.RemoveAt(index); });
+            foreach (var index in indices) Model.RemoveAt(index);
         });
 
         /* --------------------------------------------------------------------- */
@@ -151,8 +151,8 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Clear_Handle(object sender, EventArgs e)
-            => Execute(async () => await Async(() => Model.Clear()));
+        private async void Clear_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() => Model.Clear());
 
         /* --------------------------------------------------------------------- */
         ///
@@ -163,13 +163,13 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Move_Handle(object sender, ValueEventArgs<int> e)
-            => Execute(async () =>
+        private async void Move_Handle(object sender, ValueEventArgs<int> e)
+            => await ExecuteAsync(() =>
         {
             int[] indices = null;
             SyncWait(() => indices = View.SelectedIndices.Ascend().ToArray());
             if (indices == null || indices.Length == 0) return;
-            await Async(() => Model.Move(indices, e.Value));
+            Model.Move(indices, e.Value);
         });
 
         /* --------------------------------------------------------------------- */
@@ -181,13 +181,13 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Merge_Handle(object sender, EventArgs e)
-            => Execute(async () =>
+        private async void Merge_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() =>
         {
             var dest = GetMergeFile();
             if (string.IsNullOrEmpty(dest)) return;
 
-            await Async(() => Model.Merge(dest));
+            Model.Merge(dest);
 
             var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
             Model.Clear();
@@ -203,40 +203,18 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Split_Handle(object sender, EventArgs e)
-            => Execute(async () =>
+        private async void Split_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() =>
         {
             var dest = GetSplitFolder();
             if (string.IsNullOrEmpty(dest)) return;
 
             var results = new List<string>();
-            await Async(() => Model.Split(dest, results));
+            Model.Split(dest, results);
 
             var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
             Model.Clear();
             PostProcess(results.ToArray(), message);
-        });
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Version_Handle
-        /// 
-        /// <summary>
-        /// バージョン情報の表示要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void Version_Handle(object sender, EventArgs e)
-            => SyncWait(() =>
-        {
-            var dialog = new Cube.Forms.VersionForm();
-            dialog.Assembly = Assembly.GetExecutingAssembly();
-            dialog.Version.Digit = 3;
-            dialog.Logo = Properties.Resources.Logo;
-            dialog.Description = string.Empty;
-            dialog.Height = 280;
-            dialog.ShowInTaskbar = false;
-            dialog.ShowDialog();
         });
 
         #endregion
@@ -288,11 +266,8 @@ namespace Cube.Pdf.App.Page
         private void Model_PasswordRequired(object sender, QueryEventArgs<string, string> e)
             => SyncWait(() =>
         {
-            var dialog = new PasswordForm();
-            dialog.Path = e.Query;
-            dialog.StartPosition = FormStartPosition.CenterParent;
+            var dialog = Dialogs.Password(e.Query);
             var result = dialog.ShowDialog(View);
-
             e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
             if (!e.Cancel) e.Result = dialog.Password;
         });
@@ -305,28 +280,28 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Execute
+        /// ExecuteAsync
         /// 
         /// <summary>
         /// 処理を実行します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Execute(Action action)
+        private async Task ExecuteAsync(Action action)
         {
             if (action == null) return;
 
             try
             {
-                SyncWait(() => View.AllowOperation = false);
-                action();
+                Settings.AllowOperation = false;
+                await Async(() => action());
             }
             catch (Exception err)
             {
                 this.LogError(err.Message, err);
-                ShowMessage(err);
+                Dialogs.Error(err);
             }
-            finally { SyncWait(() => View.AllowOperation = true); }
+            finally { Settings.AllowOperation = true; }
         }
 
         /* --------------------------------------------------------------------- */
@@ -345,11 +320,7 @@ namespace Cube.Pdf.App.Page
             string[] dest = null;
             SyncWait(() =>
             {
-                var dialog = new OpenFileDialog();
-                dialog.CheckFileExists = true;
-                dialog.Multiselect = true;
-                dialog.Title = Properties.Resources.OpenFileTitle;
-                dialog.Filter = Properties.Resources.OpenFileFilter;
+                var dialog = Dialogs.Add();
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
                 dest = dialog.FileNames;
             });
@@ -370,10 +341,7 @@ namespace Cube.Pdf.App.Page
             var dest = string.Empty;
             SyncWait(() =>
             {
-                var dialog = new SaveFileDialog();
-                dialog.OverwritePrompt = true;
-                dialog.Title = Properties.Resources.MergeTitle;
-                dialog.Filter = Properties.Resources.SaveFileFilter;
+                var dialog = Dialogs.Merge();
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
                 dest = dialog.FileName;
             });
@@ -394,31 +362,12 @@ namespace Cube.Pdf.App.Page
             var dest = string.Empty;
             SyncWait(() =>
             {
-                var dialog = new FolderBrowserDialog();
-                dialog.Description = Properties.Resources.SplitDescription;
-                dialog.ShowNewFolderButton = true;
+                var dialog = Dialogs.Split();
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
                 dest = dialog.SelectedPath;
             });
             return dest;
         }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Refresh
-        /// 
-        /// <summary>
-        /// View を再描画します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void Refresh()
-            => Sync(() =>
-        {
-            var form = View.FindForm();
-            if (form == null) return;
-            form.Refresh();
-        });
 
         /* --------------------------------------------------------------------- */
         ///
@@ -432,49 +381,9 @@ namespace Cube.Pdf.App.Page
         private void PostProcess(string[] files, string message)
             => SyncWait(() =>
         {
-            var result = MessageBox.Show(message, Properties.Resources.MessageTitle,
-            MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            var result = Dialogs.Confirm(message);
             if (result == DialogResult.No) return;
-
             Add_Handle(this, new ValueEventArgs<string[]>(files));
-        });
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// ShowMessage
-        /// 
-        /// <summary>
-        /// メッセージをメッセージボックスに表示します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void ShowMessage(string message, MessageBoxIcon icon)
-            => SyncWait(() =>
-        {
-            MessageBox.Show(message, 
-                Properties.Resources.MessageTitle,
-                MessageBoxButtons.OK,
-                icon
-            );
-        });
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// ShowMessage
-        /// 
-        /// <summary>
-        /// 例外メッセージをメッセージボックスに表示します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void ShowMessage(Exception err)
-            => SyncWait(() =>
-        {
-            MessageBox.Show(err.Message,
-                Properties.Resources.ErrorTitle,
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-            );
         });
 
         #endregion

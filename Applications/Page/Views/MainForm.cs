@@ -20,7 +20,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Page
@@ -143,7 +142,8 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new FileCollectionPresenter(FileListView, Files, Aggregator);
+            new FileCollectionPresenter(FileListView, Files, Settings, Aggregator);
+            new MenuPresenter(this, Settings, Aggregator);
         }
 
         #endregion
@@ -162,15 +162,13 @@ namespace Cube.Pdf.App.Page
         [Browsable(true)]
         public bool AllowOperation
         {
-            get { return FileListView.AllowOperation; }
+            get { return ButtonsPanel.Enabled && FooterPanel.Enabled; }
             set
             {
-                if (FileListView.AllowOperation == value) return;
-
-                FileListView.AllowOperation = value;
                 ButtonsPanel.Enabled = value;
                 FooterPanel.Enabled  = value;
                 Cursor = value ? Cursors.Default : Cursors.WaitCursor;
+                Text = value ? _title : string.Format(Properties.Resources.TitleBusy, _title);
             }
         }
 
@@ -227,10 +225,10 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected override void OnLoad(EventArgs e)
         {
-            var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
+            var asm = new AssemblyReader(Settings.Assembly);
             var version = new SoftwareVersion(asm.Assembly);
             version.Digit = 3;
-            Text = $"{asm.Product} {version}";
+            Text = _title = $"{asm.Product} {version}";
             base.OnLoad(e);
             Refresh();
         }
@@ -369,11 +367,16 @@ namespace Cube.Pdf.App.Page
         #region Models
         private FileCollection Files = new FileCollection();
         private IconCollection Icons = new IconCollection();
+        private SettingsValue Settings = new SettingsValue();
         private EventAggregator Aggregator = new EventAggregator();
         #endregion
 
         #region Views
         private FileMenuControl FileMenu = new FileMenuControl();
+        #endregion
+
+        #region Fields
+        private string _title = string.Empty;
         #endregion
     }
 }

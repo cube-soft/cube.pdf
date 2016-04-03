@@ -62,7 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\EventAggregator.cs" />
+    <Compile Include="Models\SettingsValue.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
+    <Compile Include="Views\Dialogs.cs" />
     <Compile Include="Views\FileListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -78,6 +80,7 @@
     <Compile Include="Models\FileConverter.cs" />
     <Compile Include="Models\IconCollection.cs" />
     <Compile Include="Models\FileCollection.cs" />
+    <Compile Include="Presenters\MenuPresenter.cs" />
     <Compile Include="Views\PasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
