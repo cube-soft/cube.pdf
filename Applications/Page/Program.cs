@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Page
@@ -55,13 +56,35 @@ namespace Cube.Pdf.App.Page
                     return;
                 }
 
+                InitLog();
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 var form = new MainForm(args);
                 form.Bootstrap = bootstrap;
                 Application.Run(form);
             }
+        }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitLog
+        /// 
+        /// <summary>
+        /// ログを出力します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static void InitLog()
+        {
+            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
+            var edition = (IntPtr.Size == 4) ? "x86" : "x64";
+            var type = typeof(Program);
+
+            Cube.Log.Operations.Configure();
+            Cube.Log.Operations.Info(type, $"{reader.Product} {reader.Version} ({edition})");
+            Cube.Log.Operations.Info(type, $"{Environment.OSVersion}");
+            Cube.Log.Operations.Info(type, $"{Environment.Version}");
         }
     }
 }
