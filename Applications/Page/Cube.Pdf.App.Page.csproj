@@ -64,6 +64,7 @@
     <Compile Include="Models\EventAggregator.cs" />
     <Compile Include="Models\SettingsValue.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
+    <Compile Include="Views\Dialogs.cs" />
     <Compile Include="Views\FileListView.cs">
       <SubType>Component</SubType>
     </Compile>
