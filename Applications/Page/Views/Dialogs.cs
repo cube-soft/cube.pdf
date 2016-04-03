@@ -114,11 +114,11 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public static DialogResult Version()
+        public static DialogResult Version(Assembly assembly)
         {
             var dest = new Cube.Forms.VersionForm
             {
-                Assembly = Assembly.GetExecutingAssembly(),
+                Assembly = assembly,
                 Logo = Properties.Resources.Logo,
                 Description = string.Empty,
                 Height = 280,
@@ -142,7 +142,7 @@ namespace Cube.Pdf.App.Page
         public static DialogResult Confirm(string message)
             => MessageBox.Show(
             message,
-            Properties.Resources.MessageTitle,
+            Properties.Resources.TitleCommon,
             MessageBoxButtons.YesNo,
             MessageBoxIcon.Information
         );
@@ -159,7 +159,7 @@ namespace Cube.Pdf.App.Page
         public static DialogResult Error(Exception err)
             => MessageBox.Show(
             err.Message,
-            Properties.Resources.ErrorTitle,
+            Properties.Resources.TitleError,
             MessageBoxButtons.OK,
             MessageBoxIcon.Error
         );

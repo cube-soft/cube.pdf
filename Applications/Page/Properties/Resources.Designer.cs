@@ -115,15 +115,6 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   CubePDF Page エラー に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ErrorTitle {
-            get {
-                return ResourceManager.GetString("ErrorTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap HeaderImage {
@@ -209,15 +200,6 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
-        ///   CubePDF Page に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageTitle {
-            get {
-                return ResourceManager.GetString("MessageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   追加可能なファイル (*.pdf, *.bmp, *.gif, *.jpg, *.png, *.tiff)|*.pdf;*.PDF;*.bmp;*.BMP;*.dib;*.DIB;*.gif;*.GIF;*.jpg;*.JPG;*.jpeg;*.JPEG;*.jpe;*.JPE;*.png;*.PNG;*.tiff;*.TIFF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string OpenFileFilter {
@@ -269,6 +251,33 @@ namespace Cube.Pdf.App.Page.Properties {
         internal static string SplitSuccess {
             get {
                 return ResourceManager.GetString("SplitSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   処理を実行中です... - {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleBusy {
+            get {
+                return ResourceManager.GetString("TitleBusy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CubePDF Page に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleCommon {
+            get {
+                return ResourceManager.GetString("TitleCommon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CubePDF Page エラー に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleError {
+            get {
+                return ResourceManager.GetString("TitleError", resourceCulture);
             }
         }
     }
