@@ -20,7 +20,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Page
@@ -169,6 +168,7 @@ namespace Cube.Pdf.App.Page
                 ButtonsPanel.Enabled = value;
                 FooterPanel.Enabled  = value;
                 Cursor = value ? Cursors.Default : Cursors.WaitCursor;
+                Text = value ? _title : string.Format(Properties.Resources.TitleBusy, _title);
             }
         }
 
@@ -225,10 +225,10 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         protected override void OnLoad(EventArgs e)
         {
-            var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
+            var asm = new AssemblyReader(Settings.Assembly);
             var version = new SoftwareVersion(asm.Assembly);
             version.Digit = 3;
-            Text = $"{asm.Product} {version}";
+            Text = _title = $"{asm.Product} {version}";
             base.OnLoad(e);
             Refresh();
         }
@@ -373,6 +373,10 @@ namespace Cube.Pdf.App.Page
 
         #region Views
         private FileMenuControl FileMenu = new FileMenuControl();
+        #endregion
+
+        #region Fields
+        private string _title = string.Empty;
         #endregion
     }
 }
