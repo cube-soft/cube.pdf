@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PdfReaderEx.cs
+/// ITextReader.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
@@ -21,18 +21,18 @@
 using System.Drawing;
 using iTextSharp.text.pdf;
 
-namespace Cube.Pdf.Editing.Extensions
+namespace Cube.Pdf.Editing.ITextReader
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PdfReaderEx
+    /// ITextReader.Operations
     /// 
     /// <summary>
     /// iTextSharp.text.pdf.PdfReader の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PdfReaderEx
+    internal static class Operations
     {
         /* ----------------------------------------------------------------- */
         ///

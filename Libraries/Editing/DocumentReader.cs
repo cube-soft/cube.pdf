@@ -23,7 +23,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
-using Cube.Pdf.Editing.Extensions;
+using Cube.Pdf.Editing.ITextReader;
 
 namespace Cube.Pdf.Editing
 {

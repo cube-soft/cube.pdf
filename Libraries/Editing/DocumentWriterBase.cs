@@ -25,7 +25,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using iTextSharp.text.pdf;
 using Cube.Log;
-using Cube.Pdf.Editing.Extensions;
+using Cube.Pdf.Editing.Images;
+using Cube.Pdf.Editing.ITextReader;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing

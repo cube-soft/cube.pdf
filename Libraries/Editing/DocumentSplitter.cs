@@ -20,7 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using iTextSharp.text.pdf;
-using Cube.Pdf.Editing.Extensions;
+using Cube.Pdf.Editing.ITextReader;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing

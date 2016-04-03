@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Log;
-using Cube.Pdf.Editing.Extensions;
+using Cube.Pdf.Editing.ITextReader;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing
