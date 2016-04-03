@@ -22,6 +22,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Cube.Log;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
@@ -127,7 +128,7 @@ namespace Cube.Pdf.App.Page
                 else if (IoEx.File.Exists(path))
                 {
                     try { Add(path); }
-                    catch (Exception /* err */) { /* see remarks */ }
+                    catch (Exception err) { this.LogWarn($"Ignore:{path}", err); }
                 }
             }
         }

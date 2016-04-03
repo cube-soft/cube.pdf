@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.Log;
 
 namespace Cube.Pdf.App.ImageEx
 {
@@ -260,12 +261,16 @@ namespace Cube.Pdf.App.ImageEx
                     var ext = System.IO.Path.GetExtension(path).ToLower();
                     if (!AllowExtensions.Contains(ext) || !System.IO.File.Exists(path)) continue;
 
-                    var model     = new ImageCollection(path);
-                    var view      = new ProgressForm();
+                    var model = new ImageCollection(path);
+                    var view = new ProgressForm();
                     var presenter = new ProgressPresenter(view, model);
                     view.Show();
                 }
-                catch (Exception /* err */) { continue; }
+                catch (Exception err)
+                {
+                    this.LogError(err.Message, err);
+                    continue;
+                }
             }
         }
 

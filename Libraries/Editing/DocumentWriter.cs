@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
+using Cube.Log;
 using Cube.Pdf.Editing.Extensions;
 using IoEx = System.IO;
 
@@ -204,7 +205,11 @@ namespace Cube.Pdf.Editing
                 IoEx.File.Delete(path);
                 return true;
             }
-            catch (Exception /* err */) { return false; }
+            catch (Exception err)
+            {
+                this.LogError(err.Message, err);
+                return false;
+            }
         }
 
         #endregion

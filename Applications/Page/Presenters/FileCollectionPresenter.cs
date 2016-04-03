@@ -187,6 +187,7 @@ namespace Cube.Pdf.App.Page
             var dest = GetMergeFile();
             if (string.IsNullOrEmpty(dest)) return;
 
+            this.LogDebug($"Merge:{Model.Count}\tDest:{dest}");
             Model.Merge(dest);
 
             var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
@@ -209,6 +210,7 @@ namespace Cube.Pdf.App.Page
             var dest = GetSplitFolder();
             if (string.IsNullOrEmpty(dest)) return;
 
+            this.LogDebug($"Split:{Model.Count}\tDest:{dest}");
             var results = new List<string>();
             Model.Split(dest, results);
 
