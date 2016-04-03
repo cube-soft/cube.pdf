@@ -18,6 +18,8 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System.Reflection;
+
 namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
@@ -31,7 +33,36 @@ namespace Cube.Pdf.App.Page
     /* --------------------------------------------------------------------- */
     public class SettingsValue : ObservableSettingsValue
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsValue
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsValue()
+        {
+            Assembly = Assembly.GetExecutingAssembly();
+        }
+
+        #endregion
+
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Assembly
+        /// 
+        /// <summary>
+        /// アセンブリ情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Assembly Assembly { get; }
 
         /* ----------------------------------------------------------------- */
         ///
