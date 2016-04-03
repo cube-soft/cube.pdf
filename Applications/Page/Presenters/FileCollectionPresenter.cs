@@ -446,25 +446,6 @@ namespace Cube.Pdf.App.Page
         /// ShowMessage
         /// 
         /// <summary>
-        /// メッセージをメッセージボックスに表示します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void ShowMessage(string message, MessageBoxIcon icon)
-            => SyncWait(() =>
-        {
-            MessageBox.Show(message, 
-                Properties.Resources.MessageTitle,
-                MessageBoxButtons.OK,
-                icon
-            );
-        });
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// ShowMessage
-        /// 
-        /// <summary>
         /// 例外メッセージをメッセージボックスに表示します。
         /// </summary>
         ///
