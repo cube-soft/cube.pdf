@@ -55,6 +55,23 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
+        /// Password
+        /// 
+        /// <summary>
+        /// パスワードを入力するためのダイアログを生成します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public static PasswordForm Password(string path)
+            => new PasswordForm
+        {
+            Path = path,
+            ShowInTaskbar = false,
+            StartPosition = FormStartPosition.CenterParent,
+        };
+
+        /* --------------------------------------------------------------------- */
+        ///
         /// Merge
         /// 
         /// <summary>
