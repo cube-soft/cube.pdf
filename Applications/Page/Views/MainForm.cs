@@ -144,6 +144,7 @@ namespace Cube.Pdf.App.Page
         private void InitializePresenters()
         {
             new FileCollectionPresenter(FileListView, Files, Settings, Aggregator);
+            new MenuPresenter(this, Settings, Aggregator);
         }
 
         #endregion

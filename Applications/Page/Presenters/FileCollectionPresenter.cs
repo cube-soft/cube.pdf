@@ -35,7 +35,7 @@ namespace Cube.Pdf.App.Page
     /// FileCollectionPresenter
     ///
     /// <summary>
-    /// MainForm と FileCollection を対応付けるためのクラスです。
+    /// FileListView と FileCollection を対応付けるためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
