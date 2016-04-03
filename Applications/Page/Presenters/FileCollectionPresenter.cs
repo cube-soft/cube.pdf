@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
-using System.Reflection;
 using System.Linq;
 using System.Windows.Forms;
 using Cube.Log;
@@ -63,18 +62,17 @@ namespace Cube.Pdf.App.Page
             Events.Move.Handle    += Move_Handle;
             Events.Merge.Handle   += Merge_Handle;
             Events.Split.Handle   += Split_Handle;
-            Events.Version.Handle += Version_Handle;
 
-            View.Added                += (s, e) => Refresh();
-            View.Removed              += (s, e) => Refresh();
-            View.Cleared              += (s, e) => Refresh();
-            View.SelectedIndexChanged += (s, e) => Refresh();
+            View.Added                += (s, e) => Events.Refresh.Raise();
+            View.Removed              += (s, e) => Events.Refresh.Raise();
+            View.Cleared              += (s, e) => Events.Refresh.Raise();
+            View.SelectedIndexChanged += (s, e) => Events.Refresh.Raise();
             View.MouseDoubleClick     += (s, e) => Events.Preview.Raise();
 
             Model.CollectionChanged += Model_CollectionChanged;
             Model.PasswordRequired  += Model_PasswordRequired;
 
-            var reader = new AssemblyReader(Assembly.GetEntryAssembly());
+            var reader = new AssemblyReader(Settings.Assembly);
             Model.Metadata.Version = new Version(1, 7);
             Model.Metadata.Creator = reader.Product;
         }
@@ -219,28 +217,6 @@ namespace Cube.Pdf.App.Page
             PostProcess(results.ToArray(), message);
         });
 
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Version_Handle
-        /// 
-        /// <summary>
-        /// バージョン情報の表示要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void Version_Handle(object sender, EventArgs e)
-            => SyncWait(() =>
-        {
-            var dialog = new Cube.Forms.VersionForm();
-            dialog.Assembly = Assembly.GetExecutingAssembly();
-            dialog.Version.Digit = 3;
-            dialog.Logo = Properties.Resources.Logo;
-            dialog.Description = string.Empty;
-            dialog.Height = 280;
-            dialog.ShowInTaskbar = false;
-            dialog.ShowDialog();
-        });
-
         #endregion
 
         #region Model
@@ -290,11 +266,8 @@ namespace Cube.Pdf.App.Page
         private void Model_PasswordRequired(object sender, QueryEventArgs<string, string> e)
             => SyncWait(() =>
         {
-            var dialog = new PasswordForm();
-            dialog.Path = e.Query;
-            dialog.StartPosition = FormStartPosition.CenterParent;
+            var dialog = Dialogs.Password(e.Query);
             var result = dialog.ShowDialog(View);
-
             e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
             if (!e.Cancel) e.Result = dialog.Password;
         });
@@ -326,7 +299,7 @@ namespace Cube.Pdf.App.Page
             catch (Exception err)
             {
                 this.LogError(err.Message, err);
-                ShowMessage(err);
+                Dialogs.Error(err);
             }
             finally { Settings.AllowOperation = true; }
         }
@@ -347,11 +320,7 @@ namespace Cube.Pdf.App.Page
             string[] dest = null;
             SyncWait(() =>
             {
-                var dialog = new OpenFileDialog();
-                dialog.CheckFileExists = true;
-                dialog.Multiselect = true;
-                dialog.Title = Properties.Resources.OpenFileTitle;
-                dialog.Filter = Properties.Resources.OpenFileFilter;
+                var dialog = Dialogs.Add();
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
                 dest = dialog.FileNames;
             });
@@ -372,10 +341,7 @@ namespace Cube.Pdf.App.Page
             var dest = string.Empty;
             SyncWait(() =>
             {
-                var dialog = new SaveFileDialog();
-                dialog.OverwritePrompt = true;
-                dialog.Title = Properties.Resources.MergeTitle;
-                dialog.Filter = Properties.Resources.SaveFileFilter;
+                var dialog = Dialogs.Merge();
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
                 dest = dialog.FileName;
             });
@@ -396,31 +362,12 @@ namespace Cube.Pdf.App.Page
             var dest = string.Empty;
             SyncWait(() =>
             {
-                var dialog = new FolderBrowserDialog();
-                dialog.Description = Properties.Resources.SplitDescription;
-                dialog.ShowNewFolderButton = true;
+                var dialog = Dialogs.Split();
                 if (dialog.ShowDialog() == DialogResult.Cancel) return;
                 dest = dialog.SelectedPath;
             });
             return dest;
         }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Refresh
-        /// 
-        /// <summary>
-        /// View を再描画します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void Refresh()
-            => Sync(() =>
-        {
-            var form = View.FindForm();
-            if (form == null) return;
-            form.Refresh();
-        });
 
         /* --------------------------------------------------------------------- */
         ///
@@ -434,30 +381,9 @@ namespace Cube.Pdf.App.Page
         private void PostProcess(string[] files, string message)
             => SyncWait(() =>
         {
-            var result = MessageBox.Show(message, Properties.Resources.MessageTitle,
-            MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            var result = Dialogs.Confirm(message);
             if (result == DialogResult.No) return;
-
             Add_Handle(this, new ValueEventArgs<string[]>(files));
-        });
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// ShowMessage
-        /// 
-        /// <summary>
-        /// 例外メッセージをメッセージボックスに表示します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void ShowMessage(Exception err)
-            => SyncWait(() =>
-        {
-            MessageBox.Show(err.Message,
-                Properties.Resources.ErrorTitle,
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-            );
         });
 
         #endregion

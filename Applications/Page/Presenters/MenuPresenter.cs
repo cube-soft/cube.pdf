@@ -49,12 +49,44 @@ namespace Cube.Pdf.App.Page
             EventAggregator events)
             : base(view, model, model, events)
         {
+            Events.Refresh.Handle += Refresh_Handle;
+            Events.Version.Handle += Version_Handle;
             Settings.PropertyChanged += Settings_PropertyChanged;
         }
 
         #endregion
 
         #region Event handlers
+
+        #region EventAggregator
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Refresh_Handle
+        /// 
+        /// <summary>
+        /// 再描画イベント発生時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void Refresh_Handle(object sender, System.EventArgs e)
+            => Sync(() => View.Refresh());
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Version_Handle
+        /// 
+        /// <summary>
+        /// バージョン情報の表示イベント発生時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void Version_Handle(object sender, System.EventArgs e)
+            => Sync(() => Dialogs.Version(Settings.Assembly));
+
+        #endregion
+
+        #region Settings
 
         /* --------------------------------------------------------------------- */
         ///
@@ -76,6 +108,8 @@ namespace Cube.Pdf.App.Page
                     break;
             }
         }
+
+        #endregion
 
         #endregion
     }
