@@ -17,8 +17,9 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using Size = System.Drawing.Size;
-using ImageFormat = System.Drawing.Imaging.ImageFormat;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Collections.Generic;
 
 namespace Cube.Pdf
 {
@@ -27,128 +28,113 @@ namespace Cube.Pdf
     /// ImagePage
     /// 
     /// <summary>
-    /// 単一イメージのみが存在する PDF のページを表すクラスです。
+    /// 画像ページを生成するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImagePage : IPage
+    public static class ImagePage
     {
-        #region IPage properties
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Type
+        /// Create
         /// 
         /// <summary>
-        /// オブジェクトの種類を取得します。
+        /// ページオブジェクトを生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageType Type
+        public static Page Create(string path, int index)
         {
-            get { return PageType.Image; }
+            using (var image = Image.FromFile(path))
+            {
+                return Create(path, image, index);
+            }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
+        /// Create
         /// 
         /// <summary>
-        /// PDF ファイルのパスを取得または設定します。
+        /// ページオブジェクトを生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string FilePath { get; set; } = string.Empty;
+        public static Page Create(string path, Image image, int index)
+        {
+            var guid = image.FrameDimensionsList[0];
+            return CreatePage(path, image, index, new FrameDimension(guid));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Size
+        /// Create
         /// 
         /// <summary>
-        /// 対象ページのオリジナルサイズを取得または設定します。
+        /// ページオブジェクト一覧を生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Size Size { get; set; } = Size.Empty;
+        public static Page[] Create(string path)
+        {
+            using (var image = Image.FromFile(path))
+            {
+                return Create(path, image);
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Rotation
+        /// Create
         /// 
         /// <summary>
-        /// 該当ページを表示する際の回転角を取得または設定します。
+        /// ページオブジェクト一覧を生成します。
         /// </summary>
-        /// 
-        /// <remarks>
-        /// 値は度単位 (degree) で設定して下さい。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public int Rotation { get; set; } = 0;
+        public static Page[] Create(string path, Image image)
+        {
+            var dest = new List<Page>();
+            var dimension = new FrameDimension(image.FrameDimensionsList[0]);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Power
-        /// 
-        /// <summary>
-        /// 該当ページの表示倍率を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public double Power { get; set; } = 1.0;
+            for (var i = 0; i < image.GetFrameCount(dimension); ++i)
+            {
+                dest.Add(CreatePage(path, image, i, dimension));
+            }
+
+            return dest.ToArray();
+        }
 
         #endregion
 
-        #region IEquatable<IPage> methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Equals
-        ///
+        /// CreatePage
+        /// 
         /// <summary>
-        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
+        /// ページオブジェクトを生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Equals(IPage obj)
+        private static Page CreatePage(string path, Image image, int index, FrameDimension dimension)
         {
-            var other = obj as ImagePage;
-            if (other == null) return false;
-            return FilePath == other.FilePath;
-        }
+            image.SelectActiveFrame(dimension, index);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Equals
-        ///
-        /// <summary>
-        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public override bool Equals(object obj)
-        {
-            if (object.ReferenceEquals(obj, null)) return false;
-            if (object.ReferenceEquals(this, obj)) return true;
+            var x = (int)image.HorizontalResolution;
+            var y = (int)image.VerticalResolution;
 
-            var other = obj as IPage;
-            if (other == null) return false;
-
-            return Equals(other);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetHashCode
-        ///
-        /// <summary>
-        /// 特定の型のハッシュ関数として機能します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
+            return new Page
+            {
+                File       = new ImageFile(path, image, IconSize.Zero),
+                Number     = index + 1,
+                Size       = image.Size,
+                Resolution = new Point(x, y),
+                Rotation   = 0
+            };
         }
 
         #endregion

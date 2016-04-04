@@ -56,19 +56,18 @@
     <Compile Include="Encryption.cs" />
     <Compile Include="EncryptionException.cs" />
     <Compile Include="EncryptionMethod.cs" />
-    <Compile Include="EncryptionStatus.cs" />
-    <Compile Include="Extensions\PageExtensions.cs" />
+    <Compile Include="File.cs" />
+    <Compile Include="FileBase.cs" />
     <Compile Include="IDocumentReader.cs" />
     <Compile Include="IDocumentWriter.cs" />
+    <Compile Include="ImageFile.cs" />
     <Compile Include="ImagePage.cs" />
-    <Compile Include="IPage.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Page.cs" />
-    <Compile Include="PageType.cs" />
     <Compile Include="Permission.cs" />
+    <Compile Include="PermissionMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewLayout.cs" />
-    <Compile Include="ViewMode.cs" />
+    <Compile Include="ViewPreferences.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

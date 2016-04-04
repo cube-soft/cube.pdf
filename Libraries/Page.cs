@@ -17,7 +17,8 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-using Size = System.Drawing.Size;
+using System;
+using System.Drawing;
 
 namespace Cube.Pdf
 {
@@ -26,105 +27,141 @@ namespace Cube.Pdf
     /// Page
     /// 
     /// <summary>
-    /// PDF のページを表すクラスです。
+    /// ページを表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Page : IPage
+    public class Page : IEquatable<Page>
     {
-        #region IPage properties
+        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Type
+        /// File
         /// 
         /// <summary>
-        /// オブジェクトの種類を取得します。
+        /// ページオブジェクトが属するファイルを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PageType Type
-        {
-            get { return PageType.Pdf; }
-        }
+        public FileBase File { get; set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
+        /// Number
         /// 
         /// <summary>
-        /// PDF ファイルのパスを取得または設定します。
+        /// ページ番号を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string FilePath { get; set; } = string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Size
-        /// 
-        /// <summary>
-        /// 対象ページのオリジナルサイズを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Size Size { get; set; } = Size.Empty;
+        public int Number { get; set; } = -1;
 
         /* ----------------------------------------------------------------- */
         ///
         /// Rotation
         /// 
         /// <summary>
-        /// 該当ページを表示する際の回転角を取得または設定します。
+        /// ページオブジェクト表示時の回転角を度 (degree) 単位で取得
+        /// または設定します。
         /// </summary>
         /// 
         /// <remarks>
-        /// 値は度単位 (degree) で設定して下さい。
+        /// 設定時に [0, 360) で正規化されます。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public int Rotation { get; set; } = 0;
+        public int Rotation
+        {
+            get { return _rotation; }
+            set
+            {
+                var degree = value;
+                while (degree <    0) degree += 360;
+                while (degree >= 360) degree -= 360;
+                _rotation = degree;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Power
+        /// Resolution
         /// 
         /// <summary>
-        /// 該当ページの表示倍率を取得または設定します。
+        /// 水平方法および垂直方向の解像度（1 インチあたりのピクセル数）を
+        /// 取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public double Power { get; set; } = 1.0;
+        public Point Resolution { get; set; } = Point.Empty;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Size
+        /// 
+        /// <summary>
+        /// ページオブジェクトのサイズ（ピクセル単位）を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Size Size { get; set; } = Size.Empty;
 
         #endregion
 
-        #region Extended properties
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Password
+        /// ViewSize
         /// 
         /// <summary>
-        /// PDF ファイルを開くためのパスワードを取得または設定します。
+        /// ページオブジェクトの表示サイズを取得します。
         /// </summary>
-        ///
+        /// 
         /* ----------------------------------------------------------------- */
-        public string Password { get; set; } = string.Empty;
+        public Size ViewSize()
+        {
+            return ViewSize(Resolution);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageNumber
+        /// ViewSize
         /// 
         /// <summary>
-        /// PDF ファイル内でのページ番号を取得または設定します。
+        /// ページオブジェクトの表示サイズを取得します。
         /// </summary>
-        ///
+        /// 
         /* ----------------------------------------------------------------- */
-        public int PageNumber { get; set; } = 0;
+        public Size ViewSize(int dpi)
+        {
+            return ViewSize(new Point(dpi, dpi));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewSize
+        /// 
+        /// <summary>
+        /// ページオブジェクトの表示サイズを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public Size ViewSize(Point dpi)
+        {
+            var radian = Math.PI * Rotation / 180.0;
+            var sin = Math.Abs(Math.Sin(radian));
+            var cos = Math.Abs(Math.Cos(radian));
+            var width = Size.Width * cos + Size.Height * sin;
+            var height = Size.Width * sin + Size.Height * cos;
+            var horizontal = dpi.X / (double)Resolution.X;
+            var vertical = dpi.Y / (double)Resolution.Y;
+            return new Size((int)(width * horizontal), (int)(height * vertical));
+        }
 
         #endregion
 
-        #region IEquatable<IPage> methods
+        #region IEquatable<PageBase> methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -135,11 +172,9 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Equals(IPage obj)
+        public bool Equals(Page other)
         {
-            var other = obj as Page;
-            if (other == null) return false;
-            return FilePath == other.FilePath && PageNumber == other.PageNumber;
+            return File == other.File && Number == other.Number;
         }
 
         /* ----------------------------------------------------------------- */
@@ -156,7 +191,7 @@ namespace Cube.Pdf
             if (object.ReferenceEquals(obj, null)) return false;
             if (object.ReferenceEquals(this, obj)) return true;
 
-            var other = obj as IPage;
+            var other = obj as Page;
             if (other == null) return false;
 
             return Equals(other);
@@ -176,6 +211,10 @@ namespace Cube.Pdf
             return base.GetHashCode();
         }
 
+        #endregion
+
+        #region Fields
+        private int _rotation = 0;
         #endregion
     }
 }

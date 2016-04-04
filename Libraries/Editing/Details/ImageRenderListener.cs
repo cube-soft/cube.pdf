@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Collections.Generic;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
@@ -27,7 +28,7 @@ namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.ImageRenderListener
+    /// ImageRenderListener
     /// 
     /// <summary>
     /// PDF ファイル中の画像を抽出するた IRenderListerner 実装クラスです。
@@ -64,10 +65,24 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public void RenderImage(ImageRenderInfo info)
         {
-            var image = info.GetImage();
-            var filter = image.Get(PdfName.FILTER) as PdfName;
+            var obj = info.GetImage();
+            var filter = obj?.Get(PdfName.FILTER) as PdfName;
             if (filter == null) return;
-            Images.Add(image.GetDrawingImage());
+
+            var image = obj?.GetDrawingImage();
+            if (image == null) return;
+
+            var smask = obj?.GetDictionary()?.GetDirectObject(PdfName.SMASK);
+            if (smask == null)
+            {
+                Images.Add(image);
+                return;
+            }
+
+            var tmp = new PdfImageObject(smask as PRStream);
+            var mask = tmp?.GetDrawingImage();
+            var restore = Restore(image as Bitmap, mask as Bitmap);
+            Images.Add(restore ?? image);
         }
 
         #region Other implementations for IRenderListener
@@ -75,6 +90,40 @@ namespace Cube.Pdf.Editing
         public void EndTextBlock() { }
         public void RenderText(TextRenderInfo info) { }
         #endregion
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Restore
+        ///
+        /// <summary>
+        /// 描画部分のビットマップとマスク処理用のビットマップから元々の
+        /// 画像を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Bitmap Restore(Bitmap src, Bitmap mask)
+        {
+            if (src == null || mask == null) return null;
+
+            var dest = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
+            for (int x = 0; x < src.Width; x++)
+            for (int y = 0; y < src.Height; y++)
+            {
+                var color = src.GetPixel(x, y).ToArgb();
+                if (x < mask.Width && y < mask.Height)
+                {
+                    var tmp = mask.GetPixel(x, y);
+                    var alpha = Color.FromArgb((tmp.R + tmp.G + tmp.B) / 3, 0, 0, 0);
+                    color &= ~alpha.ToArgb();
+                }
+                dest.SetPixel(x, y, Color.FromArgb(color));
+            }
+            return dest;
+        }
 
         #endregion
     }

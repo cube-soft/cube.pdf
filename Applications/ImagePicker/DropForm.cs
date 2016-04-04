@@ -22,12 +22,13 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.Log;
 
 namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.ImageEx.App.DropForm
+    /// DropForm
     ///
     /// <summary>
     /// メイン画面を表示するクラスです。
@@ -183,7 +184,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnReceived(DataEventArgs<object> e)
+        protected override void OnReceived(ValueEventArgs<object> e)
         {
             base.OnReceived(e);
 
@@ -260,12 +261,16 @@ namespace Cube.Pdf.App.ImageEx
                     var ext = System.IO.Path.GetExtension(path).ToLower();
                     if (!AllowExtensions.Contains(ext) || !System.IO.File.Exists(path)) continue;
 
-                    var model     = new PickTask(path);
-                    var view      = new ProgressForm();
+                    var model = new ImageCollection(path);
+                    var view = new ProgressForm();
                     var presenter = new ProgressPresenter(view, model);
                     view.Show();
                 }
-                catch (Exception /* err */) { continue; }
+                catch (Exception err)
+                {
+                    this.LogError(err.Message, err);
+                    continue;
+                }
             }
         }
 

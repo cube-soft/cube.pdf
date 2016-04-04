@@ -17,7 +17,6 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
-
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
@@ -38,11 +37,11 @@ namespace Cube.Pdf
         /// Printing
         ///
         /// <summary>
-        /// 印刷操作が許可されているかどうかを取得または設定します。
+        /// 印刷操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Printing { get; set; } = true;
+        public PermissionMethod Printing { get; set; } = PermissionMethod.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -50,34 +49,33 @@ namespace Cube.Pdf
         /// 
         /// <summary>
         /// 文書アセンブリ（ページの挿入、削除、回転、しおりとサムネイルの
-        /// 作成）操作が許可されているかどうかを取得または設定します。
+        /// 作成）操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Assembly { get; set; } = true;
+        public PermissionMethod Assembly { get; set; } = PermissionMethod.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
         /// ModifyContents
         /// 
         /// <summary>
-        /// 内容の編集操作が許可されているかどうかを取得または設定します。
+        /// 内容の編集操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool ModifyContents { get; set; } = true;
+        public PermissionMethod ModifyContents { get; set; } = PermissionMethod.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
         /// CopyContents
         /// 
         /// <summary>
-        /// 内容の選択/コピー操作が許可されているかどうかを取得
-        /// または設定します。
+        /// 内容の選択/コピー操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool CopyContents { get; set; } = true;
+        public PermissionMethod CopyContents { get; set; } = PermissionMethod.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -85,70 +83,67 @@ namespace Cube.Pdf
         /// 
         /// <summary>
         /// アクセシビリティ（視覚に障害を持つユーザに対して、読み上げ機能
-        /// を提供する）のための内容の抽出操作が許可されているかどうかを
-        /// 取得または設定します。
+        /// を提供する）のための内容抽出操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Accessibility { get; set; } = true;
+        public PermissionMethod Accessibility { get; set; } = PermissionMethod.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
         /// ExtractPage
         /// 
         /// <summary>
-        /// ページの抽出操作が許可されているかどうかを取得または設定します。
+        /// ページ抽出操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool ExtractPage { get; set; } = true;
+        public PermissionMethod ExtractPage { get; set; } = PermissionMethod.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
         /// ModifyAnnotations
         /// 
         /// <summary>
-        /// 注釈の追加、編集操作が許可されているかを取得または設定します。
+        /// 注釈の追加、編集操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool ModifyAnnotations { get; set; } = true;
+        public PermissionMethod ModifyAnnotations { get; set; } = PermissionMethod.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
         /// InputFormFields
         /// 
         /// <summary>
-        /// フォームフィールドへの入力操作が許可されているかどうかを取得
-        /// または設定します。
+        /// フォームフィールドへの入力操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool InputFormFields { get; set; } = true;
+        public PermissionMethod InputFormFields { get; set; } = PermissionMethod.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
         /// Signature
         /// 
         /// <summary>
-        /// 既存の署名フィールドへの署名が許可されているかどうかを取得
-        /// または設定します。
+        /// 既存の署名フィールドへの署名操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Signature { get; set; } = true;
+        public PermissionMethod Signature { get; set; } = PermissionMethod.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
         /// TemplatePage
         /// 
         /// <summary>
-        /// コンテンツの動的な作成等に利用するテンプレートページの作成が
-        /// 許可されているかどうかを取得または設定します。
+        /// コンテンツの動的な作成等に利用するテンプレートページの
+        /// 作成操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool TemplatePage { get; set; } = true;
+        public PermissionMethod TemplatePage { get; set; } = PermissionMethod.Allow;
 
         #endregion
     }

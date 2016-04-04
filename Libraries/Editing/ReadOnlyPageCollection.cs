@@ -21,20 +21,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using iTextSharp.text.pdf;
-using Cube.Pdf.Editing.Extensions;
+using Cube.Pdf.Editing.ITextReader;
 
 namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Editing.ReadOnlyPageCollection
+    /// ReadOnlyPageCollection
     /// 
     /// <summary>
     /// 読み取り専用で PDF ページ一覧へアクセスするためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ReadOnlyPageCollection : IReadOnlyCollection<IPage>
+    public class ReadOnlyPageCollection : IReadOnlyCollection<Page>
     {
         #region Constructors
 
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection() : this(null, string.Empty, string.Empty) { }
+        public ReadOnlyPageCollection() : this(null, null) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -58,16 +58,26 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(PdfReader impl, string path, string password)
+        public ReadOnlyPageCollection(PdfReader core, FileBase file)
         {
-            _impl = impl;
-            _path = path;
-            _password = password;
+            File  = file;
+            _core = core;
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileBase
+        /// 
+        /// <summary>
+        /// ファイル情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public FileBase File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -80,7 +90,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public int Count
         {
-            get { return (_impl != null) ? _impl.NumberOfPages : 0; }
+            get { return (_core != null) ? _core.NumberOfPages : 0; }
         }
 
         #endregion
@@ -96,12 +106,12 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<IPage> GetEnumerator()
+        public IEnumerator<Page> GetEnumerator()
         {
-            for (var i = 0; i < _impl.NumberOfPages; ++i)
+            for (var i = 0; i < Count; ++i)
             {
                 var pagenum = i + 1;
-                yield return _impl.CreatePage(_path, _password, pagenum);
+                yield return _core.CreatePage(File, pagenum);
             }
         }
 
@@ -122,9 +132,7 @@ namespace Cube.Pdf.Editing
         #endregion
 
         #region Fields
-        private PdfReader _impl = null;
-        private string _path = string.Empty;
-        private string _password = string.Empty;
+        private PdfReader _core = null;
         #endregion
     }
 }

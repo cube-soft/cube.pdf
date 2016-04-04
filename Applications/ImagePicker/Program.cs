@@ -25,7 +25,7 @@ namespace Cube.Pdf.App.ImageEx
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.ImageEx.Program
+    /// Program
     ///
     /// <summary>
     /// メインプログラムを表すクラスです。

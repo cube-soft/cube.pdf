@@ -23,13 +23,14 @@ namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.EncryptionException
+    /// EncryptionException
     /// 
     /// <summary>
     /// 暗号化に関する例外を送出するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public class EncryptionException : Exception
     {
         #region Constructors

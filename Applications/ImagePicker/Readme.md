@@ -27,11 +27,15 @@ CubePDF ImagePicker を実行すると、コンピュータ画面の右上にフ
 
 CubePDF ImagePicker は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
+
 * iTextSharp
   URL: http://sourceforge.net/projects/itextsharp/
   GNU Affero General Public License ( http://www.gnu.org/licenses/agpl.html )
 
 ## バージョン履歴
+
+* 2016/MM/DD version 1.0.1
+ - 画像抽出時に透過情報が失われる不都合を修正
 
 * 2015/11/09 version 1.0.0
  - 最初の公開バージョン
