@@ -18,9 +18,11 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.Log;
 
 namespace Cube.Pdf.App.Page
 {
@@ -48,12 +50,10 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public IconCollection()
         {
-            var icon = IconFactory.Create(StockIcons.DocumentNotAssociated, IconSize.Small);
-
             ImageList = new ImageList();
             ImageList.ImageSize = new Size(16, 16);
             ImageList.ColorDepth = ColorDepth.Depth32Bit;
-            ImageList.Images.Add(icon);
+            ImageList.Images.Add(DefaultIcon());
         }
 
         #endregion
@@ -95,6 +95,29 @@ namespace Cube.Pdf.App.Page
             ImageList.Images.Add(file.Icon);
             _map.Add(extension, index);
             return index;
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DefaultIcon
+        /// 
+        /// <summary>
+        /// 既定のアイコンを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Icon DefaultIcon()
+        {
+            try { return IconFactory.Create(StockIcons.DocumentNotAssociated, IconSize.Small); }
+            catch (Exception err)
+            {
+                this.LogError(err.Message, err);
+                return Properties.Resources.NotAssociated;
+            }
         }
 
         #endregion

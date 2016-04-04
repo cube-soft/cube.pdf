@@ -164,6 +164,9 @@
   <data name="MergeTitle" xml:space="preserve">
     <value>結合したファイルの保存</value>
   </data>
+  <data name="NotAssociated" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\NotAssociated.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="OpenFileFilter" xml:space="preserve">
     <value>追加可能なファイル (*.pdf, *.bmp, *.gif, *.jpg, *.png, *.tiff)|*.pdf;*.PDF;*.bmp;*.BMP;*.dib;*.DIB;*.gif;*.GIF;*.jpg;*.JPG;*.jpeg;*.JPEG;*.jpe;*.JPE;*.png;*.PNG;*.tiff;*.TIFF|すべてのファイル (*.*)|*.*</value>
   </data>
