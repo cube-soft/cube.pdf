@@ -200,6 +200,16 @@ namespace Cube.Pdf.App.Page.Properties {
         }
         
         /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon NotAssociated {
+            get {
+                object obj = ResourceManager.GetObject("NotAssociated", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   追加可能なファイル (*.pdf, *.bmp, *.gif, *.jpg, *.png, *.tiff)|*.pdf;*.PDF;*.bmp;*.BMP;*.dib;*.DIB;*.gif;*.GIF;*.jpg;*.JPG;*.jpeg;*.JPEG;*.jpe;*.JPE;*.png;*.PNG;*.tiff;*.TIFF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string OpenFileFilter {
