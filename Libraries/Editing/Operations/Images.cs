@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ImageEx.cs
+/// Images.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
@@ -21,18 +21,18 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Cube.Pdf.Editing.Extensions
+namespace Cube.Pdf.Editing.Images
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageEx
+    /// Images.Operations
     /// 
     /// <summary>
     /// System.Drawing.Image の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class ImageEx
+    internal static class Operations
     {
         /* ----------------------------------------------------------------- */
         ///

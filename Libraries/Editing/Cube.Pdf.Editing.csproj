@@ -53,8 +53,8 @@
     <Compile Include="Details\ImageRenderListener.cs" />
     <Compile Include="Details\Transform.cs" />
     <Compile Include="DocumentWriterBase.cs" />
-    <Compile Include="Extensions\ImageEx.cs" />
-    <Compile Include="Extensions\PdfReaderEx.cs" />
+    <Compile Include="Operations\Images.cs" />
+    <Compile Include="Operations\ITextReader.cs" />
     <Compile Include="DocumentWriter.cs" />
     <Compile Include="DocumentSplitter.cs" />
     <Compile Include="ReadOnlyPageCollection.cs" />

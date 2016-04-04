@@ -1,8 +1,8 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Program.cs
+/// ITextReader.cs
 ///
-/// Copyright (c) 2010 CubeSoft, Inc.
+/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -18,73 +18,63 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Reflection;
-using System.Windows.Forms;
+using System.Drawing;
+using iTextSharp.text.pdf;
 
-namespace Cube.Pdf.App.Page
+namespace Cube.Pdf.Editing.ITextReader
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.Page.Program
-    ///
+    /// ITextReader.Operations
+    /// 
     /// <summary>
-    /// メインプログラムを表すクラスです。
+    /// iTextSharp.text.pdf.PdfReader の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    internal static class Operations
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// CreatePage
         /// 
         /// <summary>
-        /// アプリケーションのメイン エントリ ポイントです。
+        /// Page オブジェクトを生成します。
         /// </summary>
-        ///
+        /// 
         /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args)
+        public static Page CreatePage(this PdfReader reader, FileBase file, int pagenum)
         {
-            var name = Application.ProductName.ToLower();
-            using (var bootstrap = new Bootstrap(name))
-            {
-                if (bootstrap.Exists())
-                {
-                    bootstrap.Activate(args);
-                    return;
-                }
-
-                InitLog();
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                var form = new MainForm(args);
-                form.Bootstrap = bootstrap;
-                Application.Run(form);
-            }
+            var size = reader.GetPageSize(pagenum);
+            var dest = new Page();
+            dest.File = file;
+            dest.Number = pagenum;
+            dest.Size = new Size((int)size.Width, (int)size.Height);
+            dest.Rotation = reader.GetPageRotation(pagenum);
+            dest.Resolution = new Point(72, 72);
+            return dest;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitLog
+        /// Rotate
         /// 
         /// <summary>
-        /// ログを出力します。
+        /// Page オブジェクトの情報にしたがって回転します。
         /// </summary>
-        ///
+        /// 
+        /// <remarks>
+        /// PDF ページを回転させる場合、いったん PdfReader オブジェクトの
+        /// 内容を改変した後に PdfCopy オブジェクト等でコピーする方法が
+        /// もっとも容易に実現できます。
+        /// </remarks>
+        /// 
         /* ----------------------------------------------------------------- */
-        static void InitLog()
+        public static void Rotate(this PdfReader reader, Page page)
         {
-            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
-            var edition = (IntPtr.Size == 4) ? "x86" : "x64";
-            var type = typeof(Program);
-
-            Cube.Log.Operations.Configure();
-            Cube.Log.Operations.Info(type, $"{reader.Product} {reader.Version} ({edition})");
-            Cube.Log.Operations.Info(type, $"{Environment.OSVersion}");
-            Cube.Log.Operations.Info(type, $"{Environment.Version}");
+            var rot = reader.GetPageRotation(page.Number);
+            var dic = reader.GetPageN(page.Number);
+            if (rot != page.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(page.Rotation));
         }
     }
 }

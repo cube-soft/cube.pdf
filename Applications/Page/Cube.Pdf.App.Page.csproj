@@ -61,28 +61,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Models\EventAggregator.cs" />
+    <Compile Include="Models\SettingsValue.cs" />
+    <Compile Include="Presenters\PresenterBase.cs" />
+    <Compile Include="Views\Dialogs.cs" />
+    <Compile Include="Views\FileListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\FileMenuControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\FileConverter.cs" />
     <Compile Include="Models\IconCollection.cs" />
     <Compile Include="Models\FileCollection.cs" />
-    <Compile Include="PasswordForm.cs">
+    <Compile Include="Presenters\MenuPresenter.cs" />
+    <Compile Include="Views\PasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PasswordForm.Designer.cs">
+    <Compile Include="Views\PasswordForm.Designer.cs">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\FileCollectionPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PasswordForm.resx">
+    <EmbeddedResource Include="Views\PasswordForm.resx">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -112,7 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
-    <None Include="Resources\Shadow.png" />
     <None Include="Resources\Logo.png" />
     <None Include="Resources\HeaderTitle.png" />
     <None Include="Resources\HeaderImage.png" />

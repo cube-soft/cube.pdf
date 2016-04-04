@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Program.cs
+/// SettingsValue.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -18,73 +18,76 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Reflection;
-using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.App.Page.Program
+    /// SettingsValue
     ///
     /// <summary>
-    /// メインプログラムを表すクラスです。
+    /// 各種設定を保持するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    public class SettingsValue : ObservableSettingsValue
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// SettingsValue
         /// 
         /// <summary>
-        /// アプリケーションのメイン エントリ ポイントです。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args)
+        public SettingsValue()
         {
-            var name = Application.ProductName.ToLower();
-            using (var bootstrap = new Bootstrap(name))
+            Assembly = Assembly.GetExecutingAssembly();
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Assembly
+        /// 
+        /// <summary>
+        /// アセンブリ情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Assembly Assembly { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowOperation
+        /// 
+        /// <summary>
+        /// ユーザからの操作を受け付けるかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AllowOperation
+        {
+            get { return _allowOperation; }
+            set
             {
-                if (bootstrap.Exists())
-                {
-                    bootstrap.Activate(args);
-                    return;
-                }
-
-                InitLog();
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                var form = new MainForm(args);
-                form.Bootstrap = bootstrap;
-                Application.Run(form);
+                if (_allowOperation == value) return;
+                _allowOperation = value;
+                RaisePropertyChanged(nameof(AllowOperation));
             }
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitLog
-        /// 
-        /// <summary>
-        /// ログを出力します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        static void InitLog()
-        {
-            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
-            var edition = (IntPtr.Size == 4) ? "x86" : "x64";
-            var type = typeof(Program);
+        #endregion
 
-            Cube.Log.Operations.Configure();
-            Cube.Log.Operations.Info(type, $"{reader.Product} {reader.Version} ({edition})");
-            Cube.Log.Operations.Info(type, $"{Environment.OSVersion}");
-            Cube.Log.Operations.Info(type, $"{Environment.Version}");
-        }
+        #region Fields
+        private bool _allowOperation = true;
+        #endregion
     }
 }

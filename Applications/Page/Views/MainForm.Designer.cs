@@ -44,12 +44,7 @@
             this.DownButton = new Cube.Forms.Button();
             this.RemoveButton = new Cube.Forms.Button();
             this.ClearButton = new Cube.Forms.Button();
-            this.FileListView = new Cube.Forms.ListView();
-            this.FileColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.TypeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.PageColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DateColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.SizeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.FileListView = new Cube.Pdf.App.Page.FileListView();
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.TitleButton = new System.Windows.Forms.PictureBox();
@@ -99,7 +94,7 @@
             // 
             // ExitButtonPanel
             // 
-            this.ExitButtonPanel.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.Shadow;
+            this.ExitButtonPanel.BackColor = System.Drawing.Color.Gainsboro;
             this.ExitButtonPanel.Controls.Add(this.ExitButton);
             this.ExitButtonPanel.Location = new System.Drawing.Point(572, 12);
             this.ExitButtonPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -124,7 +119,7 @@
             // 
             // SplitButtonPanel
             // 
-            this.SplitButtonPanel.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.Shadow;
+            this.SplitButtonPanel.BackColor = System.Drawing.Color.Gainsboro;
             this.SplitButtonPanel.Controls.Add(this.SplitButton);
             this.SplitButtonPanel.Location = new System.Drawing.Point(433, 12);
             this.SplitButtonPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -149,7 +144,7 @@
             // 
             // MergeButtonPanel
             // 
-            this.MergeButtonPanel.BackgroundImage = global::Cube.Pdf.App.Page.Properties.Resources.Shadow;
+            this.MergeButtonPanel.BackColor = System.Drawing.Color.Gainsboro;
             this.MergeButtonPanel.Controls.Add(this.MergeButton);
             this.MergeButtonPanel.Location = new System.Drawing.Point(294, 12);
             this.MergeButtonPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -177,7 +172,7 @@
             this.ContentsPanel.ColumnCount = 2;
             this.ContentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ContentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124F));
-            this.ContentsPanel.Controls.Add(this.ButtonsPanel, 0, 0);
+            this.ContentsPanel.Controls.Add(this.ButtonsPanel, 1, 0);
             this.ContentsPanel.Controls.Add(this.FileListView, 0, 0);
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContentsPanel.Location = new System.Drawing.Point(0, 35);
@@ -216,7 +211,7 @@
             this.FileButton.Name = "FileButton";
             this.FileButton.Size = new System.Drawing.Size(100, 30);
             this.FileButton.TabIndex = 0;
-            this.FileButton.Text = "追加(&O)...";
+            this.FileButton.Text = "追加(&O) ...";
             this.FileButton.UseVisualStyleBackColor = false;
             // 
             // UpButton
@@ -278,15 +273,7 @@
             // 
             // FileListView
             // 
-            this.FileListView.AllowDrop = true;
             this.FileListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.FileListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.FileColumnHeader,
-            this.TypeColumnHeader,
-            this.PageColumnHeader,
-            this.DateColumnHeader,
-            this.SizeColumnHeader});
-            this.FileListView.Converter = null;
             this.FileListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileListView.FullRowSelect = true;
             this.FileListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -299,31 +286,6 @@
             this.FileListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.FileListView.UseCompatibleStateImageBehavior = false;
             this.FileListView.View = System.Windows.Forms.View.Details;
-            // 
-            // FileColumnHeader
-            // 
-            this.FileColumnHeader.Text = "ファイル名";
-            this.FileColumnHeader.Width = 180;
-            // 
-            // TypeColumnHeader
-            // 
-            this.TypeColumnHeader.Text = "種類";
-            this.TypeColumnHeader.Width = 90;
-            // 
-            // PageColumnHeader
-            // 
-            this.PageColumnHeader.Text = "ページ数";
-            this.PageColumnHeader.Width = 70;
-            // 
-            // DateColumnHeader
-            // 
-            this.DateColumnHeader.Text = "更新日時";
-            this.DateColumnHeader.Width = 120;
-            // 
-            // SizeColumnHeader
-            // 
-            this.SizeColumnHeader.Text = "サイズ";
-            this.SizeColumnHeader.Width = 80;
             // 
             // HeaderPanel
             // 
@@ -390,26 +352,21 @@
         private System.Windows.Forms.FlowLayoutPanel FooterPanel;
         private System.Windows.Forms.TableLayoutPanel ContentsPanel;
         private System.Windows.Forms.FlowLayoutPanel ButtonsPanel;
-        private System.Windows.Forms.ColumnHeader FileColumnHeader;
-        private System.Windows.Forms.ColumnHeader PageColumnHeader;
-        private System.Windows.Forms.ColumnHeader SizeColumnHeader;
-        private System.Windows.Forms.ColumnHeader DateColumnHeader;
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox TitleButton;
         private System.Windows.Forms.PictureBox ImagePictureBox;
-        private Cube.Forms.ListView FileListView;
         private Cube.Forms.Button FileButton;
         private Cube.Forms.Button UpButton;
         private Cube.Forms.Button DownButton;
         private Cube.Forms.Button RemoveButton;
         private Cube.Forms.Button ClearButton;
-        private System.Windows.Forms.ColumnHeader TypeColumnHeader;
         private System.Windows.Forms.Panel ExitButtonPanel;
         private Forms.Button ExitButton;
         private System.Windows.Forms.Panel SplitButtonPanel;
         private Forms.Button SplitButton;
         private System.Windows.Forms.Panel MergeButtonPanel;
         private Forms.Button MergeButton;
+        private FileListView FileListView;
     }
 }
 

@@ -22,6 +22,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Cube.Log;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
@@ -127,7 +128,7 @@ namespace Cube.Pdf.App.Page
                 else if (IoEx.File.Exists(path))
                 {
                     try { Add(path); }
-                    catch (Exception /* err */) { /* see remarks */ }
+                    catch (Exception err) { this.LogWarn($"Ignore:{path}", err); }
                 }
             }
         }
@@ -172,14 +173,29 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void Merge(string path)
         {
-            var writer = new Cube.Pdf.Editing.DocumentWriter();
-            foreach (var file in Items)
+            var dir = IoEx.Path.GetDirectoryName(path);
+            var tmp = IoEx.Path.Combine(dir, Guid.NewGuid().ToString("N"));
+
+            try
             {
-                if (file is File) AddDocument(file as File, writer);
-                else AddImage(file as ImageFile, writer);
+                var writer = new Cube.Pdf.Editing.DocumentWriter();
+                foreach (var file in Items)
+                {
+                    if (file is File) AddDocument(file as File, writer);
+                    else AddImage(file as ImageFile, writer);
+                }
+                writer.Metadata = Metadata;
+                writer.Save(tmp);
+
+                var op = new Cube.FileSystem.FileHandler();
+                op.Failed += (s, e) =>
+                {
+                    e.Cancel = true;
+                    throw e.Value;
+                };
+                op.Move(tmp, path, true);
             }
-            writer.Metadata = Metadata;
-            writer.Save(path);
+            finally { IoEx.File.Delete(tmp); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -309,11 +325,14 @@ namespace Cube.Pdf.App.Page
         {
             lock (_lock)
             {
+                var inserted = offset < 0 ? -1 : Count;
                 foreach (var index in indices)
                 {
-                    var newindex = index + offset;
-                    if (newindex < 0 || newindex >= Count) break;
+                    var newindex = offset < 0 ?
+                        Math.Max(index + offset, inserted + 1) :
+                        Math.Min(index + offset, inserted - 1);
                     Move(index, newindex);
+                    inserted = newindex;
                 }
             }
         }

@@ -21,9 +21,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Reflection;
+using System.Threading.Tasks;
 using System.Linq;
 using System.Windows.Forms;
+using Cube.Log;
+using Cube.Forms.Controls;
 
 namespace Cube.Pdf.App.Page
 {
@@ -32,11 +34,11 @@ namespace Cube.Pdf.App.Page
     /// FileCollectionPresenter
     ///
     /// <summary>
-    /// MainForm と FileCollection を対応付けるためのクラスです。
+    /// FileListView と FileCollection を対応付けるためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileCollectionPresenter : Cube.Forms.PresenterBase<MainForm, FileCollection>
+    public class FileCollectionPresenter : PresenterBase<FileListView, FileCollection>
     {
         #region Constructors
 
@@ -49,21 +51,28 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public FileCollectionPresenter(MainForm view, FileCollection model)
-            : base(view, model)
+        public FileCollectionPresenter(FileListView view, FileCollection model,
+            SettingsValue settings, EventAggregator events)
+            : base(view, model, settings, events)
         {
-            View.PreviewRequired += View_PreviewRequired;
-            View.AddRequired     += View_AddRequired;
-            View.RemoveRequired  += View_RemoveRequired;
-            View.ClearRequired   += View_ClearRequired;
-            View.MoveRequired    += View_MoveRequired;
-            View.MergeRequired   += View_MergeRequired;
-            View.SplitRequired   += View_SplitRequired;
+            Events.Preview.Handle += Preview_Handle;
+            Events.Add.Handle     += Add_Handle;
+            Events.Remove.Handle  += Remove_Handle;
+            Events.Clear.Handle   += Clear_Handle;
+            Events.Move.Handle    += Move_Handle;
+            Events.Merge.Handle   += Merge_Handle;
+            Events.Split.Handle   += Split_Handle;
+
+            View.Added                += (s, e) => Events.Refresh.Raise();
+            View.Removed              += (s, e) => Events.Refresh.Raise();
+            View.Cleared              += (s, e) => Events.Refresh.Raise();
+            View.SelectedIndexChanged += (s, e) => Events.Refresh.Raise();
+            View.MouseDoubleClick     += (s, e) => Events.Preview.Raise();
 
             Model.CollectionChanged += Model_CollectionChanged;
-            Model.PasswordRequired += Model_PasswordRequired;
+            Model.PasswordRequired  += Model_PasswordRequired;
 
-            var reader = new AssemblyReader(Assembly.GetEntryAssembly());
+            var reader = new AssemblyReader(Settings.Assembly);
             Model.Metadata.Version = new Version(1, 7);
             Model.Metadata.Creator = reader.Product;
         }
@@ -72,32 +81,31 @@ namespace Cube.Pdf.App.Page
 
         #region Event handlers
 
-        #region View
+        #region Events
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_PreviewRequired
+        /// Preview_Handle
         /// 
         /// <summary>
-        /// 項目を既定のプログラムで開きます。
+        /// 選択項目のプレビュー要求が発生した時に実行されるハンドラです。
+        /// 選択されている項目の内、最初の項目を既定のプログラムで開きます。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_PreviewRequired(object sender, EventArgs e)
+        private void Preview_Handle(object sender, EventArgs e)
+            => this.LogException(()
+            => Sync(() =>
         {
-            try
-            {
-                var indices = View.SelectedIndices;
-                var index = (indices.Count > 0) ? indices[0] : -1;
-                if (index < 0 || index >= Model.Count) return;
-                System.Diagnostics.Process.Start(Model[index].FullName);
-            }
-            catch (Exception /* err */) { /* ignore errors */ }
-        }
+            var indices = View.SelectedIndices;
+            var index = (indices.Count > 0) ? indices[0] : -1;
+            if (index < 0 || index >= Model.Count) return;
+            System.Diagnostics.Process.Start(Model[index].FullName);
+        }));
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_AddRequired
+        /// Add_Handle
         /// 
         /// <summary>
         /// ファイルの追加要求が発生した時に実行されるハンドラです。
@@ -108,97 +116,108 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_AddRequired(object sender, ValueEventArgs<string[]> e)
+        private async void Add_Handle(object sender, ValueEventArgs<string[]> e)
+            => await ExecuteAsync(() =>
         {
-            Execute(async () => await Async(() => Model.Add(e.Value, 1)));
-        }
+            var files = GetFiles(e.Value as string[]);
+            if (files == null || files.Length == 0) return;
+            Model.Add(files, 1);
+        });
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_RemoveRequired
+        /// Remove_Handle
         /// 
         /// <summary>
         /// 項目の削除要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_RemoveRequired(object sender, EventArgs e)
+        private async void Remove_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() =>
         {
-            foreach (var index in View.SelectedIndices.Reverse()) Model.RemoveAt(index);
-        }
+            int[] indices = null;
+            SyncWait(() => indices = View.SelectedIndices.Descend().ToArray());
+            if (indices == null || indices.Length == 0) return;
+            foreach (var index in indices) Model.RemoveAt(index);
+        });
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_ClearRequired
+        /// Clear_Handle
         /// 
         /// <summary>
         /// 全項目の削除要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void View_ClearRequired(object sender, EventArgs e)
-        {
-            await Async(() => Model.Clear());
-        }
+        private async void Clear_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() => Model.Clear());
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_MoveRequired
+        /// Move_Handle
         /// 
         /// <summary>
         /// 項目の移動要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_MoveRequired(object sender, ValueEventArgs<int> e)
+        private async void Move_Handle(object sender, ValueEventArgs<int> e)
+            => await ExecuteAsync(() =>
         {
-            var indices = View.SelectedIndices;
-            if (indices.Count == 0) return;
+            int[] indices = null;
+            SyncWait(() => indices = View.SelectedIndices.Ascend().ToArray());
+            if (indices == null || indices.Length == 0) return;
             Model.Move(indices, e.Value);
-        }
+        });
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_MergeRequired
+        /// Merge_Handle
         /// 
         /// <summary>
         /// ファイルの結合要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_MergeRequired(object sender, ValueEventArgs<string> e)
+        private async void Merge_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() =>
         {
-            Execute(async () =>
-            {
-                await Async(() => Model.Merge(e.Value));
+            var dest = GetMergeFile();
+            if (string.IsNullOrEmpty(dest)) return;
 
-                var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
-                Model.Clear();
-                PostProcess(new string[] { e.Value }, message);
-            });
-        }
+            this.LogDebug($"Merge:{Model.Count}\tDest:{dest}");
+            Model.Merge(dest);
+
+            var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
+            Model.Clear();
+            PostProcess(new string[] { dest }, message);
+        });
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_SplitRequired
+        /// Split_Handle
         /// 
         /// <summary>
         /// ファイルの分割要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_SplitRequired(object sender, ValueEventArgs<string> e)
+        private async void Split_Handle(object sender, EventArgs e)
+            => await ExecuteAsync(() =>
         {
-            Execute(async () =>
-            {
-                var results = new List<string>();
-                await Async(() => Model.Split(e.Value, results));
+            var dest = GetSplitFolder();
+            if (string.IsNullOrEmpty(dest)) return;
 
-                var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
-                Model.Clear();
-                PostProcess(results.ToArray(), message);
-            });
-        }
+            this.LogDebug($"Split:{Model.Count}\tDest:{dest}");
+            var results = new List<string>();
+            Model.Split(dest, results);
+
+            var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
+            Model.Clear();
+            PostProcess(results.ToArray(), message);
+        });
 
         #endregion
 
@@ -214,30 +233,28 @@ namespace Cube.Pdf.App.Page
         ///
         /* --------------------------------------------------------------------- */
         private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+            => SyncWait(() =>
         {
-            SyncWait(() =>
+            switch (e.Action)
             {
-                switch (e.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        View.Insert(e.NewStartingIndex, Model[e.NewStartingIndex]);
-                        break;
-                    case NotifyCollectionChangedAction.Move:
-                        View.MoveItem(e.OldStartingIndex, e.NewStartingIndex);
-                        break;
-                    case NotifyCollectionChangedAction.Remove:
-                        View.Remove(e.OldStartingIndex);
-                        break;
-                    case NotifyCollectionChangedAction.Reset:
-                        View.ClearItems();
-                        if (Model.Count == 0) break;
-                        foreach (var item in Model) View.Add(item);
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
+                case NotifyCollectionChangedAction.Add:
+                    View.Insert(e.NewStartingIndex, Model[e.NewStartingIndex]);
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    View.MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    View.RemoveItems(new int[] { e.OldStartingIndex });
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    View.ClearItems();
+                    if (Model.Count == 0) break;
+                    foreach (var item in Model) View.Add(item);
+                    break;
+                default:
+                    break;
+            }
+        });
 
         /* --------------------------------------------------------------------- */
         ///
@@ -249,49 +266,109 @@ namespace Cube.Pdf.App.Page
         ///
         /* --------------------------------------------------------------------- */
         private void Model_PasswordRequired(object sender, QueryEventArgs<string, string> e)
+            => SyncWait(() =>
         {
-            SyncWait(() =>
-            {
-                var dialog = new PasswordForm();
-                dialog.Path = e.Query;
-                dialog.StartPosition = FormStartPosition.CenterParent;
-                var result = dialog.ShowDialog(View);
-
-                e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
-                if (!e.Cancel) e.Result = dialog.Password;
-            });
-        }
+            var dialog = Dialogs.Password(e.Query);
+            var result = dialog.ShowDialog(View);
+            e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
+            if (!e.Cancel) e.Result = dialog.Password;
+        });
 
         #endregion
 
         #endregion
 
-        #region Other private methods
+        #region Others
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Execute
+        /// ExecuteAsync
         /// 
         /// <summary>
         /// 処理を実行します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Execute(Action action)
+        private async Task ExecuteAsync(Action action)
         {
             if (action == null) return;
 
             try
             {
-                SyncWait(() => View.AllowOperation = false);
-                action();
+                Settings.AllowOperation = false;
+                await Async(() => action());
             }
             catch (Exception err)
             {
-                Logger.Error(err);
-                ShowMessage(err);
+                this.LogError(err.Message, err);
+                Dialogs.Error(err);
             }
-            finally { SyncWait(() => View.AllowOperation = true); }
+            finally { Settings.AllowOperation = true; }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// GetFiles
+        /// 
+        /// <summary>
+        /// 追加するファイルを取得します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private string[] GetFiles(string[] src)
+        {
+            if (src != null && src.Length > 0) return src;
+
+            string[] dest = null;
+            SyncWait(() =>
+            {
+                var dialog = Dialogs.Add();
+                if (dialog.ShowDialog() == DialogResult.Cancel) return;
+                dest = dialog.FileNames;
+            });
+            return dest;
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// GetMergeFile
+        /// 
+        /// <summary>
+        /// 結合したファイルの保存先を取得します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private string GetMergeFile()
+        {
+            var dest = string.Empty;
+            SyncWait(() =>
+            {
+                var dialog = Dialogs.Merge();
+                if (dialog.ShowDialog() == DialogResult.Cancel) return;
+                dest = dialog.FileName;
+            });
+            return dest;
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// GetSplitFolder
+        /// 
+        /// <summary>
+        /// 分割したファイルの保存先を取得します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private string GetSplitFolder()
+        {
+            var dest = string.Empty;
+            SyncWait(() =>
+            {
+                var dialog = Dialogs.Split();
+                if (dialog.ShowDialog() == DialogResult.Cancel) return;
+                dest = dialog.SelectedPath;
+            });
+            return dest;
         }
 
         /* --------------------------------------------------------------------- */
@@ -304,58 +381,12 @@ namespace Cube.Pdf.App.Page
         ///
         /* --------------------------------------------------------------------- */
         private void PostProcess(string[] files, string message)
+            => SyncWait(() =>
         {
-            SyncWait(() =>
-            {
-                var result = MessageBox.Show(message, Properties.Resources.MessageTitle,
-                MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (result == DialogResult.No) return;
-
-                View_AddRequired(this, new ValueEventArgs<string[]>(files));
-            });
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// ShowMessage
-        /// 
-        /// <summary>
-        /// メッセージをメッセージボックスに表示します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void ShowMessage(string message, MessageBoxIcon icon)
-        {
-            SyncWait(() =>
-            {
-                MessageBox.Show(message, 
-                    Properties.Resources.MessageTitle,
-                    MessageBoxButtons.OK,
-                    icon
-                );
-            });
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// ShowMessage
-        /// 
-        /// <summary>
-        /// 例外メッセージをメッセージボックスに表示します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void ShowMessage(Exception err)
-        {
-            SyncWait(() =>
-            {
-                MessageBox.Show(err.Message,
-                    Properties.Resources.ErrorMessageTitle,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-            });
-        }
+            var result = Dialogs.Confirm(message);
+            if (result == DialogResult.No) return;
+            Add_Handle(this, new ValueEventArgs<string[]>(files));
+        });
 
         #endregion
     }

@@ -31,6 +31,7 @@ namespace Cube.Pdf.Tests.Editing
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
+    [Parallelizable]
     [TestFixture]
     class DocumentWriterTest : DocumentResource
     {
@@ -77,7 +78,7 @@ namespace Cube.Pdf.Tests.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("bookmark.pdf", "cubepdf.png", 90)]
+        [TestCase("bookmark.pdf", "image.png", 90)]
         public void Merge_FileAndImage(string file, string image, int rotation)
         {
             var output = string.Format("Merge_FileAndImage_{0}_{1}.pdf",

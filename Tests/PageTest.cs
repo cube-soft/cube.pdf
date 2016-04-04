@@ -30,6 +30,7 @@ namespace Cube.Pdf.Tests
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
+    [Parallelizable]
     [TestFixture]
     class PageTest
     {

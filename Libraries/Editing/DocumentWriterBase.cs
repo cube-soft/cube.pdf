@@ -24,7 +24,9 @@ using System.Drawing.Imaging;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using iTextSharp.text.pdf;
-using Cube.Pdf.Editing.Extensions;
+using Cube.Log;
+using Cube.Pdf.Editing.Images;
+using Cube.Pdf.Editing.ITextReader;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing
@@ -289,7 +291,11 @@ namespace Cube.Pdf.Editing
                        new PdfReader(file.FullName, System.Text.Encoding.UTF8.GetBytes(file.Password)) :
                        new PdfReader(file.FullName);
             }
-            catch (Exception /* err */) { return null; }
+            catch (Exception err)
+            {
+                this.LogError(err.Message, err);
+                return null;
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -355,7 +361,11 @@ namespace Cube.Pdf.Editing
 
                 return dest;
             }
-            catch (Exception /* err */) { return null; }
+            catch (Exception err)
+            {
+                this.LogError(err.Message, err);
+                return null;
+            }
         }
 
         /* ----------------------------------------------------------------- */

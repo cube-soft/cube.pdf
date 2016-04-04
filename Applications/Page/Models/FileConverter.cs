@@ -19,7 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Windows.Forms;
-using Cube.Extensions;
+using Cube.Conversions;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
