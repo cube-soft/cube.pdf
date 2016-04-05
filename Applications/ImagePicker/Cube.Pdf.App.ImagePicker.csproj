@@ -63,43 +63,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\FormEx.cs" />
-    <Compile Include="DropForm.cs">
+    <Compile Include="Views\DropForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DropForm.Designer.cs">
+    <Compile Include="Views\DropForm.Designer.cs">
       <DependentUpon>DropForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageCollection.cs" />
     <Compile Include="Presenters\ProgressPresenter.cs" />
     <Compile Include="Presenters\ThumbnailPresenter.cs" />
-    <Compile Include="PreviewForm.cs">
+    <Compile Include="Views\PreviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PreviewForm.Designer.cs">
+    <Compile Include="Views\PreviewForm.Designer.cs">
       <DependentUpon>PreviewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="ProgressForm.cs">
+    <Compile Include="Views\ProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProgressForm.Designer.cs">
+    <Compile Include="Views\ProgressForm.Designer.cs">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThumbnailForm.cs">
+    <Compile Include="Views\ThumbnailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ThumbnailForm.Designer.cs">
+    <Compile Include="Views\ThumbnailForm.Designer.cs">
       <DependentUpon>ThumbnailForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="DropForm.resx">
+    <EmbeddedResource Include="Views\DropForm.resx">
       <DependentUpon>DropForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PreviewForm.resx">
+    <EmbeddedResource Include="Views\PreviewForm.resx">
       <DependentUpon>PreviewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgressForm.resx">
+    <EmbeddedResource Include="Views\ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -112,7 +111,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ThumbnailForm.resx">
+    <EmbeddedResource Include="Views\ThumbnailForm.resx">
       <DependentUpon>ThumbnailForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.manifest" />

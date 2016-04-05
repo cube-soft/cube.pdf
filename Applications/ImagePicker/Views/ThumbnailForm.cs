@@ -25,7 +25,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Cube.Pdf.App.ImageEx.Extensions;
+using Cube.Forms.Controls;
 
 namespace Cube.Pdf.App.ImageEx
 {
@@ -89,7 +89,7 @@ namespace Cube.Pdf.App.ImageEx
                 if (_filename != value)
                 {
                     _filename = value;
-                    this.UpdateTitle(value);
+                    this.UpdateText(value);
                 }
             }
         }

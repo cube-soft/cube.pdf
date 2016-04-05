@@ -162,7 +162,7 @@ namespace Cube.Pdf.App.ImageEx
             var index = indices[0];
             var filename = IoEx.Path.GetFileNameWithoutExtension(Model.Path);
             var dialog = new PreviewForm();
-            dialog.FileName = string.Format("{0} ({1}/{2})", filename, index, Model.Count);
+            dialog.FileName = $"{filename} ({index}/{Model.Count})";
             dialog.Image = Model[index];
             dialog.ShowDialog();
         }
@@ -187,7 +187,7 @@ namespace Cube.Pdf.App.ImageEx
 
         /* --------------------------------------------------------------------- */
         ///
-        /// AddImagesAsync
+        /// AddImages
         /// 
         /// <summary>
         /// 画像を View に追加します。
