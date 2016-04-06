@@ -45,9 +45,8 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DropPresenter(DropForm view, object model,
-            EventAggregator events)
-            : base(view, model, events)
+        public DropPresenter(DropForm view, EventAggregator events)
+            : base(view, null, events)
         {
             Events.Open.Handle += Open_Handle;
         }
@@ -91,8 +90,8 @@ namespace Cube.Pdf.App.Picker
             var ext = IoEx.Path.GetExtension(path).ToLower();
             if (!ContainsExtension(ext) || !IoEx.File.Exists(path)) return;
 
-            var model = new ImageCollection(path);
             var view  = new ProgressForm();
+            var model = new ImageCollection(path);
             var _     = new ProgressPresenter(view, model, Events);
 
             view.Show();
