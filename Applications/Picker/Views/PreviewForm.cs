@@ -71,11 +71,9 @@ namespace Cube.Pdf.App.Picker
             get { return PictureBox.Image; }
             set
             {
-                if (PictureBox.Image != value)
-                {
-                    PictureBox.Image = value;
-                    ResizeForm(value.Size);
-                }
+                if (PictureBox.Image == value) return;
+                PictureBox.Image = value;
+                ResizeForm(value.Size);
             }
         }
 
@@ -93,11 +91,9 @@ namespace Cube.Pdf.App.Picker
             get { return _filename; }
             set
             {
-                if (_filename != value)
-                {
-                    _filename = value;
-                    this.UpdateText(value);
-                }
+                if (_filename == value) return;
+                _filename = value;
+                this.UpdateText(value);
             }
         }
 
@@ -116,8 +112,8 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         protected override void OnClientSizeChanged(EventArgs e)
         {
-            ResizeImage();
             base.OnClientSizeChanged(e);
+            ResizeImage();
         }
 
         #endregion
