@@ -94,6 +94,7 @@ namespace Cube.Pdf.App.Picker
             var model = new ImageCollection(path);
             var _     = new ProgressPresenter(view, model, Events);
 
+            view.Aggregator = Events;
             view.Show();
         }));
 
