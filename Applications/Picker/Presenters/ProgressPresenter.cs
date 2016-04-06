@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Windows.Forms;
+using Cube.Log;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Picker
@@ -46,20 +47,84 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ProgressPresenter(ProgressForm view, ImageCollection model,
-            EventAggregator events)
+        public ProgressPresenter(ProgressForm view, ImageCollection model, EventAggregator events)
             : base(view, model, events)
         {
+            Events.SaveAll.Handle += SaveAll_Handle;
+            Events.Preview.Handle += Preview_Handle;
+
             View.FileName = IoEx.Path.GetFileName(Model.Path);
             View.Shown      += View_Shown;
-            View.FormClosed += View_Closed;
-            View.Save       += View_Save;
-            View.Preview    += View_Preview;
+            View.FormClosed += (s, e) => Model.Dispose();
         }
 
         #endregion
 
         #region Event handlers
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SaveAll_Handle
+        /// 
+        /// <summary>
+        /// 抽出画像が保存される時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void SaveAll_Handle(object sender, EventArgs e)
+            => SyncWait(async () =>
+        {
+            try
+            {
+                var dialog = Dialogs.Save(Model.Path);
+                if (dialog.ShowDialog() == DialogResult.Cancel) return;
+
+                View.AllowOperation = false;
+                await Async(() => Model.Save(dialog.SelectedPath));
+            }
+            catch (Exception err) { this.LogError(err.Message, err); }
+            finally { View.Close(); }
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Preview_Handle
+        /// 
+        /// <summary>
+        /// 抽出画像のプレビュー画面を表示する時に実行されるハンドラです。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private void Preview_Handle(object sender, EventArgs e)
+            => Sync(() =>
+        {
+            var sview = new ThumbnailForm();
+            var presenter = new ThumbnailPresenter(sview, Model, Events);
+
+            var completed = false;
+            presenter.Completed += (s, ev) => { completed = true; };
+
+            var removed = false;
+            sview.Removed += (s, ev) => { removed = true; };
+            sview.FormClosed += (s, ev) =>
+            {
+                if (completed) View.Close();
+                else
+                {
+                    View.Show();
+                    if (removed) Model.Restore();
+                }
+            };
+
+            View.Hide();
+            sview.Show();
+        });
+
+        #region EventAggregator
+
+        #endregion
+
+        #region Views
 
         /* ----------------------------------------------------------------- */
         ///
@@ -88,76 +153,7 @@ namespace Cube.Pdf.App.Picker
             }
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Closed
-        /// 
-        /// <summary>
-        /// 画面が閉じられた時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private void View_Closed(object sender, EventArgs ev)
-        {
-            Model.Dispose();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Save
-        /// 
-        /// <summary>
-        /// 抽出画像が保存される時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private async void View_Save(object sender, EventArgs ev)
-        {
-            var dialog = new FolderBrowserDialog();
-            dialog.Description = Properties.Resources.SaveFolder;
-            dialog.SelectedPath = IoEx.Path.GetDirectoryName(Model.Path);
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
-
-            try
-            {
-                SyncWait(() => View.AllowOperation = false);
-                await Async(() => Model.Save(dialog.SelectedPath));
-            }
-            finally { SyncWait(() => View.Close()); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// View_Preview
-        /// 
-        /// <summary>
-        /// 抽出画像のプレビュー画面を表示する時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private void View_Preview(object sender, EventArgs ev)
-        {
-            var preview   = new ThumbnailForm();
-            var presenter = new ThumbnailPresenter(preview, Model, Events);
-
-            var completed = false;
-            presenter.Completed += (s, e) => { completed = true; };
-
-            var removed = false;
-            preview.Removed += (s, e) => { removed = true; };
-            preview.FormClosed += (s, e) =>
-            {
-                if (completed) View.Close();
-                else
-                {
-                    View.Show();
-                    if (removed) Model.Restore();
-                }
-            };
-
-            View.Hide();
-            preview.Show();
-        }
+        #endregion
 
         #endregion
 

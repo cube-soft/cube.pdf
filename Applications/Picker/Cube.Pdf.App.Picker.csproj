@@ -65,6 +65,7 @@
     <Compile Include="Models\EventAggregator.cs" />
     <Compile Include="Presenters\DropPresenter.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
+    <Compile Include="Views\Dialogs.cs" />
     <Compile Include="Views\DropForm.cs">
       <SubType>Form</SubType>
     </Compile>

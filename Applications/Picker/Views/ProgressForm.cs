@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using Cube.Forms.Controls;
 
@@ -50,14 +51,27 @@ namespace Cube.Pdf.App.Picker
         {
             InitializeComponent();
 
-            ExitButton.Click += (s, e) => Close();
-            SaveButton.Click += (s, e) => OnSave(e);
-            PreviewButton.Click += (s, e) => OnPreview(e);
+            ExitButton.Click    += (s, e) => Close();
+            SaveButton.Click    += (s, e) => Aggregator?.SaveAll.Raise();
+            PreviewButton.Click += (s, e) => Aggregator?.Preview.Raise();
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Aggregator
+        /// 
+        /// <summary>
+        /// イベントを集約したオブジェクトを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public EventAggregator Aggregator { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -69,6 +83,8 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool AllowOperation
         {
             get { return _op; }
@@ -135,64 +151,6 @@ namespace Cube.Pdf.App.Picker
                                     ProgressBarStyle.Continuous;
                 ProgressBar.Value = Math.Max(Math.Min(value, 100), 0);
             }
-        }
-
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Preview
-        /// 
-        /// <summary>
-        /// 抽出した画像のプレビュー画面を表示する時に発生するイベントです。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public EventHandler Preview;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Save
-        /// 
-        /// <summary>
-        /// 抽出した画像を保存する時に発生するイベントです。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public EventHandler Save;
-
-        #endregion
-
-        #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnPreview
-        /// 
-        /// <summary>
-        /// 抽出画像のプレビュー画面を表示する時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnPreview(EventArgs e)
-        {
-            if (Preview != null) Preview(this, e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnSave
-        /// 
-        /// <summary>
-        /// 抽出画像を保存する時に実行されるハンドラです。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnSave(EventArgs e)
-        {
-            if (Save != null) Save(this, e);
         }
 
         #endregion
