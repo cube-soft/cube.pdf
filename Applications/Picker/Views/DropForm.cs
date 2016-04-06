@@ -24,7 +24,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Cube.Log;
 
-namespace Cube.Pdf.App.ImageEx
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -263,7 +263,7 @@ namespace Cube.Pdf.App.ImageEx
 
                     var model = new ImageCollection(path);
                     var view = new ProgressForm();
-                    var presenter = new ProgressPresenter(view, model);
+                    var presenter = new ProgressPresenter(view, model, Aggregator);
                     view.Show();
                 }
                 catch (Exception err)
@@ -304,6 +304,10 @@ namespace Cube.Pdf.App.ImageEx
             Cursor = Cursors.Default;
         }
 
+        #endregion
+
+        #region Models
+        private EventAggregator Aggregator = new EventAggregator();
         #endregion
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.App.ImageEx
+﻿namespace Cube.Pdf.App.Picker
 {
     partial class PreviewForm
     {

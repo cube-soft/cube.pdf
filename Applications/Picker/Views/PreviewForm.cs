@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ProgressForm.cs
+/// PreviewForm.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -19,40 +19,38 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using Cube.Forms.Controls;
 
-namespace Cube.Pdf.App.ImageEx
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ProgressForm
+    /// PreviewForm
     ///
     /// <summary>
-    /// 進捗状況を表示するクラスです。
+    /// 画像のプレビュー画面を表示するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class ProgressForm : Cube.Forms.Form
+    public partial class PreviewForm : Cube.Forms.Form
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ProgressForm
+        /// PreviewForm
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ProgressForm()
+        public PreviewForm()
         {
             InitializeComponent();
-
-            ExitButton.Click += (s, e) => Close();
-            SaveButton.Click += (s, e) => OnSave(e);
-            PreviewButton.Click += (s, e) => OnPreview(e);
+            PictureBox.Click += (s, e) => Close();
         }
 
         #endregion
@@ -61,23 +59,23 @@ namespace Cube.Pdf.App.ImageEx
 
         /* ----------------------------------------------------------------- */
         ///
-        /// AllowOperation
+        /// Image
         /// 
         /// <summary>
-        /// ユーザに各種処理を行う事を許可するかどうかを示す値を取得
-        /// または設定します。
+        /// プレビュー画面に表示するイメージを取得または設定します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        public bool AllowOperation
+        public Image Image
         {
-            get { return _op; }
+            get { return PictureBox.Image; }
             set
             {
-                if (_op == value) return;
-                _op = value;
-                PreviewButton.Enabled = value;
-                SaveButton.Enabled = value;
+                if (PictureBox.Image != value)
+                {
+                    PictureBox.Image = value;
+                    ResizeForm(value.Size);
+                }
             }
         }
 
@@ -95,111 +93,83 @@ namespace Cube.Pdf.App.ImageEx
             get { return _filename; }
             set
             {
-                if (_filename == value) return;
-                _filename = value;
-                this.UpdateText(value);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Message
-        /// 
-        /// <summary>
-        /// 進捗に関するメッセージを取得または設定します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public string Message
-        {
-            get { return MessageLabel.Text; }
-            set { MessageLabel.Text = value; }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Value
-        /// 
-        /// <summary>
-        /// 進捗状況を取得または設定します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public int Value
-        {
-            get { return ProgressBar.Value; }
-            set
-            {
-                ProgressBar.Style = (value < 0) ?
-                                    ProgressBarStyle.Marquee :
-                                    ProgressBarStyle.Continuous;
-                ProgressBar.Value = Math.Max(Math.Min(value, 100), 0);
+                if (_filename != value)
+                {
+                    _filename = value;
+                    this.UpdateText(value);
+                }
             }
         }
 
         #endregion
 
-        #region Events
+        #region Override methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Preview
+        /// OnClientSizeChanged
         /// 
         /// <summary>
-        /// 抽出した画像のプレビュー画面を表示する時に発生するイベントです。
+        /// プレビュー画面サイズが変更された時に実行されるハンドラです。
         /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public EventHandler Preview;
-
-        /* ----------------------------------------------------------------- */
         ///
-        /// Save
-        /// 
-        /// <summary>
-        /// 抽出した画像を保存する時に発生するイベントです。
-        /// </summary>
-        /// 
         /* ----------------------------------------------------------------- */
-        public EventHandler Save;
+        protected override void OnClientSizeChanged(EventArgs e)
+        {
+            ResizeImage();
+            base.OnClientSizeChanged(e);
+        }
 
         #endregion
 
-        #region Virtual methods
+        #region Other private methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnPreview
+        /// ResizeForm
         /// 
         /// <summary>
-        /// 抽出画像のプレビュー画面を表示する時に実行されるハンドラです。
+        /// プレビュー画面をリサイズします。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPreview(EventArgs e)
+        private void ResizeForm(Size size)
         {
-            if (Preview != null) Preview(this, e);
+            var area   = Screen.GetWorkingArea(this);
+            var width  = Math.Min(Math.Max(size.Width, MinimumSize.Width), area.Width);
+            var height = Math.Min(Math.Max(size.Height, MinimumSize.Height), area.Height);
+
+            ClientSize = new Size(width, height);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnSave
+        /// ResizeImage
         /// 
         /// <summary>
-        /// 抽出画像を保存する時に実行されるハンドラです。
+        /// 画像を表示する PictureBox をリサイズします。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnSave(EventArgs e)
+        private void ResizeImage()
         {
-            if (Save != null) Save(this, e);
+            var width  = LayoutPanel.ClientSize.Width;
+            var height = (PictureBox.Image != null) ?
+                         (int)(LayoutPanel.ClientSize.Width * (PictureBox.Image.Height / (double)PictureBox.Image.Width)) :
+                         LayoutPanel.ClientSize.Height;
+
+            var x = 0;
+            var y = Math.Max(ClientSize.Height - height, 0) / 2;
+
+            PictureBox.Location = new Point(x, y);
+            PictureBox.Width    = width;
+            PictureBox.Height   = height;
         }
 
         #endregion
 
         #region Fields
         private string _filename = string.Empty;
-        private bool _op = true;
         #endregion
     }
 }

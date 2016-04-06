@@ -22,7 +22,7 @@ using System;
 using System.Windows.Forms;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.App.ImageEx
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -33,7 +33,7 @@ namespace Cube.Pdf.App.ImageEx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ThumbnailPresenter : Cube.Forms.PresenterBase<ThumbnailForm, ImageCollection>
+    public class ThumbnailPresenter : PresenterBase<ThumbnailForm, ImageCollection>
     {
         #region Constructors
 
@@ -46,8 +46,9 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model)
-            : base(view, model)
+        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model,
+            EventAggregator events)
+            : base(view, model, events)
         {
             View.FileName = IoEx.Path.GetFileNameWithoutExtension(Model.Path);
             View.Save    += View_Save;

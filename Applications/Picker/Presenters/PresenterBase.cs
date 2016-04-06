@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Program.cs
+/// PresenterBase.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -18,49 +18,52 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Windows.Forms;
-
-namespace Cube.Pdf.App.ImageEx
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
-    ///
+    /// PresenterBase
+    /// 
     /// <summary>
-    /// メインプログラムを表すクラスです。
+    /// CubePDF ImagePicker で作成する Presenter の基底となるクラスです。
     /// </summary>
-    ///
+    /// 
     /* --------------------------------------------------------------------- */
-    static class Program
+    public class PresenterBase<TView, TModel>
+        : Cube.Forms.PresenterBase<TView, TModel>
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// PresenterBase
         /// 
         /// <summary>
-        /// アプリケーションのメイン エントリ ポイントです。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args)
+        public PresenterBase(TView view, TModel model, EventAggregator events)
+            : base(view, model)
         {
-            var name = Application.ProductName.ToLower();
-            using (var bootstrap = new Bootstrap(name))
-            {
-                if (bootstrap.Exists())
-                {
-                    bootstrap.Activate(args);
-                    return;
-                }
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                var form = new DropForm(args);
-                form.Bootstrap = bootstrap;
-                Application.Run(form);
-            }
+            Events = events;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Events
+        /// 
+        /// <summary>
+        /// イベント情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventAggregator Events { get; }
+
+        #endregion
     }
 }

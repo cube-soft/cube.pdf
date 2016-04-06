@@ -22,7 +22,7 @@ using System;
 using System.Windows.Forms;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.App.ImageEx
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -33,7 +33,7 @@ namespace Cube.Pdf.App.ImageEx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ProgressPresenter : Cube.Forms.PresenterBase<ProgressForm, ImageCollection>
+    public class ProgressPresenter : PresenterBase<ProgressForm, ImageCollection>
     {
         #region Constructors
 
@@ -46,8 +46,9 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ProgressPresenter(ProgressForm view, ImageCollection model)
-            : base(view, model)
+        public ProgressPresenter(ProgressForm view, ImageCollection model,
+            EventAggregator events)
+            : base(view, model, events)
         {
             View.FileName = IoEx.Path.GetFileName(Model.Path);
             View.Shown      += View_Shown;
@@ -137,7 +138,7 @@ namespace Cube.Pdf.App.ImageEx
         private void View_Preview(object sender, EventArgs ev)
         {
             var preview   = new ThumbnailForm();
-            var presenter = new ThumbnailPresenter(preview, Model);
+            var presenter = new ThumbnailPresenter(preview, Model, Events);
 
             var completed = false;
             presenter.Completed += (s, e) => { completed = true; };

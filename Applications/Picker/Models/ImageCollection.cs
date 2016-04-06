@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using Cube.Pdf.Editing;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.App.ImageEx
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -119,10 +119,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public void Cancel()
-        {
-            if (_source != null) _source.Cancel();
-        }
+        public void Cancel() => _source?.Cancel();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -434,9 +431,7 @@ namespace Cube.Pdf.App.ImageEx
         /// 
         /* ----------------------------------------------------------------- */
         private ProgressEventArgs<string> Create(int percentage, string message)
-        {
-            return new ProgressEventArgs<string>(percentage, message);
-        }
+            => new ProgressEventArgs<string>(percentage, message);
 
         #endregion
 
