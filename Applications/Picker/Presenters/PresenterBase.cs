@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FormEx.cs
+/// PresenterBase.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -18,40 +18,52 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System.Reflection;
-using System.Windows.Forms;
-
-namespace Cube.Pdf.App.ImageEx.Extensions
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FormEx
-    ///
+    /// PresenterBase
+    /// 
     /// <summary>
-    /// Form の拡張用クラスです。
+    /// CubePDF ImagePicker で作成する Presenter の基底となるクラスです。
     /// </summary>
-    ///
+    /// 
     /* --------------------------------------------------------------------- */
-    public static class FormEx
+    public class PresenterBase<TView, TModel>
+        : Cube.Forms.PresenterBase<TView, TModel>
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateTitle
+        /// PresenterBase
         /// 
         /// <summary>
-        /// フォームのタイトルを更新します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void UpdateTitle(this Form form, string str)
+        public PresenterBase(TView view, TModel model, EventAggregator events)
+            : base(view, model)
         {
-            var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
-            var ss  = new System.Text.StringBuilder();
-            ss.Append(str);
-            if (!string.IsNullOrEmpty(str) && !string.IsNullOrEmpty(asm.Title)) ss.Append(" - ");
-            ss.Append(asm.Title);
-
-            form.Text = ss.ToString();
+            Events = events;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Events
+        /// 
+        /// <summary>
+        /// イベント情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventAggregator Events { get; }
+
+        #endregion
     }
 }

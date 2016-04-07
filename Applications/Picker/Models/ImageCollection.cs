@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using Cube.Pdf.Editing;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.App.ImageEx
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -119,10 +119,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public void Cancel()
-        {
-            if (_source != null) _source.Cancel();
-        }
+        public void Cancel() => _source?.Cancel();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -175,42 +172,10 @@ namespace Cube.Pdf.App.ImageEx
         {
             lock (_lock)
             {
+                if (Items.Count == _allImages.Count) return;
                 Items.Clear();
                 foreach (var image in _allImages) Items.Add(image);
             }
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// GetImage
-        /// 
-        /// <summary>
-        /// 指定されたインデックスに対応する画像を upper に応じてリサイズして
-        /// 返します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        public Image GetImage(int index, Size upperSize)
-        {
-            if (index < 0 || index >= Items.Count) return null;
-
-            var image  = Items[index];
-            var scale  = image.Width > image.Height ?
-                         Math.Min(upperSize.Width / (double)image.Width, 1.0) :
-                         Math.Min(upperSize.Height / (double)image.Height, 1.0);
-
-            var width  = (int)(image.Width * scale);
-            var height = (int)(image.Height * scale);
-
-            var x = (upperSize.Width - width) / 2;
-            var y = (upperSize.Height - height) / 2;
-
-            var dest = new Bitmap(upperSize.Width, upperSize.Height);
-            using (var gs = Graphics.FromImage(dest))
-            {
-                gs.DrawImage(image, x, y, width, height);
-            }
-            return dest;
         }
 
         /* ----------------------------------------------------------------- */
@@ -275,7 +240,7 @@ namespace Cube.Pdf.App.ImageEx
         {
             e.Cancel = true;
             throw new EncryptionException(string.Format(
-                Properties.Resources.PasswordMessage,
+                Properties.Resources.MessagePassword,
                 IoEx.Path.GetFileName(e.Query)
             ));
         }
@@ -300,7 +265,7 @@ namespace Cube.Pdf.App.ImageEx
                 var name = IoEx.Path.GetFileNameWithoutExtension(Path);
                 progress.Report(Create(
                     -1,
-                    string.Format(Properties.Resources.BeginMessage, name)
+                    string.Format(Properties.Resources.MessageBegin, name)
                 ));
 
                 var result = ExtractImages(progress);
@@ -308,13 +273,13 @@ namespace Cube.Pdf.App.ImageEx
                 progress.Report(Create(
                     100,
                     result.Value > 0 ?
-                    string.Format(Properties.Resources.EndMessage, name, result.Key, result.Value) :
-                    string.Format(Properties.Resources.NotFoundMessage, name, result.Key)
+                    string.Format(Properties.Resources.MessageEnd, name, result.Key, result.Value) :
+                    string.Format(Properties.Resources.MessageNotFound, name, result.Key)
                 ));
             }
             catch (OperationCanceledException /* err */)
             {
-                progress.Report(Create(0, Properties.Resources.CancelMessage));
+                progress.Report(Create(0, Properties.Resources.MessageCancel));
             }
             catch (Exception err)
             {
@@ -363,7 +328,7 @@ namespace Cube.Pdf.App.ImageEx
                 var pagenum = i + 1;
                 progress.Report(Create(
                    (int)(i / (double)src.Pages.Count * 100.0),
-                   string.Format(Properties.Resources.ProcessMessage, name, pagenum, src.Pages.Count)
+                   string.Format(Properties.Resources.MessageProcess, name, pagenum, src.Pages.Count)
                 ));
 
                 var images = src.GetImages(pagenum);
@@ -434,9 +399,7 @@ namespace Cube.Pdf.App.ImageEx
         /// 
         /* ----------------------------------------------------------------- */
         private ProgressEventArgs<string> Create(int percentage, string message)
-        {
-            return new ProgressEventArgs<string>(percentage, message);
-        }
+            => new ProgressEventArgs<string>(percentage, message);
 
         #endregion
 
