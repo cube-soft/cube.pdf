@@ -51,7 +51,7 @@ namespace Cube.Pdf.App.Page
             DownMenu    = new ToolStripMenuItem(Properties.Resources.MenuDown);
             RemoveMenu  = new ToolStripMenuItem(Properties.Resources.MenuRemove);
 
-            InitialzieShortcutKeys();
+            InitializeShortcutKeys();
             InitializeEvents();
             InitializeMenu();
         }
@@ -121,14 +121,14 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitialzieShortcutKeys
+        /// InitializeShortcutKeys
         /// 
         /// <summary>
         /// ショートカットキーを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InitialzieShortcutKeys()
+        private void InitializeShortcutKeys()
         {
             Menu(PreviewMenu).ShortcutKeys = Keys.Control | Keys.R;
             Menu(UpMenu).ShortcutKeys      = Keys.Control | Keys.Up;
@@ -141,7 +141,7 @@ namespace Cube.Pdf.App.Page
         /// InitializeEvents
         /// 
         /// <summary>
-        /// ショートカットキーを初期化します。
+        /// 各種イベントを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

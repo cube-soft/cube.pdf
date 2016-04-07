@@ -136,8 +136,7 @@ namespace Cube.Pdf.App.Page
         private async void Remove_Handle(object sender, EventArgs e)
             => await ExecuteAsync(() =>
         {
-            int[] indices = null;
-            SyncWait(() => indices = View.SelectedIndices.Descend().ToArray());
+            var indices = SyncWait(() => View.SelectedIndices.Descend().ToArray());
             if (indices == null || indices.Length == 0) return;
             foreach (var index in indices) Model.RemoveAt(index);
         });
@@ -166,8 +165,7 @@ namespace Cube.Pdf.App.Page
         private async void Move_Handle(object sender, ValueEventArgs<int> e)
             => await ExecuteAsync(() =>
         {
-            int[] indices = null;
-            SyncWait(() => indices = View.SelectedIndices.Ascend().ToArray());
+            var indices = SyncWait(() => View.SelectedIndices.Ascend().ToArray());
             if (indices == null || indices.Length == 0) return;
             Model.Move(indices, e.Value);
         });
@@ -318,15 +316,12 @@ namespace Cube.Pdf.App.Page
         private string[] GetFiles(string[] src)
         {
             if (src != null && src.Length > 0) return src;
-
-            string[] dest = null;
-            SyncWait(() =>
+            return SyncWait(() =>
             {
                 var dialog = Dialogs.Add();
-                if (dialog.ShowDialog() == DialogResult.Cancel) return;
-                dest = dialog.FileNames;
+                if (dialog.ShowDialog() == DialogResult.Cancel) return null;
+                return dialog.FileNames;
             });
-            return dest;
         }
 
         /* --------------------------------------------------------------------- */
@@ -339,16 +334,12 @@ namespace Cube.Pdf.App.Page
         ///
         /* --------------------------------------------------------------------- */
         private string GetMergeFile()
+            =>  SyncWait(() =>
         {
-            var dest = string.Empty;
-            SyncWait(() =>
-            {
-                var dialog = Dialogs.Merge();
-                if (dialog.ShowDialog() == DialogResult.Cancel) return;
-                dest = dialog.FileName;
-            });
-            return dest;
-        }
+            var dialog = Dialogs.Merge();
+            if (dialog.ShowDialog() == DialogResult.Cancel) return string.Empty;
+            return dialog.FileName;
+        });
 
         /* --------------------------------------------------------------------- */
         ///
@@ -360,16 +351,12 @@ namespace Cube.Pdf.App.Page
         ///
         /* --------------------------------------------------------------------- */
         private string GetSplitFolder()
+            => SyncWait(() =>
         {
-            var dest = string.Empty;
-            SyncWait(() =>
-            {
-                var dialog = Dialogs.Split();
-                if (dialog.ShowDialog() == DialogResult.Cancel) return;
-                dest = dialog.SelectedPath;
-            });
-            return dest;
-        }
+            var dialog = Dialogs.Split();
+            if (dialog.ShowDialog() == DialogResult.Cancel) return string.Empty;
+            return dialog.SelectedPath;
+        });
 
         /* --------------------------------------------------------------------- */
         ///

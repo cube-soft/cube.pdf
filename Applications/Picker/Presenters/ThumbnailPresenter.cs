@@ -98,8 +98,7 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         private async void Remove_Handle(object sender, EventArgs e)
         {
-            int[] indices = null;
-            SyncWait(() => indices = View.SelectedIndices.Descend().ToArray());
+            int[] indices = SyncWait(() => View.SelectedIndices.Descend().ToArray());
             if (indices == null || indices.Length <= 0) return;
 
             await Async(() => { foreach (var index in indices) Model.RemoveAt(index); });
