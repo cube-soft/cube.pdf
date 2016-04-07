@@ -70,24 +70,6 @@ namespace Cube.Pdf.App.Picker.Properties {
         }
         
         /// <summary>
-        ///   {0} のファイル構造を解析中です... に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string BeginMessage {
-            get {
-                return ResourceManager.GetString("BeginMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   処理をキャンセルしました。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CancelMessage {
-            get {
-                return ResourceManager.GetString("CancelMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap CloseButton {
@@ -104,24 +86,6 @@ namespace Cube.Pdf.App.Picker.Properties {
             get {
                 object obj = ResourceManager.GetObject("DragDrop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   PDF ファイルをドラッグ&amp;ドロップ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string DragDropMessage {
-            get {
-                return ResourceManager.GetString("DragDropMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   {0} ({1} ページ) から {2} 個の画像を抽出しました。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string EndMessage {
-            get {
-                return ResourceManager.GetString("EndMessage", resourceCulture);
             }
         }
         
@@ -156,47 +120,92 @@ namespace Cube.Pdf.App.Picker.Properties {
         }
         
         /// <summary>
-        ///   {0} ({1} ページ) から画像を見つける事ができませんでした。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string NotFoundMessage {
-            get {
-                return ResourceManager.GetString("NotFoundMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   {0} はパスワードで保護されているため画像を抽出できませんでした。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string PasswordMessage {
-            get {
-                return ResourceManager.GetString("PasswordMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   プレビュー画面を表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string PreviewMenu {
+        internal static string MenuPreviewImage {
             get {
-                return ResourceManager.GetString("PreviewMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   {0} の {1}/{2} ページ目から画像を抽出しています... に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ProcessMessage {
-            get {
-                return ResourceManager.GetString("ProcessMessage", resourceCulture);
+                return ResourceManager.GetString("MenuPreviewImage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   選択項目を一覧から削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string RemoveMenu {
+        internal static string MenuRemove {
             get {
-                return ResourceManager.GetString("RemoveMenu", resourceCulture);
+                return ResourceManager.GetString("MenuRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   選択項目を保存 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSave {
+            get {
+                return ResourceManager.GetString("MenuSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   全ての項目を選択 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSelectAll {
+            get {
+                return ResourceManager.GetString("MenuSelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} のファイル構造を解析中です... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageBegin {
+            get {
+                return ResourceManager.GetString("MessageBegin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   処理をキャンセルしました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageCancel {
+            get {
+                return ResourceManager.GetString("MessageCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} ({1} ページ) から {2} 個の画像を抽出しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageEnd {
+            get {
+                return ResourceManager.GetString("MessageEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} ({1} ページ) から画像を見つける事ができませんでした。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageNotFound {
+            get {
+                return ResourceManager.GetString("MessageNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} はパスワードで保護されているため画像を抽出できませんでした。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessagePassword {
+            get {
+                return ResourceManager.GetString("MessagePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} の {1}/{2} ページ目から画像を抽出しています... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageProcess {
+            get {
+                return ResourceManager.GetString("MessageProcess", resourceCulture);
             }
         }
         
@@ -210,20 +219,11 @@ namespace Cube.Pdf.App.Picker.Properties {
         }
         
         /// <summary>
-        ///   選択項目を保存 に類似しているローカライズされた文字列を検索します。
+        ///   PDF ファイルをドラッグ&amp;ドロップ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SaveMenu {
+        internal static string TitleDragDrop {
             get {
-                return ResourceManager.GetString("SaveMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   全ての項目を選択 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SelectAllMenu {
-            get {
-                return ResourceManager.GetString("SelectAllMenu", resourceCulture);
+                return ResourceManager.GetString("TitleDragDrop", resourceCulture);
             }
         }
     }

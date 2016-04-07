@@ -19,7 +19,11 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Reflection;
+using System.Linq;
 using System.Windows.Forms;
+using Cube.Forms.Controls;
+using Cube.Forms.Images;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Picker
@@ -46,116 +50,31 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model,
-            EventAggregator events)
+        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model, EventAggregator events)
             : base(view, model, events)
         {
+            View.Shown      += View_Shown;
+            View.FormClosed += View_FormClosed;
             View.FileName = IoEx.Path.GetFileNameWithoutExtension(Model.Path);
-            View.Save    += View_Save;
-            View.SaveAll += View_SaveAll;
-            View.Preview += View_Preview;
-            View.Removed += View_Removed;
-
-            AddImages();
-        }
-
-        #endregion
-
-        #region Events
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Completed
-        /// 
-        /// <summary>
-        /// 操作が完了した時に発生するイベントです。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// このイベントは View.Save, View.SaveAll いずれかのイベントで
-        /// 画像の保存処理が正常に完了した時に発生します。
-        /// </remarks>
-        ///
-        /* --------------------------------------------------------------------- */
-        public EventHandler Completed;
-
-        #endregion
-
-        #region Virtual methods
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// OnCompleted
-        /// 
-        /// <summary>
-        /// 操作が完了した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        protected virtual void OnCompleted(EventArgs e)
-        {
-            if (Completed != null) Completed(this, e);
         }
 
         #endregion
 
         #region Event handlers
 
-        /* --------------------------------------------------------------------- */
-        ///
-        /// View_Save
-        /// 
-        /// <summary>
-        /// 選択した抽出画像を保存する時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private async void View_Save(object sender, EventArgs ev)
-        {
-            var dialog = new FolderBrowserDialog();
-            dialog.Description = Properties.Resources.SaveFolder;
-            dialog.SelectedPath = IoEx.Path.GetDirectoryName(Model.Path);
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
-
-            var indices = View.SelectedIndices;
-            await Async(() => Model.Save(dialog.SelectedPath, indices));
-
-            OnCompleted(new EventArgs());
-            View.Close();
-        }
+        #region EventAggregator
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_SaveAll
-        /// 
-        /// <summary>
-        /// 全ての抽出画像を保存する時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private async void View_SaveAll(object sender, EventArgs ev)
-        {
-            var dialog = new FolderBrowserDialog();
-            dialog.Description = Properties.Resources.SaveFolder;
-            dialog.SelectedPath = IoEx.Path.GetDirectoryName(Model.Path);
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
-
-            await Async(() => Model.Save(dialog.SelectedPath));
-
-            OnCompleted(new EventArgs());
-            View.Close();
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// View_Preview
+        /// PreviewImage_Handle
         /// 
         /// <summary>
         /// 選択した抽出画像のプレビュー画面を表示する時に実行されるハンドラです。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_Preview(object sender, EventArgs ev)
+        private void PreviewImage_Handle(object sender, EventArgs e)
+            => SyncWait(() =>
         {
             var indices = View.SelectedIndices;
             if (indices == null || indices.Count <= 0) return;
@@ -166,44 +85,99 @@ namespace Cube.Pdf.App.Picker
             dialog.FileName = $"{filename} ({index}/{Model.Count})";
             dialog.Image = Model[index];
             dialog.ShowDialog();
+        });
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Remove_Handle
+        /// 
+        /// <summary>
+        /// 選択した抽出画像を削除する時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private async void Remove_Handle(object sender, EventArgs e)
+        {
+            int[] indices = null;
+            SyncWait(() => indices = View.SelectedIndices.Descend().ToArray());
+            if (indices == null || indices.Length <= 0) return;
+
+            await Async(() => { foreach (var index in indices) Model.RemoveAt(index); });
         }
 
         /* --------------------------------------------------------------------- */
         ///
-        /// View_Removed
+        /// SaveComplete_Handle
         /// 
         /// <summary>
-        /// 画像が削除された時に実行されるハンドラです。
+        /// 保存処理が完了した時に実行されるハンドラです。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void View_Removed(object sender, ValueEventArgs<int> ev)
+        private void SaveComplete_Handle(object sender, EventArgs e)
+           => SyncWait(() =>
         {
-            Model.RemoveAt(ev.Value);
-        }
+            View.Complete = true;
+            View.Close();
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version_Handle
+        ///
+        /// <summary>
+        /// バージョン情報を表示するイベントが発生した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Version_Handle(object sender, EventArgs e)
+            => SyncWait(() => Dialogs.Version(Assembly.GetEntryAssembly()));
 
         #endregion
 
-        #region Other private methods
+        #region View
 
         /* --------------------------------------------------------------------- */
         ///
-        /// AddImages
+        /// View_Shown
         /// 
         /// <summary>
-        /// 画像を View に追加します。
+        /// フォームの表示直後に実行されるハンドラです。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void AddImages()
+        private void View_Shown(object sender, EventArgs e)
         {
-            var upper = View.ImageSize;
-            for (var i = 0; i < Model.Count; ++i)
-            {
-                var image = Model.GetImage(i, upper);
-                if (image != null) View.Add(image);
-            }
+            View.Aggregator = Events;
+            Events.PreviewImage.Handle += PreviewImage_Handle;
+            Events.Remove.Handle += Remove_Handle;
+            Events.SaveComplete.Handle += SaveComplete_Handle;
+            Events.Version.Handle += Version_Handle;
+
+            View.Cursor = Cursors.WaitCursor;
+            View.AddRange(Model.Select(x => x.Reduce(View.ImageSize)));
+            View.Cursor = Cursors.Default;
         }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// View_FormClosed
+        /// 
+        /// <summary>
+        /// フォームが閉じられた時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void View_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            View.Aggregator = null;
+            Events.PreviewImage.Handle -= PreviewImage_Handle;
+            Events.Remove.Handle -= Remove_Handle;
+            Events.SaveComplete.Handle -= SaveComplete_Handle;
+            Events.Version.Handle -= Version_Handle;
+        }
+
+        #endregion
 
         #endregion
     }

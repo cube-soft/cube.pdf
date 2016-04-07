@@ -50,17 +50,20 @@ namespace Cube.Pdf.App.Picker
         public ProgressPresenter(ProgressForm view, ImageCollection model, EventAggregator events)
             : base(view, model, events)
         {
-            Events.SaveAll.Handle += SaveAll_Handle;
+            View.FileName = IoEx.Path.GetFileName(Model.Path);
+            View.Aggregator = Events;
+
+            Events.Save.Handle += Save_Handle;
             Events.Preview.Handle += Preview_Handle;
 
-            View.FileName = IoEx.Path.GetFileName(Model.Path);
-            View.Shown      += View_Shown;
-            View.FormClosed += (s, e) => Model.Dispose();
+            View.Shown += View_Shown;
         }
 
         #endregion
 
         #region Event handlers
+
+        #region EventAggregator
 
         /* ----------------------------------------------------------------- */
         ///
@@ -71,20 +74,30 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void SaveAll_Handle(object sender, EventArgs e)
-            => SyncWait(async () =>
+        private async void Save_Handle(object sender, ValueEventArgs<int[]> e)
         {
+            var path = GetSaveFile();
+            if (string.IsNullOrEmpty(path)) return;
+
+            SyncWait(() => View.AllowOperation = false);
+
             try
             {
-                var dialog = Dialogs.Save(Model.Path);
-                if (dialog.ShowDialog() == DialogResult.Cancel) return;
-
-                View.AllowOperation = false;
-                await Async(() => Model.Save(dialog.SelectedPath));
+                await Async(() =>
+                {
+                    if (e.Value == null) Model.Save(path);
+                    else Model.Save(path);
+                });
+                Events.SaveComplete.Raise();
             }
             catch (Exception err) { this.LogError(err.Message, err); }
-            finally { View.Close(); }
-        });
+
+            SyncWait(() =>
+            {
+                View.AllowOperation = true;
+                if (View.Visible) View.Close();
+            });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -98,29 +111,20 @@ namespace Cube.Pdf.App.Picker
         private void Preview_Handle(object sender, EventArgs e)
             => Sync(() =>
         {
+            Model.Restore();
+
             var sview = new ThumbnailForm();
-            var presenter = new ThumbnailPresenter(sview, Model, Events);
+            var _     = new ThumbnailPresenter(sview, Model, Events);
 
-            var completed = false;
-            presenter.Completed += (s, ev) => { completed = true; };
-
-            var removed = false;
-            sview.Removed += (s, ev) => { removed = true; };
             sview.FormClosed += (s, ev) =>
             {
-                if (completed) View.Close();
-                else
-                {
-                    View.Show();
-                    if (removed) Model.Restore();
-                }
+                if (sview.Complete) View.Close();
+                else View.Show();
             };
 
             View.Hide();
             sview.Show();
         });
-
-        #region EventAggregator
 
         #endregion
 
@@ -140,17 +144,12 @@ namespace Cube.Pdf.App.Picker
             var progress = new Progress<ProgressEventArgs<string>>();
             progress.ProgressChanged += (s, e) => Report(e);
 
-            try
-            {
-                SyncWait(() => View.AllowOperation = false);
-                await Model.ExtractAsync(progress);
+            SyncWait(() => View.AllowOperation = false);
 
-            }
+            try { await Model.ExtractAsync(progress); }
             catch (Exception err) { Report(0, err.Message); }
-            finally
-            {
-                if (Model.Count > 0) SyncWait(() => View.AllowOperation = true);
-            }
+
+            if (Model.Count > 0) SyncWait(() => View.AllowOperation = true);
         }
 
         #endregion
@@ -174,6 +173,24 @@ namespace Cube.Pdf.App.Picker
             View.Value = (int)pecentage;
             View.Message = message;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetSaveFile
+        /// 
+        /// <summary>
+        /// 保存ファイル名を取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        private string GetSaveFile()
+            => SyncWait(() =>
+        {
+            var dialog = Dialogs.Save(Model.Path);
+            return dialog.ShowDialog() == DialogResult.Cancel ?
+                   string.Empty :
+                   dialog.SelectedPath;
+        });
 
         #endregion
     }

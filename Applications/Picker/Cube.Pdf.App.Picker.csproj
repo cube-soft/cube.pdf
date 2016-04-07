@@ -95,6 +95,9 @@
     <Compile Include="Views\ThumbnailForm.Designer.cs">
       <DependentUpon>ThumbnailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ThumbnailMenuControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="Views\DropForm.resx">
       <DependentUpon>DropForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -120,24 +120,12 @@
   <data name="About" xml:space="preserve">
     <value>CubePDF ImagePicker について</value>
   </data>
-  <data name="BeginMessage" xml:space="preserve">
-    <value>{0} のファイル構造を解析中です...</value>
-  </data>
-  <data name="CancelMessage" xml:space="preserve">
-    <value>処理をキャンセルしました。</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="CloseButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CloseButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DragDrop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DragDrop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DragDropMessage" xml:space="preserve">
-    <value>PDF ファイルをドラッグ&amp;ドロップ</value>
-  </data>
-  <data name="EndMessage" xml:space="preserve">
-    <value>{0} ({1} ページ) から {2} 個の画像を抽出しました。</value>
   </data>
   <data name="HeaderImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HeaderImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,28 +136,40 @@
   <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="NotFoundMessage" xml:space="preserve">
-    <value>{0} ({1} ページ) から画像を見つける事ができませんでした。</value>
-  </data>
-  <data name="PasswordMessage" xml:space="preserve">
-    <value>{0} はパスワードで保護されているため画像を抽出できませんでした。</value>
-  </data>
-  <data name="PreviewMenu" xml:space="preserve">
+  <data name="MenuPreviewImage" xml:space="preserve">
     <value>プレビュー画面を表示</value>
   </data>
-  <data name="ProcessMessage" xml:space="preserve">
-    <value>{0} の {1}/{2} ページ目から画像を抽出しています...</value>
-  </data>
-  <data name="RemoveMenu" xml:space="preserve">
+  <data name="MenuRemove" xml:space="preserve">
     <value>選択項目を一覧から削除</value>
+  </data>
+  <data name="MenuSave" xml:space="preserve">
+    <value>選択項目を保存</value>
+  </data>
+  <data name="MenuSelectAll" xml:space="preserve">
+    <value>全ての項目を選択</value>
+  </data>
+  <data name="MessageBegin" xml:space="preserve">
+    <value>{0} のファイル構造を解析中です...</value>
+  </data>
+  <data name="MessageCancel" xml:space="preserve">
+    <value>処理をキャンセルしました。</value>
+  </data>
+  <data name="MessageEnd" xml:space="preserve">
+    <value>{0} ({1} ページ) から {2} 個の画像を抽出しました。</value>
+  </data>
+  <data name="MessageNotFound" xml:space="preserve">
+    <value>{0} ({1} ページ) から画像を見つける事ができませんでした。</value>
+  </data>
+  <data name="MessagePassword" xml:space="preserve">
+    <value>{0} はパスワードで保護されているため画像を抽出できませんでした。</value>
+  </data>
+  <data name="MessageProcess" xml:space="preserve">
+    <value>{0} の {1}/{2} ページ目から画像を抽出しています...</value>
   </data>
   <data name="SaveFolder" xml:space="preserve">
     <value>抽出画像を保存するフォルダを選択して下さい。</value>
   </data>
-  <data name="SaveMenu" xml:space="preserve">
-    <value>選択項目を保存</value>
-  </data>
-  <data name="SelectAllMenu" xml:space="preserve">
-    <value>全ての項目を選択</value>
+  <data name="TitleDragDrop" xml:space="preserve">
+    <value>PDF ファイルをドラッグ&amp;ドロップ</value>
   </data>
 </root>

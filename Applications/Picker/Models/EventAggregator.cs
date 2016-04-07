@@ -31,19 +31,22 @@ namespace Cube.Pdf.App.Picker
     /* --------------------------------------------------------------------- */
     public class EventAggregator
     {
-        #region Events
+        #region EventArgs
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// All
         ///
         /// <summary>
-        /// PDF ファイルを開いて解析するイベントです。
+        /// 全ての画像を表します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<string[]>> Open
-            = new RelayEvent<ValueEventArgs<string[]>>();
+        public static ValueEventArgs<int[]> All = new ValueEventArgs<int[]>(null);
+
+        #endregion
+
+        #region Events
 
         /* ----------------------------------------------------------------- */
         ///
@@ -54,18 +57,19 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent Save { get; } = new RelayEvent();
+        public RelayEvent<ValueEventArgs<int[]>> Save { get; }
+            = new RelayEvent<ValueEventArgs<int[]>>();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveAll
+        /// SaveComplete
         ///
         /// <summary>
-        /// 全ての画像を保存するイベントです。
+        /// 画像の保存が完了した事を表すイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent SaveAll { get; } = new RelayEvent();
+        public RelayEvent SaveComplete { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,6 +103,17 @@ namespace Cube.Pdf.App.Picker
         ///
         /* ----------------------------------------------------------------- */
         public RelayEvent Remove { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version
+        ///
+        /// <summary>
+        /// バージョン情報を表示するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Version { get; } = new RelayEvent();
 
         #endregion
     }

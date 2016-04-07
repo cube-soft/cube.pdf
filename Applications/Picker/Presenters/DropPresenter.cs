@@ -32,7 +32,7 @@ namespace Cube.Pdf.App.Picker
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class DropPresenter : PresenterBase<DropForm, object>
+    public class DropPresenter : Cube.Forms.PresenterBase<DropForm, object>
     {
         #region Constructors
 
@@ -45,10 +45,10 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DropPresenter(DropForm view, EventAggregator events)
-            : base(view, null, events)
+        public DropPresenter(DropForm view)
+            : base(view, null)
         {
-            Events.Open.Handle += Open_Handle;
+            View.Open += View_Open;
         }
 
         #endregion
@@ -64,7 +64,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Open_Handle(object sender, ValueEventArgs<string[]> e)
+        private void View_Open(object sender, ValueEventArgs<string[]> e)
         {
             if (e.Value == null) return;
             foreach (var path in e.Value) OpenProgress(path);
@@ -90,11 +90,12 @@ namespace Cube.Pdf.App.Picker
             var ext = IoEx.Path.GetExtension(path).ToLower();
             if (!ContainsExtension(ext) || !IoEx.File.Exists(path)) return;
 
-            var view  = new ProgressForm();
-            var model = new ImageCollection(path);
-            var _     = new ProgressPresenter(view, model, Events);
-
-            view.Aggregator = Events;
+            var view = new ProgressForm();
+            new ProgressPresenter(
+                view,
+                new ImageCollection(path),
+                new EventAggregator()
+            );
             view.Show();
         }));
 
@@ -108,11 +109,7 @@ namespace Cube.Pdf.App.Picker
         ///
         /* ----------------------------------------------------------------- */
         private bool ContainsExtension(string ext)
-        {
-            bool result = false;
-            SyncWait(() => result = View.AllowExtensions.Contains(ext));
-            return result;
-        }
+            => SyncWait(() => View.AllowExtensions.Contains(ext));
 
         #endregion
     }

@@ -52,7 +52,7 @@ namespace Cube.Pdf.App.Picker
             InitializeComponent();
 
             ExitButton.Click    += (s, e) => Close();
-            SaveButton.Click    += (s, e) => Aggregator?.SaveAll.Raise();
+            SaveButton.Click    += (s, e) => Aggregator?.Save.Raise(EventAggregator.All);
             PreviewButton.Click += (s, e) => Aggregator?.Preview.Raise();
         }
 

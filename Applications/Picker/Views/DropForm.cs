@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Cube.Forms;
 
 namespace Cube.Pdf.App.Picker
 {
@@ -70,7 +69,7 @@ namespace Cube.Pdf.App.Picker
         public DropForm(string[] src)
             : this()
         {
-            Aggregator.Open.Raise(ValueEventArgs.Create(src));
+            OnOpen(ValueEventArgs.Create(src));
         }
 
         #endregion
@@ -87,6 +86,37 @@ namespace Cube.Pdf.App.Picker
         ///
         /* ----------------------------------------------------------------- */
         public IList<string> AllowExtensions { get; } = new List<string>();
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// ファイルを開くときに発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler<ValueEventArgs<string[]>> Open;
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnOpen
+        /// 
+        /// <summary>
+        /// Open イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnOpen(ValueEventArgs<string[]> e)
+            => Open?.Invoke(this, e);
 
         #endregion
 
@@ -120,7 +150,7 @@ namespace Cube.Pdf.App.Picker
         {
             base.OnReceived(e);
             var args = e.Value as string[];
-            Aggregator.Open.Raise(ValueEventArgs.Create(args));
+            OnOpen(ValueEventArgs.Create(args));
         }
 
         /* ----------------------------------------------------------------- */
@@ -132,10 +162,10 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnNcHitTest(QueryEventArgs<Point, Position> e)
+        protected override void OnNcHitTest(QueryEventArgs<Point, Cube.Forms.Position> e)
         {
             base.OnNcHitTest(e);
-            if (e.Result == Position.Caption) ShowCloseButton();
+            if (e.Result == Cube.Forms.Position.Caption) ShowCloseButton();
             else HideCloseButton();
         }
 
@@ -169,7 +199,7 @@ namespace Cube.Pdf.App.Picker
         {
             base.OnDragDrop(e);
             var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
-            Aggregator.Open.Raise(ValueEventArgs.Create(files));
+            OnOpen(ValueEventArgs.Create(files));
         }
 
         #endregion
@@ -230,7 +260,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new DropPresenter(this, Aggregator);
+            new DropPresenter(this);
         }
 
         #endregion
@@ -259,10 +289,6 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         private void HideCloseButton() => ExitButton.Image = null;
 
-        #endregion
-
-        #region Models
-        private EventAggregator Aggregator = new EventAggregator();
         #endregion
     }
 }

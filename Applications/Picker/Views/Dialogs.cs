@@ -18,6 +18,7 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System.Reflection;
 using System.Windows.Forms;
 using IoEx = System.IO;
 
@@ -50,5 +51,34 @@ namespace Cube.Pdf.App.Picker
             dest.SelectedPath = IoEx.Path.GetDirectoryName(path);
             return dest;
         }
+
+        #region MessageBox
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Version
+        /// 
+        /// <summary>
+        /// バージョン情報を表示します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public static DialogResult Version(Assembly assembly)
+        {
+            var dest = new Cube.Forms.VersionForm
+            {
+                Assembly = assembly,
+                Logo = Properties.Resources.Logo,
+                Description = string.Empty,
+                Height = 280,
+                ShowInTaskbar = false,
+                StartPosition = FormStartPosition.CenterParent,
+            };
+            dest.Version.Digit = 3;
+
+            return dest.ShowDialog();
+        }
+
+        #endregion
     }
 }
