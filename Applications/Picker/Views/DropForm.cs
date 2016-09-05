@@ -54,7 +54,7 @@ namespace Cube.Pdf.App.Picker
             InitializePresenters();
 
             AllowExtensions.Add(".pdf");
-            Caption = DropPanel;
+            //Caption = DropPanel;
         }
 
         /* ----------------------------------------------------------------- */
