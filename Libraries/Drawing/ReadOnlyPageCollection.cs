@@ -47,7 +47,7 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection() : this(IntPtr.Zero, null, 0) { }
+        public ReadOnlyPageCollection() : this(IntPtr.Zero, null) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -58,10 +58,9 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(IntPtr core, FileBase file, int count)
+        public ReadOnlyPageCollection(IntPtr core, FileBase file)
         {
             File  = file;
-            Count = count;
             _core = core;
         }
 
@@ -89,7 +88,7 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count { get; }
+        public int Count => File?.PageCount ?? 0;
 
         #endregion
 
