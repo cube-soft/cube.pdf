@@ -111,11 +111,22 @@ namespace Cube.Pdf.Drawing.MuPdf
             CallingConvention = CallingConvention.Cdecl,
             CharSet = CharSet.Ansi
         )]
-        public static extern int GetBitmap(IntPtr core,
+        public static extern IntPtr GetBitmap(IntPtr core,
             out int width, out int height,
             float dpiX, float dpiY, int rotation, int colorspace,
             bool rotateLandscapePages, bool convertToLetter,
             out int length, int maxSize);
+
+        /* ----------------------------------------------------------------- */
+        /// FreeRenderedPage
+        /* ----------------------------------------------------------------- */
+        [DllImport(
+            LibName,
+            EntryPoint = "MuPDF_FreeRenderedPage",
+            CallingConvention = CallingConvention.Cdecl,
+            CharSet = CharSet.Ansi
+        )]
+        public static extern void FreeRenderedPage(IntPtr core);
 
         /* ----------------------------------------------------------------- */
         /// GetWidth
