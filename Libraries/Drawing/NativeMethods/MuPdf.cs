@@ -177,7 +177,7 @@ namespace Cube.Pdf.Drawing.MuPdf
         /* ----------------------------------------------------------------- */
         [DllImport(
             LibName,
-            EntryPoint = "MuPDF_GetAutor",
+            EntryPoint = "MuPDF_GetAuthor",
             CallingConvention = CallingConvention.Cdecl,
             CharSet = CharSet.Ansi
         )]
