@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf", "Libraries\Cube.Pdf.csproj", "{5D742956-06A5-40F9-939D-5EFF66B78D8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Drawing", "Libraries\Drawing\Cube.Pdf.Drawing.csproj", "{F42FCC0C-14C3-4504-BA40-433AB923A581}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Editing", "Libraries\Editing\Cube.Pdf.Editing.csproj", "{77E24CB7-79B1-4797-8477-EAD767685795}"
 EndProject
@@ -39,6 +41,10 @@ Global
 		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F42FCC0C-14C3-4504-BA40-433AB923A581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F42FCC0C-14C3-4504-BA40-433AB923A581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F42FCC0C-14C3-4504-BA40-433AB923A581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F42FCC0C-14C3-4504-BA40-433AB923A581}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
