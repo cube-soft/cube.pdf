@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Detail\DocumentResource.cs" />
+    <Compile Include="Drawing\DocumentReaderTest.cs" />
     <Compile Include="Editing\DocumentReaderTest.cs" />
     <Compile Include="Detail\FileResource.cs" />
     <Compile Include="Editing\DocumentWriterTest.cs" />
@@ -62,6 +63,10 @@
     <ProjectReference Include="..\Libraries\Cube.Pdf.csproj">
       <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
       <Name>Cube.Pdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Drawing\Cube.Pdf.Drawing.csproj">
+      <Project>{f42fcc0c-14c3-4504-ba40-433ab923a581}</Project>
+      <Name>Cube.Pdf.Drawing</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libraries\Editing\Cube.Pdf.Editing.csproj">
       <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>

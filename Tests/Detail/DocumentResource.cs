@@ -19,7 +19,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using Cube.Pdf.Editing;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Tests
@@ -33,7 +32,8 @@ namespace Cube.Pdf.Tests
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    class DocumentResource : FileResource, IDisposable
+    class DocumentResource<TDocumentReader> : FileResource, IDisposable
+        where TDocumentReader : IDocumentReader, new()
     {
         #region Constructors and destructors
 
@@ -75,7 +75,7 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected DocumentReader Create(string filename)
+        protected TDocumentReader Create(string filename)
         {
             return Create(filename, string.Empty);
         }
@@ -94,12 +94,13 @@ namespace Cube.Pdf.Tests
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected DocumentReader Create(string filename, string password)
+        protected TDocumentReader Create(string filename, string password)
         {
             if (!_cache.ContainsKey(filename))
             {
                 var src = IoEx.Path.Combine(Examples, filename);
-                var reader = new DocumentReader(src, password);
+                var reader = new TDocumentReader();
+                reader.Open(src, password);
                 _cache.Add(filename, reader);
             }
             return _cache[filename];
@@ -148,7 +149,7 @@ namespace Cube.Pdf.Tests
 
         #region Fields
         private bool _disposed = false;
-        private Dictionary<string, DocumentReader> _cache = new Dictionary<string, DocumentReader>();
+        private Dictionary<string, TDocumentReader> _cache = new Dictionary<string, TDocumentReader>();
         #endregion
     }
 }
