@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FileMenuControl.cs
+/// ThumbnailMenuControl.cs
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -20,39 +20,38 @@
 /* ------------------------------------------------------------------------- */
 using System.Windows.Forms;
 
-namespace Cube.Pdf.App.Page
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileMenuControl
+    /// ThumbnailMenuControl
     ///
     /// <summary>
-    /// ファイルリスト上で表示されるコンテキストメニューを表すクラスです。
+    /// サムネイル画面で表示されるコンテキストメニューを表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileMenuControl : ContextMenuStrip
+    public class ThumbnailMenuControl : ContextMenuStrip
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileMenuControl
-        /// 
+        /// ThumbnailMenuControl
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileMenuControl() : base()
+        public ThumbnailMenuControl() : base()
         {
-            PreviewMenu = new ToolStripMenuItem(Properties.Resources.MenuPreview);
-            UpMenu      = new ToolStripMenuItem(Properties.Resources.MenuUp);
-            DownMenu    = new ToolStripMenuItem(Properties.Resources.MenuDown);
-            RemoveMenu  = new ToolStripMenuItem(Properties.Resources.MenuRemove);
+            PreviewMenu   = new ToolStripMenuItem(Properties.Resources.MenuPreviewImage);
+            SelectAllMenu = new ToolStripMenuItem(Properties.Resources.MenuSelectAll);
+            SaveMenu      = new ToolStripMenuItem(Properties.Resources.MenuSave);
+            RemoveMenu    = new ToolStripMenuItem(Properties.Resources.MenuRemove);
 
             InitializeShortcutKeys();
-            InitializeEvents();
             InitializeMenu();
         }
 
@@ -84,25 +83,25 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpMenu
+        /// SelectAll
         /// 
         /// <summary>
-        /// 上へメニューを取得します。
+        /// 全て選択メニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem UpMenu { get; }
+        public ToolStripItem SelectAllMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DownMenu
+        /// Save
         /// 
         /// <summary>
-        /// 下へメニューを取得します。
+        /// 保存メニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem DownMenu { get; }
+        public ToolStripItem SaveMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -121,7 +120,7 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitializeShortcutKeys
+        /// InitialzieShortcutKeys
         /// 
         /// <summary>
         /// ショートカットキーを初期化します。
@@ -130,27 +129,10 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeShortcutKeys()
         {
-            Menu(PreviewMenu).ShortcutKeys = Keys.Control | Keys.R;
-            Menu(UpMenu).ShortcutKeys      = Keys.Control | Keys.Up;
-            Menu(DownMenu).ShortcutKeys    = Keys.Control | Keys.Down;
-            Menu(RemoveMenu).ShortcutKeys  = Keys.Control | Keys.D;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeEvents
-        /// 
-        /// <summary>
-        /// 各種イベントを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeEvents()
-        {
-            PreviewMenu.Click += (s, e) => Aggregator?.Preview.Raise();
-            UpMenu.Click      += (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(-1));
-            DownMenu.Click    += (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(1));
-            RemoveMenu.Click  += (s, e) => Aggregator?.Remove.Raise();
+            Menu(PreviewMenu).ShortcutKeys   = Keys.Control | Keys.R;
+            Menu(SelectAllMenu).ShortcutKeys = Keys.Control | Keys.A;
+            Menu(SaveMenu).ShortcutKeys      = Keys.Control | Keys.S;
+            Menu(RemoveMenu).ShortcutKeys    = Keys.Control | Keys.D;
         }
 
         /* ----------------------------------------------------------------- */
@@ -168,10 +150,10 @@ namespace Cube.Pdf.App.Page
             {
                 PreviewMenu,
                 new ToolStripSeparator(),
-                UpMenu,
-                DownMenu,
-                new ToolStripSeparator(),
+                SaveMenu,
                 RemoveMenu,
+                new ToolStripSeparator(),
+                SelectAllMenu,
             });
         }
 

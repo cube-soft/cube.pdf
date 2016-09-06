@@ -22,9 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Cube.Log;
 
-namespace Cube.Pdf.App.ImageEx
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -51,13 +50,11 @@ namespace Cube.Pdf.App.ImageEx
         public DropForm()
         {
             InitializeComponent();
-            InitializeToolTip();
+            InitializeEvents();
+            InitializePresenters();
 
             AllowExtensions.Add(".pdf");
-
-            ExitButton.Click += (s, e) => Close();
-            ExitButton.MouseEnter += (s, e) => ShowCloseButton(Cursors.Hand);
-            ExitButton.MouseLeave += (s, e) => HideCloseButton();
+            //Caption = DropPanel;
         }
 
         /* ----------------------------------------------------------------- */
@@ -72,7 +69,7 @@ namespace Cube.Pdf.App.ImageEx
         public DropForm(string[] src)
             : this()
         {
-            Create(src);
+            OnOpen(ValueEventArgs.Create(src));
         }
 
         #endregion
@@ -92,36 +89,84 @@ namespace Cube.Pdf.App.ImageEx
 
         #endregion
 
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// ファイルを開くときに発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EventHandler<ValueEventArgs<string[]>> Open;
+
+        #endregion
+
+        #region Virtual methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnOpen
+        /// 
+        /// <summary>
+        /// Open イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnOpen(ValueEventArgs<string[]> e)
+            => Open?.Invoke(this, e);
+
+        #endregion
+
         #region Override methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnMouseEnter
+        /// OnLoad
         /// 
         /// <summary>
-        /// マウスポインタがフォーム内に移動した時に実行されます。
+        /// フォームが表示される直前に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnMouseEnter(EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
-            ShowCloseButton(Cursors.Default);
-            base.OnMouseEnter(e);
+            base.OnLoad(e);
+            InitializeLayout();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnMouseLeave
+        /// OnReceived
         /// 
         /// <summary>
-        /// マウスポインタがフォーム外に移動した時に実行されます。
+        /// 他プロセスからデータ受信時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnMouseLeave(EventArgs e)
+        protected override void OnReceived(ValueEventArgs<object> e)
         {
-            HideCloseButton();
-            base.OnMouseLeave(e);
+            base.OnReceived(e);
+            var args = e.Value as string[];
+            OnOpen(ValueEventArgs.Create(args));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnNcHitTest
+        /// 
+        /// <summary>
+        /// ヒットテスト時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnNcHitTest(QueryEventArgs<Point, Cube.Forms.Position> e)
+        {
+            base.OnNcHitTest(e);
+            if (e.Result == Cube.Forms.Position.Caption) ShowCloseButton();
+            else HideCloseButton();
         }
 
         /* ----------------------------------------------------------------- */
@@ -153,48 +198,13 @@ namespace Cube.Pdf.App.ImageEx
         protected override void OnDragDrop(DragEventArgs e)
         {
             base.OnDragDrop(e);
-
             var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
-            if (files == null) return;
-            Create(files);
-        }
-
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnLoad
-        /// 
-        /// <summary>
-        /// フォームが表示される直前に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnLoad(EventArgs arg)
-        {
-            InitializeLayout();
-            base.OnLoad(arg);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnReceived
-        /// 
-        /// <summary>
-        /// 他プロセスからデータ受信時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnReceived(ValueEventArgs<object> e)
-        {
-            base.OnReceived(e);
-
-            var args = e.Value as string[];
-            if (args != null) Create(args);
+            OnOpen(ValueEventArgs.Create(files));
         }
 
         #endregion
 
-        #region Other private methods
+        #region Initialize methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -207,72 +217,55 @@ namespace Cube.Pdf.App.ImageEx
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            Width  = BackgroundImage.Width;
-            Height = BackgroundImage.Height;
+            Width  = DropPanel.BackgroundImage.Width;
+            Height = DropPanel.BackgroundImage.Height;
 
             StartPosition = FormStartPosition.Manual;
             var area = Screen.GetWorkingArea(this);
             var x = area.Width - Width - 10;
             var y = 10;
-            Location = new System.Drawing.Point(x, y);
+            Location = new Point(x, y);
 
             var cx = Width - ExitButton.Width - 1;
             var cy = 1;
             ExitButton.Location = new Point(cx, cy);
             ExitButton.Image = null;
+            ExitButton.Cursor = Cursors.Hand;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitializeToolTip
+        /// InitializeEvents
         /// 
         /// <summary>
-        /// ツールチップの表示を初期化します。
+        /// 各種イベントを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InitializeToolTip()
+        private void InitializeEvents()
         {
-            var tips = new ToolTip();
-
-            tips.InitialDelay =  300;
-            tips.ReshowDelay  = 1000;
-            tips.AutoPopDelay = 3000;
-            tips.ShowAlways   = true;
-
-            tips.SetToolTip(this, Properties.Resources.DragDropMessage);
+            ExitButton.Click      += (s, e) => Close();
+            ExitButton.MouseEnter += (s, e) => ShowCloseButton();
+            ExitButton.MouseLeave += (s, e) => HideCloseButton();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// InitializePresenters
         /// 
         /// <summary>
-        /// 画像抽出用の Model/View/Presenter を生成します。
+        /// 各種 Presenter を初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Create(string[] files)
+        private void InitializePresenters()
         {
-            foreach (var path in files)
-            {
-                try
-                {
-                    var ext = System.IO.Path.GetExtension(path).ToLower();
-                    if (!AllowExtensions.Contains(ext) || !System.IO.File.Exists(path)) continue;
-
-                    var model = new ImageCollection(path);
-                    var view = new ProgressForm();
-                    var presenter = new ProgressPresenter(view, model);
-                    view.Show();
-                }
-                catch (Exception err)
-                {
-                    this.LogError(err.Message, err);
-                    continue;
-                }
-            }
+            new DropPresenter(this);
         }
+
+        #endregion
+
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
@@ -283,11 +276,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ShowCloseButton(Cursor cursor)
-        {
-            ExitButton.Image = Properties.Resources.CloseButton;
-            Cursor = cursor;
-        }
+        private void ShowCloseButton() => ExitButton.Image = Properties.Resources.CloseButton;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -298,11 +287,7 @@ namespace Cube.Pdf.App.ImageEx
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void HideCloseButton()
-        {
-            ExitButton.Image = null;
-            Cursor = Cursors.Default;
-        }
+        private void HideCloseButton() => ExitButton.Image = null;
 
         #endregion
     }
