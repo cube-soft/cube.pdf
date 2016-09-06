@@ -57,5 +57,79 @@ namespace Cube.Pdf.Tests.Drawing
         }
 
         #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetPage
+        ///
+        /// <summary>
+        /// 各ページの情報を取得するテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        #region GetPage
+
+        [TestCase("rotation.pdf", 1, 595, 842)]
+        public void GetPage_Size(string filename, int number, int width, int height)
+        {
+            Assert.That(
+                Create(filename).GetPage(number).Size,
+                Is.EqualTo(new Size(width, height))
+            );
+        }
+
+        [TestCase("rotation.pdf", 1, 72)]
+        public void GetPage_Resolution(string filename, int number, int expected)
+        {
+            Assert.That(
+                Create(filename).GetPage(number).Resolution,
+                Is.EqualTo(new Point(expected, expected))
+            );
+        }
+
+        [TestCase("rotation.pdf", 1, 0)]
+        [TestCase("rotation.pdf", 2, 90)]
+        [TestCase("rotation.pdf", 3, 180)]
+        [TestCase("rotation.pdf", 4, 270)]
+        public void GetPage_Rotation(string filename, int number, int expected)
+        {
+            Assert.That(
+                Create(filename).GetPage(number).Rotation,
+                Is.EqualTo(expected)
+            );
+        }
+
+        #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateImage
+        ///
+        /// <summary>
+        /// Image オブジェクトを生成するテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        #region CreateImage
+
+        [TestCase("rotation.pdf", "", 1)]
+        [TestCase("rotation.pdf", "", 2)]
+        [TestCase("rotation.pdf", "", 3)]
+        [TestCase("rotation.pdf", "", 4)]
+        public void CreateImage(string filename, string password, int pagenum)
+        {
+            var power  = 1.0;
+            var reader = Create(filename, password);
+            var page   = reader.GetPage(pagenum);
+
+            using (var image = reader.CreateImage(pagenum, power))
+            {
+                var dest = IoEx.Path.Combine(Results, $"CreateImage-{pagenum}.png");
+                image.Save(dest);
+                Assert.That(IoEx.File.Exists(dest), Is.True);
+            }
+        }
+
+        #endregion
     }
 }
