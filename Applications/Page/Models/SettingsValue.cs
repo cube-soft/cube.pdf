@@ -76,12 +76,7 @@ namespace Cube.Pdf.App.Page
         public bool AllowOperation
         {
             get { return _allowOperation; }
-            set
-            {
-                if (_allowOperation == value) return;
-                _allowOperation = value;
-                RaisePropertyChanged(nameof(AllowOperation));
-            }
+            set { SetProperty(ref _allowOperation, value); }
         }
 
         #endregion
