@@ -45,13 +45,25 @@ namespace Cube.Pdf.App.Proxy
         [STAThread]
         static void Main(string[] args)
         {
+            var type = typeof(Program);
             Cube.Log.Operations.Configure();
-            Cube.Log.Operations.Info(typeof(Program), System.Reflection.Assembly.GetExecutingAssembly());
+            Cube.Log.Operations.Info(type, System.Reflection.Assembly.GetExecutingAssembly());
 
-            var parser = new LooseArguments(args, '/');
-            var username = parser.Contains("UserName") ? parser.Get("UserName") : Environment.UserName;
+            try
+            {
+                var parser = new Arguments(args, '/');
+                if (!parser.HasOption("Exec"))
+                {
+                    Cube.Log.Operations.Warn(type, "Exec not found");
+                    return;
+                }
 
-            try { Cube.Processes.Process.StartAs("cubepdf.exe", args, username); }
+                Cube.Processes.Process.StartAs(
+                    parser.Get("Exec"),
+                    args,
+                    parser.HasOption("UserName") ? parser.Get("UserName") : Environment.UserName
+                );
+            }
             catch (Exception err) { Cube.Log.Operations.Error(typeof(Program), err.Message, err); }
 
             // Application.EnableVisualStyles();
