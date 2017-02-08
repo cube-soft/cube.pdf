@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Program.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -47,11 +45,11 @@ namespace Cube.Pdf.App.Picker
         static void Main(string[] args)
         {
             var name = Application.ProductName.ToLower();
-            using (var bootstrap = new Bootstrap(name))
+            using (var bootstrap = new Cube.Processes.Bootstrap(name))
             {
-                if (bootstrap.Exists())
+                if (bootstrap.Exists)
                 {
-                    bootstrap.Activate(args);
+                    bootstrap.Send(args);
                     return;
                 }
 

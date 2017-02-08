@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// MenuPresenter.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -32,7 +30,7 @@ namespace Cube.Pdf.App.Page
     ///
     /* --------------------------------------------------------------------- */
     public class MenuPresenter
-        : PresenterBase<MainForm, SettingsValue>
+        : PresenterBase<MainForm, Settings>
     {
         #region Constructors
 
@@ -45,7 +43,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public MenuPresenter(MainForm view, SettingsValue model,
+        public MenuPresenter(MainForm view, Settings model,
             EventAggregator events)
             : base(view, model, model, events)
         {

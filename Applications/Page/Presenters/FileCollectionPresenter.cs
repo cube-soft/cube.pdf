@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FileCollectionPresenter.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -52,7 +50,7 @@ namespace Cube.Pdf.App.Page
         ///
         /* --------------------------------------------------------------------- */
         public FileCollectionPresenter(FileListView view, FileCollection model,
-            SettingsValue settings, EventAggregator events)
+            Settings settings, EventAggregator events)
             : base(view, model, settings, events)
         {
             Events.Preview.Handle += Preview_Handle;

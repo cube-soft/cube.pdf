@@ -44,9 +44,11 @@
     <Reference Include="Cube.Forms">
       <HintPath>..\..\..\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Cube.Images">
+      <HintPath>..\..\..\lib\net45\Cube.Images.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,14 +64,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\EventAggregator.cs" />
-    <Compile Include="Models\SettingsValue.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Views\Dialogs.cs" />
-    <Compile Include="Views\FileListView.cs" />
+    <Compile Include="Views\FileListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\FileMenuControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\MainForm.cs" />
+    <Compile Include="Views\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
@@ -77,7 +83,9 @@
     <Compile Include="Models\IconCollection.cs" />
     <Compile Include="Models\FileCollection.cs" />
     <Compile Include="Presenters\MenuPresenter.cs" />
-    <Compile Include="Views\PasswordForm.cs" />
+    <Compile Include="Views\PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\PasswordForm.Designer.cs">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </Compile>
@@ -101,7 +109,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.manifest" />
-    <None Include="Packages.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

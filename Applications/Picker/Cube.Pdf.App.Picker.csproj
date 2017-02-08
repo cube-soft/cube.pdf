@@ -44,9 +44,8 @@
     <Reference Include="Cube.Forms">
       <HintPath>..\..\..\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,24 +65,32 @@
     <Compile Include="Presenters\DropPresenter.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Views\Dialogs.cs" />
-    <Compile Include="Views\DropForm.cs" />
+    <Compile Include="Views\DropForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\DropForm.Designer.cs">
       <DependentUpon>DropForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageCollection.cs" />
     <Compile Include="Presenters\ProgressPresenter.cs" />
     <Compile Include="Presenters\ThumbnailPresenter.cs" />
-    <Compile Include="Views\PreviewForm.cs" />
+    <Compile Include="Views\PreviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\PreviewForm.Designer.cs">
       <DependentUpon>PreviewForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="Views\ProgressForm.cs" />
+    <Compile Include="Views\ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\ProgressForm.Designer.cs">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\ThumbnailForm.cs" />
+    <Compile Include="Views\ThumbnailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\ThumbnailForm.Designer.cs">
       <DependentUpon>ThumbnailForm.cs</DependentUpon>
     </Compile>
@@ -113,7 +120,7 @@
       <DependentUpon>ThumbnailForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.manifest" />
-    <None Include="Packages.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

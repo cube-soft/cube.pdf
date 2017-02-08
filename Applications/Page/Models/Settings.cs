@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// SettingsValue.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -24,14 +22,14 @@ namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsValue
+    /// Settings
     ///
     /// <summary>
     /// 各種設定を保持するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsValue : ObservableSettingsValue
+    public class Settings : Cube.ObservableProperty
     {
         #region Constructors
 
@@ -44,7 +42,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue()
+        public Settings()
         {
             Assembly = Assembly.GetExecutingAssembly();
         }

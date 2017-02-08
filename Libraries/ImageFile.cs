@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ImageFile.cs
-/// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
 /// Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,19 +41,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageFile(string path) : this(path, IconSize.Small) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageFile
-        /// 
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageFile(string path, IconSize size)
-            : base(path, size)
+        public ImageFile(string path) : base(path)
         {
             using (var image = Image.FromFile(path))
             {
@@ -72,15 +58,14 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageFile(string path, Image image, IconSize size)
-            : base(path, size)
+        public ImageFile(string path, Image image) : base(path)
         {
             InitializeValues(image);
         }
 
         #endregion
 
-        #region Other private methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

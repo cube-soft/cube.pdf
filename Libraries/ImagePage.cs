@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ImagePage.cs
-/// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
 /// Licensed under the Apache License, Version 2.0 (the "License");
@@ -129,7 +127,7 @@ namespace Cube.Pdf
 
             return new Page
             {
-                File       = new ImageFile(path, image, IconSize.Zero),
+                File       = new ImageFile(path, image),
                 Number     = index + 1,
                 Size       = image.Size,
                 Resolution = new Point(x, y),
