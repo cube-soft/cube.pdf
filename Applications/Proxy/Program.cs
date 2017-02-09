@@ -19,6 +19,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Linq;
 
 namespace Cube.Pdf.App.Proxy
 {
@@ -48,6 +49,7 @@ namespace Cube.Pdf.App.Proxy
             var type = typeof(Program);
             Cube.Log.Operations.Configure();
             Cube.Log.Operations.Info(type, System.Reflection.Assembly.GetExecutingAssembly());
+            Cube.Log.Operations.Info(type, $"Arguments:{string.Join(" ", args)}");
 
             try
             {
