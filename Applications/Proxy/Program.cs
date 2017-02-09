@@ -19,7 +19,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Linq;
 
 namespace Cube.Pdf.App.Proxy
 {
@@ -41,6 +40,8 @@ namespace Cube.Pdf.App.Proxy
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。
         /// </summary>
+        /// 
+        /// <param name="args">プログラム引数</param>
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
@@ -59,12 +60,7 @@ namespace Cube.Pdf.App.Proxy
                     Cube.Log.Operations.Warn(type, "Exec not found");
                     return;
                 }
-
-                Cube.Processes.Process.StartAs(
-                    parser.Get("Exec"),
-                    args,
-                    parser.HasOption("UserName") ? parser.Get("UserName") : Environment.UserName
-                );
+                Cube.Processes.Process.StartAsActiveUser(parser.Get("Exec"), args);
             }
             catch (Exception err) { Cube.Log.Operations.Error(typeof(Program), err.Message, err); }
 
