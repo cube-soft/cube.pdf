@@ -23,7 +23,6 @@ using System.Reflection;
 using System.Linq;
 using System.Windows.Forms;
 using Cube.Forms.Controls;
-using Cube.Forms.Images;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Picker
@@ -154,7 +153,7 @@ namespace Cube.Pdf.App.Picker
             Events.Version.Handle += Version_Handle;
 
             View.Cursor = Cursors.WaitCursor;
-            View.AddRange(Model.Select(x => x.Reduce(View.ImageSize)));
+            View.AddRange(Model.Select(x => Shrink(x, View.ImageSize)));
             View.Cursor = Cursors.Default;
         }
 
@@ -177,6 +176,31 @@ namespace Cube.Pdf.App.Picker
         }
 
         #endregion
+
+        #endregion
+
+        #region Others
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Shrink
+        /// 
+        /// <summary>
+        /// 画像を縮小します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: モデルに移譲
+        /// </remarks>
+        ///
+        /* --------------------------------------------------------------------- */
+        private System.Drawing.Image Shrink(System.Drawing.Image src, System.Drawing.Size size)
+            => new Cube.Images.ImageResizer(src)
+            {
+                PreserveAspectRatio = true,
+                ShrinkOnly          = true,
+                LongSide            = size.Width,
+            }.Resized;
 
         #endregion
     }
