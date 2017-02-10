@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PresenterBase.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -44,7 +42,7 @@ namespace Cube.Pdf.App.Page
         ///
         /* ----------------------------------------------------------------- */
         public PresenterBase(TView view, TModel model,
-            SettingsValue settings, EventAggregator events)
+            Settings settings, EventAggregator events)
             : base(view, model)
         {
             Settings = settings;
@@ -64,7 +62,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue Settings { get; }
+        public Settings Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///

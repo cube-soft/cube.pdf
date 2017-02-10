@@ -1,5 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
+/// Program.cs
+///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -17,9 +19,8 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Windows.Forms;
 
-namespace Cube.Pdf.App.Picker
+namespace Cube.Pdf.App.Proxy
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -39,26 +40,33 @@ namespace Cube.Pdf.App.Picker
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。
         /// </summary>
+        /// 
+        /// <param name="args">プログラム引数</param>
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
         static void Main(string[] args)
         {
-            var name = Application.ProductName.ToLower();
-            using (var bootstrap = new Cube.Processes.Bootstrap(name))
+            var type = typeof(Program);
+            Cube.Log.Operations.Configure();
+            Cube.Log.Operations.Info(type, System.Reflection.Assembly.GetExecutingAssembly());
+            Cube.Log.Operations.Info(type, $"Arguments:{string.Join(" ", args)}");
+
+            try
             {
-                if (bootstrap.Exists)
+                var parser = new Arguments(args, '/');
+                if (!parser.HasOption("Exec"))
                 {
-                    bootstrap.Send(args);
+                    Cube.Log.Operations.Warn(type, "Exec not found");
                     return;
                 }
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                var form = new DropForm(args);
-                form.Bootstrap = bootstrap;
-                Application.Run(form);
+                Cube.Processes.Process.StartAsActiveUser(parser.Get("Exec"), args);
             }
+            catch (Exception err) { Cube.Log.Operations.Error(typeof(Program), err.Message, err); }
+
+            // Application.EnableVisualStyles();
+            // Application.SetCompatibleTextRenderingDefault(false);
+            // Application.Run(new Form1());
         }
     }
 }

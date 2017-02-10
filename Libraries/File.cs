@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// File.cs
-/// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
 /// Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,8 +41,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public File(string path)
-            : this(path, string.Empty) { }
+        public File(string path) : this(path, string.Empty) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -55,20 +52,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public File(string path, string password)
-            : this(path, password, IconSize.Small) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// File
-        /// 
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public File(string path, string password, IconSize size)
-            : base(path, size)
+        public File(string path, string password) : base(path)
         {
             Password = password;
             Resolution = new Point(72, 72);

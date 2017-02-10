@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// MainForm.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -366,7 +364,7 @@ namespace Cube.Pdf.App.Page
         #region Models
         private FileCollection Files = new FileCollection();
         private IconCollection Icons = new IconCollection();
-        private SettingsValue Settings = new SettingsValue();
+        private Settings Settings = new Settings();
         private EventAggregator Aggregator = new EventAggregator();
         #endregion
 

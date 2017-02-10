@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// FileConverter.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -20,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Windows.Forms;
 using Cube.Conversions;
+using Cube.FileSystem;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
@@ -86,7 +85,7 @@ namespace Cube.Pdf.App.Page
 
             var space    = " ";
             var filename = IoEx.Path.GetFileName(file.FullName);
-            var type     = file.TypeName;
+            var type     = file.RawData.GetTypeName();
             var pages    = file.PageCount.ToString();
             var date     = file.LastWriteTime.ToString("yyyy/MM/dd hh:mm");
             var bytes    = file.Length.ToRoughBytes();

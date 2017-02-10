@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// IconCollection.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -23,6 +21,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Cube.Log;
+using Cube.Images.Icons;
 
 namespace Cube.Pdf.App.Page
 {
@@ -86,13 +85,14 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public int Register(FileBase file)
         {
-            if (file.Icon == null) return 0;
+            var icon = file.RawData.GetIcon(IconSize.Small);
+            if (icon == null) return 0;
 
             var extension = file.Extension.ToLower();
             if (_map.ContainsKey(extension)) return _map[extension];
 
             var index = ImageList.Images.Count;
-            ImageList.Images.Add(file.Icon);
+            ImageList.Images.Add(icon);
             _map.Add(extension, index);
             return index;
         }
