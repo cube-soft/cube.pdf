@@ -38,6 +38,19 @@
     <ApplicationManifest>App.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Cube.Pdf.csproj">
+      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
+      <Name>Cube.Pdf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Editing\Cube.Pdf.Editing.csproj">
+      <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
+      <Name>Cube.Pdf.Editing</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
@@ -47,25 +60,26 @@
     <Reference Include="Cube.Images">
       <HintPath>..\..\..\lib\net45\Cube.Images.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\EventAggregator.cs" />
+    <Compile Include="Models\FileCollection.cs" />
+    <Compile Include="Models\FileConverter.cs" />
+    <Compile Include="Models\IconCollection.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="Presenters\FileCollectionPresenter.cs" />
+    <Compile Include="Presenters\MenuPresenter.cs" />
     <Compile Include="Presenters\PresenterBase.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Views\Dialogs.cs" />
     <Compile Include="Views\FileListView.cs">
       <SubType>Component</SubType>
@@ -79,37 +93,18 @@
     <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\FileConverter.cs" />
-    <Compile Include="Models\IconCollection.cs" />
-    <Compile Include="Models\FileCollection.cs" />
-    <Compile Include="Presenters\MenuPresenter.cs" />
     <Compile Include="Views\PasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\PasswordForm.Designer.cs">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presenters\FileCollectionPresenter.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Views\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\PasswordForm.resx">
-      <DependentUpon>PasswordForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="App.manifest" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -121,7 +116,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PasswordForm.resx">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="App.config" />
+    <None Include="App.manifest" />
+    <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
@@ -129,16 +139,6 @@
     <None Include="Resources\Logo.png" />
     <None Include="Resources\HeaderTitle.png" />
     <None Include="Resources\HeaderImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Cube.Pdf.csproj">
-      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
-      <Name>Cube.Pdf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Editing\Cube.Pdf.Editing.csproj">
-      <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
-      <Name>Cube.Pdf.Editing</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
