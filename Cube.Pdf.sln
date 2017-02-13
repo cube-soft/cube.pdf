@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf", "Libraries\Cube.Pdf.csproj", "{5D742956-06A5-40F9-939D-5EFF66B78D8D}"
 EndProject
@@ -14,8 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Page", "Applications\Page\Cube.Pdf.App.Page.csproj", "{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Picker", "Applications\Picker\Cube.Pdf.App.Picker.csproj", "{C60D1DD1-1A53-4BFF-97F9-FD9902689336}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Proxy", "Applications\Proxy\Cube.Pdf.App.Proxy.csproj", "{3527332D-55A2-43B6-B291-F04FFEBAB8D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +45,6 @@ Global
 		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C60D1DD1-1A53-4BFF-97F9-FD9902689336}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3527332D-55A2-43B6-B291-F04FFEBAB8D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3527332D-55A2-43B6-B291-F04FFEBAB8D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3527332D-55A2-43B6-B291-F04FFEBAB8D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3527332D-55A2-43B6-B291-F04FFEBAB8D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
