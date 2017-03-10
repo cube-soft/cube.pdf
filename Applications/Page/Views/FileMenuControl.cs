@@ -62,14 +62,14 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Aggregator
+        /// EventAggregator
         ///
         /// <summary>
         /// イベントを集約するオブジェクトを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventAggregator Aggregator { get; set; }
+        public IEventAggregator EventAggregator { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -147,10 +147,10 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            PreviewMenu.Click += (s, e) => Aggregator?.Preview.Raise();
-            UpMenu.Click      += (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(-1));
-            DownMenu.Click    += (s, e) => Aggregator?.Move.Raise(ValueEventArgs.Create(1));
-            RemoveMenu.Click  += (s, e) => Aggregator?.Remove.Raise();
+            PreviewMenu.Click += (s, e) => EventAggregator.GetEvents()?.Preview.Publish();
+            UpMenu.Click      += (s, e) => EventAggregator.GetEvents()?.Move.Publish(-1);
+            DownMenu.Click    += (s, e) => EventAggregator.GetEvents()?.Move.Publish(1);
+            RemoveMenu.Click  += (s, e) => EventAggregator.GetEvents()?.Remove.Publish();
         }
 
         /* ----------------------------------------------------------------- */

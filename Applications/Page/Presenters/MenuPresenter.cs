@@ -30,7 +30,7 @@ namespace Cube.Pdf.App.Page
     ///
     /* --------------------------------------------------------------------- */
     public class MenuPresenter
-        : PresenterBase<MainForm, Settings>
+        : Cube.Forms.PresenterBase<MainForm, Settings>
     {
         #region Constructors
 
@@ -43,13 +43,12 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public MenuPresenter(MainForm view, Settings model,
-            EventAggregator events)
-            : base(view, model, model, events)
+        public MenuPresenter(MainForm view, Settings model, IEventAggregator events)
+            : base(view, model, events)
         {
-            Events.Refresh.Handle += Refresh_Handle;
-            Events.Version.Handle += Version_Handle;
-            Settings.PropertyChanged += Settings_PropertyChanged;
+            EventAggregator.GetEvents()?.Refresh.Subscribe(Refresh_Handle);
+            EventAggregator.GetEvents()?.Version.Subscribe(Version_Handle);
+            Model.PropertyChanged += Settings_PropertyChanged;
         }
 
         #endregion
@@ -67,7 +66,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Refresh_Handle(object sender, System.EventArgs e)
+        private void Refresh_Handle()
             => Sync(() => View.Refresh());
 
         /* --------------------------------------------------------------------- */
@@ -79,8 +78,8 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Version_Handle(object sender, System.EventArgs e)
-            => Sync(() => Dialogs.Version(Settings.Assembly));
+        private void Version_Handle()
+            => Sync(() => Dialogs.Version(Model.Assembly));
 
         #endregion
 
@@ -99,8 +98,8 @@ namespace Cube.Pdf.App.Page
         {
             switch (e.PropertyName)
             {
-                case nameof(Settings.AllowOperation):
-                    Sync(() => View.AllowOperation = Settings.AllowOperation);
+                case nameof(Model.AllowOperation):
+                    Sync(() => View.AllowOperation = Model.AllowOperation);
                     break;
                 default:
                     break;

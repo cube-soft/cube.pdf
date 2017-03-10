@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class ProgressForm : Cube.Forms.Form
+    public partial class ProgressForm : Cube.Forms.FormBase
     {
         #region Constructors
 
@@ -52,26 +52,13 @@ namespace Cube.Pdf.App.Picker
             InitializeComponent();
 
             ExitButton.Click    += (s, e) => Close();
-            SaveButton.Click    += (s, e) => Aggregator?.Save.Raise(EventAggregator.All);
-            PreviewButton.Click += (s, e) => Aggregator?.Preview.Raise();
+            SaveButton.Click    += (s, e) => EventAggregator.GetEvents()?.Save.Publish(null);
+            PreviewButton.Click += (s, e) => EventAggregator.GetEvents()?.Preview.Publish();
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Aggregator
-        /// 
-        /// <summary>
-        /// イベントを集約したオブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public EventAggregator Aggregator { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///

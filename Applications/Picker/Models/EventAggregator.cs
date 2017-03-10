@@ -29,25 +29,8 @@ namespace Cube.Pdf.App.Picker
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class EventAggregator
+    public class EventAggregator : IEventAggregator
     {
-        #region EventArgs
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// All
-        ///
-        /// <summary>
-        /// 全ての画像を表します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static ValueEventArgs<int[]> All = new ValueEventArgs<int[]>(null);
-
-        #endregion
-
-        #region Events
-
         /* ----------------------------------------------------------------- */
         ///
         /// Save
@@ -57,8 +40,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int[]>> Save { get; }
-            = new RelayEvent<ValueEventArgs<int[]>>();
+        public RelayEvent<int[]> Save { get; } = new RelayEvent<int[]>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,7 +96,29 @@ namespace Cube.Pdf.App.Picker
         ///
         /* ----------------------------------------------------------------- */
         public RelayEvent Version { get; } = new RelayEvent();
+    }
 
-        #endregion
+    /* --------------------------------------------------------------------- */
+    ///
+    /// EventAggregatorOperations
+    /// 
+    /// <summary>
+    /// EventAggregator に対する操作を定義するためのクラスです。
+    /// </summary>
+    /// 
+    /* --------------------------------------------------------------------- */
+    public static class EventAggregatorOperations
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEvents
+        ///
+        /// <summary>
+        /// EventAggregator オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static EventAggregator GetEvents(this IEventAggregator e)
+            => e as EventAggregator;
     }
 }

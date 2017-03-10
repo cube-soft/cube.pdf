@@ -32,7 +32,7 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class PasswordForm : Cube.Forms.Form
+    public partial class PasswordForm : Cube.Forms.FormBase
     {
         #region Constructors
 

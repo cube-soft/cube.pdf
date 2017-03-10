@@ -29,24 +29,8 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class EventAggregator
+    public class EventAggregator : IEventAggregator
     {
-        #region EventArgs
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Empty
-        ///
-        /// <summary>
-        /// ファイルが指定されていな事を表す EventArgs オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static ValueEventArgs<string[]> Empty { get; }
-            = ValueEventArgs.Create(new string[] { });
-
-        #endregion
-
         #region Events
 
         /* ----------------------------------------------------------------- */
@@ -58,8 +42,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<string[]>> Add { get; }
-            = new RelayEvent<ValueEventArgs<string[]>>();
+        public RelayEvent<string[]> Add { get; } = new RelayEvent<string[]>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -107,8 +90,7 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<ValueEventArgs<int>> Move { get; }
-            = new RelayEvent<ValueEventArgs<int>>();
+        public RelayEvent<int> Move { get; } = new RelayEvent<int>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -155,5 +137,29 @@ namespace Cube.Pdf.App.Page
         public RelayEvent Version { get; } = new RelayEvent();
 
         #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// EventAggregatorOperations
+    /// 
+    /// <summary>
+    /// EventAggregator に対する操作を定義するためのクラスです。
+    /// </summary>
+    /// 
+    /* --------------------------------------------------------------------- */
+    public static class EventAggregatorOperations
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEvents
+        ///
+        /// <summary>
+        /// EventAggregator オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static EventAggregator GetEvents(this IEventAggregator e)
+            => e as EventAggregator;
     }
 }

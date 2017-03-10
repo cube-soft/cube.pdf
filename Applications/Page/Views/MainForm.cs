@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.Form
+    public partial class MainForm : Cube.Forms.FormBase
     {
         #region Constructors
 
@@ -65,7 +65,7 @@ namespace Cube.Pdf.App.Page
             : this()
         {
             if (args == null || args.Length == 0) return;
-            Aggregator.Add.Raise(new ValueEventArgs<string[]>(args));
+            EventAggregator.GetEvents()?.Add.Publish(args);
         }
 
         #endregion
@@ -83,6 +83,8 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
+            EventAggregator = new EventAggregator();
+
             var tips = new ToolTip
             {
                 InitialDelay = 200,
@@ -106,18 +108,18 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            TitleButton.Click  += (s, e) => Aggregator.Version.Raise();
-            FileButton.Click   += (s, e) => Aggregator.Add.Raise(EventAggregator.Empty);
-            RemoveButton.Click += (s, e) => Aggregator.Remove.Raise();
-            ClearButton.Click  += (s, e) => Aggregator.Clear.Raise();
-            UpButton.Click     += (s, e) => Aggregator.Move.Raise(ValueEventArgs.Create(-1));
-            DownButton.Click   += (s, e) => Aggregator.Move.Raise(ValueEventArgs.Create(1));
-            MergeButton.Click  += (s, e) => Aggregator.Merge.Raise();
-            SplitButton.Click  += (s, e) => Aggregator.Split.Raise();
+            TitleButton.Click  += (s, e) => EventAggregator.GetEvents()?.Version.Publish();
+            FileButton.Click   += (s, e) => EventAggregator.GetEvents()?.Add.Publish(null);
+            RemoveButton.Click += (s, e) => EventAggregator.GetEvents()?.Remove.Publish();
+            ClearButton.Click  += (s, e) => EventAggregator.GetEvents()?.Clear.Publish();
+            UpButton.Click     += (s, e) => EventAggregator.GetEvents()?.Move.Publish(-1);
+            DownButton.Click   += (s, e) => EventAggregator.GetEvents()?.Move.Publish(1);
+            MergeButton.Click  += (s, e) => EventAggregator.GetEvents()?.Merge.Publish();
+            SplitButton.Click  += (s, e) => EventAggregator.GetEvents()?.Split.Publish();
             ExitButton.Click   += (s, e) => Close();
 
-            FileMenu.Aggregator = Aggregator;
-            FileListView.Aggregator = Aggregator;
+            FileMenu.EventAggregator = EventAggregator;
+            FileListView.EventAggregator = EventAggregator;
             FileListView.ContextMenuStrip = FileMenu;
             FileListView.DragEnter += (s, e) => OnDragEnter(e);
             FileListView.DragDrop  += (s, e) => OnDragDrop(e);
@@ -140,8 +142,8 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new FileCollectionPresenter(FileListView, Files, Settings, Aggregator);
-            new MenuPresenter(this, Settings, Aggregator);
+            new FileCollectionPresenter(FileListView, Files, Settings, EventAggregator);
+            new MenuPresenter(this, Settings, EventAggregator);
         }
 
         #endregion
@@ -245,7 +247,7 @@ namespace Cube.Pdf.App.Page
             {
                 var args = e.Value as string[];
                 if (args == null) return;
-                Aggregator.Add.Raise(new ValueEventArgs<string[]>(args));
+                EventAggregator.GetEvents()?.Add.Publish(args);
             }
             finally { base.OnReceived(e); }
         }
@@ -284,7 +286,7 @@ namespace Cube.Pdf.App.Page
             var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
             if (files == null) return;
 
-            Aggregator.Add.Raise(ValueEventArgs.Create(files));
+            EventAggregator.GetEvents()?.Add.Publish(files);
         }
 
         /* ----------------------------------------------------------------- */
@@ -326,31 +328,31 @@ namespace Cube.Pdf.App.Page
                     foreach (ListViewItem item in FileListView.Items) item.Selected = true;
                     break;
                 case Keys.D:
-                    if (e.Shift) Aggregator.Clear.Raise();
-                    else Aggregator.Remove.Raise();
+                    if (e.Shift) EventAggregator.GetEvents()?.Clear.Publish();
+                    else EventAggregator.GetEvents()?.Remove.Publish();
                     break;
                 case Keys.H:
-                    Aggregator.Version.Raise();
+                    EventAggregator.GetEvents()?.Version.Publish();
                     break;
                 case Keys.M:
-                    Aggregator.Merge.Raise();
+                    EventAggregator.GetEvents()?.Merge.Publish();
                     break;
                 case Keys.O:
-                    Aggregator.Add.Raise(EventAggregator.Empty);
+                    EventAggregator.GetEvents()?.Add.Publish(null);
                     break;
                 case Keys.R:
-                    Aggregator.Preview.Raise();
+                    EventAggregator.GetEvents()?.Preview.Publish();
                     break;
                 case Keys.S:
-                    Aggregator.Split.Raise();
+                    EventAggregator.GetEvents()?.Split.Publish();
                     break;
                 case Keys.K:
                 case Keys.Up:
-                    Aggregator.Move.Raise(ValueEventArgs.Create(-1));
+                    EventAggregator.GetEvents()?.Move.Publish(-1);
                     break;
                 case Keys.J:
                 case Keys.Down:
-                    Aggregator.Move.Raise(ValueEventArgs.Create(1));
+                    EventAggregator.GetEvents()?.Move.Publish(1);
                     break;
                 default:
                     results = false;
@@ -365,7 +367,6 @@ namespace Cube.Pdf.App.Page
         private FileCollection Files = new FileCollection();
         private IconCollection Icons = new IconCollection();
         private Settings Settings = new Settings();
-        private EventAggregator Aggregator = new EventAggregator();
         #endregion
 
         #region Views

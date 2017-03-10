@@ -76,7 +76,6 @@
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Presenters\FileCollectionPresenter.cs" />
     <Compile Include="Presenters\MenuPresenter.cs" />
-    <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

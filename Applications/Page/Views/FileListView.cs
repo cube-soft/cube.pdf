@@ -64,7 +64,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public EventAggregator Aggregator { get; set; }
+        public IEventAggregator EventAggregator { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -199,7 +199,7 @@ namespace Cube.Pdf.App.Page
                 int dest = Items.IndexOf(GetItemAt(point.X, point.Y));
                 if (dest == -1) dest = Items.Count - 1;
 
-                Aggregator?.Move.Raise(ValueEventArgs.Create(dest - src));
+                EventAggregator.GetEvents()?.Move.Publish(dest - src);
             }
             finally { MouseDownLocation = Point.Empty; }
         }

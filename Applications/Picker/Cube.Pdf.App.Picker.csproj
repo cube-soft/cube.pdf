@@ -73,7 +73,6 @@
     <Compile Include="Models\EventAggregator.cs" />
     <Compile Include="Models\ImageCollection.cs" />
     <Compile Include="Presenters\DropPresenter.cs" />
-    <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Presenters\ProgressPresenter.cs" />
     <Compile Include="Presenters\ThumbnailPresenter.cs" />
     <Compile Include="Program.cs" />
