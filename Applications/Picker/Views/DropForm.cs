@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class DropForm : Cube.Forms.WidgetForm
+    public partial class DropForm : Cube.Forms.BorderlessForm
     {
         #region Constructors
 
