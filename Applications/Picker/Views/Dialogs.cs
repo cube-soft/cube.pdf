@@ -63,20 +63,17 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public static DialogResult Version(Assembly assembly)
+        public static void Version(Assembly assembly)
         {
-            var dest = new Cube.Forms.VersionForm
+            var sv = new SoftwareVersion(assembly) { Digit = 3 };
+            using (var dialog = new Cube.Forms.VersionForm
             {
-                Assembly = assembly,
-                Logo = Properties.Resources.Logo,
+                Version = sv.ToString(true),
+                Image = Properties.Resources.Logo,
                 Description = string.Empty,
                 Height = 280,
-                ShowInTaskbar = false,
                 StartPosition = FormStartPosition.CenterParent,
-            };
-            dest.Version.Digit = 3;
-
-            return dest.ShowDialog();
+            }) dialog.ShowDialog();
         }
 
         #endregion
