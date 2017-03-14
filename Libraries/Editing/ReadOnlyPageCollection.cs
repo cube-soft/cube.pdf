@@ -1,8 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ReadOnlyPageCollection.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -88,10 +86,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count
-        {
-            get { return (_core != null) ? _core.NumberOfPages : 0; }
-        }
+        public int Count => _core?.NumberOfPages ?? 0;
 
         #endregion
 
@@ -124,10 +119,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         #endregion
 
