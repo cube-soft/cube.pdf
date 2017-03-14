@@ -48,9 +48,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
@@ -62,6 +59,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -104,6 +104,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -130,7 +131,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="App.manifest" />
-    <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
