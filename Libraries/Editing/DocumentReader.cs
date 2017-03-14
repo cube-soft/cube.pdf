@@ -258,6 +258,7 @@ namespace Cube.Pdf.Editing
                 Metadata = GetMetadata(_core);
                 Encryption = GetEncryption(_core, password, file.FullAccess);
                 Pages = new ReadOnlyPageCollection(_core, file);
+                Attachments = new ReadOnlyAttachmentCollection(_core, file);
             }
             catch (BadPasswordException /* err */)
             {

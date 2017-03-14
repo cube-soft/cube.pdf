@@ -59,6 +59,7 @@
     <Compile Include="DocumentSplitter.cs" />
     <Compile Include="DocumentWriterBase.cs" />
     <Compile Include="DocumentWriter.cs" />
+    <Compile Include="ReadOnlyAttachmentCollection.cs" />
     <Compile Include="ReadOnlyPageCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using System.Linq;
 using NUnit.Framework;
 using IoEx = System.IO;
 
@@ -343,12 +344,26 @@ namespace Cube.Pdf.Tests.Editing
         public void Pages_Count(string filename, string password, int expected)
         {
             Assert.That(
-                Create(filename, password).Pages.Count,
+                Create(filename, password).Pages.Count(),
                 Is.EqualTo(expected)
             );
         }
 
         #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments_Count
+        ///
+        /// <summary>
+        /// 添付ファイルの情報を取得するテストを行います。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("rotation.pdf", "", ExpectedResult = 0)]
+        [TestCase("attachment.pdf", "", ExpectedResult = 2)]
+        public int Attachments_Count(string filename, string password)
+            => Create(filename, password).Attachments.Count();
 
         /* ----------------------------------------------------------------- */
         ///
