@@ -1,8 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentReader.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -148,7 +146,18 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IReadOnlyCollection<Page> Pages { get; private set; } = null;
+        public IEnumerable<Page> Pages { get; private set; } = null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments
+        /// 
+        /// <summary>
+        /// 添付ファイルの一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Attachment> Attachments { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///

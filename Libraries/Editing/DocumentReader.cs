@@ -1,8 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentReader.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -19,8 +17,9 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Pdf.Editing.ITextReader;
@@ -148,7 +147,18 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IReadOnlyCollection<Page> Pages { get; private set; } = null;
+        public IEnumerable<Page> Pages { get; private set; } = null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments
+        /// 
+        /// <summary>
+        /// 添付ファイルの一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Attachment> Attachments { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -309,7 +319,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public IList<Image> GetImages(int pagenum)
         {
-            if (pagenum < 0 || pagenum > Pages.Count) throw new IndexOutOfRangeException();
+            if (pagenum < 0 || pagenum > Pages.Count()) throw new IndexOutOfRangeException();
 
             var parser = new iTextSharp.text.pdf.parser.PdfReaderContentParser(_core);
             var listener = new ImageRenderListener();
