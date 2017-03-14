@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ImageCollection.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -22,6 +20,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cube.Pdf.Editing;
@@ -304,7 +303,7 @@ namespace Cube.Pdf.App.Picker
                 reader.Open(Path, string.Empty, true);
 
                 ExtractImages(reader, progress);
-                return new KeyValuePair<int, int>(reader.Pages.Count, Items.Count);
+                return new KeyValuePair<int, int>(reader.Pages.Count(), Items.Count);
             }
         }
 
@@ -319,16 +318,17 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         private void ExtractImages(DocumentReader src, IProgress<ProgressEventArgs<string>> progress)
         {
-            var name = IoEx.Path.GetFileNameWithoutExtension(Path);
+            var count = src.Pages.Count();
+            var name  = IoEx.Path.GetFileNameWithoutExtension(Path);
 
-            for (var i = 0; i < src.Pages.Count; ++i)
+            for (var i = 0; i < count; ++i)
             {
                 _source.Token.ThrowIfCancellationRequested();
 
                 var pagenum = i + 1;
                 progress.Report(Create(
-                   (int)(i / (double)src.Pages.Count * 100.0),
-                   string.Format(Properties.Resources.MessageProcess, name, pagenum, src.Pages.Count)
+                   (int)(i / (double)count * 100.0),
+                   string.Format(Properties.Resources.MessageProcess, name, pagenum, count)
                 ));
 
                 var images = src.GetImages(pagenum);
