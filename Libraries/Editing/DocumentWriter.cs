@@ -122,7 +122,7 @@ namespace Cube.Pdf.Editing
 
                 foreach (var page in Pages)
                 {
-                    if (page.File is File) AddPage(page, writer, cache);
+                    if (page.File is PdfFile) AddPage(page, writer, cache);
                     else if (page.File is ImageFile) AddImagePage(page, writer);
                 }
 

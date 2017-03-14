@@ -116,7 +116,7 @@ namespace Cube.Pdf.Tests.Drawing
         [TestCase("password-aes256.pdf", "password")]
         public void File_Password(string filename, string password)
         {
-            var file = Create(filename, password).File as File;
+            var file = Create(filename, password).File as PdfFile;
             Assert.That(
                 file.Password,
                 Is.EqualTo(password)

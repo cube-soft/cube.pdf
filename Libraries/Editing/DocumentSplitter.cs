@@ -103,7 +103,7 @@ namespace Cube.Pdf.Editing
             {
                 foreach (var page in Pages)
                 {
-                    if (page.File is File) SavePage(page, folder, cache);
+                    if (page.File is PdfFile) SavePage(page, folder, cache);
                     else if (page.File is ImageFile) SaveImagePage(page, folder);
                 }
             }

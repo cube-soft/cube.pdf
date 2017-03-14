@@ -65,7 +65,7 @@ namespace Cube.Pdf.Tests.Editing
                 reader.Open(src, "view");
 
                 Assert.That(reader.IsOpen, Is.True);
-                Assert.That(((File)reader.File).FullAccess, Is.False);
+                Assert.That(((PdfFile)reader.File).FullAccess, Is.False);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password-aes256.pdf", "password")]
         public void File_Password(string filename, string password)
         {
-            var file = Create(filename, password).File as File;
+            var file = Create(filename, password).File as PdfFile;
             Assert.That(
                 file.Password,
                 Is.EqualTo(password)

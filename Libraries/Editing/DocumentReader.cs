@@ -240,7 +240,7 @@ namespace Cube.Pdf.Editing
                     throw new BadPasswordException("allow only owner password");
                 }
 
-                var file = new File(path, password);
+                var file = new PdfFile(path, password);
                 file.FullAccess = _core.IsOpenedWithFullPermissions;
                 file.PageCount = _core.NumberOfPages;
 

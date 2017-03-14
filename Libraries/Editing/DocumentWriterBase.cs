@@ -284,7 +284,7 @@ namespace Cube.Pdf.Editing
         {
             try
             {
-                var file = src.File as File;
+                var file = src.File as PdfFile;
                 if (file == null) return null;
 
                 return file.Password.Length > 0 ?
@@ -310,7 +310,7 @@ namespace Cube.Pdf.Editing
         protected PdfReader CreatePdfReader(Page src, IoEx.MemoryStream buffer)
         {
             if (src == null) return null;
-            if (src.File is File) return CreatePdfReader(src);
+            if (src.File is PdfFile) return CreatePdfReader(src);
 
             using (var image = Image.FromFile(src.File.FullName))
             {

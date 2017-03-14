@@ -228,7 +228,7 @@ namespace Cube.Pdf.Drawing
                 if (count < 0) throw new IoEx.FileLoadException();
                 NativeMethods.SetAlphaBits(_mupdf, 8);
 
-                var file = new File(path, password);
+                var file = new PdfFile(path, password);
                 file.FullAccess = true;
                 file.PageCount = count;
 
