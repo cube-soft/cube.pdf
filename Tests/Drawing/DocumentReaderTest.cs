@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using System.Linq;
 using NUnit.Framework;
 using IoEx = System.IO;
 
@@ -153,7 +154,7 @@ namespace Cube.Pdf.Tests.Drawing
         public void Pages_Count(string filename, string password, int expected)
         {
             Assert.That(
-                Create(filename, password).Pages.Count,
+                Create(filename, password).Pages.Count(),
                 Is.EqualTo(expected)
             );
         }
