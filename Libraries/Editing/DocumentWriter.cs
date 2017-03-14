@@ -126,6 +126,8 @@ namespace Cube.Pdf.Editing
                     else if (page.File is ImageFile) AddImagePage(page, writer);
                 }
 
+                AddAttachments(writer, cache);
+
                 document.Close();
                 writer.Close();
             }
@@ -154,7 +156,7 @@ namespace Cube.Pdf.Editing
         {
             if (!cache.ContainsKey(src.File.FullName))
             {
-                var created = CreatePdfReader(src);
+                var created = CreatePdfReader(src.File);
                 if (created == null) return;
                 cache.Add(src.File.FullName, created);
             }
@@ -186,6 +188,112 @@ namespace Cube.Pdf.Editing
                     var page = dest.GetImportedPage(reader, i + 1);
                     dest.AddPage(page);
                 }
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddAttachments
+        /// 
+        /// <summary>
+        /// 添付ファイルを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddAttachments(PdfCopy dest, IDictionary<string, PdfReader> cache)
+        {
+            var done  = new List<string>();
+            var embed = new Dictionary<string, Attachment>();
+            var files = new Dictionary<string, Attachment>();
+
+            foreach (var item in Attachments)
+            {
+                if (item.File is PdfFile)
+                {
+                    if (!cache.ContainsKey(item.File.FullName))
+                    {
+                        var created = CreatePdfReader(item.File);
+                        if (created == null) continue;
+                        cache.Add(item.File.FullName, created);
+                    }
+                    embed.Add(item.Name, item);
+                }
+                else files.Add(item.Name, item);
+            }
+
+            AddAttachments(files, dest, done);
+            AddAttachments(embed, dest, done, cache);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddAttachments
+        /// 
+        /// <summary>
+        /// 別の PDF に添付されているファイルを添付します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddAttachments(IDictionary<string, Attachment> src, PdfCopy dest,
+            IList<string> done, IDictionary<string, PdfReader> cache)
+        {
+            foreach (var kv in cache)
+            {
+                var files = kv.Value.GetEmbeddedFiles();
+                if (files == null) continue;
+
+                var index = 0;
+                while (index < files.Size)
+                {
+                    ++index;
+
+                    var dic  = files.GetAsDict(index);
+                    var file = dic.GetAsDict(PdfName.EF);
+
+                    foreach (var key in file.Keys)
+                    {
+                        var name = dic.GetAsString(key).ToString();
+
+                        if (done.Contains(name)) continue;
+                        if (!src.ContainsKey(name)) continue;
+                        if (src[name].File.FullName != kv.Key) continue;
+
+                        var stream = PdfReader.GetPdfObject(file.GetAsIndirectObject(key)) as PRStream;
+                        if (stream == null) continue;
+
+                        var content = PdfReader.GetStreamBytes(stream);
+                        if (content == null) continue;
+
+                        var fs = PdfFileSpecification.FileEmbedded(dest, null, name, content);
+                        dest.AddFileAttachment(fs);
+                        done.Add(name);
+                    }
+
+                    ++index;
+                }
+
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddAttachments
+        /// 
+        /// <summary>
+        /// 新しいファイルを添付します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AddAttachments(IDictionary<string, Attachment> src, PdfCopy dest,
+            IList<string> done)
+        {
+            foreach (var kv in src)
+            {
+                if (done.Contains(kv.Key)) continue;
+
+                var fs = PdfFileSpecification.FileEmbedded(dest, kv.Value.File.FullName, kv.Key, null);
+                dest.AddFileAttachment(fs);
+                done.Add(kv.Key);
             }
         }
 

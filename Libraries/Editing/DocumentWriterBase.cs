@@ -114,6 +114,17 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Attachments
+        /// 
+        /// <summary>
+        /// 添付ファイル一覧の情報を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICollection<Attachment> Attachments { get; } = new List<Attachment>();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// UseSmartCopy
         /// 
         /// <summary>
@@ -280,11 +291,11 @@ namespace Cube.Pdf.Editing
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        protected PdfReader CreatePdfReader(Page src)
+        protected PdfReader CreatePdfReader(FileBase src)
         {
             try
             {
-                var file = src.File as PdfFile;
+                var file = src as PdfFile;
                 if (file == null) return null;
 
                 return file.Password.Length > 0 ?
@@ -310,7 +321,7 @@ namespace Cube.Pdf.Editing
         protected PdfReader CreatePdfReader(Page src, IoEx.MemoryStream buffer)
         {
             if (src == null) return null;
-            if (src.File is PdfFile) return CreatePdfReader(src);
+            if (src.File is PdfFile) return CreatePdfReader(src.File);
 
             using (var image = Image.FromFile(src.File.FullName))
             {

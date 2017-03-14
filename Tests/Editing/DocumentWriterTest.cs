@@ -17,6 +17,7 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System.Linq;
 using NUnit.Framework;
 using IoEx = System.IO;
 
@@ -130,6 +131,34 @@ namespace Cube.Pdf.Tests.Editing
 
                 Assert.That(writer.Results.Count, Is.EqualTo(expected));
             }
+        }
+
+        [TestCase("rotation.pdf", "", "image.png", ExpectedResult = 1)]
+        [TestCase("attachment.pdf", "", "image.png", ExpectedResult = 3)]
+        public int Add_Attachment(string src, string password, string file)
+        {
+            var output = string.Format("Attach_{0}_{1}.pdf",
+                IoEx.Path.GetFileNameWithoutExtension(src),
+                IoEx.Path.GetFileNameWithoutExtension(file));
+            var dest = IoEx.Path.Combine(Results, output);
+
+            using (var writer = new Cube.Pdf.Editing.DocumentWriter())
+            {
+                var reader = Create(src, password);
+                writer.Metadata = reader.Metadata;
+                writer.Encryption = reader.Encryption;
+                writer.UseSmartCopy = true;
+                foreach (var page in reader.Pages) writer.Pages.Add(page);
+                foreach (var item in reader.Attachments) writer.Attachments.Add(item);
+                writer.Attachments.Add(new Attachment
+                {
+                    Name = file,
+                    File = new File(IoEx.Path.Combine(Examples, file))
+                });
+                writer.Save(dest);
+            }
+
+            using (var result = Create(dest, password)) return result.Attachments.Count();
         }
 
     }

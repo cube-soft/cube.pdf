@@ -131,7 +131,7 @@ namespace Cube.Pdf.Editing
         {
             if (!cache.ContainsKey(src.File.FullName))
             {
-                var created = CreatePdfReader(src);
+                var created = CreatePdfReader(src.File);
                 if (created == null) return;
                 cache.Add(src.File.FullName, created);
             }
