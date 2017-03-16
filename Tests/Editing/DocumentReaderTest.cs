@@ -445,7 +445,7 @@ namespace Cube.Pdf.Tests.Editing
         /* ----------------------------------------------------------------- */
         [TestCase("image.pdf", 1, ExpectedResult = 2)]
         [TestCase("image.pdf", 2, ExpectedResult = 0)]
-        public int GetImages_Count(string filename, int n)
+        public int GetImages(string filename, int n)
         {
             var src = IoEx.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
