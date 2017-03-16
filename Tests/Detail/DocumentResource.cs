@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentResource.cs
-/// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
 /// Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +33,7 @@ namespace Cube.Pdf.Tests
     class DocumentResource<TDocumentReader> : FileResource, IDisposable
         where TDocumentReader : IDocumentReader, new()
     {
-        #region Constructors and destructors
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,6 +62,22 @@ namespace Cube.Pdf.Tests
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Cache
+        /// 
+        /// <summary>
+        /// DocumentReader オブジェクトのキャッシュ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IDictionary<string, TDocumentReader> Cache { get; }
+            = new Dictionary<string, TDocumentReader>();
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -76,9 +90,7 @@ namespace Cube.Pdf.Tests
         ///
         /* ----------------------------------------------------------------- */
         protected TDocumentReader Create(string filename)
-        {
-            return Create(filename, string.Empty);
-        }
+            => Create(filename, string.Empty);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -96,15 +108,17 @@ namespace Cube.Pdf.Tests
         /* ----------------------------------------------------------------- */
         protected TDocumentReader Create(string filename, string password)
         {
-            if (!_cache.ContainsKey(filename))
+            if (!Cache.ContainsKey(filename))
             {
                 var src = IoEx.Path.Combine(Examples, filename);
                 var reader = new TDocumentReader();
                 reader.Open(src, password);
-                _cache.Add(filename, reader);
+                Cache.Add(filename, reader);
             }
-            return _cache[filename];
+            return Cache[filename];
         }
+
+        #region IDisposable
 
         /* ----------------------------------------------------------------- */
         ///
@@ -121,10 +135,6 @@ namespace Cube.Pdf.Tests
             GC.SuppressFinalize(this);
         }
 
-        #endregion
-
-        #region Virtual methods
-
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
@@ -140,16 +150,17 @@ namespace Cube.Pdf.Tests
             _disposed = true;
             if (disposing)
             {
-                foreach (var item in _cache) item.Value.Dispose();
-                _cache.Clear();
+                foreach (var item in Cache) item.Value.Dispose();
+                Cache.Clear();
             }
         }
 
         #endregion
 
+        #endregion
+
         #region Fields
         private bool _disposed = false;
-        private Dictionary<string, TDocumentReader> _cache = new Dictionary<string, TDocumentReader>();
         #endregion
     }
 }
