@@ -193,7 +193,7 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler<QueryEventArgs<string, string>> PasswordRequired;
+        public event QueryEventHandler<string, string> PasswordRequired;
 
         #endregion
 

@@ -113,7 +113,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        event EventHandler<QueryEventArgs<string, string>> PasswordRequired;
+        event QueryEventHandler<string, string> PasswordRequired;
 
         #endregion
 
@@ -126,6 +126,8 @@ namespace Cube.Pdf
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
         void Open(string path);
@@ -137,6 +139,11 @@ namespace Cube.Pdf
         /// <summary>
         /// PDF ファイルをパスワードを入力して開きます。
         /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
+        /// <param name="password">
+        /// オーナパスワードまたはユーザパスワード
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         void Open(string path, string password);
@@ -148,6 +155,8 @@ namespace Cube.Pdf
         /// <summary>
         /// 指定されたページ番号に対応するページ情報を取得します。
         /// </summary>
+        /// 
+        /// <param name="pagenum">ページ番号</param>
         ///
         /* ----------------------------------------------------------------- */
         Page GetPage(int pagenum);

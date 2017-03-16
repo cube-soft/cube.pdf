@@ -46,17 +46,13 @@
   <ItemGroup>
     <Compile Include="Attachment.cs" />
     <Compile Include="Encryption.cs" />
-    <Compile Include="EncryptionException.cs" />
-    <Compile Include="EncryptionMethod.cs" />
     <Compile Include="File.cs" />
-    <Compile Include="PdfFile.cs" />
     <Compile Include="IDocumentReader.cs" />
     <Compile Include="IDocumentWriter.cs" />
     <Compile Include="ImagePage.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Permission.cs" />
-    <Compile Include="PermissionMethod.cs" />
     <Compile Include="ViewPreferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -41,7 +41,7 @@ namespace Cube.Pdf.Editing
     /* --------------------------------------------------------------------- */
     public class DocumentReader : IDocumentReader
     {
-        #region Constructors and destructors
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
@@ -80,25 +80,6 @@ namespace Cube.Pdf.Editing
         public DocumentReader(string path, string password)
         {
             Open(path, password);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~DocumentReader
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
-        /// に記述して下さい。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~DocumentReader()
-        {
-            Dispose(false);
         }
 
         #endregion
@@ -194,11 +175,92 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler<QueryEventArgs<string, string>> PasswordRequired;
+        public event QueryEventHandler<string, string> PasswordRequired;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPasswordRequired
+        /// 
+        /// <summary>
+        /// パスワードが要求された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
+        {
+            if (PasswordRequired != null) PasswordRequired(this, e);
+            else e.Cancel = true;
+        }
 
         #endregion
 
         #region Methods
+
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~DocumentReader
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
+        /// に記述して下さい。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~DocumentReader()
+        {
+            Dispose(false);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        /// 
+        /// <summary>
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            _disposed = true;
+
+            if (_core == null) return;
+
+            if (disposing)
+            {
+                _core.Dispose();
+                _core = null;
+
+                File       = null;
+                Metadata   = null;
+                Encryption = null;
+                Pages      = null;
+            }
+        }
+
+        #endregion
 
         #region IDocumentReader
 
@@ -209,12 +271,11 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open(string path)
-        {
-            Open(path, string.Empty);
-        }
+        public void Open(string path) => Open(path, string.Empty);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -223,12 +284,15 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
+        /// <param name="password">
+        /// オーナパスワードまたはユーザパスワード
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         public void Open(string path, string password)
-        {
-            Open(path, password, false);
-        }
+            => Open(path, password, false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -237,6 +301,22 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
+        /// 
+        /// <param name="password">
+        /// オーナパスワードまたはユーザパスワード
+        /// </param>
+        /// 
+        /// <param name="onlyFullAccess">
+        /// フルアクセスのみを許可するかどうかを示す値
+        /// </param>
+        /// 
+        /// <remarks>
+        /// onlyFullAccess が true の場合、ユーザパスワードで
+        /// PDF ファイルを開こうとすると PasswordRequired イベントが
+        /// 発生します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         public void Open(string path, string password, bool onlyFullAccess)
@@ -281,33 +361,18 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// 指定されたページ番号に対応するページ情報を取得します。
         /// </summary>
+        /// 
+        /// <param name="pagenum">ページ番号</param>
+        /// 
+        /// <returns>ページ情報を保持するオブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
         public Page GetPage(int pagenum)
-        {
-            return _core != null && File != null ?
-                   _core.CreatePage(File, pagenum) :
-                   null;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+            => _core != null && File != null ?
+               _core.CreatePage(File, pagenum) :
+               null;
 
         #endregion
-
-        #region Extended
 
         /* ----------------------------------------------------------------- */
         ///
@@ -317,8 +382,12 @@ namespace Cube.Pdf.Editing
         /// 指定されたページ中に存在する画像を取得します。
         /// </summary>
         /// 
+        /// <param name="pagenum">ページ番号</param>
+        /// 
+        /// <returns>抽出された Image オブジェクトのリスト</returns>
+        /// 
         /* ----------------------------------------------------------------- */
-        public IList<Image> GetImages(int pagenum)
+        public IEnumerable<Image> GetImages(int pagenum)
         {
             if (pagenum < 0 || pagenum > Pages.Count()) throw new IndexOutOfRangeException();
 
@@ -330,56 +399,7 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
-        #endregion
-
-        #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed) return;
-            _disposed = true;
-
-            if (_core == null) return;
-
-            if (disposing)
-            {
-                _core.Dispose();
-                _core = null;
-
-                File       = null;
-                Metadata   = null;
-                Encryption = null;
-                Pages      = null;
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnPasswordRequired
-        /// 
-        /// <summary>
-        /// パスワードが要求された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
-        {
-            if (PasswordRequired != null) PasswordRequired(this, e);
-            else e.Cancel = true;
-        }
-
-        #endregion
-
-        #region Other private methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -455,11 +475,11 @@ namespace Cube.Pdf.Editing
             return password;
         }
 
-        #endregion
-
         #region Fields
         private bool _disposed = false;
         private PdfReader _core = null;
+        #endregion
+
         #endregion
     }
 }
