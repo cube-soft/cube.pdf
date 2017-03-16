@@ -203,8 +203,8 @@ namespace Cube.Pdf.Editing
         private void AddAttachments(PdfCopy dest, IDictionary<string, PdfReader> cache)
         {
             var done  = new List<string>();
-            var embed = new Dictionary<string, Attachment>();
-            var files = new Dictionary<string, Attachment>();
+            var embed = new Dictionary<string, IAttachment>();
+            var files = new Dictionary<string, IAttachment>();
 
             foreach (var item in Attachments)
             {
@@ -234,7 +234,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddAttachments(IDictionary<string, Attachment> src, PdfCopy dest,
+        private void AddAttachments(IDictionary<string, IAttachment> src, PdfCopy dest,
             IList<string> done, IDictionary<string, PdfReader> cache)
         {
             foreach (var kv in cache)
@@ -284,7 +284,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddAttachments(IDictionary<string, Attachment> src, PdfCopy dest,
+        private void AddAttachments(IDictionary<string, IAttachment> src, PdfCopy dest,
             IList<string> done)
         {
             foreach (var kv in src)

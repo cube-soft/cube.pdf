@@ -139,7 +139,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Attachment> Attachments { get; private set; } = null;
+        public IEnumerable<IAttachment> Attachments { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///

@@ -47,10 +47,12 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attachments.cs" />
     <Compile Include="Details\ImageRenderListener.cs" />
     <Compile Include="Details\Transform.cs" />
     <Compile Include="Operations\Images.cs" />

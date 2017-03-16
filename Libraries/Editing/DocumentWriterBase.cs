@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentWriterBase.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -121,7 +119,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICollection<Attachment> Attachments { get; } = new List<Attachment>();
+        public ICollection<IAttachment> Attachments { get; } = new List<IAttachment>();
 
         /* ----------------------------------------------------------------- */
         ///

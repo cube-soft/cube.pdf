@@ -64,7 +64,7 @@ namespace Cube.Pdf.Editing
         {
             File = file;
             _core = core;
-            _names = _core.GetAttachments();
+            ParseAttachments();
         }
 
         #endregion
@@ -91,7 +91,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count => _names?.Count() ?? 0;
+        public int Count => _values.Count();
 
         #endregion
 
@@ -106,17 +106,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<Attachment> GetEnumerator()
-        {
-            foreach (var name in _names)
-            {
-                yield return new Attachment
-                {
-                    Name = name,
-                    File = File
-                };
-            }
-        }
+        public IEnumerator<Attachment> GetEnumerator() => _values.GetEnumerator();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -131,9 +121,51 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ParseAttachments
+        /// 
+        /// <summary>
+        /// 添付ファイルを解析します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ParseAttachments()
+        {
+            var names = _core.GetEmbeddedFiles();
+            if (names == null) return;
+
+            var index = 0;
+
+            while (index < names.Size)
+            {
+                ++index;
+
+                var dic = names.GetAsDict(index);
+                var file = dic.GetAsDict(PdfName.EF);
+
+                foreach (var key in file.Keys)
+                {
+                    var name = dic.GetAsString(key).ToString();
+                    if (string.IsNullOrEmpty(name)) continue;
+
+                    var stream = PdfReader.GetPdfObject(file.GetAsIndirectObject(key)) as PRStream;
+                    if (stream == null) continue;
+                    
+                    _values.Add(new Attachment(name, File, stream));
+                }
+
+                ++index;
+            }
+        }
+
         #region Fields
         private PdfReader _core = null;
-        private IEnumerable<string> _names = null;
+        private IList<Attachment> _values = new List<Attachment>();
+        #endregion
+
         #endregion
     }
 }

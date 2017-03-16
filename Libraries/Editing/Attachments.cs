@@ -16,87 +16,58 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Security.Cryptography;
+using iTextSharp.text.pdf;
 
-namespace Cube.Pdf
+namespace Cube.Pdf.Editing
 {
-    /* --------------------------------------------------------------------- */
-    ///
-    /// IAttachment
-    /// 
-    /// <summary>
-    /// 添付ファイルを表すインターフェースです。
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public interface IAttachment
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Name
-        /// 
-        /// <summary>
-        /// 添付ファイルの名前を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        string Name { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// File
-        /// 
-        /// <summary>
-        /// 添付オブジェクトが属するファイルを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        FileBase File { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Length
-        /// 
-        /// <summary>
-        /// 添付ファイルのサイズを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        long Length { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Length
-        /// 
-        /// <summary>
-        /// 添付ファイルのチェックサムを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        byte[] Checksum { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetBytes
-        /// 
-        /// <summary>
-        /// 添付ファイルの内容をバイト配列で取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        byte[] GetBytes();
-    }
-
     /* --------------------------------------------------------------------- */
     ///
     /// Attachment
     /// 
     /// <summary>
-    /// 添付ファイルを表すクラスです。
+    /// PDF ファイルに添付済のファイルを表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     public class Attachment : IAttachment
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachment
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        /// 
+        /// <param name="stream">添付ファイルのストリーム</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Attachment(PRStream stream) : this("", null, stream) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachment
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        /// 
+        /// <param name="name">添付ファイル名</param>
+        /// <param name="file">PDF ファイル情報</param>
+        /// <param name="stream">添付ファイルのストリーム</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Attachment(string name, FileBase file, PRStream stream) : base()
+        {
+            Name = name;
+            File = file;
+            _stream = stream;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -115,20 +86,11 @@ namespace Cube.Pdf
         /// File
         /// 
         /// <summary>
-        /// 添付オブジェクトが属するファイルを取得または設定します。
+        /// 添付先 PDF ファイル情報を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File
-        {
-            get { return _file; }
-            set
-            {
-                if (_file == value) return;
-                _file  = value;
-                _cache = null;
-            }
-        }
+        public FileBase File { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,12 +103,12 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public long Length
         {
-            get { return File?.Length ?? 0; }
+            get { return _stream?.Length ?? 0; }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Length
+        /// Checksum
         /// 
         /// <summary>
         /// 添付ファイルのチェックサムを取得します。
@@ -157,7 +119,11 @@ namespace Cube.Pdf
         {
             get
             {
-                if (_cache == null) _cache = GetChecksum(File.FullName);
+                if (_cache == null)
+                {
+                    var md5 = new MD5CryptoServiceProvider();
+                    _cache = md5.ComputeHash(GetBytes());
+                }
                 return _cache;
             }
         }
@@ -175,47 +141,13 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public byte[] GetBytes()
-        {
-            var buffer = new byte[1024 * 1024];
-
-            using (var input = System.IO.File.OpenRead(File.FullName))
-            using (var ms = new System.IO.MemoryStream())
-            {
-                var n = 0;
-                while ((n = input.Read(buffer, 0, buffer.Length)) > 0) ms.Write(buffer, 0, n);
-                return ms.ToArray();
-            }
-        }
+        public byte[] GetBytes() => PdfReader.GetStreamBytes(_stream);
 
         #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetChecksum
-        /// 
-        /// <summary>
-        /// チェックサムを計算します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private byte[] GetChecksum(string path)
-        {
-            if (!System.IO.File.Exists(path)) return null;
-
-            using (var s = new System.IO.BufferedStream(
-                System.IO.File.OpenRead(path),
-                1024 * 1024
-            )) return new MD5CryptoServiceProvider().ComputeHash(s);
-        }
 
         #region Fields
-        private FileBase _file;
+        private PRStream _stream;
         private byte[] _cache;
-        #endregion
-
         #endregion
     }
 }

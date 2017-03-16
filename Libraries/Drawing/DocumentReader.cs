@@ -157,7 +157,7 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Attachment> Attachments { get; private set; } = null;
+        public IEnumerable<IAttachment> Attachments { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
