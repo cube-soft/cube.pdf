@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Pdf.Editing.ITextReader;
@@ -143,6 +144,17 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
+        /// RawObject
+        /// 
+        /// <summary>
+        /// 内部実装のオブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PdfReader RawObject { get; private set; } = null;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// IsOpen
         /// 
         /// <summary>
@@ -151,16 +163,12 @@ namespace Cube.Pdf.Editing
         ///
         /* ----------------------------------------------------------------- */
         public bool IsOpen
-        {
-            get
-            {
-                return _core      != null &&
-                       File       != null &&
-                       Metadata   != null &&
-                       Encryption != null &&
-                       Pages      != null ;
-            }
-        }
+            => RawObject   != null &&
+               File        != null &&
+               Metadata    != null &&
+               Encryption  != null &&
+               Pages       != null &&
+               Attachments != null;
 
         #endregion
 
@@ -246,12 +254,12 @@ namespace Cube.Pdf.Editing
             if (_disposed) return;
             _disposed = true;
 
-            if (_core == null) return;
+            if (RawObject == null) return;
 
             if (disposing)
             {
-                _core.Dispose();
-                _core = null;
+                RawObject.Dispose();
+                RawObject = null;
 
                 File       = null;
                 Metadata   = null;
@@ -323,29 +331,31 @@ namespace Cube.Pdf.Editing
         {
             try
             {
-                var bytes = !string.IsNullOrEmpty(password) ? System.Text.Encoding.UTF8.GetBytes(password) : null;
-                _core = new PdfReader(path, bytes, true);
-                if (onlyFullAccess && !_core.IsOpenedWithFullPermissions)
+                var pass = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
+                RawObject = new PdfReader(path, pass, true);
+                if (onlyFullAccess && !RawObject.IsOpenedWithFullPermissions)
                 {
                     throw new BadPasswordException("allow only owner password");
                 }
 
-                var file = new PdfFile(path, password);
-                file.FullAccess = _core.IsOpenedWithFullPermissions;
-                file.PageCount = _core.NumberOfPages;
+                var file = new PdfFile(path, password)
+                {
+                    FullAccess = RawObject.IsOpenedWithFullPermissions,
+                    PageCount  = RawObject.NumberOfPages
+                };
 
-                File = file;
-                Metadata = GetMetadata(_core);
-                Encryption = GetEncryption(_core, password, file.FullAccess);
-                Pages = new ReadOnlyPageCollection(_core, file);
-                Attachments = new ReadOnlyAttachmentCollection(_core, file);
+                File        = file;
+                Metadata    = GetMetadata(RawObject);
+                Encryption  = GetEncryption(RawObject, password, file.FullAccess);
+                Pages       = new ReadOnlyPageCollection(RawObject, file);
+                Attachments = new ReadOnlyAttachmentCollection(RawObject, file);
             }
             catch (BadPasswordException /* err */)
             {
-                if (_core != null)
+                if (RawObject != null)
                 {
-                    _core.Dispose();
-                    _core = null;
+                    RawObject.Dispose();
+                    RawObject = null;
                 }
 
                 var e = new QueryEventArgs<string, string>(path);
@@ -368,8 +378,8 @@ namespace Cube.Pdf.Editing
         ///
         /* ----------------------------------------------------------------- */
         public Page GetPage(int pagenum)
-            => _core != null && File != null ?
-               _core.CreatePage(File, pagenum) :
+            => RawObject != null && File != null ?
+               RawObject.CreatePage(File, pagenum) :
                null;
 
         #endregion
@@ -391,7 +401,7 @@ namespace Cube.Pdf.Editing
         {
             if (pagenum < 0 || pagenum > Pages.Count()) throw new IndexOutOfRangeException();
 
-            var parser = new iTextSharp.text.pdf.parser.PdfReaderContentParser(_core);
+            var parser = new iTextSharp.text.pdf.parser.PdfReaderContentParser(RawObject);
             var listener = new ImageRenderListener();
             parser.ProcessContent(pagenum, listener);
             return listener.Images;
@@ -410,21 +420,17 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Metadata GetMetadata(PdfReader src)
+        private Metadata GetMetadata(PdfReader src) => new Metadata()
         {
-            var dest = new Metadata();
-
-            dest.Version  = new Version(1, Int32.Parse(src.PdfVersion.ToString()), 0, 0);
-            dest.Author   = src.Info.ContainsKey("Author") ? src.Info["Author"] : "";
-            dest.Title    = src.Info.ContainsKey("Title") ? src.Info["Title"] : "";
-            dest.Subtitle = src.Info.ContainsKey("Subject") ? src.Info["Subject"] : "";
-            dest.Keywords = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : "";
-            dest.Creator  = src.Info.ContainsKey("Creator") ? src.Info["Creator"] : "";
-            dest.Producer = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : "";
-            dest.ViewPreferences = src.SimpleViewerPreferences;
-
-            return dest;
-        }
+            Version         = new Version(1, Int32.Parse(src.PdfVersion.ToString()), 0, 0),
+            Author          = src.Info.ContainsKey("Author")   ? src.Info["Author"]   : "",
+            Title           = src.Info.ContainsKey("Title")    ? src.Info["Title"]    : "",
+            Subtitle        = src.Info.ContainsKey("Subject")  ? src.Info["Subject"]  : "",
+            Keywords        = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : "",
+            Creator         = src.Info.ContainsKey("Creator")  ? src.Info["Creator"]  : "",
+            Producer        = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : "",
+            ViewPreferences = src.SimpleViewerPreferences
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -470,14 +476,13 @@ namespace Cube.Pdf.Editing
             {
                 if (method == EncryptionMethod.Aes256) return string.Empty; // see remarks
                 var bytes = src.ComputeUserPassword();
-                if (bytes != null && bytes.Length > 0) return System.Text.Encoding.UTF8.GetString(bytes);
+                if (bytes != null && bytes.Length > 0) return Encoding.UTF8.GetString(bytes);
             }
             return password;
         }
 
         #region Fields
         private bool _disposed = false;
-        private PdfReader _core = null;
         #endregion
 
         #endregion
