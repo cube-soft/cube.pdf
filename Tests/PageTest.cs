@@ -26,7 +26,7 @@ namespace Cube.Pdf.Tests
     /// PageTest
     /// 
     /// <summary>
-    /// Page のテストを行うクラスです。
+    /// Page のテスト用クラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
@@ -39,20 +39,20 @@ namespace Cube.Pdf.Tests
         /// Rotation
         ///
         /// <summary>
-        /// 回転角度の正規化テストを行います。
+        /// 回転角度の正規化テストを実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(   0,   0)]
-        [TestCase( 359, 359)]
-        [TestCase( 360,   0)]
-        [TestCase(  -1, 359)]
-        [TestCase(1000, 280)]
-        public void Rotation(int input, int expected)
+        [TestCase(   0, ExpectedResult =   0)]
+        [TestCase( 359, ExpectedResult = 359)]
+        [TestCase( 360, ExpectedResult =   0)]
+        [TestCase(  -1, ExpectedResult = 359)]
+        [TestCase(1000, ExpectedResult = 280)]
+        public int Rotation(int degree)
         {
             var page = new Page();
-            page.Rotation = input;
-            Assert.That(page.Rotation, Is.EqualTo(expected));
+            page.Rotation = degree;
+            return page.Rotation;
         }
     }
 }
