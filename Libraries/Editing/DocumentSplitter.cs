@@ -131,7 +131,7 @@ namespace Cube.Pdf.Editing
         {
             if (!cache.ContainsKey(src.File.FullName))
             {
-                var created = CreatePdfReader(src.File);
+                var created = GetRawReader(src.File);
                 if (created == null) return;
                 cache.Add(src.File.FullName, created);
             }
@@ -158,7 +158,7 @@ namespace Cube.Pdf.Editing
             if (src == null) return;
 
             using (var buffer = new IoEx.MemoryStream())
-            using (var reader = CreatePdfReader(src, buffer))
+            using (var reader = GetRawReader(src, buffer))
             {
                 for (var i = 0; i < reader.NumberOfPages; ++i)
                 {
@@ -182,12 +182,12 @@ namespace Cube.Pdf.Editing
         private void SaveOne(PdfReader reader, int pagenum, string dest)
         {
             var document = new iTextSharp.text.Document();
-            var writer = CreatePdfCopy(document, dest);
+            var writer = GetRawWriter(document, dest);
 
-            AddEncryption(writer);
+            SetEncryption(writer);
             document.Open();
             writer.AddPage(writer.GetImportedPage(reader, pagenum));
-            AddMetadata(document);
+            SetMetadata(document);
 
             document.Close();
             writer.Close();

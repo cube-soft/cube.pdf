@@ -77,8 +77,8 @@ namespace Cube.Pdf.Editing
                 using (var reader = new PdfReader(tmp))
                 using (var stamper = new PdfStamper(reader, new IoEx.FileStream(path, IoEx.FileMode.Create)))
                 {
-                    AddMetadata(reader, stamper);
-                    AddEncryption(stamper.Writer);
+                    SetMetadata(reader, stamper);
+                    SetEncryption(stamper.Writer);
                     if (Metadata.Version.Minor >= 5) stamper.SetFullCompression();
                     stamper.Writer.Outlines = Bookmarks;
                 }
@@ -115,7 +115,7 @@ namespace Cube.Pdf.Editing
             try
             {
                 var document = new iTextSharp.text.Document();
-                var writer = CreatePdfCopy(document, dest);
+                var writer = GetRawWriter(document, dest);
 
                 document.Open();
                 Bookmarks.Clear();
@@ -156,7 +156,7 @@ namespace Cube.Pdf.Editing
         {
             if (!cache.ContainsKey(src.File.FullName))
             {
-                var created = CreatePdfReader(src.File);
+                var created = GetRawReader(src.File);
                 if (created == null) return;
                 cache.Add(src.File.FullName, created);
             }
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Editing
         private void AddImagePage(Page src, PdfCopy dest)
         {
             using (var buffer = new IoEx.MemoryStream())
-            using (var reader = CreatePdfReader(src, buffer))
+            using (var reader = GetRawReader(src, buffer))
             {
                 for (var i = 0; i < reader.NumberOfPages; ++i)
                 {
@@ -212,7 +212,7 @@ namespace Cube.Pdf.Editing
                 {
                     if (!cache.ContainsKey(item.File.FullName))
                     {
-                        var created = CreatePdfReader(item.File);
+                        var created = GetRawReader(item.File);
                         if (created == null) continue;
                         cache.Add(item.File.FullName, created);
                     }
