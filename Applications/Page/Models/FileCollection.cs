@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileCollection : ObservableCollection<FileBase>
+    public class FileCollection : ObservableCollection<MediaFile>
     {
         #region Constructors
 
@@ -287,9 +287,7 @@ namespace Cube.Pdf.App.Page
             {
                 reader.PasswordRequired += (s, e) => { e.Cancel = true; };
                 reader.Open(src.FullName, src.Password, true);
-                if (!reader.IsOpen) return;
-
-                foreach (var page in reader.Pages) dest.Pages.Add(page);
+                if (reader.IsOpen) dest.Add(reader.Pages);
             }
         }
 
@@ -307,9 +305,7 @@ namespace Cube.Pdf.App.Page
             if (src == null) return;
 
             var pages = ImagePage.Create(src.FullName);
-            if (pages == null) return;
-
-            foreach (var page in pages) dest.Pages.Add(page);
+            if (pages != null) dest.Add(pages);
         }
 
         /* ----------------------------------------------------------------- */

@@ -80,20 +80,21 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public ListViewItem Convert<T>(T src)
         {
-            var file = src as FileBase;
+            var file = src as MediaFile;
             if (file == null) return new ListViewItem(src.ToString());
 
             var space    = " ";
             var filename = IoEx.Path.GetFileName(file.FullName);
-            var type     = file.RawData.GetTypeName();
+            var type     = file.RawObject.GetTypeName();
             var pages    = file.PageCount.ToString();
             var date     = file.LastWriteTime.ToString("yyyy/MM/dd hh:mm");
             var bytes    = file.Length.ToRoughBytes();
 
-            var dest = new ListViewItem(new string[] { space + filename, type, pages, date, bytes });
-            dest.ToolTipText = file.FullName;
-            dest.ImageIndex = Icons.Register(file);
-            return dest;
+            return new ListViewItem(new string[] { space + filename, type, pages, date, bytes })
+            {
+                ToolTipText = file.FullName,
+                ImageIndex  = Icons.Register(file)
+            };
         }
 
         #endregion
