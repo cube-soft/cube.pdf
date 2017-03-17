@@ -134,7 +134,14 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         private void ParseAttachments()
         {
-            var names = _core.GetEmbeddedFiles();
+            if (_core == null) return;
+
+            var c = PdfReader.GetPdfObject(_core.Catalog.Get(PdfName.NAMES)) as PdfDictionary;
+            if (c == null) return;
+            var e = PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) as PdfDictionary;
+            if (e == null) return;
+
+            var names = e.GetAsArray(PdfName.NAMES);
             if (names == null) return;
 
             var index = 0;
@@ -143,7 +150,7 @@ namespace Cube.Pdf.Editing
             {
                 ++index;
 
-                var dic = names.GetAsDict(index);
+                var dic  = names.GetAsDict(index);
                 var file = dic.GetAsDict(PdfName.EF);
 
                 foreach (var key in file.Keys)
