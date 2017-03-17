@@ -17,7 +17,6 @@
 /* ------------------------------------------------------------------------- */
 using System.Linq;
 using NUnit.Framework;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.Tests.Editing
 {
@@ -48,8 +47,8 @@ namespace Cube.Pdf.Tests.Editing
         public void SaveAs(string filename, string password, int rotation)
         {
             var output = string.Format("SaveAs_{0}", filename);
-            var dest = IoEx.Path.Combine(Results, output);
-            var src  = IoEx.Path.Combine(Examples, filename);
+            var dest = System.IO.Path.Combine(Results, output);
+            var src  = System.IO.Path.Combine(Examples, filename);
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
@@ -62,12 +61,12 @@ namespace Cube.Pdf.Tests.Editing
                 foreach (var page in reader.Pages)
                 {
                     page.Rotation = rotation;
-                    writer.Pages.Add(page);
+                    writer.Add(page);
                 }
                 writer.Save(dest);
             }
 
-            Assert.That(IoEx.File.Exists(dest), Is.True);
+            Assert.That(System.IO.File.Exists(dest), Is.True);
         }
 
         /* ----------------------------------------------------------------- */
@@ -84,10 +83,10 @@ namespace Cube.Pdf.Tests.Editing
         public void Merge(string pdf, string image, int rotation)
         {
             var output = string.Format("Merge_{0}_{1}.pdf",
-                IoEx.Path.GetFileNameWithoutExtension(pdf),
-                IoEx.Path.GetFileNameWithoutExtension(image));
-            var dest = IoEx.Path.Combine(Results, output);
-            var src  = IoEx.Path.Combine(Examples, pdf);
+                System.IO.Path.GetFileNameWithoutExtension(pdf),
+                System.IO.Path.GetFileNameWithoutExtension(image));
+            var dest = System.IO.Path.Combine(Results, output);
+            var src  = System.IO.Path.Combine(Examples, pdf);
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
@@ -95,7 +94,7 @@ namespace Cube.Pdf.Tests.Editing
                 reader.Open(src);
 
                 var p1 = reader.GetPage(1);
-                var p2 = ImagePage.Create(IoEx.Path.Combine(Examples, image), 0);
+                var p2 = ImagePage.Create(System.IO.Path.Combine(Examples, image), 0);
 
                 p1.Rotation = rotation;
                 p2.Rotation = rotation;
@@ -103,12 +102,12 @@ namespace Cube.Pdf.Tests.Editing
                 writer.Metadata     = reader.Metadata;
                 writer.Encryption   = reader.Encryption;
                 writer.UseSmartCopy = true;
-                writer.Pages.Add(p1);
-                writer.Pages.Add(p2);
+                writer.Add(p1);
+                writer.Add(p2);
                 writer.Save(dest);
             }
 
-            Assert.That(IoEx.File.Exists(dest), Is.True);
+            Assert.That(System.IO.File.Exists(dest), Is.True);
         }
 
         /* ----------------------------------------------------------------- */
@@ -124,7 +123,7 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password.pdf", "password", ExpectedResult = 2)]
         public int Split(string filename, string password)
         {
-            var src = IoEx.Path.Combine(Examples, filename);
+            var src = System.IO.Path.Combine(Examples, filename);
 
             using (var writer = new Cube.Pdf.Editing.DocumentSplitter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
@@ -134,39 +133,55 @@ namespace Cube.Pdf.Tests.Editing
                 writer.Metadata     = reader.Metadata;
                 writer.Encryption   = reader.Encryption;
                 writer.UseSmartCopy = true;
-                foreach (var page in reader.Pages) writer.Pages.Add(page);
+                writer.Add(reader.Pages);
                 writer.Save(Results);
 
                 return writer.Results.Count;
             }
         }
 
-        //[TestCase("rotation.pdf", "", "image.png", ExpectedResult = 1)]
-        //[TestCase("attachment.pdf", "", "image.png", ExpectedResult = 3)]
-        //public int Add_Attachment(string src, string password, string file)
-        //{
-        //    var output = string.Format("Attach_{0}_{1}.pdf",
-        //        IoEx.Path.GetFileNameWithoutExtension(src),
-        //        IoEx.Path.GetFileNameWithoutExtension(file));
-        //    var dest = IoEx.Path.Combine(Results, output);
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        ///
+        /// <summary>
+        /// ファイルを添付するテストを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("rotation.pdf",   "", "image.png", ExpectedResult = 1)]
+        [TestCase("attachment.pdf", "", "image.png", ExpectedResult = 3)]
+        public int Attach(string pdf, string password, string file)
+        {
+            var output = string.Format("Attach_{0}_{1}.pdf",
+                System.IO.Path.GetFileNameWithoutExtension(pdf),
+                System.IO.Path.GetFileNameWithoutExtension(file));
+            var dest = System.IO.Path.Combine(Results, output);
+            var src  = System.IO.Path.Combine(Examples, pdf);
 
-        //    using (var writer = new Cube.Pdf.Editing.DocumentWriter())
-        //    {
-        //        var reader = Create(src, password);
-        //        writer.Metadata = reader.Metadata;
-        //        writer.Encryption = reader.Encryption;
-        //        writer.UseSmartCopy = true;
-        //        foreach (var page in reader.Pages) writer.Pages.Add(page);
-        //        foreach (var item in reader.Attachments) writer.Attachments.Add(item);
-        //        writer.Attachments.Add(new Attachment
-        //        {
-        //            Name = file,
-        //            File = new File(IoEx.Path.Combine(Examples, file))
-        //        });
-        //        writer.Save(dest);
-        //    }
+            using (var writer = new Cube.Pdf.Editing.DocumentWriter())
+            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            {
+                reader.Open(src, password);
 
-        //    using (var result = Create(dest, password)) return result.Attachments.Count();
-        //}
+                writer.Metadata = reader.Metadata;
+                writer.Encryption = reader.Encryption;
+                writer.UseSmartCopy = true;
+                writer.Add(reader.Pages);
+                writer.Attach(reader.Attachments);
+                writer.Attach(new Attachment
+                {
+                    Name = file,
+                    File = new File(System.IO.Path.Combine(Examples, file))
+                });
+                writer.Save(dest);
+            }
+
+            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            {
+                reader.Open(dest, password);
+                return reader.Attachments.Count();
+            }
+        }
     }
 }
