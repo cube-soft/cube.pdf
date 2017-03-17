@@ -20,7 +20,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using iTextSharp.text.pdf;
-using Cube.Pdf.Editing.ITextReader;
 
 namespace Cube.Pdf.Editing
 {
@@ -130,6 +129,17 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// 添付ファイルを解析します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// /EmbededFiles, /Names で取得できる配列は、以下のような構造に
+        /// なっています。
+        /// 
+        /// [String, Object, String, Object, ...]
+        /// 
+        /// この内、各 Object が、添付ファイルに関する実際の情報を保持
+        /// しています。そのため、間の String 情報をスキップする必要が
+        /// あります。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private void ParseAttachments()
@@ -141,30 +151,26 @@ namespace Cube.Pdf.Editing
             var e = PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) as PdfDictionary;
             if (e == null) return;
 
-            var names = e.GetAsArray(PdfName.NAMES);
-            if (names == null) return;
+            var files = e.GetAsArray(PdfName.NAMES);
+            if (files == null) return;
 
-            var index = 0;
-
-            while (index < names.Size)
+            for (var i = 1; i < files.Size; i += 2) // see remarks
             {
-                ++index;
+                var item = files.GetAsDict(i);
+                var ef   = item.GetAsDict(PdfName.EF);
 
-                var dic  = names.GetAsDict(index);
-                var file = dic.GetAsDict(PdfName.EF);
-
-                foreach (var key in file.Keys)
+                // NOTE: Are /F and /UF contents same ?
+                foreach (var key in ef.Keys)
                 {
-                    var name = dic.GetAsString(key).ToString();
+                    var name = item.GetAsString(key)?.ToString();
                     if (string.IsNullOrEmpty(name)) continue;
 
-                    var stream = PdfReader.GetPdfObject(file.GetAsIndirectObject(key)) as PRStream;
+                    var stream = PdfReader.GetPdfObject(ef.GetAsIndirectObject(key)) as PRStream;
                     if (stream == null) continue;
                     
                     _values.Add(new Attachment(name, File, stream));
+                    break;
                 }
-
-                ++index;
             }
         }
 
