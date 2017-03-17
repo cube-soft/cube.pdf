@@ -1,8 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ReadOnlyPageCollection.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -58,7 +56,7 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(IntPtr core, FileBase file)
+        public ReadOnlyPageCollection(IntPtr core, MediaFile file)
         {
             File  = file;
             _core = core;
@@ -70,14 +68,14 @@ namespace Cube.Pdf.Drawing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileBase
+        /// File
         /// 
         /// <summary>
         /// ファイル情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File { get; }
+        public MediaFile File { get; }
 
         /* ----------------------------------------------------------------- */
         ///

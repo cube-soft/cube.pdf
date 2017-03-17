@@ -22,10 +22,10 @@ namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileBase
+    /// File
     /// 
     /// <summary>
-    /// ファイル情報を保持するための基底クラスです。
+    /// ファイル情報を保持するためのクラスです。
     /// </summary>
     /// 
     /// <remarks>
@@ -34,51 +34,25 @@ namespace Cube.Pdf
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileBase : IEquatable<FileBase>
+    public class File
     {
-        #region Constructors
-
         /* ----------------------------------------------------------------- */
         ///
-        /// FileBase
+        /// File
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
+        /// 
+        /// <param name="path">ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected FileBase(string path)
+        public File(string path)
         {
             _base = new System.IO.FileInfo(path);
         }
 
-        #endregion
-
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageCount
-        /// 
-        /// <summary>
-        /// ページ数を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int PageCount { get; set; } = 0;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Resolution
-        /// 
-        /// <summary>
-        /// ファイルの解像度を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Point Resolution { get; set; } = Point.Empty;
-
-        #region FileInfo
 
         /* ----------------------------------------------------------------- */
         ///
@@ -254,16 +228,14 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RawData
+        /// RawObject
         ///
         /// <summary>
-        /// FileBase クラスが参照しているオブジェクトを取得します。
+        /// File クラスが参照しているオブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public System.IO.FileInfo RawData => _base;
-
-        #endregion
+        public System.IO.FileInfo RawObject => _base;
 
         #endregion
 
@@ -280,7 +252,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public void Refresh() => _base.Refresh();
 
-        #region IEquatable<FileBase>
+        #region IEquatable<File>
 
         /* ----------------------------------------------------------------- */
         ///
@@ -291,10 +263,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Equals(FileBase other)
-        {
-            return FullName == other.FullName;
-        }
+        public bool Equals(File other) => FullName == other.FullName;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -310,7 +279,7 @@ namespace Cube.Pdf
             if (ReferenceEquals(obj, null)) return false;
             if (ReferenceEquals(this, obj)) return true;
 
-            var other = obj as Page;
+            var other = obj as File;
             if (other == null) return false;
 
             return Equals(other);
@@ -338,31 +307,60 @@ namespace Cube.Pdf
 
     /* --------------------------------------------------------------------- */
     ///
-    /// File
+    /// MediaFile
     /// 
     /// <summary>
-    /// ファイル情報を保持するためのクラスです。
+    /// PDF や画像ファイル等の情報を保持するためのクラスです。
     /// </summary>
     /// 
     /// <remarks>
-    /// 添付予定のファイル情報を保持する際などに使用されます。
+    /// このクラスを直接オブジェクト化する事はできません。
+    /// 必要に応じて継承クラスを利用して下さい。
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class File : FileBase
+    public class MediaFile : File
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// File
+        /// MediaFile
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
-        /// 
-        /// <param name="path">ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        public File(string path) : base(path) { }
+        protected MediaFile(string path) : base(path) { }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PageCount
+        /// 
+        /// <summary>
+        /// ページ数を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int PageCount { get; set; } = 0;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Resolution
+        /// 
+        /// <summary>
+        /// ファイルの解像度を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Point Resolution { get; set; } = Point.Empty;
+
+        #endregion
     }
 
     /* --------------------------------------------------------------------- */
@@ -374,7 +372,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PdfFile : FileBase
+    public class PdfFile : MediaFile
     {
         #region Constructors
 
@@ -449,7 +447,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageFile : FileBase
+    public class ImageFile : MediaFile
     {
         #region Constructors
 
@@ -486,7 +484,7 @@ namespace Cube.Pdf
 
         #endregion
 
-        #region Others
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///

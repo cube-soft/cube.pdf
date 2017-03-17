@@ -96,7 +96,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File { get; private set; } = null;
+        public MediaFile File { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///

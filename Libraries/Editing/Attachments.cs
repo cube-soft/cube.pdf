@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editing
         /// <param name="stream">添付ファイルのストリーム</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EmbeddedAttachment(string name, FileBase file, PRStream stream) : base()
+        public EmbeddedAttachment(string name, MediaFile file, PRStream stream) : base()
         {
             Name = name;
             File = file;

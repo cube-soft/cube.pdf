@@ -52,7 +52,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File
+        public File File
         {
             get { return _file; }
             set
@@ -173,7 +173,7 @@ namespace Cube.Pdf
         }
 
         #region Fields
-        private FileBase _file;
+        private File _file;
         private byte[] _cache;
         #endregion
 

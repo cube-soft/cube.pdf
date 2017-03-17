@@ -346,7 +346,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        protected PdfReader GetRawReader(FileBase src)
+        protected PdfReader GetRawReader(MediaFile src)
         {
             try
             {

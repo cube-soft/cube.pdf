@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -41,16 +41,18 @@ namespace Cube.Pdf.Editing.ITextReader
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public static Page CreatePage(this PdfReader reader, FileBase file, int pagenum)
+        public static Page CreatePage(this PdfReader reader, MediaFile file, int pagenum)
         {
             var size = reader.GetPageSize(pagenum);
-            var dest = new Page();
-            dest.File = file;
-            dest.Number = pagenum;
-            dest.Size = new Size((int)size.Width, (int)size.Height);
-            dest.Rotation = reader.GetPageRotation(pagenum);
-            dest.Resolution = new Point(72, 72);
-            return dest;
+
+            return new Page()
+            {
+                File       = file,
+                Number     = pagenum,
+                Size       = new Size((int)size.Width, (int)size.Height),
+                Rotation   = reader.GetPageRotation(pagenum),
+                Resolution = new Point(72, 72)
+            };
         }
 
         /* ----------------------------------------------------------------- */

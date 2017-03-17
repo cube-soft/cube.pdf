@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editing
         /// <param name="file">PDF のファイル情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyAttachmentCollection(PdfReader core, FileBase file)
+        public ReadOnlyAttachmentCollection(PdfReader core, MediaFile file)
         {
             File = file;
             _core = core;
@@ -72,14 +72,14 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileBase
+        /// File
         /// 
         /// <summary>
         /// ファイル情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File { get; }
+        public MediaFile File { get; }
 
         /* ----------------------------------------------------------------- */
         ///

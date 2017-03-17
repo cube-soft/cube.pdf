@@ -56,7 +56,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(PdfReader core, FileBase file)
+        public ReadOnlyPageCollection(PdfReader core, MediaFile file)
         {
             File  = file;
             _core = core;
@@ -68,14 +68,14 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileBase
+        /// File
         /// 
         /// <summary>
         /// ファイル情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File { get; }
+        public MediaFile File { get; }
 
         /* ----------------------------------------------------------------- */
         ///

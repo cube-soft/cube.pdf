@@ -113,7 +113,7 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File { get; private set; } = null;
+        public MediaFile File { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -169,16 +169,11 @@ namespace Cube.Pdf.Drawing
         ///
         /* ----------------------------------------------------------------- */
         public bool IsOpen
-        {
-            get
-            {
-                return _mupdf     != null &&
-                       File       != null &&
-                       Metadata   != null &&
-                       Encryption != null &&
-                       Pages      != null ;
-            }
-        }
+            => _mupdf     != null &&
+               File       != null &&
+               Metadata   != null &&
+               Encryption != null &&
+               Pages      != null;
 
         #endregion
 
@@ -237,9 +232,11 @@ namespace Cube.Pdf.Drawing
                 if (count < 0) throw new IoEx.FileLoadException();
                 NativeMethods.SetAlphaBits(_mupdf, 8);
 
-                var file = new PdfFile(path, password);
-                file.FullAccess = true;
-                file.PageCount = count;
+                var file = new PdfFile(path, password)
+                {
+                    FullAccess = true,
+                    PageCount  = count
+                };
 
                 File       = file;
                 Metadata   = _mupdf.CreateMetadata();

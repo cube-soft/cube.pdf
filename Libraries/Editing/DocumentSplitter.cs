@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentSplitter.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -202,7 +200,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private string Unique(string folder, FileBase src, int pagenum)
+        private string Unique(string folder, MediaFile src, int pagenum)
         {
             var basename = IoEx.Path.GetFileNameWithoutExtension(src.FullName);
             var digit = string.Format("D{0}", src.PageCount.ToString("D").Length);

@@ -42,7 +42,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File { get; set; } = null;
+        public MediaFile File { get; set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
