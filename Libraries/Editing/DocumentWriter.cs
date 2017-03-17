@@ -208,8 +208,10 @@ namespace Cube.Pdf.Editing
             {
                 var hash = item.Name.ToLower() + BitConverter.ToString(item.Checksum);
                 if (done.Contains(hash)) continue;
-                
-                dest.AddFileAttachment(null, item.Data, null, item.Name);
+
+                if (item is EmbeddedAttachment) dest.AddFileAttachment(null, item.Data, null, item.Name);
+                else dest.AddFileAttachment(null, null, item.File.FullName, item.Name);
+
                 done.Add(hash);
             }
         }
