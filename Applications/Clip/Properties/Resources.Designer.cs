@@ -61,11 +61,20 @@ namespace Cube.Pdf.App.Clip.Properties {
         }
         
         /// <summary>
-        ///   状態 に類似しているローカライズされた文字列を検索します。
+        ///   添付状況 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ColumnCondition {
             get {
                 return ResourceManager.GetString("ColumnCondition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   サイズ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ColumnLength {
+            get {
+                return ResourceManager.GetString("ColumnLength", resourceCulture);
             }
         }
         

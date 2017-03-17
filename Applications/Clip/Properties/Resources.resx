@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ColumnCondition" xml:space="preserve">
-    <value>状態</value>
+    <value>添付状況</value>
+  </data>
+  <data name="ColumnLength" xml:space="preserve">
+    <value>サイズ</value>
   </data>
   <data name="ColumnName" xml:space="preserve">
     <value>ファイル名</value>
