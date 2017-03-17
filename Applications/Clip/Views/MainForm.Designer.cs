@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -43,9 +44,6 @@
             this.RemoveButton = new Cube.Forms.Button();
             this.ClearButton = new Cube.Forms.Button();
             this.AttachListView = new Cube.Pdf.App.Clip.ClipListView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HeaderButton = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
@@ -239,7 +237,7 @@
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(100, 30);
             this.ClearButton.TabIndex = 4;
-            this.ClearButton.Text = "すべて削除";
+            this.ClearButton.Text = "リセット";
             this.ClearButton.UseVisualStyleBackColor = false;
             // 
             // AttachListView
@@ -252,48 +250,16 @@
             this.AttachListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.AttachListView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.AttachListView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.AttachListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.AttachListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3});
+            this.AttachListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.AttachListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AttachListView.GridColor = System.Drawing.SystemColors.Control;
-            this.AttachListView.Location = new System.Drawing.Point(0, 0);
-            this.AttachListView.Margin = new System.Windows.Forms.Padding(0);
+            this.AttachListView.Location = new System.Drawing.Point(3, 3);
             this.AttachListView.Name = "AttachListView";
             this.AttachListView.ReadOnly = true;
             this.AttachListView.RowHeadersVisible = false;
-            this.AttachListView.RowTemplate.Height = 21;
             this.AttachListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.AttachListView.Size = new System.Drawing.Size(454, 151);
-            this.AttachListView.TabIndex = 0;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
-            this.dataGridViewTextBoxColumn1.FillWeight = 250F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "ファイル名";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "Condition";
-            this.dataGridViewTextBoxColumn2.FillWeight = 43.75F;
-            this.dataGridViewTextBoxColumn2.HeaderText = "状態";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.FillWeight = 6.25F;
-            this.dataGridViewTextBoxColumn3.HeaderText = "";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.AttachListView.Size = new System.Drawing.Size(448, 145);
+            this.AttachListView.TabIndex = 4;
             // 
             // HeaderButton
             // 
@@ -347,9 +313,6 @@
         private Forms.Button AttachButton;
         private Forms.Button SourceButton;
         private System.Windows.Forms.PictureBox HeaderButton;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }
 }
 

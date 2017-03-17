@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.Conversions;
 
 namespace Cube.Pdf.App.Clip
 {
@@ -43,11 +44,7 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ClipListView() : base()
-        {
-            InitializeLayout();
-            InitializeColumns();
-        }
+        public ClipListView() : base() { }
 
         #endregion
 
@@ -55,15 +52,18 @@ namespace Cube.Pdf.App.Clip
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitializeLayout
+        /// OnCreateControl
         /// 
         /// <summary>
-        /// 各種レイアウトを初期化します。
+        /// コントロール生成時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InitializeLayout()
+        protected override void OnCreateControl()
         {
+            base.OnCreateControl();
+
+            // General settings
             AllowUserToAddRows = false;
             AllowUserToDeleteRows = false;
             AllowUserToResizeRows = false;
@@ -74,39 +74,55 @@ namespace Cube.Pdf.App.Clip
             CellBorderStyle = DataGridViewCellBorderStyle.None;
             ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            Dock = DockStyle.Fill;
             GridColor = SystemColors.Control;
             ReadOnly = true;
             RowHeadersVisible = false;
             SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            if (DesignMode) return;
+
+            // Column settings
+            Columns.Clear();
+            Columns.Add("Name", Properties.Resources.ColumnName);
+            Columns.Add("Condition", Properties.Resources.ColumnCondition);
+            Columns.Add("Length", Properties.Resources.ColumnLength);
+
+            Columns["Name"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            Columns["Name"].DataPropertyName = "Name";
+            Columns["Name"].Width = 150;
+
+            Columns["Condition"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            Columns["Condition"].DataPropertyName = "Condition";
+            Columns["Condition"].Width = 60;
+
+            Columns["Length"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            Columns["Length"].DataPropertyName = "Length";
+            Columns["Length"].Width = 70;
+            Columns["Length"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitializeColumns
+        /// OnCellFormatting
         /// 
         /// <summary>
-        /// カラムの内容を初期化します。
+        /// セルの書式整形時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InitializeColumns()
+        protected override void OnCellFormatting(DataGridViewCellFormattingEventArgs e)
         {
-            if (DesignMode) return;
-
-            Columns.Clear();
-            Columns.Add("Name", Properties.Resources.ColumnName);
-            Columns.Add("Condition", Properties.Resources.ColumnCondition);
-            Columns.Add("Dummy", "");
-
-            Columns["Name"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            Columns["Name"].DataPropertyName = "Name";
-            Columns["Name"].Width = 200;
-
-            Columns["Condition"].SortMode = DataGridViewColumnSortMode.NotSortable;
-            Columns["Condition"].DataPropertyName = "Condition";
-            Columns["Condition"].Width = 80;
-
-            Columns["Dummy"].SortMode = DataGridViewColumnSortMode.NotSortable;
+            if (e.ColumnIndex == 2)
+            {
+                try
+                {
+                    e.Value = ((long)e.Value).ToRoughBytes();
+                    e.FormattingApplied = true;
+                }
+                catch { /* use default format */ }
+            }
+            base.OnCellFormatting(e);
         }
 
         #endregion
