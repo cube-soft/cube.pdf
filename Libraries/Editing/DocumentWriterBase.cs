@@ -86,28 +86,6 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Pages
-        /// 
-        /// <summary>
-        /// PDF ファイルの各ページ情報を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICollection<Page> Pages { get; } = new List<Page>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attachments
-        /// 
-        /// <summary>
-        /// 添付ファイル一覧の情報を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICollection<IAttachment> Attachments { get; } = new List<IAttachment>();
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// UseSmartCopy
         /// 
         /// <summary>
@@ -133,18 +111,6 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Bookmarks
-        /// 
-        /// <summary>
-        /// ブックマーク情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected List<Dictionary<string, object>> Bookmarks { get; }
-            = new List<Dictionary<string, object>>();
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Dpi
         /// 
         /// <summary>
@@ -159,6 +125,39 @@ namespace Cube.Pdf.Editing
         ///
         /* ----------------------------------------------------------------- */
         protected int Dpi { get { return 72; } }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Pages
+        /// 
+        /// <summary>
+        /// PDF ファイルの各ページ情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IReadOnlyCollection<Page> Pages => _pages;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments
+        /// 
+        /// <summary>
+        /// 添付ファイル一覧の情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IReadOnlyCollection<IAttachment> Attachments => _attach;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Bookmarks
+        /// 
+        /// <summary>
+        /// ブックマーク情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IReadOnlyCollection<Dictionary<string, object>> Bookmarks => _bookmarks;
 
         #endregion
 
@@ -208,7 +207,11 @@ namespace Cube.Pdf.Editing
         {
             if (_disposed) return;
             _disposed = true;
-            if (disposing) Pages.Clear();
+            if (disposing)
+            {
+                _pages.Clear();
+                _attach.Clear();
+            }
         }
 
         #endregion
@@ -248,7 +251,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(Page page) => Pages.Add(page);
+        public void Add(Page page) => _pages.Add(page);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -273,7 +276,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach(IAttachment data) => Attachments.Add(data);
+        public void Attach(IAttachment data) => _attach.Add(data);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -309,9 +312,10 @@ namespace Cube.Pdf.Editing
         {
             Metadata = new Metadata();
             Encryption = new Encryption();
-            Pages.Clear();
-            Bookmarks.Clear();
-            Attachments.Clear();
+
+            _pages.Clear();
+            _attach.Clear();
+            _bookmarks.Clear();
         }
 
         /* ----------------------------------------------------------------- */
@@ -479,9 +483,9 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void SetMetadata(PdfReader reader, PdfStamper dest)
+        protected void SetMetadata(PdfReader src, PdfStamper dest)
         {
-            var info = reader.Info;
+            var info = src.Info;
 
             info.Add("Title",    Metadata.Title);
             info.Add("Subject",  Metadata.Subtitle);
@@ -518,6 +522,30 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SetBookmarks
+        /// 
+        /// <summary>
+        /// しおり情報を PdfWriter オブジェクトに設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void SetBookmarks(PdfWriter dest)
+            => dest.Outlines = _bookmarks;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetBookmarks
+        /// 
+        /// <summary>
+        /// しおり情報をリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void ResetBookmarks()
+            => _bookmarks.Clear();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// StockBookmarks
         /// 
         /// <summary>
@@ -536,7 +564,7 @@ namespace Cube.Pdf.Editing
             {
                 if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern))
                 {
-                    Bookmarks.Add(bm);
+                    _bookmarks.Add(bm);
                 }
             }
         }
@@ -603,8 +631,9 @@ namespace Cube.Pdf.Editing
 
         #region Fields
         private bool _disposed = false;
-        private IDictionary<string, DocumentReader> _cache = new Dictionary<string, DocumentReader>();
-        private IDictionary<string, PdfReader> _raws = new Dictionary<string, PdfReader>();
+        private List<Page> _pages = new List<Page>();
+        private List<IAttachment> _attach = new List<IAttachment>();
+        private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
         #endregion
 
         #endregion

@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// ITextReader.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -18,10 +16,8 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
 using System.Drawing;
 using iTextSharp.text.pdf;
-using Cube.Log;
 
 namespace Cube.Pdf.Editing.ITextReader
 {
@@ -54,73 +50,6 @@ namespace Cube.Pdf.Editing.ITextReader
             dest.Size = new Size((int)size.Width, (int)size.Height);
             dest.Rotation = reader.GetPageRotation(pagenum);
             dest.Resolution = new Point(72, 72);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetAttachments
-        /// 
-        /// <summary>
-        /// 添付ファイル名の一覧を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public static IEnumerable<string> GetAttachments(this PdfReader reader)
-        {
-            var dest = new List<string>();
-
-            var names = GetEmbeddedFiles(reader);
-            if (names == null) return dest;
-
-            var index = 0;
-            while (index < names.Size)
-            {
-                ++index;
-
-                var dic  = names.GetAsDict(index);
-                var file = dic.GetAsDict(PdfName.EF);
-
-                foreach (var key in file.Keys)
-                {
-                    var name = dic.GetAsString(key).ToString();
-                    if (string.IsNullOrEmpty(name)) continue;
-                    else if (dest.Contains(name))
-                    {
-                        reader.LogWarn($"{name} already exists");
-                        continue;
-                    }
-                    else dest.Add(name);
-                }
-
-                ++index;
-            }
-
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEmbeddedFiles
-        /// 
-        /// <summary>
-        /// 添付ファイルを表す PDF オブジェクトを取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public static PdfArray GetEmbeddedFiles(this PdfReader reader)
-        {
-            if (reader == null) return null;
-
-            var catalog = PdfReader.GetPdfObject(reader.Catalog.Get(PdfName.NAMES)) as PdfDictionary;
-            if (catalog == null) return null;
-
-            var files = PdfReader.GetPdfObject(catalog.Get(PdfName.EMBEDDEDFILES)) as PdfDictionary;
-            if (files == null) return null;
-
-            var dest = files.GetAsArray(PdfName.NAMES);
-            if (dest == null) return null;
-
             return dest;
         }
 
