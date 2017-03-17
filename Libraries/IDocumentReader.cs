@@ -87,7 +87,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        IEnumerable<IAttachment> Attachments { get; }
+        IEnumerable<Attachment> Attachments { get; }
 
         /* ----------------------------------------------------------------- */
         ///

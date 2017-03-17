@@ -22,14 +22,14 @@ namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Attachment
+    /// EmbeddedAttachment
     /// 
     /// <summary>
     /// PDF ファイルに添付済のファイルを表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Attachment : IAttachment
+    public class EmbeddedAttachment : Attachment
     {
         #region Constructors
 
@@ -44,7 +44,7 @@ namespace Cube.Pdf.Editing
         /// <param name="stream">添付ファイルのストリーム</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Attachment(PRStream stream) : this("", null, stream) { }
+        public EmbeddedAttachment(PRStream stream) : this("", null, stream) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editing
         /// <param name="stream">添付ファイルのストリーム</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Attachment(string name, FileBase file, PRStream stream) : base()
+        public EmbeddedAttachment(string name, FileBase file, PRStream stream) : base()
         {
             Name = name;
             File = file;
@@ -68,69 +68,18 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
-        #region Properties
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Name
-        /// 
-        /// <summary>
-        /// 添付ファイルの名前を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Name { get; set; } = string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// File
-        /// 
-        /// <summary>
-        /// 添付先 PDF ファイル情報を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public FileBase File { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Length
+        /// GetLength
         /// 
         /// <summary>
         /// 添付ファイルのサイズを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public long Length
-        {
-            get { return _stream?.Length ?? 0; }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Checksum
-        /// 
-        /// <summary>
-        /// 添付ファイルのチェックサムを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public byte[] Checksum
-        {
-            get
-            {
-                if (_cache == null)
-                {
-                    var md5 = new MD5CryptoServiceProvider();
-                    _cache = md5.ComputeHash(GetBytes());
-                }
-                return _cache;
-            }
-        }
-
-        #endregion
-
-        #region Methods
+        protected override long GetLength() => _stream?.Length ?? 0;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,7 +90,26 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public byte[] GetBytes() => PdfReader.GetStreamBytes(_stream);
+        protected override byte[] GetBytes() => PdfReader.GetStreamBytes(_stream);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetChecksum
+        /// 
+        /// <summary>
+        /// 添付ファイルのチェックサムを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override byte[] GetChecksum()
+        {
+            if (_cache == null)
+            {
+                var md5 = new MD5CryptoServiceProvider();
+                _cache = md5.ComputeHash(GetBytes());
+            }
+            return _cache;
+        }
 
         #endregion
 

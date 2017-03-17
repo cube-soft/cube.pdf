@@ -209,7 +209,7 @@ namespace Cube.Pdf.Editing
                 var hash = item.Name.ToLower() + BitConverter.ToString(item.Checksum);
                 if (done.Contains(hash)) continue;
                 
-                dest.AddFileAttachment(null, item.GetBytes(), null, item.Name);
+                dest.AddFileAttachment(null, item.Data, null, item.Name);
                 done.Add(hash);
             }
         }

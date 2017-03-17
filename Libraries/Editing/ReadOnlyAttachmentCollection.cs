@@ -168,7 +168,7 @@ namespace Cube.Pdf.Editing
                     var stream = PdfReader.GetPdfObject(ef.GetAsIndirectObject(key)) as PRStream;
                     if (stream == null) continue;
                     
-                    _values.Add(new Attachment(name, File, stream));
+                    _values.Add(new EmbeddedAttachment(name, File, stream));
                     break;
                 }
             }

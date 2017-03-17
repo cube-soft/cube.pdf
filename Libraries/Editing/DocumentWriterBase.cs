@@ -146,7 +146,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IReadOnlyCollection<IAttachment> Attachments => _attach;
+        protected IReadOnlyCollection<Attachment> Attachments => _attach;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -276,7 +276,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach(IAttachment data) => _attach.Add(data);
+        public void Attach(Attachment data) => _attach.Add(data);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -287,7 +287,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach(IEnumerable<IAttachment> data)
+        public void Attach(IEnumerable<Attachment> data)
         {
             foreach (var item in data) Attach(item);
         }
@@ -632,7 +632,7 @@ namespace Cube.Pdf.Editing
         #region Fields
         private bool _disposed = false;
         private List<Page> _pages = new List<Page>();
-        private List<IAttachment> _attach = new List<IAttachment>();
+        private List<Attachment> _attach = new List<Attachment>();
         private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
         #endregion
 

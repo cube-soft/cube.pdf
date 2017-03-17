@@ -149,8 +149,10 @@ namespace Cube.Pdf.Tests.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("rotation.pdf",   "", "image.png", ExpectedResult = 1)]
-        [TestCase("attachment.pdf", "", "image.png", ExpectedResult = 3)]
+        [TestCase("rotation.pdf",   "", "image.png",   ExpectedResult = 1)]
+        [TestCase("attachment.pdf", "", "image.png",   ExpectedResult = 3)]
+        [TestCase("attachment.pdf", "", "cubepdf.png", ExpectedResult = 2)]
+        [TestCase("heavy.pdf", "", "image.pdf", ExpectedResult = 13)]
         public int Attach(string pdf, string password, string file)
         {
             var output = string.Format("Attach_{0}_{1}.pdf",
