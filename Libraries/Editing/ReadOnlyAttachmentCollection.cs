@@ -157,20 +157,23 @@ namespace Cube.Pdf.Editing
             for (var i = 1; i < files.Size; i += 2) // see remarks
             {
                 var item = files.GetAsDict(i);
-                var ef   = item.GetAsDict(PdfName.EF);
+                var kind = PdfName.UF;
+                var name = item.GetAsString(PdfName.UF)?.ToUnicodeString();
 
-                // NOTE: Are /F and /UF contents same ?
-                foreach (var key in ef.Keys)
+                if (string.IsNullOrEmpty(name))
                 {
-                    var name = item.GetAsString(key)?.ToString();
-                    if (string.IsNullOrEmpty(name)) continue;
-
-                    var stream = PdfReader.GetPdfObject(ef.GetAsIndirectObject(key)) as PRStream;
-                    if (stream == null) continue;
-                    
-                    _values.Add(new EmbeddedAttachment(name, File, stream));
-                    break;
+                    kind = PdfName.F;
+                    name = item.GetAsString(kind)?.ToString();
                 }
+                if (string.IsNullOrEmpty(name)) continue;
+
+                var ef = item.GetAsDict(PdfName.EF);
+                if (ef == null) continue;
+
+                var stream = PdfReader.GetPdfObject(ef.GetAsIndirectObject(kind)) as PRStream;
+                if (stream == null) continue;
+
+                _values.Add(new EmbeddedAttachment(name, File, stream));
             }
         }
 
