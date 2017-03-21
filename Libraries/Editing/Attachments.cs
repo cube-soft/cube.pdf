@@ -59,7 +59,8 @@ namespace Cube.Pdf.Editing
         /// <param name="stream">添付ファイルのストリーム</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EmbeddedAttachment(string name, MediaFile file, PRStream stream) : base()
+        public EmbeddedAttachment(string name, MediaFile file, PRStream stream)
+            : base()
         {
             Name = name;
             File = file;
@@ -79,7 +80,10 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override long GetLength() => _stream?.Length ?? 0;
+        protected override long GetLength()
+            => _stream?.GetAsDict(PdfName.PARAMS)?
+                       .GetAsNumber(PdfName.SIZE)?
+                       .LongValue ?? 0;
 
         /* ----------------------------------------------------------------- */
         ///
