@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CubeSoft")]
-[assembly: AssemblyProduct("CubePdfClip")]
-[assembly: AssemblyCopyright("Copyright © 2010 CubeSoft, Inc.")]
+[assembly: AssemblyProduct("CubePDF Clip")]
+[assembly: AssemblyCopyright("Copyright © 2017 CubeSoft, Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
