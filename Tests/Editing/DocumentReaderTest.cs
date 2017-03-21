@@ -414,19 +414,61 @@ namespace Cube.Pdf.Tests.Editing
         /// Attachments
         ///
         /// <summary>
-        /// 添付ファイルの情報を取得するテストを行います。
+        /// 添付ファイルの情報を取得するテストを実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("rotation.pdf",   "", ExpectedResult = 0)]
-        [TestCase("attachment.pdf", "", ExpectedResult = 2)]
-        public int Attachments(string filename, string password)
+        [TestCase("rotation.pdf",   ExpectedResult = 0)]
+        [TestCase("attachment.pdf", ExpectedResult = 3)]
+        public int Attachments(string filename)
         {
             var src = IoEx.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(src);
                 return reader.Attachments.Count();
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments_Length
+        ///
+        /// <summary>
+        /// 添付ファイルのファイルサイズを取得するテストを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("CubePDF.png", ExpectedResult =   3765)]
+        [TestCase("CubeICE.png", ExpectedResult = 165524)]
+        [TestCase("Empty",       ExpectedResult =      0)]
+        public long Attachments_Length(string name)
+        {
+            var src = IoEx.Path.Combine(Examples, "attachment.pdf");
+            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            {
+                reader.Open(src);
+                return reader.Attachments.First(x => x.Name == name).Length;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments_CJK
+        ///
+        /// <summary>
+        /// ファイル名が日本語の添付ファイルを取得できる事を確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("attachment-cjk.pdf", "日本語のサンプル.md")]
+        public void Attachments_CJK(string filename, string expected)
+        {
+            var src = IoEx.Path.Combine(Examples, filename);
+            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            {
+                reader.Open(src);
+                Assert.That(reader.Attachments.Any(x => x.Name == expected));
             }
         }
 

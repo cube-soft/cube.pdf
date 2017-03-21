@@ -149,10 +149,11 @@ namespace Cube.Pdf.Tests.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("rotation.pdf",   "", "image.png",   ExpectedResult = 1)]
-        [TestCase("attachment.pdf", "", "image.png",   ExpectedResult = 3)]
-        [TestCase("attachment.pdf", "", "cubepdf.png", ExpectedResult = 2)]
-        public int Attach(string pdf, string password, string file)
+        [TestCase("rotation.pdf",   "image.png",           ExpectedResult = 1)]
+        [TestCase("attachment.pdf", "image.png",           ExpectedResult = 4)]
+        [TestCase("attachment.pdf", "cubepdf.png",         ExpectedResult = 3)]
+        [TestCase("attachment.pdf", "日本語のサンプル.md", ExpectedResult = 4)]
+        public int Attach(string pdf, string file)
         {
             var output = string.Format("Attach_{0}_{1}.pdf",
                 System.IO.Path.GetFileNameWithoutExtension(pdf),
@@ -163,7 +164,7 @@ namespace Cube.Pdf.Tests.Editing
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(src);
 
                 writer.Metadata = reader.Metadata;
                 writer.Encryption = reader.Encryption;
@@ -180,7 +181,7 @@ namespace Cube.Pdf.Tests.Editing
 
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(dest, password);
+                reader.Open(dest);
                 return reader.Attachments.Count();
             }
         }
