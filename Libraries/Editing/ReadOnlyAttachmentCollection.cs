@@ -157,23 +157,21 @@ namespace Cube.Pdf.Editing
             for (var i = 1; i < files.Size; i += 2) // see remarks
             {
                 var item = files.GetAsDict(i);
-                var kind = PdfName.UF;
                 var name = item.GetAsString(PdfName.UF)?.ToUnicodeString();
-
-                if (string.IsNullOrEmpty(name))
-                {
-                    kind = PdfName.F;
-                    name = item.GetAsString(kind)?.ToString();
-                }
+                if (string.IsNullOrEmpty(name)) name = item.GetAsString(PdfName.F)?.ToString();
                 if (string.IsNullOrEmpty(name)) continue;
 
                 var ef = item.GetAsDict(PdfName.EF);
                 if (ef == null) continue;
 
-                var stream = PdfReader.GetPdfObject(ef.GetAsIndirectObject(kind)) as PRStream;
-                if (stream == null) continue;
+                foreach (var key in ef.Keys)
+                {
+                    var stream = PdfReader.GetPdfObject(ef.GetAsIndirectObject(key)) as PRStream;
+                    if (stream == null) continue;
 
-                _values.Add(new EmbeddedAttachment(name, File, stream));
+                    _values.Add(new EmbeddedAttachment(name, File, stream));
+                    break;
+                }
             }
         }
 
