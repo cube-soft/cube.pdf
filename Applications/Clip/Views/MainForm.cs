@@ -19,6 +19,12 @@
 using System;
 using System.Windows.Forms;
 
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using Cube.Forms.Bindings;
+
 namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
@@ -32,6 +38,8 @@ namespace Cube.Pdf.App.Clip
     /* --------------------------------------------------------------------- */
     public partial class MainForm : Cube.Forms.FormBase
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
         /// MainForm
@@ -47,5 +55,18 @@ namespace Cube.Pdf.App.Clip
 
             ExitButton.Click += (s, e) => Close();
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MainForm
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainForm(string[] args) : this() { }
+
+        #endregion
     }
 }
