@@ -90,16 +90,16 @@ namespace Cube.Pdf.App.Clip
 
             Columns["Name"].SortMode = DataGridViewColumnSortMode.NotSortable;
             Columns["Name"].DataPropertyName = "Name";
-            Columns["Name"].Width = 150;
+            Columns["Name"].FillWeight = 3.0f;
 
             Columns["Condition"].SortMode = DataGridViewColumnSortMode.NotSortable;
             Columns["Condition"].DataPropertyName = "Condition";
-            Columns["Condition"].Width = 60;
+            Columns["Condition"].FillWeight = 1.0f;
 
             Columns["Length"].SortMode = DataGridViewColumnSortMode.NotSortable;
             Columns["Length"].DataPropertyName = "Length";
-            Columns["Length"].Width = 70;
             Columns["Length"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            Columns["Length"].FillWeight = 1.2f;
         }
 
         /* ----------------------------------------------------------------- */
