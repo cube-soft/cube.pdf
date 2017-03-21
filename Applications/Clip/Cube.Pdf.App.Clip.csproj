@@ -62,7 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\ClipListView.cs">
+    <Compile Include="Views\ClipDataView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Views\MainForm.cs">
