@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Log;
@@ -202,17 +203,23 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         private void SetAttachments(PdfCopy dest)
         {
-            var done  = new List<string>();
+            var done = new List<Attachment>();
             
             foreach (var item in Attachments)
             {
-                var hash = item.Name.ToLower() + BitConverter.ToString(item.Checksum);
-                if (done.Contains(hash)) continue;
+                if (done.Any(
+                    x => x.Name.ToLower() == item.Name.ToLower() &&
+                         x.Length == item.Length &&
+                         x.Checksum.SequenceEqual(item.Checksum)
+                )) continue;
 
-                if (item is EmbeddedAttachment) dest.AddFileAttachment(null, item.Data, null, item.Name);
-                else dest.AddFileAttachment(null, null, item.File.FullName, item.Name);
+                var fs = item is EmbeddedAttachment ?
+                         PdfFileSpecification.FileEmbedded(dest, null, item.Name, item.Data) :
+                         PdfFileSpecification.FileEmbedded(dest, item.File.FullName, item.Name, null);
 
-                done.Add(hash);
+                fs.SetUnicodeFileName(item.Name, true);
+                dest.AddFileAttachment(fs);
+                done.Add(item);
             }
         }
 
