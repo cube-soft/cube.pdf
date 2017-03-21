@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -112,7 +111,7 @@
             this.AttachButton.Name = "AttachButton";
             this.AttachButton.Size = new System.Drawing.Size(135, 35);
             this.AttachButton.TabIndex = 3;
-            this.AttachButton.Text = "添付";
+            this.AttachButton.Text = "保存 (&S)";
             this.AttachButton.UseVisualStyleBackColor = false;
             // 
             // SourcePanel
@@ -209,7 +208,7 @@
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(100, 30);
             this.AddButton.TabIndex = 0;
-            this.AddButton.Text = "追加 ...";
+            this.AddButton.Text = "追加 (&N) ...";
             this.AddButton.UseVisualStyleBackColor = false;
             // 
             // RemoveButton
@@ -223,7 +222,7 @@
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(100, 30);
             this.RemoveButton.TabIndex = 3;
-            this.RemoveButton.Text = "削除";
+            this.RemoveButton.Text = "削除 (&D)";
             this.RemoveButton.UseVisualStyleBackColor = false;
             // 
             // ClearButton
@@ -237,7 +236,7 @@
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(100, 30);
             this.ClearButton.TabIndex = 4;
-            this.ClearButton.Text = "リセット";
+            this.ClearButton.Text = "リセット (&R)";
             this.ClearButton.UseVisualStyleBackColor = false;
             // 
             // AttachListView
@@ -275,11 +274,13 @@
             // 
             // MainForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(584, 281);
             this.Controls.Add(this.LayoutPanel);
             this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Location = new System.Drawing.Point(0, 0);
             this.MinimumSize = new System.Drawing.Size(510, 280);
             this.Name = "MainForm";
