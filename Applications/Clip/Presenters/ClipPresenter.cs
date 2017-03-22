@@ -61,6 +61,7 @@ namespace Cube.Pdf.App.Clip
             EventAggregator?.GetEvents()?.Detach.Subscribe(WhenDetach);
             EventAggregator?.GetEvents()?.Reset.Subscribe(WhenReset);
             EventAggregator?.GetEvents()?.Save.Subscribe(WhenSave);
+            EventAggregator?.GetEvents()?.Message.Subscribe(WhenMessage);
         }
 
         #endregion
@@ -179,8 +180,29 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenSave()
-            => Async(() => Model.Save());
+        private async void WhenSave()
+        {
+            try
+            {
+                SyncWait(() => View.IsBusy = true);
+                await Async(() => Model.Save());
+                EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
+            }
+            catch (Exception err) { this.LogError(err.Message, err); }
+            finally { SyncWait(() => View.IsBusy = false); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenMessage
+        /// 
+        /// <summary>
+        /// Message イベント発生時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenMessage(string message)
+            => Sync(() => ViewFactory.ShowMessage(message));
 
         #endregion
 

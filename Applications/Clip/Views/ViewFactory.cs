@@ -113,5 +113,26 @@ namespace Cube.Pdf.App.Clip
             Uri           = new Uri(Properties.Resources.VersionWeb),
             Version       = version,
         };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowMessage
+        /// 
+        /// <summary>
+        /// メッセージを表示します。
+        /// </summary>
+        /// 
+        /// <param name="message">メッセージ</param>
+        /// 
+        /// <returns>DialogResult オブジェクト</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogResult ShowMessage(string message)
+            => MessageBox.Show(
+                message,
+                Application.ProductName,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
     }
 }
