@@ -144,6 +144,15 @@ namespace Cube.Pdf.App.Clip.Properties {
         }
         
         /// <summary>
+        ///   ファイルの添付が完了しました。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageSuccess {
+            get {
+                return ResourceManager.GetString("MessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SourceFilter {
