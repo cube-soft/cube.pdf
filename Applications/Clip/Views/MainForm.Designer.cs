@@ -32,24 +32,24 @@
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ExitButton = new Cube.Forms.Button();
-            this.AttachButton = new Cube.Forms.Button();
+            this.SaveButton = new Cube.Forms.Button();
             this.SourcePanel = new System.Windows.Forms.TableLayoutPanel();
             this.SourceLabel = new System.Windows.Forms.Label();
             this.SourceTextBox = new System.Windows.Forms.TextBox();
-            this.SourceButton = new Cube.Forms.Button();
-            this.AttachPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.OpenButton = new Cube.Forms.Button();
+            this.ClipPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.AddButton = new Cube.Forms.Button();
-            this.RemoveButton = new Cube.Forms.Button();
-            this.ClearButton = new Cube.Forms.Button();
-            this.AttachListView = new Cube.Pdf.App.Clip.ClipDataView();
+            this.AttachButton = new Cube.Forms.Button();
+            this.DetachButton = new Cube.Forms.Button();
+            this.ResetButton = new Cube.Forms.Button();
+            this.MyClipDataView = new Cube.Pdf.App.Clip.ClipDataView();
             this.HeaderButton = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.SourcePanel.SuspendLayout();
-            this.AttachPanel.SuspendLayout();
+            this.ClipPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AttachListView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MyClipDataView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HeaderButton)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,7 +59,7 @@
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.Controls.Add(this.FooterPanel, 0, 3);
             this.LayoutPanel.Controls.Add(this.SourcePanel, 0, 1);
-            this.LayoutPanel.Controls.Add(this.AttachPanel, 0, 2);
+            this.LayoutPanel.Controls.Add(this.ClipPanel, 0, 2);
             this.LayoutPanel.Controls.Add(this.HeaderButton, 0, 0);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
@@ -76,7 +76,7 @@
             // 
             this.FooterPanel.AllowDrop = true;
             this.FooterPanel.Controls.Add(this.ExitButton);
-            this.FooterPanel.Controls.Add(this.AttachButton);
+            this.FooterPanel.Controls.Add(this.SaveButton);
             this.FooterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FooterPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.FooterPanel.Location = new System.Drawing.Point(0, 221);
@@ -100,19 +100,19 @@
             this.ExitButton.Text = "終了";
             this.ExitButton.UseVisualStyleBackColor = false;
             // 
-            // AttachButton
+            // SaveButton
             // 
-            this.AttachButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.AttachButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.AttachButton.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
-            this.AttachButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AttachButton.ForeColor = System.Drawing.Color.White;
-            this.AttachButton.Location = new System.Drawing.Point(330, 13);
-            this.AttachButton.Name = "AttachButton";
-            this.AttachButton.Size = new System.Drawing.Size(135, 35);
-            this.AttachButton.TabIndex = 3;
-            this.AttachButton.Text = "保存 (&S)";
-            this.AttachButton.UseVisualStyleBackColor = false;
+            this.SaveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.SaveButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SaveButton.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
+            this.SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveButton.ForeColor = System.Drawing.Color.White;
+            this.SaveButton.Location = new System.Drawing.Point(330, 13);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(135, 35);
+            this.SaveButton.TabIndex = 3;
+            this.SaveButton.Text = "保存 (&S)";
+            this.SaveButton.UseVisualStyleBackColor = false;
             // 
             // SourcePanel
             // 
@@ -122,7 +122,7 @@
             this.SourcePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
             this.SourcePanel.Controls.Add(this.SourceLabel, 0, 0);
             this.SourcePanel.Controls.Add(this.SourceTextBox, 1, 0);
-            this.SourcePanel.Controls.Add(this.SourceButton, 2, 0);
+            this.SourcePanel.Controls.Add(this.OpenButton, 2, 0);
             this.SourcePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SourcePanel.Location = new System.Drawing.Point(0, 35);
             this.SourcePanel.Margin = new System.Windows.Forms.Padding(0);
@@ -151,43 +151,43 @@
             this.SourceTextBox.Size = new System.Drawing.Size(404, 23);
             this.SourceTextBox.TabIndex = 1;
             // 
-            // SourceButton
+            // OpenButton
             // 
-            this.SourceButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.SourceButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.SourceButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
-            this.SourceButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SourceButton.ForeColor = System.Drawing.Color.White;
-            this.SourceButton.Location = new System.Drawing.Point(496, 6);
-            this.SourceButton.Margin = new System.Windows.Forms.Padding(0);
-            this.SourceButton.Name = "SourceButton";
-            this.SourceButton.Size = new System.Drawing.Size(70, 23);
-            this.SourceButton.TabIndex = 2;
-            this.SourceButton.Text = "...";
-            this.SourceButton.UseVisualStyleBackColor = false;
+            this.OpenButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.OpenButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.OpenButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
+            this.OpenButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OpenButton.ForeColor = System.Drawing.Color.White;
+            this.OpenButton.Location = new System.Drawing.Point(496, 6);
+            this.OpenButton.Margin = new System.Windows.Forms.Padding(0);
+            this.OpenButton.Name = "OpenButton";
+            this.OpenButton.Size = new System.Drawing.Size(70, 23);
+            this.OpenButton.TabIndex = 2;
+            this.OpenButton.Text = "...";
+            this.OpenButton.UseVisualStyleBackColor = false;
             // 
-            // AttachPanel
+            // ClipPanel
             // 
-            this.AttachPanel.ColumnCount = 2;
-            this.AttachPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.AttachPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
-            this.AttachPanel.Controls.Add(this.ToolsPanel, 1, 0);
-            this.AttachPanel.Controls.Add(this.AttachListView, 0, 0);
-            this.AttachPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AttachPanel.Location = new System.Drawing.Point(0, 70);
-            this.AttachPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.AttachPanel.Name = "AttachPanel";
-            this.AttachPanel.RowCount = 1;
-            this.AttachPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.AttachPanel.Size = new System.Drawing.Size(584, 151);
-            this.AttachPanel.TabIndex = 6;
+            this.ClipPanel.ColumnCount = 2;
+            this.ClipPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ClipPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.ClipPanel.Controls.Add(this.ToolsPanel, 1, 0);
+            this.ClipPanel.Controls.Add(this.MyClipDataView, 0, 0);
+            this.ClipPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ClipPanel.Location = new System.Drawing.Point(0, 70);
+            this.ClipPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.ClipPanel.Name = "ClipPanel";
+            this.ClipPanel.RowCount = 1;
+            this.ClipPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ClipPanel.Size = new System.Drawing.Size(584, 151);
+            this.ClipPanel.TabIndex = 6;
             // 
             // ToolsPanel
             // 
             this.ToolsPanel.AllowDrop = true;
-            this.ToolsPanel.Controls.Add(this.AddButton);
-            this.ToolsPanel.Controls.Add(this.RemoveButton);
-            this.ToolsPanel.Controls.Add(this.ClearButton);
+            this.ToolsPanel.Controls.Add(this.AttachButton);
+            this.ToolsPanel.Controls.Add(this.DetachButton);
+            this.ToolsPanel.Controls.Add(this.ResetButton);
             this.ToolsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ToolsPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.ToolsPanel.Location = new System.Drawing.Point(454, 0);
@@ -197,68 +197,68 @@
             this.ToolsPanel.Size = new System.Drawing.Size(130, 151);
             this.ToolsPanel.TabIndex = 3;
             // 
-            // AddButton
+            // AttachButton
             // 
-            this.AddButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.AddButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.AddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AddButton.ForeColor = System.Drawing.Color.White;
-            this.AddButton.Location = new System.Drawing.Point(12, 0);
-            this.AddButton.Margin = new System.Windows.Forms.Padding(2, 0, 2, 2);
-            this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(100, 30);
-            this.AddButton.TabIndex = 0;
-            this.AddButton.Text = "追加 (&N) ...";
-            this.AddButton.UseVisualStyleBackColor = false;
+            this.AttachButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.AttachButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.AttachButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AttachButton.ForeColor = System.Drawing.Color.White;
+            this.AttachButton.Location = new System.Drawing.Point(12, 0);
+            this.AttachButton.Margin = new System.Windows.Forms.Padding(2, 0, 2, 2);
+            this.AttachButton.Name = "AttachButton";
+            this.AttachButton.Size = new System.Drawing.Size(100, 30);
+            this.AttachButton.TabIndex = 0;
+            this.AttachButton.Text = "追加 (&N) ...";
+            this.AttachButton.UseVisualStyleBackColor = false;
             // 
-            // RemoveButton
+            // DetachButton
             // 
-            this.RemoveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.RemoveButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.RemoveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RemoveButton.ForeColor = System.Drawing.Color.White;
-            this.RemoveButton.Location = new System.Drawing.Point(12, 34);
-            this.RemoveButton.Margin = new System.Windows.Forms.Padding(2);
-            this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(100, 30);
-            this.RemoveButton.TabIndex = 3;
-            this.RemoveButton.Text = "削除 (&D)";
-            this.RemoveButton.UseVisualStyleBackColor = false;
+            this.DetachButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.DetachButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.DetachButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DetachButton.ForeColor = System.Drawing.Color.White;
+            this.DetachButton.Location = new System.Drawing.Point(12, 34);
+            this.DetachButton.Margin = new System.Windows.Forms.Padding(2);
+            this.DetachButton.Name = "DetachButton";
+            this.DetachButton.Size = new System.Drawing.Size(100, 30);
+            this.DetachButton.TabIndex = 3;
+            this.DetachButton.Text = "削除 (&D)";
+            this.DetachButton.UseVisualStyleBackColor = false;
             // 
-            // ClearButton
+            // ResetButton
             // 
-            this.ClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.ClearButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.ClearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ClearButton.ForeColor = System.Drawing.Color.White;
-            this.ClearButton.Location = new System.Drawing.Point(12, 68);
-            this.ClearButton.Margin = new System.Windows.Forms.Padding(2);
-            this.ClearButton.Name = "ClearButton";
-            this.ClearButton.Size = new System.Drawing.Size(100, 30);
-            this.ClearButton.TabIndex = 4;
-            this.ClearButton.Text = "リセット (&R)";
-            this.ClearButton.UseVisualStyleBackColor = false;
+            this.ResetButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.ResetButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
+            this.ResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ResetButton.ForeColor = System.Drawing.Color.White;
+            this.ResetButton.Location = new System.Drawing.Point(12, 68);
+            this.ResetButton.Margin = new System.Windows.Forms.Padding(2);
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(100, 30);
+            this.ResetButton.TabIndex = 4;
+            this.ResetButton.Text = "リセット (&R)";
+            this.ResetButton.UseVisualStyleBackColor = false;
             // 
-            // AttachListView
+            // MyClipDataView
             // 
-            this.AttachListView.AllowUserToAddRows = false;
-            this.AttachListView.AllowUserToDeleteRows = false;
-            this.AttachListView.AllowUserToResizeRows = false;
-            this.AttachListView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.AttachListView.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.AttachListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.AttachListView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.AttachListView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.AttachListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.AttachListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AttachListView.GridColor = System.Drawing.SystemColors.Control;
-            this.AttachListView.Location = new System.Drawing.Point(3, 3);
-            this.AttachListView.Name = "AttachListView";
-            this.AttachListView.ReadOnly = true;
-            this.AttachListView.RowHeadersVisible = false;
-            this.AttachListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.AttachListView.Size = new System.Drawing.Size(448, 145);
-            this.AttachListView.TabIndex = 4;
+            this.MyClipDataView.AllowUserToAddRows = false;
+            this.MyClipDataView.AllowUserToDeleteRows = false;
+            this.MyClipDataView.AllowUserToResizeRows = false;
+            this.MyClipDataView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MyClipDataView.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.MyClipDataView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.MyClipDataView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.MyClipDataView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.MyClipDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.MyClipDataView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MyClipDataView.GridColor = System.Drawing.SystemColors.Control;
+            this.MyClipDataView.Location = new System.Drawing.Point(3, 3);
+            this.MyClipDataView.Name = "MyClipDataView";
+            this.MyClipDataView.ReadOnly = true;
+            this.MyClipDataView.RowHeadersVisible = false;
+            this.MyClipDataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.MyClipDataView.Size = new System.Drawing.Size(448, 145);
+            this.MyClipDataView.TabIndex = 4;
             // 
             // HeaderButton
             // 
@@ -281,7 +281,6 @@
             this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Location = new System.Drawing.Point(0, 0);
             this.MinimumSize = new System.Drawing.Size(510, 280);
             this.Name = "MainForm";
             this.Text = "CubePDF Clip";
@@ -289,9 +288,9 @@
             this.FooterPanel.ResumeLayout(false);
             this.SourcePanel.ResumeLayout(false);
             this.SourcePanel.PerformLayout();
-            this.AttachPanel.ResumeLayout(false);
+            this.ClipPanel.ResumeLayout(false);
             this.ToolsPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.AttachListView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MyClipDataView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.HeaderButton)).EndInit();
             this.ResumeLayout(false);
 
@@ -303,16 +302,16 @@
         private System.Windows.Forms.TableLayoutPanel SourcePanel;
         private System.Windows.Forms.Label SourceLabel;
         private System.Windows.Forms.TextBox SourceTextBox;
-        private System.Windows.Forms.TableLayoutPanel AttachPanel;
-        private ClipDataView AttachListView;
+        private System.Windows.Forms.TableLayoutPanel ClipPanel;
+        private ClipDataView MyClipDataView;
         private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
-        private Forms.Button AddButton;
-        private Forms.Button RemoveButton;
-        private Forms.Button ClearButton;
+        private Forms.Button AttachButton;
+        private Forms.Button DetachButton;
+        private Forms.Button ResetButton;
         private System.Windows.Forms.FlowLayoutPanel FooterPanel;
         private Forms.Button ExitButton;
-        private Forms.Button AttachButton;
-        private Forms.Button SourceButton;
+        private Forms.Button SaveButton;
+        private Forms.Button OpenButton;
         private System.Windows.Forms.PictureBox HeaderButton;
     }
 }

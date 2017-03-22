@@ -17,13 +17,10 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Windows.Forms;
-
-using System.Linq;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Cube.Forms.Bindings;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Clip
 {
@@ -36,7 +33,7 @@ namespace Cube.Pdf.App.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.FormBase
+    public partial class MainForm : Cube.Forms.FormBase, IClipView
     {
         #region Constructors
 
@@ -53,7 +50,28 @@ namespace Cube.Pdf.App.Clip
         {
             InitializeComponent();
 
-            ExitButton.Click += (s, e) => Close();
+            // Event handlers
+            ExitButton.Click           += (s, e) => Close();
+            OpenButton.Click           += (s, e) => RaiseOpen();
+            AttachButton.Click         += (s, e) => RaiseAttach();
+            DetachButton.Click         += (s, e) => RaiseDetach();
+            ResetButton.Click          += (s, e) => RaiseReset();
+            SaveButton.Click           += (s, e) => RaiseSave();
+            MyClipDataView.RowsAdded   += WhenRowCountChanged;
+            MyClipDataView.RowsRemoved += WhenRowCountChanged;
+            SourceTextBox.TextChanged  += WhenSourceChanged;
+
+            // Shortcut keys
+            ShortcutKeys.Add(Keys.Delete,           RaiseDetach);
+            ShortcutKeys.Add(Keys.Control | Keys.D, RaiseDetach);
+            ShortcutKeys.Add(Keys.Control | Keys.N, RaiseAttach);
+            ShortcutKeys.Add(Keys.Control | Keys.O, RaiseOpen);
+            ShortcutKeys.Add(Keys.Control | Keys.R, RaiseDetach);
+            ShortcutKeys.Add(Keys.Control | Keys.S, RaiseSave);
+
+            // Properties
+            Source = "WhenSourceChanged(object, EventArgs)";
+            Source = string.Empty;
         }
 
         /* ----------------------------------------------------------------- */
@@ -63,9 +81,240 @@ namespace Cube.Pdf.App.Clip
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
+        /// 
+        /// <param name="args">プログラム引数</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainForm(string[] args) : this() { }
+        public MainForm(string[] args) : this()
+        {
+            Load += (s, e) => EventAggregator?.GetEvents()?.Open.Publish(args);
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Source
+        /// 
+        /// <summary>
+        /// PDF ファイルのパスを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Source
+        {
+            get { return SourceTextBox.Text; }
+            set { SourceTextBox.Text = value; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DataSource
+        /// 
+        /// <summary>
+        /// View に関連付けられるデータを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public object DataSource
+        {
+            get { return MyClipDataView.DataSource; }
+            set { MyClipDataView.DataSource = value; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedIndices
+        /// 
+        /// <summary>
+        /// 選択されているインデックスの一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IEnumerable<int> SelectedIndices
+            => MyClipDataView.SelectedRows
+                             .Cast<DataGridViewRow>()
+                             .Select(x => x.Index);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBusy
+        /// 
+        /// <summary>
+        /// 処理中かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+
+                SourcePanel.Enabled =
+                ClipPanel.Enabled   =
+                ToolsPanel.Enabled  =
+                SaveButton.Enabled  = !value;
+            }
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragEnter
+        /// 
+        /// <summary>
+        /// ドラッグ時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            base.OnDragEnter(e);
+            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ?
+                       DragDropEffects.Copy :
+                       DragDropEffects.None;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragDrop
+        /// 
+        /// <summary>
+        /// ドラッグ&ドロップ時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDragDrop(DragEventArgs e)
+        {
+            base.OnDragDrop(e);
+
+            var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+            var open  = string.IsNullOrEmpty(SourceTextBox.Text);
+            if (open) EventAggregator?.GetEvents()?.Open.Publish(files);
+            else EventAggregator?.GetEvents()?.Attach.Publish(files);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseOpen
+        /// 
+        /// <summary>
+        /// Open イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseOpen()
+        {
+            var dialog = ViewFactory.CreateOpenView();
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+            EventAggregator?.GetEvents()?.Open.Publish(dialog.FileNames);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseAttach
+        /// 
+        /// <summary>
+        /// Attach イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseAttach()
+        {
+            if (!ToolsPanel.Enabled || AttachButton.Enabled) return;
+            var dialog = ViewFactory.CreateAttachView();
+            if (dialog.ShowDialog() == DialogResult.Cancel) return;
+            EventAggregator?.GetEvents()?.Attach.Publish(dialog.FileNames);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseDetach
+        /// 
+        /// <summary>
+        /// Detach イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseDetach()
+        {
+            if (!ToolsPanel.Enabled || !DetachButton.Enabled) return;
+            EventAggregator?.GetEvents()?.Detach.Publish();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseReset
+        /// 
+        /// <summary>
+        /// Reset イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseReset()
+        {
+            if (!ToolsPanel.Enabled || !ResetButton.Enabled) return;
+            EventAggregator?.GetEvents()?.Reset.Publish();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RaiseSave
+        /// 
+        /// <summary>
+        /// Save イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseSave()
+        {
+            if (!SaveButton.Enabled) return;
+            EventAggregator?.GetEvents()?.Save.Publish();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenRowCountChanged
+        /// 
+        /// <summary>
+        /// DataGridView の行数が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenRowCountChanged(object sender, EventArgs e)
+            => DetachButton.Enabled = MyClipDataView.RowCount > 0;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenSourceChanged
+        /// 
+        /// <summary>
+        /// PDF ファイル欄の内容が変化した時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenSourceChanged(object sender, EventArgs e)
+        {
+            ToolsPanel.Enabled =
+            SaveButton.Enabled = !string.IsNullOrEmpty(SourceTextBox.Text);
+        }
+
+        #region Fields
+        private bool _isBusy = false;
+        #endregion
 
         #endregion
     }
