@@ -119,18 +119,25 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async void WhenOpen(string[] files)
+        private void WhenOpen(string[] files)
+            => Async(() =>
         {
             foreach (var file in files)
             {
                 try
                 {
-                    await Async(() => Model.Open(file));
+                    Model.Open(file);
+                    break;
+                }
+                catch (EncryptionException err)
+                {
+                    this.LogError(err.Message, err);
+                    EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
                     break;
                 }
                 catch (Exception err) { this.LogError(err.Message, err); }
             }
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///

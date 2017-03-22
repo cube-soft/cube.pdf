@@ -350,7 +350,7 @@ namespace Cube.Pdf.Drawing
         protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
         {
             if (PasswordRequired != null) PasswordRequired(this, e);
-            else e.Cancel = true;
+            else throw new EncryptionException(e.Query);
         }
 
         #endregion

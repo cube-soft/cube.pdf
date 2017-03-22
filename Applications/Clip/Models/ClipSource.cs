@@ -82,7 +82,11 @@ namespace Cube.Pdf.App.Clip
         public void Open(string src)
         {
             Close();
-            Source = new Cube.Pdf.Editing.DocumentReader(src);
+            
+            var reader = new Cube.Pdf.Editing.DocumentReader();
+            reader.Open(src);
+            Source = reader;
+
             Reset();
         }
 

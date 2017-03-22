@@ -144,6 +144,15 @@ namespace Cube.Pdf.App.Clip.Properties {
         }
         
         /// <summary>
+        ///   パスワードで保護された PDF ファイルの編集には未対応です。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageEncryption {
+            get {
+                return ResourceManager.GetString("MessageEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイルの添付が完了しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageSuccess {
