@@ -33,7 +33,7 @@ namespace Cube.Pdf.App.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ClipSource : IDisposable
+    public class ClipSource : ObservableProperty, IDisposable
     {
         #region Properties
 
@@ -46,7 +46,11 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IDocumentReader Source { get; private set; }
+        public IDocumentReader Source
+        {
+            get { return _source; }
+            set { SetProperty(ref _source, value); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -312,6 +316,7 @@ namespace Cube.Pdf.App.Clip
 
         #region Fields
         private bool _disposed = false;
+        private IDocumentReader _source = null;
         #endregion
 
         #endregion
