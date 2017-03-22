@@ -17,6 +17,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Clip
@@ -44,11 +45,20 @@ namespace Cube.Pdf.App.Clip
         [STAThread]
         static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            var type = typeof(Program);
 
-            var view = ViewFactory.CreateMainView(args);
-            using (var _ = new ClipPresenter(view)) Application.Run(view);
+            try
+            {
+                Cube.Log.Operations.Configure();
+                Cube.Log.Operations.Info(type, Assembly.GetExecutingAssembly());
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                var view = ViewFactory.CreateMainView(args);
+                using (var _ = new ClipPresenter(view)) Application.Run(view);
+            }
+            catch (Exception err) { Cube.Log.Operations.Error(type, err.Message, err); }
         }
     }
 }
