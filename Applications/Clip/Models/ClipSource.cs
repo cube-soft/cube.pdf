@@ -119,8 +119,10 @@ namespace Cube.Pdf.App.Clip
         {
             if (Source == null || !Source.IsOpen) return;
 
-            var dest = Source.File.FullName;
-            var tmp  = System.IO.Path.GetTempFileName();
+            var dest  = Source.File.FullName;
+            var tmp   = System.IO.Path.GetTempFileName();
+            var items = Clips.Select(x => x.RawObject)
+                             .Where(x => System.IO.File.Exists(x.File.FullName));
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             {
@@ -128,7 +130,7 @@ namespace Cube.Pdf.App.Clip
                 writer.Encryption = Source.Encryption;
                 writer.UseSmartCopy = true;
                 writer.Add(Source.Pages);
-                writer.Attach(Clips.Select(x => x.RawObject));
+                writer.Attach(items);
 
                 System.IO.File.Delete(tmp);
                 writer.Save(tmp);
