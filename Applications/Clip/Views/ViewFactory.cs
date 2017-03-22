@@ -16,6 +16,8 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Clip
@@ -84,6 +86,32 @@ namespace Cube.Pdf.App.Clip
             Multiselect = true,
             CheckFileExists = true,
             SupportMultiDottedExtensions = true,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateVersionView
+        /// 
+        /// <summary>
+        /// バージョン画面を生成します。
+        /// </summary>
+        /// 
+        /// <param name="version">バージョン</param>
+        /// <param name="icon">アイコン画像</param>
+        /// 
+        /// <returns>バージョン画面</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Cube.Forms.VersionForm CreateVersionView(string version, Icon icon)
+            => new Cube.Forms.VersionForm
+        {
+            AutoScaleMode = AutoScaleMode.None,
+            Icon          = icon,
+            Image         = Properties.Resources.Logo,
+            StartPosition = FormStartPosition.CenterParent,
+            Text          = Properties.Resources.VersionTitle,
+            Uri           = new Uri(Properties.Resources.VersionWeb),
+            Version       = version,
         };
     }
 }
