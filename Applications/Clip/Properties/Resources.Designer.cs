@@ -61,6 +61,24 @@ namespace Cube.Pdf.App.Clip.Properties {
         }
         
         /// <summary>
+        ///   すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string AttachFilter {
+            get {
+                return ResourceManager.GetString("AttachFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   添付するファイルを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string AttachTitle {
+            get {
+                return ResourceManager.GetString("AttachTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   添付状況 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ColumnCondition {
@@ -112,6 +130,24 @@ namespace Cube.Pdf.App.Clip.Properties {
             get {
                 object obj = ResourceManager.GetObject("HeaderImage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SourceFilter {
+            get {
+                return ResourceManager.GetString("SourceFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   添付対象となる PDF ファイルを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SourceTitle {
+            get {
+                return ResourceManager.GetString("SourceTitle", resourceCulture);
             }
         }
     }
