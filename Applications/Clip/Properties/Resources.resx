@@ -121,7 +121,7 @@
     <value>すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="AttachTitle" xml:space="preserve">
-    <value>添付するファイルを選択して下さい。</value>
+    <value>添付するファイルを選択して下さい</value>
   </data>
   <data name="ColumnCondition" xml:space="preserve">
     <value>添付状況</value>
@@ -142,10 +142,19 @@
   <data name="HeaderImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HeaderImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="SourceFilter" xml:space="preserve">
     <value>PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="SourceTitle" xml:space="preserve">
-    <value>添付対象となる PDF ファイルを選択して下さい。</value>
+    <value>添付対象となる PDF ファイルを選択して下さい</value>
+  </data>
+  <data name="VersionTitle" xml:space="preserve">
+    <value>CubePDF Clip について</value>
+  </data>
+  <data name="VersionWeb" xml:space="preserve">
+    <value>http://www.cube-soft.jp/</value>
   </data>
 </root>

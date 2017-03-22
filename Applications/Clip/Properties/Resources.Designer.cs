@@ -70,7 +70,7 @@ namespace Cube.Pdf.App.Clip.Properties {
         }
         
         /// <summary>
-        ///   添付するファイルを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        ///   添付するファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string AttachTitle {
             get {
@@ -134,6 +134,16 @@ namespace Cube.Pdf.App.Clip.Properties {
         }
         
         /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo {
+            get {
+                object obj = ResourceManager.GetObject("Logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SourceFilter {
@@ -143,11 +153,29 @@ namespace Cube.Pdf.App.Clip.Properties {
         }
         
         /// <summary>
-        ///   添付対象となる PDF ファイルを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        ///   添付対象となる PDF ファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SourceTitle {
             get {
                 return ResourceManager.GetString("SourceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CubePDF Clip について に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string VersionTitle {
+            get {
+                return ResourceManager.GetString("VersionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string VersionWeb {
+            get {
+                return ResourceManager.GetString("VersionWeb", resourceCulture);
             }
         }
     }
