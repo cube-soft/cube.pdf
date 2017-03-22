@@ -182,7 +182,10 @@ namespace Cube.Pdf.Tests.Editing
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
                 reader.Open(dest);
-                return reader.Attachments.Count();
+
+                var items = reader.Attachments;
+                Assert.That(items.Any(x => x.Name.ToLower() == file.ToLower()));
+                return items.Count();
             }
         }
     }
