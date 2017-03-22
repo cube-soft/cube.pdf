@@ -43,14 +43,14 @@
             this.DetachButton = new Cube.Forms.Button();
             this.ResetButton = new Cube.Forms.Button();
             this.MyClipDataView = new Cube.Pdf.App.Clip.ClipDataView();
-            this.HeaderButton = new System.Windows.Forms.PictureBox();
+            this.VersionButton = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.SourcePanel.SuspendLayout();
             this.ClipPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MyClipDataView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HeaderButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VersionButton)).BeginInit();
             this.SuspendLayout();
             // 
             // LayoutPanel
@@ -60,7 +60,7 @@
             this.LayoutPanel.Controls.Add(this.FooterPanel, 0, 3);
             this.LayoutPanel.Controls.Add(this.SourcePanel, 0, 1);
             this.LayoutPanel.Controls.Add(this.ClipPanel, 0, 2);
-            this.LayoutPanel.Controls.Add(this.HeaderButton, 0, 0);
+            this.LayoutPanel.Controls.Add(this.VersionButton, 0, 0);
             this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
@@ -260,17 +260,18 @@
             this.MyClipDataView.Size = new System.Drawing.Size(448, 145);
             this.MyClipDataView.TabIndex = 4;
             // 
-            // HeaderButton
+            // VersionButton
             // 
-            this.HeaderButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.HeaderButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HeaderButton.Image = global::Cube.Pdf.App.Clip.Properties.Resources.HeaderImage;
-            this.HeaderButton.Location = new System.Drawing.Point(0, 0);
-            this.HeaderButton.Margin = new System.Windows.Forms.Padding(0);
-            this.HeaderButton.Name = "HeaderButton";
-            this.HeaderButton.Size = new System.Drawing.Size(584, 35);
-            this.HeaderButton.TabIndex = 8;
-            this.HeaderButton.TabStop = false;
+            this.VersionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.VersionButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.VersionButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VersionButton.Image = global::Cube.Pdf.App.Clip.Properties.Resources.HeaderImage;
+            this.VersionButton.Location = new System.Drawing.Point(0, 0);
+            this.VersionButton.Margin = new System.Windows.Forms.Padding(0);
+            this.VersionButton.Name = "VersionButton";
+            this.VersionButton.Size = new System.Drawing.Size(584, 35);
+            this.VersionButton.TabIndex = 8;
+            this.VersionButton.TabStop = false;
             // 
             // MainForm
             // 
@@ -291,7 +292,7 @@
             this.ClipPanel.ResumeLayout(false);
             this.ToolsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MyClipDataView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HeaderButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VersionButton)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -312,7 +313,7 @@
         private Forms.Button ExitButton;
         private Forms.Button SaveButton;
         private Forms.Button OpenButton;
-        private System.Windows.Forms.PictureBox HeaderButton;
+        private System.Windows.Forms.PictureBox VersionButton;
     }
 }
 

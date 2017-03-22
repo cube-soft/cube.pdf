@@ -57,6 +57,7 @@ namespace Cube.Pdf.App.Clip
             DetachButton.Click         += (s, e) => RaiseDetach();
             ResetButton.Click          += (s, e) => RaiseReset();
             SaveButton.Click           += (s, e) => RaiseSave();
+            VersionButton.Click        += WhenVersionClick;
             MyClipDataView.RowsAdded   += WhenRowCountChanged;
             MyClipDataView.RowsRemoved += WhenRowCountChanged;
             SourceTextBox.TextChanged  += WhenSourceChanged;
@@ -72,6 +73,17 @@ namespace Cube.Pdf.App.Clip
             // Properties
             Source = "WhenSourceChanged(object, EventArgs)";
             Source = string.Empty;
+            Text   = $"{ProductName} {ProductVersion} ({Platform})";
+
+            // ToolTip
+            var tips = new ToolTip
+            {
+                InitialDelay = 200,
+                AutoPopDelay = 5000,
+                ReshowDelay  = 1000
+            };
+            tips.SetToolTip(VersionButton, Properties.Resources.VersionTitle);
+            tips.SetToolTip(OpenButton,    Properties.Resources.SourceTitle);
         }
 
         /* ----------------------------------------------------------------- */
@@ -93,6 +105,19 @@ namespace Cube.Pdf.App.Clip
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Platform
+        /// 
+        /// <summary>
+        /// プラットフォームを表す文字列を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string Platform => (IntPtr.Size == 4) ? "x86" : "x64";
 
         /* ----------------------------------------------------------------- */
         ///
@@ -164,6 +189,8 @@ namespace Cube.Pdf.App.Clip
                 ClipPanel.Enabled   =
                 ToolsPanel.Enabled  =
                 SaveButton.Enabled  = !value;
+
+                Cursor = value ? Cursors.WaitCursor : Cursors.Default;
             }
         }
 
@@ -234,7 +261,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         private void RaiseAttach()
         {
-            if (!ToolsPanel.Enabled || AttachButton.Enabled) return;
+            if (!ToolsPanel.Enabled || !AttachButton.Enabled) return;
             var dialog = ViewFactory.CreateAttachView();
             if (dialog.ShowDialog() == DialogResult.Cancel) return;
             EventAggregator?.GetEvents()?.Attach.Publish(dialog.FileNames);
@@ -310,6 +337,22 @@ namespace Cube.Pdf.App.Clip
         {
             ToolsPanel.Enabled =
             SaveButton.Enabled = !string.IsNullOrEmpty(SourceTextBox.Text);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenVersionClick
+        /// 
+        /// <summary>
+        /// バージョンボタンがクリックされた時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenVersionClick(object sender, EventArgs e)
+        {
+            var v = $"Version {ProductVersion} ({Platform})";
+            var dialog = ViewFactory.CreateVersionView(v, Icon);
+            dialog.ShowDialog();
         }
 
         #region Fields

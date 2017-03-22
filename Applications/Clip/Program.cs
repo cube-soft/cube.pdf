@@ -46,7 +46,9 @@ namespace Cube.Pdf.App.Clip
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(ViewFactory.CreateMainView(args));
+
+            var view = ViewFactory.CreateMainView(args);
+            using (var _ = new ClipPresenter(view)) Application.Run(view);
         }
     }
 }
