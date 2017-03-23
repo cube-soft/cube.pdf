@@ -67,7 +67,7 @@ namespace Cube.Pdf.App.Clip
             ShortcutKeys.Add(Keys.Control | Keys.D, RaiseDetach);
             ShortcutKeys.Add(Keys.Control | Keys.N, RaiseAttach);
             ShortcutKeys.Add(Keys.Control | Keys.O, RaiseOpen);
-            ShortcutKeys.Add(Keys.Control | Keys.R, RaiseDetach);
+            ShortcutKeys.Add(Keys.Control | Keys.R, RaiseReset);
             ShortcutKeys.Add(Keys.Control | Keys.S, RaiseSave);
 
             // Properties
