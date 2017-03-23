@@ -57,7 +57,7 @@ namespace Cube.Pdf.App.Clip
             DetachButton.Click         += (s, e) => RaiseDetach();
             ResetButton.Click          += (s, e) => RaiseReset();
             SaveButton.Click           += (s, e) => RaiseSave();
-            VersionButton.Click        += WhenVersionClick;
+            VersionButton.Click        += (s, e) => RaiseVersion();
             MyClipDataView.RowsAdded   += WhenRowCountChanged;
             MyClipDataView.RowsRemoved += WhenRowCountChanged;
             SourceTextBox.TextChanged  += WhenSourceChanged;
@@ -65,6 +65,7 @@ namespace Cube.Pdf.App.Clip
             // Shortcut keys
             ShortcutKeys.Add(Keys.Delete,           RaiseDetach);
             ShortcutKeys.Add(Keys.Control | Keys.D, RaiseDetach);
+            ShortcutKeys.Add(Keys.Control | Keys.H, RaiseVersion);
             ShortcutKeys.Add(Keys.Control | Keys.N, RaiseAttach);
             ShortcutKeys.Add(Keys.Control | Keys.O, RaiseOpen);
             ShortcutKeys.Add(Keys.Control | Keys.R, RaiseReset);
@@ -314,6 +315,22 @@ namespace Cube.Pdf.App.Clip
 
         /* ----------------------------------------------------------------- */
         ///
+        /// RaiseVersion
+        /// 
+        /// <summary>
+        /// バージョン画面を表示します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RaiseVersion()
+        {
+            var version = $"Version {ProductVersion} ({Platform})";
+            var view = Views.CreateVersionView(version, Icon);
+            view.ShowDialog();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// WhenRowCountChanged
         /// 
         /// <summary>
@@ -337,22 +354,6 @@ namespace Cube.Pdf.App.Clip
         {
             ToolsPanel.Enabled =
             SaveButton.Enabled = !string.IsNullOrEmpty(SourceTextBox.Text);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenVersionClick
-        /// 
-        /// <summary>
-        /// バージョンボタンがクリックされた時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenVersionClick(object sender, EventArgs e)
-        {
-            var version = $"Version {ProductVersion} ({Platform})";
-            var view = Views.CreateVersionView(version, Icon);
-            view.ShowDialog();
         }
 
         #region Fields
