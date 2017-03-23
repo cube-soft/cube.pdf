@@ -174,11 +174,10 @@ namespace Cube.Pdf.App.Picker
         {
             View.EventAggregator = null;
 
-            throw new NotImplementedException("EventAggregator.Unsubscribe");
-            //EventAggregator.GetEvents()?.PreviewImage.Unsubscribe(PreviewImage_Handle);
-            //EventAggregator.GetEvents()?.Remove.Unsubscribe(Remove_Handle);
-            //EventAggregator.GetEvents()?.SaveComplete.Unsubscribe(SaveComplete_Handle);
-            //EventAggregator.GetEvents()?.Version.Unsubscribe(Version_Handle);
+            EventAggregator.GetEvents()?.PreviewImage.Unsubscribe(PreviewImage_Handle);
+            EventAggregator.GetEvents()?.Remove.Unsubscribe(Remove_Handle);
+            EventAggregator.GetEvents()?.SaveComplete.Unsubscribe(SaveComplete_Handle);
+            EventAggregator.GetEvents()?.Version.Unsubscribe(Version_Handle);
         }
 
         #endregion
