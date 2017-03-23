@@ -45,12 +45,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+    <Reference Include="log4net">
       <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
       <HintPath>..\..\lib\net45\Cube.Core.dll</HintPath>

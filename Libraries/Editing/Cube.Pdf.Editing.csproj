@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="itextsharp">
-      <HintPath>..\..\..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
+      <HintPath>..\..\..\packages\iTextSharp.5.5.11\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
