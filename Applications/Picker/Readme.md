@@ -7,7 +7,7 @@ Copyright (c) 2015 CubeSoft, Inc.
 * Mail: support@cube-soft.jp
 * Web: http://www.cube-soft.jp/
 
-## What's this
+## はじめに
 
 CubePDF ImagePicker は、PDF ファイルから画像を抽出するためのソフトウェアです。
 
@@ -23,14 +23,25 @@ CubePDF ImagePicker を実行すると、コンピュータ画面の右上にフ
 「全て保存」では、ドラッグ&ドロップされた PDF ファイルから抽出した全ての画像を保存します。
 「プレビュー」では、抽出した画像の一覧が表示されますので、必要な画像を選択し「選択項目を保存」ボタンを押して下さい。
 
-### 使用ライブラリ
+### 利用ライブラリ
 
 CubePDF ImagePicker は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
 * iTextSharp
-  URL: http://sourceforge.net/projects/itextsharp/
-  GNU Affero General Public License ( http://www.gnu.org/licenses/agpl.html )
+ - GNU Affero General Public License
+ - http://itextpdf.com/
+ - https://www.nuget.org/packages/iTextSharp/
+
+* log4net
+ - Apache License, Version 2.0
+ - http://logging.apache.org/log4net/
+ - https://www.nuget.org/packages/log4net/
+
+* AsyncBridge
+ - MIT License
+ - http://omermor.github.io/AsyncBridge/
+ - https://www.nuget.org/packages/AsyncBridge.Net35
 
 ## バージョン履歴
 

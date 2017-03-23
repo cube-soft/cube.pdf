@@ -4,9 +4,9 @@ Copyright (c) 2013 CubeSoft, Inc.
 
 * License: GNU Affero General Public License version 3 (AGPLv3)
 * Mail: support@cube-soft.jp
-* Web: http://www.cube-soft.jp/cubepdf/
+* Web: http://www.cube-soft.jp/cubepdfpage/
 
-## What's this
+## はじめに
 
 CubePDF Page は、PDF ファイルおよび画像ファイル（BMP, JPEG, PNG, GIF, TIFF) を
 結合、または分割するためのソフトウェアです。
@@ -44,14 +44,25 @@ CubePDF Page で有効なキーボードのショートカットキーは、以�
 * Ctrl + R : 選択中のファイルを関連付けられているアプリケーションで開く（プレビュー）
 * Ctrl + S : 分割操作を実行
 
-## 使用ライブラリ
+## 利用ライブラリ
 
 CubePDF Page は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
 * iTextSharp
-  GNU Affero General Public License
-  http://sourceforge.net/projects/itextsharp/
+ - GNU Affero General Public License
+ - http://itextpdf.com/
+ - https://www.nuget.org/packages/iTextSharp/
+
+* log4net
+ - Apache License, Version 2.0
+ - http://logging.apache.org/log4net/
+ - https://www.nuget.org/packages/log4net/
+
+* AsyncBridge
+ - MIT License
+ - http://omermor.github.io/AsyncBridge/
+ - https://www.nuget.org/packages/AsyncBridge.Net35
 
 ## バージョン履歴
 
