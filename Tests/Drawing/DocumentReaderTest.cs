@@ -19,6 +19,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using System.Linq;
 using NUnit.Framework;
 using IoEx = System.IO;
 
@@ -116,7 +117,7 @@ namespace Cube.Pdf.Tests.Drawing
         [TestCase("password-aes256.pdf", "password")]
         public void File_Password(string filename, string password)
         {
-            var file = Create(filename, password).File as File;
+            var file = Create(filename, password).File as PdfFile;
             Assert.That(
                 file.Password,
                 Is.EqualTo(password)
@@ -153,7 +154,7 @@ namespace Cube.Pdf.Tests.Drawing
         public void Pages_Count(string filename, string password, int expected)
         {
             Assert.That(
-                Create(filename, password).Pages.Count,
+                Create(filename, password).Pages.Count(),
                 Is.EqualTo(expected)
             );
         }

@@ -37,11 +37,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AsyncBridge.Net35">
-      <HintPath>..\..\..\packages\AsyncBridge.Net35.0.2.0\lib\net35-Client\AsyncBridge.Net35.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading">
-      <HintPath>..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+    <Reference Include="Cube.Backwards">
+      <HintPath>..\..\..\lib\net35\Cube.Backwards.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -55,10 +52,12 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attachments.cs" />
     <Compile Include="Details\ImageRenderListener.cs" />
     <Compile Include="Details\Transform.cs" />
     <Compile Include="Operations\Images.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="DocumentSplitter.cs" />
     <Compile Include="DocumentWriterBase.cs" />
     <Compile Include="DocumentWriter.cs" />
+    <Compile Include="ReadOnlyAttachmentCollection.cs" />
     <Compile Include="ReadOnlyPageCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

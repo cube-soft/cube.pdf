@@ -39,6 +39,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Cube.Backwards">
+      <HintPath>..\..\..\lib\net35\Cube.Backwards.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net35\Cube.Core.dll</HintPath>
     </Reference>

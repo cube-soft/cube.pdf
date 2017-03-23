@@ -50,28 +50,22 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attachment.cs" />
     <Compile Include="Encryption.cs" />
-    <Compile Include="EncryptionException.cs" />
-    <Compile Include="EncryptionMethod.cs" />
     <Compile Include="File.cs" />
-    <Compile Include="FileBase.cs" />
     <Compile Include="IDocumentReader.cs" />
     <Compile Include="IDocumentWriter.cs" />
-    <Compile Include="ImageFile.cs" />
     <Compile Include="ImagePage.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Permission.cs" />
-    <Compile Include="PermissionMethod.cs" />
     <Compile Include="ViewPreferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

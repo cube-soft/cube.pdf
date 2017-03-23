@@ -72,14 +72,14 @@ namespace Cube.Pdf.Editing
         {
             int dest = 0;
 
-            if (value.Printing.IsAllow())          dest |= PdfWriter.AllowPrinting;
-            if (!value.Printing.IsDeny())          dest |= PdfWriter.AllowDegradedPrinting;
-            if (value.Assembly.IsAllow())          dest |= PdfWriter.AllowAssembly;
-            if (value.ModifyContents.IsAllow())    dest |= PdfWriter.AllowModifyContents;
-            if (value.CopyContents.IsAllow())      dest |= PdfWriter.AllowCopy;
-            if (value.InputFormFields.IsAllow())   dest |= PdfWriter.AllowFillIn;
-            if (value.ModifyAnnotations.IsAllow()) dest |= PdfWriter.AllowModifyAnnotations;
-            if (value.Accessibility.IsAllow())     dest |= PdfWriter.AllowScreenReaders;
+            if (value.Printing.IsAllowed())          dest |= PdfWriter.AllowPrinting;
+            if (!value.Printing.IsDenied())          dest |= PdfWriter.AllowDegradedPrinting;
+            if (value.Assembly.IsAllowed())          dest |= PdfWriter.AllowAssembly;
+            if (value.ModifyContents.IsAllowed())    dest |= PdfWriter.AllowModifyContents;
+            if (value.CopyContents.IsAllowed())      dest |= PdfWriter.AllowCopy;
+            if (value.InputFormFields.IsAllowed())   dest |= PdfWriter.AllowFillIn;
+            if (value.ModifyAnnotations.IsAllowed()) dest |= PdfWriter.AllowModifyAnnotations;
+            if (value.Accessibility.IsAllowed())     dest |= PdfWriter.AllowScreenReaders;
             // if (value.ExtractPage.IsAllow())    dest |= ???
             // if (value.Signature.IsAllow())      dest |= ???
             // if (value.TemplatePage.IsAllow())   dest |= ???
@@ -152,7 +152,7 @@ namespace Cube.Pdf.Editing
             // dest.Signature      = ToPermissionMethod(value, ???);
             // dest.TemplatePage   = ToPermissionMethod(value, ???);
 
-            if (dest.Printing.IsDeny() && (value & PdfWriter.AllowDegradedPrinting) != 0)
+            if (dest.Printing.IsDenied() && (value & PdfWriter.AllowDegradedPrinting) != 0)
             {
                 dest.Printing = PermissionMethod.Restrict;
             }

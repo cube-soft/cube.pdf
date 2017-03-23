@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DropForm));
-            this.DropPanel = new Cube.Forms.UserControl();
+            this.DropPanel = new Cube.Forms.ControlBase();
             this.ExitButton = new Cube.Forms.Button();
             this.DropPanel.SuspendLayout();
             this.SuspendLayout();
@@ -86,7 +86,7 @@
 
         #endregion
 
-        private Cube.Forms.UserControl DropPanel;
+        private Cube.Forms.ControlBase DropPanel;
         private Cube.Forms.Button ExitButton;
     }
 }

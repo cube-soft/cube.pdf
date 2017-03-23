@@ -55,10 +55,13 @@
     <Reference Include="System.Threading">
       <HintPath>..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
     </Reference>
+    <Reference Include="Cube.Backwards">
+      <HintPath>..\..\..\lib\net35\Cube.Backwards.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.7\lib\net35-full\log4net.dll</HintPath>
+      <HintPath>..\..\..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net35\Cube.Core.dll</HintPath>
@@ -83,7 +86,6 @@
     <Compile Include="Models\EventAggregator.cs" />
     <Compile Include="Models\ImageCollection.cs" />
     <Compile Include="Presenters\DropPresenter.cs" />
-    <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Presenters\ProgressPresenter.cs" />
     <Compile Include="Presenters\ThumbnailPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -123,6 +125,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -155,7 +158,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="App.manifest" />
-    <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />

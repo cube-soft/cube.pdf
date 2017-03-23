@@ -46,7 +46,7 @@ namespace Cube.Pdf.Drawing.MuPdf
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        public static Page CreatePage(this IntPtr core, FileBase file, int pagenum)
+        public static Page CreatePage(this IntPtr core, MediaFile file, int pagenum)
         {
             if (NativeMethods.SetPage(core, pagenum) < 0) return null;
 

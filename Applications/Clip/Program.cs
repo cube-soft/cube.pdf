@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// PresenterBase.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -18,52 +16,49 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.App.Picker
+using System;
+using System.Reflection;
+using System.Windows.Forms;
+
+namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PresenterBase
-    /// 
+    /// Program
+    ///
     /// <summary>
-    /// CubePDF ImagePicker で作成する Presenter の基底となるクラスです。
+    /// メインプログラムを表すクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public class PresenterBase<TView, TModel>
-        : Cube.Forms.PresenterBase<TView, TModel>
+    static class Program
     {
-        #region Constructors
-
         /* ----------------------------------------------------------------- */
         ///
-        /// PresenterBase
+        /// Main
         /// 
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// アプリケーションのメイン エントリ ポイントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PresenterBase(TView view, TModel model, EventAggregator events)
-            : base(view, model)
+        [STAThread]
+        static void Main(string[] args)
         {
-            Events = events;
+            var type = typeof(Program);
+
+            try
+            {
+                Cube.Log.Operations.Configure();
+                Cube.Log.Operations.Info(type, Assembly.GetExecutingAssembly());
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                var view = Views.CreateMainView(args);
+                using (var _ = new ClipPresenter(view)) Application.Run(view);
+            }
+            catch (Exception err) { Cube.Log.Operations.Error(type, err.Message, err); }
         }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Events
-        /// 
-        /// <summary>
-        /// イベント情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EventAggregator Events { get; }
-
-        #endregion
     }
 }

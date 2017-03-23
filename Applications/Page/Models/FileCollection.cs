@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileCollection : ObservableCollection<FileBase>
+    public class FileCollection : ObservableCollection<MediaFile>
     {
         #region Constructors
 
@@ -181,7 +181,7 @@ namespace Cube.Pdf.App.Page
                 var writer = new Cube.Pdf.Editing.DocumentWriter();
                 foreach (var file in Items)
                 {
-                    if (file is File) AddDocument(file as File, writer);
+                    if (file is PdfFile) AddDocument(file as PdfFile, writer);
                     else AddImage(file as ImageFile, writer);
                 }
                 writer.Metadata = Metadata;
@@ -212,7 +212,7 @@ namespace Cube.Pdf.App.Page
             var writer = new Cube.Pdf.Editing.DocumentSplitter();
             foreach (var item in Items)
             {
-                if (item is File) AddDocument(item as File, writer);
+                if (item is PdfFile) AddDocument(item as PdfFile, writer);
                 else AddImage(item as ImageFile, writer);
             }
             writer.Metadata = Metadata;
@@ -279,7 +279,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddDocument(File src, IDocumentWriter dest)
+        private void AddDocument(PdfFile src, IDocumentWriter dest)
         {
             if (src == null) return;
 
@@ -287,9 +287,7 @@ namespace Cube.Pdf.App.Page
             {
                 reader.PasswordRequired += (s, e) => { e.Cancel = true; };
                 reader.Open(src.FullName, src.Password, true);
-                if (!reader.IsOpen) return;
-
-                foreach (var page in reader.Pages) dest.Pages.Add(page);
+                if (reader.IsOpen) dest.Add(reader.Pages);
             }
         }
 
@@ -307,9 +305,7 @@ namespace Cube.Pdf.App.Page
             if (src == null) return;
 
             var pages = ImagePage.Create(src.FullName);
-            if (pages == null) return;
-
-            foreach (var page in pages) dest.Pages.Add(page);
+            if (pages != null) dest.Add(pages);
         }
 
         /* ----------------------------------------------------------------- */

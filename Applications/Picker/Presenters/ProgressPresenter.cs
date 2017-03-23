@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ProgressPresenter : PresenterBase<ProgressForm, ImageCollection>
+    public class ProgressPresenter : Cube.Forms.PresenterBase<ProgressForm, ImageCollection>
     {
         #region Constructors
 
@@ -47,14 +47,14 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ProgressPresenter(ProgressForm view, ImageCollection model, EventAggregator events)
+        public ProgressPresenter(ProgressForm view, ImageCollection model, IEventAggregator events)
             : base(view, model, events)
         {
             View.FileName = IoEx.Path.GetFileName(Model.Path);
-            View.Aggregator = Events;
+            View.EventAggregator = EventAggregator;
 
-            Events.Save.Handle += Save_Handle;
-            Events.Preview.Handle += Preview_Handle;
+            EventAggregator.GetEvents()?.Save.Subscribe(Save_Handle);
+            EventAggregator.GetEvents()?.Preview.Subscribe(Preview_Handle);
 
             View.Shown += View_Shown;
         }
@@ -67,14 +67,14 @@ namespace Cube.Pdf.App.Picker
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveAll_Handle
+        /// Save_Handle
         /// 
         /// <summary>
         /// 抽出画像が保存される時に実行されるハンドラです。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private async void Save_Handle(object sender, ValueEventArgs<int[]> e)
+        private async void Save_Handle(int[] files)
         {
             var path = GetSaveFile();
             if (string.IsNullOrEmpty(path)) return;
@@ -85,10 +85,10 @@ namespace Cube.Pdf.App.Picker
             {
                 await Async(() =>
                 {
-                    if (e.Value == null) Model.Save(path);
-                    else Model.Save(path);
+                    if (files == null) Model.Save(path);
+                    else Model.Save(path, files);
                 });
-                Events.SaveComplete.Raise();
+                EventAggregator.GetEvents()?.SaveComplete.Publish();
             }
             catch (Exception err) { this.LogError(err.Message, err); }
 
@@ -108,13 +108,13 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private void Preview_Handle(object sender, EventArgs e)
+        private void Preview_Handle()
             => Sync(() =>
         {
             Model.Restore();
 
             var sview = new ThumbnailForm();
-            var _     = new ThumbnailPresenter(sview, Model, Events);
+            var _     = new ThumbnailPresenter(sview, Model, EventAggregator);
 
             sview.FormClosed += (s, ev) =>
             {

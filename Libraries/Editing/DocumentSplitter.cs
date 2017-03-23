@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentSplitter.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -103,7 +101,7 @@ namespace Cube.Pdf.Editing
             {
                 foreach (var page in Pages)
                 {
-                    if (page.File is File) SavePage(page, folder, cache);
+                    if (page.File is PdfFile) SavePage(page, folder, cache);
                     else if (page.File is ImageFile) SaveImagePage(page, folder);
                 }
             }
@@ -131,7 +129,7 @@ namespace Cube.Pdf.Editing
         {
             if (!cache.ContainsKey(src.File.FullName))
             {
-                var created = CreatePdfReader(src);
+                var created = GetRawReader(src.File);
                 if (created == null) return;
                 cache.Add(src.File.FullName, created);
             }
@@ -158,7 +156,7 @@ namespace Cube.Pdf.Editing
             if (src == null) return;
 
             using (var buffer = new IoEx.MemoryStream())
-            using (var reader = CreatePdfReader(src, buffer))
+            using (var reader = GetRawReader(src, buffer))
             {
                 for (var i = 0; i < reader.NumberOfPages; ++i)
                 {
@@ -182,12 +180,12 @@ namespace Cube.Pdf.Editing
         private void SaveOne(PdfReader reader, int pagenum, string dest)
         {
             var document = new iTextSharp.text.Document();
-            var writer = CreatePdfCopy(document, dest);
+            var writer = GetRawWriter(document, dest);
 
-            AddEncryption(writer);
+            SetEncryption(writer);
             document.Open();
             writer.AddPage(writer.GetImportedPage(reader, pagenum));
-            AddMetadata(document);
+            SetMetadata(document);
 
             document.Close();
             writer.Close();
@@ -202,7 +200,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        private string Unique(string folder, FileBase src, int pagenum)
+        private string Unique(string folder, MediaFile src, int pagenum)
         {
             var basename = IoEx.Path.GetFileNameWithoutExtension(src.FullName);
             var digit = string.Format("D{0}", src.PageCount.ToString("D").Length);

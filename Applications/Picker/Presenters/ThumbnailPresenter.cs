@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ThumbnailPresenter : PresenterBase<ThumbnailForm, ImageCollection>
+    public class ThumbnailPresenter : Cube.Forms.PresenterBase<ThumbnailForm, ImageCollection>
     {
         #region Constructors
 
@@ -49,7 +49,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model, EventAggregator events)
+        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model, IEventAggregator events)
             : base(view, model, events)
         {
             View.Shown      += View_Shown;
@@ -72,7 +72,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void PreviewImage_Handle(object sender, EventArgs e)
+        private void PreviewImage_Handle()
             => SyncWait(() =>
         {
             var indices = View.SelectedIndices;
@@ -95,7 +95,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Remove_Handle(object sender, EventArgs e)
+        private async void Remove_Handle()
         {
             int[] indices = SyncWait(() => View.SelectedIndices.Descend().ToArray());
             if (indices == null || indices.Length <= 0) return;
@@ -112,7 +112,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void SaveComplete_Handle(object sender, EventArgs e)
+        private void SaveComplete_Handle()
            => SyncWait(() =>
         {
             View.Complete = true;
@@ -128,7 +128,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Version_Handle(object sender, EventArgs e)
+        private void Version_Handle()
             => SyncWait(() => Dialogs.Version(Assembly.GetEntryAssembly()));
 
         #endregion
@@ -146,11 +146,11 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         private void View_Shown(object sender, EventArgs e)
         {
-            View.Aggregator = Events;
-            Events.PreviewImage.Handle += PreviewImage_Handle;
-            Events.Remove.Handle += Remove_Handle;
-            Events.SaveComplete.Handle += SaveComplete_Handle;
-            Events.Version.Handle += Version_Handle;
+            View.EventAggregator = EventAggregator;
+            EventAggregator.GetEvents()?.PreviewImage.Subscribe(PreviewImage_Handle);
+            EventAggregator.GetEvents()?.Remove.Subscribe(Remove_Handle);
+            EventAggregator.GetEvents()?.SaveComplete.Subscribe(SaveComplete_Handle);
+            EventAggregator.GetEvents()?.Version.Subscribe(Version_Handle);
 
             View.Cursor = Cursors.WaitCursor;
             View.AddRange(Model.Select(x => Shrink(x, View.ImageSize)));
@@ -164,15 +164,21 @@ namespace Cube.Pdf.App.Picker
         /// <summary>
         /// フォームが閉じられた時に実行されるハンドラです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: EventAggregator.Unsubscribe の実装
+        /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
         private void View_FormClosed(object sender, FormClosedEventArgs e)
         {
-            View.Aggregator = null;
-            Events.PreviewImage.Handle -= PreviewImage_Handle;
-            Events.Remove.Handle -= Remove_Handle;
-            Events.SaveComplete.Handle -= SaveComplete_Handle;
-            Events.Version.Handle -= Version_Handle;
+            View.EventAggregator = null;
+
+            throw new NotImplementedException("EventAggregator.Unsubscribe");
+            //EventAggregator.GetEvents()?.PreviewImage.Unsubscribe(PreviewImage_Handle);
+            //EventAggregator.GetEvents()?.Remove.Unsubscribe(Remove_Handle);
+            //EventAggregator.GetEvents()?.SaveComplete.Unsubscribe(SaveComplete_Handle);
+            //EventAggregator.GetEvents()?.Version.Unsubscribe(Version_Handle);
         }
 
         #endregion

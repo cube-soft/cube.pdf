@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Encryption.cs
-/// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
 /// Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +15,8 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
+
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
@@ -109,6 +109,85 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         public Permission Permission { get; set; } = new Permission();
+
+        #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// EncryptionMethod
+    /// 
+    /// <summary>
+    /// PDF の暗号化の際に使用可能な暗号化方式を定義した列挙型です。
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// 現在のところ、以下の暗号化方式を使用する事ができます（括弧内の値は、
+    /// 最初にサポートされた PDF バージョンを表します）。
+    /// -  40bit RC4 (PDF 1.1)
+    /// - 128bit RC4 (PDF 1.4)
+    /// - 128bit AES (PDF 1.5)
+    /// - 256bit AES (PDF 1.7 ExtensionLevel 3)
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public enum EncryptionMethod
+    {
+        Standard40,     //  40bit RC4
+        Standard128,    // 128bit RC4
+        Aes128,         // 128bit AES
+        Aes256,         // 256bit AES
+        Unknown = -1,
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// EncryptionException
+    /// 
+    /// <summary>
+    /// 暗号化に関する例外を送出するためのクラスです。
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [Serializable]
+    public class EncryptionException : Exception
+    {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EncryptionException
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EncryptionException() : base() { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EncryptionException
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EncryptionException(string message) : base(message) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EncryptionException
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EncryptionException(string message, Exception innerException)
+            : base(message, innerException)
+        { }
 
         #endregion
     }

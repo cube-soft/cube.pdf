@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.7\lib\net35-full\log4net.dll</HintPath>
+      <HintPath>..\..\..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>
     </Reference>    
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net35\Cube.Core.dll</HintPath>
@@ -86,7 +86,6 @@
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Presenters\FileCollectionPresenter.cs" />
     <Compile Include="Presenters\MenuPresenter.cs" />
-    <Compile Include="Presenters\PresenterBase.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +114,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -141,7 +141,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="App.manifest" />
-    <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />

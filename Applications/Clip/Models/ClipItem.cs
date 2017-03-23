@@ -16,37 +16,33 @@
 /// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ///
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.App.Page
+namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PresenterBase
+    /// ClipItem
     /// 
     /// <summary>
-    /// CubePDF Page で作成する Presenter の基底となるクラスです。
+    /// 添付ファイルの情報を保持するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public class PresenterBase<TView, TModel>
-        : Cube.Forms.PresenterBase<TView, TModel>
+    public class ClipItem
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PresenterBase
+        /// ClipItem
         /// 
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PresenterBase(TView view, TModel model,
-            Settings settings, EventAggregator events)
-            : base(view, model)
+        public ClipItem(Attachment raw)
         {
-            Settings = settings;
-            Events = events;
+            RawObject = raw;
         }
 
         #endregion
@@ -55,25 +51,48 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// Name
         /// 
         /// <summary>
-        /// 設定情報を取得します。
+        /// 添付ファイルの名前を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings Settings { get; }
+        public string Name => RawObject.Name;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Events
+        /// Length
         /// 
         /// <summary>
-        /// イベント情報を取得します。
+        /// 添付ファイルのサイズを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventAggregator Events { get; }
+        public long Length => RawObject.Length;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Condition
+        /// 
+        /// <summary>
+        /// 添付状況を表す文字列を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Condition { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RawObject
+        /// 
+        /// <summary>
+        /// ClipItem クラスが参照している Attachment オブジェクトを
+        /// 取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Attachment RawObject { get; }
 
         #endregion
     }

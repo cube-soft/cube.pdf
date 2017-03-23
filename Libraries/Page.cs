@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Page.cs
-/// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
 /// Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +42,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File { get; set; } = null;
+        public MediaFile File { get; set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///

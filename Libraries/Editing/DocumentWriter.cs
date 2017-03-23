@@ -20,6 +20,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Log;
@@ -77,10 +78,10 @@ namespace Cube.Pdf.Editing
                 using (var reader = new PdfReader(tmp))
                 using (var stamper = new PdfStamper(reader, new IoEx.FileStream(path, IoEx.FileMode.Create)))
                 {
-                    AddMetadata(reader, stamper);
-                    AddEncryption(stamper.Writer);
+                    SetMetadata(reader, stamper);
+                    SetEncryption(stamper.Writer);
                     if (Metadata.Version.Minor >= 5) stamper.SetFullCompression();
-                    stamper.Writer.Outlines = Bookmarks;
+                    SetBookmarks(stamper.Writer);
                 }
             }
             catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
@@ -115,16 +116,18 @@ namespace Cube.Pdf.Editing
             try
             {
                 var document = new iTextSharp.text.Document();
-                var writer = CreatePdfCopy(document, dest);
+                var writer = GetRawWriter(document, dest);
 
                 document.Open();
-                Bookmarks.Clear();
+                ResetBookmarks();
 
                 foreach (var page in Pages)
                 {
-                    if (page.File is File) AddPage(page, writer, cache);
+                    if (page.File is PdfFile) AddPage(page, writer, cache);
                     else if (page.File is ImageFile) AddImagePage(page, writer);
                 }
+
+                SetAttachments(writer);
 
                 document.Close();
                 writer.Close();
@@ -154,7 +157,7 @@ namespace Cube.Pdf.Editing
         {
             if (!cache.ContainsKey(src.File.FullName))
             {
-                var created = CreatePdfReader(src);
+                var created = GetRawReader(src.File);
                 if (created == null) return;
                 cache.Add(src.File.FullName, created);
             }
@@ -179,13 +182,44 @@ namespace Cube.Pdf.Editing
         private void AddImagePage(Page src, PdfCopy dest)
         {
             using (var buffer = new IoEx.MemoryStream())
-            using (var reader = CreatePdfReader(src, buffer))
+            using (var reader = GetRawReader(src, buffer))
             {
                 for (var i = 0; i < reader.NumberOfPages; ++i)
                 {
                     var page = dest.GetImportedPage(reader, i + 1);
                     dest.AddPage(page);
                 }
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetAttachments
+        /// 
+        /// <summary>
+        /// 添付ファイルを追加します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetAttachments(PdfCopy dest)
+        {
+            var done = new List<Attachment>();
+            
+            foreach (var item in Attachments)
+            {
+                if (done.Any(
+                    x => x.Name.ToLower() == item.Name.ToLower() &&
+                         x.Length == item.Length &&
+                         x.Checksum.SequenceEqual(item.Checksum)
+                )) continue;
+
+                var fs = item is EmbeddedAttachment ?
+                         PdfFileSpecification.FileEmbedded(dest, null, item.Name, item.Data) :
+                         PdfFileSpecification.FileEmbedded(dest, item.File.FullName, item.Name, null);
+
+                fs.SetUnicodeFileName(item.Name, true);
+                dest.AddFileAttachment(fs);
+                done.Add(item);
             }
         }
 

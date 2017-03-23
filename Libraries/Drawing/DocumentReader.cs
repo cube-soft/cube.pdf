@@ -1,8 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentReader.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -115,7 +113,7 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File { get; private set; } = null;
+        public MediaFile File { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -148,7 +146,18 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IReadOnlyCollection<Page> Pages { get; private set; } = null;
+        public IEnumerable<Page> Pages { get; private set; } = null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments
+        /// 
+        /// <summary>
+        /// 添付ファイルの一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Attachment> Attachments { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -160,16 +169,11 @@ namespace Cube.Pdf.Drawing
         ///
         /* ----------------------------------------------------------------- */
         public bool IsOpen
-        {
-            get
-            {
-                return _mupdf     != null &&
-                       File       != null &&
-                       Metadata   != null &&
-                       Encryption != null &&
-                       Pages      != null ;
-            }
-        }
+            => _mupdf     != null &&
+               File       != null &&
+               Metadata   != null &&
+               Encryption != null &&
+               Pages      != null;
 
         #endregion
 
@@ -184,7 +188,7 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler<QueryEventArgs<string, string>> PasswordRequired;
+        public event QueryEventHandler<string, string> PasswordRequired;
 
         #endregion
 
@@ -228,9 +232,11 @@ namespace Cube.Pdf.Drawing
                 if (count < 0) throw new IoEx.FileLoadException();
                 NativeMethods.SetAlphaBits(_mupdf, 8);
 
-                var file = new File(path, password);
-                file.FullAccess = true;
-                file.PageCount = count;
+                var file = new PdfFile(path, password)
+                {
+                    FullAccess = true,
+                    PageCount  = count
+                };
 
                 File       = file;
                 Metadata   = _mupdf.CreateMetadata();
@@ -344,7 +350,7 @@ namespace Cube.Pdf.Drawing
         protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
         {
             if (PasswordRequired != null) PasswordRequired(this, e);
-            else e.Cancel = true;
+            else throw new EncryptionException(e.Query);
         }
 
         #endregion

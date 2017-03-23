@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class ThumbnailForm : Cube.Forms.Form
+    public partial class ThumbnailForm : Cube.Forms.FormBase
     {
         #region Constructors
 
@@ -60,19 +60,6 @@ namespace Cube.Pdf.App.Picker
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Aggregator
-        /// 
-        /// <summary>
-        /// イベントを集約したオブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public EventAggregator Aggregator { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -313,13 +300,13 @@ namespace Cube.Pdf.App.Picker
                         SelectAll();
                         break;
                     case Keys.D:
-                        Aggregator?.Remove.Raise();
+                        EventAggregator.GetEvents()?.Remove.Publish();
                         break;
                     case Keys.R:
-                        Aggregator?.PreviewImage.Raise();
+                        EventAggregator.GetEvents()?.PreviewImage.Publish();
                         break;
                     case Keys.S:
-                        if (e.Shift) Aggregator?.Save.Raise(EventAggregator.All);
+                        if (e.Shift) EventAggregator.GetEvents()?.Save.Publish(null);
                         else if (AnyItemsSelected) RaiseSave();
                         break;
                     default:
@@ -373,16 +360,16 @@ namespace Cube.Pdf.App.Picker
         private void InitializeEvents()
         {
             ExitButton.Click    += (s, e) => Close();
-            TitleButton.Click   += (s, e) => Aggregator?.Version.Raise();
-            SaveAllButton.Click += (s, e) => Aggregator?.Save.Raise(EventAggregator.All);
+            TitleButton.Click   += (s, e) => EventAggregator.GetEvents()?.Version.Publish();
+            SaveAllButton.Click += (s, e) => EventAggregator.GetEvents()?.Save.Publish(null);
             SaveButton.Click    += (s, e) => RaiseSave();
 
-            MenuControl.PreviewMenu.Click   += (s, e) => Aggregator?.PreviewImage.Raise();
-            MenuControl.RemoveMenu.Click    += (s, e) => Aggregator?.Remove.Raise();
+            MenuControl.PreviewMenu.Click   += (s, e) => EventAggregator.GetEvents()?.PreviewImage.Publish();
+            MenuControl.RemoveMenu.Click    += (s, e) => EventAggregator.GetEvents()?.Remove.Publish();
             MenuControl.SaveMenu.Click      += (s, e) => RaiseSave();
             MenuControl.SelectAllMenu.Click += (s, e) => SelectAll();
 
-            ImageListView.DoubleClick += (s, e) => Aggregator?.PreviewImage.Raise();
+            ImageListView.DoubleClick += (s, e) => EventAggregator.GetEvents()?.PreviewImage.Publish();
             ImageListView.SelectedIndexChanged += (s, e) => Refresh();
         }
 
@@ -396,7 +383,7 @@ namespace Cube.Pdf.App.Picker
         /// 
         /* ----------------------------------------------------------------- */
         private void RaiseSave()
-            => Aggregator?.Save.Raise(ValueEventArgs.Create(SelectedIndices.Ascend().ToArray()));
+            => EventAggregator.GetEvents()?.Save.Publish(SelectedIndices.Ascend().ToArray());
 
         #endregion
 

@@ -1,8 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentReader.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
+/// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
 /// it under the terms of the GNU Affero General Public License as published
@@ -19,8 +17,10 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Pdf.Editing.ITextReader;
@@ -42,7 +42,7 @@ namespace Cube.Pdf.Editing
     /* --------------------------------------------------------------------- */
     public class DocumentReader : IDocumentReader
     {
-        #region Constructors and destructors
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
@@ -83,25 +83,6 @@ namespace Cube.Pdf.Editing
             Open(path, password);
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~DocumentReader
-        /// 
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
-        /// に記述して下さい。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~DocumentReader()
-        {
-            Dispose(false);
-        }
-
         #endregion
 
         #region Properties
@@ -115,7 +96,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileBase File { get; private set; } = null;
+        public MediaFile File { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -148,7 +129,29 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IReadOnlyCollection<Page> Pages { get; private set; } = null;
+        public IEnumerable<Page> Pages { get; private set; } = null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments
+        /// 
+        /// <summary>
+        /// 添付ファイルの一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Attachment> Attachments { get; private set; } = null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RawObject
+        /// 
+        /// <summary>
+        /// 内部実装のオブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PdfReader RawObject { get; private set; } = null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -160,16 +163,12 @@ namespace Cube.Pdf.Editing
         ///
         /* ----------------------------------------------------------------- */
         public bool IsOpen
-        {
-            get
-            {
-                return _core      != null &&
-                       File       != null &&
-                       Metadata   != null &&
-                       Encryption != null &&
-                       Pages      != null ;
-            }
-        }
+            => RawObject   != null &&
+               File        != null &&
+               Metadata    != null &&
+               Encryption  != null &&
+               Pages       != null &&
+               Attachments != null;
 
         #endregion
 
@@ -182,101 +181,53 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// パスワードが要求された時に発生するイベントです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// PasswordRequired イベントに対してイベントハンドラが登録されて
+        /// いない場合、EncryptionException が送出されます。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler<QueryEventArgs<string, string>> PasswordRequired;
+        public event QueryEventHandler<string, string> PasswordRequired;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPasswordRequired
+        /// 
+        /// <summary>
+        /// パスワードが要求された時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
+        {
+            if (PasswordRequired != null) PasswordRequired(this, e);
+            else throw new EncryptionException(e.Query);
+        }
 
         #endregion
 
         #region Methods
 
-        #region IDocumentReader
+        #region IDisposable
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// ~DocumentReader
         /// 
         /// <summary>
-        /// PDF ファイルを開きます。
+        /// オブジェクトを破棄します。
         /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(string path)
-        {
-            Open(path, string.Empty);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
         /// 
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
+        /// <remarks>
+        /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
+        /// に記述して下さい。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open(string path, string password)
+        ~DocumentReader()
         {
-            Open(path, password, false);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        /// 
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(string path, string password, bool onlyFullAccess)
-        {
-            try
-            {
-                var bytes = !string.IsNullOrEmpty(password) ? System.Text.Encoding.UTF8.GetBytes(password) : null;
-                _core = new PdfReader(path, bytes, true);
-                if (onlyFullAccess && !_core.IsOpenedWithFullPermissions)
-                {
-                    throw new BadPasswordException("allow only owner password");
-                }
-
-                var file = new File(path, password);
-                file.FullAccess = _core.IsOpenedWithFullPermissions;
-                file.PageCount = _core.NumberOfPages;
-
-                File = file;
-                Metadata = GetMetadata(_core);
-                Encryption = GetEncryption(_core, password, file.FullAccess);
-                Pages = new ReadOnlyPageCollection(_core, file);
-            }
-            catch (BadPasswordException /* err */)
-            {
-                if (_core != null)
-                {
-                    _core.Dispose();
-                    _core = null;
-                }
-
-                var e = new QueryEventArgs<string, string>(path);
-                OnPasswordRequired(e);
-                if (!e.Cancel) Open(path, e.Result);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetPage
-        /// 
-        /// <summary>
-        /// 指定されたページ番号に対応するページ情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Page GetPage(int pagenum)
-        {
-            return _core != null && File != null ?
-                   _core.CreatePage(File, pagenum) :
-                   null;
+            Dispose(false);
         }
 
         /* ----------------------------------------------------------------- */
@@ -294,35 +245,6 @@ namespace Cube.Pdf.Editing
             GC.SuppressFinalize(this);
         }
 
-        #endregion
-
-        #region Extended
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImages
-        /// 
-        /// <summary>
-        /// 指定されたページ中に存在する画像を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public IList<Image> GetImages(int pagenum)
-        {
-            if (pagenum < 0 || pagenum > Pages.Count) throw new IndexOutOfRangeException();
-
-            var parser = new iTextSharp.text.pdf.parser.PdfReaderContentParser(_core);
-            var listener = new ImageRenderListener();
-            parser.ProcessContent(pagenum, listener);
-            return listener.Images;
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Virtual methods
-
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
@@ -337,12 +259,12 @@ namespace Cube.Pdf.Editing
             if (_disposed) return;
             _disposed = true;
 
-            if (_core == null) return;
+            if (RawObject == null) return;
 
             if (disposing)
             {
-                _core.Dispose();
-                _core = null;
+                RawObject.Dispose();
+                RawObject = null;
 
                 File       = null;
                 Metadata   = null;
@@ -351,24 +273,148 @@ namespace Cube.Pdf.Editing
             }
         }
 
+        #endregion
+
+        #region IDocumentReader
+
         /* ----------------------------------------------------------------- */
         ///
-        /// OnPasswordRequired
+        /// Open
         /// 
         /// <summary>
-        /// パスワードが要求された時に実行されるハンドラです。
+        /// PDF ファイルを開きます。
         /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
+        public void Open(string path) => Open(path, string.Empty);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
+        /// <param name="password">
+        /// オーナパスワードまたはユーザパスワード
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(string path, string password)
+            => Open(path, password, false);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
+        /// 
+        /// <param name="password">
+        /// オーナパスワードまたはユーザパスワード
+        /// </param>
+        /// 
+        /// <param name="onlyFullAccess">
+        /// フルアクセスのみを許可するかどうかを示す値
+        /// </param>
+        /// 
+        /// <remarks>
+        /// onlyFullAccess が true の場合、ユーザパスワードで
+        /// PDF ファイルを開こうとすると PasswordRequired イベントが
+        /// 発生します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(string path, string password, bool onlyFullAccess)
         {
-            if (PasswordRequired != null) PasswordRequired(this, e);
-            else e.Cancel = true;
+            try
+            {
+                var pass = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
+                RawObject = new PdfReader(path, pass, true);
+                if (onlyFullAccess && !RawObject.IsOpenedWithFullPermissions)
+                {
+                    throw new BadPasswordException("allow only owner password");
+                }
+
+                var file = new PdfFile(path, password)
+                {
+                    FullAccess = RawObject.IsOpenedWithFullPermissions,
+                    PageCount  = RawObject.NumberOfPages
+                };
+
+                File        = file;
+                Metadata    = GetMetadata(RawObject);
+                Encryption  = GetEncryption(RawObject, password, file.FullAccess);
+                Pages       = new ReadOnlyPageCollection(RawObject, file);
+                Attachments = new ReadOnlyAttachmentCollection(RawObject, file);
+            }
+            catch (BadPasswordException /* err */)
+            {
+                if (RawObject != null)
+                {
+                    RawObject.Dispose();
+                    RawObject = null;
+                }
+
+                var e = new QueryEventArgs<string, string>(path);
+                OnPasswordRequired(e);
+                if (!e.Cancel) Open(path, e.Result);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetPage
+        /// 
+        /// <summary>
+        /// 指定されたページ番号に対応するページ情報を取得します。
+        /// </summary>
+        /// 
+        /// <param name="pagenum">ページ番号</param>
+        /// 
+        /// <returns>ページ情報を保持するオブジェクト</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Page GetPage(int pagenum)
+            => RawObject != null && File != null ?
+               RawObject.CreatePage(File, pagenum) :
+               null;
+
+        #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImages
+        /// 
+        /// <summary>
+        /// 指定されたページ中に存在する画像を取得します。
+        /// </summary>
+        /// 
+        /// <param name="pagenum">ページ番号</param>
+        /// 
+        /// <returns>抽出された Image オブジェクトのリスト</returns>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Image> GetImages(int pagenum)
+        {
+            if (pagenum < 0 || pagenum > Pages.Count()) throw new IndexOutOfRangeException();
+
+            var parser = new iTextSharp.text.pdf.parser.PdfReaderContentParser(RawObject);
+            var listener = new ImageRenderListener();
+            parser.ProcessContent(pagenum, listener);
+            return listener.Images;
         }
 
         #endregion
 
-        #region Other private methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -379,21 +425,17 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Metadata GetMetadata(PdfReader src)
+        private Metadata GetMetadata(PdfReader src) => new Metadata()
         {
-            var dest = new Metadata();
-
-            dest.Version  = new Version(1, Int32.Parse(src.PdfVersion.ToString()), 0, 0);
-            dest.Author   = src.Info.ContainsKey("Author") ? src.Info["Author"] : "";
-            dest.Title    = src.Info.ContainsKey("Title") ? src.Info["Title"] : "";
-            dest.Subtitle = src.Info.ContainsKey("Subject") ? src.Info["Subject"] : "";
-            dest.Keywords = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : "";
-            dest.Creator  = src.Info.ContainsKey("Creator") ? src.Info["Creator"] : "";
-            dest.Producer = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : "";
-            dest.ViewPreferences = src.SimpleViewerPreferences;
-
-            return dest;
-        }
+            Version         = new Version(1, Int32.Parse(src.PdfVersion.ToString()), 0, 0),
+            Author          = src.Info.ContainsKey("Author")   ? src.Info["Author"]   : "",
+            Title           = src.Info.ContainsKey("Title")    ? src.Info["Title"]    : "",
+            Subtitle        = src.Info.ContainsKey("Subject")  ? src.Info["Subject"]  : "",
+            Keywords        = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : "",
+            Creator         = src.Info.ContainsKey("Creator")  ? src.Info["Creator"]  : "",
+            Producer        = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : "",
+            ViewPreferences = src.SimpleViewerPreferences
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -439,16 +481,15 @@ namespace Cube.Pdf.Editing
             {
                 if (method == EncryptionMethod.Aes256) return string.Empty; // see remarks
                 var bytes = src.ComputeUserPassword();
-                if (bytes != null && bytes.Length > 0) return System.Text.Encoding.UTF8.GetString(bytes);
+                if (bytes != null && bytes.Length > 0) return Encoding.UTF8.GetString(bytes);
             }
             return password;
         }
 
-        #endregion
-
         #region Fields
         private bool _disposed = false;
-        private PdfReader _core = null;
+        #endregion
+
         #endregion
     }
 }

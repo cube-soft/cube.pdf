@@ -36,7 +36,8 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileCollectionPresenter : PresenterBase<FileListView, FileCollection>
+    public class FileCollectionPresenter
+        : Cube.Forms.PresenterBase<FileListView, FileCollection, Settings>
     {
         #region Constructors
 
@@ -50,22 +51,22 @@ namespace Cube.Pdf.App.Page
         ///
         /* --------------------------------------------------------------------- */
         public FileCollectionPresenter(FileListView view, FileCollection model,
-            Settings settings, EventAggregator events)
+            Settings settings, IEventAggregator events)
             : base(view, model, settings, events)
         {
-            Events.Preview.Handle += Preview_Handle;
-            Events.Add.Handle     += Add_Handle;
-            Events.Remove.Handle  += Remove_Handle;
-            Events.Clear.Handle   += Clear_Handle;
-            Events.Move.Handle    += Move_Handle;
-            Events.Merge.Handle   += Merge_Handle;
-            Events.Split.Handle   += Split_Handle;
+            EventAggregator.GetEvents()?.Preview.Subscribe(Preview_Handle);
+            EventAggregator.GetEvents()?.Add.Subscribe(Add_Handle);
+            EventAggregator.GetEvents()?.Remove.Subscribe(Remove_Handle);
+            EventAggregator.GetEvents()?.Clear.Subscribe(Clear_Handle);
+            EventAggregator.GetEvents()?.Move.Subscribe(Move_Handle);
+            EventAggregator.GetEvents()?.Merge.Subscribe(Merge_Handle);
+            EventAggregator.GetEvents()?.Split.Subscribe(Split_Handle);
 
-            View.Added                += (s, e) => Events.Refresh.Raise();
-            View.Removed              += (s, e) => Events.Refresh.Raise();
-            View.Cleared              += (s, e) => Events.Refresh.Raise();
-            View.SelectedIndexChanged += (s, e) => Events.Refresh.Raise();
-            View.MouseDoubleClick     += (s, e) => Events.Preview.Raise();
+            View.Added                += (s, e) => EventAggregator.GetEvents()?.Refresh.Publish();
+            View.Removed              += (s, e) => EventAggregator.GetEvents()?.Refresh.Publish();
+            View.Cleared              += (s, e) => EventAggregator.GetEvents()?.Refresh.Publish();
+            View.SelectedIndexChanged += (s, e) => EventAggregator.GetEvents()?.Refresh.Publish();
+            View.MouseDoubleClick     += (s, e) => EventAggregator.GetEvents()?.Preview.Publish();
 
             Model.CollectionChanged += Model_CollectionChanged;
             Model.PasswordRequired  += Model_PasswordRequired;
@@ -91,7 +92,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Preview_Handle(object sender, EventArgs e)
+        private void Preview_Handle()
             => this.LogException(()
             => Sync(() =>
         {
@@ -114,10 +115,10 @@ namespace Cube.Pdf.App.Page
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Add_Handle(object sender, ValueEventArgs<string[]> e)
+        private async void Add_Handle(string[] value)
             => await ExecuteAsync(() =>
         {
-            var files = GetFiles(e.Value as string[]);
+            var files = GetFiles(value);
             if (files == null || files.Length == 0) return;
             Model.Add(files, 1);
         });
@@ -131,7 +132,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Remove_Handle(object sender, EventArgs e)
+        private async void Remove_Handle()
             => await ExecuteAsync(() =>
         {
             var indices = SyncWait(() => View.SelectedIndices.Descend().ToArray());
@@ -148,7 +149,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Clear_Handle(object sender, EventArgs e)
+        private async void Clear_Handle()
             => await ExecuteAsync(() => Model.Clear());
 
         /* --------------------------------------------------------------------- */
@@ -160,12 +161,12 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Move_Handle(object sender, ValueEventArgs<int> e)
+        private async void Move_Handle(int value)
             => await ExecuteAsync(() =>
         {
             var indices = SyncWait(() => View.SelectedIndices.Ascend().ToArray());
             if (indices == null || indices.Length == 0) return;
-            Model.Move(indices, e.Value);
+            Model.Move(indices, value);
         });
 
         /* --------------------------------------------------------------------- */
@@ -177,7 +178,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Merge_Handle(object sender, EventArgs e)
+        private async void Merge_Handle()
             => await ExecuteAsync(() =>
         {
             var dest = GetMergeFile();
@@ -200,7 +201,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Split_Handle(object sender, EventArgs e)
+        private async void Split_Handle()
             => await ExecuteAsync(() =>
         {
             var dest = GetSplitFolder();
@@ -370,7 +371,7 @@ namespace Cube.Pdf.App.Page
         {
             var result = Dialogs.Confirm(message);
             if (result == DialogResult.No) return;
-            Add_Handle(this, new ValueEventArgs<string[]>(files));
+            Add_Handle(files);
         });
 
         #endregion

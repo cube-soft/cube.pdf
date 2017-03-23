@@ -147,4 +147,60 @@ namespace Cube.Pdf
 
         #endregion
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// PermissionMethod
+    /// 
+    /// <summary>
+    /// PDF への各種操作に対して設定されている許可状態を示す列挙型です。
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public enum PermissionMethod
+    {
+        Deny     = 0,
+        Restrict = 1,
+        Allow    = 2
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// PermissionOperations
+    /// 
+    /// <summary>
+    /// Permission クラスに関連する拡張用クラスです。
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static class PermissionOperations
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsAllowed
+        /// 
+        /// <summary>
+        /// 許可状態かどうかを判別します。
+        /// </summary>
+        /// 
+        /// <param name="obj">PermissionMethod オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsAllowed(this PermissionMethod obj)
+            => obj == PermissionMethod.Allow;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsDenied
+        /// 
+        /// <summary>
+        /// 拒否状態かどうかを判別します。
+        /// </summary>
+        /// 
+        /// <param name="obj">PermissionMethod オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsDenied(this PermissionMethod obj)
+            => obj == PermissionMethod.Deny;
+    }
 }

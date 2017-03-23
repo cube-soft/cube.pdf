@@ -53,6 +53,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.3.5.0\lib\net35\nunit.framework.dll</HintPath>
     </Reference>

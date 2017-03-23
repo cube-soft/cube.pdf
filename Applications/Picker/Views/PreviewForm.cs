@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class PreviewForm : Cube.Forms.Form
+    public partial class PreviewForm : Cube.Forms.FormBase
     {
         #region Constructors
 
