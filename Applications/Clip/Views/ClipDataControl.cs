@@ -24,14 +24,14 @@ namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ClipDataView
+    /// ClipDataControl
     /// 
     /// <summary>
     /// 添付ファイル一覧を表示するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ClipDataView : DataGridView
+    public class ClipDataControl : DataGridView
     {
         #region Constructors
 
@@ -44,7 +44,7 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ClipDataView() : base() { }
+        public ClipDataControl() : base() { }
 
         #endregion
 

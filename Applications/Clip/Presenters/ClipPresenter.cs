@@ -209,7 +209,7 @@ namespace Cube.Pdf.App.Clip
         ///
         /* ----------------------------------------------------------------- */
         private void WhenMessage(string message)
-            => Sync(() => ViewFactory.ShowMessage(message));
+            => Sync(() => Clip.Views.ShowMessage(message));
 
         #endregion
 

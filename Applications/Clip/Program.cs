@@ -55,7 +55,7 @@ namespace Cube.Pdf.App.Clip
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var view = ViewFactory.CreateMainView(args);
+                var view = Views.CreateMainView(args);
                 using (var _ = new ClipPresenter(view)) Application.Run(view);
             }
             catch (Exception err) { Cube.Log.Operations.Error(type, err.Message, err); }

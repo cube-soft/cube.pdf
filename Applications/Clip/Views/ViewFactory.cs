@@ -27,11 +27,11 @@ namespace Cube.Pdf.App.Clip
     /// ViewFactory
     ///
     /// <summary>
-    /// View の生成用クラスです。
+    /// 各種 View の生成用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class ViewFactory
+    public class ViewFactory
     {
         /* ----------------------------------------------------------------- */
         ///
@@ -44,7 +44,7 @@ namespace Cube.Pdf.App.Clip
         /// <returns>メイン画面</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static MainForm CreateMainView(string[] args)
+        public virtual MainForm CreateMainView(string[] args)
             => new MainForm(args);
 
         /* ----------------------------------------------------------------- */
@@ -58,12 +58,12 @@ namespace Cube.Pdf.App.Clip
         /// <returns>PDF ファイルの選択画面</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileDialog CreateOpenView()
+        public virtual OpenFileDialog CreateOpenView()
             => new OpenFileDialog
         {
-            Title  = Properties.Resources.SourceTitle,
-            Filter = Properties.Resources.SourceFilter,
-            Multiselect = false,
+            Title           = Properties.Resources.SourceTitle,
+            Filter          = Properties.Resources.SourceFilter,
+            Multiselect     = false,
             CheckFileExists = true,
         };
 
@@ -78,13 +78,13 @@ namespace Cube.Pdf.App.Clip
         /// <returns>添付ファイルの選択画面</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileDialog CreateAttachView()
+        public virtual OpenFileDialog CreateAttachView()
             => new OpenFileDialog
         {
-            Title = Properties.Resources.AttachTitle,
-            Filter = Properties.Resources.AttachFilter,
-            Multiselect = true,
-            CheckFileExists = true,
+            Title                        = Properties.Resources.AttachTitle,
+            Filter                       = Properties.Resources.AttachFilter,
+            Multiselect                  = true,
+            CheckFileExists              = true,
             SupportMultiDottedExtensions = true,
         };
 
@@ -102,7 +102,7 @@ namespace Cube.Pdf.App.Clip
         /// <returns>バージョン画面</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Cube.Forms.VersionForm CreateVersionView(string version, Icon icon)
+        public virtual Cube.Forms.VersionForm CreateVersionView(string version, Icon icon)
             => new Cube.Forms.VersionForm
         {
             AutoScaleMode = AutoScaleMode.None,
@@ -127,12 +127,66 @@ namespace Cube.Pdf.App.Clip
         /// <returns>DialogResult オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogResult ShowMessage(string message)
+        public virtual DialogResult ShowMessage(string message)
             => MessageBox.Show(
                 message,
                 Application.ProductName,
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Views
+    ///
+    /// <summary>
+    /// 各種 View の生成用クラスです。
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// Views は ViewFactory のプロキシとして実装されています。
+    /// 実際の View 生成コードは ViewFactory および継承クラスで実装して
+    /// 下さい。
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static class Views
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Configure
+        /// 
+        /// <summary>
+        /// Facotry オブジェクトを設定します。
+        /// </summary>
+        /// 
+        /// <param name="factory">Factory オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Configure(ViewFactory factory)
+            => _factory = factory;
+
+        #region Factory methods
+        public static MainForm CreateMainView(string[] args)
+            => _factory?.CreateMainView(args);
+
+        public static OpenFileDialog CreateOpenView()
+            => _factory?.CreateOpenView();
+
+        public static OpenFileDialog CreateAttachView()
+            => _factory?.CreateAttachView();
+
+        public static Cube.Forms.VersionForm CreateVersionView(string version, Icon icon)
+            => _factory?.CreateVersionView(version, icon);
+
+        public static DialogResult ShowMessage(string message)
+            => _factory?.ShowMessage(message) ?? DialogResult.Cancel;
+
+        #endregion
+
+        #region Fields
+        private static ViewFactory _factory = new ViewFactory();
+        #endregion
     }
 }

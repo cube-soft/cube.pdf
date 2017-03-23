@@ -245,9 +245,9 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         private void RaiseOpen()
         {
-            var dialog = ViewFactory.CreateOpenView();
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
-            EventAggregator?.GetEvents()?.Open.Publish(dialog.FileNames);
+            var view = Views.CreateOpenView();
+            if (view.ShowDialog() == DialogResult.Cancel) return;
+            EventAggregator?.GetEvents()?.Open.Publish(view.FileNames);
         }
 
         /* ----------------------------------------------------------------- */
@@ -262,9 +262,9 @@ namespace Cube.Pdf.App.Clip
         private void RaiseAttach()
         {
             if (!ToolsPanel.Enabled || !AttachButton.Enabled) return;
-            var dialog = ViewFactory.CreateAttachView();
-            if (dialog.ShowDialog() == DialogResult.Cancel) return;
-            EventAggregator?.GetEvents()?.Attach.Publish(dialog.FileNames);
+            var view = Views.CreateAttachView();
+            if (view.ShowDialog() == DialogResult.Cancel) return;
+            EventAggregator?.GetEvents()?.Attach.Publish(view.FileNames);
         }
 
         /* ----------------------------------------------------------------- */
@@ -350,9 +350,9 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         private void WhenVersionClick(object sender, EventArgs e)
         {
-            var v = $"Version {ProductVersion} ({Platform})";
-            var dialog = ViewFactory.CreateVersionView(v, Icon);
-            dialog.ShowDialog();
+            var version = $"Version {ProductVersion} ({Platform})";
+            var view = Views.CreateVersionView(version, Icon);
+            view.ShowDialog();
         }
 
         #region Fields

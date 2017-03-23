@@ -67,7 +67,7 @@
     <Compile Include="Events\EventAggregator.cs" />
     <Compile Include="Models\ClipSource.cs" />
     <Compile Include="Presenters\ClipPresenter.cs" />
-    <Compile Include="Views\ClipDataView.cs">
+    <Compile Include="Views\ClipDataControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Views\IClipView.cs" />
