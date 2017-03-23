@@ -311,7 +311,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         private void RaiseVersion()
         {
-            var version = $"Version {ProductVersion} ({Platform})";
+            var version = $"Version {ProductVersion} ({ProductPlatform})";
             var view = Views.CreateVersionView(version, Icon);
             view.ShowDialog();
         }

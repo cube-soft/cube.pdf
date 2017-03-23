@@ -26,43 +26,45 @@ namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Dialogs
+    /// ViewFactory
     ///
     /// <summary>
-    /// 各種ダイアログの生成を行うためのクラスです。
+    /// 各種 View の生成用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class Dialogs
+    public class ViewFactory
     {
         /* --------------------------------------------------------------------- */
         ///
-        /// Add
+        /// CreateAddView
         /// 
         /// <summary>
-        /// 追加するファイルを選択するためのダイアログを生成します。
+        /// 追加するファイルを選択するための View を生成します。
         /// </summary>
+        /// 
+        /// <returns>ファイル選択画面</returns>
         ///
         /* --------------------------------------------------------------------- */
-        public static OpenFileDialog Add()
+        public OpenFileDialog CreateAddView()
             => new OpenFileDialog()
         {
             CheckFileExists = true,
-            Multiselect = true,
+            Multiselect     = true,
             Title = Properties.Resources.OpenFileTitle,
             Filter = Properties.Resources.OpenFileFilter,
         };
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Password
+        /// CreatePasswordView
         /// 
         /// <summary>
-        /// パスワードを入力するためのダイアログを生成します。
+        /// パスワードを入力するための View を生成します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public static PasswordForm Password(string path)
+        public PasswordForm CreatePasswordView(string path)
             => new PasswordForm
         {
             Path = path,
@@ -72,14 +74,14 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Merge
+        /// CreateMergeView
         /// 
         /// <summary>
-        /// 結合したファイルの保存先を選択するためのダイアログを生成します。
+        /// 結合したファイルの保存先を選択するためのView を生成します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public static SaveFileDialog Merge()
+        public SaveFileDialog CreateMergeView()
             => new SaveFileDialog
         {
             OverwritePrompt = true,
@@ -89,32 +91,30 @@ namespace Cube.Pdf.App.Page
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Split
+        /// CreateSplitView
         /// 
         /// <summary>
-        /// 分割したファイルの保存先を選択するためのダイアログを生成します。
+        /// 分割したファイルの保存先を選択するための View を生成します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public static FolderBrowserDialog Split()
+        public FolderBrowserDialog CreateSplitView()
             => new FolderBrowserDialog
         {
             Description = Properties.Resources.SplitDescription,
             ShowNewFolderButton = true,
         };
 
-        #region MessageBox
-
         /* --------------------------------------------------------------------- */
         ///
-        /// Version
+        /// CreateVersionView
         /// 
         /// <summary>
         /// バージョン情報を表示します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public static void Version(Assembly assembly)
+        public void CreateVersionView(Assembly assembly)
         {
             var sv = new SoftwareVersion(assembly) { Digit = 3 };
             using (var dialog = new Cube.Forms.VersionForm
@@ -123,45 +123,88 @@ namespace Cube.Pdf.App.Page
                 Image = Properties.Resources.Logo,
                 Description = string.Empty,
                 Height = 280,
-                ShowInTaskbar = false,
                 StartPosition = FormStartPosition.CenterParent,
             }) dialog.ShowDialog();
         }
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Confirm
+        /// ShowConfirmMessage
         /// 
         /// <summary>
         /// 確認メッセージを表示します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public static DialogResult Confirm(string message)
+        public DialogResult ShowConfirmMessage(string message)
             => MessageBox.Show(
             message,
-            Properties.Resources.TitleCommon,
+            Application.ProductName,
             MessageBoxButtons.YesNo,
             MessageBoxIcon.Information
         );
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Error
+        /// ShowErrorMessage
         /// 
         /// <summary>
         /// エラーメッセージを表示します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public static DialogResult Error(Exception err)
+        public DialogResult ShowErrorMessage(Exception err)
             => MessageBox.Show(
             err.Message,
-            Properties.Resources.TitleError,
+            Application.ProductName,
             MessageBoxButtons.OK,
             MessageBoxIcon.Error
         );
+    }
 
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Views
+    ///
+    /// <summary>
+    /// 各種 View の生成用クラスです。
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// Views は ViewFactory のプロキシとして実装されています。
+    /// 実際の View 生成コードは ViewFactory および継承クラスで実装して
+    /// 下さい。
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static class Views
+    {
+        #region Factory methods
+        public static OpenFileDialog CreateAddView()
+            => _factory?.CreateAddView();
+
+        public static PasswordForm CreatePasswordView(string path)
+            => _factory?.CreatePasswordView(path);
+
+        public static SaveFileDialog CreateMergeView()
+            => _factory?.CreateMergeView();
+
+        public static FolderBrowserDialog CreateSplitView()
+            => _factory?.CreateSplitView();
+
+        public static void CreateVersionView(Assembly assembly)
+            => _factory?.CreateVersionView(assembly);
+
+        public static DialogResult ShowConfirmMessage(string message)
+            => _factory?.ShowConfirmMessage(message) ?? DialogResult.Cancel;
+
+        public static DialogResult ShowErrorMessage(Exception err)
+            => _factory?.ShowErrorMessage(err) ?? DialogResult.Cancel;
+
+        #endregion
+
+        #region Fields
+        private static ViewFactory _factory = new ViewFactory();
         #endregion
     }
 }

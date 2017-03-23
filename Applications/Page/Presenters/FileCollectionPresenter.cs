@@ -265,7 +265,7 @@ namespace Cube.Pdf.App.Page
         private void Model_PasswordRequired(object sender, QueryEventArgs<string, string> e)
             => SyncWait(() =>
         {
-            var dialog = Dialogs.Password(e.Query);
+            var dialog = Views.CreatePasswordView(e.Query);
             var result = dialog.ShowDialog(View);
             e.Cancel = (dialog.DialogResult == DialogResult.Cancel);
             if (!e.Cancel) e.Result = dialog.Password;
@@ -298,7 +298,7 @@ namespace Cube.Pdf.App.Page
             catch (Exception err)
             {
                 this.LogError(err.Message, err);
-                Dialogs.Error(err);
+                Views.ShowErrorMessage(err);
             }
             finally { Settings.AllowOperation = true; }
         }
@@ -317,7 +317,7 @@ namespace Cube.Pdf.App.Page
             if (src != null && src.Length > 0) return src;
             return SyncWait(() =>
             {
-                var dialog = Dialogs.Add();
+                var dialog = Views.CreateAddView();
                 if (dialog.ShowDialog() == DialogResult.Cancel) return null;
                 return dialog.FileNames;
             });
@@ -335,7 +335,7 @@ namespace Cube.Pdf.App.Page
         private string GetMergeFile()
             =>  SyncWait(() =>
         {
-            var dialog = Dialogs.Merge();
+            var dialog = Views.CreateMergeView();
             if (dialog.ShowDialog() == DialogResult.Cancel) return string.Empty;
             return dialog.FileName;
         });
@@ -352,7 +352,7 @@ namespace Cube.Pdf.App.Page
         private string GetSplitFolder()
             => SyncWait(() =>
         {
-            var dialog = Dialogs.Split();
+            var dialog = Views.CreateSplitView();
             if (dialog.ShowDialog() == DialogResult.Cancel) return string.Empty;
             return dialog.SelectedPath;
         });
@@ -369,7 +369,7 @@ namespace Cube.Pdf.App.Page
         private void PostProcess(string[] files, string message)
             => SyncWait(() =>
         {
-            var result = Dialogs.Confirm(message);
+            var result = Views.ShowConfirmMessage(message);
             if (result == DialogResult.No) return;
             Add_Handle(files);
         });
