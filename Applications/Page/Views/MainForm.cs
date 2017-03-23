@@ -95,6 +95,8 @@ namespace Cube.Pdf.App.Page
 
             FileListView.SmallImageList = Icons.ImageList;
             FileListView.Converter = new FileConverter(Icons);
+
+            Text = $"{ProductName} {ProductVersion} ({ProductPlatform})";
         }
 
         /* ----------------------------------------------------------------- */
@@ -225,25 +227,6 @@ namespace Cube.Pdf.App.Page
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnLoad
-        /// 
-        /// <summary>
-        /// フォームのロード時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnLoad(EventArgs e)
-        {
-            var asm = new AssemblyReader(Settings.Assembly);
-            var version = new SoftwareVersion(asm.Assembly);
-            version.Digit = 3;
-            Text = $"{asm.Product} {version}";
-            base.OnLoad(e);
-            Refresh();
-        }
 
         /* ----------------------------------------------------------------- */
         ///

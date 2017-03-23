@@ -74,7 +74,7 @@ namespace Cube.Pdf.App.Clip
             // Properties
             Source = "WhenSourceChanged(object, EventArgs)";
             Source = string.Empty;
-            Text   = $"{ProductName} {ProductVersion} ({Platform})";
+            Text   = $"{ProductName} {ProductVersion} ({ProductPlatform})";
 
             // ToolTip
             var tips = new ToolTip
@@ -106,19 +106,6 @@ namespace Cube.Pdf.App.Clip
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Platform
-        /// 
-        /// <summary>
-        /// プラットフォームを表す文字列を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string Platform => (IntPtr.Size == 4) ? "x86" : "x64";
 
         /* ----------------------------------------------------------------- */
         ///
