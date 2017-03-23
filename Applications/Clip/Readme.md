@@ -2,9 +2,9 @@
 
 Copyright (c) 2017 CubeSoft, Inc.
 
-* License: GNU Affero General Public License version 3 (AGPLv3)
-* Mail: support@cube-soft.jp
-* Web: http://www.cube-soft.jp/
+License: GNU Affero General Public License version 3 (AGPLv3)  
+Mail: support@cube-soft.jp  
+Web: http://www.cube-soft.jp/  
 
 ## はじめに
 
@@ -12,7 +12,7 @@ CubePDF Clip は、PDF ファイルにテキストファイルや画像ファイ
 別のファイルを添付するためのソフトウェアです。
 
 CubePDF Clip を使用するためには、Microsoft .NET Framework 3.5 以上がインストール
-されている必要があります。.NET Framework 3.5 は、以下の URL からダウンロードして下さい。
+されている必要があります。.NET Framework 3.5 は、以下の URL からダウンロードして下さい。  
 http://www.microsoft.com/ja-jp/download/details.aspx?id=22
 
 ## 使用方法
@@ -40,7 +40,7 @@ PDF ファイルにファイルを添付する方法は、以下の 2 通りが�
 となります。2. の「注釈としてファイルを添付」および注釈として添付されたファイルを
 削除する事はできません。
 
-参考: PDF 文書にファイルを添付する方法
+参考: PDF 文書にファイルを添付する方法  
 https://helpx.adobe.com/jp/acrobat/kb/4566.html
 
 ## ショートカットキー一覧
