@@ -125,7 +125,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -156,11 +155,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App.ico" />
     <None Include="App.config" />
     <None Include="App.manifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App.ico" />
+    <None Include="Packages.config" />
     <None Include="Resources\Logo.png" />
     <None Include="Resources\CloseButton.png" />
     <None Include="Resources\DragDrop.png" />
