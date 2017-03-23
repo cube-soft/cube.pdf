@@ -50,31 +50,27 @@ CubePDF Page は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
 * iTextSharp
- - GNU Affero General Public License
- - http://itextpdf.com/
- - https://www.nuget.org/packages/iTextSharp/
-
+    - GNU Affero General Public License
+    - http://itextpdf.com/
+    - https://www.nuget.org/packages/iTextSharp/
 * log4net
- - Apache License, Version 2.0
- - http://logging.apache.org/log4net/
- - https://www.nuget.org/packages/log4net/
-
+    - Apache License, Version 2.0
+    - http://logging.apache.org/log4net/
+    - https://www.nuget.org/packages/log4net/
 * AsyncBridge
- - MIT License
- - http://omermor.github.io/AsyncBridge/
- - https://www.nuget.org/packages/AsyncBridge.Net35
+    - MIT License
+    - http://omermor.github.io/AsyncBridge/
+    - https://www.nuget.org/packages/AsyncBridge.Net35
 
 ## バージョン履歴
 
 * 2016/04/05 version 2.0.1
- - しおり（ブックマーク）の位置がずれる不都合を修正
- - 上書き保存が失敗する不都合を修正
- - マウスのドラッグ&ドロップによる項目の移動を実装
- 
+    - しおり（ブックマーク）の位置がずれる不都合を修正
+    - 上書き保存が失敗する不都合を修正
+    - マウスのドラッグ&ドロップによる項目の移動を実装
 * 2015/12/28 version 2.0.0
- - 画像ファイルの結合に対応
- - 結合・分割処理の実装を CubePDF Utility と統一するように修正
- - GUI の修正
- 
+    - 画像ファイルの結合に対応
+    - 結合・分割処理の実装を CubePDF Utility と統一するように修正
+    - GUI の修正
 * 2013/02/25 version 1.0.0
- - 最初の公開バージョン
+    - 最初の公開バージョン

@@ -29,24 +29,21 @@ CubePDF ImagePicker は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
 * iTextSharp
- - GNU Affero General Public License
- - http://itextpdf.com/
- - https://www.nuget.org/packages/iTextSharp/
-
+    - GNU Affero General Public License
+    - http://itextpdf.com/
+    - https://www.nuget.org/packages/iTextSharp/
 * log4net
- - Apache License, Version 2.0
- - http://logging.apache.org/log4net/
- - https://www.nuget.org/packages/log4net/
-
+    - Apache License, Version 2.0
+    - http://logging.apache.org/log4net/
+    - https://www.nuget.org/packages/log4net/
 * AsyncBridge
- - MIT License
- - http://omermor.github.io/AsyncBridge/
- - https://www.nuget.org/packages/AsyncBridge.Net35
+    - MIT License
+    - http://omermor.github.io/AsyncBridge/
+    - https://www.nuget.org/packages/AsyncBridge.Net35
 
 ## バージョン履歴
 
 * 2016/MM/DD version 1.0.1
- - 画像抽出時に透過情報が失われる不都合を修正
-
+    - 画像抽出時に透過情報が失われる不都合を修正
 * 2015/11/09 version 1.0.0
- - 最初の公開バージョン
+    - 最初の公開バージョン
