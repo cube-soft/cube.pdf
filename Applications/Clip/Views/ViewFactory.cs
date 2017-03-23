@@ -168,6 +168,7 @@ namespace Cube.Pdf.App.Clip
             => _factory = factory;
 
         #region Factory methods
+
         public static MainForm CreateMainView(string[] args)
             => _factory?.CreateMainView(args);
 

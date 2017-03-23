@@ -181,6 +181,11 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// パスワードが要求された時に発生するイベントです。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// PasswordRequired イベントに対してイベントハンドラが登録されて
+        /// いない場合、EncryptionException が送出されます。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         public event QueryEventHandler<string, string> PasswordRequired;
