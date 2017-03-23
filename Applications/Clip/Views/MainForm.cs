@@ -187,9 +187,9 @@ namespace Cube.Pdf.App.Clip
                 _isBusy = value;
 
                 SourcePanel.Enabled =
-                ClipPanel.Enabled   =
+                ClipPanel.Enabled   = !value;
                 ToolsPanel.Enabled  =
-                SaveButton.Enabled  = !value;
+                SaveButton.Enabled  = !value && !string.IsNullOrEmpty(SourceTextBox.Text);
 
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
             }
