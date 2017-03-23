@@ -2,9 +2,9 @@
 
 Copyright (c) 2017 CubeSoft, Inc.
 
-License: GNU Affero General Public License version 3 (AGPLv3)  
-Mail: support@cube-soft.jp  
-Web: http://www.cube-soft.jp/  
+GNU Affero General Public License version 3 (AGPLv3)  
+support@cube-soft.jp  
+http://www.cube-soft.jp/  
 
 ## はじめに
 
