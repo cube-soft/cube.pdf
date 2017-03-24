@@ -285,7 +285,7 @@ namespace Cube.Pdf.Tests.Drawing
         public void Encryption_Assembly(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
-                Create(filename, password).Encryption.Permission.Assembly,
+                Create(filename, password).Encryption.Permission.Assemble,
                 Is.EqualTo(expected)
             );
         }
@@ -300,10 +300,10 @@ namespace Cube.Pdf.Tests.Drawing
         }
 
         //[TestCase("password.pdf", "password", PermissionMethod.Deny)]
-        public void Encryption_InputFormFields(string filename, string password, PermissionMethod expected)
+        public void Encryption_FillInFormFields(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
-                Create(filename, password).Encryption.Permission.InputFormFields,
+                Create(filename, password).Encryption.Permission.FillInFormFields,
                 Is.EqualTo(expected)
             );
         }
@@ -330,25 +330,7 @@ namespace Cube.Pdf.Tests.Drawing
         public void Encryption_Printing(string filename, string password, PermissionMethod expected)
         {
             Assert.That(
-                Create(filename, password).Encryption.Permission.Printing,
-                Is.EqualTo(expected)
-            );
-        }
-
-        //[TestCase("password.pdf", "password", PermissionMethod.Allow)]
-        public void Encryption_Signature(string filename, string password, PermissionMethod expected)
-        {
-            Assert.That(
-                Create(filename, password).Encryption.Permission.Signature,
-                Is.EqualTo(expected)
-            );
-        }
-
-        //[TestCase("password.pdf", "password", PermissionMethod.Allow)]
-        public void Encryption_TemplatePage(string filename, string password, PermissionMethod expected)
-        {
-            Assert.That(
-                Create(filename, password).Encryption.Permission.TemplatePage,
+                Create(filename, password).Encryption.Permission.Print,
                 Is.EqualTo(expected)
             );
         }

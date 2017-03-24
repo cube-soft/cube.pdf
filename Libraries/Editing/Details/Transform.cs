@@ -72,12 +72,12 @@ namespace Cube.Pdf.Editing
         {
             int dest = 0;
 
-            if (value.Printing.IsAllowed())          dest |= PdfWriter.AllowPrinting;
-            if (!value.Printing.IsDenied())          dest |= PdfWriter.AllowDegradedPrinting;
-            if (value.Assembly.IsAllowed())          dest |= PdfWriter.AllowAssembly;
+            if (value.Print.IsAllowed())          dest |= PdfWriter.AllowPrinting;
+            if (!value.Print.IsDenied())          dest |= PdfWriter.AllowDegradedPrinting;
+            if (value.Assemble.IsAllowed())          dest |= PdfWriter.AllowAssembly;
             if (value.ModifyContents.IsAllowed())    dest |= PdfWriter.AllowModifyContents;
             if (value.CopyContents.IsAllowed())      dest |= PdfWriter.AllowCopy;
-            if (value.InputFormFields.IsAllowed())   dest |= PdfWriter.AllowFillIn;
+            if (value.FillInFormFields.IsAllowed())   dest |= PdfWriter.AllowFillIn;
             if (value.ModifyAnnotations.IsAllowed()) dest |= PdfWriter.AllowModifyAnnotations;
             if (value.Accessibility.IsAllowed())     dest |= PdfWriter.AllowScreenReaders;
             // if (value.ExtractPage.IsAllow())    dest |= ???
@@ -141,20 +141,20 @@ namespace Cube.Pdf.Editing
         {
             var dest = new Permission();
 
-            dest.Printing          = ToPermissionMethod(value, PdfWriter.AllowPrinting);
-            dest.Assembly          = ToPermissionMethod(value, PdfWriter.AllowAssembly);
+            dest.Print          = ToPermissionMethod(value, PdfWriter.AllowPrinting);
+            dest.Assemble          = ToPermissionMethod(value, PdfWriter.AllowAssembly);
             dest.ModifyContents    = ToPermissionMethod(value, PdfWriter.AllowModifyContents);
             dest.CopyContents      = ToPermissionMethod(value, PdfWriter.AllowCopy);
-            dest.InputFormFields   = ToPermissionMethod(value, PdfWriter.AllowFillIn);
+            dest.FillInFormFields   = ToPermissionMethod(value, PdfWriter.AllowFillIn);
             dest.ModifyAnnotations = ToPermissionMethod(value, PdfWriter.AllowModifyAnnotations);
             dest.Accessibility     = ToPermissionMethod(value, PdfWriter.AllowScreenReaders);
             // dest.ExtractPage    = ToPermissionMethod(value, ???);
             // dest.Signature      = ToPermissionMethod(value, ???);
             // dest.TemplatePage   = ToPermissionMethod(value, ???);
 
-            if (dest.Printing.IsDenied() && (value & PdfWriter.AllowDegradedPrinting) != 0)
+            if (dest.Print.IsDenied() && (value & PdfWriter.AllowDegradedPrinting) != 0)
             {
-                dest.Printing = PermissionMethod.Restrict;
+                dest.Print = PermissionMethod.Restrict;
             }
             return dest;
         }

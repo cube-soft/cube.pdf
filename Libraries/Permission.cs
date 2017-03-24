@@ -34,18 +34,41 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Printing
+        /// Print
         ///
         /// <summary>
         /// 印刷操作の許可設定を取得または設定します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// Print のみ Restrict と言う許可状態（低品質での印刷を許可）が
+        /// 存在します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod Printing { get; set; } = PermissionMethod.Allow;
+        public PermissionMethod Print
+        {
+            get
+            {
+                return _flags.HasFlag(PermissionFlags.PrintHighQuality) ? PermissionMethod.Allow :
+                       _flags.HasFlag(PermissionFlags.Print)            ? PermissionMethod.Restrict :
+                                                                          PermissionMethod.Deny;
+            }
+
+            set
+            {
+                if (value == PermissionMethod.Allow) _flags |= PermissionFlags.PrintHighQuality;
+                else
+                {
+                    _flags &= ~PermissionFlags.PrintHighQuality;
+                    if (value == PermissionMethod.Restrict) _flags |= PermissionFlags.Print;
+                }
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Assembly
+        /// Assemble
         /// 
         /// <summary>
         /// 文書アセンブリ（ページの挿入、削除、回転、しおりとサムネイルの
@@ -53,7 +76,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod Assembly { get; set; } = PermissionMethod.Allow;
+        public PermissionMethod Assemble
+        {
+            get { return Get(PermissionFlags.Assemble); }
+            set { Set(PermissionFlags.Assemble, value); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,7 +91,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod ModifyContents { get; set; } = PermissionMethod.Allow;
+        public PermissionMethod ModifyContents
+        {
+            get { return Get(PermissionFlags.ModifyContents); }
+            set { Set(PermissionFlags.ModifyContents, value); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -75,7 +106,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod CopyContents { get; set; } = PermissionMethod.Allow;
+        public PermissionMethod CopyContents
+        {
+            get { return Get(PermissionFlags.CopyContents); }
+            set { Set(PermissionFlags.CopyContents, value); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -87,18 +122,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod Accessibility { get; set; } = PermissionMethod.Allow;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ExtractPage
-        /// 
-        /// <summary>
-        /// ページ抽出操作の許可設定を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PermissionMethod ExtractPage { get; set; } = PermissionMethod.Allow;
+        public PermissionMethod Accessibility
+        {
+            get { return Get(PermissionFlags.Accessibility); }
+            set { Set(PermissionFlags.Accessibility, value); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -109,42 +137,75 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod ModifyAnnotations { get; set; } = PermissionMethod.Allow;
+        public PermissionMethod ModifyAnnotations
+        {
+            get { return Get(PermissionFlags.ModifyAnnotations); }
+            set { Set(PermissionFlags.ModifyAnnotations, value); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InputFormFields
+        /// FillInFormFields
         /// 
         /// <summary>
         /// フォームフィールドへの入力操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod InputFormFields { get; set; } = PermissionMethod.Allow;
+        public PermissionMethod FillInFormFields
+        {
+            get { return Get(PermissionFlags.FillInFormFields); }
+            set { Set(PermissionFlags.FillInFormFields, value); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Signature
+        /// Value
         /// 
         /// <summary>
-        /// 既存の署名フィールドへの署名操作の許可設定を取得または設定します。
+        /// 各種許可状態を表す値を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod Signature { get; set; } = PermissionMethod.Allow;
+        public long Value => (long)_flags;
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// TemplatePage
+        /// Get
         /// 
         /// <summary>
-        /// コンテンツの動的な作成等に利用するテンプレートページの
-        /// 作成操作の許可設定を取得または設定します。
+        /// 指定されたフラグの許可状態を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod TemplatePage { get; set; } = PermissionMethod.Allow;
+        private PermissionMethod Get(PermissionFlags flag)
+            => _flags.HasFlag(flag) ?
+               PermissionMethod.Allow :
+               PermissionMethod.Deny;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        /// 
+        /// <summary>
+        /// 指定されたフラグの許可状態を設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Set(PermissionFlags flag, PermissionMethod method)
+        {
+            if (method == PermissionMethod.Allow) _flags |= flag;
+            else _flags &= ~flag;
+        }
+
+        #endregion
+
+        #region Fields
+        private PermissionFlags _flags = PermissionFlags.All;
         #endregion
     }
 
@@ -177,7 +238,8 @@ namespace Cube.Pdf
     internal enum PermissionFlags : uint
     {
         // 7, 8, 13-32 bit must be set
-        Reserved            = 0xFFFFF0C0,
+        Reserved            = 0xfffff0c0,
+        All                 = 0xfffffffc,
 
         // Print the document (possibly not at the highest quality level,
         // depending on whether bit 12 is also set).

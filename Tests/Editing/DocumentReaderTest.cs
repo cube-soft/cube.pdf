@@ -270,14 +270,12 @@ namespace Cube.Pdf.Tests.Editing
 
                 // Permission
                 Assert.That(actual.Permission.Accessibility,     Is.EqualTo(expected.Permission.Accessibility));
-                Assert.That(actual.Permission.Assembly,          Is.EqualTo(expected.Permission.Assembly));
+                Assert.That(actual.Permission.Assemble,          Is.EqualTo(expected.Permission.Assemble));
                 Assert.That(actual.Permission.CopyContents,      Is.EqualTo(expected.Permission.CopyContents));
-                Assert.That(actual.Permission.InputFormFields,   Is.EqualTo(expected.Permission.InputFormFields));
+                Assert.That(actual.Permission.FillInFormFields,  Is.EqualTo(expected.Permission.FillInFormFields));
                 Assert.That(actual.Permission.ModifyAnnotations, Is.EqualTo(expected.Permission.ModifyAnnotations));
                 Assert.That(actual.Permission.ModifyContents,    Is.EqualTo(expected.Permission.ModifyContents));
-                Assert.That(actual.Permission.Printing,          Is.EqualTo(expected.Permission.Printing));
-                Assert.That(actual.Permission.Signature,         Is.EqualTo(expected.Permission.Signature));
-                Assert.That(actual.Permission.TemplatePage,      Is.EqualTo(expected.Permission.TemplatePage));
+                Assert.That(actual.Permission.Print,             Is.EqualTo(expected.Permission.Print));
             }
         }
 
@@ -304,14 +302,12 @@ namespace Cube.Pdf.Tests.Editing
                         Permission            = new Permission
                         {
                             Accessibility     = PermissionMethod.Deny,
-                            Assembly          = PermissionMethod.Allow,
+                            Assemble          = PermissionMethod.Allow,
                             CopyContents      = PermissionMethod.Deny,
-                            InputFormFields   = PermissionMethod.Deny,
+                            FillInFormFields  = PermissionMethod.Deny,
                             ModifyAnnotations = PermissionMethod.Deny,
                             ModifyContents    = PermissionMethod.Deny,
-                            Printing          = PermissionMethod.Allow,
-                            Signature         = PermissionMethod.Allow,
-                            TemplatePage      = PermissionMethod.Allow,
+                            Print             = PermissionMethod.Allow,
                         }
                     });
 
@@ -325,14 +321,12 @@ namespace Cube.Pdf.Tests.Editing
                         Permission            = new Permission
                         {
                             Accessibility     = PermissionMethod.Allow,
-                            Assembly          = PermissionMethod.Allow,
+                            Assemble          = PermissionMethod.Allow,
                             CopyContents      = PermissionMethod.Allow,
-                            InputFormFields   = PermissionMethod.Allow,
+                            FillInFormFields  = PermissionMethod.Allow,
                             ModifyAnnotations = PermissionMethod.Allow,
                             ModifyContents    = PermissionMethod.Allow,
-                            Printing          = PermissionMethod.Allow,
-                            Signature         = PermissionMethod.Allow,
-                            TemplatePage      = PermissionMethod.Allow,
+                            Print             = PermissionMethod.Allow,
                         }
                     });
             }
