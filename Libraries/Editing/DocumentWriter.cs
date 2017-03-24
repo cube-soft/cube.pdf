@@ -24,7 +24,7 @@ using System.Linq;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Log;
-using Cube.Pdf.Editing.ITextReader;
+using Cube.Pdf.Editing.IText;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing

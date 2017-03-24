@@ -24,7 +24,7 @@ using System.Text.RegularExpressions;
 using iTextSharp.text.pdf;
 using Cube.Log;
 using Cube.Pdf.Editing.Images;
-using Cube.Pdf.Editing.ITextReader;
+using Cube.Pdf.Editing.IText;
 
 namespace Cube.Pdf.Editing
 {

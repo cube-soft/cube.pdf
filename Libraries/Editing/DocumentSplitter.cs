@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using iTextSharp.text.pdf;
-using Cube.Pdf.Editing.ITextReader;
+using Cube.Pdf.Editing.IText;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing

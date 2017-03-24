@@ -23,7 +23,7 @@ using System.Linq;
 using System.Text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
-using Cube.Pdf.Editing.ITextReader;
+using Cube.Pdf.Editing.IText;
 
 namespace Cube.Pdf.Editing
 {
@@ -350,8 +350,8 @@ namespace Cube.Pdf.Editing
                 };
 
                 File        = file;
-                Metadata    = GetMetadata(RawObject);
-                Encryption  = GetEncryption(RawObject, password, file.FullAccess);
+                Metadata    = RawObject.CreateMetadata();
+                Encryption  = RawObject.CreateEncryption(file);
                 Pages       = new ReadOnlyPageCollection(RawObject, file);
                 Attachments = new ReadOnlyAttachmentCollection(RawObject, file);
             }
@@ -414,82 +414,8 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetMetadata
-        /// 
-        /// <summary>
-        /// PDF ファイルのメタデータを抽出して返します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Metadata GetMetadata(PdfReader src) => new Metadata()
-        {
-            Version         = new Version(1, Int32.Parse(src.PdfVersion.ToString()), 0, 0),
-            Author          = src.Info.ContainsKey("Author")   ? src.Info["Author"]   : "",
-            Title           = src.Info.ContainsKey("Title")    ? src.Info["Title"]    : "",
-            Subtitle        = src.Info.ContainsKey("Subject")  ? src.Info["Subject"]  : "",
-            Keywords        = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : "",
-            Creator         = src.Info.ContainsKey("Creator")  ? src.Info["Creator"]  : "",
-            Producer        = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : "",
-            ViewPreferences = src.SimpleViewerPreferences
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEncryption
-        /// 
-        /// <summary>
-        /// Encryption オブジェクトを取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private Encryption GetEncryption(PdfReader src, string password, bool access)
-        {
-            var dest = new Encryption();
-            if (access && string.IsNullOrEmpty(password)) return dest;
-
-            dest.IsEnabled     = true;
-            dest.Method        = Transform.ToEncryptionMethod(src.GetCryptoMode());
-            dest.Permission    = Transform.ToPermission(src.Permissions);
-            dest.OwnerPassword = access ? password : string.Empty;
-            dest.UserPassword  = GetUserPassword(src, password, access, dest.Method);
-            dest.IsUserPasswordEnabled = !string.IsNullOrEmpty(dest.UserPassword);
-
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetUserPassword
-        /// 
-        /// <summary>
-        /// ユーザパスワードを取得します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// TODO: 暗号化方式が AES256 の場合、ユーザパスワードの解析に
-        /// 失敗するので除外しています。AES256 の場合の解析方法を要検討。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetUserPassword(PdfReader src, string password, bool access, EncryptionMethod method)
-        {
-            if (access)
-            {
-                if (method == EncryptionMethod.Aes256) return string.Empty; // see remarks
-                var bytes = src.ComputeUserPassword();
-                if (bytes != null && bytes.Length > 0) return Encoding.UTF8.GetString(bytes);
-            }
-            return password;
-        }
-
         #region Fields
         private bool _disposed = false;
-        #endregion
-
         #endregion
     }
 }
