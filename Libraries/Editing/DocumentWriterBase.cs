@@ -211,6 +211,7 @@ namespace Cube.Pdf.Editing
             {
                 _pages.Clear();
                 _attach.Clear();
+                Release();
             }
         }
 
@@ -295,6 +296,77 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Bind
+        /// 
+        /// <summary>
+        /// DocumentReader オブジェクトを束縛します。
+        /// </summary>
+        /// 
+        /// <param name="reader">
+        /// 束縛する DocumentReader オブジェクト
+        /// </param>
+        /// 
+        /// <remarks>
+        /// 束縛された DocumentReader オブジェクトは、DocumentWriter に
+        /// よって Dispose されます。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public void Bind(DocumentReader reader)
+        {
+            var key = reader.File.FullName;
+            if (_bounds.ContainsKey(key))
+            {
+                // same PDF file but other instance has already bound.
+                if (_bounds[key] != reader) reader.Dispose();
+            }
+            else _bounds.Add(key, reader);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBound
+        /// 
+        /// <summary>
+        /// 指定されたパスを指す DocumentReader オブジェクトが束縛されて
+        /// いるかどうかを判別します。
+        /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
+        /// 
+        /// <returns>束縛されているかどうかを示す値</returns>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public bool IsBound(string path)
+            => _bounds.ContainsKey(path);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBound
+        /// 
+        /// <summary>
+        /// 指定された DocumentReader オブジェクトが束縛されているか
+        /// どうかを判別します。
+        /// </summary>
+        /// 
+        /// <param name="reader">DocumentReader オブジェクト</param>
+        /// 
+        /// <returns>束縛されているかどうかを示す値</returns>
+        /// 
+        /// <remarks>
+        /// このメソッドは、引数に指定されたオブジェクトと完全に等しい
+        /// オブジェクトが束縛されているかどうかを判別します。そのため、
+        /// このメソッドが false を返した場合でも、同じパスの別の
+        /// DocumentReader オブジェクトが束縛されている可能性があります。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public bool IsBound(DocumentReader reader)
+            => _bounds.ContainsKey(reader.File.FullName) &&
+               _bounds[reader.File.FullName] == reader;
+
         #endregion
 
         #region Virtual methods
@@ -336,6 +408,50 @@ namespace Cube.Pdf.Editing
         #endregion
 
         #region Helper methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Release
+        /// 
+        /// <summary>
+        /// 束縛されている DocumentReader オブジェクトを開放します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        protected void Release()
+        {
+            foreach (var kv in _bounds) kv.Value.Dispose();
+            _bounds.Clear();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetReader
+        /// 
+        /// <summary>
+        /// DocumentReader オブジェクトを取得します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        protected DocumentReader GetReader(MediaFile src)
+        {
+            try
+            {
+                var file = src as PdfFile;
+                if (file == null) return null;
+
+                var path = file.FullName;
+                var pass = file.Password;
+
+                if (!IsBound(path)) Bind(new DocumentReader(path, pass));
+                return _bounds[file.FullName];
+            }
+            catch (Exception err)
+            {
+                this.LogError(err.Message, err);
+                return null;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -634,6 +750,7 @@ namespace Cube.Pdf.Editing
         private List<Page> _pages = new List<Page>();
         private List<Attachment> _attach = new List<Attachment>();
         private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
+        private IDictionary<string, DocumentReader> _bounds = new Dictionary<string, DocumentReader>();
         #endregion
 
         #endregion
