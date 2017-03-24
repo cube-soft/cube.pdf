@@ -388,6 +388,7 @@ namespace Cube.Pdf.Editing
             _pages.Clear();
             _attach.Clear();
             _bookmarks.Clear();
+            Release();
         }
 
         /* ----------------------------------------------------------------- */
