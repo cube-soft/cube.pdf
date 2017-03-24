@@ -106,12 +106,38 @@ namespace Cube.Pdf.Editing.IText
             return new Encryption
             {
                 IsEnabled             = true,
-                Method                = Transform.ToEncryptionMethod(src.GetCryptoMode()),
-                Permission            = Transform.ToPermission(src.Permissions),
+                Method                = src.GetEncryptionMethod(),
+                Permission            = new Permission(src.Permissions),
                 OwnerPassword         = file.FullAccess ? file.Password : string.Empty,
                 UserPassword          = password,
                 IsUserPasswordEnabled = !string.IsNullOrEmpty(password),
             };
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEncryptionMethod
+        /// 
+        /// <summary>
+        /// 暗号化方式を取得します。
+        /// </summary>
+        ///
+        /// <param name="src">PdfReader オブジェクト</param>
+        /// 
+        /// <returns>暗号化方式</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static EncryptionMethod GetEncryptionMethod(this PdfReader src)
+        {
+            switch (src.GetCryptoMode())
+            {
+                case PdfWriter.STANDARD_ENCRYPTION_40:  return EncryptionMethod.Standard40;
+                case PdfWriter.STANDARD_ENCRYPTION_128: return EncryptionMethod.Standard128;
+                case PdfWriter.ENCRYPTION_AES_128:      return EncryptionMethod.Aes128;
+                case PdfWriter.ENCRYPTION_AES_256:      return EncryptionMethod.Aes256;
+                default: break;
+            }
+            return EncryptionMethod.Unknown;
         }
 
         /* ----------------------------------------------------------------- */
@@ -137,7 +163,7 @@ namespace Cube.Pdf.Editing.IText
         {
             if (file.FullAccess)
             {
-                var method = Transform.ToEncryptionMethod(src.GetCryptoMode());
+                var method = src.GetEncryptionMethod();
                 if (method == EncryptionMethod.Aes256) return string.Empty; // see remarks
 
                 var bytes = src.ComputeUserPassword();

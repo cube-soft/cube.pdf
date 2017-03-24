@@ -625,14 +625,17 @@ namespace Cube.Pdf.Editing
         {
             if (Encryption.IsEnabled && Encryption.OwnerPassword.Length > 0)
             {
-                var method   = Transform.ToIText(Encryption.Method);
-                var flags    = Transform.ToIText(Encryption.Permission);
                 var password = string.IsNullOrEmpty(Encryption.UserPassword) ?
                                Encryption.OwnerPassword :
                                Encryption.UserPassword;
                 if (!Encryption.IsUserPasswordEnabled) password = string.Empty;
 
-                dest.SetEncryption(method, password, Encryption.OwnerPassword, flags);
+                dest.SetEncryption(
+                    (int)Encryption.Method,
+                    password,
+                    Encryption.OwnerPassword,
+                    (int)Encryption.Permission.Value
+                );
             }
         }
 

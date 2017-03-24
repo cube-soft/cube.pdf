@@ -54,7 +54,6 @@
   <ItemGroup>
     <Compile Include="Attachments.cs" />
     <Compile Include="Details\ImageRenderListener.cs" />
-    <Compile Include="Details\Transform.cs" />
     <Compile Include="Operations\Images.cs" />
     <Compile Include="Operations\IText.cs" />
     <Compile Include="DocumentReader.cs" />

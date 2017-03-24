@@ -30,6 +30,42 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     public class Permission
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Permission
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Permission()
+        {
+            _flags = PermissionFlags.All;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Permission
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="value">許可状態を表す値</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Permission(long value)
+        {
+            var n0 = value & (long)PermissionFlags.All;
+            var n1 = n0 | (long)PermissionFlags.Reserved;
+            _flags = (PermissionFlags)n1;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -205,7 +241,7 @@ namespace Cube.Pdf
         #endregion
 
         #region Fields
-        private PermissionFlags _flags = PermissionFlags.All;
+        private PermissionFlags _flags;
         #endregion
     }
 
