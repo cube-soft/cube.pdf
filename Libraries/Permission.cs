@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// Permission.cs
-/// 
 /// Copyright (c) 2010 CubeSoft, Inc.
 /// 
 /// Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +15,8 @@
 /// limitations under the License.
 ///
 /* ------------------------------------------------------------------------- */
+using System;
+
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
@@ -159,9 +159,55 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     public enum PermissionMethod
     {
-        Deny     = 0,
-        Restrict = 1,
-        Allow    = 2
+        Deny,
+        Restrict,
+        Allow,
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// PermissionFlags
+    /// 
+    /// <summary>
+    /// 許可状態を表す列挙型です。
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [Flags]
+    internal enum PermissionFlags : uint
+    {
+        // 7, 8, 13-32 bit must be set
+        Reserved            = 0xFFFFF0C0,
+
+        // Print the document (possibly not at the highest quality level,
+        // depending on whether bit 12 is also set).
+        Print               = 0x00000004,
+        PrintHighQuality    = 0x00000800 | Print,
+
+        // Modify the contents of the document by operations other than
+        // those controlled by bits 6, 9, and 11. 
+        ModifyContents      = 0x00000008,
+
+        // Copy or otherwise extract text and graphics from the document
+        // by operations other than that controlled by bit 10. 
+        CopyContents        = 0x00000010,
+
+        // Add or modify text annotations, fill in interactive form fields,
+        // and, if bit 4 is also set, create or modify interactive
+        // form fields (including signature fields).
+        ModifyAnnotations   = 0x00000020,
+
+        // Fill in existing interactive form fields (including signature
+        // fields), even if bit 6 is clear. 
+        FillInFormFields    = 0x00000100,
+
+        // Extract text and graphics (in support of accessibility to users
+        // with disabilities or for other purposes). 
+        Accessibility       = 0x00000200,
+
+        // Assemble the document (insert, rotate, or delete pages and
+        // create bookmarks or thumbnail images), even if bit 4 is clear. 
+        Assemble            = 0x00000400,
     }
 
     /* --------------------------------------------------------------------- */
