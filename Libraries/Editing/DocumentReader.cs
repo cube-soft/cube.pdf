@@ -62,12 +62,11 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string path)
-        {
-            Open(path);
-        }
+        public DocumentReader(string path) : this(path, null) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,6 +75,11 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
+        ///
+        /// <param name="path">PDF ファイルのパス</param>
+        /// <param name="password">
+        /// オーナパスワードまたはユーザパスワード
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string path, string password)
@@ -195,7 +199,7 @@ namespace Cube.Pdf.Editing
         /// OnPasswordRequired
         /// 
         /// <summary>
-        /// パスワードが要求された時に実行されるハンドラです。
+        /// PasswordRequired イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -257,20 +261,16 @@ namespace Cube.Pdf.Editing
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed) return;
-            _disposed = true;
-
-            if (RawObject == null) return;
-
             if (disposing)
             {
-                RawObject.Dispose();
-                RawObject = null;
-
+                RawObject?.Dispose();
+                RawObject  = null;
                 File       = null;
                 Metadata   = null;
                 Encryption = null;
                 Pages      = null;
             }
+            _disposed = true;
         }
 
         #endregion
@@ -334,39 +334,20 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public void Open(string path, string password, bool onlyFullAccess)
         {
-            try
+            SetRawObject(path, password, onlyFullAccess);
+            if (RawObject == null) return;
+
+            var file = new PdfFile(path, password)
             {
-                var pass = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
-                RawObject = new PdfReader(path, pass, true);
-                if (onlyFullAccess && !RawObject.IsOpenedWithFullPermissions)
-                {
-                    throw new BadPasswordException("allow only owner password");
-                }
+                FullAccess = RawObject.IsOpenedWithFullPermissions,
+                PageCount  = RawObject.NumberOfPages
+            };
 
-                var file = new PdfFile(path, password)
-                {
-                    FullAccess = RawObject.IsOpenedWithFullPermissions,
-                    PageCount  = RawObject.NumberOfPages
-                };
-
-                File        = file;
-                Metadata    = RawObject.CreateMetadata();
-                Encryption  = RawObject.CreateEncryption(file);
-                Pages       = new ReadOnlyPageCollection(RawObject, file);
-                Attachments = new ReadOnlyAttachmentCollection(RawObject, file);
-            }
-            catch (BadPasswordException /* err */)
-            {
-                if (RawObject != null)
-                {
-                    RawObject.Dispose();
-                    RawObject = null;
-                }
-
-                var e = new QueryEventArgs<string, string>(path);
-                OnPasswordRequired(e);
-                if (!e.Cancel) Open(path, e.Result);
-            }
+            File        = file;
+            Metadata    = RawObject.CreateMetadata();
+            Encryption  = RawObject.CreateEncryption(file);
+            Pages       = new ReadOnlyPageCollection(RawObject, file);
+            Attachments = new ReadOnlyAttachmentCollection(RawObject, file);
         }
 
         /* ----------------------------------------------------------------- */
@@ -410,6 +391,43 @@ namespace Cube.Pdf.Editing
             var listener = new ImageRenderListener();
             parser.ProcessContent(pagenum, listener);
             return listener.Images;
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetRawObject
+        /// 
+        /// <summary>
+        /// RawObject を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetRawObject(string path, string password, bool onlyFullAccess)
+        {
+            try
+            {
+                var bytes = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
+
+                RawObject?.Dispose();
+                RawObject = null;
+                RawObject = new PdfReader(path, bytes, true);
+
+                var reject = onlyFullAccess && !RawObject.IsOpenedWithFullPermissions;
+                if (reject) throw new BadPasswordException("owner password required");
+            }
+            catch (BadPasswordException /* err */)
+            {
+                RawObject?.Dispose();
+                RawObject = null;
+
+                var e = new QueryEventArgs<string, string>(path);
+                OnPasswordRequired(e);
+                if (!e.Cancel) Open(path, e.Result);
+            }
         }
 
         #endregion
