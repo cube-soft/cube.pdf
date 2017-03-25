@@ -155,8 +155,7 @@ namespace Cube.Pdf.Editing
         {
             if (src == null) return;
 
-            using (var buffer = new IoEx.MemoryStream())
-            using (var reader = GetRawReader(src, buffer))
+            using (var reader = GetRawReader(src))
             {
                 for (var i = 0; i < reader.NumberOfPages; ++i)
                 {
@@ -182,10 +181,9 @@ namespace Cube.Pdf.Editing
             var document = new iTextSharp.text.Document();
             var writer = GetRawWriter(document, dest);
 
-            SetEncryption(writer);
+            writer.Set(Encryption);
             document.Open();
             writer.AddPage(writer.GetImportedPage(reader, pagenum));
-            SetMetadata(document);
 
             document.Close();
             writer.Close();

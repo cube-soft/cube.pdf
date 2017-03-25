@@ -78,8 +78,8 @@ namespace Cube.Pdf.Editing
                 using (var reader = new PdfReader(tmp))
                 using (var stamper = new PdfStamper(reader, new IoEx.FileStream(path, IoEx.FileMode.Create)))
                 {
-                    SetMetadata(reader, stamper);
-                    SetEncryption(stamper.Writer);
+                    stamper.MoreInfo = reader.Merge(Metadata);
+                    stamper.Writer.Set(Encryption);
                     if (Metadata.Version.Minor >= 5) stamper.SetFullCompression();
                     SetBookmarks(stamper.Writer);
                 }
@@ -181,8 +181,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         private void AddImagePage(Page src, PdfCopy dest)
         {
-            using (var buffer = new IoEx.MemoryStream())
-            using (var reader = GetRawReader(src, buffer))
+            using (var reader = GetRawReader(src))
             {
                 for (var i = 0; i < reader.NumberOfPages; ++i)
                 {

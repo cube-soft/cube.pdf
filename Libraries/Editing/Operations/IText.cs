@@ -17,6 +17,7 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using iTextSharp.text.pdf;
 
@@ -33,6 +34,8 @@ namespace Cube.Pdf.Editing.IText
     /* --------------------------------------------------------------------- */
     internal static class Operations
     {
+        #region PdfReader
+
         /* ----------------------------------------------------------------- */
         ///
         /// CreatePage
@@ -193,5 +196,77 @@ namespace Cube.Pdf.Editing.IText
             var dic = src.GetPageN(page.Number);
             if (rot != page.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(page.Rotation));
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Merge
+        /// 
+        /// <summary>
+        /// 文書プロパティを結合します。
+        /// </summary>
+        /// 
+        /// 
+        /// <param name="src">PdfReader オブジェクト</param>
+        /// <param name="data">文書プロパティ</param>
+        /// 
+        /// <returns>結合結果</returns>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public static IDictionary<string, string> Merge(this PdfReader src, Metadata data)
+        {
+            var dest = src.Info;
+
+            dest.Update("Title",    data.Title);
+            dest.Update("Subject",  data.Subtitle);
+            dest.Update("Keywords", data.Keywords);
+            dest.Update("Creator",  data.Creator);
+            dest.Update("Author",   data.Author);
+
+            return dest;
+        }
+
+        #endregion
+
+        #region PdfWriter
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        /// 
+        /// <summary>
+        /// 暗号化情報を設定します。
+        /// </summary>
+        /// 
+        /// <param name="src">PdfWriter オブジェクト</param>
+        /// <param name="data">暗号化情報</param>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public static void Set(this PdfWriter src, Encryption data)
+        {
+            if (data == null || !data.IsEnabled ||
+                string.IsNullOrEmpty(data.OwnerPassword)) return;
+
+            var m = (int)data.Method;
+            var p = (int)data.Permission.Value;
+
+            var owner = data.OwnerPassword;
+            var user  = !data.IsUserPasswordEnabled ? string.Empty :
+                        !string.IsNullOrEmpty(data.UserPassword) ? data.UserPassword :
+                        owner;
+
+            src.SetEncryption(m, user, owner, p);
+        }
+
+        #endregion
+
+        #region Implementations
+
+        private static void Update(this IDictionary<string, string> src, string key, string value)
+        {
+            if (src.ContainsKey(key)) src[key] = value;
+            else src.Add(key, value);
+        }
+
+        #endregion
     }
 }

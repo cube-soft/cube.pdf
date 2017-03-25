@@ -20,6 +20,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using iTextSharp.text.pdf;
 using Cube.Log;
@@ -135,7 +136,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IReadOnlyCollection<Page> Pages => _pages;
+        protected IEnumerable<Page> Pages => _pages;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -146,7 +147,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IReadOnlyCollection<Attachment> Attachments => _attach;
+        protected IEnumerable<Attachment> Attachments => _attach;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -157,7 +158,26 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IReadOnlyCollection<Dictionary<string, object>> Bookmarks => _bookmarks;
+        protected IEnumerable<Dictionary<string, object>> Bookmarks => _bookmarks;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SupportedImageFormats
+        /// 
+        /// <summary>
+        /// 対応している画像フォーマットの一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<ImageFormat> SupportedImageFormats
+            => new List<ImageFormat>()
+        {
+            ImageFormat.Bmp,
+            ImageFormat.Gif,
+            ImageFormat.Jpeg,
+            ImageFormat.Png,
+            ImageFormat.Tiff
+        };
 
         #endregion
 
@@ -327,6 +347,21 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Release
+        /// 
+        /// <summary>
+        /// 束縛されている DocumentReader オブジェクトを開放します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
+        protected void Release()
+        {
+            foreach (var kv in _bounds) kv.Value?.Dispose();
+            _bounds.Clear();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// IsBound
         /// 
         /// <summary>
@@ -382,12 +417,13 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         protected virtual void OnReset()
         {
-            Metadata = new Metadata();
+            Metadata   = new Metadata();
             Encryption = new Encryption();
 
             _pages.Clear();
             _attach.Clear();
             _bookmarks.Clear();
+
             Release();
         }
 
@@ -409,50 +445,6 @@ namespace Cube.Pdf.Editing
         #endregion
 
         #region Helper methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Release
-        /// 
-        /// <summary>
-        /// 束縛されている DocumentReader オブジェクトを開放します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        protected void Release()
-        {
-            foreach (var kv in _bounds) kv.Value.Dispose();
-            _bounds.Clear();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetReader
-        /// 
-        /// <summary>
-        /// DocumentReader オブジェクトを取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        protected DocumentReader GetReader(MediaFile src)
-        {
-            try
-            {
-                var file = src as PdfFile;
-                if (file == null) return null;
-
-                var path = file.FullName;
-                var pass = file.Password;
-
-                if (!IsBound(path)) Bind(new DocumentReader(path, pass));
-                return _bounds[file.FullName];
-            }
-            catch (Exception err)
-            {
-                this.LogError(err.Message, err);
-                return null;
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -490,15 +482,16 @@ namespace Cube.Pdf.Editing
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        protected PdfReader GetRawReader(Page src, System.IO.MemoryStream buffer)
+        protected PdfReader GetRawReader(Page src)
         {
             if (src == null) return null;
             if (src.File is PdfFile) return GetRawReader(src.File);
 
+            using (var ms = new System.IO.MemoryStream())
             using (var image = Image.FromFile(src.File.FullName))
             {
                 var document = new iTextSharp.text.Document();
-                var writer = PdfWriter.GetInstance(document, buffer);
+                var writer = PdfWriter.GetInstance(document, ms);
                 document.Open();
 
                 var guid = image.FrameDimensionsList[0];
@@ -517,9 +510,9 @@ namespace Cube.Pdf.Editing
 
                 document.Close();
                 writer.Close();
-            }
 
-            return new PdfReader(buffer.ToArray());
+                return new PdfReader(ms.ToArray());
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -563,8 +556,8 @@ namespace Cube.Pdf.Editing
         protected iTextSharp.text.Image GetRawImage(Image src, Page page)
         {
             var size  = page.ViewSize(Dpi);
-            var scale = GetScale(src, size);
-            var pos   = GetPosition(src, scale, size);
+            var scale = src.GetScale(size);
+            var pos   = src.GetCenterPosition(size, scale);
 
             var dest = iTextSharp.text.Image.GetInstance(src, GetFormat(src));
             dest.SetAbsolutePosition(pos.X, pos.Y);
@@ -573,72 +566,7 @@ namespace Cube.Pdf.Editing
             return dest;
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetMetadata
-        /// 
-        /// <summary>
-        /// タイトル、著者名等の各種メタデータを設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void SetMetadata(iTextSharp.text.Document dest)
-        {
-            dest.AddTitle(Metadata.Title);
-            dest.AddSubject(Metadata.Subtitle);
-            dest.AddKeywords(Metadata.Keywords);
-            dest.AddCreator(Metadata.Creator);
-            dest.AddAuthor(Metadata.Author);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetMetadata
-        /// 
-        /// <summary>
-        /// タイトル、著者名等のメタ情報を追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void SetMetadata(PdfReader src, PdfStamper dest)
-        {
-            var info = src.Info;
-
-            info.Add("Title",    Metadata.Title);
-            info.Add("Subject",  Metadata.Subtitle);
-            info.Add("Keywords", Metadata.Keywords);
-            info.Add("Creator",  Metadata.Creator);
-            info.Add("Author",   Metadata.Author);
-
-            dest.MoreInfo = info;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetEncryption
-        /// 
-        /// <summary>
-        /// 暗号化に関する情報を設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void SetEncryption(PdfWriter dest)
-        {
-            if (Encryption.IsEnabled && Encryption.OwnerPassword.Length > 0)
-            {
-                var password = string.IsNullOrEmpty(Encryption.UserPassword) ?
-                               Encryption.OwnerPassword :
-                               Encryption.UserPassword;
-                if (!Encryption.IsUserPasswordEnabled) password = string.Empty;
-
-                dest.SetEncryption(
-                    (int)Encryption.Method,
-                    password,
-                    Encryption.OwnerPassword,
-                    (int)Encryption.Permission.Value
-                );
-            }
-        }
+        #region Bookmarks
 
         /* ----------------------------------------------------------------- */
         ///
@@ -691,39 +619,9 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
+        #endregion
+
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetScale
-        /// 
-        /// <summary>
-        /// イメージの縮小倍率を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private double GetScale(Image image, Size size)
-        {
-            var x = size.Width / (double)image.Width;
-            var y = size.Height / (double)image.Height;
-            return Math.Min(Math.Min(x, y), 1.0);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetPosition
-        /// 
-        /// <summary>
-        /// イメージの表示位置を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private Point GetPosition(Image image, double scale, Size size)
-        {
-            var x = (size.Width - image.Width * scale) / 2.0;
-            var y = (size.Height - image.Height * scale) / 2.0;
-            return new Point((int)x, (int)y);
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -736,17 +634,8 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         private ImageFormat GetFormat(Image image)
         {
-            var supports = new List<ImageFormat>()
-            {
-                ImageFormat.Bmp,
-                ImageFormat.Gif,
-                ImageFormat.Jpeg,
-                ImageFormat.Png,
-                ImageFormat.Tiff
-            };
-
-            var dest = image.GuessImageFormat();
-            return supports.Contains(dest) ? dest : ImageFormat.Png;
+            var format = image.GuessImageFormat();
+            return SupportedImageFormats.Contains(format) ? format : ImageFormat.Png;
         }
 
         #region Fields
