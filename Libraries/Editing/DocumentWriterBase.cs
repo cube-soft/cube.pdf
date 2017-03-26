@@ -17,14 +17,9 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using iTextSharp.text.pdf;
 using Cube.Log;
-using Cube.Pdf.Editing.Images;
 using Cube.Pdf.Editing.IText;
 
 namespace Cube.Pdf.Editing
@@ -148,17 +143,6 @@ namespace Cube.Pdf.Editing
         ///
         /* ----------------------------------------------------------------- */
         protected IEnumerable<Attachment> Attachments => _attach;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Bookmarks
-        /// 
-        /// <summary>
-        /// ブックマーク情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected IEnumerable<Dictionary<string, object>> Bookmarks => _bookmarks;
 
         #endregion
 
@@ -411,7 +395,6 @@ namespace Cube.Pdf.Editing
 
             _pages.Clear();
             _attach.Clear();
-            _bookmarks.Clear();
 
             Release();
         }
@@ -492,66 +475,12 @@ namespace Cube.Pdf.Editing
             return null;
         }
 
-        #region Bookmarks
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetBookmarks
-        /// 
-        /// <summary>
-        /// しおり情報を PdfWriter オブジェクトに設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void SetBookmarks(PdfWriter dest)
-            => dest.Outlines = _bookmarks;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ResetBookmarks
-        /// 
-        /// <summary>
-        /// しおり情報をリセットします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void ResetBookmarks()
-            => _bookmarks.Clear();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// StockBookmarks
-        /// 
-        /// <summary>
-        /// PDF ファイルに存在するしおり情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void StockBookmarks(PdfReader src, int srcPageNumber, int destPageNumber)
-        {
-            var bookmarks = SimpleBookmark.GetBookmark(src);
-            if (bookmarks == null) return;
-
-            var pattern = string.Format("^{0} (XYZ|Fit|FitH|FitBH)", destPageNumber);
-            SimpleBookmark.ShiftPageNumbers(bookmarks, destPageNumber - srcPageNumber, null);
-            foreach (var bm in bookmarks)
-            {
-                if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern))
-                {
-                    _bookmarks.Add(bm);
-                }
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region Fields
         private bool _disposed = false;
         private List<Page> _pages = new List<Page>();
         private List<Attachment> _attach = new List<Attachment>();
-        private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
         private IDictionary<string, DocumentReader> _bounds = new Dictionary<string, DocumentReader>();
         private IDictionary<string, PdfReader> _images = new Dictionary<string, PdfReader>();
         #endregion

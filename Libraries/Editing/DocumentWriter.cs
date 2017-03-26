@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentWriter.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -21,11 +19,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
 using Cube.Log;
 using Cube.Pdf.Editing.IText;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing
 {
@@ -70,7 +68,8 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         protected override void OnSave(string path)
         {
-            var tmp = IoEx.Path.GetTempFileName();
+            var tmp = System.IO.Path.GetTempFileName();
+            TryDelete(tmp);
 
             try
             {
@@ -78,12 +77,12 @@ namespace Cube.Pdf.Editing
                 Release();
 
                 using (var reader = new PdfReader(tmp))
-                using (var stamper = new PdfStamper(reader, new IoEx.FileStream(path, IoEx.FileMode.Create)))
+                using (var stamper = new PdfStamper(reader, System.IO.File.Create(path)))
                 {
+                    stamper.Writer.Outlines = _bookmarks;
                     stamper.MoreInfo = reader.Merge(Metadata);
                     stamper.Writer.Set(Encryption);
                     if (Metadata.Version.Minor >= 5) stamper.SetFullCompression();
-                    SetBookmarks(stamper.Writer);
                 }
             }
             catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
@@ -94,9 +93,24 @@ namespace Cube.Pdf.Editing
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnReset
+        /// 
+        /// <summary>
+        /// 初期状態にリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnReset()
+        {
+            base.OnReset();
+            _bookmarks.Clear();
+        }
+
         #endregion
 
-        #region Others
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -115,13 +129,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         private void Merge(string dest)
         {
-            TryDelete(dest);
-
             var document = new iTextSharp.text.Document();
             var writer = GetRawWriter(document, dest);
 
             document.Open();
-            ResetBookmarks();
+            _bookmarks.Clear();
 
             foreach (var page in Pages)
             {
@@ -216,6 +228,31 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
+        /// StockBookmarks
+        /// 
+        /// <summary>
+        /// PDF ファイルに存在するしおり情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void StockBookmarks(PdfReader src, int srcPageNumber, int destPageNumber)
+        {
+            var bookmarks = SimpleBookmark.GetBookmark(src);
+            if (bookmarks == null) return;
+
+            var pattern = string.Format("^{0} (XYZ|Fit|FitH|FitBH)", destPageNumber);
+            SimpleBookmark.ShiftPageNumbers(bookmarks, destPageNumber - srcPageNumber, null);
+            foreach (var bm in bookmarks)
+            {
+                if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern))
+                {
+                    _bookmarks.Add(bm);
+                }
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// TryDelete
         /// 
         /// <summary>
@@ -227,7 +264,7 @@ namespace Cube.Pdf.Editing
         {
             try
             {
-                IoEx.File.Delete(path);
+                System.IO.File.Delete(path);
                 return true;
             }
             catch (Exception err)
@@ -236,6 +273,10 @@ namespace Cube.Pdf.Editing
                 return false;
             }
         }
+
+        #region Fields
+        private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
+        #endregion
 
         #endregion
     }
