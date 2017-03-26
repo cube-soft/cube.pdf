@@ -66,7 +66,7 @@ namespace Cube.Pdf.Editing
         /// <param name="path">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string path) : this(path, null) { }
+        public DocumentReader(string path) { Open(path); }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,10 +82,20 @@ namespace Cube.Pdf.Editing
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string path, string password)
-        {
-            Open(path, password);
-        }
+        public DocumentReader(string path, string password) { Open(path, password); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="file">PDF ファイルオブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(MediaFile file) { Open(file); }
 
         #endregion
 
@@ -348,6 +358,57 @@ namespace Cube.Pdf.Editing
             Encryption  = RawObject.CreateEncryption(file);
             Pages       = new ReadOnlyPageCollection(RawObject, file);
             Attachments = new ReadOnlyAttachmentCollection(RawObject, file);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        /// 
+        /// <param name="file">PDF ファイルオブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(MediaFile file) => Open(file, false);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        /// 
+        /// <param name="file">PDF ファイルオブジェクト</param>
+        /// <param name="onlyFullAccess">
+        /// フルアクセスのみを許可するかどうかを示す値
+        /// </param>
+        /// 
+        /// <remarks>
+        /// onlyFullAccess が true の場合、ユーザパスワードで
+        /// PDF ファイルを開こうとすると PasswordRequired イベントが
+        /// 発生します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(MediaFile file, bool onlyFullAccess)
+        {
+            var pdf = file as PdfFile;
+            if (pdf == null) throw new System.IO.FileLoadException();
+
+            SetRawObject(pdf.FullName, pdf.Password, onlyFullAccess);
+            if (RawObject == null) return;
+
+            pdf.FullAccess = RawObject.IsOpenedWithFullPermissions;
+            pdf.PageCount = RawObject.NumberOfPages;
+
+            File = pdf;
+            Metadata = RawObject.CreateMetadata();
+            Encryption = RawObject.CreateEncryption(pdf);
+            Pages = new ReadOnlyPageCollection(RawObject, pdf);
+            Attachments = new ReadOnlyAttachmentCollection(RawObject, pdf);
         }
 
         /* ----------------------------------------------------------------- */

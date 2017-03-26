@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Cube.Pdf.Drawing.MuPdf;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.Drawing
 {
@@ -62,10 +61,7 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string path)
-        {
-            Open(path);
-        }
+        public DocumentReader(string path) { Open(path); }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,10 +72,18 @@ namespace Cube.Pdf.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string path, string password)
-        {
-            Open(path, password);
-        }
+        public DocumentReader(string path, string password) { Open(path, password); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(MediaFile file) { Open(file); }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -221,27 +225,39 @@ namespace Cube.Pdf.Drawing
         ///
         /* ----------------------------------------------------------------- */
         public void Open(string path, string password)
+            => Open(new PdfFile(path, password));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(MediaFile file)
         {
+            var pdf = file as PdfFile;
+            if (pdf == null) throw new System.IO.FileLoadException();
+
             lock (_lock)
             {
                 if (_mupdf != IntPtr.Zero) NativeMethods.Dispose(_mupdf);
                 _mupdf = NativeMethods.Create();
-                if (_mupdf == IntPtr.Zero) throw new IoEx.FileLoadException();
+                if (_mupdf == IntPtr.Zero) throw new System.IO.FileLoadException();
 
-                var count = NativeMethods.LoadFile(_mupdf, path, password);
-                if (count < 0) throw new IoEx.FileLoadException();
+                var count = NativeMethods.LoadFile(_mupdf, pdf.FullName, pdf.Password);
+                if (count < 0) throw new System.IO.FileLoadException();
                 NativeMethods.SetAlphaBits(_mupdf, 8);
 
-                var file = new PdfFile(path, password)
-                {
-                    FullAccess = true,
-                    PageCount  = count
-                };
+                pdf.FullAccess = true;
+                pdf.PageCount = count;
 
-                File       = file;
-                Metadata   = _mupdf.CreateMetadata();
-                Encryption = _mupdf.CreateEncryption(file.Password);
-                Pages      = new ReadOnlyPageCollection(_mupdf, file);
+                File = pdf;
+                Metadata = _mupdf.CreateMetadata();
+                Encryption = _mupdf.CreateEncryption(pdf.Password);
+                Pages = new ReadOnlyPageCollection(_mupdf, file);
             }
         }
 
