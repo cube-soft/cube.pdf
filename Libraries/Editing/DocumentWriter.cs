@@ -75,6 +75,8 @@ namespace Cube.Pdf.Editing
             try
             {
                 Merge(tmp);
+                Release();
+
                 using (var reader = new PdfReader(tmp))
                 using (var stamper = new PdfStamper(reader, new IoEx.FileStream(path, IoEx.FileMode.Create)))
                 {
@@ -85,7 +87,11 @@ namespace Cube.Pdf.Editing
                 }
             }
             catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
-            finally { TryDelete(tmp); }
+            finally
+            {
+                TryDelete(tmp);
+                Reset();
+            }
         }
 
         #endregion
@@ -109,34 +115,24 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         private void Merge(string dest)
         {
-            if (IoEx.File.Exists(dest)) IoEx.File.Delete(dest);
+            TryDelete(dest);
 
-            var cache  = new Dictionary<string, PdfReader>();
+            var document = new iTextSharp.text.Document();
+            var writer = GetRawWriter(document, dest);
 
-            try
+            document.Open();
+            ResetBookmarks();
+
+            foreach (var page in Pages)
             {
-                var document = new iTextSharp.text.Document();
-                var writer = GetRawWriter(document, dest);
-
-                document.Open();
-                ResetBookmarks();
-
-                foreach (var page in Pages)
-                {
-                    if (page.File is PdfFile) AddPage(page, writer, cache);
-                    else if (page.File is ImageFile) AddImagePage(page, writer);
-                }
-
-                SetAttachments(writer);
-
-                document.Close();
-                writer.Close();
+                if (page.File is PdfFile) AddPage(page, writer);
+                else if (page.File is ImageFile) AddImagePage(page, writer);
             }
-            finally
-            {
-                foreach (var reader in cache.Values) reader.Close();
-                cache.Clear();
-            }
+
+            SetAttachments(writer);
+
+            document.Close();
+            writer.Close();
         }
 
         /* ----------------------------------------------------------------- */
@@ -153,16 +149,9 @@ namespace Cube.Pdf.Editing
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddPage(Page src, PdfCopy dest, Dictionary<string, PdfReader> cache)
+        private void AddPage(Page src, PdfCopy dest)
         {
-            if (!cache.ContainsKey(src.File.FullName))
-            {
-                var created = GetRawReader(src.File);
-                if (created == null) return;
-                cache.Add(src.File.FullName, created);
-            }
-
-            var reader = cache[src.File.FullName];
+            var reader = GetRawReader(src);
             reader.Rotate(src);
 
             var pagenum = dest.PageNumber; // see remarks
@@ -177,17 +166,20 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// 画像ファイルを PDF ページとして追加します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// TODO: Page オブジェクトが引数のはずなのに、全ページ挿入する
+        /// 形となっている。要修正。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private void AddImagePage(Page src, PdfCopy dest)
         {
-            using (var reader = GetRawReader(src))
+            var reader = GetRawReader(src);
+            for (var i = 0; i < reader.NumberOfPages; ++i)
             {
-                for (var i = 0; i < reader.NumberOfPages; ++i)
-                {
-                    var page = dest.GetImportedPage(reader, i + 1);
-                    dest.AddPage(page);
-                }
+                var page = dest.GetImportedPage(reader, i + 1);
+                dest.AddPage(page);
             }
         }
 

@@ -160,25 +160,6 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         protected IEnumerable<Dictionary<string, object>> Bookmarks => _bookmarks;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SupportedImageFormats
-        /// 
-        /// <summary>
-        /// 対応している画像フォーマットの一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static IEnumerable<ImageFormat> SupportedImageFormats
-            => new List<ImageFormat>()
-        {
-            ImageFormat.Bmp,
-            ImageFormat.Gif,
-            ImageFormat.Jpeg,
-            ImageFormat.Png,
-            ImageFormat.Tiff
-        };
-
         #endregion
 
         #region Methods
@@ -353,11 +334,19 @@ namespace Cube.Pdf.Editing
         /// 束縛されている DocumentReader オブジェクトを開放します。
         /// </summary>
         /// 
+        /// <remarks>
+        /// 継承クラスで生成された、画像ファイルを基にした PdfReader
+        /// オブジェクトも同時に解放されます。
+        /// </remarks>
+        /// 
         /* ----------------------------------------------------------------- */
         protected void Release()
         {
             foreach (var kv in _bounds) kv.Value?.Dispose();
             _bounds.Clear();
+
+            foreach (var kv in _images) kv.Value?.Dispose();
+            _images.Clear();
         }
 
         /* ----------------------------------------------------------------- */
@@ -451,68 +440,29 @@ namespace Cube.Pdf.Editing
         /// GetRawReader
         /// 
         /// <summary>
-        /// PdfReader オブジェクトを取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        protected PdfReader GetRawReader(MediaFile src)
-        {
-            try
-            {
-                var file = src as PdfFile;
-                if (file == null) return null;
-
-                return file.Password.Length > 0 ?
-                       new PdfReader(file.FullName, System.Text.Encoding.UTF8.GetBytes(file.Password)) :
-                       new PdfReader(file.FullName);
-            }
-            catch (Exception err)
-            {
-                this.LogError(err.Message, err);
-                return null;
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetRawReader
-        /// 
-        /// <summary>
-        /// 画像ファイルから PdfReader オブジェクトを生成します。
+        /// PdfReader オブジェクトを生成します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
         protected PdfReader GetRawReader(Page src)
         {
-            if (src == null) return null;
-            if (src.File is PdfFile) return GetRawReader(src.File);
-
-            using (var ms = new System.IO.MemoryStream())
-            using (var image = Image.FromFile(src.File.FullName))
+            try
             {
-                var document = new iTextSharp.text.Document();
-                var writer = PdfWriter.GetInstance(document, ms);
-                document.Open();
-
-                var guid = image.FrameDimensionsList[0];
-                var dimension = new FrameDimension(guid);
-                for (var i = 0; i < image.GetFrameCount(dimension); ++i)
+                if (src?.File is PdfFile pdf)
                 {
-                    var size = src.ViewSize(Dpi);
-
-                    image.SelectActiveFrame(dimension, i);
-                    image.Rotate(src.Rotation);
-
-                    document.SetPageSize(new iTextSharp.text.Rectangle(size.Width, size.Height));
-                    document.NewPage();
-                    document.Add(GetRawImage(image, src));
+                    if (!IsBound(pdf.FullName)) Bind(new DocumentReader(pdf));
+                    return _bounds[pdf.FullName].RawObject;
                 }
-
-                document.Close();
-                writer.Close();
-
-                return new PdfReader(ms.ToArray());
+                else if (src?.File is ImageFile img)
+                {
+                    var key = img.FullName;
+                    if (!_images.ContainsKey(key)) _images.Add(key, img.CreatePdfReader());
+                    return _images[key];
+                }
             }
+            catch (Exception err) { this.LogError(err.Message, err); }
+
+            return null;
         }
 
         /* ----------------------------------------------------------------- */
@@ -537,33 +487,9 @@ namespace Cube.Pdf.Editing
 
                 return dest;
             }
-            catch (Exception err)
-            {
-                this.LogError(err.Message, err);
-                return null;
-            }
-        }
+            catch (Exception err) { this.LogError(err.Message, err); }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetRawImage
-        /// 
-        /// <summary>
-        /// イメージオブジェクトを取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        protected iTextSharp.text.Image GetRawImage(Image src, Page page)
-        {
-            var size  = page.ViewSize(Dpi);
-            var scale = src.GetScale(size);
-            var pos   = src.GetCenterPosition(size, scale);
-
-            var dest = iTextSharp.text.Image.GetInstance(src, GetFormat(src));
-            dest.SetAbsolutePosition(pos.X, pos.Y);
-            dest.ScalePercent((float)(scale * 100.0));
-
-            return dest;
+            return null;
         }
 
         #region Bookmarks
@@ -621,31 +547,13 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetFormat
-        /// 
-        /// <summary>
-        /// イメージフォーマットを取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private ImageFormat GetFormat(Image image)
-        {
-            var format = image.GuessImageFormat();
-            return SupportedImageFormats.Contains(format) ? format : ImageFormat.Png;
-        }
-
         #region Fields
         private bool _disposed = false;
         private List<Page> _pages = new List<Page>();
         private List<Attachment> _attach = new List<Attachment>();
         private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
         private IDictionary<string, DocumentReader> _bounds = new Dictionary<string, DocumentReader>();
-        #endregion
-
+        private IDictionary<string, PdfReader> _images = new Dictionary<string, PdfReader>();
         #endregion
     }
 }

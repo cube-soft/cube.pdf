@@ -88,6 +88,11 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// PDF ファイルを指定フォルダ下に保存します。
         /// </summary>
+        /// 
+        /// <remarks>
+        /// Reset() を実行すると Results まで消去されてしまうため、
+        /// base.OnReset() を代わりに実行しています。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         protected override void OnSave(string folder)
@@ -95,21 +100,15 @@ namespace Cube.Pdf.Editing
             if (!IoEx.Directory.Exists(folder)) IoEx.Directory.CreateDirectory(folder);
             Results.Clear();
 
-            var cache = new Dictionary<string, PdfReader>();
-
             try
             {
                 foreach (var page in Pages)
                 {
-                    if (page.File is PdfFile) SavePage(page, folder, cache);
+                    if (page.File is PdfFile) SavePage(page, folder);
                     else if (page.File is ImageFile) SaveImagePage(page, folder);
                 }
             }
-            finally
-            {
-                foreach (var reader in cache.Values) reader.Close();
-                cache.Clear();
-            }
+            finally { base.OnReset(); /* see remarks */ }
         }
 
         #endregion
@@ -125,16 +124,9 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SavePage(Page src, string folder, Dictionary<string, PdfReader> cache)
+        private void SavePage(Page src, string folder)
         {
-            if (!cache.ContainsKey(src.File.FullName))
-            {
-                var created = GetRawReader(src.File);
-                if (created == null) return;
-                cache.Add(src.File.FullName, created);
-            }
-
-            var reader = cache[src.File.FullName];
+            var reader = GetRawReader(src);
             reader.Rotate(src);
 
             var dest = Unique(folder, src.File, src.Number);
@@ -153,17 +145,13 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         private void SaveImagePage(Page src, string folder)
         {
-            if (src == null) return;
-
-            using (var reader = GetRawReader(src))
+            var reader = GetRawReader(src);
+            for (var i = 0; i < reader.NumberOfPages; ++i)
             {
-                for (var i = 0; i < reader.NumberOfPages; ++i)
-                {
-                    var pagenum = i + 1;
-                    var dest = Unique(folder, src.File, pagenum);
-                    SaveOne(reader, pagenum, dest);
-                    Results.Add(dest);
-                }
+                var pagenum = i + 1;
+                var dest = Unique(folder, src.File, pagenum);
+                SaveOne(reader, pagenum, dest);
+                Results.Add(dest);
             }
         }
 
