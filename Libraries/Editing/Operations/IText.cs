@@ -307,6 +307,15 @@ namespace Cube.Pdf.Editing.IText
 
         #region Implementations
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        /// 
+        /// <summary>
+        /// Dictionary オブジェクトの内容を更新します。
+        /// </summary>
+        /// 
+        /* ----------------------------------------------------------------- */
         private static void Update(this IDictionary<string, string> src, string key, string value)
         {
             if (src.ContainsKey(key)) src[key] = value;
