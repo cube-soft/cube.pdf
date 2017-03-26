@@ -19,7 +19,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using iTextSharp.text.pdf;
+using Cube.Pdf.Editing.Images;
 
 namespace Cube.Pdf.Editing.IText
 {
@@ -35,6 +37,50 @@ namespace Cube.Pdf.Editing.IText
     internal static class Operations
     {
         #region PdfReader
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreatePdfReader
+        /// 
+        /// <summary>
+        /// 画像ファイルから PdfReader オブジェクトを生成します。
+        /// </summary>
+        ///
+        /// <param name="src">画像ファイルの情報</param>
+        /// 
+        /// <returns>PdfReader オブジェクト</returns>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public static PdfReader CreatePdfReader(this ImageFile src)
+        {
+            using (var ms = new System.IO.MemoryStream())
+            using (var image = Image.FromFile(src.FullName))
+            {
+                var document = new iTextSharp.text.Document();
+                var writer = PdfWriter.GetInstance(document, ms);
+                document.Open();
+
+                var guid = image.FrameDimensionsList[0];
+                var dimension = new FrameDimension(guid);
+                for (var i = 0; i < image.GetFrameCount(dimension); ++i)
+                {
+                    image.SelectActiveFrame(dimension, i);
+
+                    var scale = 72.0 / image.HorizontalResolution;
+                    var w = (float)(image.Width * scale);
+                    var h = (float)(image.Height * scale);
+
+                    document.SetPageSize(new iTextSharp.text.Rectangle(w, h));
+                    document.NewPage();
+                    document.Add(image.Convert());
+                }
+
+                document.Close();
+                writer.Close();
+
+                return new PdfReader(ms.ToArray());
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
