@@ -46,13 +46,12 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password.pdf", "password",  0)]
         public void SaveAs(string filename, string password, int rotation)
         {
-            var src  = Example(filename);
             var dest = Result($"SaveAs_{filename}");
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
                 
                 writer.Metadata     = reader.Metadata;
                 writer.Encryption   = reader.Encryption;
@@ -87,10 +86,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password.pdf", "password")]
         public void Overwrite(string filename, string password)
         {
-            var src  = Example(filename);
             var dest = Result($"Overwrite_{filename}");
 
-            System.IO.File.Copy(src, dest, true);
+            System.IO.File.Copy(Example(filename), dest, true);
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             {
@@ -123,13 +121,12 @@ namespace Cube.Pdf.Tests.Editing
         {
             var n1   = System.IO.Path.GetFileNameWithoutExtension(pdf);
             var n2   = System.IO.Path.GetFileNameWithoutExtension(image);
-            var src  = Example(pdf);
             var dest = Result($"Merge_{n1}_{n2}.pdf");
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src);
+                reader.Open(Example(pdf));
 
                 var p1 = reader.GetPage(1);
                 var p2 = ImagePage.Create(System.IO.Path.Combine(Examples, image), 0);
@@ -161,12 +158,10 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password.pdf", "password", ExpectedResult = 2)]
         public int Split(string filename, string password)
         {
-            var src = Example(filename);
-
             using (var writer = new Cube.Pdf.Editing.DocumentSplitter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
 
                 writer.Metadata     = reader.Metadata;
                 writer.Encryption   = reader.Encryption;
