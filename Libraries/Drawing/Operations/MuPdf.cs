@@ -1,7 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// MuPdf.cs
-///
 /// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
 ///
 /// This program is free software: you can redistribute it and/or modify
@@ -106,16 +104,12 @@ namespace Cube.Pdf.Drawing.MuPdf
             dest.Permission.Assemble          = ConvertTo(NativeMethods.HasAssemblePermission(core));
             dest.Permission.ModifyContents    = ConvertTo(NativeMethods.HasEditPermission(core));
             dest.Permission.CopyContents      = ConvertTo(NativeMethods.HasCopyPermission(core));
-            dest.Permission.FillInFormFields   = ConvertTo(NativeMethods.HasFillFormPermission(core));
+            dest.Permission.FillInFormFields  = ConvertTo(NativeMethods.HasFillFormPermission(core));
             dest.Permission.ModifyAnnotations = ConvertTo(NativeMethods.HasAnnotatePermission(core));
             dest.Permission.Accessibility     = ConvertTo(NativeMethods.HasAccessibilityPermission(core));
-            dest.Permission.Print          = high  ? PermissionMethod.Allow :
+            dest.Permission.Print             = high  ? PermissionMethod.Allow :
                                                 basic ? PermissionMethod.Restrict :
                                                         PermissionMethod.Deny;
-
-            // dest.ExtractPage    = ConvertTo(???);
-            // dest.Signature      = ConvertTo(???);
-            // dest.TemplatePage   = ConvertTo(???);
 
             return dest;
         }
