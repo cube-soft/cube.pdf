@@ -69,49 +69,6 @@ namespace Cube.Pdf.Editing.Images
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetScale
-        /// 
-        /// <summary>
-        /// 指定サイズに縦横比を維持したままできるだけ大きく表示するための
-        /// イメージの縮小倍率を取得します。
-        /// </summary>
-        /// 
-        /// <param name="image">Image オブジェクト</param>
-        /// <param name="bounds">最大サイズ</param>
-        /// 
-        /// <returns>縮小倍率</returns>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public static double GetScale(this Image image, Size bounds)
-            => Math.Min(Math.Min(
-                bounds.Width  / (double)image.Width,
-                bounds.Height / (double)image.Height
-            ), 1.0);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetCenterPosition
-        /// 
-        /// <summary>
-        /// 指定サイズ、縮小倍率で画像を中央に表示する時の左上の座標を
-        /// 取得します。
-        /// </summary>
-        /// 
-        /// <param name="image">Image オブジェクト</param>
-        /// <param name="bounds">最大サイズ</param>
-        /// <param name="scale">縮小倍率</param>
-        /// 
-        /// <returns>左上の座標</returns>
-        /// 
-        /* ----------------------------------------------------------------- */
-        public static Point GetCenterPosition(this Image image, Size bounds, double scale)
-            => new Point(
-                (int)Math.Max((bounds.Width  - image.Width  * scale) / 2.0, 0.0),
-                (int)Math.Max((bounds.Height - image.Height * scale) / 2.0, 0.0)
-            );
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// GuessImageFormat
         /// 
         /// <summary>
@@ -132,30 +89,6 @@ namespace Cube.Pdf.Editing.Images
                    image.RawFormat.Equals(ImageFormat.Tiff)      ? ImageFormat.Tiff      :
                    image.RawFormat.Equals(ImageFormat.Wmf)       ? ImageFormat.Wmf       :
                                                                    ImageFormat.Bmp       ;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotate
-        /// 
-        /// <summary>
-        /// イメージを degree 度だけ回転させます。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// RotateFlip メソッドは 90 度単位でしか回転させる事ができないので、
-        /// 引数に指定された回転度数を 90 度単位で丸めています。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Rotate(this Image image, int degree)
-        {
-            var value = (degree >=  90 && degree < 180) ? RotateFlipType.Rotate90FlipNone  :
-                        (degree >= 180 && degree < 270) ? RotateFlipType.Rotate180FlipNone :
-                        (degree >= 270 && degree < 360) ? RotateFlipType.Rotate270FlipNone :
-                                                          RotateFlipType.RotateNoneFlipNone;
-
-            if (value != RotateFlipType.RotateNoneFlipNone) image.RotateFlip(value);
         }
     }
 }
