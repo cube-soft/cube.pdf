@@ -269,7 +269,7 @@ namespace Cube.Pdf.Editing
             }
             catch (Exception err)
             {
-                this.LogError(err.Message, err);
+                this.LogWarn(err.Message, err);
                 return false;
             }
         }
