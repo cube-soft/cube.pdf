@@ -62,6 +62,7 @@ namespace Cube.Pdf.App.Clip
             EventAggregator?.GetEvents()?.Reset.Subscribe(WhenReset);
             EventAggregator?.GetEvents()?.Save.Subscribe(WhenSave);
             EventAggregator?.GetEvents()?.Message.Subscribe(WhenMessage);
+            EventAggregator?.GetEvents()?.Error.Subscribe(WhenError);
         }
 
         #endregion
@@ -135,7 +136,7 @@ namespace Cube.Pdf.App.Clip
                     EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
                     break;
                 }
-                catch (Exception err) { this.LogError(err.Message, err); }
+                catch (Exception err) { this.LogWarn(err.Message, err); }
             }
         });
 
@@ -195,7 +196,11 @@ namespace Cube.Pdf.App.Clip
                 await Async(() => Model.Save());
                 EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
             }
-            catch (Exception err) { this.LogError(err.Message, err); }
+            catch (Exception err)
+            {
+                this.LogError(err.Message, err);
+                EventAggregator?.GetEvents()?.Error.Publish(err.Message);
+            }
             finally { SyncWait(() => View.IsBusy = false); }
         }
 
@@ -210,6 +215,18 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         private void WhenMessage(string message)
             => Sync(() => Views.ShowMessage(message));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenError
+        /// 
+        /// <summary>
+        /// Error イベント発生時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenError(string message)
+            => Sync(() => Views.ShowError(message));
 
         #endregion
 

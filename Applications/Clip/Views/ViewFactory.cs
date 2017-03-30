@@ -134,6 +134,27 @@ namespace Cube.Pdf.App.Clip
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowError
+        /// 
+        /// <summary>
+        /// エラーメッセージを表示します。
+        /// </summary>
+        /// 
+        /// <param name="message">メッセージ</param>
+        /// 
+        /// <returns>DialogResult オブジェクト</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public virtual DialogResult ShowError(string message)
+            => MessageBox.Show(
+                message,
+                Application.ProductName,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
     }
 
     /* --------------------------------------------------------------------- */
@@ -183,6 +204,9 @@ namespace Cube.Pdf.App.Clip
 
         public static DialogResult ShowMessage(string message)
             => _factory?.ShowMessage(message) ?? DialogResult.Cancel;
+
+        public static DialogResult ShowError(string message)
+            => _factory?.ShowError(message) ?? DialogResult.OK;
 
         #endregion
 
