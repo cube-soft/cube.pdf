@@ -66,6 +66,37 @@ namespace Cube.Pdf.App.Clip
 
         #endregion
 
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Locked
+        ///
+        /// <summary>
+        /// ファイルが他のプロセスによって使用されているなどの理由で
+        /// ロックされている時に発生するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event ValueCancelEventHandler<string> Locked;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLocked
+        ///
+        /// <summary>
+        /// Locked イベントを発生させます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnLocked(ValueCancelEventArgs<string> e)
+        {
+            if (Locked != null) Locked(this, e);
+            else e.Cancel = true;
+        }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -81,6 +112,13 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         public void Open(string src)
         {
+            while (IsLocked(src))
+            {
+                var e = ValueEventArgs.Create(src, false);
+                OnLocked(e);
+                if (e.Cancel) return;
+            }
+
             Close();
             
             var reader = new Cube.Pdf.Editing.DocumentReader();
@@ -174,14 +212,14 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         public void Attach(string file)
         {
-            try { if (!System.IO.File.Exists(file)) return; }
-            catch (Exception err)
-            {
-                this.LogError(err.Message, err);
-                return;
-            }
-
             if (Clips.Any(x => x.RawObject.File.FullName == file)) return;
+
+            while (IsLocked(file))
+            {
+                var e = ValueEventArgs.Create(file, false);
+                OnLocked(e);
+                if (e.Cancel) return;
+            }
 
             var item = new Attachment
             {
@@ -318,6 +356,30 @@ namespace Cube.Pdf.App.Clip
             Clips.Clear();
             Source?.Dispose();
             Source = null;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsLocked
+        ///
+        /// <summary>
+        /// ファイルがロックされているかどうかを判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsLocked(string path)
+        {
+            try
+            {
+                using (var _ = new System.IO.FileStream(path,
+                    System.IO.FileMode.Open,
+                    System.IO.FileAccess.ReadWrite,
+                    System.IO.FileShare.None)) return false;
+            }
+            catch (System.IO.IOException) { return true; }
+            catch (System.Security.SecurityException) { return true; }
+            catch (UnauthorizedAccessException) { return true; }
+            catch { return true; }
         }
 
         #region Fields
