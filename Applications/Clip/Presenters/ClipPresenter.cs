@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 using Cube.Forms.Bindings;
 using Cube.Log;
 
@@ -54,6 +55,7 @@ namespace Cube.Pdf.App.Clip
 
             // Model
             Model.PropertyChanged += WhenModelChanged;
+            Model.Locked          += WhenLocked;
 
             // EventAggregator
             EventAggregator?.GetEvents()?.Open.Subscribe(WhenOpen);
@@ -109,6 +111,25 @@ namespace Cube.Pdf.App.Clip
         {
             if (e.PropertyName != nameof(Model.Source)) return;
             Sync(() => View.Source = Model.Source?.File.FullName ?? string.Empty);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenLocked
+        /// 
+        /// <summary>
+        /// ファイルがロックされている時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenLocked(object sender, ValueCancelEventArgs<string> e)
+        {
+            var result = SyncWait(() => Views.ShowMessage(
+                string.Format(
+                    Properties.Resources.MessageLock,
+                    System.IO.Path.GetFileName(e.Value)
+                ), MessageBoxButtons.RetryCancel));
+            e.Cancel = (result == DialogResult.Cancel);
         }
 
         /* ----------------------------------------------------------------- */

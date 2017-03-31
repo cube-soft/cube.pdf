@@ -148,6 +148,9 @@
   <data name="MessageEncryption" xml:space="preserve">
     <value>パスワードで保護された PDF ファイルの編集には未対応です。</value>
   </data>
+  <data name="MessageLock" xml:space="preserve">
+    <value>{0} は他のプロセスによって開かれているため、操作を完了できません。ファイルを閉じてから再試行してください。</value>
+  </data>
   <data name="MessageSuccess" xml:space="preserve">
     <value>ファイルの添付が完了しました。</value>
   </data>
