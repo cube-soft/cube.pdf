@@ -127,11 +127,11 @@ namespace Cube.Pdf.App.Clip
         /// <returns>DialogResult オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public virtual DialogResult ShowMessage(string message)
+        public virtual DialogResult ShowMessage(string message, MessageBoxButtons buttons)
             => MessageBox.Show(
                 message,
                 Application.ProductName,
-                MessageBoxButtons.OK,
+                buttons,
                 MessageBoxIcon.Information
             );
 
@@ -202,8 +202,9 @@ namespace Cube.Pdf.App.Clip
         public static Cube.Forms.VersionForm CreateVersionView(string version, Icon icon)
             => _factory?.CreateVersionView(version, icon);
 
-        public static DialogResult ShowMessage(string message)
-            => _factory?.ShowMessage(message) ?? DialogResult.Cancel;
+        public static DialogResult ShowMessage(string message,
+            MessageBoxButtons buttons = MessageBoxButtons.OK)
+            => _factory?.ShowMessage(message, buttons) ?? DialogResult.Cancel;
 
         public static DialogResult ShowError(string message)
             => _factory?.ShowError(message) ?? DialogResult.OK;
