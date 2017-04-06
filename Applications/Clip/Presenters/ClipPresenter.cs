@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 using Cube.Forms.Bindings;
 using Cube.Log;
 
@@ -54,6 +55,7 @@ namespace Cube.Pdf.App.Clip
 
             // Model
             Model.PropertyChanged += WhenModelChanged;
+            Model.Locked          += WhenLocked;
 
             // EventAggregator
             EventAggregator?.GetEvents()?.Open.Subscribe(WhenOpen);
@@ -62,6 +64,7 @@ namespace Cube.Pdf.App.Clip
             EventAggregator?.GetEvents()?.Reset.Subscribe(WhenReset);
             EventAggregator?.GetEvents()?.Save.Subscribe(WhenSave);
             EventAggregator?.GetEvents()?.Message.Subscribe(WhenMessage);
+            EventAggregator?.GetEvents()?.Error.Subscribe(WhenError);
         }
 
         #endregion
@@ -112,6 +115,25 @@ namespace Cube.Pdf.App.Clip
 
         /* ----------------------------------------------------------------- */
         ///
+        /// WhenLocked
+        /// 
+        /// <summary>
+        /// ファイルがロックされている時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenLocked(object sender, ValueCancelEventArgs<string> e)
+        {
+            var result = SyncWait(() => Views.ShowMessage(
+                string.Format(
+                    Properties.Resources.MessageLock,
+                    System.IO.Path.GetFileName(e.Value)
+                ), MessageBoxButtons.RetryCancel));
+            e.Cancel = (result == DialogResult.Cancel);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// WhenOpen
         /// 
         /// <summary>
@@ -135,7 +157,7 @@ namespace Cube.Pdf.App.Clip
                     EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
                     break;
                 }
-                catch (Exception err) { this.LogError(err.Message, err); }
+                catch (Exception err) { this.LogWarn(err.Message, err); }
             }
         });
 
@@ -195,7 +217,11 @@ namespace Cube.Pdf.App.Clip
                 await Async(() => Model.Save());
                 EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
             }
-            catch (Exception err) { this.LogError(err.Message, err); }
+            catch (Exception err)
+            {
+                this.LogError(err.Message, err);
+                EventAggregator?.GetEvents()?.Error.Publish(err.Message);
+            }
             finally { SyncWait(() => View.IsBusy = false); }
         }
 
@@ -209,7 +235,19 @@ namespace Cube.Pdf.App.Clip
         ///
         /* ----------------------------------------------------------------- */
         private void WhenMessage(string message)
-            => Sync(() => Clip.Views.ShowMessage(message));
+            => Sync(() => Views.ShowMessage(message));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenError
+        /// 
+        /// <summary>
+        /// Error イベント発生時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenError(string message)
+            => Sync(() => Views.ShowError(message));
 
         #endregion
 

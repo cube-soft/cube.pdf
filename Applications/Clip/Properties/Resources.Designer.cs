@@ -153,6 +153,15 @@ namespace Cube.Pdf.App.Clip.Properties {
         }
         
         /// <summary>
+        ///   {0} は他のプロセスによって開かれているため、操作を完了できません。ファイルを閉じてから再試行してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageLock {
+            get {
+                return ResourceManager.GetString("MessageLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   ファイルの添付が完了しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageSuccess {

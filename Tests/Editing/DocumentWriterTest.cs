@@ -46,14 +46,12 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password.pdf", "password",  0)]
         public void SaveAs(string filename, string password, int rotation)
         {
-            var output = string.Format("SaveAs_{0}", filename);
-            var dest = System.IO.Path.Combine(Results, output);
-            var src  = System.IO.Path.Combine(Examples, filename);
+            var dest = Result($"SaveAs_{filename}");
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
                 
                 writer.Metadata     = reader.Metadata;
                 writer.Encryption   = reader.Encryption;
@@ -63,6 +61,45 @@ namespace Cube.Pdf.Tests.Editing
                     page.Rotation = rotation;
                     writer.Add(page);
                 }
+                writer.Save(dest);
+            }
+
+            Assert.That(System.IO.File.Exists(dest), Is.True);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Overwrite
+        ///
+        /// <summary>
+        /// PDF を上書き保存するテストを実行します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// DocumentWriter で上書きする場合、保存の直前に DocumentReader
+        /// オブジェクトを破棄する必要があるため、Bind(DocumentReader) を
+        /// 利用します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("bookmark.pdf", "")]
+        [TestCase("password.pdf", "password")]
+        public void Overwrite(string filename, string password)
+        {
+            var dest = Result($"Overwrite_{filename}");
+
+            System.IO.File.Copy(Example(filename), dest, true);
+
+            using (var writer = new Cube.Pdf.Editing.DocumentWriter())
+            {
+                var reader = new Cube.Pdf.Editing.DocumentReader();
+                reader.Open(dest, password);
+
+                writer.Metadata = reader.Metadata;
+                writer.Encryption = reader.Encryption;
+                writer.UseSmartCopy = true;
+                writer.Add(reader.Pages);
+                writer.Bind(reader);
                 writer.Save(dest);
             }
 
@@ -82,16 +119,14 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("bookmark.pdf", "image.png", 90)]
         public void Merge(string pdf, string image, int rotation)
         {
-            var output = string.Format("Merge_{0}_{1}.pdf",
-                System.IO.Path.GetFileNameWithoutExtension(pdf),
-                System.IO.Path.GetFileNameWithoutExtension(image));
-            var dest = System.IO.Path.Combine(Results, output);
-            var src  = System.IO.Path.Combine(Examples, pdf);
+            var n1   = System.IO.Path.GetFileNameWithoutExtension(pdf);
+            var n2   = System.IO.Path.GetFileNameWithoutExtension(image);
+            var dest = Result($"Merge_{n1}_{n2}.pdf");
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src);
+                reader.Open(Example(pdf));
 
                 var p1 = reader.GetPage(1);
                 var p2 = ImagePage.Create(System.IO.Path.Combine(Examples, image), 0);
@@ -123,12 +158,10 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password.pdf", "password", ExpectedResult = 2)]
         public int Split(string filename, string password)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
-
             using (var writer = new Cube.Pdf.Editing.DocumentSplitter())
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
 
                 writer.Metadata     = reader.Metadata;
                 writer.Encryption   = reader.Encryption;
@@ -155,15 +188,14 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("attachment.pdf", "日本語のサンプル.md", ExpectedResult = 4)]
         public int Attach(string pdf, string file)
         {
-            var output = string.Format("Attach_{0}_{1}.pdf",
-                System.IO.Path.GetFileNameWithoutExtension(pdf),
-                System.IO.Path.GetFileNameWithoutExtension(file));
-            var dest = System.IO.Path.Combine(Results, output);
-            var src  = System.IO.Path.Combine(Examples, pdf);
+            var n1   = System.IO.Path.GetFileNameWithoutExtension(pdf);
+            var n2   = System.IO.Path.GetFileNameWithoutExtension(file);
+            var src  = Example(pdf);
+            var dest = Result($"Attach_{n1}_{n2}.pdf");
 
             using (var writer = new Cube.Pdf.Editing.DocumentWriter())
-            using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
+                var reader = new Cube.Pdf.Editing.DocumentReader();
                 reader.Open(src);
 
                 writer.Metadata = reader.Metadata;
@@ -176,6 +208,7 @@ namespace Cube.Pdf.Tests.Editing
                     Name = file,
                     File = new File(System.IO.Path.Combine(Examples, file))
                 });
+                writer.Bind(reader);
                 writer.Save(dest);
             }
 

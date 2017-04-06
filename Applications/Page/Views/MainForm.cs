@@ -95,6 +95,8 @@ namespace Cube.Pdf.App.Page
 
             FileListView.SmallImageList = Icons.ImageList;
             FileListView.Converter = new FileConverter(Icons);
+
+            Text = $"{ProductName} {ProductVersion} ({ProductPlatform})";
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,6 +131,20 @@ namespace Cube.Pdf.App.Page
 
             FooterPanel.DragEnter += (s, e) => OnDragEnter(e);
             FooterPanel.DragDrop  += (s, e) => OnDragDrop(e);
+
+            ShortcutKeys.Add(Keys.Control | Keys.A, SelectAll);
+            ShortcutKeys.Add(Keys.Control | Keys.D, () => EventAggregator?.GetEvents()?.Remove.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.H, () => EventAggregator?.GetEvents()?.Version.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.J, () => EventAggregator.GetEvents()?.Move.Publish(1));
+            ShortcutKeys.Add(Keys.Control | Keys.K, () => EventAggregator.GetEvents()?.Move.Publish(-1));
+            ShortcutKeys.Add(Keys.Control | Keys.M, () => EventAggregator?.GetEvents()?.Merge.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.O, () => EventAggregator.GetEvents()?.Add.Publish(null));
+            ShortcutKeys.Add(Keys.Control | Keys.R, () => EventAggregator.GetEvents()?.Preview.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.S, () => EventAggregator.GetEvents()?.Split.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.Up, () => EventAggregator.GetEvents()?.Move.Publish(-1));
+            ShortcutKeys.Add(Keys.Control | Keys.Down, () => EventAggregator.GetEvents()?.Move.Publish(1));
+            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, () => EventAggregator?.GetEvents()?.Clear.Publish());
+            ShortcutKeys.Add(Keys.Delete, () => EventAggregator?.GetEvents()?.Remove.Publish());
         }
 
         /* ----------------------------------------------------------------- */
@@ -199,8 +215,7 @@ namespace Cube.Pdf.App.Page
                 FileMenu.PreviewMenu.Enabled =
                 FileMenu.UpMenu.Enabled      =
                 FileMenu.DownMenu.Enabled    =
-                FileMenu.RemoveMenu.Enabled  =
-                FileListView.AnyItemsSelected;
+                FileMenu.RemoveMenu.Enabled  = FileListView.AnyItemsSelected;
             }
             finally
             {
@@ -211,26 +226,7 @@ namespace Cube.Pdf.App.Page
 
         #endregion
 
-        #region Override methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnLoad
-        /// 
-        /// <summary>
-        /// フォームのロード時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnLoad(EventArgs e)
-        {
-            var asm = new AssemblyReader(Settings.Assembly);
-            var version = new SoftwareVersion(asm.Assembly);
-            version.Digit = 3;
-            Text = $"{asm.Product} {version}";
-            base.OnLoad(e);
-            Refresh();
-        }
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -291,77 +287,17 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnKeyDown
+        /// SelectAll
         /// 
         /// <summary>
-        /// キーボードのキーが押下された時に実行されるハンドラです。
+        /// 全ての項目を選択します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        protected override void OnKeyDown(KeyEventArgs e)
+        private void SelectAll()
         {
-            try { ShortcutKeys(e); }
-            finally { base.OnKeyDown(e); }
+            foreach (ListViewItem item in FileListView.Items) item.Selected = true;
         }
-
-        #endregion
-
-        #region Shortcut keys
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ShortcutKeys
-        /// 
-        /// <summary>
-        /// ショートカットキーを処理します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private void ShortcutKeys(KeyEventArgs e)
-        {
-            if (!e.Control) return;
-
-            var results = true;
-            switch (e.KeyCode)
-            {
-                case Keys.A:
-                    foreach (ListViewItem item in FileListView.Items) item.Selected = true;
-                    break;
-                case Keys.D:
-                    if (e.Shift) EventAggregator.GetEvents()?.Clear.Publish();
-                    else EventAggregator.GetEvents()?.Remove.Publish();
-                    break;
-                case Keys.H:
-                    EventAggregator.GetEvents()?.Version.Publish();
-                    break;
-                case Keys.M:
-                    EventAggregator.GetEvents()?.Merge.Publish();
-                    break;
-                case Keys.O:
-                    EventAggregator.GetEvents()?.Add.Publish(null);
-                    break;
-                case Keys.R:
-                    EventAggregator.GetEvents()?.Preview.Publish();
-                    break;
-                case Keys.S:
-                    EventAggregator.GetEvents()?.Split.Publish();
-                    break;
-                case Keys.K:
-                case Keys.Up:
-                    EventAggregator.GetEvents()?.Move.Publish(-1);
-                    break;
-                case Keys.J:
-                case Keys.Down:
-                    EventAggregator.GetEvents()?.Move.Publish(1);
-                    break;
-                default:
-                    results = false;
-                    break;
-            }
-            e.Handled = results;
-        }
-
-        #endregion
 
         #region Models
         private FileCollection Files = new FileCollection();
@@ -371,6 +307,8 @@ namespace Cube.Pdf.App.Page
 
         #region Views
         private FileMenuControl FileMenu = new FileMenuControl();
+        #endregion
+
         #endregion
     }
 }

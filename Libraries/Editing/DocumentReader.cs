@@ -23,7 +23,7 @@ using System.Linq;
 using System.Text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.exceptions;
-using Cube.Pdf.Editing.ITextReader;
+using Cube.Pdf.Editing.IText;
 
 namespace Cube.Pdf.Editing
 {
@@ -62,12 +62,11 @@ namespace Cube.Pdf.Editing
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string path)
-        {
-            Open(path);
-        }
+        public DocumentReader(string path) { Open(path); }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,11 +76,26 @@ namespace Cube.Pdf.Editing
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="path">PDF ファイルのパス</param>
+        /// <param name="password">
+        /// オーナパスワードまたはユーザパスワード
+        /// </param>
+        ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string path, string password)
-        {
-            Open(path, password);
-        }
+        public DocumentReader(string path, string password) { Open(path, password); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        /// 
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="file">PDF ファイルオブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(MediaFile file) { Open(file); }
 
         #endregion
 
@@ -195,7 +209,7 @@ namespace Cube.Pdf.Editing
         /// OnPasswordRequired
         /// 
         /// <summary>
-        /// パスワードが要求された時に実行されるハンドラです。
+        /// PasswordRequired イベントを発生させます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -257,20 +271,16 @@ namespace Cube.Pdf.Editing
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed) return;
-            _disposed = true;
-
-            if (RawObject == null) return;
-
             if (disposing)
             {
-                RawObject.Dispose();
-                RawObject = null;
-
+                RawObject?.Dispose();
+                RawObject  = null;
                 File       = null;
                 Metadata   = null;
                 Encryption = null;
                 Pages      = null;
             }
+            _disposed = true;
         }
 
         #endregion
@@ -334,39 +344,71 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         public void Open(string path, string password, bool onlyFullAccess)
         {
-            try
+            SetRawObject(path, password, onlyFullAccess);
+            if (RawObject == null) return;
+
+            var file = new PdfFile(path, password)
             {
-                var pass = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
-                RawObject = new PdfReader(path, pass, true);
-                if (onlyFullAccess && !RawObject.IsOpenedWithFullPermissions)
-                {
-                    throw new BadPasswordException("allow only owner password");
-                }
+                FullAccess = RawObject.IsOpenedWithFullPermissions,
+                PageCount  = RawObject.NumberOfPages
+            };
 
-                var file = new PdfFile(path, password)
-                {
-                    FullAccess = RawObject.IsOpenedWithFullPermissions,
-                    PageCount  = RawObject.NumberOfPages
-                };
+            File        = file;
+            Metadata    = RawObject.CreateMetadata();
+            Encryption  = RawObject.CreateEncryption(file);
+            Pages       = new ReadOnlyPageCollection(RawObject, file);
+            Attachments = new ReadOnlyAttachmentCollection(RawObject, file);
+        }
 
-                File        = file;
-                Metadata    = GetMetadata(RawObject);
-                Encryption  = GetEncryption(RawObject, password, file.FullAccess);
-                Pages       = new ReadOnlyPageCollection(RawObject, file);
-                Attachments = new ReadOnlyAttachmentCollection(RawObject, file);
-            }
-            catch (BadPasswordException /* err */)
-            {
-                if (RawObject != null)
-                {
-                    RawObject.Dispose();
-                    RawObject = null;
-                }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        /// 
+        /// <param name="file">PDF ファイルオブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(MediaFile file) => Open(file, false);
 
-                var e = new QueryEventArgs<string, string>(path);
-                OnPasswordRequired(e);
-                if (!e.Cancel) Open(path, e.Result);
-            }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        /// 
+        /// <summary>
+        /// PDF ファイルを開きます。
+        /// </summary>
+        /// 
+        /// <param name="file">PDF ファイルオブジェクト</param>
+        /// <param name="onlyFullAccess">
+        /// フルアクセスのみを許可するかどうかを示す値
+        /// </param>
+        /// 
+        /// <remarks>
+        /// onlyFullAccess が true の場合、ユーザパスワードで
+        /// PDF ファイルを開こうとすると PasswordRequired イベントが
+        /// 発生します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(MediaFile file, bool onlyFullAccess)
+        {
+            var pdf = file as PdfFile;
+            if (pdf == null) throw new System.IO.FileLoadException();
+
+            SetRawObject(pdf.FullName, pdf.Password, onlyFullAccess);
+            if (RawObject == null) return;
+
+            pdf.FullAccess = RawObject.IsOpenedWithFullPermissions;
+            pdf.PageCount = RawObject.NumberOfPages;
+
+            File = pdf;
+            Metadata = RawObject.CreateMetadata();
+            Encryption = RawObject.CreateEncryption(pdf);
+            Pages = new ReadOnlyPageCollection(RawObject, pdf);
+            Attachments = new ReadOnlyAttachmentCollection(RawObject, pdf);
         }
 
         /* ----------------------------------------------------------------- */
@@ -418,78 +460,41 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetMetadata
+        /// SetRawObject
         /// 
         /// <summary>
-        /// PDF ファイルのメタデータを抽出して返します。
+        /// RawObject を生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Metadata GetMetadata(PdfReader src) => new Metadata()
+        private void SetRawObject(string path, string password, bool onlyFullAccess)
         {
-            Version         = new Version(1, Int32.Parse(src.PdfVersion.ToString()), 0, 0),
-            Author          = src.Info.ContainsKey("Author")   ? src.Info["Author"]   : "",
-            Title           = src.Info.ContainsKey("Title")    ? src.Info["Title"]    : "",
-            Subtitle        = src.Info.ContainsKey("Subject")  ? src.Info["Subject"]  : "",
-            Keywords        = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : "",
-            Creator         = src.Info.ContainsKey("Creator")  ? src.Info["Creator"]  : "",
-            Producer        = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : "",
-            ViewPreferences = src.SimpleViewerPreferences
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEncryption
-        /// 
-        /// <summary>
-        /// Encryption オブジェクトを取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private Encryption GetEncryption(PdfReader src, string password, bool access)
-        {
-            var dest = new Encryption();
-            if (access && string.IsNullOrEmpty(password)) return dest;
-
-            dest.IsEnabled     = true;
-            dest.Method        = Transform.ToEncryptionMethod(src.GetCryptoMode());
-            dest.Permission    = Transform.ToPermission(src.Permissions);
-            dest.OwnerPassword = access ? password : string.Empty;
-            dest.UserPassword  = GetUserPassword(src, password, access, dest.Method);
-            dest.IsUserPasswordEnabled = !string.IsNullOrEmpty(dest.UserPassword);
-
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetUserPassword
-        /// 
-        /// <summary>
-        /// ユーザパスワードを取得します。
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// TODO: 暗号化方式が AES256 の場合、ユーザパスワードの解析に
-        /// 失敗するので除外しています。AES256 の場合の解析方法を要検討。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetUserPassword(PdfReader src, string password, bool access, EncryptionMethod method)
-        {
-            if (access)
+            try
             {
-                if (method == EncryptionMethod.Aes256) return string.Empty; // see remarks
-                var bytes = src.ComputeUserPassword();
-                if (bytes != null && bytes.Length > 0) return Encoding.UTF8.GetString(bytes);
+                var bytes = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
+
+                RawObject?.Dispose();
+                RawObject = null;
+                RawObject = new PdfReader(path, bytes, true);
+
+                var reject = onlyFullAccess && !RawObject.IsOpenedWithFullPermissions;
+                if (reject) throw new BadPasswordException("owner password required");
             }
-            return password;
+            catch (BadPasswordException /* err */)
+            {
+                RawObject?.Dispose();
+                RawObject = null;
+
+                var e = new QueryEventArgs<string, string>(path);
+                OnPasswordRequired(e);
+                if (!e.Cancel) Open(path, e.Result);
+            }
         }
+
+        #endregion
 
         #region Fields
         private bool _disposed = false;
-        #endregion
-
         #endregion
     }
 }

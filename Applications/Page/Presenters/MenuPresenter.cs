@@ -79,7 +79,7 @@ namespace Cube.Pdf.App.Page
         ///
         /* --------------------------------------------------------------------- */
         private void Version_Handle()
-            => Sync(() => Dialogs.Version(Model.Assembly));
+            => Sync(() => Views.CreateVersionView(Model.Assembly));
 
         #endregion
 

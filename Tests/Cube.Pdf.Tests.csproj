@@ -57,7 +57,7 @@
       <HintPath>..\..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.3.5.0\lib\net35\nunit.framework.dll</HintPath>
+      <HintPath>..\..\packages\NUnit.3.6.1\lib\net35\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
       <HintPath>..\..\lib\net35\Cube.Core.dll</HintPath>
@@ -70,7 +70,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Detail\DocumentResource.cs" />
     <Compile Include="Detail\FileResource.cs" />
     <Compile Include="Drawing\DocumentReaderTest.cs" />
     <Compile Include="Editing\DocumentReaderTest.cs" />

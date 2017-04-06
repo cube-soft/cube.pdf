@@ -53,10 +53,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password-aes256.pdf", "password",  true)]
         public void Open(string filename, string password, bool fullAccess)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
                 Assert.That(reader.IsOpen, Is.True);
                 Assert.That(((PdfFile)reader.File).FullAccess, Is.EqualTo(fullAccess));
             }
@@ -73,13 +72,11 @@ namespace Cube.Pdf.Tests.Editing
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Open_EncryptionException()
-            => Assert.That(() =>
+        public void Open_EncryptionException() => Assert.That(() =>
         {
-            var src = System.IO.Path.Combine(Examples, "password.pdf");
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, "bad-password-string");
+                reader.Open(Example("password.pdf"), "bad-password-string");
             }
         }, Throws.TypeOf<EncryptionException>());
 
@@ -99,10 +96,8 @@ namespace Cube.Pdf.Tests.Editing
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Open_PasswordRequired()
-            => Assert.DoesNotThrow(() =>
+        public void Open_PasswordRequired() => Assert.DoesNotThrow(() =>
         {
-            var src = System.IO.Path.Combine(Examples, "password.pdf");
             var raised = false;
 
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
@@ -112,7 +107,7 @@ namespace Cube.Pdf.Tests.Editing
                     raised = true;
                     e.Cancel = true;
                 };
-                reader.Open(src, "bad-password-string");
+                reader.Open(Example("password.pdf"), "bad-password-string");
             }
 
             Assert.That(raised, Is.True);
@@ -134,10 +129,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCaseSource(nameof(FileTestCases))]
         public void File(string filename, string password, PdfFile expected)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
                 var actual = reader.File as PdfFile;
 
                 Assert.That(actual.PageCount,  Is.EqualTo(expected.PageCount));
@@ -198,10 +192,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCaseSource(nameof(MetadataTestCases))]
         public void Metadata(string filename, string password, Metadata expected)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
                 var actual = reader.Metadata;
 
                 Assert.That(actual.Version,    Is.EqualTo(expected.Version));
@@ -257,10 +250,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCaseSource(nameof(EncryptionTestCases))]
         public void Encryption(string filename, string password, Encryption expected)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
                 var actual = reader.Encryption;
 
                 Assert.That(actual.IsEnabled,             Is.EqualTo(expected.IsEnabled));
@@ -270,14 +262,12 @@ namespace Cube.Pdf.Tests.Editing
 
                 // Permission
                 Assert.That(actual.Permission.Accessibility,     Is.EqualTo(expected.Permission.Accessibility));
-                Assert.That(actual.Permission.Assembly,          Is.EqualTo(expected.Permission.Assembly));
+                Assert.That(actual.Permission.Assemble,          Is.EqualTo(expected.Permission.Assemble));
                 Assert.That(actual.Permission.CopyContents,      Is.EqualTo(expected.Permission.CopyContents));
-                Assert.That(actual.Permission.InputFormFields,   Is.EqualTo(expected.Permission.InputFormFields));
+                Assert.That(actual.Permission.FillInFormFields,  Is.EqualTo(expected.Permission.FillInFormFields));
                 Assert.That(actual.Permission.ModifyAnnotations, Is.EqualTo(expected.Permission.ModifyAnnotations));
                 Assert.That(actual.Permission.ModifyContents,    Is.EqualTo(expected.Permission.ModifyContents));
-                Assert.That(actual.Permission.Printing,          Is.EqualTo(expected.Permission.Printing));
-                Assert.That(actual.Permission.Signature,         Is.EqualTo(expected.Permission.Signature));
-                Assert.That(actual.Permission.TemplatePage,      Is.EqualTo(expected.Permission.TemplatePage));
+                Assert.That(actual.Permission.Print,             Is.EqualTo(expected.Permission.Print));
             }
         }
 
@@ -304,14 +294,12 @@ namespace Cube.Pdf.Tests.Editing
                         Permission            = new Permission
                         {
                             Accessibility     = PermissionMethod.Deny,
-                            Assembly          = PermissionMethod.Allow,
+                            Assemble          = PermissionMethod.Allow,
                             CopyContents      = PermissionMethod.Deny,
-                            InputFormFields   = PermissionMethod.Deny,
+                            FillInFormFields  = PermissionMethod.Deny,
                             ModifyAnnotations = PermissionMethod.Deny,
                             ModifyContents    = PermissionMethod.Deny,
-                            Printing          = PermissionMethod.Allow,
-                            Signature         = PermissionMethod.Allow,
-                            TemplatePage      = PermissionMethod.Allow,
+                            Print             = PermissionMethod.Allow,
                         }
                     });
 
@@ -325,14 +313,12 @@ namespace Cube.Pdf.Tests.Editing
                         Permission            = new Permission
                         {
                             Accessibility     = PermissionMethod.Allow,
-                            Assembly          = PermissionMethod.Allow,
+                            Assemble          = PermissionMethod.Allow,
                             CopyContents      = PermissionMethod.Allow,
-                            InputFormFields   = PermissionMethod.Allow,
+                            FillInFormFields  = PermissionMethod.Allow,
                             ModifyAnnotations = PermissionMethod.Allow,
                             ModifyContents    = PermissionMethod.Allow,
-                            Printing          = PermissionMethod.Allow,
-                            Signature         = PermissionMethod.Allow,
-                            TemplatePage      = PermissionMethod.Allow,
+                            Print             = PermissionMethod.Allow,
                         }
                     });
             }
@@ -357,10 +343,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password-aes256.pdf", "password", ExpectedResult = 9)]
         public int Pages(string filename, string password)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
                 return reader.Pages.Count();
             }
         }
@@ -378,10 +363,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("rotation.pdf", 2, 595, 842)]
         public void GetPage_Size(string filename, int n, int width, int height)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src);
+                reader.Open(Example(filename));
                 var actual = reader.GetPage(n);
                 Assert.That(actual.Size, Is.EqualTo(new Size(width, height)));
             }
@@ -399,10 +383,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("rotation.pdf", 1, ExpectedResult = 72)]
         public int GetPage_Resolution(string filename, int n)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src);
+                reader.Open(Example(filename));
                 return reader.GetPage(n).Resolution.X;
             }
         }
@@ -423,10 +406,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("rotation.pdf", 5, ExpectedResult =   0)]
         public int GetPage_Rotation(string filename, int n)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src);
+                reader.Open(Example(filename));
                 return reader.GetPage(n).Rotation;
             }
         }
@@ -448,10 +430,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("attachment.pdf", ExpectedResult = 3)]
         public int Attachments(string filename)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src);
+                reader.Open(Example(filename));
                 return reader.Attachments.Count();
             }
         }
@@ -470,10 +451,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("Empty",       ExpectedResult =      0)]
         public long Attachments_Length(string name)
         {
-            var src = System.IO.Path.Combine(Examples, "attachment.pdf");
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src);
+                reader.Open(Example("attachment.pdf"));
                 return reader.Attachments.First(x => x.Name == name).Length;
             }
         }
@@ -490,10 +470,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("attachment-cjk.pdf", "日本語のサンプル.md")]
         public void Attachments_CJK(string filename, string expected)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src);
+                reader.Open(Example(filename));
                 Assert.That(reader.Attachments.Any(x => x.Name == expected));
             }
         }
@@ -515,10 +494,9 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("image.pdf", 2, ExpectedResult = 0)]
         public int GetImages(string filename, int n)
         {
-            var src = System.IO.Path.Combine(Examples, filename);
             using (var reader = new Cube.Pdf.Editing.DocumentReader())
             {
-                reader.Open(src);
+                reader.Open(Example(filename));
                 return reader.GetImages(n).Count();
             }
         }

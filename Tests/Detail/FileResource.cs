@@ -18,7 +18,6 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System.Reflection;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.Tests
 {
@@ -47,9 +46,10 @@ namespace Cube.Pdf.Tests
         protected FileResource()
         {
             var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
-            Root = IoEx.Path.GetDirectoryName(reader.Location);
+            Root = System.IO.Path.GetDirectoryName(reader.Location);
             _folder = GetType().FullName.Replace(string.Format("{0}.", reader.Product), "");
-            Initialize();
+            if (!System.IO.Directory.Exists(Results)) System.IO.Directory.CreateDirectory(Results);
+            Clean(Results);
         }
 
         #endregion
@@ -78,9 +78,7 @@ namespace Cube.Pdf.Tests
         ///
         /* ----------------------------------------------------------------- */
         protected string Examples
-        {
-            get { return IoEx.Path.Combine(Root, "Examples"); }
-        }
+            => System.IO.Path.Combine(Root, "Examples");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -92,32 +90,39 @@ namespace Cube.Pdf.Tests
         ///
         /* ----------------------------------------------------------------- */
         protected string Results
-        {
-            get
-            {
-                var folder = string.Format(@"Results\{0}", _folder);
-                return IoEx.Path.Combine(Root, folder);
-            }
-        }
+            => System.IO.Path.Combine(Root, $@"Results\{_folder}");
 
         #endregion
 
-        #region Other private methods
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Initialize
+        /// Example
         /// 
         /// <summary>
-        /// リソースファイルを初期化します。
+        /// Examples フォルダのパスを結合した結果を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Initialize()
-        {
-            if (!IoEx.Directory.Exists(Results)) IoEx.Directory.CreateDirectory(Results);
-            Clean(Results);
-        }
+        protected string Example(string filename)
+            => System.IO.Path.Combine(Examples, filename);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Result
+        /// 
+        /// <summary>
+        /// Result フォルダのパスを結合した結果を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected string Result(string filename)
+            => System.IO.Path.Combine(Results, filename);
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -130,15 +135,16 @@ namespace Cube.Pdf.Tests
         /* ----------------------------------------------------------------- */
         private void Clean(string folder)
         {
-            foreach (string file in IoEx.Directory.GetFiles(folder))
+            foreach (string file in System.IO.Directory.GetFiles(folder))
             {
-                IoEx.File.SetAttributes(file, IoEx.FileAttributes.Normal);
-                IoEx.File.Delete(file);
+                System.IO.File.SetAttributes(file, System.IO.FileAttributes.Normal);
+                System.IO.File.Delete(file);
             }
 
-            foreach (string sub in IoEx.Directory.GetDirectories(folder))
+            foreach (string sub in System.IO.Directory.GetDirectories(folder))
             {
                 Clean(sub);
+                System.IO.Directory.Delete(sub);
             }
         }
 

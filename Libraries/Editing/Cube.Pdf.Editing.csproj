@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="itextsharp">
-      <HintPath>..\..\..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
+      <HintPath>..\..\..\packages\iTextSharp.5.5.11\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\lib\net35\Cube.Core.dll</HintPath>
@@ -59,9 +59,8 @@
   <ItemGroup>
     <Compile Include="Attachments.cs" />
     <Compile Include="Details\ImageRenderListener.cs" />
-    <Compile Include="Details\Transform.cs" />
     <Compile Include="Operations\Images.cs" />
-    <Compile Include="Operations\ITextReader.cs" />
+    <Compile Include="Operations\IText.cs" />
     <Compile Include="DocumentReader.cs" />
     <Compile Include="DocumentSplitter.cs" />
     <Compile Include="DocumentWriterBase.cs" />

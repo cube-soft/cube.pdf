@@ -103,7 +103,7 @@ namespace Cube.Pdf.App.Picker
             {
                 using (_source = new CancellationTokenSource())
                 {
-                    await Task35.Run(() => Extract(progress));
+                    await TaskEx.Run(() => Extract(progress));
                 }
             }
             finally { _source = null; }

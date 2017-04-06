@@ -89,7 +89,7 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\Dialogs.cs" />
+    <Compile Include="Views\ViewFactory.cs" />
     <Compile Include="Views\FileListView.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -17,14 +17,10 @@
 ///
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using iTextSharp.text.pdf;
 using Cube.Log;
-using Cube.Pdf.Editing.Images;
-using Cube.Pdf.Editing.ITextReader;
+using Cube.Pdf.Editing.IText;
 
 namespace Cube.Pdf.Editing
 {
@@ -135,7 +131,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected ICollection<Page> Pages => _pages;
+        protected IEnumerable<Page> Pages => _pages;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -146,18 +142,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected ICollection<Attachment> Attachments => _attach;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Bookmarks
-        /// 
-        /// <summary>
-        /// ブックマーク情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected ICollection<Dictionary<string, object>> Bookmarks => _bookmarks;
+        protected IEnumerable<Attachment> Attachments => _attach;
 
         #endregion
 
@@ -211,6 +196,7 @@ namespace Cube.Pdf.Editing
             {
                 _pages.Clear();
                 _attach.Clear();
+                Release();
             }
         }
 
@@ -295,6 +281,100 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Bind
+        /// 
+        /// <summary>
+        /// DocumentReader オブジェクトを束縛します。
+        /// </summary>
+        /// 
+        /// <param name="reader">
+        /// 束縛する DocumentReader オブジェクト
+        /// </param>
+        /// 
+        /// <remarks>
+        /// 束縛された DocumentReader オブジェクトは、DocumentWriter に
+        /// よって Dispose されます。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public void Bind(DocumentReader reader)
+        {
+            var key = reader.File.FullName;
+            if (_bounds.ContainsKey(key))
+            {
+                // same PDF file but other instance has already bound.
+                if (_bounds[key] != reader) reader.Dispose();
+            }
+            else _bounds.Add(key, reader);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Release
+        /// 
+        /// <summary>
+        /// 束縛されている DocumentReader オブジェクトを開放します。
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// 継承クラスで生成された、画像ファイルを基にした PdfReader
+        /// オブジェクトも同時に解放されます。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        protected void Release()
+        {
+            foreach (var kv in _bounds) kv.Value?.Dispose();
+            _bounds.Clear();
+
+            foreach (var kv in _images) kv.Value?.Dispose();
+            _images.Clear();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBound
+        /// 
+        /// <summary>
+        /// 指定されたパスを指す DocumentReader オブジェクトが束縛されて
+        /// いるかどうかを判別します。
+        /// </summary>
+        /// 
+        /// <param name="path">PDF ファイルのパス</param>
+        /// 
+        /// <returns>束縛されているかどうかを示す値</returns>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public bool IsBound(string path)
+            => _bounds.ContainsKey(path);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBound
+        /// 
+        /// <summary>
+        /// 指定された DocumentReader オブジェクトが束縛されているか
+        /// どうかを判別します。
+        /// </summary>
+        /// 
+        /// <param name="reader">DocumentReader オブジェクト</param>
+        /// 
+        /// <returns>束縛されているかどうかを示す値</returns>
+        /// 
+        /// <remarks>
+        /// このメソッドは、引数に指定されたオブジェクトと完全に等しい
+        /// オブジェクトが束縛されているかどうかを判別します。そのため、
+        /// このメソッドが false を返した場合でも、同じパスの別の
+        /// DocumentReader オブジェクトが束縛されている可能性があります。
+        /// </remarks>
+        /// 
+        /* ----------------------------------------------------------------- */
+        public bool IsBound(DocumentReader reader)
+            => _bounds.ContainsKey(reader.File.FullName) &&
+               _bounds[reader.File.FullName] == reader;
+
         #endregion
 
         #region Virtual methods
@@ -310,12 +390,13 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         protected virtual void OnReset()
         {
-            Metadata = new Metadata();
+            Metadata   = new Metadata();
             Encryption = new Encryption();
 
             _pages.Clear();
             _attach.Clear();
-            _bookmarks.Clear();
+
+            Release();
         }
 
         /* ----------------------------------------------------------------- */
@@ -342,67 +423,29 @@ namespace Cube.Pdf.Editing
         /// GetRawReader
         /// 
         /// <summary>
-        /// PdfReader オブジェクトを取得します。
+        /// PdfReader オブジェクトを生成します。
         /// </summary>
         /// 
         /* ----------------------------------------------------------------- */
-        protected PdfReader GetRawReader(MediaFile src)
+        protected PdfReader GetRawReader(Page src)
         {
             try
             {
-                var file = src as PdfFile;
-                if (file == null) return null;
-
-                return file.Password.Length > 0 ?
-                       new PdfReader(file.FullName, System.Text.Encoding.UTF8.GetBytes(file.Password)) :
-                       new PdfReader(file.FullName);
-            }
-            catch (Exception err)
-            {
-                this.LogError(err.Message, err);
-                return null;
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetRawReader
-        /// 
-        /// <summary>
-        /// 画像ファイルから PdfReader オブジェクトを生成します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        protected PdfReader GetRawReader(Page src, System.IO.MemoryStream buffer)
-        {
-            if (src == null) return null;
-            if (src.File is PdfFile) return GetRawReader(src.File);
-
-            using (var image = Image.FromFile(src.File.FullName))
-            {
-                var document = new iTextSharp.text.Document();
-                var writer = PdfWriter.GetInstance(document, buffer);
-                document.Open();
-
-                var guid = image.FrameDimensionsList[0];
-                var dimension = new FrameDimension(guid);
-                for (var i = 0; i < image.GetFrameCount(dimension); ++i)
+                if (src?.File is PdfFile pdf)
                 {
-                    var size = src.ViewSize(Dpi);
-
-                    image.SelectActiveFrame(dimension, i);
-                    image.Rotate(src.Rotation);
-
-                    document.SetPageSize(new iTextSharp.text.Rectangle(size.Width, size.Height));
-                    document.NewPage();
-                    document.Add(GetRawImage(image, src));
+                    if (!IsBound(pdf.FullName)) Bind(new DocumentReader(pdf));
+                    return _bounds[pdf.FullName].RawObject;
                 }
-
-                document.Close();
-                writer.Close();
+                else if (src?.File is ImageFile img)
+                {
+                    var key = img.FullName;
+                    if (!_images.ContainsKey(key)) _images.Add(key, img.CreatePdfReader());
+                    return _images[key];
+                }
             }
+            catch (Exception err) { this.LogError(err.Message, err); }
 
-            return new PdfReader(buffer.ToArray());
+            return null;
         }
 
         /* ----------------------------------------------------------------- */
@@ -427,215 +470,19 @@ namespace Cube.Pdf.Editing
 
                 return dest;
             }
-            catch (Exception err)
-            {
-                this.LogError(err.Message, err);
-                return null;
-            }
-        }
+            catch (Exception err) { this.LogError(err.Message, err); }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetRawImage
-        /// 
-        /// <summary>
-        /// イメージオブジェクトを取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        protected iTextSharp.text.Image GetRawImage(Image src, Page page)
-        {
-            var size  = page.ViewSize(Dpi);
-            var scale = GetScale(src, size);
-            var pos   = GetPosition(src, scale, size);
-
-            var dest = iTextSharp.text.Image.GetInstance(src, GetFormat(src));
-            dest.SetAbsolutePosition(pos.X, pos.Y);
-            dest.ScalePercent((float)(scale * 100.0));
-
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetMetadata
-        /// 
-        /// <summary>
-        /// タイトル、著者名等の各種メタデータを設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void SetMetadata(iTextSharp.text.Document dest)
-        {
-            dest.AddTitle(Metadata.Title);
-            dest.AddSubject(Metadata.Subtitle);
-            dest.AddKeywords(Metadata.Keywords);
-            dest.AddCreator(Metadata.Creator);
-            dest.AddAuthor(Metadata.Author);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetMetadata
-        /// 
-        /// <summary>
-        /// タイトル、著者名等のメタ情報を追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void SetMetadata(PdfReader src, PdfStamper dest)
-        {
-            var info = src.Info;
-
-            info.Add("Title",    Metadata.Title);
-            info.Add("Subject",  Metadata.Subtitle);
-            info.Add("Keywords", Metadata.Keywords);
-            info.Add("Creator",  Metadata.Creator);
-            info.Add("Author",   Metadata.Author);
-
-            dest.MoreInfo = info;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetEncryption
-        /// 
-        /// <summary>
-        /// 暗号化に関する情報を設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void SetEncryption(PdfWriter dest)
-        {
-            if (Encryption.IsEnabled && Encryption.OwnerPassword.Length > 0)
-            {
-                var method   = Transform.ToIText(Encryption.Method);
-                var flags    = Transform.ToIText(Encryption.Permission);
-                var password = string.IsNullOrEmpty(Encryption.UserPassword) ?
-                               Encryption.OwnerPassword :
-                               Encryption.UserPassword;
-                if (!Encryption.IsUserPasswordEnabled) password = string.Empty;
-
-                dest.SetEncryption(method, password, Encryption.OwnerPassword, flags);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetBookmarks
-        /// 
-        /// <summary>
-        /// しおり情報を PdfWriter オブジェクトに設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void SetBookmarks(PdfWriter dest)
-            => dest.Outlines = _bookmarks;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ResetBookmarks
-        /// 
-        /// <summary>
-        /// しおり情報をリセットします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void ResetBookmarks()
-            => _bookmarks.Clear();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// StockBookmarks
-        /// 
-        /// <summary>
-        /// PDF ファイルに存在するしおり情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void StockBookmarks(PdfReader src, int srcPageNumber, int destPageNumber)
-        {
-            var bookmarks = SimpleBookmark.GetBookmark(src);
-            if (bookmarks == null) return;
-
-            var pattern = string.Format("^{0} (XYZ|Fit|FitH|FitBH)", destPageNumber);
-            SimpleBookmark.ShiftPageNumbers(bookmarks, destPageNumber - srcPageNumber, null);
-            foreach (var bm in bookmarks)
-            {
-                if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern))
-                {
-                    _bookmarks.Add(bm);
-                }
-            }
+            return null;
         }
 
         #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetScale
-        /// 
-        /// <summary>
-        /// イメージの縮小倍率を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private double GetScale(Image image, Size size)
-        {
-            var x = size.Width / (double)image.Width;
-            var y = size.Height / (double)image.Height;
-            return Math.Min(Math.Min(x, y), 1.0);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetPosition
-        /// 
-        /// <summary>
-        /// イメージの表示位置を取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private Point GetPosition(Image image, double scale, Size size)
-        {
-            var x = (size.Width - image.Width * scale) / 2.0;
-            var y = (size.Height - image.Height * scale) / 2.0;
-            return new Point((int)x, (int)y);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetFormat
-        /// 
-        /// <summary>
-        /// イメージフォーマットを取得します。
-        /// </summary>
-        /// 
-        /* ----------------------------------------------------------------- */
-        private ImageFormat GetFormat(Image image)
-        {
-            var supports = new List<ImageFormat>()
-            {
-                ImageFormat.Bmp,
-                ImageFormat.Gif,
-                ImageFormat.Jpeg,
-                ImageFormat.Png,
-                ImageFormat.Tiff
-            };
-
-            var dest = image.GuessImageFormat();
-            return supports.Contains(dest) ? dest : ImageFormat.Png;
-        }
 
         #region Fields
         private bool _disposed = false;
         private List<Page> _pages = new List<Page>();
         private List<Attachment> _attach = new List<Attachment>();
-        private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
-        #endregion
-
+        private IDictionary<string, DocumentReader> _bounds = new Dictionary<string, DocumentReader>();
+        private IDictionary<string, PdfReader> _images = new Dictionary<string, PdfReader>();
         #endregion
     }
 }
