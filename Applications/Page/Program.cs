@@ -47,44 +47,26 @@ namespace Cube.Pdf.App.Page
         [STAThread]
         static void Main(string[] args)
         {
-            var name = Application.ProductName.ToLower();
-            using (var bootstrap = new Cube.Processes.Bootstrap(name))
-            {
-                if (bootstrap.Exists)
-                {
-                    bootstrap.Send(args);
-                    return;
-                }
-
-                InitLog();
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                var form = new MainForm(args);
-                form.Bootstrap = bootstrap;
-                Application.Run(form);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitLog
-        /// 
-        /// <summary>
-        /// ログを出力します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        static void InitLog()
-        {
-            var reader = new AssemblyReader(Assembly.GetExecutingAssembly());
-            var edition = (IntPtr.Size == 4) ? "x86" : "x64";
             var type = typeof(Program);
+            var name = Application.ProductName.ToLower();
 
-            Cube.Log.Operations.Configure();
-            Cube.Log.Operations.Info(type, $"{reader.Product} {reader.Version} ({edition})");
-            Cube.Log.Operations.Info(type, $"{Environment.OSVersion}");
-            Cube.Log.Operations.Info(type, $"{Environment.Version}");
+            try
+            {
+                using (var m = new Cube.Processes.Messenger<string[]>(name))
+                {
+                    if (!m.IsServer) m.Publish(args);
+                    else
+                    {
+                        Cube.Log.Operations.Configure();
+                        Cube.Log.Operations.Info(type, Assembly.GetExecutingAssembly());
+
+                        Application.EnableVisualStyles();
+                        Application.SetCompatibleTextRenderingDefault(false);
+                        Application.Run(new MainForm(args) { Activator = m });
+                    }
+                }
+            }
+            catch (Exception err) { Cube.Log.Operations.Error(type, err.Message, err); }
         }
     }
 }
