@@ -237,13 +237,12 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnReceived(ValueEventArgs<object> e)
+        protected override void OnReceived(ValueEventArgs<string[]> e)
         {
             try
             {
-                var args = e.Value as string[];
-                if (args == null) return;
-                EventAggregator.GetEvents()?.Add.Publish(args);
+                if (e.Value == null) return;
+                EventAggregator.GetEvents()?.Add.Publish(e.Value);
             }
             finally { base.OnReceived(e); }
         }

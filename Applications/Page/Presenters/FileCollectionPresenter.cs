@@ -92,15 +92,14 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Preview_Handle()
-            => this.LogException(()
-            => Sync(() =>
+        private void Preview_Handle() => Sync(() =>
         {
             var indices = View.SelectedIndices;
             var index = (indices.Count > 0) ? indices[0] : -1;
             if (index < 0 || index >= Model.Count) return;
-            System.Diagnostics.Process.Start(Model[index].FullName);
-        }));
+            try { System.Diagnostics.Process.Start(Model[index].FullName); }
+            catch (Exception err) { this.LogWarn(err.ToString()); }
+        });
 
         /* --------------------------------------------------------------------- */
         ///

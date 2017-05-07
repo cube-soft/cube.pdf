@@ -83,9 +83,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void OpenProgress(string path)
-            => Sync(()
-            => this.LogException(() =>
+        private void OpenProgress(string path) => Sync(() =>
         {
             var ext = IoEx.Path.GetExtension(path).ToLower();
             if (!ContainsExtension(ext) || !IoEx.File.Exists(path)) return;
@@ -97,7 +95,7 @@ namespace Cube.Pdf.App.Picker
                 new EventAggregator()
             );
             view.Show();
-        }));
+        });
 
         /* ----------------------------------------------------------------- */
         ///

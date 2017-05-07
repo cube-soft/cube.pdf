@@ -146,11 +146,10 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnReceived(ValueEventArgs<object> e)
+        protected override void OnReceived(ValueEventArgs<string[]> e)
         {
             base.OnReceived(e);
-            var args = e.Value as string[];
-            OnOpen(ValueEventArgs.Create(args));
+            OnOpen(ValueEventArgs.Create(e.Value));
         }
 
         /* ----------------------------------------------------------------- */
