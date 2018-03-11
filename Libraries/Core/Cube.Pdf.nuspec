@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <copyright>$copyright$</copyright>
+    <description>PDF library for CubeSoft applications.</description>
+    <releaseNotes>Private release.</releaseNotes>
+    <tags>Cube PDF</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/License.txt</licenseUrl>
+    <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
+    <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png</iconUrl>
+  </metadata>
+  <files>
+    <file src="bin\Release\Cube.Pdf.dll" target="lib\net45" />
+  </files>
+</package>

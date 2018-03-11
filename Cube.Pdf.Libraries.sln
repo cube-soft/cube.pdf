@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf", "Libraries\Cube.Pdf.csproj", "{5D742956-06A5-40F9-939D-5EFF66B78D8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf", "Libraries\Core\Cube.Pdf.csproj", "{5D742956-06A5-40F9-939D-5EFF66B78D8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Drawing", "Libraries\Drawing\Cube.Pdf.Drawing.csproj", "{F42FCC0C-14C3-4504-BA40-433AB923A581}"
 EndProject
