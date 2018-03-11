@@ -1,23 +1,23 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
-using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Page
@@ -31,14 +31,14 @@ namespace Cube.Pdf.App.Page
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.FormBase
+    public partial class MainForm : Cube.Forms.StandardForm
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
         /// MainForm
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -55,7 +55,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// MainForm
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -65,7 +65,7 @@ namespace Cube.Pdf.App.Page
             : this()
         {
             if (args == null || args.Length == 0) return;
-            EventAggregator.GetEvents()?.Add.Publish(args);
+            EventHub.GetEvents()?.Add.Publish(args);
         }
 
         #endregion
@@ -75,7 +75,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeLayout
-        /// 
+        ///
         /// <summary>
         /// レイアウトを初期化します。
         /// </summary>
@@ -83,7 +83,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            EventAggregator = new EventAggregator();
+            EventHub = new EventHub();
 
             var tips = new ToolTip
             {
@@ -102,7 +102,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeEvents
-        /// 
+        ///
         /// <summary>
         /// イベントを初期化します。
         /// </summary>
@@ -110,18 +110,18 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            TitleButton.Click  += (s, e) => EventAggregator.GetEvents()?.Version.Publish();
-            FileButton.Click   += (s, e) => EventAggregator.GetEvents()?.Add.Publish(null);
-            RemoveButton.Click += (s, e) => EventAggregator.GetEvents()?.Remove.Publish();
-            ClearButton.Click  += (s, e) => EventAggregator.GetEvents()?.Clear.Publish();
-            UpButton.Click     += (s, e) => EventAggregator.GetEvents()?.Move.Publish(-1);
-            DownButton.Click   += (s, e) => EventAggregator.GetEvents()?.Move.Publish(1);
-            MergeButton.Click  += (s, e) => EventAggregator.GetEvents()?.Merge.Publish();
-            SplitButton.Click  += (s, e) => EventAggregator.GetEvents()?.Split.Publish();
+            TitleButton.Click  += (s, e) => EventHub.GetEvents()?.Version.Publish();
+            FileButton.Click   += (s, e) => EventHub.GetEvents()?.Add.Publish(null);
+            RemoveButton.Click += (s, e) => EventHub.GetEvents()?.Remove.Publish();
+            ClearButton.Click  += (s, e) => EventHub.GetEvents()?.Clear.Publish();
+            UpButton.Click     += (s, e) => EventHub.GetEvents()?.Move.Publish(-1);
+            DownButton.Click   += (s, e) => EventHub.GetEvents()?.Move.Publish(1);
+            MergeButton.Click  += (s, e) => EventHub.GetEvents()?.Merge.Publish();
+            SplitButton.Click  += (s, e) => EventHub.GetEvents()?.Split.Publish();
             ExitButton.Click   += (s, e) => Close();
 
-            FileMenu.EventAggregator = EventAggregator;
-            FileListView.EventAggregator = EventAggregator;
+            FileMenu.EventHub = EventHub;
+            FileListView.EventHub = EventHub;
             FileListView.ContextMenuStrip = FileMenu;
             FileListView.DragEnter += (s, e) => OnDragEnter(e);
             FileListView.DragDrop  += (s, e) => OnDragDrop(e);
@@ -133,24 +133,24 @@ namespace Cube.Pdf.App.Page
             FooterPanel.DragDrop  += (s, e) => OnDragDrop(e);
 
             ShortcutKeys.Add(Keys.Control | Keys.A, SelectAll);
-            ShortcutKeys.Add(Keys.Control | Keys.D, () => EventAggregator?.GetEvents()?.Remove.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.H, () => EventAggregator?.GetEvents()?.Version.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.J, () => EventAggregator.GetEvents()?.Move.Publish(1));
-            ShortcutKeys.Add(Keys.Control | Keys.K, () => EventAggregator.GetEvents()?.Move.Publish(-1));
-            ShortcutKeys.Add(Keys.Control | Keys.M, () => EventAggregator?.GetEvents()?.Merge.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.O, () => EventAggregator.GetEvents()?.Add.Publish(null));
-            ShortcutKeys.Add(Keys.Control | Keys.R, () => EventAggregator.GetEvents()?.Preview.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.S, () => EventAggregator.GetEvents()?.Split.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.Up, () => EventAggregator.GetEvents()?.Move.Publish(-1));
-            ShortcutKeys.Add(Keys.Control | Keys.Down, () => EventAggregator.GetEvents()?.Move.Publish(1));
-            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, () => EventAggregator?.GetEvents()?.Clear.Publish());
-            ShortcutKeys.Add(Keys.Delete, () => EventAggregator?.GetEvents()?.Remove.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.D, () => EventHub?.GetEvents()?.Remove.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.H, () => EventHub?.GetEvents()?.Version.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.J, () => EventHub.GetEvents()?.Move.Publish(1));
+            ShortcutKeys.Add(Keys.Control | Keys.K, () => EventHub.GetEvents()?.Move.Publish(-1));
+            ShortcutKeys.Add(Keys.Control | Keys.M, () => EventHub?.GetEvents()?.Merge.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.O, () => EventHub.GetEvents()?.Add.Publish(null));
+            ShortcutKeys.Add(Keys.Control | Keys.R, () => EventHub.GetEvents()?.Preview.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.S, () => EventHub.GetEvents()?.Split.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.Up, () => EventHub.GetEvents()?.Move.Publish(-1));
+            ShortcutKeys.Add(Keys.Control | Keys.Down, () => EventHub.GetEvents()?.Move.Publish(1));
+            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, () => EventHub?.GetEvents()?.Clear.Publish());
+            ShortcutKeys.Add(Keys.Delete, () => EventHub?.GetEvents()?.Remove.Publish());
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// InitializePresenters
-        /// 
+        ///
         /// <summary>
         /// 各種 Presenter を初期化します。
         /// </summary>
@@ -158,8 +158,8 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new FileCollectionPresenter(FileListView, Files, Settings, EventAggregator);
-            new MenuPresenter(this, Settings, EventAggregator);
+            new FileCollectionPresenter(FileListView, Files, Settings, EventHub);
+            new MenuPresenter(this, Settings, EventHub);
         }
 
         #endregion
@@ -169,7 +169,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// AllowOperation
-        /// 
+        ///
         /// <summary>
         /// 各種操作を受け付けるかどうかを取得または設定します。
         /// </summary>
@@ -194,7 +194,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// Refresh
-        /// 
+        ///
         /// <summary>
         /// 再描画します。
         /// </summary>
@@ -231,18 +231,18 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// OnReceived
-        /// 
+        ///
         /// <summary>
         /// 他プロセスからデータ受信時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnReceived(ValueEventArgs<string[]> e)
+        protected override void OnReceived(EnumerableEventArgs<string> e)
         {
             try
             {
                 if (e.Value == null) return;
-                EventAggregator.GetEvents()?.Add.Publish(e.Value);
+                EventHub.GetEvents()?.Add.Publish(e.Value.ToArray());
             }
             finally { base.OnReceived(e); }
         }
@@ -281,17 +281,17 @@ namespace Cube.Pdf.App.Page
             var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
             if (files == null) return;
 
-            EventAggregator.GetEvents()?.Add.Publish(files);
+            EventHub.GetEvents()?.Add.Publish(files);
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// SelectAll
-        /// 
+        ///
         /// <summary>
         /// 全ての項目を選択します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void SelectAll()
         {

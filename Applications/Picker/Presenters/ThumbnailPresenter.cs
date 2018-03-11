@@ -1,28 +1,27 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// ThumbnailPresenter.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Reflection;
-using System.Linq;
-using System.Windows.Forms;
 using Cube.Forms.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Picker
@@ -43,13 +42,13 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         ///
         /// ThumbnailPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model, IEventAggregator events)
+        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model, IEventHub events)
             : base(view, model, events)
         {
             View.Shown      += View_Shown;
@@ -61,12 +60,12 @@ namespace Cube.Pdf.App.Picker
 
         #region Event handlers
 
-        #region EventAggregator
+        #region EventHub
 
         /* --------------------------------------------------------------------- */
         ///
         /// PreviewImage_Handle
-        /// 
+        ///
         /// <summary>
         /// 選択した抽出画像のプレビュー画面を表示する時に実行されるハンドラです。
         /// </summary>
@@ -89,7 +88,7 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         ///
         /// Remove_Handle
-        /// 
+        ///
         /// <summary>
         /// 選択した抽出画像を削除する時に実行されるハンドラです。
         /// </summary>
@@ -106,7 +105,7 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         ///
         /// SaveComplete_Handle
-        /// 
+        ///
         /// <summary>
         /// 保存処理が完了した時に実行されるハンドラです。
         /// </summary>
@@ -138,7 +137,7 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         ///
         /// View_Shown
-        /// 
+        ///
         /// <summary>
         /// フォームの表示直後に実行されるハンドラです。
         /// </summary>
@@ -146,11 +145,16 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         private void View_Shown(object sender, EventArgs e)
         {
-            View.EventAggregator = EventAggregator;
-            EventAggregator.GetEvents()?.PreviewImage.Subscribe(PreviewImage_Handle);
-            EventAggregator.GetEvents()?.Remove.Subscribe(Remove_Handle);
-            EventAggregator.GetEvents()?.SaveComplete.Subscribe(SaveComplete_Handle);
-            EventAggregator.GetEvents()?.Version.Subscribe(Version_Handle);
+            View.EventHub = EventHub;
+
+            var hub = EventHub.GetEvents();
+            if (hub != null)
+            {
+                _events.Add(hub.PreviewImage.Subscribe(PreviewImage_Handle));
+                _events.Add(hub.Remove.Subscribe(Remove_Handle));
+                _events.Add(hub.SaveComplete.Subscribe(SaveComplete_Handle));
+                _events.Add(hub.Version.Subscribe(Version_Handle));
+            }
 
             View.Cursor = Cursors.WaitCursor;
             View.AddRange(Model.Select(x => Shrink(x, View.ImageSize)));
@@ -160,24 +164,20 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         ///
         /// View_FormClosed
-        /// 
+        ///
         /// <summary>
         /// フォームが閉じられた時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
-        /// TODO: EventAggregator.Unsubscribe の実装
+        /// TODO: EventHub.Unsubscribe の実装
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
         private void View_FormClosed(object sender, FormClosedEventArgs e)
         {
-            View.EventAggregator = null;
-
-            EventAggregator.GetEvents()?.PreviewImage.Unsubscribe(PreviewImage_Handle);
-            EventAggregator.GetEvents()?.Remove.Unsubscribe(Remove_Handle);
-            EventAggregator.GetEvents()?.SaveComplete.Unsubscribe(SaveComplete_Handle);
-            EventAggregator.GetEvents()?.Version.Unsubscribe(Version_Handle);
+            View.EventHub = null;
+            foreach (var ev in _events) ev.Dispose();
         }
 
         #endregion
@@ -189,11 +189,11 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         ///
         /// Shrink
-        /// 
+        ///
         /// <summary>
         /// 画像を縮小します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// TODO: モデルに移譲
         /// </remarks>
@@ -207,6 +207,10 @@ namespace Cube.Pdf.App.Picker
                 LongSide            = size.Width,
             }.Resized;
 
+        #endregion
+
+        #region Fields
+        private IList<IDisposable> _events = new List<IDisposable>();
         #endregion
     }
 }

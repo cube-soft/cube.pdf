@@ -1,19 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System.Security.Cryptography;
 
@@ -22,7 +22,7 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     ///
     /// Attachment
-    /// 
+    ///
     /// <summary>
     /// 添付ファイルを表すクラスです。
     /// </summary>
@@ -35,7 +35,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Name
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルの名前を取得または設定します。
         /// </summary>
@@ -46,7 +46,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// File
-        /// 
+        ///
         /// <summary>
         /// 添付オブジェクトが属するファイルを取得または設定します。
         /// </summary>
@@ -66,7 +66,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Length
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルのサイズを取得します。
         /// </summary>
@@ -77,7 +77,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Data
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルの内容を取得します。
         /// </summary>
@@ -88,7 +88,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Checksum
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルのチェックサムを取得します。
         /// </summary>
@@ -103,7 +103,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// GetLength
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルのサイズを取得します。
         /// </summary>
@@ -115,7 +115,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// GetBytes
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルの内容をバイト配列で取得します。
         /// </summary>
@@ -137,7 +137,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// GetChecksum
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルのチェックサムを取得します。
         /// </summary>
@@ -156,7 +156,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// GetChecksum
-        /// 
+        ///
         /// <summary>
         /// チェックサムを計算します。
         /// </summary>

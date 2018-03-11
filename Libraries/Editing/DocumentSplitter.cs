@@ -1,24 +1,24 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
-using iTextSharp.text.pdf;
 using Cube.Pdf.Editing.IText;
+using iTextSharp.text.pdf;
+using System.Collections.Generic;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.Editing
@@ -26,7 +26,7 @@ namespace Cube.Pdf.Editing
     /* --------------------------------------------------------------------- */
     ///
     /// DocumentSplitter
-    /// 
+    ///
     /// <summary>
     /// PDF ファイルを全て 1 ページの PDF ファイルに分割するクラスです。
     /// </summary>
@@ -39,7 +39,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentSplitter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Results
-        /// 
+        ///
         /// <summary>
         /// 作成した PDF ファイルのパス一覧を取得します。
         /// </summary>
@@ -69,7 +69,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// OnReset
-        /// 
+        ///
         /// <summary>
         /// 初期状態にリセットします。
         /// </summary>
@@ -84,11 +84,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// OnSave
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを指定フォルダ下に保存します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Reset() を実行すると Results まで消去されてしまうため、
         /// base.OnReset() を代わりに実行しています。
@@ -118,7 +118,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// SavePage
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを分割して保存します。
         /// </summary>
@@ -137,7 +137,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// SaveImagePage
-        /// 
+        ///
         /// <summary>
         /// 画像ファイルを 1 ページの PDF ファイルに変換して保存します。
         /// </summary>
@@ -158,11 +158,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// SaveOne
-        /// 
+        ///
         /// <summary>
         /// 1 ページの PDF ファイルを保存します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void SaveOne(PdfReader reader, int pagenum, string dest)
         {
@@ -180,11 +180,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Unique
-        /// 
+        ///
         /// <summary>
         /// 一意のパス名を取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private string Unique(string folder, MediaFile src, int pagenum)
         {

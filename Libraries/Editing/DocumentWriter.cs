@@ -1,36 +1,36 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Log;
+using Cube.Pdf.Editing.IText;
+using iTextSharp.text.exceptions;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using iTextSharp.text.pdf;
-using iTextSharp.text.exceptions;
-using Cube.Log;
-using Cube.Pdf.Editing.IText;
 
 namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
     /// DocumentWriter
-    /// 
+    ///
     /// <summary>
     /// PDF ファイルの生成するためのクラスです。
     /// </summary>
@@ -43,7 +43,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentWriter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -58,7 +58,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// OnSave
-        /// 
+        ///
         /// <summary>
         /// メンバ変数が保持している、メタデータ、暗号化に関する情報、
         /// 各ページ情報に基づいた PDF ファイルを指定されたパスに保存
@@ -96,7 +96,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// OnReset
-        /// 
+        ///
         /// <summary>
         /// 初期状態にリセットします。
         /// </summary>
@@ -115,11 +115,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Merge
-        /// 
+        ///
         /// <summary>
         /// ページを結合し、新たな PDF ファイルを生成します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// 注釈等を含めて完全にページ内容をコピーするため、いったん
         /// PdfCopy クラスを用いて全ページを結合します。セキュリティ設定や
@@ -150,11 +150,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// AddPage
-        /// 
+        ///
         /// <summary>
         /// PDF ページを追加します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// PdfCopy.PageNumber (dest) は、AddPage を実行した段階で値が
         /// 自動的に増加するので注意。
@@ -174,11 +174,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// AddImagePage
-        /// 
+        ///
         /// <summary>
         /// 画像ファイルを PDF ページとして追加します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// TODO: Page オブジェクトが引数のはずなのに、全ページ挿入する
         /// 形となっている。要修正。
@@ -198,7 +198,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// SetAttachments
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルを追加します。
         /// </summary>
@@ -207,7 +207,7 @@ namespace Cube.Pdf.Editing
         private void SetAttachments(PdfCopy dest)
         {
             var done = new List<Attachment>();
-            
+
             foreach (var item in Attachments)
             {
                 if (done.Any(
@@ -229,7 +229,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// StockBookmarks
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルに存在するしおり情報を取得します。
         /// </summary>
@@ -254,7 +254,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// TryDelete
-        /// 
+        ///
         /// <summary>
         /// ファイルの削除を試行します。
         /// </summary>

@@ -1,28 +1,26 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// FileCollection.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Log;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Cube.Log;
+using System.Linq;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Page
@@ -43,7 +41,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// ItemCollection
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -58,7 +56,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// Metadata
-        /// 
+        ///
         /// <summary>
         /// PDF のメタ情報を取得します。
         /// </summary>
@@ -73,7 +71,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// PasswordRequired
-        /// 
+        ///
         /// <summary>
         /// パスワードが要求された時に発生するイベントです。
         /// </summary>
@@ -88,7 +86,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// Add
-        /// 
+        ///
         /// <summary>
         /// 指定されたファイルを追加します。
         /// </summary>
@@ -104,11 +102,11 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Add
-        /// 
+        ///
         /// <summary>
         /// ファイルを追加します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// 追加不可能なファイルに関しては読み飛ばします。
         /// </remarks>
@@ -136,7 +134,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// Contains
-        /// 
+        ///
         /// <summary>
         /// 指定されたパスを表す項目が既に存在しているかどうか判別します。
         /// </summary>
@@ -150,7 +148,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// Move
-        /// 
+        ///
         /// <summary>
         /// 項目を移動します。
         /// </summary>
@@ -165,7 +163,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// Merge
-        /// 
+        ///
         /// <summary>
         /// ファイルを結合します。
         /// </summary>
@@ -201,7 +199,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// Split
-        /// 
+        ///
         /// <summary>
         /// ファイルを分割します。
         /// </summary>
@@ -228,11 +226,11 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// OnPasswordRequired
-        /// 
+        ///
         /// <summary>
         /// パスワードが要求された時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// イベントハンドラが設定されていない場合は、無限ループを防ぐ
         /// ために操作をキャンセルします。
@@ -252,7 +250,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// AddDocument
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを追加します。
         /// </summary>
@@ -273,7 +271,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// AddDocument
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを追加します。
         /// </summary>
@@ -294,7 +292,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// AddImage
-        /// 
+        ///
         /// <summary>
         /// 画像ファイルを追加します。
         /// </summary>
@@ -311,7 +309,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// MoveItems
-        /// 
+        ///
         /// <summary>
         /// 項目を移動します。
         /// </summary>

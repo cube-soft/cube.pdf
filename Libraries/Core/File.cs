@@ -1,19 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
@@ -23,11 +23,11 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     ///
     /// File
-    /// 
+    ///
     /// <summary>
     /// ファイル情報を保持するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// FileInfo は継承できないため、FileInfo の互換クラスとして実装されて
     /// います。
@@ -39,11 +39,11 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// File
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /// <param name="path">ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -308,11 +308,11 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     ///
     /// MediaFile
-    /// 
+    ///
     /// <summary>
     /// PDF や画像ファイル等の情報を保持するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// このクラスを直接オブジェクト化する事はできません。
     /// 必要に応じて継承クラスを利用して下さい。
@@ -326,7 +326,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// MediaFile
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -341,7 +341,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// PageCount
-        /// 
+        ///
         /// <summary>
         /// ページ数を取得または設定します。
         /// </summary>
@@ -352,7 +352,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Resolution
-        /// 
+        ///
         /// <summary>
         /// ファイルの解像度を取得または設定します。
         /// </summary>
@@ -366,7 +366,7 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     ///
     /// PdfFile
-    /// 
+    ///
     /// <summary>
     /// PDF のファイル情報を保持するためのクラスです。
     /// </summary>
@@ -379,7 +379,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// File
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -390,7 +390,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// File
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -409,7 +409,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Password
-        /// 
+        ///
         /// <summary>
         /// オーナパスワードまたはユーザパスワードを取得または設定します。
         /// </summary>
@@ -420,12 +420,12 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// FullAccess
-        /// 
+        ///
         /// <summary>
         /// ファイルの全ての内容にアクセス可能かどうかを示す値を取得または
         /// 設定します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// このプロパティは、PDF ファイルにパスワードによって暗号化されて
         /// おり、かつユーザパスワードを用いてファイルを開いた場合 false に
@@ -441,7 +441,7 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     ///
     /// ImageFile
-    /// 
+    ///
     /// <summary>
     /// 画像ファイルの情報を保持するためのクラスです。
     /// </summary>
@@ -454,7 +454,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// ImageFile
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -471,7 +471,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// ImageFile
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -489,7 +489,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeValues
-        /// 
+        ///
         /// <summary>
         /// 各種プロパティを初期化します。
         /// </summary>

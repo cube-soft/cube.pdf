@@ -1,20 +1,20 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
 using System.ComponentModel;
 
@@ -37,17 +37,17 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// MenuPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public MenuPresenter(MainForm view, Settings model, IEventAggregator events)
+        public MenuPresenter(MainForm view, Settings model, IEventHub events)
             : base(view, model, events)
         {
-            EventAggregator.GetEvents()?.Refresh.Subscribe(Refresh_Handle);
-            EventAggregator.GetEvents()?.Version.Subscribe(Version_Handle);
+            EventHub.GetEvents()?.Refresh.Subscribe(Refresh_Handle);
+            EventHub.GetEvents()?.Version.Subscribe(Version_Handle);
             Model.PropertyChanged += Settings_PropertyChanged;
         }
 
@@ -55,12 +55,12 @@ namespace Cube.Pdf.App.Page
 
         #region Event handlers
 
-        #region EventAggregator
+        #region EventHub
 
         /* --------------------------------------------------------------------- */
         ///
         /// Refresh_Handle
-        /// 
+        ///
         /// <summary>
         /// 再描画イベント発生時に実行されるハンドラです。
         /// </summary>
@@ -72,7 +72,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Version_Handle
-        /// 
+        ///
         /// <summary>
         /// バージョン情報の表示イベント発生時に実行されるハンドラです。
         /// </summary>
@@ -88,7 +88,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Settings_PropertyChanged
-        /// 
+        ///
         /// <summary>
         /// Settings の内容が変化した時に実行されるハンドラです。
         /// </summary>

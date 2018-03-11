@@ -1,34 +1,34 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Pdf.Editing.Images;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using iTextSharp.text.pdf;
-using Cube.Pdf.Editing.Images;
 
 namespace Cube.Pdf.Editing.IText
 {
     /* --------------------------------------------------------------------- */
     ///
     /// IText.Operations
-    /// 
+    ///
     /// <summary>
     /// iTextSharp に関する拡張メソッドを定義するためのクラスです。
     /// </summary>
@@ -41,15 +41,15 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// CreatePdfReader
-        /// 
+        ///
         /// <summary>
         /// 画像ファイルから PdfReader オブジェクトを生成します。
         /// </summary>
         ///
         /// <param name="src">画像ファイルの情報</param>
-        /// 
+        ///
         /// <returns>PdfReader オブジェクト</returns>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static PdfReader CreatePdfReader(this ImageFile src)
         {
@@ -85,13 +85,13 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// CreatePage
-        /// 
+        ///
         /// <summary>
         /// Page オブジェクトを生成します。
         /// </summary>
         ///
         /// <param name="src">PdfReader オブジェクト</param>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static Page CreatePage(this PdfReader src, MediaFile file, int pagenum)
         {
@@ -110,13 +110,13 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// CreateMetadata
-        /// 
+        ///
         /// <summary>
         /// Metadata オブジェクトを生成します。
         /// </summary>
-        /// 
+        ///
         /// <param name="src">PdfReader オブジェクト</param>
-        /// 
+        ///
         /// <returns>Metadata オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -136,14 +136,14 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// CreateEncryption
-        /// 
+        ///
         /// <summary>
         /// Encryption オブジェクトを生成します。
         /// </summary>
-        /// 
+        ///
         /// <param name="src">PdfReader オブジェクト</param>
         /// <param name="file">PDF のファイル情報</param>
-        /// 
+        ///
         /// <returns>Encryption オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -166,13 +166,13 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// GetEncryptionMethod
-        /// 
+        ///
         /// <summary>
         /// 暗号化方式を取得します。
         /// </summary>
         ///
         /// <param name="src">PdfReader オブジェクト</param>
-        /// 
+        ///
         /// <returns>暗号化方式</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -192,16 +192,16 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// GetUserPassword
-        /// 
+        ///
         /// <summary>
         /// ユーザパスワードを取得します。
         /// </summary>
         ///
         /// <param name="src">PdfReader オブジェクト</param>
         /// <param name="file">PDF のファイル情報</param>
-        /// 
+        ///
         /// <returns>ユーザパスワード</returns>
-        /// 
+        ///
         /// <remarks>
         /// 暗号化方式が AES256 の場合、ユーザパスワードの解析に
         /// 失敗するので除外しています。AES256 の場合の解析方法を要検討。
@@ -224,17 +224,17 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// Rotate
-        /// 
+        ///
         /// <summary>
         /// Page オブジェクトの情報にしたがって回転します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// PDF ページを回転させる場合、いったん PdfReader オブジェクトの
         /// 内容を改変した後に PdfCopy オブジェクト等でコピーする方法が
         /// もっとも容易に実現できます。
         /// </remarks>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static void Rotate(this PdfReader src, Page page)
         {
@@ -246,17 +246,17 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// Merge
-        /// 
+        ///
         /// <summary>
         /// 文書プロパティを結合します。
         /// </summary>
-        /// 
-        /// 
+        ///
+        ///
         /// <param name="src">PdfReader オブジェクト</param>
         /// <param name="data">文書プロパティ</param>
-        /// 
+        ///
         /// <returns>結合結果</returns>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static IDictionary<string, string> Merge(this PdfReader src, Metadata data)
         {
@@ -278,14 +278,14 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// Set
-        /// 
+        ///
         /// <summary>
         /// 暗号化情報を設定します。
         /// </summary>
-        /// 
+        ///
         /// <param name="src">PdfWriter オブジェクト</param>
         /// <param name="data">暗号化情報</param>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static void Set(this PdfWriter src, Encryption data)
         {
@@ -310,11 +310,11 @@ namespace Cube.Pdf.Editing.IText
         /* ----------------------------------------------------------------- */
         ///
         /// Update
-        /// 
+        ///
         /// <summary>
         /// Dictionary オブジェクトの内容を更新します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private static void Update(this IDictionary<string, string> src, string key, string value)
         {

@@ -1,22 +1,20 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// FileMenuControl.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
 using System.Windows.Forms;
 
@@ -38,7 +36,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// FileMenuControl
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -62,19 +60,19 @@ namespace Cube.Pdf.App.Page
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EventAggregator
+        /// EventHub
         ///
         /// <summary>
         /// イベントを集約するオブジェクトを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEventAggregator EventAggregator { get; set; }
+        public IEventHub EventHub { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// PreviewMenu
-        /// 
+        ///
         /// <summary>
         /// プレビューメニューを取得します。
         /// </summary>
@@ -85,7 +83,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// UpMenu
-        /// 
+        ///
         /// <summary>
         /// 上へメニューを取得します。
         /// </summary>
@@ -96,7 +94,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// DownMenu
-        /// 
+        ///
         /// <summary>
         /// 下へメニューを取得します。
         /// </summary>
@@ -107,7 +105,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// RemoveMenu
-        /// 
+        ///
         /// <summary>
         /// 削除メニューを取得します。
         /// </summary>
@@ -122,7 +120,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeShortcutKeys
-        /// 
+        ///
         /// <summary>
         /// ショートカットキーを初期化します。
         /// </summary>
@@ -139,7 +137,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeEvents
-        /// 
+        ///
         /// <summary>
         /// 各種イベントを初期化します。
         /// </summary>
@@ -147,16 +145,16 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            PreviewMenu.Click += (s, e) => EventAggregator.GetEvents()?.Preview.Publish();
-            UpMenu.Click      += (s, e) => EventAggregator.GetEvents()?.Move.Publish(-1);
-            DownMenu.Click    += (s, e) => EventAggregator.GetEvents()?.Move.Publish(1);
-            RemoveMenu.Click  += (s, e) => EventAggregator.GetEvents()?.Remove.Publish();
+            PreviewMenu.Click += (s, e) => EventHub.GetEvents()?.Preview.Publish();
+            UpMenu.Click      += (s, e) => EventHub.GetEvents()?.Move.Publish(-1);
+            DownMenu.Click    += (s, e) => EventHub.GetEvents()?.Move.Publish(1);
+            RemoveMenu.Click  += (s, e) => EventHub.GetEvents()?.Remove.Publish();
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeMenu
-        /// 
+        ///
         /// <summary>
         /// メニューを初期化します。
         /// </summary>
@@ -178,7 +176,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// Menu
-        /// 
+        ///
         /// <summary>
         /// ToolStripMenuItem にキャストします。
         /// </summary>

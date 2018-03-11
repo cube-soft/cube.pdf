@@ -1,35 +1,33 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// EventAggregator.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// EventAggregator
-    /// 
+    /// EventHub
+    ///
     /// <summary>
     /// CubePDF ImagePicker で発生するイベントを集約するクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public class EventAggregator : IEventAggregator
+    public class EventHub : IEventHub
     {
         /* ----------------------------------------------------------------- */
         ///
@@ -100,25 +98,25 @@ namespace Cube.Pdf.App.Picker
 
     /* --------------------------------------------------------------------- */
     ///
-    /// EventAggregatorOperations
-    /// 
+    /// EventHubOperations
+    ///
     /// <summary>
-    /// EventAggregator に対する操作を定義するためのクラスです。
+    /// EventHub に対する操作を定義するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public static class EventAggregatorOperations
+    public static class EventHubOperations
     {
         /* ----------------------------------------------------------------- */
         ///
         /// GetEvents
         ///
         /// <summary>
-        /// EventAggregator オブジェクトを取得します。
+        /// EventHub オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static EventAggregator GetEvents(this IEventAggregator e)
-            => e as EventAggregator;
+        public static EventHub GetEvents(this IEventHub e)
+            => e as EventHub;
     }
 }

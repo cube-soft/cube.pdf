@@ -1,20 +1,20 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
@@ -36,11 +36,11 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// CreateMainView
-        /// 
+        ///
         /// <summary>
         /// メイン画面を生成します。
         /// </summary>
-        /// 
+        ///
         /// <returns>メイン画面</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -50,11 +50,11 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// CreateOpenView
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルの選択画面を生成します。
         /// </summary>
-        /// 
+        ///
         /// <returns>PDF ファイルの選択画面</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -70,11 +70,11 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// CreateAttachView
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルの選択画面を生成します。
         /// </summary>
-        /// 
+        ///
         /// <returns>添付ファイルの選択画面</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -91,14 +91,14 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// CreateVersionView
-        /// 
+        ///
         /// <summary>
         /// バージョン画面を生成します。
         /// </summary>
-        /// 
+        ///
         /// <param name="version">バージョン</param>
         /// <param name="icon">アイコン画像</param>
-        /// 
+        ///
         /// <returns>バージョン画面</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -117,13 +117,13 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// ShowMessage
-        /// 
+        ///
         /// <summary>
         /// メッセージを表示します。
         /// </summary>
-        /// 
+        ///
         /// <param name="message">メッセージ</param>
-        /// 
+        ///
         /// <returns>DialogResult オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -138,13 +138,13 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// ShowError
-        /// 
+        ///
         /// <summary>
         /// エラーメッセージを表示します。
         /// </summary>
-        /// 
+        ///
         /// <param name="message">メッセージ</param>
-        /// 
+        ///
         /// <returns>DialogResult オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -164,7 +164,7 @@ namespace Cube.Pdf.App.Clip
     /// <summary>
     /// 各種 View の生成用クラスです。
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// Views は ViewFactory のプロキシとして実装されています。
     /// 実際の View 生成コードは ViewFactory および継承クラスで実装して
@@ -177,11 +177,11 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// Configure
-        /// 
+        ///
         /// <summary>
         /// Facotry オブジェクトを設定します。
         /// </summary>
-        /// 
+        ///
         /// <param name="factory">Factory オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */

@@ -1,22 +1,20 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// FileListView.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
@@ -28,20 +26,20 @@ namespace Cube.Pdf.App.Page
     /* --------------------------------------------------------------------- */
     ///
     /// FileListView
-    /// 
+    ///
     /// <summary>
     /// ファイル一覧を表示するための ListView クラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public class FileListView : Cube.Forms.ListView
+    public class FileListView : System.Windows.Forms.ListView
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
         /// FileListView
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -56,7 +54,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// Aggregator
-        /// 
+        ///
         /// <summary>
         /// イベントを集約したオブジェクトを取得または設定します。
         /// </summary>
@@ -64,12 +62,12 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public IEventAggregator EventAggregator { get; set; }
+        public IEventHub EventHub { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// MouseDownLocation
-        /// 
+        ///
         /// <summary>
         /// MouseDown イベントが発生した時の Location を取得または設定します。
         /// </summary>
@@ -86,11 +84,11 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// OnCreateControl
-        /// 
+        ///
         /// <summary>
         /// コントロールが生成された時に実行されます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected override void OnCreateControl()
         {
@@ -111,7 +109,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// OnMouseDown
-        /// 
+        ///
         /// <summary>
         /// マウスが押下された時に実行されます。
         /// </summary>
@@ -126,7 +124,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// OnMouseUp
-        /// 
+        ///
         /// <summary>
         /// マウスが押下された時に実行されます。
         /// </summary>
@@ -141,7 +139,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// OnMouseMove
-        /// 
+        ///
         /// <summary>
         /// マウスが移動した時に実行されます。
         /// </summary>
@@ -157,7 +155,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// OnDragEnter
-        /// 
+        ///
         /// <summary>
         /// 項目がドラッグ移動された時に実行されます。
         /// </summary>
@@ -177,7 +175,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// OnDragDrop
-        /// 
+        ///
         /// <summary>
         /// 項目がドロップされた時に実行されます。
         /// </summary>
@@ -199,7 +197,7 @@ namespace Cube.Pdf.App.Page
                 int dest = Items.IndexOf(GetItemAt(point.X, point.Y));
                 if (dest == -1) dest = Items.Count - 1;
 
-                EventAggregator.GetEvents()?.Move.Publish(dest - src);
+                EventHub.GetEvents()?.Move.Publish(dest - src);
             }
             finally { MouseDownLocation = Point.Empty; }
         }
@@ -211,11 +209,11 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeColumns
-        /// 
+        ///
         /// <summary>
         /// Columns オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void InitializeColumns()
         {
@@ -250,7 +248,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         ///
         /// DoDragMove
-        /// 
+        ///
         /// <summary>
         /// ドラッグ移動を実行します。
         /// </summary>

@@ -1,22 +1,20 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Dialogs.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Reflection;
@@ -38,11 +36,11 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// CreateAddView
-        /// 
+        ///
         /// <summary>
         /// 追加するファイルを選択するための View を生成します。
         /// </summary>
-        /// 
+        ///
         /// <returns>ファイル選択画面</returns>
         ///
         /* --------------------------------------------------------------------- */
@@ -58,7 +56,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// CreatePasswordView
-        /// 
+        ///
         /// <summary>
         /// パスワードを入力するための View を生成します。
         /// </summary>
@@ -75,7 +73,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// CreateMergeView
-        /// 
+        ///
         /// <summary>
         /// 結合したファイルの保存先を選択するためのView を生成します。
         /// </summary>
@@ -92,7 +90,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// CreateSplitView
-        /// 
+        ///
         /// <summary>
         /// 分割したファイルの保存先を選択するための View を生成します。
         /// </summary>
@@ -108,7 +106,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// CreateVersionView
-        /// 
+        ///
         /// <summary>
         /// バージョン情報を表示します。
         /// </summary>
@@ -130,7 +128,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// ShowConfirmMessage
-        /// 
+        ///
         /// <summary>
         /// 確認メッセージを表示します。
         /// </summary>
@@ -147,7 +145,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// ShowErrorMessage
-        /// 
+        ///
         /// <summary>
         /// エラーメッセージを表示します。
         /// </summary>
@@ -169,7 +167,7 @@ namespace Cube.Pdf.App.Page
     /// <summary>
     /// 各種 View の生成用クラスです。
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// Views は ViewFactory のプロキシとして実装されています。
     /// 実際の View 生成コードは ViewFactory および継承クラスで実装して

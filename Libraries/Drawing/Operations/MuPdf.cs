@@ -1,20 +1,20 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc. All rights reserved.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
@@ -25,7 +25,7 @@ namespace Cube.Pdf.Drawing.MuPdf
     /* --------------------------------------------------------------------- */
     ///
     /// Operations
-    /// 
+    ///
     /// <summary>
     /// MuPDF の拡張用クラスです。
     /// </summary>
@@ -38,11 +38,11 @@ namespace Cube.Pdf.Drawing.MuPdf
         /* ----------------------------------------------------------------- */
         ///
         /// CreatePage
-        /// 
+        ///
         /// <summary>
         /// Page オブジェクトを生成します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static Page CreatePage(this IntPtr core, MediaFile file, int pagenum)
         {
@@ -64,11 +64,11 @@ namespace Cube.Pdf.Drawing.MuPdf
         /* ----------------------------------------------------------------- */
         ///
         /// CreateMetadata
-        /// 
+        ///
         /// <summary>
         /// Metadata オブジェクトを生成します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static Metadata CreateMetadata(this IntPtr core)
             => new Metadata
@@ -84,11 +84,11 @@ namespace Cube.Pdf.Drawing.MuPdf
         /* ----------------------------------------------------------------- */
         ///
         /// CreateEncryption
-        /// 
+        ///
         /// <summary>
         /// Encryption オブジェクトを生成します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static Encryption CreateEncryption(this IntPtr core, string password)
         {
@@ -117,11 +117,11 @@ namespace Cube.Pdf.Drawing.MuPdf
         /* ----------------------------------------------------------------- */
         ///
         /// CreateImage
-        /// 
+        ///
         /// <summary>
         /// Image オブジェクトを生成します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public static Image CreateImage(this IntPtr core, Page page, double power)
         {
@@ -156,11 +156,11 @@ namespace Cube.Pdf.Drawing.MuPdf
         /* ----------------------------------------------------------------- */
         ///
         /// ConvertTo
-        /// 
+        ///
         /// <summary>
         /// C で生成されたイメージを Image オブジェクトに変換します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private static unsafe Image ConvertTo(IntPtr raw, int width, int height)
         {
@@ -196,11 +196,11 @@ namespace Cube.Pdf.Drawing.MuPdf
         /* ----------------------------------------------------------------- */
         ///
         /// ConvertTo
-        /// 
+        ///
         /// <summary>
         /// 真偽値を PermissionMethod オブジェクトに変換します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private static PermissionMethod ConvertTo(bool value)
             => value ?

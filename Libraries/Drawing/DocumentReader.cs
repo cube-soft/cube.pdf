@@ -1,37 +1,37 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Pdf.Drawing.MuPdf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Cube.Pdf.Drawing.MuPdf;
 
 namespace Cube.Pdf.Drawing
 {
     /* --------------------------------------------------------------------- */
     ///
     /// DocumentReader
-    /// 
+    ///
     /// <summary>
     /// PDF ファイルを読み込み、各種情報の保持およびページのイメージを
     /// 生成するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// MuPDF を用いて PDF ファイルの解析を行います。
     /// </remarks>
@@ -44,7 +44,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -55,7 +55,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -66,7 +66,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -88,11 +88,11 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// ~DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを破棄します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
         /// に記述して下さい。
@@ -111,7 +111,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// File
-        /// 
+        ///
         /// <summary>
         /// ファイル情報を取得します。
         /// </summary>
@@ -122,7 +122,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// Metadata
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルに関するメタ情報を取得します。
         /// </summary>
@@ -133,7 +133,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// Encryption
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルに関する暗号化情報を取得します。
         /// </summary>
@@ -144,7 +144,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// Pages
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルのページ一覧を取得します。
         /// </summary>
@@ -155,7 +155,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// Attachments
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルの一覧を取得します。
         /// </summary>
@@ -166,7 +166,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// IsOpen
-        /// 
+        ///
         /// <summary>
         /// ファイルが正常に開いているかどうかを示す値を取得します。
         /// </summary>
@@ -186,7 +186,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// PasswordRequired
-        /// 
+        ///
         /// <summary>
         /// パスワードが要求された時に発生するイベントです。
         /// </summary>
@@ -203,7 +203,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
@@ -214,11 +214,11 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// TODO: パスワードを要求された時の処理の実装
         /// </remarks>
@@ -230,7 +230,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
@@ -264,7 +264,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// GetPage
-        /// 
+        ///
         /// <summary>
         /// 指定されたページ番号に対応するページ情報を取得します。
         /// </summary>
@@ -282,7 +282,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを破棄する際に必要な終了処理を実行します。
         /// </summary>
@@ -297,7 +297,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを破棄する際に必要な終了処理を実行します。
         /// </summary>
@@ -327,11 +327,11 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// CreateImage
-        /// 
+        ///
         /// <summary>
         /// 指定されたページ番号に対応するイメージを生成します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// 引数 power には、取得したいイメージのサイズを元データのサイズ
         /// に対する倍率で指定します。省略時は、等倍率の画像データが
@@ -357,7 +357,7 @@ namespace Cube.Pdf.Drawing
         /* ----------------------------------------------------------------- */
         ///
         /// OnPasswordRequired
-        /// 
+        ///
         /// <summary>
         /// パスワードが要求された時に実行されるハンドラです。
         /// </summary>

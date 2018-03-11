@@ -1,32 +1,32 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using iTextSharp.text.pdf;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
     /// ReadOnlyAttachmentCollection
-    /// 
+    ///
     /// <summary>
     /// 読み取り専用で添付ファイル一覧へアクセスするためのクラスです。
     /// </summary>
@@ -39,7 +39,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// ReadOnlyAttachmentCollection
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -50,11 +50,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// ReadOnlyAttachmentCollection
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /// <param name="core">内部処理用のオブジェクト</param>
         /// <param name="file">PDF のファイル情報</param>
         ///
@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// File
-        /// 
+        ///
         /// <summary>
         /// ファイル情報を取得します。
         /// </summary>
@@ -84,7 +84,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Count
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルの数を取得します。
         /// </summary>
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// GetEnumerator
-        /// 
+        ///
         /// <summary>
         /// 各ページオブジェクトへアクセスするための反復子を取得します。
         /// </summary>
@@ -110,7 +110,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// GetEnumerator
-        /// 
+        ///
         /// <summary>
         /// 各ページオブジェクトへアクセスするための反復子を取得します。
         /// </summary>
@@ -125,17 +125,17 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// ParseAttachments
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルを解析します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// /EmbededFiles, /Names で取得できる配列は、以下のような構造に
         /// なっています。
-        /// 
+        ///
         /// [String, Object, String, Object, ...]
-        /// 
+        ///
         /// この内、各 Object が、添付ファイルに関する実際の情報を保持
         /// しています。そのため、間の String 情報をスキップする必要が
         /// あります。

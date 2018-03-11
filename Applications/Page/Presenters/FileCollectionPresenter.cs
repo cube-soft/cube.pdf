@@ -1,29 +1,29 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Forms.Controls;
+using Cube.Log;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using Cube.Log;
-using Cube.Forms.Controls;
 
 namespace Cube.Pdf.App.Page
 {
@@ -44,29 +44,29 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// ListViewPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
         public FileCollectionPresenter(FileListView view, FileCollection model,
-            Settings settings, IEventAggregator events)
+            Settings settings, IEventHub events)
             : base(view, model, settings, events)
         {
-            EventAggregator.GetEvents()?.Preview.Subscribe(Preview_Handle);
-            EventAggregator.GetEvents()?.Add.Subscribe(Add_Handle);
-            EventAggregator.GetEvents()?.Remove.Subscribe(Remove_Handle);
-            EventAggregator.GetEvents()?.Clear.Subscribe(Clear_Handle);
-            EventAggregator.GetEvents()?.Move.Subscribe(Move_Handle);
-            EventAggregator.GetEvents()?.Merge.Subscribe(Merge_Handle);
-            EventAggregator.GetEvents()?.Split.Subscribe(Split_Handle);
+            EventHub.GetEvents()?.Preview.Subscribe(Preview_Handle);
+            EventHub.GetEvents()?.Add.Subscribe(Add_Handle);
+            EventHub.GetEvents()?.Remove.Subscribe(Remove_Handle);
+            EventHub.GetEvents()?.Clear.Subscribe(Clear_Handle);
+            EventHub.GetEvents()?.Move.Subscribe(Move_Handle);
+            EventHub.GetEvents()?.Merge.Subscribe(Merge_Handle);
+            EventHub.GetEvents()?.Split.Subscribe(Split_Handle);
 
-            View.Added                += (s, e) => EventAggregator.GetEvents()?.Refresh.Publish();
-            View.Removed              += (s, e) => EventAggregator.GetEvents()?.Refresh.Publish();
-            View.Cleared              += (s, e) => EventAggregator.GetEvents()?.Refresh.Publish();
-            View.SelectedIndexChanged += (s, e) => EventAggregator.GetEvents()?.Refresh.Publish();
-            View.MouseDoubleClick     += (s, e) => EventAggregator.GetEvents()?.Preview.Publish();
+            View.Added                += (s, e) => EventHub.GetEvents()?.Refresh.Publish();
+            View.Removed              += (s, e) => EventHub.GetEvents()?.Refresh.Publish();
+            View.Cleared              += (s, e) => EventHub.GetEvents()?.Refresh.Publish();
+            View.SelectedIndexChanged += (s, e) => EventHub.GetEvents()?.Refresh.Publish();
+            View.MouseDoubleClick     += (s, e) => EventHub.GetEvents()?.Preview.Publish();
 
             Model.CollectionChanged += Model_CollectionChanged;
             Model.PasswordRequired  += Model_PasswordRequired;
@@ -85,7 +85,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Preview_Handle
-        /// 
+        ///
         /// <summary>
         /// 選択項目のプレビュー要求が発生した時に実行されるハンドラです。
         /// 選択されている項目の内、最初の項目を既定のプログラムで開きます。
@@ -104,11 +104,11 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Add_Handle
-        /// 
+        ///
         /// <summary>
         /// ファイルの追加要求が発生した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// フォルダを指定された場合、直下のファイルのみを対象とします。
         /// </remarks>
@@ -125,7 +125,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Remove_Handle
-        /// 
+        ///
         /// <summary>
         /// 項目の削除要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -142,7 +142,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Clear_Handle
-        /// 
+        ///
         /// <summary>
         /// 全項目の削除要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -154,7 +154,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Move_Handle
-        /// 
+        ///
         /// <summary>
         /// 項目の移動要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -171,7 +171,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Merge_Handle
-        /// 
+        ///
         /// <summary>
         /// ファイルの結合要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -194,7 +194,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Split_Handle
-        /// 
+        ///
         /// <summary>
         /// ファイルの分割要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -222,7 +222,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Model_CollectionChanged
-        /// 
+        ///
         /// <summary>
         /// コレクションの内容に変更が発生した時に実行されるハンドラです。
         /// </summary>
@@ -255,7 +255,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// Model_PasswordRequired
-        /// 
+        ///
         /// <summary>
         /// パスワードの要求が発生した時に実行されるハンドラです。
         /// </summary>
@@ -279,7 +279,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// ExecuteAsync
-        /// 
+        ///
         /// <summary>
         /// 処理を実行します。
         /// </summary>
@@ -305,7 +305,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// GetFiles
-        /// 
+        ///
         /// <summary>
         /// 追加するファイルを取得します。
         /// </summary>
@@ -325,7 +325,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// GetMergeFile
-        /// 
+        ///
         /// <summary>
         /// 結合したファイルの保存先を取得します。
         /// </summary>
@@ -342,7 +342,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// GetSplitFolder
-        /// 
+        ///
         /// <summary>
         /// 分割したファイルの保存先を取得します。
         /// </summary>
@@ -359,7 +359,7 @@ namespace Cube.Pdf.App.Page
         /* --------------------------------------------------------------------- */
         ///
         /// PostProcess
-        /// 
+        ///
         /// <summary>
         /// 終了時に行う処理を UI スレッドで実行します。
         /// </summary>

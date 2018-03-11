@@ -1,40 +1,40 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Pdf.Editing.IText;
+using iTextSharp.text.exceptions;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using iTextSharp.text.pdf;
-using iTextSharp.text.exceptions;
-using Cube.Pdf.Editing.IText;
 
 namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
     /// DocumentReader
-    /// 
+    ///
     /// <summary>
     /// PDF ファイルを読み込んで各種情報を保持するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// iTextSharp を用いて PDF ファイルの解析を行います。
     /// </remarks>
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -58,11 +58,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /// <param name="path">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -87,7 +87,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -104,7 +104,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// File
-        /// 
+        ///
         /// <summary>
         /// ファイル情報を取得します。
         /// </summary>
@@ -115,7 +115,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Metadata
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルに関するメタ情報を取得します。
         /// </summary>
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Encryption
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルに関する暗号化情報を取得します。
         /// </summary>
@@ -137,7 +137,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Pages
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルのページ一覧を取得します。
         /// </summary>
@@ -148,7 +148,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Attachments
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルの一覧を取得します。
         /// </summary>
@@ -159,7 +159,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// RawObject
-        /// 
+        ///
         /// <summary>
         /// 内部実装のオブジェクトを取得します。
         /// </summary>
@@ -170,7 +170,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// IsOpen
-        /// 
+        ///
         /// <summary>
         /// ファイルが正常に開いているかどうかを示す値を取得します。
         /// </summary>
@@ -191,11 +191,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// PasswordRequired
-        /// 
+        ///
         /// <summary>
         /// パスワードが要求された時に発生するイベントです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// PasswordRequired イベントに対してイベントハンドラが登録されて
         /// いない場合、EncryptionException が送出されます。
@@ -207,7 +207,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// OnPasswordRequired
-        /// 
+        ///
         /// <summary>
         /// PasswordRequired イベントを発生させます。
         /// </summary>
@@ -228,11 +228,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// ~DocumentReader
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを破棄します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
         /// に記述して下さい。
@@ -247,7 +247,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを破棄する際に必要な終了処理を実行します。
         /// </summary>
@@ -262,7 +262,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを破棄する際に必要な終了処理を実行します。
         /// </summary>
@@ -290,11 +290,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
-        /// 
+        ///
         /// <param name="path">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -303,11 +303,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
-        /// 
+        ///
         /// <param name="path">PDF ファイルのパス</param>
         /// <param name="password">
         /// オーナパスワードまたはユーザパスワード
@@ -320,21 +320,21 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
-        /// 
+        ///
         /// <param name="path">PDF ファイルのパス</param>
-        /// 
+        ///
         /// <param name="password">
         /// オーナパスワードまたはユーザパスワード
         /// </param>
-        /// 
+        ///
         /// <param name="onlyFullAccess">
         /// フルアクセスのみを許可するかどうかを示す値
         /// </param>
-        /// 
+        ///
         /// <remarks>
         /// onlyFullAccess が true の場合、ユーザパスワードで
         /// PDF ファイルを開こうとすると PasswordRequired イベントが
@@ -363,11 +363,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
-        /// 
+        ///
         /// <param name="file">PDF ファイルオブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -376,16 +376,16 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
-        /// 
+        ///
         /// <param name="file">PDF ファイルオブジェクト</param>
         /// <param name="onlyFullAccess">
         /// フルアクセスのみを許可するかどうかを示す値
         /// </param>
-        /// 
+        ///
         /// <remarks>
         /// onlyFullAccess が true の場合、ユーザパスワードで
         /// PDF ファイルを開こうとすると PasswordRequired イベントが
@@ -414,13 +414,13 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// GetPage
-        /// 
+        ///
         /// <summary>
         /// 指定されたページ番号に対応するページ情報を取得します。
         /// </summary>
-        /// 
+        ///
         /// <param name="pagenum">ページ番号</param>
-        /// 
+        ///
         /// <returns>ページ情報を保持するオブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -434,15 +434,15 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// GetImages
-        /// 
+        ///
         /// <summary>
         /// 指定されたページ中に存在する画像を取得します。
         /// </summary>
-        /// 
+        ///
         /// <param name="pagenum">ページ番号</param>
-        /// 
+        ///
         /// <returns>抽出された Image オブジェクトのリスト</returns>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public IEnumerable<Image> GetImages(int pagenum)
         {
@@ -461,7 +461,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// SetRawObject
-        /// 
+        ///
         /// <summary>
         /// RawObject を生成します。
         /// </summary>

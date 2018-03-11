@@ -1,35 +1,33 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// EventAggregator.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.App.Page
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// EventAggregator
-    /// 
+    /// EventHub
+    ///
     /// <summary>
     /// CubePDF Page で発生するイベントを集約するクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public class EventAggregator : IEventAggregator
+    public class EventHub : IEventHub
     {
         #region Events
 
@@ -84,7 +82,7 @@ namespace Cube.Pdf.App.Page
         /// <summary>
         /// ページを移動するイベントです。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Move イベントの Value に設定される値は移動量になります。
         /// </remarks>
@@ -99,7 +97,7 @@ namespace Cube.Pdf.App.Page
         /// <summary>
         /// ファイルを結合するイベントです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public RelayEvent Merge { get; } = new RelayEvent();
 
@@ -110,7 +108,7 @@ namespace Cube.Pdf.App.Page
         /// <summary>
         /// ファイルを分割するイベントです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public RelayEvent Split { get; } = new RelayEvent();
 
@@ -121,7 +119,7 @@ namespace Cube.Pdf.App.Page
         /// <summary>
         /// 画面を再描画するイベントです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public RelayEvent Refresh { get; } = new RelayEvent();
 
@@ -132,7 +130,7 @@ namespace Cube.Pdf.App.Page
         /// <summary>
         /// バージョン情報を表示するイベントです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public RelayEvent Version { get; } = new RelayEvent();
 
@@ -141,25 +139,25 @@ namespace Cube.Pdf.App.Page
 
     /* --------------------------------------------------------------------- */
     ///
-    /// EventAggregatorOperations
-    /// 
+    /// EventHubOperations
+    ///
     /// <summary>
-    /// EventAggregator に対する操作を定義するためのクラスです。
+    /// EventHub に対する操作を定義するためのクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
-    public static class EventAggregatorOperations
+    public static class EventHubOperations
     {
         /* ----------------------------------------------------------------- */
         ///
         /// GetEvents
         ///
         /// <summary>
-        /// EventAggregator オブジェクトを取得します。
+        /// EventHub オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static EventAggregator GetEvents(this IEventAggregator e)
-            => e as EventAggregator;
+        public static EventHub GetEvents(this IEventHub e)
+            => e as EventHub;
     }
 }

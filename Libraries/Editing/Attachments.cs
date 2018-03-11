@@ -1,29 +1,30 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
-using System.Security.Cryptography;
 using iTextSharp.text.pdf;
+using System.Security.Cryptography;
 
 namespace Cube.Pdf.Editing
 {
     /* --------------------------------------------------------------------- */
     ///
     /// EmbeddedAttachment
-    /// 
+    ///
     /// <summary>
     /// PDF ファイルに添付済のファイルを表すクラスです。
     /// </summary>
@@ -36,11 +37,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Attachment
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /// <param name="stream">添付ファイルのストリーム</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -49,11 +50,11 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// Attachment
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /// <param name="name">添付ファイル名</param>
         /// <param name="file">PDF ファイル情報</param>
         /// <param name="stream">添付ファイルのストリーム</param>
@@ -74,7 +75,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// GetLength
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルのサイズを取得します。
         /// </summary>
@@ -88,7 +89,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// GetBytes
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルの内容をバイト配列で取得します。
         /// </summary>
@@ -99,7 +100,7 @@ namespace Cube.Pdf.Editing
         /* ----------------------------------------------------------------- */
         ///
         /// GetChecksum
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルのチェックサムを取得します。
         /// </summary>

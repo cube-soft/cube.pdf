@@ -1,29 +1,29 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Pdf.Editing;
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Cube.Pdf.Editing;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Picker
@@ -44,11 +44,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// ImageCollection
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public ImageCollection(string path)
         {
@@ -58,7 +58,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// ~ImageCollection
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを解放します。
         /// </summary>
@@ -76,11 +76,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Path
-        /// 
+        ///
         /// <summary>
         /// 画像を抽出するファイルを取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public string Path { get; }
 
@@ -91,11 +91,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// ExtractAsync
-        /// 
+        ///
         /// <summary>
         /// 抽出処理を非同期で実行します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public async Task ExtractAsync(IProgress<ProgressEventArgs<string>> progress)
         {
@@ -112,22 +112,22 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Cancel
-        /// 
+        ///
         /// <summary>
         /// 非同期で実行中の処理をキャンセルします。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public void Cancel() => _source?.Cancel();
 
         /* ----------------------------------------------------------------- */
         ///
         /// Save
-        /// 
+        ///
         /// <summary>
         /// 全てのイメージを保存します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public void Save(string directory)
         {
@@ -141,11 +141,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Save
-        /// 
+        ///
         /// <summary>
         /// 選択したイメージを保存します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public void Save(string directory, IEnumerable<int> indices)
         {
@@ -160,12 +160,12 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Restore
-        /// 
+        ///
         /// <summary>
         /// Images に対して行った処理を破棄し、RunAsync 完了直後の状態に
         /// 復元します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         public void Restore()
         {
@@ -180,7 +180,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを解放します。
         /// </summary>
@@ -199,7 +199,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを解放します。
         /// </summary>
@@ -229,11 +229,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Reader_PasswordRequired
-        /// 
+        ///
         /// <summary>
         /// パスワードの要求が発生した時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Reader_PasswordRequired(object sender, QueryEventArgs<string, string> e)
         {
@@ -251,11 +251,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Extract
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルからイメージを抽出します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Extract(IProgress<ProgressEventArgs<string>> progress)
         {
@@ -289,11 +289,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// ExtractImages
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルからイメージを抽出します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private KeyValuePair<int, int> ExtractImages(IProgress<ProgressEventArgs<string>> progress)
         {
@@ -310,11 +310,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// ExtractImages
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルからイメージを抽出します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void ExtractImages(DocumentReader src, IProgress<ProgressEventArgs<string>> progress)
         {
@@ -353,11 +353,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Save
-        /// 
+        ///
         /// <summary>
         /// イメージを保存します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Save(Image src, string directory, string basename, int index)
         {
@@ -368,11 +368,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Unique
-        /// 
+        ///
         /// <summary>
         /// 一意のパス名を取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private string Unique(string directory, string basename, int index)
         {
@@ -392,11 +392,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Create
-        /// 
+        ///
         /// <summary>
         /// ProgressEventArgs オブジェクトを生成します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private ProgressEventArgs<string> Create(int percentage, string message)
             => new ProgressEventArgs<string>(percentage, message);

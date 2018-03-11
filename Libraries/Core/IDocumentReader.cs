@@ -1,19 +1,19 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-/// 
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-///  http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-/// limitations under the License.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     ///
     /// IDocumentReader
-    /// 
+    ///
     /// <summary>
     /// PDF ファイルの読み込むためのインターフェースです。
     /// </summary>
@@ -36,7 +36,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// File
-        /// 
+        ///
         /// <summary>
         /// ファイルオブジェクトを取得します。
         /// </summary>
@@ -47,7 +47,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Metadata
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルに関するメタ情報を取得します。
         /// </summary>
@@ -58,7 +58,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Encryption
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルに関する暗号化情報を取得します。
         /// </summary>
@@ -69,7 +69,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Pages
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルの各ページ情報へアクセスするための反復子を
         /// 取得します。
@@ -81,7 +81,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Attachments
-        /// 
+        ///
         /// <summary>
         /// 添付ファイルの情報へアクセスするための反復子を取得します。
         /// </summary>
@@ -92,7 +92,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// IsOpen
-        /// 
+        ///
         /// <summary>
         /// ファイルが正常に開いているかどうかを示す値を取得します。
         /// </summary>
@@ -107,7 +107,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// PasswordRequired
-        /// 
+        ///
         /// <summary>
         /// パスワードが要求された時に発生するイベントです。
         /// </summary>
@@ -122,11 +122,11 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
-        /// 
+        ///
         /// <param name="file">PDF ファイルオブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -135,11 +135,11 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルを開きます。
         /// </summary>
-        /// 
+        ///
         /// <param name="path">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -148,11 +148,11 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// Open
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルをパスワードを入力して開きます。
         /// </summary>
-        /// 
+        ///
         /// <param name="path">PDF ファイルのパス</param>
         /// <param name="password">
         /// オーナパスワードまたはユーザパスワード
@@ -164,11 +164,11 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         ///
         /// GetPage
-        /// 
+        ///
         /// <summary>
         /// 指定されたページ番号に対応するページ情報を取得します。
         /// </summary>
-        /// 
+        ///
         /// <param name="pagenum">ページ番号</param>
         ///
         /* ----------------------------------------------------------------- */
