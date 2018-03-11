@@ -1,4 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
+using Cube.Forms.Bindings;
+using Cube.Log;
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -19,8 +21,6 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using Cube.Forms.Bindings;
-using Cube.Log;
 
 namespace Cube.Pdf.App.Clip
 {
@@ -40,31 +40,31 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// ClipPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public ClipPresenter(IClipView view)
-            : base(view, new ClipSource(), new EventAggregator())
+            : base(view, new ClipSource(), new EventHub())
         {
             // View
-            View.EventAggregator = EventAggregator;
+            View.EventHub = EventHub;
             View.DataSource = Model.Clips.ToBindingSource();
 
             // Model
             Model.PropertyChanged += WhenModelChanged;
             Model.Locked          += WhenLocked;
 
-            // EventAggregator
-            EventAggregator?.GetEvents()?.Open.Subscribe(WhenOpen);
-            EventAggregator?.GetEvents()?.Attach.Subscribe(WhenAttach);
-            EventAggregator?.GetEvents()?.Detach.Subscribe(WhenDetach);
-            EventAggregator?.GetEvents()?.Reset.Subscribe(WhenReset);
-            EventAggregator?.GetEvents()?.Save.Subscribe(WhenSave);
-            EventAggregator?.GetEvents()?.Message.Subscribe(WhenMessage);
-            EventAggregator?.GetEvents()?.Error.Subscribe(WhenError);
+            // EventHub
+            EventHub?.GetEvents()?.Open.Subscribe(WhenOpen);
+            EventHub?.GetEvents()?.Attach.Subscribe(WhenAttach);
+            EventHub?.GetEvents()?.Detach.Subscribe(WhenDetach);
+            EventHub?.GetEvents()?.Reset.Subscribe(WhenReset);
+            EventHub?.GetEvents()?.Save.Subscribe(WhenSave);
+            EventHub?.GetEvents()?.Message.Subscribe(WhenMessage);
+            EventHub?.GetEvents()?.Error.Subscribe(WhenError);
         }
 
         #endregion
@@ -74,11 +74,11 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
-        /// 
+        ///
         /// <summary>
         /// リソースを開放します。
         /// </summary>
-        /// 
+        ///
         /// <param name="disposing">
         /// マネージオブジェクトを開放するかどうかを示す値
         /// </param>
@@ -101,7 +101,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenModelChanged
-        /// 
+        ///
         /// <summary>
         /// Model のプロパティが変化した時に実行されます。
         /// </summary>
@@ -116,7 +116,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenLocked
-        /// 
+        ///
         /// <summary>
         /// ファイルがロックされている時に実行されるハンドラです。
         /// </summary>
@@ -135,7 +135,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenOpen
-        /// 
+        ///
         /// <summary>
         /// Open イベント発生時に実行されます。
         /// </summary>
@@ -154,7 +154,7 @@ namespace Cube.Pdf.App.Clip
                 catch (EncryptionException err)
                 {
                     this.LogError(err.Message, err);
-                    EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
+                    EventHub?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
                     break;
                 }
                 catch (Exception err) { this.LogWarn(err.Message, err); }
@@ -164,7 +164,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenAttach
-        /// 
+        ///
         /// <summary>
         /// Attach イベント発生時に実行されます。
         /// </summary>
@@ -176,7 +176,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenDetach
-        /// 
+        ///
         /// <summary>
         /// Detach イベント発生時に実行されます。
         /// </summary>
@@ -191,7 +191,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenReset
-        /// 
+        ///
         /// <summary>
         /// Reset イベント発生時に実行されます。
         /// </summary>
@@ -203,7 +203,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenSave
-        /// 
+        ///
         /// <summary>
         /// Save イベント発生時に実行されます。
         /// </summary>
@@ -215,12 +215,12 @@ namespace Cube.Pdf.App.Clip
             {
                 SyncWait(() => View.IsBusy = true);
                 await Async(() => Model.Save());
-                EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
+                EventHub?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
             }
             catch (Exception err)
             {
                 this.LogError(err.Message, err);
-                EventAggregator?.GetEvents()?.Error.Publish(err.Message);
+                EventHub?.GetEvents()?.Error.Publish(err.Message);
             }
             finally { SyncWait(() => View.IsBusy = false); }
         }
@@ -228,7 +228,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenMessage
-        /// 
+        ///
         /// <summary>
         /// Message イベント発生時に実行されます。
         /// </summary>
@@ -240,7 +240,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenError
-        /// 
+        ///
         /// <summary>
         /// Error イベント発生時に実行されます。
         /// </summary>

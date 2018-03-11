@@ -39,17 +39,23 @@
     <ApplicationManifest>App.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    <Reference Include="AlphaFS">
+      <HintPath>..\..\..\packages\AlphaFS.2.1.3\lib\net45\AlphaFS.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Core.1.8.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Cube.Forms">
-      <HintPath>..\..\..\lib\net45\Cube.Forms.dll</HintPath>
+    <Reference Include="Cube.FileSystem">
+      <HintPath>..\..\..\packages\Cube.FileSystem.1.8.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\lib\net45\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Images.1.8.0\lib\net45\Cube.Images.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Forms">
+      <HintPath>..\..\..\packages\Cube.Forms.1.8.0\lib\net45\Cube.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -114,7 +120,7 @@
     <None Include="Resources\Logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Cube.Pdf.csproj">
+    <ProjectReference Include="..\..\Libraries\Core\Cube.Pdf.csproj">
       <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
       <Name>Cube.Pdf</Name>
     </ProjectReference>

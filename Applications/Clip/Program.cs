@@ -1,4 +1,5 @@
 ﻿/* ------------------------------------------------------------------------- */
+using Cube.Log;
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
 ///
@@ -36,7 +37,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// Main
-        /// 
+        ///
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。
         /// </summary>
@@ -49,8 +50,8 @@ namespace Cube.Pdf.App.Clip
 
             try
             {
-                Cube.Log.Operations.Configure();
-                Cube.Log.Operations.Info(type, Assembly.GetExecutingAssembly());
+                LogOperator.Configure();
+                LogOperator.Info(type, Assembly.GetExecutingAssembly());
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -58,7 +59,7 @@ namespace Cube.Pdf.App.Clip
                 var view = Views.CreateMainView(args);
                 using (var _ = new ClipPresenter(view)) Application.Run(view);
             }
-            catch (Exception err) { Cube.Log.Operations.Error(type, err.Message, err); }
+            catch (Exception err) { LogOperator.Error(type, err.Message, err); }
         }
     }
 }

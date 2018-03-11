@@ -20,14 +20,14 @@ namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// EventAggregator
+    /// EventHub
     /// 
     /// <summary>
     /// CubePDF Clip で発生するイベントを集約するクラスです。
     /// </summary>
     /// 
     /* --------------------------------------------------------------------- */
-    public class EventAggregator : IEventAggregator
+    public class EventHub : IEventHub
     {
         /* ----------------------------------------------------------------- */
         ///
@@ -127,12 +127,12 @@ namespace Cube.Pdf.App.Clip
         /// イベントの一覧を取得します。
         /// </summary>
         /// 
-        /// <param name="ea">IEventAggregator オブジェクト</param>
+        /// <param name="ea">IEventHub オブジェクト</param>
         /// 
         /// <returns>イベント一覧</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static EventAggregator GetEvents(this IEventAggregator ea)
-            => ea as EventAggregator;
+        public static EventHub GetEvents(this IEventHub ea)
+            => ea as EventHub;
     }
 }
