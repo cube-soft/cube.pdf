@@ -57,8 +57,8 @@ namespace Cube.Pdf.App.Picker
                     if (!m.IsServer) m.Publish(args);
                     else
                     {
-                        LogOperator.Configure();
-                        LogOperator.Info(type, Assembly.GetExecutingAssembly());
+                        Logger.Configure();
+                        Logger.Info(type, Assembly.GetExecutingAssembly());
 
                         Application.EnableVisualStyles();
                         Application.SetCompatibleTextRenderingDefault(false);
@@ -66,7 +66,7 @@ namespace Cube.Pdf.App.Picker
                     }
                 }
             }
-            catch (Exception err) { LogOperator.Error(type, err.Message, err); }
+            catch (Exception err) { Logger.Error(type, err.Message, err); }
         }
     }
 }

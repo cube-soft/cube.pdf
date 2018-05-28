@@ -94,7 +94,6 @@ namespace Cube.Pdf.App.Page
             tips.SetToolTip(TitleButton, Properties.Resources.About);
 
             FileListView.SmallImageList = Icons.ImageList;
-            FileListView.Converter = new FileConverter(Icons);
 
             Text = $"{ProductName} {ProductVersion} ({ProductPlatform})";
         }
@@ -121,7 +120,6 @@ namespace Cube.Pdf.App.Page
             ExitButton.Click   += (s, e) => Close();
 
             FileMenu.EventHub = EventHub;
-            FileListView.EventHub = EventHub;
             FileListView.ContextMenuStrip = FileMenu;
             FileListView.DragEnter += (s, e) => OnDragEnter(e);
             FileListView.DragDrop  += (s, e) => OnDragDrop(e);
@@ -209,13 +207,13 @@ namespace Cube.Pdf.App.Page
                 MergeButton.Enabled = FileListView.Items.Count > 1;
                 SplitButton.Enabled = FileListView.Items.Count > 0;
 
-                UpButton.Enabled             =
-                DownButton.Enabled           =
-                RemoveButton.Enabled         =
-                FileMenu.PreviewMenu.Enabled =
-                FileMenu.UpMenu.Enabled      =
-                FileMenu.DownMenu.Enabled    =
-                FileMenu.RemoveMenu.Enabled  = FileListView.AnyItemsSelected;
+                //UpButton.Enabled             =
+                //DownButton.Enabled           =
+                //RemoveButton.Enabled         =
+                //FileMenu.PreviewMenu.Enabled =
+                //FileMenu.UpMenu.Enabled      =
+                //FileMenu.DownMenu.Enabled    =
+                //FileMenu.RemoveMenu.Enabled  = FileListView.AnyItemsSelected;
             }
             finally
             {

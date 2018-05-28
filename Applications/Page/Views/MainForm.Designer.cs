@@ -44,7 +44,7 @@
             this.DownButton = new Cube.Forms.Button();
             this.RemoveButton = new Cube.Forms.Button();
             this.ClearButton = new Cube.Forms.Button();
-            this.FileListView = new Cube.Pdf.App.Page.FileListView();
+            this.FileListView = new System.Windows.Forms.ListView();
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.TitleButton = new System.Windows.Forms.PictureBox();
@@ -283,7 +283,6 @@
             this.FileListView.ShowItemToolTips = true;
             this.FileListView.Size = new System.Drawing.Size(560, 216);
             this.FileListView.TabIndex = 3;
-            this.FileListView.Theme = Cube.Forms.WindowTheme.Explorer;
             this.FileListView.UseCompatibleStateImageBehavior = false;
             this.FileListView.View = System.Windows.Forms.View.Details;
             // 
@@ -367,7 +366,7 @@
         private Forms.Button SplitButton;
         private System.Windows.Forms.Panel MergeButtonPanel;
         private Forms.Button MergeButton;
-        private FileListView FileListView;
+        private System.Windows.Forms.ListView FileListView;
     }
 }
 

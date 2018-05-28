@@ -185,11 +185,11 @@ namespace Cube.Pdf.App.Page
                 writer.Metadata = Metadata;
                 writer.Save(tmp);
 
-                var op = new Cube.FileSystem.FileHandler();
+                var op = new Cube.FileSystem.IO();
                 op.Failed += (s, e) =>
                 {
                     e.Cancel = true;
-                    throw e.Value;
+                    throw e.Exception;
                 };
                 op.Move(tmp, path, true);
             }

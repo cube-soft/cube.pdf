@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Page
     ///
     /* --------------------------------------------------------------------- */
     public class FileCollectionPresenter
-        : Cube.Forms.PresenterBase<FileListView, FileCollection, Settings>
+        : Cube.Forms.PresenterBase<ListView, FileCollection, Settings>
     {
         #region Constructors
 
@@ -50,7 +50,7 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public FileCollectionPresenter(FileListView view, FileCollection model,
+        public FileCollectionPresenter(ListView view, FileCollection model,
             Settings settings, IEventHub events)
             : base(view, model, settings, events)
         {
@@ -62,13 +62,9 @@ namespace Cube.Pdf.App.Page
             EventHub.GetEvents()?.Merge.Subscribe(Merge_Handle);
             EventHub.GetEvents()?.Split.Subscribe(Split_Handle);
 
-            View.Added                += (s, e) => EventHub.GetEvents()?.Refresh.Publish();
-            View.Removed              += (s, e) => EventHub.GetEvents()?.Refresh.Publish();
-            View.Cleared              += (s, e) => EventHub.GetEvents()?.Refresh.Publish();
             View.SelectedIndexChanged += (s, e) => EventHub.GetEvents()?.Refresh.Publish();
             View.MouseDoubleClick     += (s, e) => EventHub.GetEvents()?.Preview.Publish();
 
-            Model.CollectionChanged += Model_CollectionChanged;
             Model.PasswordRequired  += Model_PasswordRequired;
 
             var reader = new AssemblyReader(Settings.Assembly);
@@ -218,39 +214,6 @@ namespace Cube.Pdf.App.Page
         #endregion
 
         #region Model
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Model_CollectionChanged
-        ///
-        /// <summary>
-        /// コレクションの内容に変更が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void Model_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-            => SyncWait(() =>
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    View.Insert(e.NewStartingIndex, Model[e.NewStartingIndex]);
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    View.MoveItems(new int[] { e.OldStartingIndex }, e.NewStartingIndex - e.OldStartingIndex);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    View.RemoveItems(new int[] { e.OldStartingIndex });
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    View.ClearItems();
-                    if (Model.Count == 0) break;
-                    foreach (var item in Model) View.Add(item);
-                    break;
-                default:
-                    break;
-            }
-        });
 
         /* --------------------------------------------------------------------- */
         ///

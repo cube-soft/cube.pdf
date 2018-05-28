@@ -36,6 +36,7 @@ namespace Cube.Pdf.Tests.Drawing
     /* --------------------------------------------------------------------- */
     [Parallelizable]
     [TestFixture]
+    [Ignore("Temporarily ignored")]
     class DocumentReaderTest : FileResource
     {
         /* ----------------------------------------------------------------- */

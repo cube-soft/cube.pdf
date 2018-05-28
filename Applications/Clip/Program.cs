@@ -50,8 +50,8 @@ namespace Cube.Pdf.App.Clip
 
             try
             {
-                LogOperator.Configure();
-                LogOperator.Info(type, Assembly.GetExecutingAssembly());
+                Logger.Configure();
+                Logger.Info(type, Assembly.GetExecutingAssembly());
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -59,7 +59,7 @@ namespace Cube.Pdf.App.Clip
                 var view = Views.CreateMainView(args);
                 using (var _ = new ClipPresenter(view)) Application.Run(view);
             }
-            catch (Exception err) { LogOperator.Error(type, err.Message, err); }
+            catch (Exception err) { Logger.Error(type, err.Message, err); }
         }
     }
 }

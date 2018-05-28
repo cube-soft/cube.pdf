@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Log;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -51,13 +52,13 @@ namespace Cube.Pdf.App.Page
 
             try
             {
-                using (var m = new Cube.Processes.Messenger<string[]>(name))
+                using (var m = new Cube.Processes.Messenger<IEnumerable<string>>(name))
                 {
                     if (!m.IsServer) m.Publish(args);
                     else
                     {
-                        LogOperator.Configure();
-                        LogOperator.Info(type, Assembly.GetExecutingAssembly());
+                        Logger.Configure();
+                        Logger.Info(type, Assembly.GetExecutingAssembly());
 
                         Application.EnableVisualStyles();
                         Application.SetCompatibleTextRenderingDefault(false);
@@ -65,7 +66,7 @@ namespace Cube.Pdf.App.Page
                     }
                 }
             }
-            catch (Exception err) { LogOperator.Error(type, err.Message, err); }
+            catch (Exception err) { Logger.Error(type, err.Message, err); }
         }
     }
 }
