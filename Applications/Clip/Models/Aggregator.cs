@@ -16,107 +16,123 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.App.Picker
+namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// EventHub
+    /// Aggregator
     ///
     /// <summary>
-    /// CubePDF ImagePicker で発生するイベントを集約するクラスです。
+    /// CubePDF Clip で発生するイベントを集約するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EventHub : IEventHub
+    public class Aggregator : IAggregator
     {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// 添付元の PDF ファイルを開くイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<string[]> Open { get; } = new RelayEvent<string[]>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        ///
+        /// <summary>
+        /// 添付ファイルを追加するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<string[]> Attach { get; } = new RelayEvent<string[]>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Detach
+        ///
+        /// <summary>
+        /// 添付ファイルを削除するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Detach { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// 添付ファイルを Open イベント発生直後の状態にリセットする
+        /// イベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Reset { get; } = new RelayEvent();
+
         /* ----------------------------------------------------------------- */
         ///
         /// Save
         ///
         /// <summary>
-        /// 画像を保存するイベントです。
+        /// PDF ファイルを上書き保存するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<int[]> Save { get; } = new RelayEvent<int[]>();
+        public RelayEvent Save { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveComplete
+        /// Message
         ///
         /// <summary>
-        /// 画像の保存が完了した事を表すイベントです。
+        /// メッセージを表示するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent SaveComplete { get; } = new RelayEvent();
+        public RelayEvent<string> Message { get; } = new RelayEvent<string>();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Preview
+        /// Error
         ///
         /// <summary>
-        /// プレビュー画面を表示するイベントです。
+        /// エラーメッセージを表示するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent Preview { get; } = new RelayEvent();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PreviewImage
-        ///
-        /// <summary>
-        /// 画像のプレビューを表示するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent PreviewImage { get; } = new RelayEvent();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Remove
-        ///
-        /// <summary>
-        /// 画像を一覧から削除するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Remove { get; } = new RelayEvent();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Version
-        ///
-        /// <summary>
-        /// バージョン情報を表示するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Version { get; } = new RelayEvent();
+        public RelayEvent<string> Error { get; } = new RelayEvent<string>();
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// EventHubOperations
+    /// AggregatorExtension
     ///
     /// <summary>
-    /// EventHub に対する操作を定義するためのクラスです。
+    /// Aggregator の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class EventHubOperations
+    public static class AggregatorExtension
     {
         /* ----------------------------------------------------------------- */
         ///
         /// GetEvents
         ///
         /// <summary>
-        /// EventHub オブジェクトを取得します。
+        /// Aggregator で定義されているイベント群にアクセス可能な
+        /// オブジェクトを取得します。
         /// </summary>
         ///
+        /// <param name="src">イベント集約オブジェクト</param>
+        ///
+        /// <returns>Aggregator オブジェクト</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public static EventHub GetEvents(this IEventHub e)
-            => e as EventHub;
+        public static Aggregator GetEvents(this IAggregator src) => src as Aggregator;
     }
 }

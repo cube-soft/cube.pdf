@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Cube.Pdf.Editing
+namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///

@@ -16,50 +16,54 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Editing.IText;
 using iTextSharp.text.pdf;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Cube.Pdf.Editing
+namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ReadOnlyPageCollection
+    /// ReadOnlyAttachmentCollection
     ///
     /// <summary>
-    /// 読み取り専用で PDF ページ一覧へアクセスするためのクラスです。
+    /// 読み取り専用で添付ファイル一覧へアクセスするためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ReadOnlyPageCollection : IReadOnlyCollection<Page>
+    public class ReadOnlyAttachmentCollection : IReadOnlyCollection<Attachment>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReadOnlyPageCollection
+        /// ReadOnlyAttachmentCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection() : this(null, null) { }
+        public ReadOnlyAttachmentCollection() : this(null, null) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReadOnlyPageCollection
+        /// ReadOnlyAttachmentCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="core">内部処理用のオブジェクト</param>
+        /// <param name="file">PDF のファイル情報</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(PdfReader core, MediaFile file)
+        public ReadOnlyAttachmentCollection(PdfReader core, MediaFile file)
         {
-            File  = file;
+            File = file;
             _core = core;
+            ParseAttachments();
         }
 
         #endregion
@@ -82,11 +86,11 @@ namespace Cube.Pdf.Editing
         /// Count
         ///
         /// <summary>
-        /// ページ数を取得します。
+        /// 添付ファイルの数を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count => _core?.NumberOfPages ?? 0;
+        public int Count => _values.Count();
 
         #endregion
 
@@ -101,14 +105,7 @@ namespace Cube.Pdf.Editing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<Page> GetEnumerator()
-        {
-            for (var i = 0; i < Count; ++i)
-            {
-                var pagenum = i + 1;
-                yield return _core.CreatePage(File, pagenum);
-            }
-        }
+        public IEnumerator<Attachment> GetEnumerator() => _values.GetEnumerator();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -123,8 +120,66 @@ namespace Cube.Pdf.Editing
 
         #endregion
 
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ParseAttachments
+        ///
+        /// <summary>
+        /// 添付ファイルを解析します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// /EmbededFiles, /Names で取得できる配列は、以下のような構造に
+        /// なっています。
+        ///
+        /// [String, Object, String, Object, ...]
+        ///
+        /// この内、各 Object が、添付ファイルに関する実際の情報を保持
+        /// しています。そのため、間の String 情報をスキップする必要が
+        /// あります。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ParseAttachments()
+        {
+            if (_core == null) return;
+
+            var c = PdfReader.GetPdfObject(_core.Catalog.Get(PdfName.NAMES)) as PdfDictionary;
+            if (c == null) return;
+            var e = PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) as PdfDictionary;
+            if (e == null) return;
+
+            var files = e.GetAsArray(PdfName.NAMES);
+            if (files == null) return;
+
+            for (var i = 1; i < files.Size; i += 2) // see remarks
+            {
+                var item = files.GetAsDict(i);
+                var name = item.GetAsString(PdfName.UF)?.ToUnicodeString();
+                if (string.IsNullOrEmpty(name)) name = item.GetAsString(PdfName.F)?.ToString();
+                if (string.IsNullOrEmpty(name)) continue;
+
+                var ef = item.GetAsDict(PdfName.EF);
+                if (ef == null) continue;
+
+                foreach (var key in ef.Keys)
+                {
+                    var stream = PdfReader.GetPdfObject(ef.GetAsIndirectObject(key)) as PRStream;
+                    if (stream == null) continue;
+
+                    _values.Add(new EmbeddedAttachment(name, File, stream));
+                    break;
+                }
+            }
+        }
+
         #region Fields
         private PdfReader _core = null;
+        private IList<Attachment> _values = new List<Attachment>();
+        #endregion
+
         #endregion
     }
 }

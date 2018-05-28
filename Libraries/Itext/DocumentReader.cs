@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Editing.IText;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 using System;
@@ -25,7 +24,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace Cube.Pdf.Editing
+namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///

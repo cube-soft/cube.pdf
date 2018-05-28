@@ -301,13 +301,13 @@ namespace Cube.Pdf.App.Picker
                         SelectAll();
                         break;
                     case Keys.D:
-                        EventHub.GetEvents()?.Remove.Publish();
+                        Aggregator.GetEvents()?.Remove.Publish();
                         break;
                     case Keys.R:
-                        EventHub.GetEvents()?.PreviewImage.Publish();
+                        Aggregator.GetEvents()?.PreviewImage.Publish();
                         break;
                     case Keys.S:
-                        if (e.Shift) EventHub.GetEvents()?.Save.Publish(null);
+                        if (e.Shift) Aggregator.GetEvents()?.Save.Publish(null);
                         else if (AnyItemsSelected) RaiseSave();
                         break;
                     default:
@@ -361,16 +361,16 @@ namespace Cube.Pdf.App.Picker
         private void InitializeEvents()
         {
             ExitButton.Click    += (s, e) => Close();
-            TitleButton.Click   += (s, e) => EventHub.GetEvents()?.Version.Publish();
-            SaveAllButton.Click += (s, e) => EventHub.GetEvents()?.Save.Publish(null);
+            TitleButton.Click   += (s, e) => Aggregator.GetEvents()?.Version.Publish();
+            SaveAllButton.Click += (s, e) => Aggregator.GetEvents()?.Save.Publish(null);
             SaveButton.Click    += (s, e) => RaiseSave();
 
-            MenuControl.PreviewMenu.Click   += (s, e) => EventHub.GetEvents()?.PreviewImage.Publish();
-            MenuControl.RemoveMenu.Click    += (s, e) => EventHub.GetEvents()?.Remove.Publish();
+            MenuControl.PreviewMenu.Click   += (s, e) => Aggregator.GetEvents()?.PreviewImage.Publish();
+            MenuControl.RemoveMenu.Click    += (s, e) => Aggregator.GetEvents()?.Remove.Publish();
             MenuControl.SaveMenu.Click      += (s, e) => RaiseSave();
             MenuControl.SelectAllMenu.Click += (s, e) => SelectAll();
 
-            ImageListView.DoubleClick += (s, e) => EventHub.GetEvents()?.PreviewImage.Publish();
+            ImageListView.DoubleClick += (s, e) => Aggregator.GetEvents()?.PreviewImage.Publish();
             ImageListView.SelectedIndexChanged += (s, e) => Refresh();
         }
 
@@ -383,8 +383,8 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseSave()
-            => EventHub.GetEvents()?.Save.Publish(SelectedIndices.Ascend().ToArray());
+        private void RaiseSave() =>
+            Aggregator.GetEvents()?.Save.Publish(SelectedIndices.Ascend().ToArray());
 
         #endregion
 

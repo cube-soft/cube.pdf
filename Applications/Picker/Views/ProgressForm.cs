@@ -50,8 +50,8 @@ namespace Cube.Pdf.App.Picker
             InitializeComponent();
 
             ExitButton.Click    += (s, e) => Close();
-            SaveButton.Click    += (s, e) => EventHub.GetEvents()?.Save.Publish(null);
-            PreviewButton.Click += (s, e) => EventHub.GetEvents()?.Preview.Publish();
+            SaveButton.Click    += (s, e) => Aggregator.GetEvents()?.Save.Publish(null);
+            PreviewButton.Click += (s, e) => Aggregator.GetEvents()?.Preview.Publish();
         }
 
         #endregion

@@ -66,7 +66,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHub Aggregator { get; set; }
+        public Aggregator Aggregator { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///

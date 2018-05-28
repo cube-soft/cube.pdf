@@ -89,7 +89,7 @@ namespace Cube.Pdf.App.Picker
             new ProgressPresenter(
                 view,
                 new ImageCollection(path),
-                new EventHub()
+                new Aggregator()
             );
             view.Show();
         });

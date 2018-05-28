@@ -16,77 +16,57 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Drawing.MuPdf;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using iTextSharp.text.pdf;
+using System.Security.Cryptography;
 
-namespace Cube.Pdf.Drawing
+namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ReadOnlyPageCollection
+    /// EmbeddedAttachment
     ///
     /// <summary>
-    /// 読み取り専用で PDF ページ一覧へアクセスするためのクラスです。
+    /// PDF ファイルに添付済のファイルを表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ReadOnlyPageCollection : IReadOnlyCollection<Page>
+    public class EmbeddedAttachment : Attachment
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReadOnlyPageCollection
+        /// Attachment
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="stream">添付ファイルのストリーム</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection() : this(IntPtr.Zero, null) { }
+        public EmbeddedAttachment(PRStream stream) : this("", null, stream) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReadOnlyPageCollection
+        /// Attachment
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="name">添付ファイル名</param>
+        /// <param name="file">PDF ファイル情報</param>
+        /// <param name="stream">添付ファイルのストリーム</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(IntPtr core, MediaFile file)
+        public EmbeddedAttachment(string name, MediaFile file, PRStream stream)
+            : base()
         {
-            File  = file;
-            _core = core;
+            Name = name;
+            File = file;
+            _stream = stream;
         }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// File
-        ///
-        /// <summary>
-        /// ファイル情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public MediaFile File { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Count
-        ///
-        /// <summary>
-        /// ページ数を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Count => File?.PageCount ?? 0;
 
         #endregion
 
@@ -94,37 +74,53 @@ namespace Cube.Pdf.Drawing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetEnumerator
+        /// GetLength
         ///
         /// <summary>
-        /// 各ページオブジェクトへアクセスするための反復子を取得します。
+        /// 添付ファイルのサイズを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<Page> GetEnumerator()
-        {
-            for (var i = 0; i < Count; ++i)
-            {
-                var pagenum = i + 1;
-                yield return _core.CreatePage(File, pagenum);
-            }
-        }
+        protected override long GetLength()
+            => _stream?.GetAsDict(PdfName.PARAMS)?
+                       .GetAsNumber(PdfName.SIZE)?
+                       .LongValue ?? 0;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetEnumerator
+        /// GetBytes
         ///
         /// <summary>
-        /// 各ページオブジェクトへアクセスするための反復子を取得します。
+        /// 添付ファイルの内容をバイト配列で取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        protected override byte[] GetBytes() => PdfReader.GetStreamBytes(_stream);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetChecksum
+        ///
+        /// <summary>
+        /// 添付ファイルのチェックサムを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override byte[] GetChecksum()
+        {
+            if (_cache == null)
+            {
+                var md5 = new MD5CryptoServiceProvider();
+                _cache = md5.ComputeHash(GetBytes());
+            }
+            return _cache;
+        }
 
         #endregion
 
         #region Fields
-        private IntPtr _core = IntPtr.Zero;
+        private PRStream _stream;
+        private byte[] _cache;
         #endregion
     }
 }

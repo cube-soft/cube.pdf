@@ -100,7 +100,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         public MainForm(string[] args) : this()
         {
-            Load += (s, e) => EventHub?.GetEvents()?.Open.Publish(args);
+            Load += (s, e) => Aggregator?.GetEvents()?.Open.Publish(args);
         }
 
         #endregion
@@ -218,8 +218,8 @@ namespace Cube.Pdf.App.Clip
 
             var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
             var open  = string.IsNullOrEmpty(SourceTextBox.Text);
-            if (open) EventHub?.GetEvents()?.Open.Publish(files);
-            else EventHub?.GetEvents()?.Attach.Publish(files);
+            if (open) Aggregator?.GetEvents()?.Open.Publish(files);
+            else Aggregator?.GetEvents()?.Attach.Publish(files);
         }
 
         /* ----------------------------------------------------------------- */
@@ -235,7 +235,7 @@ namespace Cube.Pdf.App.Clip
         {
             var view = Views.CreateOpenView();
             if (view.ShowDialog() == DialogResult.Cancel) return;
-            EventHub?.GetEvents()?.Open.Publish(view.FileNames);
+            Aggregator?.GetEvents()?.Open.Publish(view.FileNames);
         }
 
         /* ----------------------------------------------------------------- */
@@ -252,7 +252,7 @@ namespace Cube.Pdf.App.Clip
             if (!ToolsPanel.Enabled || !AttachButton.Enabled) return;
             var view = Views.CreateAttachView();
             if (view.ShowDialog() == DialogResult.Cancel) return;
-            EventHub?.GetEvents()?.Attach.Publish(view.FileNames);
+            Aggregator?.GetEvents()?.Attach.Publish(view.FileNames);
         }
 
         /* ----------------------------------------------------------------- */
@@ -267,7 +267,7 @@ namespace Cube.Pdf.App.Clip
         private void RaiseDetach()
         {
             if (!ToolsPanel.Enabled || !DetachButton.Enabled) return;
-            EventHub?.GetEvents()?.Detach.Publish();
+            Aggregator?.GetEvents()?.Detach.Publish();
         }
 
         /* ----------------------------------------------------------------- */
@@ -282,7 +282,7 @@ namespace Cube.Pdf.App.Clip
         private void RaiseReset()
         {
             if (!ToolsPanel.Enabled || !ResetButton.Enabled) return;
-            EventHub?.GetEvents()?.Reset.Publish();
+            Aggregator?.GetEvents()?.Reset.Publish();
         }
 
         /* ----------------------------------------------------------------- */
@@ -297,7 +297,7 @@ namespace Cube.Pdf.App.Clip
         private void RaiseSave()
         {
             if (!SaveButton.Enabled) return;
-            EventHub?.GetEvents()?.Save.Publish();
+            Aggregator?.GetEvents()?.Save.Publish();
         }
 
         /* ----------------------------------------------------------------- */

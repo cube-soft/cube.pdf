@@ -17,56 +17,75 @@
 //
 /* ------------------------------------------------------------------------- */
 using iTextSharp.text.pdf;
-using System.Security.Cryptography;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace Cube.Pdf.Editing
+namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// EmbeddedAttachment
+    /// ReadOnlyPageCollection
     ///
     /// <summary>
-    /// PDF ファイルに添付済のファイルを表すクラスです。
+    /// 読み取り専用で PDF ページ一覧へアクセスするためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EmbeddedAttachment : Attachment
+    public class ReadOnlyPageCollection : IReadOnlyCollection<Page>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Attachment
+        /// ReadOnlyPageCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="stream">添付ファイルのストリーム</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public EmbeddedAttachment(PRStream stream) : this("", null, stream) { }
+        public ReadOnlyPageCollection() : this(null, null) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Attachment
+        /// ReadOnlyPageCollection
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="name">添付ファイル名</param>
-        /// <param name="file">PDF ファイル情報</param>
-        /// <param name="stream">添付ファイルのストリーム</param>
+        /* ----------------------------------------------------------------- */
+        public ReadOnlyPageCollection(PdfReader core, MediaFile file)
+        {
+            File  = file;
+            _core = core;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// File
+        ///
+        /// <summary>
+        /// ファイル情報を取得します。
+        /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EmbeddedAttachment(string name, MediaFile file, PRStream stream)
-            : base()
-        {
-            Name = name;
-            File = file;
-            _stream = stream;
-        }
+        public MediaFile File { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Count
+        ///
+        /// <summary>
+        /// ページ数を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Count => _core?.NumberOfPages ?? 0;
 
         #endregion
 
@@ -74,53 +93,37 @@ namespace Cube.Pdf.Editing
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetLength
+        /// GetEnumerator
         ///
         /// <summary>
-        /// 添付ファイルのサイズを取得します。
+        /// 各ページオブジェクトへアクセスするための反復子を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override long GetLength()
-            => _stream?.GetAsDict(PdfName.PARAMS)?
-                       .GetAsNumber(PdfName.SIZE)?
-                       .LongValue ?? 0;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetBytes
-        ///
-        /// <summary>
-        /// 添付ファイルの内容をバイト配列で取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override byte[] GetBytes() => PdfReader.GetStreamBytes(_stream);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetChecksum
-        ///
-        /// <summary>
-        /// 添付ファイルのチェックサムを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override byte[] GetChecksum()
+        public IEnumerator<Page> GetEnumerator()
         {
-            if (_cache == null)
+            for (var i = 0; i < Count; ++i)
             {
-                var md5 = new MD5CryptoServiceProvider();
-                _cache = md5.ComputeHash(GetBytes());
+                var pagenum = i + 1;
+                yield return _core.CreatePage(File, pagenum);
             }
-            return _cache;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEnumerator
+        ///
+        /// <summary>
+        /// 各ページオブジェクトへアクセスするための反復子を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         #endregion
 
         #region Fields
-        private PRStream _stream;
-        private byte[] _cache;
+        private PdfReader _core = null;
         #endregion
     }
 }

@@ -43,11 +43,11 @@ namespace Cube.Pdf.App.Page
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public MenuPresenter(MainForm view, Settings model, IEventHub events)
+        public MenuPresenter(MainForm view, Settings model, IAggregator events)
             : base(view, model, events)
         {
-            EventHub.GetEvents()?.Refresh.Subscribe(Refresh_Handle);
-            EventHub.GetEvents()?.Version.Subscribe(Version_Handle);
+            Aggregator.GetEvents()?.Refresh.Subscribe(Refresh_Handle);
+            Aggregator.GetEvents()?.Version.Subscribe(Version_Handle);
             Model.PropertyChanged += Settings_PropertyChanged;
         }
 
@@ -55,7 +55,7 @@ namespace Cube.Pdf.App.Page
 
         #region Event handlers
 
-        #region EventHub
+        #region Aggregator
 
         /* --------------------------------------------------------------------- */
         ///

@@ -20,18 +20,18 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Cube.Pdf.Editing.Images
+namespace Cube.Pdf.Itext.Images
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Images.Operations
+    /// ImageExtension
     ///
     /// <summary>
     /// System.Drawing.Image の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class Operations
+    internal static class ImageExtension
     {
         /* ----------------------------------------------------------------- */
         ///

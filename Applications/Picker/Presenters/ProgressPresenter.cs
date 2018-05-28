@@ -44,15 +44,19 @@ namespace Cube.Pdf.App.Picker
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="view">View オブジェクト</param>
+        /// <param name="model">Model オブジェクト</param>
+        /// <param name="ea">イベント集約オブジェクト</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public ProgressPresenter(ProgressForm view, ImageCollection model, IEventHub events)
-            : base(view, model, events)
+        public ProgressPresenter(ProgressForm view, ImageCollection model, IAggregator ea) :
+            base(view, model, ea)
         {
             View.FileName = IoEx.Path.GetFileName(Model.Path);
-            View.EventHub = EventHub;
+            View.Aggregator = Aggregator;
 
-            EventHub.GetEvents()?.Save.Subscribe(Save_Handle);
-            EventHub.GetEvents()?.Preview.Subscribe(Preview_Handle);
+            Aggregator.GetEvents()?.Save.Subscribe(Save_Handle);
+            Aggregator.GetEvents()?.Preview.Subscribe(Preview_Handle);
 
             View.Shown += View_Shown;
         }
@@ -86,7 +90,7 @@ namespace Cube.Pdf.App.Picker
                     if (files == null) Model.Save(path);
                     else Model.Save(path, files);
                 });
-                EventHub.GetEvents()?.SaveComplete.Publish();
+                Aggregator.GetEvents()?.SaveComplete.Publish();
             }
             catch (Exception err) { this.LogError(err.Message, err); }
 
@@ -112,7 +116,7 @@ namespace Cube.Pdf.App.Picker
             Model.Restore();
 
             var sview = new ThumbnailForm();
-            var _     = new ThumbnailPresenter(sview, Model, EventHub);
+            var _     = new ThumbnailPresenter(sview, Model, Aggregator);
 
             sview.FormClosed += (s, ev) =>
             {

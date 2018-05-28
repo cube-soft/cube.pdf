@@ -17,12 +17,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Log;
-using Cube.Pdf.Editing.IText;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 
-namespace Cube.Pdf.Editing
+namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///

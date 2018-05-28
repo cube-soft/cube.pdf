@@ -65,7 +65,7 @@ namespace Cube.Pdf.App.Page
             : this()
         {
             if (args == null || args.Length == 0) return;
-            EventHub.GetEvents()?.Add.Publish(args);
+            Aggregator.GetEvents()?.Add.Publish(args);
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
-            EventHub = new EventHub();
+            Aggregator = new Aggregator();
 
             var tips = new ToolTip
             {
@@ -109,17 +109,17 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
-            TitleButton.Click  += (s, e) => EventHub.GetEvents()?.Version.Publish();
-            FileButton.Click   += (s, e) => EventHub.GetEvents()?.Add.Publish(null);
-            RemoveButton.Click += (s, e) => EventHub.GetEvents()?.Remove.Publish();
-            ClearButton.Click  += (s, e) => EventHub.GetEvents()?.Clear.Publish();
-            UpButton.Click     += (s, e) => EventHub.GetEvents()?.Move.Publish(-1);
-            DownButton.Click   += (s, e) => EventHub.GetEvents()?.Move.Publish(1);
-            MergeButton.Click  += (s, e) => EventHub.GetEvents()?.Merge.Publish();
-            SplitButton.Click  += (s, e) => EventHub.GetEvents()?.Split.Publish();
+            TitleButton.Click  += (s, e) => Aggregator.GetEvents()?.Version.Publish();
+            FileButton.Click   += (s, e) => Aggregator.GetEvents()?.Add.Publish(null);
+            RemoveButton.Click += (s, e) => Aggregator.GetEvents()?.Remove.Publish();
+            ClearButton.Click  += (s, e) => Aggregator.GetEvents()?.Clear.Publish();
+            UpButton.Click     += (s, e) => Aggregator.GetEvents()?.Move.Publish(-1);
+            DownButton.Click   += (s, e) => Aggregator.GetEvents()?.Move.Publish(1);
+            MergeButton.Click  += (s, e) => Aggregator.GetEvents()?.Merge.Publish();
+            SplitButton.Click  += (s, e) => Aggregator.GetEvents()?.Split.Publish();
             ExitButton.Click   += (s, e) => Close();
 
-            FileMenu.EventHub = EventHub;
+            FileMenu.Aggregator = Aggregator;
             FileListView.ContextMenuStrip = FileMenu;
             FileListView.DragEnter += (s, e) => OnDragEnter(e);
             FileListView.DragDrop  += (s, e) => OnDragDrop(e);
@@ -131,18 +131,18 @@ namespace Cube.Pdf.App.Page
             FooterPanel.DragDrop  += (s, e) => OnDragDrop(e);
 
             ShortcutKeys.Add(Keys.Control | Keys.A, SelectAll);
-            ShortcutKeys.Add(Keys.Control | Keys.D, () => EventHub?.GetEvents()?.Remove.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.H, () => EventHub?.GetEvents()?.Version.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.J, () => EventHub.GetEvents()?.Move.Publish(1));
-            ShortcutKeys.Add(Keys.Control | Keys.K, () => EventHub.GetEvents()?.Move.Publish(-1));
-            ShortcutKeys.Add(Keys.Control | Keys.M, () => EventHub?.GetEvents()?.Merge.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.O, () => EventHub.GetEvents()?.Add.Publish(null));
-            ShortcutKeys.Add(Keys.Control | Keys.R, () => EventHub.GetEvents()?.Preview.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.S, () => EventHub.GetEvents()?.Split.Publish());
-            ShortcutKeys.Add(Keys.Control | Keys.Up, () => EventHub.GetEvents()?.Move.Publish(-1));
-            ShortcutKeys.Add(Keys.Control | Keys.Down, () => EventHub.GetEvents()?.Move.Publish(1));
-            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, () => EventHub?.GetEvents()?.Clear.Publish());
-            ShortcutKeys.Add(Keys.Delete, () => EventHub?.GetEvents()?.Remove.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.D, () => Aggregator?.GetEvents()?.Remove.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.H, () => Aggregator?.GetEvents()?.Version.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.J, () => Aggregator.GetEvents()?.Move.Publish(1));
+            ShortcutKeys.Add(Keys.Control | Keys.K, () => Aggregator.GetEvents()?.Move.Publish(-1));
+            ShortcutKeys.Add(Keys.Control | Keys.M, () => Aggregator?.GetEvents()?.Merge.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.O, () => Aggregator.GetEvents()?.Add.Publish(null));
+            ShortcutKeys.Add(Keys.Control | Keys.R, () => Aggregator.GetEvents()?.Preview.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.S, () => Aggregator.GetEvents()?.Split.Publish());
+            ShortcutKeys.Add(Keys.Control | Keys.Up, () => Aggregator.GetEvents()?.Move.Publish(-1));
+            ShortcutKeys.Add(Keys.Control | Keys.Down, () => Aggregator.GetEvents()?.Move.Publish(1));
+            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, () => Aggregator?.GetEvents()?.Clear.Publish());
+            ShortcutKeys.Add(Keys.Delete, () => Aggregator?.GetEvents()?.Remove.Publish());
         }
 
         /* ----------------------------------------------------------------- */
@@ -156,8 +156,8 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new FileCollectionPresenter(FileListView, Files, Settings, EventHub);
-            new MenuPresenter(this, Settings, EventHub);
+            new FileCollectionPresenter(FileListView, Files, Settings, Aggregator);
+            new MenuPresenter(this, Settings, Aggregator);
         }
 
         #endregion
@@ -240,7 +240,7 @@ namespace Cube.Pdf.App.Page
             try
             {
                 if (e.Value == null) return;
-                EventHub.GetEvents()?.Add.Publish(e.Value.ToArray());
+                Aggregator.GetEvents()?.Add.Publish(e.Value.ToArray());
             }
             finally { base.OnReceived(e); }
         }
@@ -279,7 +279,7 @@ namespace Cube.Pdf.App.Page
             var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
             if (files == null) return;
 
-            EventHub.GetEvents()?.Add.Publish(files);
+            Aggregator.GetEvents()?.Add.Publish(files);
         }
 
         /* ----------------------------------------------------------------- */

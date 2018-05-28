@@ -176,7 +176,7 @@ namespace Cube.Pdf.App.Page
 
             try
             {
-                var writer = new Cube.Pdf.Editing.DocumentWriter();
+                var writer = new Cube.Pdf.Itext.DocumentWriter();
                 foreach (var file in Items)
                 {
                     if (file is PdfFile) AddDocument(file as PdfFile, writer);
@@ -207,7 +207,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         public void Split(string directory, IList<string> results)
         {
-            var writer = new Cube.Pdf.Editing.DocumentSplitter();
+            var writer = new Cube.Pdf.Itext.DocumentSplitter();
             foreach (var item in Items)
             {
                 if (item is PdfFile) AddDocument(item as PdfFile, writer);
@@ -258,7 +258,7 @@ namespace Cube.Pdf.App.Page
         /* ----------------------------------------------------------------- */
         private void AddDocument(string path, string password)
         {
-            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.PasswordRequired += (s, e) => OnPasswordRequired(e);
                 reader.Open(path, password, true);
@@ -281,7 +281,7 @@ namespace Cube.Pdf.App.Page
         {
             if (src == null) return;
 
-            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.PasswordRequired += (s, e) => { e.Cancel = true; };
                 reader.Open(src.FullName, src.Password, true);

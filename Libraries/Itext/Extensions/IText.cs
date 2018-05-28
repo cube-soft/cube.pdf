@@ -16,25 +16,25 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Editing.Images;
+using Cube.Pdf.Itext.Images;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Cube.Pdf.Editing.IText
+namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IText.Operations
+    /// ItextExtension
     ///
     /// <summary>
     /// iTextSharp に関する拡張メソッドを定義するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class Operations
+    internal static class ItextExtension
     {
         #region PdfReader
 

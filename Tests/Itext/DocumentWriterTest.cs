@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
-/// 
+///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
 /// You may obtain a copy of the License at
@@ -18,16 +18,16 @@
 using System.Linq;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Tests.Editing
+namespace Cube.Pdf.Tests.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
     /// DocumentWriterTest
-    /// 
+    ///
     /// <summary>
     /// DocumentWriter および DocumentSplitter のテスト用クラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     [Parallelizable]
     [TestFixture]
@@ -48,11 +48,11 @@ namespace Cube.Pdf.Tests.Editing
         {
             var dest = Result($"SaveAs_{filename}");
 
-            using (var writer = new Cube.Pdf.Editing.DocumentWriter())
-            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            using (var writer = new Cube.Pdf.Itext.DocumentWriter())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(filename), password);
-                
+
                 writer.Metadata     = reader.Metadata;
                 writer.Encryption   = reader.Encryption;
                 writer.UseSmartCopy = true;
@@ -74,7 +74,7 @@ namespace Cube.Pdf.Tests.Editing
         /// <summary>
         /// PDF を上書き保存するテストを実行します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// DocumentWriter で上書きする場合、保存の直前に DocumentReader
         /// オブジェクトを破棄する必要があるため、Bind(DocumentReader) を
@@ -90,9 +90,9 @@ namespace Cube.Pdf.Tests.Editing
 
             System.IO.File.Copy(Example(filename), dest, true);
 
-            using (var writer = new Cube.Pdf.Editing.DocumentWriter())
+            using (var writer = new Cube.Pdf.Itext.DocumentWriter())
             {
-                var reader = new Cube.Pdf.Editing.DocumentReader();
+                var reader = new Cube.Pdf.Itext.DocumentReader();
                 reader.Open(dest, password);
 
                 writer.Metadata = reader.Metadata;
@@ -123,8 +123,8 @@ namespace Cube.Pdf.Tests.Editing
             var n2   = System.IO.Path.GetFileNameWithoutExtension(image);
             var dest = Result($"Merge_{n1}_{n2}.pdf");
 
-            using (var writer = new Cube.Pdf.Editing.DocumentWriter())
-            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            using (var writer = new Cube.Pdf.Itext.DocumentWriter())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(pdf));
 
@@ -158,8 +158,8 @@ namespace Cube.Pdf.Tests.Editing
         [TestCase("password.pdf", "password", ExpectedResult = 2)]
         public int Split(string filename, string password)
         {
-            using (var writer = new Cube.Pdf.Editing.DocumentSplitter())
-            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            using (var writer = new Cube.Pdf.Itext.DocumentSplitter())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(filename), password);
 
@@ -193,9 +193,9 @@ namespace Cube.Pdf.Tests.Editing
             var src  = Example(pdf);
             var dest = Result($"Attach_{n1}_{n2}.pdf");
 
-            using (var writer = new Cube.Pdf.Editing.DocumentWriter())
+            using (var writer = new Cube.Pdf.Itext.DocumentWriter())
             {
-                var reader = new Cube.Pdf.Editing.DocumentReader();
+                var reader = new Cube.Pdf.Itext.DocumentReader();
                 reader.Open(src);
 
                 writer.Metadata = reader.Metadata;
@@ -212,7 +212,7 @@ namespace Cube.Pdf.Tests.Editing
                 writer.Save(dest);
             }
 
-            using (var reader = new Cube.Pdf.Editing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(dest);
 

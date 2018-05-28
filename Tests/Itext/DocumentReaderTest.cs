@@ -1,9 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
-/// DocumentReaderTest.cs
-/// 
 /// Copyright (c) 2010 CubeSoft, Inc.
-/// 
+///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
 /// You may obtain a copy of the License at
@@ -23,31 +21,21 @@ using System.Drawing;
 using System.Linq;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Tests.Drawing
+namespace Cube.Pdf.Tests.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
     /// DocumentReaderTest
-    /// 
+    ///
     /// <summary>
     /// DocumentReader のテストを行うクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     [Parallelizable]
     [TestFixture]
-    [Ignore("Temporarily ignored")]
     class DocumentReaderTest : FileResource
     {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// PDF ファイルを開くテストを行います。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
         #region Open
 
         /* ----------------------------------------------------------------- */
@@ -59,16 +47,15 @@ namespace Cube.Pdf.Tests.Drawing
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("rotation.pdf",        "",         true)]
-        [TestCase("password.pdf",        "password", true)]
-        [TestCase("password.pdf",        "view",     true /* false */)]
-        [TestCase("password-aes256.pdf", "password", true)]
+        [TestCase("rotation.pdf",        "",          true)]
+        [TestCase("password.pdf",        "password",  true)]
+        [TestCase("password.pdf",        "view",     false)]
+        [TestCase("password-aes256.pdf", "password",  true)]
         public void Open(string filename, string password, bool fullAccess)
         {
-            var src = Example(filename);
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
-                reader.Open(src, password);
+                reader.Open(Example(filename), password);
                 Assert.That(reader.IsOpen, Is.True);
                 Assert.That(((PdfFile)reader.File).FullAccess, Is.EqualTo(fullAccess));
             }
@@ -82,17 +69,12 @@ namespace Cube.Pdf.Tests.Drawing
         /// 間違ったパスワードを入力して PDF ファイルを開こうとするテストを
         /// 実行します。
         /// </summary>
-        /// 
-        /// <remarks>
-        /// 現在、パスワードの入力エラーとそれ以外のエラーの判別が
-        /// できないため、未実装となっています。要修正。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        //[Test]
+        [Test]
         public void Open_EncryptionException() => Assert.That(() =>
         {
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example("password.pdf"), "bad-password-string");
             }
@@ -106,19 +88,19 @@ namespace Cube.Pdf.Tests.Drawing
         /// 間違ったパスワードを入力して PDF ファイルを開こうとするテストを
         /// 実行します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
-        /// 現在、パスワードの入力エラーとそれ以外のエラーの判別が
-        /// できないため、未実装となっています。要修正。
+        /// PasswordRequired イベントにハンドラが登録されている場合、
+        /// 例外は送出されず PasswordRequired イベントが発生します。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        //[Test]
+        [Test]
         public void Open_PasswordRequired() => Assert.DoesNotThrow(() =>
         {
             var raised = false;
 
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.PasswordRequired += (s, e) =>
                 {
@@ -147,7 +129,7 @@ namespace Cube.Pdf.Tests.Drawing
         [TestCaseSource(nameof(FileTestCases))]
         public void File(string filename, string password, PdfFile expected)
         {
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(filename), password);
                 var actual = reader.File as PdfFile;
@@ -205,16 +187,12 @@ namespace Cube.Pdf.Tests.Drawing
         /// <summary>
         /// Metadata オブジェクトの内容を確認します。
         /// </summary>
-        /// 
-        /// <remarks>
-        /// 要実装
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        //[TestCaseSource(nameof(MetadataTestCases))]
+        [TestCaseSource(nameof(MetadataTestCases))]
         public void Metadata(string filename, string password, Metadata expected)
         {
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(filename), password);
                 var actual = reader.Metadata;
@@ -267,16 +245,12 @@ namespace Cube.Pdf.Tests.Drawing
         /// <summary>
         /// Encryption オブジェクトの内容を確認します。
         /// </summary>
-        /// 
-        /// <remarks>
-        /// 要実装
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        //[TestCaseSource(nameof(EncryptionTestCases))]
+        [TestCaseSource(nameof(EncryptionTestCases))]
         public void Encryption(string filename, string password, Encryption expected)
         {
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(filename), password);
                 var actual = reader.Encryption;
@@ -369,7 +343,7 @@ namespace Cube.Pdf.Tests.Drawing
         [TestCase("password-aes256.pdf", "password", ExpectedResult = 9)]
         public int Pages(string filename, string password)
         {
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(filename), password);
                 return reader.Pages.Count();
@@ -383,19 +357,13 @@ namespace Cube.Pdf.Tests.Drawing
         /// <summary>
         /// 各ページのサイズ情報を確認します。
         /// </summary>
-        /// 
-        /// <remarks>
-        /// ページを回転している場合、回転後のサイズが返されている。
-        /// Editing.DocumentReader() では元のサイズとなっているが、
-        /// この辺りの整合性をどうするか要検討。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("rotation.pdf", 1, 595, 842)]
-        [TestCase("rotation.pdf", 2, 842, 595)]
+        [TestCase("rotation.pdf", 2, 595, 842)]
         public void GetPage_Size(string filename, int n, int width, int height)
         {
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(filename));
                 var actual = reader.GetPage(n);
@@ -415,7 +383,7 @@ namespace Cube.Pdf.Tests.Drawing
         [TestCase("rotation.pdf", 1, ExpectedResult = 72)]
         public int GetPage_Resolution(string filename, int n)
         {
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(filename));
                 return reader.GetPage(n).Resolution.X;
@@ -438,7 +406,7 @@ namespace Cube.Pdf.Tests.Drawing
         [TestCase("rotation.pdf", 5, ExpectedResult =   0)]
         public int GetPage_Rotation(string filename, int n)
         {
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
                 reader.Open(Example(filename));
                 return reader.GetPage(n).Rotation;
@@ -447,34 +415,89 @@ namespace Cube.Pdf.Tests.Drawing
 
         #endregion
 
-        #region CreateImage
+        #region Attachments
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateImage
+        /// Attachments
         ///
         /// <summary>
-        /// Image オブジェクトを生成するテストを行います。
+        /// 添付ファイルの情報を取得するテストを実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("rotation.pdf", "", 1)]
-        [TestCase("rotation.pdf", "", 2)]
-        [TestCase("rotation.pdf", "", 3)]
-        [TestCase("rotation.pdf", "", 4)]
-        public void CreateImage(string filename, string password, int pagenum)
+        [TestCase("rotation.pdf",   ExpectedResult = 0)]
+        [TestCase("attachment.pdf", ExpectedResult = 3)]
+        public int Attachments(string filename)
         {
-            using (var reader = new Cube.Pdf.Drawing.DocumentReader())
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
             {
-                reader.Open(Example(filename), password);
-                var page = reader.GetPage(pagenum);
+                reader.Open(Example(filename));
+                return reader.Attachments.Count();
+            }
+        }
 
-                using (var image = reader.CreateImage(pagenum, 1.0))
-                {
-                    var dest = Result($"CreateImage-{pagenum}.png");
-                    image.Save(dest);
-                    Assert.That(System.IO.File.Exists(dest), Is.True);
-                }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments_Length
+        ///
+        /// <summary>
+        /// 添付ファイルのファイルサイズを取得するテストを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("CubePDF.png", ExpectedResult =   3765)]
+        [TestCase("CubeICE.png", ExpectedResult = 165524)]
+        [TestCase("Empty",       ExpectedResult =      0)]
+        public long Attachments_Length(string name)
+        {
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
+            {
+                reader.Open(Example("attachment.pdf"));
+                return reader.Attachments.First(x => x.Name == name).Length;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments_CJK
+        ///
+        /// <summary>
+        /// ファイル名が日本語の添付ファイルを取得できる事を確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("attachment-cjk.pdf", "日本語のサンプル.md")]
+        public void Attachments_CJK(string filename, string expected)
+        {
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
+            {
+                reader.Open(Example(filename));
+                Assert.That(reader.Attachments.Any(x => x.Name == expected));
+            }
+        }
+
+        #endregion
+
+        #region GetImages
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImages
+        ///
+        /// <summary>
+        /// ページ内に存在する画像の抽出テストを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("image.pdf", 1, ExpectedResult = 2)]
+        [TestCase("image.pdf", 2, ExpectedResult = 0)]
+        public int GetImages(string filename, int n)
+        {
+            using (var reader = new Cube.Pdf.Itext.DocumentReader())
+            {
+                reader.Open(Example(filename));
+                return reader.GetImages(n).Count();
             }
         }
 

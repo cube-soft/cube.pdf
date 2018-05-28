@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Editing;
+using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

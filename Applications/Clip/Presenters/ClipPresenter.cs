@@ -46,25 +46,24 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ClipPresenter(IClipView view)
-            : base(view, new ClipSource(), new EventHub())
+        public ClipPresenter(IClipView view) : base(view, new ClipSource(), new Aggregator())
         {
             // View
-            View.EventHub = EventHub;
+            View.Aggregator = Aggregator;
             View.DataSource = Model.Clips.ToBindingSource();
 
             // Model
             Model.PropertyChanged += WhenModelChanged;
             Model.Locked          += WhenLocked;
 
-            // EventHub
-            EventHub?.GetEvents()?.Open.Subscribe(WhenOpen);
-            EventHub?.GetEvents()?.Attach.Subscribe(WhenAttach);
-            EventHub?.GetEvents()?.Detach.Subscribe(WhenDetach);
-            EventHub?.GetEvents()?.Reset.Subscribe(WhenReset);
-            EventHub?.GetEvents()?.Save.Subscribe(WhenSave);
-            EventHub?.GetEvents()?.Message.Subscribe(WhenMessage);
-            EventHub?.GetEvents()?.Error.Subscribe(WhenError);
+            // Aggregator
+            Aggregator?.GetEvents()?.Open.Subscribe(WhenOpen);
+            Aggregator?.GetEvents()?.Attach.Subscribe(WhenAttach);
+            Aggregator?.GetEvents()?.Detach.Subscribe(WhenDetach);
+            Aggregator?.GetEvents()?.Reset.Subscribe(WhenReset);
+            Aggregator?.GetEvents()?.Save.Subscribe(WhenSave);
+            Aggregator?.GetEvents()?.Message.Subscribe(WhenMessage);
+            Aggregator?.GetEvents()?.Error.Subscribe(WhenError);
         }
 
         #endregion
@@ -86,17 +85,13 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (!_disposed)
-            {
-                if (disposing) Model.Dispose();
-                _disposed = true;
-            }
+            if (disposing) Model.Dispose();
             base.Dispose(disposing);
         }
 
         #endregion
 
-        #region Event handlers
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,8 +136,7 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenOpen(string[] files)
-            => Async(() =>
+        private void WhenOpen(string[] files) => Async(() =>
         {
             foreach (var file in files)
             {
@@ -154,7 +148,7 @@ namespace Cube.Pdf.App.Clip
                 catch (EncryptionException err)
                 {
                     this.LogError(err.Message, err);
-                    EventHub?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
+                    Aggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
                     break;
                 }
                 catch (Exception err) { this.LogWarn(err.Message, err); }
@@ -197,8 +191,7 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenReset()
-            => Async(() => Model.Reset());
+        private void WhenReset() => Async(() => Model.Reset());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -215,12 +208,12 @@ namespace Cube.Pdf.App.Clip
             {
                 SyncWait(() => View.IsBusy = true);
                 await Async(() => Model.Save());
-                EventHub?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
+                Aggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
             }
             catch (Exception err)
             {
                 this.LogError(err.Message, err);
-                EventHub?.GetEvents()?.Error.Publish(err.Message);
+                Aggregator?.GetEvents()?.Error.Publish(err.Message);
             }
             finally { SyncWait(() => View.IsBusy = false); }
         }
@@ -234,8 +227,7 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenMessage(string message)
-            => Sync(() => Views.ShowMessage(message));
+        private void WhenMessage(string message) => Sync(() => Views.ShowMessage(message));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -246,13 +238,8 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenError(string message)
-            => Sync(() => Views.ShowError(message));
+        private void WhenError(string message) => Sync(() => Views.ShowError(message));
 
-        #endregion
-
-        #region Fields
-        private bool _disposed = false;
         #endregion
     }
 }

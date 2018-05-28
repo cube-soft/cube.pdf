@@ -5,9 +5,7 @@ VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf", "Libraries\Core\Cube.Pdf.csproj", "{5D742956-06A5-40F9-939D-5EFF66B78D8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Drawing", "Libraries\Drawing\Cube.Pdf.Drawing.csproj", "{F42FCC0C-14C3-4504-BA40-433AB923A581}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Editing", "Libraries\Editing\Cube.Pdf.Editing.csproj", "{77E24CB7-79B1-4797-8477-EAD767685795}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Itext", "Libraries\Itext\Cube.Pdf.Itext.csproj", "{77E24CB7-79B1-4797-8477-EAD767685795}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests", "Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
 EndProject
@@ -21,10 +19,6 @@ Global
 		{5D742956-06A5-40F9-939D-5EFF66B78D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D742956-06A5-40F9-939D-5EFF66B78D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D742956-06A5-40F9-939D-5EFF66B78D8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F42FCC0C-14C3-4504-BA40-433AB923A581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F42FCC0C-14C3-4504-BA40-433AB923A581}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F42FCC0C-14C3-4504-BA40-433AB923A581}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F42FCC0C-14C3-4504-BA40-433AB923A581}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77E24CB7-79B1-4797-8477-EAD767685795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{77E24CB7-79B1-4797-8477-EAD767685795}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77E24CB7-79B1-4797-8477-EAD767685795}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D2AD0DF-E702-494C-AB9F-34CF8FE073E0}
 	EndGlobalSection
 EndGlobal

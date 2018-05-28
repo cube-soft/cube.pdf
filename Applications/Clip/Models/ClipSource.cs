@@ -120,7 +120,7 @@ namespace Cube.Pdf.App.Clip
 
             Close();
 
-            var reader = new Cube.Pdf.Editing.DocumentReader();
+            var reader = new Cube.Pdf.Itext.DocumentReader();
             reader.Open(src);
             Source = reader;
 
@@ -165,7 +165,7 @@ namespace Cube.Pdf.App.Clip
             var items = Clips.Select(x => x.RawObject)
                              .Where(x => System.IO.File.Exists(x.File.FullName));
 
-            using (var writer = new Cube.Pdf.Editing.DocumentWriter())
+            using (var writer = new Cube.Pdf.Itext.DocumentWriter())
             {
                 writer.Metadata = Source.Metadata;
                 writer.Encryption = Source.Encryption;

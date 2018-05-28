@@ -47,9 +47,13 @@ namespace Cube.Pdf.App.Picker
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="view">View オブジェクト</param>
+        /// <param name="model">Model オブジェクト</param>
+        /// <param name="ea">イベント集約オブジェクト</param>
+        ///
         /* --------------------------------------------------------------------- */
-        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model, IEventHub events)
-            : base(view, model, events)
+        public ThumbnailPresenter(ThumbnailForm view, ImageCollection model, IAggregator ea)
+            : base(view, model, ea)
         {
             View.Shown      += View_Shown;
             View.FormClosed += View_FormClosed;
@@ -145,15 +149,15 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         private void View_Shown(object sender, EventArgs e)
         {
-            View.EventHub = EventHub;
+            View.Aggregator = Aggregator;
 
-            var hub = EventHub.GetEvents();
-            if (hub != null)
+            var ea = Aggregator.GetEvents();
+            if (ea != null)
             {
-                _events.Add(hub.PreviewImage.Subscribe(PreviewImage_Handle));
-                _events.Add(hub.Remove.Subscribe(Remove_Handle));
-                _events.Add(hub.SaveComplete.Subscribe(SaveComplete_Handle));
-                _events.Add(hub.Version.Subscribe(Version_Handle));
+                _events.Add(ea.PreviewImage.Subscribe(PreviewImage_Handle));
+                _events.Add(ea.Remove.Subscribe(Remove_Handle));
+                _events.Add(ea.SaveComplete.Subscribe(SaveComplete_Handle));
+                _events.Add(ea.Version.Subscribe(Version_Handle));
             }
 
             View.Cursor = Cursors.WaitCursor;
@@ -176,7 +180,7 @@ namespace Cube.Pdf.App.Picker
         /* --------------------------------------------------------------------- */
         private void View_FormClosed(object sender, FormClosedEventArgs e)
         {
-            View.EventHub = null;
+            View.Aggregator = null;
             foreach (var ev in _events) ev.Dispose();
         }
 

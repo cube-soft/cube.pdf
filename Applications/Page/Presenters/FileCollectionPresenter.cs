@@ -51,19 +51,19 @@ namespace Cube.Pdf.App.Page
         ///
         /* --------------------------------------------------------------------- */
         public FileCollectionPresenter(ListView view, FileCollection model,
-            Settings settings, IEventHub events)
+            Settings settings, IAggregator events)
             : base(view, model, settings, events)
         {
-            EventHub.GetEvents()?.Preview.Subscribe(Preview_Handle);
-            EventHub.GetEvents()?.Add.Subscribe(Add_Handle);
-            EventHub.GetEvents()?.Remove.Subscribe(Remove_Handle);
-            EventHub.GetEvents()?.Clear.Subscribe(Clear_Handle);
-            EventHub.GetEvents()?.Move.Subscribe(Move_Handle);
-            EventHub.GetEvents()?.Merge.Subscribe(Merge_Handle);
-            EventHub.GetEvents()?.Split.Subscribe(Split_Handle);
+            Aggregator.GetEvents()?.Preview.Subscribe(Preview_Handle);
+            Aggregator.GetEvents()?.Add.Subscribe(Add_Handle);
+            Aggregator.GetEvents()?.Remove.Subscribe(Remove_Handle);
+            Aggregator.GetEvents()?.Clear.Subscribe(Clear_Handle);
+            Aggregator.GetEvents()?.Move.Subscribe(Move_Handle);
+            Aggregator.GetEvents()?.Merge.Subscribe(Merge_Handle);
+            Aggregator.GetEvents()?.Split.Subscribe(Split_Handle);
 
-            View.SelectedIndexChanged += (s, e) => EventHub.GetEvents()?.Refresh.Publish();
-            View.MouseDoubleClick     += (s, e) => EventHub.GetEvents()?.Preview.Publish();
+            View.SelectedIndexChanged += (s, e) => Aggregator.GetEvents()?.Refresh.Publish();
+            View.MouseDoubleClick     += (s, e) => Aggregator.GetEvents()?.Preview.Publish();
 
             Model.PasswordRequired  += Model_PasswordRequired;
 

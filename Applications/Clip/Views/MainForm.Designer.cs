@@ -42,7 +42,7 @@
             this.AttachButton = new Cube.Forms.Button();
             this.DetachButton = new Cube.Forms.Button();
             this.ResetButton = new Cube.Forms.Button();
-            this.MyClipDataView = new Cube.Pdf.App.Clip.ClipDataControl();
+            this.MyClipDataView = new Cube.Pdf.App.Clip.ClipControl();
             this.VersionButton = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
@@ -304,7 +304,7 @@
         private System.Windows.Forms.Label SourceLabel;
         private System.Windows.Forms.TextBox SourceTextBox;
         private System.Windows.Forms.TableLayoutPanel ClipPanel;
-        private ClipDataControl MyClipDataView;
+        private ClipControl MyClipDataView;
         private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
         private Forms.Button AttachButton;
         private Forms.Button DetachButton;
