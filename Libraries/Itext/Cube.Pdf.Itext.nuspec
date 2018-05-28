@@ -6,16 +6,15 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/License.txt</licenseUrl>
-    <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
-    <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Cube PDF library for using iTextSharp.</description>
-    <releaseNotes>Private release.</releaseNotes>
     <copyright>$copyright$</copyright>
+    <description>iTextSharp based PDF library for CubeSoft applications.</description>
     <tags>Cube PDF iText</tags>
-    <dependencies>
-      <dependency id="iTextSharp" version="5.5.11" />
-    </dependencies>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Itest/License.txt</licenseUrl>
+    <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
+    <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
   </metadata>
+  <files>
+    <file src="bin\Release\Cube.Pdf.Itext.dll" target="lib\net45" />
+  </files>
 </package>
