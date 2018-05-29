@@ -21,7 +21,7 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.App.Clip
+namespace Cube.Pdf.Clip.App
 {
     /* --------------------------------------------------------------------- */
     ///

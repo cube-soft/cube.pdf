@@ -20,7 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.App.Page
+namespace Cube.Pdf.Page.App
 {
     /* --------------------------------------------------------------------- */
     ///

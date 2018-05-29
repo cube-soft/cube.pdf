@@ -26,7 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.App.Picker
+namespace Cube.Pdf.Picker.App
 {
     /* --------------------------------------------------------------------- */
     ///

@@ -20,7 +20,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.App.Clip
+namespace Cube.Pdf.Clip.App
 {
     /* --------------------------------------------------------------------- */
     ///

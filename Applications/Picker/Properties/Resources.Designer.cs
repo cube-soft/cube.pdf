@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cube.Pdf.App.Picker.Properties {
+namespace Cube.Pdf.Picker.App.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
     /// </summary>
@@ -23,15 +23,15 @@ namespace Cube.Pdf.App.Picker.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
@@ -39,13 +39,13 @@ namespace Cube.Pdf.App.Picker.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cube.Pdf.App.Picker.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cube.Pdf.Picker.App.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
@@ -59,7 +59,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   CubePDF ImagePicker について に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -68,7 +68,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("About", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -78,7 +78,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -88,7 +88,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -98,7 +98,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -108,7 +108,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -118,7 +118,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   プレビュー画面を表示 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -127,7 +127,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MenuPreviewImage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   選択項目を一覧から削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -136,7 +136,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MenuRemove", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   選択項目を保存 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -145,7 +145,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MenuSave", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   全ての項目を選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -154,7 +154,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MenuSelectAll", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   {0} のファイル構造を解析中です... に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -163,7 +163,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MessageBegin", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   処理をキャンセルしました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -172,7 +172,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MessageCancel", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   {0} ({1} ページ) から {2} 個の画像を抽出しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -181,7 +181,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MessageEnd", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   {0} ({1} ページ) から画像を見つける事ができませんでした。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -190,7 +190,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MessageNotFound", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   {0} はパスワードで保護されているため画像を抽出できませんでした。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -199,7 +199,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MessagePassword", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   {0} の {1}/{2} ページ目から画像を抽出しています... に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -208,7 +208,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("MessageProcess", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   抽出画像を保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -217,7 +217,7 @@ namespace Cube.Pdf.App.Picker.Properties {
                 return ResourceManager.GetString("SaveFolder", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   PDF ファイルをドラッグ&amp;ドロップ に類似しているローカライズされた文字列を検索します。
         /// </summary>

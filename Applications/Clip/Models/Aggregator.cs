@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.App.Clip
+namespace Cube.Pdf.Clip.App
 {
     /* --------------------------------------------------------------------- */
     ///

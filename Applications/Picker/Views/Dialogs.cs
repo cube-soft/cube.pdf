@@ -20,7 +20,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.App.Picker
+namespace Cube.Pdf.Picker.App
 {
     /* --------------------------------------------------------------------- */
     ///

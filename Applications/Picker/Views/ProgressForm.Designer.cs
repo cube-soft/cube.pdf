@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.App.Picker
+﻿namespace Cube.Pdf.Picker.App
 {
     partial class ProgressForm
     {
@@ -41,16 +41,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // ProgressBar
-            // 
+            //
             this.ProgressBar.Location = new System.Drawing.Point(12, 90);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(410, 20);
             this.ProgressBar.TabIndex = 1000;
-            // 
+            //
             // ExitButton
-            // 
+            //
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
             this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -61,9 +61,9 @@
             this.ExitButton.TabIndex = 2;
             this.ExitButton.Text = "キャンセル";
             this.ExitButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // SaveButton
-            // 
+            //
             this.SaveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.SaveButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -74,9 +74,9 @@
             this.SaveButton.TabIndex = 1;
             this.SaveButton.Text = "全て保存";
             this.SaveButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // PreviewButton
-            // 
+            //
             this.PreviewButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.PreviewButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.PreviewButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -87,9 +87,9 @@
             this.PreviewButton.TabIndex = 0;
             this.PreviewButton.Text = "プレビュー";
             this.PreviewButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // HeaderPanel
-            // 
+            //
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.HeaderPanel.Controls.Add(this.ImagePictureBox);
             this.HeaderPanel.Controls.Add(this.LogoPictureBox);
@@ -99,10 +99,10 @@
             this.HeaderPanel.Name = "HeaderPanel";
             this.HeaderPanel.Size = new System.Drawing.Size(434, 35);
             this.HeaderPanel.TabIndex = 1000;
-            // 
+            //
             // ImagePictureBox
-            // 
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.Picker.Properties.Resources.HeaderImage;
+            //
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Picker.App.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.ImagePictureBox.Location = new System.Drawing.Point(217, 0);
@@ -111,11 +111,11 @@
             this.ImagePictureBox.Size = new System.Drawing.Size(217, 35);
             this.ImagePictureBox.TabIndex = 5;
             this.ImagePictureBox.TabStop = false;
-            // 
+            //
             // LogoPictureBox
-            // 
+            //
             this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LogoPictureBox.Image = global::Cube.Pdf.App.Picker.Properties.Resources.HeaderLogo;
+            this.LogoPictureBox.Image = global::Cube.Pdf.Picker.App.Properties.Resources.HeaderLogo;
             this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
             this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.LogoPictureBox.Name = "LogoPictureBox";
@@ -123,9 +123,9 @@
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.LogoPictureBox.TabIndex = 4;
             this.LogoPictureBox.TabStop = false;
-            // 
+            //
             // MessageLabel
-            // 
+            //
             this.MessageLabel.AutoEllipsis = true;
             this.MessageLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.MessageLabel.Location = new System.Drawing.Point(0, 35);
@@ -135,9 +135,9 @@
             this.MessageLabel.TabIndex = 1000;
             this.MessageLabel.Text = "ファイルを解析しています...";
             this.MessageLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
+            //
             // ProgressForm
-            // 
+            //
             this.ClientSize = new System.Drawing.Size(434, 181);
             this.Controls.Add(this.MessageLabel);
             this.Controls.Add(this.HeaderPanel);

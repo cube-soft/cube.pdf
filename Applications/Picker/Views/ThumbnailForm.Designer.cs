@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.App.Picker
+﻿namespace Cube.Pdf.Picker.App
 {
     partial class ThumbnailForm
     {
@@ -140,7 +140,7 @@
             //
             // ImagePictureBox
             //
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.Picker.Properties.Resources.HeaderImage;
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Picker.App.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.ImagePictureBox.Location = new System.Drawing.Point(417, 0);
@@ -154,7 +154,7 @@
             //
             this.TitleButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TitleButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.TitleButton.Image = global::Cube.Pdf.App.Picker.Properties.Resources.HeaderLogo;
+            this.TitleButton.Image = global::Cube.Pdf.Picker.App.Properties.Resources.HeaderLogo;
             this.TitleButton.Location = new System.Drawing.Point(0, 0);
             this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
             this.TitleButton.Name = "TitleButton";

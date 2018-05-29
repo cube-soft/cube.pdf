@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.App.Picker
+namespace Cube.Pdf.Picker.App
 {
     /* --------------------------------------------------------------------- */
     ///
