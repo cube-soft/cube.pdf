@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Images.BuiltIn;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -33,6 +34,8 @@ namespace Cube.Pdf.Itext.Images
     /* --------------------------------------------------------------------- */
     internal static class ImageExtension
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// Convert
@@ -49,15 +52,9 @@ namespace Cube.Pdf.Itext.Images
         /* ----------------------------------------------------------------- */
         public static iTextSharp.text.Image Convert(this Image image)
         {
-            var supports = new List<ImageFormat>
-            {
-                ImageFormat.Bmp, ImageFormat.Gif, ImageFormat.Jpeg,
-                ImageFormat.Png, ImageFormat.Tiff
-            };
-
             var scale  = 72.0 / image.HorizontalResolution;
-            var format = image.GuessImageFormat();
-            if (!supports.Contains(format)) format = ImageFormat.Png;
+            var format = image.GetImageFormat();
+            if (!GetSupportFormats().Contains(format)) format = ImageFormat.Png;
 
             var dest = iTextSharp.text.Image.GetInstance(image, format);
             dest.SetAbsolutePosition(0, 0);
@@ -66,28 +63,34 @@ namespace Cube.Pdf.Itext.Images
             return dest;
         }
 
+        #endregion
+
+        #region Implementations
+
         /* ----------------------------------------------------------------- */
         ///
-        /// GuessImageFormat
+        /// GetSupportFormats
         ///
         /// <summary>
-        /// ImageFormat を推測します。
+        /// サポートしている画像フォーマット一覧を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageFormat GuessImageFormat(this Image image)
-        {
-            return image.RawFormat.Equals(ImageFormat.Bmp)       ? ImageFormat.Bmp       :
-                   image.RawFormat.Equals(ImageFormat.Emf)       ? ImageFormat.Emf       :
-                   image.RawFormat.Equals(ImageFormat.Exif)      ? ImageFormat.Exif      :
-                   image.RawFormat.Equals(ImageFormat.Gif)       ? ImageFormat.Gif       :
-                   image.RawFormat.Equals(ImageFormat.Icon)      ? ImageFormat.Icon      :
-                   image.RawFormat.Equals(ImageFormat.Jpeg)      ? ImageFormat.Jpeg      :
-                   image.RawFormat.Equals(ImageFormat.MemoryBmp) ? ImageFormat.MemoryBmp :
-                   image.RawFormat.Equals(ImageFormat.Png)       ? ImageFormat.Png       :
-                   image.RawFormat.Equals(ImageFormat.Tiff)      ? ImageFormat.Tiff      :
-                   image.RawFormat.Equals(ImageFormat.Wmf)       ? ImageFormat.Wmf       :
-                                                                   ImageFormat.Bmp       ;
-        }
+        private static HashSet<ImageFormat> GetSupportFormats() => _supports ?? (
+            _supports = new HashSet<ImageFormat>
+            {
+                ImageFormat.Bmp,
+                ImageFormat.Gif,
+                ImageFormat.Jpeg,
+                ImageFormat.Png,
+                ImageFormat.Tiff,
+            }
+        );
+
+        #endregion
+
+        #region Fields
+        private static HashSet<ImageFormat> _supports;
+        #endregion
     }
 }

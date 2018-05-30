@@ -37,6 +37,9 @@
     <Reference Include="Cube.FileSystem">
       <HintPath>..\..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
+    <Reference Include="Cube.Images">
+      <HintPath>..\..\..\packages\Cube.Images.1.10.0\lib\net45\Cube.Images.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\..\..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
     </Reference>
