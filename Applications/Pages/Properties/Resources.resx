@@ -123,14 +123,17 @@
   <data name="ColumnDate" xml:space="preserve">
     <value>更新日時</value>
   </data>
-  <data name="ColumnFile" xml:space="preserve">
+  <data name="ColumnIcon" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ColumnLength" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="ColumnName" xml:space="preserve">
     <value>ファイル名</value>
   </data>
-  <data name="ColumnPage" xml:space="preserve">
+  <data name="ColumnPages" xml:space="preserve">
     <value>ページ数</value>
-  </data>
-  <data name="ColumnSize" xml:space="preserve">
-    <value>サイズ</value>
   </data>
   <data name="ColumnType" xml:space="preserve">
     <value>種類</value>

@@ -120,7 +120,7 @@ namespace Cube.Pdf.Pages.App
             ExitButton.Click   += (s, e) => Close();
 
             FileMenu.Aggregator = Aggregator;
-            //FileListView.ContextMenuStrip = FileMenu;
+            FileListView.ContextMenuStrip = FileMenu;
             //FileListView.DragEnter += (s, e) => OnDragEnter(e);
             //FileListView.DragDrop  += (s, e) => OnDragDrop(e);
 
