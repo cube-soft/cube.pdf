@@ -93,7 +93,7 @@ namespace Cube.Pdf.Page.App
             };
             tips.SetToolTip(TitleButton, Properties.Resources.About);
 
-            FileListView.SmallImageList = Icons.ImageList;
+            //FileListView.SmallImageList = Icons.ImageList;
 
             Text = $"{ProductName} {ProductVersion} ({ProductPlatform})";
         }
@@ -120,9 +120,9 @@ namespace Cube.Pdf.Page.App
             ExitButton.Click   += (s, e) => Close();
 
             FileMenu.Aggregator = Aggregator;
-            FileListView.ContextMenuStrip = FileMenu;
-            FileListView.DragEnter += (s, e) => OnDragEnter(e);
-            FileListView.DragDrop  += (s, e) => OnDragDrop(e);
+            //FileListView.ContextMenuStrip = FileMenu;
+            //FileListView.DragEnter += (s, e) => OnDragEnter(e);
+            //FileListView.DragDrop  += (s, e) => OnDragDrop(e);
 
             ButtonsPanel.DragEnter += (s, e) => OnDragEnter(e);
             ButtonsPanel.DragDrop  += (s, e) => OnDragDrop(e);
@@ -156,7 +156,7 @@ namespace Cube.Pdf.Page.App
         /* ----------------------------------------------------------------- */
         private void InitializePresenters()
         {
-            new FileCollectionPresenter(FileListView, Files, Settings, Aggregator);
+            //new FileCollectionPresenter(FileListView, Files, Settings, Aggregator);
             new MenuPresenter(this, Settings, Aggregator);
         }
 
@@ -204,8 +204,8 @@ namespace Cube.Pdf.Page.App
             {
                 SuspendLayout();
 
-                MergeButton.Enabled = FileListView.Items.Count > 1;
-                SplitButton.Enabled = FileListView.Items.Count > 0;
+                //MergeButton.Enabled = FileListView.Items.Count > 1;
+                //SplitButton.Enabled = FileListView.Items.Count > 0;
 
                 //UpButton.Enabled             =
                 //DownButton.Enabled           =
@@ -293,7 +293,7 @@ namespace Cube.Pdf.Page.App
         /* ----------------------------------------------------------------- */
         private void SelectAll()
         {
-            foreach (ListViewItem item in FileListView.Items) item.Selected = true;
+            //foreach (ListViewItem item in FileListView.Items) item.Selected = true;
         }
 
         #region Models
