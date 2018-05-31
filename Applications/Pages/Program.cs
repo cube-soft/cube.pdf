@@ -22,11 +22,11 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.Page.App
+namespace Cube.Pdf.Pages.App
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Cube.Pdf.Page.App.Program
+    /// Cube.Pdf.Pages.App.Program
     ///
     /// <summary>
     /// メインプログラムを表すクラスです。

@@ -16,175 +16,151 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Windows.Forms;
-
-namespace Cube.Pdf.Page.App
+namespace Cube.Pdf.Pages.App
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileMenuControl
+    /// Aggregator
     ///
     /// <summary>
-    /// ファイルリスト上で表示されるコンテキストメニューを表すクラスです。
+    /// CubePDF Page で発生するイベントを集約するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileMenuControl : ContextMenuStrip
+    public class Aggregator : IAggregator
     {
-        #region Constructors
+        #region Events
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileMenuControl
+        /// Add
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// ファイルを一覧に追加するイベントです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileMenuControl() : base()
-        {
-            PreviewMenu = new ToolStripMenuItem(Properties.Resources.MenuPreview);
-            UpMenu      = new ToolStripMenuItem(Properties.Resources.MenuUp);
-            DownMenu    = new ToolStripMenuItem(Properties.Resources.MenuDown);
-            RemoveMenu  = new ToolStripMenuItem(Properties.Resources.MenuRemove);
+        public RelayEvent<string[]> Add { get; } = new RelayEvent<string[]>();
 
-            InitializeShortcutKeys();
-            InitializeEvents();
-            InitializeMenu();
-        }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Preview
+        ///
+        /// <summary>
+        /// ファイルのプレビューを行うイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Preview { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// ファイルを一覧から削除するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Remove { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        ///
+        /// <summary>
+        /// 全てのファイルを一覧から削除するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Clear { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// ページを移動するイベントです。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Move イベントの Value に設定される値は移動量になります。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent<int> Move { get; } = new RelayEvent<int>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Merge
+        ///
+        /// <summary>
+        /// ファイルを結合するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Merge { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Split
+        ///
+        /// <summary>
+        /// ファイルを分割するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Split { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Refresh
+        ///
+        /// <summary>
+        /// 画面を再描画するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Refresh { get; } = new RelayEvent();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version
+        ///
+        /// <summary>
+        /// バージョン情報を表示するイベントです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RelayEvent Version { get; } = new RelayEvent();
 
         #endregion
+    }
 
-        #region Properties
-
+    /* --------------------------------------------------------------------- */
+    ///
+    /// AggregatorExtension
+    ///
+    /// <summary>
+    /// Aggregator の拡張用クラスです。
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static class AggregatorExtension
+    {
         /* ----------------------------------------------------------------- */
         ///
-        /// Aggregator
+        /// GetEvents
         ///
         /// <summary>
-        /// イベントを集約するオブジェクトを取得または設定します。
+        /// Aggregator オブジェクトを取得します。
         /// </summary>
         ///
-        /* ----------------------------------------------------------------- */
-        public IAggregator Aggregator { get; set; }
-
-        /* ----------------------------------------------------------------- */
+        /// <param name="src">イベント集約オブジェクト</param>
         ///
-        /// PreviewMenu
-        ///
-        /// <summary>
-        /// プレビューメニューを取得します。
-        /// </summary>
+        /// <returns>Aggregator オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripItem PreviewMenu { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpMenu
-        ///
-        /// <summary>
-        /// 上へメニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ToolStripItem UpMenu { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DownMenu
-        ///
-        /// <summary>
-        /// 下へメニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ToolStripItem DownMenu { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RemoveMenu
-        ///
-        /// <summary>
-        /// 削除メニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ToolStripItem RemoveMenu { get; }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeShortcutKeys
-        ///
-        /// <summary>
-        /// ショートカットキーを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeShortcutKeys()
-        {
-            Menu(PreviewMenu).ShortcutKeys = Keys.Control | Keys.R;
-            Menu(UpMenu).ShortcutKeys      = Keys.Control | Keys.Up;
-            Menu(DownMenu).ShortcutKeys    = Keys.Control | Keys.Down;
-            Menu(RemoveMenu).ShortcutKeys  = Keys.Control | Keys.D;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeEvents
-        ///
-        /// <summary>
-        /// 各種イベントを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeEvents()
-        {
-            PreviewMenu.Click += (s, e) => Aggregator.GetEvents()?.Preview.Publish();
-            UpMenu.Click      += (s, e) => Aggregator.GetEvents()?.Move.Publish(-1);
-            DownMenu.Click    += (s, e) => Aggregator.GetEvents()?.Move.Publish(1);
-            RemoveMenu.Click  += (s, e) => Aggregator.GetEvents()?.Remove.Publish();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeMenu
-        ///
-        /// <summary>
-        /// メニューを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeMenu()
-        {
-            Items.AddRange(new ToolStripItem[]
-            {
-                PreviewMenu,
-                new ToolStripSeparator(),
-                UpMenu,
-                DownMenu,
-                new ToolStripSeparator(),
-                RemoveMenu,
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Menu
-        ///
-        /// <summary>
-        /// ToolStripMenuItem にキャストします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ToolStripMenuItem Menu(ToolStripItem src)
-            => src as ToolStripMenuItem;
-
-        #endregion
+        public static Aggregator GetEvents(this IAggregator src) => src as Aggregator;
     }
 }

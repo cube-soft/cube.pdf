@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Itext", "Libraries
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests", "Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Page.App", "Applications\Page\Cube.Pdf.Page.App.csproj", "{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Pages.App", "Applications\Pages\Cube.Pdf.Pages.App.csproj", "{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Picker.App", "Applications\Picker\Cube.Pdf.Picker.App.csproj", "{C60D1DD1-1A53-4BFF-97F9-FD9902689336}"
 EndProject

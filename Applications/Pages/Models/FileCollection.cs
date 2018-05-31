@@ -23,7 +23,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using IoEx = System.IO;
 
-namespace Cube.Pdf.Page.App
+namespace Cube.Pdf.Pages.App
 {
     /* --------------------------------------------------------------------- */
     ///

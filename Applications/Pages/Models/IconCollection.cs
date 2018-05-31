@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.Page.App
+namespace Cube.Pdf.Pages.App
 {
     /* --------------------------------------------------------------------- */
     ///
