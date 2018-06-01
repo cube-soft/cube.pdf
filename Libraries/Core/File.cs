@@ -63,10 +63,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Name
-        {
-            get { return _base.Name; }
-        }
+        public string Name => _base.Name;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,10 +74,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string FullName
-        {
-            get { return _base.FullName; }
-        }
+        public string FullName => _base.FullName;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -91,10 +85,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string DirectoryName
-        {
-            get { return _base.DirectoryName; }
-        }
+        public string DirectoryName => _base.DirectoryName;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -105,10 +96,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Extension
-        {
-            get { return _base.Extension; }
-        }
+        public string Extension => _base.Extension;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -119,10 +107,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Exists
-        {
-            get { return _base.Exists; }
-        }
+        public bool Exists => _base.Exists;
 
         /* ----------------------------------------------------------------- */
         ///
