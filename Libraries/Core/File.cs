@@ -15,27 +15,26 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+using Cube.FileSystem;
 using System.Drawing;
 
 namespace Cube.Pdf
 {
+    #region File
+
     /* --------------------------------------------------------------------- */
     ///
     /// File
     ///
     /// <summary>
-    /// ファイル情報を保持するためのクラスです。
+    /// PDF や画像等のファイル情報を保持するための基底クラスです。
     /// </summary>
     ///
-    /// <remarks>
-    /// FileInfo は継承できないため、FileInfo の互換クラスとして実装されて
-    /// います。
-    /// </remarks>
-    ///
     /* --------------------------------------------------------------------- */
-    public class File
+    public class File : Information
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
         /// File
@@ -44,280 +43,24 @@ namespace Cube.Pdf
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="path">ファイルのパス</param>
+        /// <param name="src">ファイルまたはディレクトリのパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        public File(string path)
-        {
-            _base = new System.IO.FileInfo(path);
-        }
-
-        #region Properties
+        public File(string src) : base(src) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Name
-        ///
-        /// <summary>
-        /// ファイルの名前を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Name => _base.Name;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FullName
-        ///
-        /// <summary>
-        /// ファイルの絶対パスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string FullName => _base.FullName;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DirectoryName
-        ///
-        /// <summary>
-        /// ディレクトリの絶対パスを表す文字列を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string DirectoryName => _base.DirectoryName;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Extension
-        ///
-        /// <summary>
-        /// ファイルの拡張子部分を表す文字列を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Extension => _base.Extension;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Exists
-        ///
-        /// <summary>
-        /// ファイルが存在するかどうかを示す値を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool Exists => _base.Exists;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Length
-        ///
-        /// <summary>
-        /// 現在のファイルのサイズをバイト単位で取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public long Length => _base.Length;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attributes
-        ///
-        /// <summary>
-        /// 現在のファイルの属性を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public System.IO.FileAttributes Attributes => _base.Attributes;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsReadOnly
-        ///
-        /// <summary>
-        /// 現在のファイルが読み取り専用であるかどうかを判断する値を
-        /// 取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool IsReadOnly => _base.IsReadOnly;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreationTime
-        ///
-        /// <summary>
-        /// 現在のファイルの作成日時を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DateTime CreationTime => _base.CreationTime;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreationTimeUtc
-        ///
-        /// <summary>
-        /// 現在のファイルの作成日時を世界協定時刻 (UTC) で取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DateTime CreationTimeUtc => _base.CreationTimeUtc;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LastAccessTime
-        ///
-        /// <summary>
-        /// 現在のファイルに最後にアクセスした時刻を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DateTime LastAccessTime => _base.LastAccessTime;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LastAccessTimeUtc
-        ///
-        /// <summary>
-        /// 現在のファイルに最後にアクセスした時刻を世界協定時刻 (UTC) で
-        /// 取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DateTime LastAccessTimeUtc => _base.LastAccessTimeUtc;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LastWriteTime
-        ///
-        /// <summary>
-        /// 現在のファイルに最後に書き込みがなされた時刻を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DateTime LastWriteTime => _base.LastWriteTime;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LastWriteTimeUtc
-        ///
-        /// <summary>
-        /// 現在のファイルに最後に書き込みがなされた時刻を世界協定時刻 (UTC)
-        /// で取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DateTime LastWriteTimeUtc => _base.LastWriteTimeUtc;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RawObject
-        ///
-        /// <summary>
-        /// File クラスが参照しているオブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public System.IO.FileInfo RawObject => _base;
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Refresh
-        ///
-        /// <summary>
-        /// オブジェクトの状態を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Refresh() => _base.Refresh();
-
-        #region IEquatable<File>
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Equals
-        ///
-        /// <summary>
-        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool Equals(File other) => FullName == other.FullName;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Equals
-        ///
-        /// <summary>
-        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(obj, null)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-
-            var other = obj as File;
-            if (other == null) return false;
-
-            return Equals(other);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetHashCode
-        ///
-        /// <summary>
-        /// 特定の型のハッシュ関数として機能します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public override int GetHashCode() => base.GetHashCode();
-
-        #endregion
-
-        #endregion
-
-        #region Fields
-        private System.IO.FileInfo _base;
-        #endregion
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// MediaFile
-    ///
-    /// <summary>
-    /// PDF や画像ファイル等の情報を保持するためのクラスです。
-    /// </summary>
-    ///
-    /// <remarks>
-    /// このクラスを直接オブジェクト化する事はできません。
-    /// 必要に応じて継承クラスを利用して下さい。
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class MediaFile : File
-    {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MediaFile
+        /// File
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="src">ファイルまたはディレクトリのパス</param>
+        /// <param name="refreshable">更新用オブジェクト</param>
+        ///
         /* ----------------------------------------------------------------- */
-        protected MediaFile(string path) : base(path) { }
+        public File(string src, IRefreshable refreshable) : base(src, refreshable) { }
 
         #endregion
 
@@ -325,14 +68,14 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCount
+        /// Count
         ///
         /// <summary>
-        /// ページ数を取得または設定します。
+        /// ページ数に相当する値を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int PageCount { get; set; } = 0;
+        public int Count { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -343,48 +86,75 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Point Resolution { get; set; } = Point.Empty;
+        public PointF Resolution { get; set; }
 
         #endregion
     }
+
+    #endregion
+
+    #region DocumentFile
 
     /* --------------------------------------------------------------------- */
     ///
     /// PdfFile
     ///
     /// <summary>
-    /// PDF のファイル情報を保持するためのクラスです。
+    /// PDF ファイルの情報を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PdfFile : MediaFile
+    public class PdfFile : File
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// File
+        /// PdfFile
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="src">ファイルのパス</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public PdfFile(string path) : this(path, string.Empty) { }
+        public PdfFile(string src) : this(src, string.Empty) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// File
+        /// PdfFile
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="src">ファイルのパス</param>
+        /// <param name="password">ファイルを開くためのパスワード</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public PdfFile(string path, string password) : base(path)
+        public PdfFile(string src, string password) : base(src)
         {
-            Password = password;
-            Resolution = new Point(72, 72);
+            Initialize(password);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PdfFile
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="src">ファイルのパス</param>
+        /// <param name="password">ファイルを開くためのパスワード</param>
+        /// <param name="refreshable">情報更新用オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PdfFile(string src, string password, IRefreshable refreshable) :
+            base(src, refreshable)
+        {
+            Initialize(password);
         }
 
         #endregion
@@ -412,60 +182,12 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <remarks>
-        /// このプロパティは、PDF ファイルにパスワードによって暗号化されて
-        /// おり、かつユーザパスワードを用いてファイルを開いた場合 false に
-        /// 設定されます。
+        /// PDF ファイルにパスワードによって暗号化されており、かつユーザ
+        /// パスワードを用いてファイルを開いた場合 false に設定されます。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public bool FullAccess { get; set; } = false;
-
-        #endregion
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// ImageFile
-    ///
-    /// <summary>
-    /// 画像ファイルの情報を保持するためのクラスです。
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class ImageFile : MediaFile
-    {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageFile
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageFile(string path) : base(path)
-        {
-            using (var image = Image.FromFile(path))
-            {
-                InitializeValues(image);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageFile
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageFile(string path, Image image) : base(path)
-        {
-            InitializeValues(image);
-        }
+        public bool FullAccess { get; set; } = true;
 
         #endregion
 
@@ -473,21 +195,21 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InitializeValues
+        /// Initialize
         ///
         /// <summary>
-        /// 各種プロパティを初期化します。
+        /// 内部情報を初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InitializeValues(Image image)
+        private void Initialize(string password)
         {
-            var guid = image.FrameDimensionsList[0];
-            var dim = new System.Drawing.Imaging.FrameDimension(guid);
-            PageCount = image.GetFrameCount(dim);
-            Resolution = new Point((int)image.HorizontalResolution, (int)image.VerticalResolution);
+            Password   = password;
+            Resolution = new PointF(72.0f, 72.0f);
         }
 
         #endregion
     }
+
+    #endregion
 }

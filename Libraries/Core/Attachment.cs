@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using System.Security.Cryptography;
 
 namespace Cube.Pdf
@@ -30,38 +31,78 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     public class Attachment
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachment
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="name">表示名</param>
+        /// <param name="path">添付ファイルのパス</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Attachment(string name, string path) : this(name, path, new IO()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachment
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="name">表示名</param>
+        /// <param name="path">添付ファイルのパス</param>
+        /// <param name="io">入出力用オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Attachment(string name, string path, IO io)
+        {
+            Name   = name;
+            Source = path;
+            IO     = io;
+        }
+
+        #endregion
+
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// 入出力用オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Name
         ///
         /// <summary>
-        /// 添付ファイルの名前を取得または設定します。
+        /// 添付ファイルの表示名を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// File
+        /// Source
         ///
         /// <summary>
-        /// 添付オブジェクトが属するファイルを取得または設定します。
+        /// 添付ファイルのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public File File
-        {
-            get { return _file; }
-            set
-            {
-                if (_file == value) return;
-                _file  = value;
-                _cache = null;
-            }
-        }
+        public string Source { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -83,7 +124,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public byte[] Data => GetBytes();
+        public byte[] Data => _data ?? (_data = GetData());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -94,7 +135,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public byte[] Checksum => GetChecksum();
+        public byte[] Checksum => _checksum ?? (_checksum = GetChecksum());
 
         #endregion
 
@@ -109,8 +150,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual long GetLength()
-            => File?.Length ?? 0;
+        protected virtual long GetLength() => IO.Get(Source)?.Length ?? 0;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -121,16 +161,15 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual byte[] GetBytes()
+        protected virtual byte[] GetData()
         {
-            var buffer = new byte[1024 * 1024];
+            if (!IO.Exists(Source)) return null;
 
-            using (var input = System.IO.File.OpenRead(File.FullName))
-            using (var ms = new System.IO.MemoryStream())
+            using (var src  = IO.OpenRead(Source))
+            using (var dest = new System.IO.MemoryStream())
             {
-                var n = 0;
-                while ((n = input.Read(buffer, 0, buffer.Length)) > 0) ms.Write(buffer, 0, n);
-                return ms.ToArray();
+                src.CopyTo(dest);
+                return dest.ToArray();
             }
         }
 
@@ -145,38 +184,20 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         protected virtual byte[] GetChecksum()
         {
-            if (_cache == null) _cache = GetChecksum(File.FullName);
-            return _cache;
+            if (!IO.Exists(Source)) return null;
+
+            using (var ss = IO.OpenRead(Source))
+            {
+                var md5 = new MD5CryptoServiceProvider();
+                return md5.ComputeHash(ss);
+            }
         }
 
         #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetChecksum
-        ///
-        /// <summary>
-        /// チェックサムを計算します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private byte[] GetChecksum(string path)
-        {
-            if (!System.IO.File.Exists(path)) return null;
-
-            using (var s = new System.IO.BufferedStream(
-                System.IO.File.OpenRead(path),
-                1024 * 1024
-            )) return new MD5CryptoServiceProvider().ComputeHash(s);
-        }
 
         #region Fields
-        private File _file;
-        private byte[] _cache;
-        #endregion
-
+        private byte[] _data;
+        private byte[] _checksum;
         #endregion
     }
 }

@@ -15,8 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
-
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
@@ -28,31 +26,45 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Encryption
+    public class Encryption : ObservableProperty
     {
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsEnabled
+        /// Enabled
         ///
         /// <summary>
-        /// この暗号化設定を適用するかどうかを取得または設定します。
+        /// 暗号化を有効化するかどうかを示す値を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsEnabled { get; set; } = false;
+        public bool Enabled
+        {
+            get => _enabled;
+            set => SetProperty(ref _enabled, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsUserPasswordEnabled
+        /// OpenWithPassword
         ///
         /// <summary>
-        /// ユーザパスワードを適用するかどうかを取得または設定します。
+        /// PDF ファイルを開く際にパスワードを要求するかどうかを示す値を
+        /// 取得または設定します。
         /// </summary>
         ///
+        /// <remarks>
+        /// OpenWithPassword が true の場合、PDF ファイルを開く際に
+        /// OwnerPassword または UserPassword を入力する必要があります。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public bool IsUserPasswordEnabled { get; set; } = false;
+        public bool OpenWithPassword
+        {
+            get => _openWithPassword;
+            set => SetProperty(ref _openWithPassword, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -69,7 +81,11 @@ namespace Cube.Pdf
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public string OwnerPassword { get; set; } = string.Empty;
+        public string OwnerPassword
+        {
+            get => _ownerPassword;
+            set => SetProperty(ref _ownerPassword, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -85,7 +101,11 @@ namespace Cube.Pdf
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public string UserPassword { get; set; } = string.Empty;
+        public string UserPassword
+        {
+            get => _userPassword;
+            set => SetProperty(ref _userPassword, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -96,7 +116,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionMethod Method { get; set; } = EncryptionMethod.Unknown;
+        public EncryptionMethod Method
+        {
+            get => _method;
+            set => SetProperty(ref _method, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,87 +132,21 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Permission Permission { get; set; } = new Permission();
+        public Permission Permission
+        {
+            get => _permission;
+            set => SetProperty(ref _permission, value);
+        }
 
         #endregion
-    }
 
-    /* --------------------------------------------------------------------- */
-    ///
-    /// EncryptionMethod
-    ///
-    /// <summary>
-    /// PDF の暗号化の際に使用可能な暗号化方式を定義した列挙型です。
-    /// </summary>
-    ///
-    /// <remarks>
-    /// 現在のところ、以下の暗号化方式を使用する事ができます（括弧内の値は、
-    /// 最初にサポートされた PDF バージョンを表します）。
-    /// -  40bit RC4 (PDF 1.1)
-    /// - 128bit RC4 (PDF 1.4)
-    /// - 128bit AES (PDF 1.5)
-    /// - 256bit AES (PDF 1.7 ExtensionLevel 3)
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    public enum EncryptionMethod
-    {
-        Standard40,     //  40bit RC4
-        Standard128,    // 128bit RC4
-        Aes128,         // 128bit AES
-        Aes256,         // 256bit AES
-        Unknown = -1,
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// EncryptionException
-    ///
-    /// <summary>
-    /// 暗号化に関する例外を送出するためのクラスです。
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class EncryptionException : Exception
-    {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// EncryptionException
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EncryptionException() : base() { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// EncryptionException
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EncryptionException(string message) : base(message) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// EncryptionException
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EncryptionException(string message, Exception innerException)
-            : base(message, innerException)
-        { }
-
+        #region Fields
+        private bool _enabled = false;
+        private bool _openWithPassword = false;
+        private string _ownerPassword = string.Empty;
+        private string _userPassword = string.Empty;
+        private EncryptionMethod _method = EncryptionMethod.Standard40;
+        private Permission _permission = new Permission();
         #endregion
     }
 }

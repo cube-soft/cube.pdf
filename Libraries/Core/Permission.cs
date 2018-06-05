@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+using System.Runtime.CompilerServices;
 
 namespace Cube.Pdf
 {
@@ -24,11 +24,11 @@ namespace Cube.Pdf
     /// Permission
     ///
     /// <summary>
-    /// 暗号化されている PDF ファイルで許可されている権限を表すクラスです。
+    /// 暗号化されている PDF ファイルで許可されている操作を表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Permission
+    public class Permission : ObservableProperty
     {
         #region Constructors
 
@@ -41,10 +41,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Permission()
-        {
-            _flags = PermissionFlags.All;
-        }
+        public Permission() : this((long)PermissionFlags.All) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -54,14 +51,14 @@ namespace Cube.Pdf
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="value">許可状態を表す値</param>
+        /// <param name="src">許可状態を表す値</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Permission(long value)
+        public Permission(long src)
         {
-            var n0 = value & (long)PermissionFlags.All;
-            var n1 = n0 | (long)PermissionFlags.Reserved;
-            _flags = (PermissionFlags)n1;
+            var tmp  = src & (long)PermissionFlags.All;
+            var dest = tmp | (long)PermissionFlags.Reserved;
+            _flags = (PermissionFlags)dest;
         }
 
         #endregion
@@ -84,22 +81,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionMethod Print
         {
-            get
-            {
-                return _flags.HasFlag(PermissionFlags.PrintHighQuality) ? PermissionMethod.Allow :
-                       _flags.HasFlag(PermissionFlags.Print)            ? PermissionMethod.Restrict :
-                                                                          PermissionMethod.Deny;
-            }
-
-            set
-            {
-                if (value == PermissionMethod.Allow) _flags |= PermissionFlags.PrintHighQuality;
-                else
-                {
-                    _flags &= ~PermissionFlags.PrintHighQuality;
-                    if (value == PermissionMethod.Restrict) _flags |= PermissionFlags.Print;
-                }
-            }
+            get => GetPrintPermission();
+            set => SetPrintPermission(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -114,8 +97,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionMethod Assemble
         {
-            get { return Get(PermissionFlags.Assemble); }
-            set { Set(PermissionFlags.Assemble, value); }
+            get => Get(PermissionFlags.Assemble);
+            set => Set(PermissionFlags.Assemble, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,8 +112,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionMethod ModifyContents
         {
-            get { return Get(PermissionFlags.ModifyContents); }
-            set { Set(PermissionFlags.ModifyContents, value); }
+            get => Get(PermissionFlags.ModifyContents);
+            set => Set(PermissionFlags.ModifyContents, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -144,8 +127,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionMethod CopyContents
         {
-            get { return Get(PermissionFlags.CopyContents); }
-            set { Set(PermissionFlags.CopyContents, value); }
+            get => Get(PermissionFlags.CopyContents);
+            set => Set(PermissionFlags.CopyContents, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -160,8 +143,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionMethod Accessibility
         {
-            get { return Get(PermissionFlags.Accessibility); }
-            set { Set(PermissionFlags.Accessibility, value); }
+            get => Get(PermissionFlags.Accessibility);
+            set => Set(PermissionFlags.Accessibility, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -175,8 +158,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionMethod ModifyAnnotations
         {
-            get { return Get(PermissionFlags.ModifyAnnotations); }
-            set { Set(PermissionFlags.ModifyAnnotations, value); }
+            get => Get(PermissionFlags.ModifyAnnotations);
+            set => Set(PermissionFlags.ModifyAnnotations, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -190,8 +173,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionMethod FillInFormFields
         {
-            get { return Get(PermissionFlags.FillInFormFields); }
-            set { Set(PermissionFlags.FillInFormFields, value); }
+            get => Get(PermissionFlags.FillInFormFields);
+            set => Set(PermissionFlags.FillInFormFields, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -218,10 +201,43 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PermissionMethod Get(PermissionFlags flag)
-            => _flags.HasFlag(flag) ?
-               PermissionMethod.Allow :
-               PermissionMethod.Deny;
+        private PermissionMethod Get(PermissionFlags src) =>
+            _flags.HasFlag(src) ? PermissionMethod.Allow : PermissionMethod.Deny;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetPrintPermission
+        ///
+        /// <summary>
+        /// 印刷に関する許可状態を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private PermissionMethod GetPrintPermission() =>
+            _flags.HasFlag(PermissionFlags.PrintHighQuality) ? PermissionMethod.Allow :
+            _flags.HasFlag(PermissionFlags.Print)            ? PermissionMethod.Restrict :
+                                                               PermissionMethod.Deny;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// プロパティに値を設定します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 各種プロパティの変更時に Value プロパティに対しても
+        /// PropertyChanged イベントが発生します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool Set(ref PermissionFlags src, PermissionFlags value, string name)
+        {
+            var dest = SetProperty(ref src, value, name);
+            if (dest) RaisePropertyChanged(nameof(Value));
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -232,10 +248,30 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Set(PermissionFlags flag, PermissionMethod method)
+        private bool Set(PermissionFlags src, PermissionMethod method, [CallerMemberName] string name = null)
         {
-            if (method == PermissionMethod.Allow) _flags |= flag;
-            else _flags &= ~flag;
+            var dest = method == PermissionMethod.Allow ?
+                       _flags |  src :
+                       _flags & ~src ;
+            return Set(ref _flags, dest, name);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetPrintPermission
+        ///
+        /// <summary>
+        /// 印刷に関する許可状態を設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool SetPrintPermission(PermissionMethod method)
+        {
+            var dest = method == PermissionMethod.Allow ?
+                       _flags |  PermissionFlags.PrintHighQuality :
+                       _flags & ~PermissionFlags.PrintHighQuality ;
+            if (method == PermissionMethod.Restrict) dest |= PermissionFlags.Print;
+            return Set(ref _flags, dest, nameof(Print));
         }
 
         #endregion
@@ -243,108 +279,5 @@ namespace Cube.Pdf
         #region Fields
         private PermissionFlags _flags;
         #endregion
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// PermissionMethod
-    ///
-    /// <summary>
-    /// PDF への各種操作に対して設定されている許可状態を示す列挙型です。
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public enum PermissionMethod
-    {
-        Deny,
-        Restrict,
-        Allow,
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// PermissionFlags
-    ///
-    /// <summary>
-    /// 許可状態を表す列挙型です。
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [Flags]
-    internal enum PermissionFlags : uint
-    {
-        // 7, 8, 13-32 bit must be set
-        Reserved            = 0xfffff0c0,
-        All                 = 0xfffffffc,
-
-        // Print the document (possibly not at the highest quality level,
-        // depending on whether bit 12 is also set).
-        Print               = 0x00000004,
-        PrintHighQuality    = 0x00000800 | Print,
-
-        // Modify the contents of the document by operations other than
-        // those controlled by bits 6, 9, and 11.
-        ModifyContents      = 0x00000008,
-
-        // Copy or otherwise extract text and graphics from the document
-        // by operations other than that controlled by bit 10.
-        CopyContents        = 0x00000010,
-
-        // Add or modify text annotations, fill in interactive form fields,
-        // and, if bit 4 is also set, create or modify interactive
-        // form fields (including signature fields).
-        ModifyAnnotations   = 0x00000020,
-
-        // Fill in existing interactive form fields (including signature
-        // fields), even if bit 6 is clear.
-        FillInFormFields    = 0x00000100,
-
-        // Extract text and graphics (in support of accessibility to users
-        // with disabilities or for other purposes).
-        Accessibility       = 0x00000200,
-
-        // Assemble the document (insert, rotate, or delete pages and
-        // create bookmarks or thumbnail images), even if bit 4 is clear.
-        Assemble            = 0x00000400,
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// PermissionOperations
-    ///
-    /// <summary>
-    /// Permission クラスに関連する拡張用クラスです。
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static class PermissionOperations
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsAllowed
-        ///
-        /// <summary>
-        /// 許可状態かどうかを判別します。
-        /// </summary>
-        ///
-        /// <param name="obj">PermissionMethod オブジェクト</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static bool IsAllowed(this PermissionMethod obj)
-            => obj == PermissionMethod.Allow;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsDenied
-        ///
-        /// <summary>
-        /// 拒否状態かどうかを判別します。
-        /// </summary>
-        ///
-        /// <param name="obj">PermissionMethod オブジェクト</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static bool IsDenied(this PermissionMethod obj)
-            => obj == PermissionMethod.Deny;
     }
 }

@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Drawing;
 
 namespace Cube.Pdf
@@ -29,7 +28,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Page : IEquatable<Page>
+    public class Page : ObservableProperty
     {
         #region Properties
 
@@ -38,11 +37,16 @@ namespace Cube.Pdf
         /// File
         ///
         /// <summary>
-        /// ページオブジェクトが属するファイルを取得または設定します。
+        /// Page オブジェクトが属する File オブジェクトを取得または
+        /// 設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MediaFile File { get; set; } = null;
+        public File File
+        {
+            get => _file;
+            set => SetProperty(ref _file, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -53,7 +57,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Number { get; set; } = -1;
+        public int Number
+        {
+            get => _number;
+            set => SetProperty(ref _number, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -71,14 +79,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public int Rotation
         {
-            get { return _rotation; }
-            set
-            {
-                var degree = value;
-                while (degree <    0) degree += 360;
-                while (degree >= 360) degree -= 360;
-                _rotation = degree;
-            }
+            get => _rotation;
+            set => SetProperty(ref _rotation, NormalizeDegree(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -91,7 +93,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Point Resolution { get; set; } = Point.Empty;
+        public PointF Resolution
+        {
+            get => _resolution;
+            set => SetProperty(ref _resolution, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -102,117 +108,41 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Size Size { get; set; } = Size.Empty;
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewSize
-        ///
-        /// <summary>
-        /// ページオブジェクトの表示サイズを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Size ViewSize()
+        public SizeF Size
         {
-            return ViewSize(Resolution);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewSize
-        ///
-        /// <summary>
-        /// ページオブジェクトの表示サイズを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Size ViewSize(int dpi)
-        {
-            return ViewSize(new Point(dpi, dpi));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewSize
-        ///
-        /// <summary>
-        /// ページオブジェクトの表示サイズを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Size ViewSize(Point dpi)
-        {
-            var radian = Math.PI * Rotation / 180.0;
-            var sin = Math.Abs(Math.Sin(radian));
-            var cos = Math.Abs(Math.Cos(radian));
-            var width = Size.Width * cos + Size.Height * sin;
-            var height = Size.Width * sin + Size.Height * cos;
-            var horizontal = dpi.X / (double)Resolution.X;
-            var vertical = dpi.Y / (double)Resolution.Y;
-            return new Size((int)(width * horizontal), (int)(height * vertical));
+            get => _size;
+            set => SetProperty(ref _size, value);
         }
 
         #endregion
 
-        #region IEquatable<PageBase> methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Equals
+        /// NormalizeDegree
         ///
         /// <summary>
-        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
+        /// 角度を [0, 360) の範囲に正規化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Equals(Page other)
+        private int NormalizeDegree(int src)
         {
-            return File == other.File && Number == other.Number;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Equals
-        ///
-        /// <summary>
-        /// 引数に指定されたオブジェクトと等しいかどうか判別します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public override bool Equals(object obj)
-        {
-            if (object.ReferenceEquals(obj, null)) return false;
-            if (object.ReferenceEquals(this, obj)) return true;
-
-            var other = obj as Page;
-            if (other == null) return false;
-
-            return Equals(other);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetHashCode
-        ///
-        /// <summary>
-        /// 特定の型のハッシュ関数として機能します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
+            var dest = src;
+            while (dest <    0) dest += 360;
+            while (dest >= 360) dest -= 360;
+            return dest;
         }
 
         #endregion
 
         #region Fields
+        private File _file;
+        private int _number = -1;
         private int _rotation = 0;
+        private PointF _resolution;
+        private SizeF _size;
         #endregion
     }
 }

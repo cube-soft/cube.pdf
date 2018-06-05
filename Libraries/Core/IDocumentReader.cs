@@ -25,7 +25,7 @@ namespace Cube.Pdf
     /// IDocumentReader
     ///
     /// <summary>
-    /// PDF ファイルの読み込むためのインターフェースです。
+    /// PDF ファイルを読み込むためのインターフェースです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,7 +42,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        MediaFile File { get; }
+        File File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -102,21 +102,6 @@ namespace Cube.Pdf
 
         #endregion
 
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PasswordRequired
-        ///
-        /// <summary>
-        /// パスワードが要求された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        event QueryEventHandler<string, string> PasswordRequired;
-
-        #endregion
-
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -127,23 +112,10 @@ namespace Cube.Pdf
         /// PDF ファイルを開きます。
         /// </summary>
         ///
-        /// <param name="file">PDF ファイルオブジェクト</param>
+        /// <param name="src">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        void Open(MediaFile file);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /// <param name="path">PDF ファイルのパス</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Open(string path);
+        void Open(string src);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -153,26 +125,29 @@ namespace Cube.Pdf
         /// PDF ファイルをパスワードを入力して開きます。
         /// </summary>
         ///
-        /// <param name="path">PDF ファイルのパス</param>
+        /// <param name="src">PDF ファイルのパス</param>
         /// <param name="password">
         /// オーナパスワードまたはユーザパスワード
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        void Open(string path, string password);
+        void Open(string src, string password);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetPage
+        /// Open
         ///
         /// <summary>
-        /// 指定されたページ番号に対応するページ情報を取得します。
+        /// PDF ファイルをパスワードを入力して開きます。
         /// </summary>
         ///
-        /// <param name="pagenum">ページ番号</param>
+        /// <param name="src">PDF ファイルのパス</param>
+        /// <param name="password">
+        /// パスワード入力用オブジェクト
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        Page GetPage(int pagenum);
+        void Open(string src, IQuery<string> password);
 
         #endregion
     }

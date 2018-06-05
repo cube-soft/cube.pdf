@@ -31,17 +31,23 @@ namespace Cube.Pdf
     [Flags]
     public enum ViewLayout
     {
-        SinglePage     = 0x0001,
-        OneColumn      = 0x0002,
-        TwoColumnLeft  = 0x0004,
+        /// <summary>単一ページ</summary>
+        SinglePage = 0x0001,
+        /// <summary>連続ページ</summary>
+        OneColumn = 0x0002,
+        /// <summary>連続見開きページ（左綴じ）</summary>
+        TwoColumnLeft = 0x0004,
+        /// <summary>連続見開きページ（右綴じ）</summary>
         TwoColumnRight = 0x0008,
-        TwoPageLeft    = 0x0010,
-        TwoPageRight   = 0x0020
+        /// <summary>見開きページ（左綴じ）</summary>
+        TwoPageLeft = 0x0010,
+        /// <summary>見開きページ（右綴じ）</summary>
+        TwoPageRight = 0x0020
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewMode
+    /// ViewOption
     ///
     /// <summary>
     /// PDF ファイルの表示方法を定義した列挙型です。
@@ -49,13 +55,19 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Flags]
-    public enum ViewMode
+    public enum ViewOption
     {
-        None            = 0x0040,
-        Outline         = 0x0080,
-        Thumbnail       = 0x0100,
-        FullScreen      = 0x0200,
+        /// <summary>なし</summary>
+        None = 0x0040,
+        /// <summary>アウトライン</summary>
+        Outline = 0x0080,
+        /// <summary>サムネイル</summary>
+        Thumbnail = 0x0100,
+        /// <summary>全画面表示</summary>
+        FullScreen = 0x0200,
+        /// <summary>付加的なコンテンツ</summary>
         OptionalContent = 0x0400,
-        Attachment      = 0x0800
+        /// <summary>添付オブジェクト</summary>
+        Attachment = 0x0800
     }
 }

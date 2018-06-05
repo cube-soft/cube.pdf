@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using System;
 
 namespace Cube.Pdf
@@ -28,7 +29,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Metadata
+    public class Metadata : ObservableProperty
     {
         #region Properties
 
@@ -48,7 +49,11 @@ namespace Cube.Pdf
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public Version Version { get; set; } = new Version(0, 0);
+        public Version Version
+        {
+            get => _version;
+            set => SetProperty(ref _version, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -59,7 +64,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Author { get; set; } = string.Empty;
+        public string Author
+        {
+            get => _author;
+            set => SetProperty(ref _author, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -70,7 +79,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Title { get; set; } = string.Empty;
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -81,7 +94,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Subtitle { get; set; } = string.Empty;
+        public string Subtitle
+        {
+            get => _subtitle;
+            set => SetProperty(ref _subtitle, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -92,7 +109,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Keywords { get; set; } = string.Empty;
+        public string Keywords
+        {
+            get => _keywords;
+            set => SetProperty(ref _keywords, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -103,7 +124,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Creator { get; set; } = string.Empty;
+        public string Creator
+        {
+            get => _creator;
+            set => SetProperty(ref _creator, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -115,18 +140,11 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Producer { get; set; } = string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewMode
-        ///
-        /// <summary>
-        /// PDF ファイルの表示方法を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ViewMode ViewMode { get; set; } = ViewMode.None;
+        public string Producer
+        {
+            get => _producer;
+            set => SetProperty(ref _producer, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -138,7 +156,26 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ViewLayout ViewLayout { get; set; } = ViewLayout.SinglePage;
+        public ViewLayout ViewLayout
+        {
+            get => _layout;
+            set => SetProperty(ref _layout, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewOption
+        ///
+        /// <summary>
+        /// PDF ファイルの表示方法を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ViewOption ViewOption
+        {
+            get => _option;
+            set => SetProperty(ref _option, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -151,23 +188,53 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public int ViewPreferences
         {
-            get
-            {
-                var mode   = (int)ViewMode;
-                var layout = (int)ViewLayout;
-                return mode & layout;
-            }
-
+            get => ViewOption.TryCast<int>() & ViewLayout.TryCast<int>();
             set
             {
-                var layout = value & 0x003f;
-                if (Enum.IsDefined(typeof(ViewLayout), layout)) ViewLayout = (ViewLayout)layout;
-
-                var mode = value & 0x0fc0;
-                if (Enum.IsDefined(typeof(ViewMode), mode)) ViewMode = (ViewMode)mode;
+                var s0 = SetProperty(ref _layout, ToLayout(value), nameof(ViewLayout));
+                var s1 = SetProperty(ref _option, ToMode(value), nameof(ViewOption));
+                if (s0 || s1) RaisePropertyChanged(nameof(ViewPreferences));
             }
         }
 
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ToLayout
+        ///
+        /// <summary>
+        /// ViewLayout に変換します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ViewLayout ToLayout(int src) => (src & 0x003f).TryCast(ViewLayout.SinglePage);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ToMode
+        ///
+        /// <summary>
+        /// ViewMode に変換します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ViewOption ToMode(int src) => (src & 0x0fc0).TryCast(ViewOption.None);
+
+        #endregion
+
+        #region Fields
+        private Version _version = new Version(1, 2);
+        private string _author = string.Empty;
+        private string _title = string.Empty;
+        private string _subtitle = string.Empty;
+        private string _keywords = string.Empty;
+        private string _creator = string.Empty;
+        private string _producer = string.Empty;
+        private ViewOption _option = ViewOption.None;
+        private ViewLayout _layout = ViewLayout.SinglePage;
         #endregion
     }
 }

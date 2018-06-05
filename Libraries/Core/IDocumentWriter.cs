@@ -107,24 +107,28 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Metadata
+        /// Set
         ///
         /// <summary>
-        /// PDF ファイルのメタデータを取得または設定します。
+        /// PDF ファイルのメタデータを設定します。
         /// </summary>
         ///
+        /// <param name="metadata">メタデータ</param>
+        ///
         /* ----------------------------------------------------------------- */
-        Metadata Metadata { get; set; }
+        void Set(Metadata metadata);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Encryption
+        /// Set
         ///
         /// <summary>
-        /// 暗号化に関する情報をを取得または設定します。
+        /// 暗号化に関する情報を設定します。
         /// </summary>
         ///
+        /// <param name="encryption">暗号化情報</param>
+        ///
         /* ----------------------------------------------------------------- */
-        Encryption Encryption { get; set; }
+        void Set(Encryption encryption);
     }
 }
