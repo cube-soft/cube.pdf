@@ -105,8 +105,8 @@ namespace Cube.Pdf
         Accessibility = 0x00000200,
 
         /// <summary>
-        // Assemble the document (insert, rotate, or delete pages and
-        // create bookmarks or thumbnail images), even if bit 4 is clear.
+        /// Assemble the document (insert, rotate, or delete pages and
+        /// create bookmarks or thumbnail images), even if bit 4 is clear.
         /// </summary>
         Assemble = 0x00000400,
     }
