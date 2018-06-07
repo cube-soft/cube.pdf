@@ -65,12 +65,24 @@ namespace Cube.Pdf
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="inner">内部例外オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EncryptionException(Exception inner) : base(string.Empty, inner) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EncryptionException
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
         /// <param name="message">メッセージ</param>
         /// <param name="inner">内部例外オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionException(string message, Exception inner) :
-            base(message, inner) { }
+        public EncryptionException(string message, Exception inner) : base(message, inner) { }
 
         #endregion
     }
