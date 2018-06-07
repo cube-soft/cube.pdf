@@ -58,9 +58,10 @@
     <Compile Include="FileExtension.cs" />
     <Compile Include="IDocumentReader.cs" />
     <Compile Include="IDocumentWriter.cs" />
-    <Compile Include="PageExtension.cs" />
     <Compile Include="Metadata.cs" />
+    <Compile Include="OneTimeQuery.cs" />
     <Compile Include="Page.cs" />
+    <Compile Include="PageExtension.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="PermissionMethod.cs" />
     <Compile Include="ViewPreferences.cs" />
@@ -68,6 +69,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
