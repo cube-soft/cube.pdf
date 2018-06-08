@@ -22,7 +22,7 @@ namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// OneTimeQuery
+    /// OnceQuery
     ///
     /// <summary>
     /// 予め指定されたパスワードを一度だけ返す Query クラスです。
@@ -34,7 +34,7 @@ namespace Cube.Pdf
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class OneTimeQuery : Query<string>
+    public class OnceQuery : Query<string>
     {
         #region Constructors
 
@@ -49,7 +49,7 @@ namespace Cube.Pdf
         /// <param name="password">パスワード</param>
         ///
         /* ----------------------------------------------------------------- */
-        public OneTimeQuery(string password)
+        public OnceQuery(string password)
         {
             var field = password;
 
