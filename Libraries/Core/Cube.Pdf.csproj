@@ -59,7 +59,7 @@
     <Compile Include="IDocumentReader.cs" />
     <Compile Include="IDocumentWriter.cs" />
     <Compile Include="Metadata.cs" />
-    <Compile Include="OneTimeQuery.cs" />
+    <Compile Include="OnceQuery.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="PageExtension.cs" />
     <Compile Include="Permission.cs" />
