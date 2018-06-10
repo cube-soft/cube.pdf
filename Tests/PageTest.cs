@@ -28,7 +28,6 @@ namespace Cube.Pdf.Tests
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Parallelizable]
     [TestFixture]
     class PageTest
     {
@@ -44,13 +43,9 @@ namespace Cube.Pdf.Tests
         [TestCase(   0, ExpectedResult =   0)]
         [TestCase( 359, ExpectedResult = 359)]
         [TestCase( 360, ExpectedResult =   0)]
-        [TestCase(  -1, ExpectedResult = 359)]
         [TestCase(1000, ExpectedResult = 280)]
-        public int Rotation(int degree)
-        {
-            var page = new Page();
-            page.Rotation = degree;
-            return page.Rotation;
-        }
+        [TestCase(  -1, ExpectedResult = 359)]
+        [TestCase(-900, ExpectedResult = 180)]
+        public int Rotation(int degree) => new Page { Rotation = degree }.Rotation;
     }
 }

@@ -206,7 +206,7 @@ namespace Cube.Pdf.Tests.Itext
                 writer.Attach(new Attachment
                 {
                     Name = file,
-                    File = new File(System.IO.Path.Combine(Examples, file))
+                    File = new PdfFile(System.IO.Path.Combine(Examples, file))
                 });
                 writer.Bind(reader);
                 writer.Save(dest);
