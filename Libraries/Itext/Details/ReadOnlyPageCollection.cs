@@ -31,7 +31,7 @@ namespace Cube.Pdf.Itext
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ReadOnlyPageCollection : IReadOnlyCollection<Page>
+    internal class ReadOnlyPageCollection : IReadOnlyCollection<Page>
     {
         #region Constructors
 
@@ -43,19 +43,11 @@ namespace Cube.Pdf.Itext
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection() : this(null, null) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ReadOnlyPageCollection
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
+        /// <param name="core">PdfReader オブジェクト</param>
+        /// <param name="file">PDF ファイル情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(PdfReader core, MediaFile file)
+        public ReadOnlyPageCollection(PdfReader core, PdfFile file)
         {
             File  = file;
             _core = core;
@@ -70,11 +62,11 @@ namespace Cube.Pdf.Itext
         /// File
         ///
         /// <summary>
-        /// ファイル情報を取得します。
+        /// PDF ファイル情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MediaFile File { get; }
+        public PdfFile File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,14 +91,12 @@ namespace Cube.Pdf.Itext
         /// 各ページオブジェクトへアクセスするための反復子を取得します。
         /// </summary>
         ///
+        /// <returns>反復子</returns>
+        ///
         /* ----------------------------------------------------------------- */
         public IEnumerator<Page> GetEnumerator()
         {
-            for (var i = 0; i < Count; ++i)
-            {
-                var pagenum = i + 1;
-                yield return _core.CreatePage(File, pagenum);
-            }
+            for (var i = 0; i < Count; ++i) yield return _core.GetPage(File, i + 1);
         }
 
         /* ----------------------------------------------------------------- */
@@ -117,13 +107,15 @@ namespace Cube.Pdf.Itext
         /// 各ページオブジェクトへアクセスするための反復子を取得します。
         /// </summary>
         ///
+        /// <returns>反復子</returns>
+        ///
         /* ----------------------------------------------------------------- */
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         #endregion
 
         #region Fields
-        private PdfReader _core = null;
+        private readonly PdfReader _core;
         #endregion
     }
 }

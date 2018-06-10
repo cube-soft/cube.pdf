@@ -16,13 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
+using Cube.FileSystem;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Cube.Pdf.Itext
 {
@@ -31,7 +28,7 @@ namespace Cube.Pdf.Itext
     /// DocumentWriter
     ///
     /// <summary>
-    /// PDF ファイルの生成するためのクラスです。
+    /// PDF ファイルを生成するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -48,11 +45,40 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentWriter() : base() { }
+        public DocumentWriter() : this(new IO()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentWriter
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="io">I/O オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentWriter(IO io) : base(io) { }
 
         #endregion
 
-        #region Override methods
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Bookmarks
+        ///
+        /// <summary>
+        /// しおり情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IList<Dictionary<string, object>> Bookmarks { get; } =
+            new List<Dictionary<string, object>>();
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -68,26 +94,18 @@ namespace Cube.Pdf.Itext
         protected override void OnSave(string path)
         {
             var tmp = System.IO.Path.GetTempFileName();
-            TryDelete(tmp);
+            IO.TryDelete(tmp);
 
             try
             {
                 Merge(tmp);
                 Release();
-
-                using (var reader = new PdfReader(tmp))
-                using (var stamper = new PdfStamper(reader, System.IO.File.Create(path)))
-                {
-                    stamper.Writer.Outlines = _bookmarks;
-                    stamper.MoreInfo = reader.Merge(Metadata);
-                    stamper.Writer.Set(Encryption);
-                    if (Metadata.Version.Minor >= 5) stamper.SetFullCompression();
-                }
+                Finalize(tmp, path);
             }
-            catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
+            catch (BadPasswordException err) { throw new EncryptionException(err); }
             finally
             {
-                TryDelete(tmp);
+                IO.TryDelete(tmp);
                 Reset();
             }
         }
@@ -104,7 +122,7 @@ namespace Cube.Pdf.Itext
         protected override void OnReset()
         {
             base.OnReset();
-            _bookmarks.Clear();
+            Bookmarks.Clear();
         }
 
         #endregion
@@ -128,22 +146,38 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void Merge(string dest)
         {
-            var document = new iTextSharp.text.Document();
-            var writer = GetRawWriter(document, dest);
+            var kv = WriterFactory.Create(dest, Metadata, UseSmartCopy, IO);
 
-            document.Open();
-            _bookmarks.Clear();
+            kv.Key.Open();
+            Bookmarks.Clear();
 
-            foreach (var page in Pages)
+            foreach (var page in Pages) AddPage(page, kv.Value);
+
+            kv.Value.Set(Attachments);
+            kv.Key.Close();
+            kv.Value.Close();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Finalize
+        ///
+        /// <summary>
+        /// 一時的に生成された PDF ファイルに対して、各種メタ情報を追加
+        /// して保存します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Finalize(string src, string dest)
+        {
+            using (var reader = ReaderFactory.Create(src))
+            using (var writer = WriterFactory.Create(dest, reader, IO))
             {
-                if (page.File is PdfFile) AddPage(page, writer);
-                else if (page.File is ImageFile) AddImagePage(page, writer);
+                writer.Writer.Outlines = Bookmarks;
+                writer.Set(Metadata, reader.Info);
+                writer.Writer.Set(Encryption);
+                if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
             }
-
-            SetAttachments(writer);
-
-            document.Close();
-            writer.Close();
         }
 
         /* ----------------------------------------------------------------- */
@@ -163,119 +197,14 @@ namespace Cube.Pdf.Itext
         private void AddPage(Page src, PdfCopy dest)
         {
             var reader = GetRawReader(src);
-            reader.Rotate(src);
-
-            var pagenum = dest.PageNumber; // see remarks
-            StockBookmarks(reader, src.Number, pagenum);
+            if (src.File is PdfFile)
+            {
+                var n = dest.PageNumber; // see remarks
+                reader.Rotate(src);
+                reader.GetBookmarks(n, n - src.Number, Bookmarks);
+            }
             dest.AddPage(dest.GetImportedPage(reader, src.Number));
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddImagePage
-        ///
-        /// <summary>
-        /// 画像ファイルを PDF ページとして追加します。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// TODO: Page オブジェクトが引数のはずなのに、全ページ挿入する
-        /// 形となっている。要修正。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddImagePage(Page src, PdfCopy dest)
-        {
-            var reader = GetRawReader(src);
-            for (var i = 0; i < reader.NumberOfPages; ++i)
-            {
-                var page = dest.GetImportedPage(reader, i + 1);
-                dest.AddPage(page);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetAttachments
-        ///
-        /// <summary>
-        /// 添付ファイルを追加します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetAttachments(PdfCopy dest)
-        {
-            var done = new List<Attachment>();
-
-            foreach (var item in Attachments)
-            {
-                if (done.Any(
-                    x => x.Name.ToLower() == item.Name.ToLower() &&
-                         x.Length == item.Length &&
-                         x.Checksum.SequenceEqual(item.Checksum)
-                )) continue;
-
-                var fs = item is EmbeddedAttachment ?
-                         PdfFileSpecification.FileEmbedded(dest, null, item.Name, item.Data) :
-                         PdfFileSpecification.FileEmbedded(dest, item.File.FullName, item.Name, null);
-
-                fs.SetUnicodeFileName(item.Name, true);
-                dest.AddFileAttachment(fs);
-                done.Add(item);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// StockBookmarks
-        ///
-        /// <summary>
-        /// PDF ファイルに存在するしおり情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void StockBookmarks(PdfReader src, int srcPageNumber, int destPageNumber)
-        {
-            var bookmarks = SimpleBookmark.GetBookmark(src);
-            if (bookmarks == null) return;
-
-            var pattern = string.Format("^{0} (XYZ|Fit|FitH|FitBH)", destPageNumber);
-            SimpleBookmark.ShiftPageNumbers(bookmarks, destPageNumber - srcPageNumber, null);
-            foreach (var bm in bookmarks)
-            {
-                if (bm.ContainsKey("Page") && Regex.IsMatch(bm["Page"].ToString(), pattern))
-                {
-                    _bookmarks.Add(bm);
-                }
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TryDelete
-        ///
-        /// <summary>
-        /// ファイルの削除を試行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool TryDelete(string path)
-        {
-            try
-            {
-                System.IO.File.Delete(path);
-                return true;
-            }
-            catch (Exception err)
-            {
-                this.LogWarn(err.Message, err);
-                return false;
-            }
-        }
-
-        #region Fields
-        private List<Dictionary<string, object>> _bookmarks = new List<Dictionary<string, object>>();
-        #endregion
 
         #endregion
     }

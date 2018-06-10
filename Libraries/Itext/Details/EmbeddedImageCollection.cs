@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -26,72 +27,109 @@ namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageRenderListener
+    /// EmbeddedImageCollection
     ///
     /// <summary>
-    /// PDF ファイル中の画像を抽出するた IRenderListerner 実装クラスです。
+    /// PDF ファイルに埋め込まれた画像一覧を表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class ImageRenderListener : IRenderListener
+    internal class EmbeddedImageCollection : IRenderListener, IEnumerable<Image>
     {
-        #region Properties
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Images
+        /// GetEnumerator
         ///
         /// <summary>
-        /// 抽出した画像一覧を取得します。
+        /// 反復用オブジェクトを取得します。
         /// </summary>
         ///
+        /// <returns>反復用オブジェクト</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public IList<Image> Images { get; } = new List<Image>();
+        public IEnumerator<Image> GetEnumerator() => _inner.GetEnumerator();
 
-        #endregion
-
-        #region Methods
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IEnumerable.GetEnumerator
+        ///
+        /// <summary>
+        /// 反復用オブジェクトを取得します。
+        /// </summary>
+        ///
+        /// <returns>反復用オブジェクト</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /* ----------------------------------------------------------------- */
         ///
         /// RenderImage
         ///
         /// <summary>
-        /// 画像を抽出します。
+        /// 画像描画時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public void RenderImage(ImageRenderInfo info)
         {
             var obj = info.GetImage();
-            var filter = obj?.Get(PdfName.FILTER) as PdfName;
-            if (filter == null) return;
+            if (!(obj?.Get(PdfName.FILTER) is PdfName)) return;
 
-            var image = obj?.GetDrawingImage();
-            if (image == null) return;
+            var raw = obj?.GetDrawingImage();
+            if (raw == null) return;
 
-            var smask = obj?.GetDictionary()?.GetDirectObject(PdfName.SMASK);
-            if (smask == null)
+            var sm = obj?.GetDictionary()?.GetDirectObject(PdfName.SMASK);
+            if (sm == null)
             {
-                Images.Add(image);
+                _inner.Add(raw);
                 return;
             }
 
-            var tmp = new PdfImageObject(smask as PRStream);
+            var tmp  = new PdfImageObject(sm as PRStream);
             var mask = tmp?.GetDrawingImage();
-            var restore = Restore(image as Bitmap, mask as Bitmap);
-            Images.Add(restore ?? image);
+            var dest = Restore(raw as Bitmap, mask as Bitmap);
+            _inner.Add(dest ?? raw);
         }
 
-        #region Other implementations for IRenderListener
-        public void BeginTextBlock() { }
-        public void EndTextBlock() { }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RenderText
+        ///
+        /// <summary>
+        /// テキスト描画時に実行されます。。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public void RenderText(TextRenderInfo info) { }
-        #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BeginTextBlock
+        ///
+        /// <summary>
+        /// テキスト描画開始時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void BeginTextBlock() { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EndTextBlock
+        ///
+        /// <summary>
+        /// テキスト描画終了時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void EndTextBlock() { }
 
         #endregion
 
-        #region Others
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,7 +152,7 @@ namespace Cube.Pdf.Itext
                 var color = src.GetPixel(x, y).ToArgb();
                 if (x < mask.Width && y < mask.Height)
                 {
-                    var tmp = mask.GetPixel(x, y);
+                    var tmp   = mask.GetPixel(x, y);
                     var alpha = Color.FromArgb((tmp.R + tmp.G + tmp.B) / 3, 0, 0, 0);
                     color &= ~alpha.ToArgb();
                 }
@@ -123,6 +161,10 @@ namespace Cube.Pdf.Itext
             return dest;
         }
 
+        #endregion
+
+        #region Fields
+        private IList<Image> _inner = new List<Image>();
         #endregion
     }
 }

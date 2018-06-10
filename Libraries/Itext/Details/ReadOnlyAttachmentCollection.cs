@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using iTextSharp.text.pdf;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,26 +45,18 @@ namespace Cube.Pdf.Itext
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /* ----------------------------------------------------------------- */
-        public ReadOnlyAttachmentCollection() : this(null, null) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ReadOnlyAttachmentCollection
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
         /// <param name="core">内部処理用のオブジェクト</param>
-        /// <param name="file">PDF のファイル情報</param>
+        /// <param name="file">PDF ファイル情報</param>
+        /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyAttachmentCollection(PdfReader core, MediaFile file)
+        public ReadOnlyAttachmentCollection(PdfReader core, PdfFile file, IO io)
         {
-            File = file;
+            File  = file;
+            IO    = io;
             _core = core;
-            ParseAttachments();
+
+            Parse();
         }
 
         #endregion
@@ -79,7 +72,18 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MediaFile File { get; }
+        public PdfFile File { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -142,14 +146,12 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void ParseAttachments()
+        private void Parse()
         {
             if (_core == null) return;
 
-            var c = PdfReader.GetPdfObject(_core.Catalog.Get(PdfName.NAMES)) as PdfDictionary;
-            if (c == null) return;
-            var e = PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) as PdfDictionary;
-            if (e == null) return;
+            if (!(PdfReader.GetPdfObject(_core.Catalog.Get(PdfName.NAMES)) is PdfDictionary c)) return;
+            if (!(PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) is PdfDictionary e)) return;
 
             var files = e.GetAsArray(PdfName.NAMES);
             if (files == null) return;
@@ -166,20 +168,18 @@ namespace Cube.Pdf.Itext
 
                 foreach (var key in ef.Keys)
                 {
-                    var stream = PdfReader.GetPdfObject(ef.GetAsIndirectObject(key)) as PRStream;
-                    if (stream == null) continue;
-
-                    _values.Add(new EmbeddedAttachment(name, File, stream));
+                    if (!(PdfReader.GetPdfObject(ef.GetAsIndirectObject(key)) is PRStream stream)) continue;
+                    _values.Add(new EmbeddedAttachment(name, File.FullName, IO, stream));
                     break;
                 }
             }
         }
 
-        #region Fields
-        private PdfReader _core = null;
-        private IList<Attachment> _values = new List<Attachment>();
         #endregion
 
+        #region Fields
+        private readonly PdfReader _core;
+        private readonly IList<Attachment> _values = new List<Attachment>();
         #endregion
     }
 }

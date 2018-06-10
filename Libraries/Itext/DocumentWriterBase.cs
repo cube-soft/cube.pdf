@@ -16,10 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
+using Cube.Generics;
 using Cube.Log;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Cube.Pdf.Itext
 {
@@ -38,7 +41,7 @@ namespace Cube.Pdf.Itext
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentWriterBase : IDocumentWriter
+    public abstract class DocumentWriterBase : IDocumentWriter
     {
         #region Constructors
 
@@ -50,8 +53,14 @@ namespace Cube.Pdf.Itext
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="io">I/O オブジェクト</param>
+        ///
         /* ----------------------------------------------------------------- */
-        protected DocumentWriterBase() { }
+        protected DocumentWriterBase(IO io)
+        {
+            _dispose = new OnceAction<bool>(Dispose);
+            IO = io;
+        }
 
         #endregion
 
@@ -59,25 +68,14 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Metadata
+        /// IO
         ///
         /// <summary>
-        /// PDF ファイルのメタデータを取得または設定します。
+        /// I/O オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; set; } = new Metadata();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Encryption
-        ///
-        /// <summary>
-        /// 暗号化に関する情報をを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Encryption Encryption { get; set; } = new Encryption();
+        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -119,7 +117,7 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected int Dpi { get { return 72; } }
+        protected float Dpi => 72.0f;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -143,6 +141,28 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected IEnumerable<Attachment> Attachments => _attach;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// PDF ファイルのメタデータを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected Metadata Metadata { get; private set; } = new Metadata();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// 暗号化に関する情報をを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encryption Encryption { get; private set; } = new Encryption();
+
         #endregion
 
         #region Methods
@@ -158,10 +178,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~DocumentWriterBase()
-        {
-            Dispose(false);
-        }
+        ~DocumentWriterBase() { _dispose.Invoke(false); }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -174,7 +191,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public void Dispose()
         {
-            Dispose(true);
+            _dispose.Invoke(true);
             GC.SuppressFinalize(this);
         }
 
@@ -189,14 +206,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed) return;
-            _disposed = true;
-            if (disposing)
-            {
-                _pages.Clear();
-                _attach.Clear();
-                Release();
-            }
+            if (disposing) Release();
         }
 
         #endregion
@@ -224,6 +234,8 @@ namespace Cube.Pdf.Itext
         /// 保存します。
         /// </summary>
         ///
+        /// <param name="path">保存パス</param>
+        ///
         /* ----------------------------------------------------------------- */
         public void Save(string path) => OnSave(path);
 
@@ -235,6 +247,8 @@ namespace Cube.Pdf.Itext
         /// ページを追加します。
         /// </summary>
         ///
+        /// <param name="page">ページ情報</param>
+        ///
         /* ----------------------------------------------------------------- */
         public void Add(Page page) => _pages.Add(page);
 
@@ -245,6 +259,8 @@ namespace Cube.Pdf.Itext
         /// <summary>
         /// ページを追加します。
         /// </summary>
+        ///
+        /// <param name="pages">ページ情報一覧</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Add(IEnumerable<Page> pages)
@@ -260,8 +276,10 @@ namespace Cube.Pdf.Itext
         /// ファイルを添付します。
         /// </summary>
         ///
+        /// <param name="file">添付ファイル</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Attach(Attachment data) => _attach.Add(data);
+        public void Attach(Attachment file) => _attach.Add(file);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -271,12 +289,39 @@ namespace Cube.Pdf.Itext
         /// ファイルを添付します。
         /// </summary>
         ///
+        /// <param name="files">添付ファイル一覧</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Attach(IEnumerable<Attachment> data)
+        public void Attach(IEnumerable<Attachment> files)
         {
-            foreach (var item in data) Attach(item);
+            foreach (var item in files) Attach(item);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// メタ情報を設定します。
+        /// </summary>
+        ///
+        /// <param name="src">メタ情報</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Set(Metadata src) => Metadata = src;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// 暗号化情報を設定します。
+        /// </summary>
+        ///
+        /// <param name="src">暗号化情報</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Set(Encryption src) => Encryption = src;
 
         #endregion
 
@@ -288,48 +333,28 @@ namespace Cube.Pdf.Itext
         /// DocumentReader オブジェクトを束縛します。
         /// </summary>
         ///
-        /// <param name="reader">
-        /// 束縛する DocumentReader オブジェクト
-        /// </param>
+        /// <param name="src">DocumentReader オブジェクト</param>
         ///
         /// <remarks>
-        /// 束縛された DocumentReader オブジェクトは、DocumentWriter に
-        /// よって Dispose されます。
+        /// 指定された DocumentReader オブジェクトは DocumentWriter
+        /// オブジェクトに所有権が移り、Dispose 等の処理も自動的に
+        /// 実行されます。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public void Bind(DocumentReader reader)
+        public void Bind(DocumentReader src)
         {
-            var key = reader.File.FullName;
+            var key = src.File.FullName;
+
             if (_bounds.ContainsKey(key))
             {
-                // same PDF file but other instance has already bound.
-                if (_bounds[key] != reader) reader.Dispose();
+                if (_bounds[key] != src)
+                {
+                    this.LogWarn($"{key}:Other instance has already bound.");
+                    src.Dispose();
+                }
             }
-            else _bounds.Add(key, reader);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Release
-        ///
-        /// <summary>
-        /// 束縛されている DocumentReader オブジェクトを開放します。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 継承クラスで生成された、画像ファイルを基にした PdfReader
-        /// オブジェクトも同時に解放されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void Release()
-        {
-            foreach (var kv in _bounds) kv.Value?.Dispose();
-            _bounds.Clear();
-
-            foreach (var kv in _images) kv.Value?.Dispose();
-            _images.Clear();
+            else _bounds.Add(key, src);
         }
 
         /* ----------------------------------------------------------------- */
@@ -341,13 +366,12 @@ namespace Cube.Pdf.Itext
         /// いるかどうかを判別します。
         /// </summary>
         ///
-        /// <param name="path">PDF ファイルのパス</param>
+        /// <param name="src">PDF ファイルのパス</param>
         ///
         /// <returns>束縛されているかどうかを示す値</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsBound(string path)
-            => _bounds.ContainsKey(path);
+        public bool IsBound(string src) => _bounds.ContainsKey(src);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -358,7 +382,7 @@ namespace Cube.Pdf.Itext
         /// どうかを判別します。
         /// </summary>
         ///
-        /// <param name="reader">DocumentReader オブジェクト</param>
+        /// <param name="src">DocumentReader オブジェクト</param>
         ///
         /// <returns>束縛されているかどうかを示す値</returns>
         ///
@@ -370,9 +394,26 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsBound(DocumentReader reader)
-            => _bounds.ContainsKey(reader.File.FullName) &&
-               _bounds[reader.File.FullName] == reader;
+        public bool IsBound(DocumentReader src) =>
+            _bounds.TryGetValue(src.File.FullName, out DocumentReader dest) && src == dest;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Release
+        ///
+        /// <summary>
+        /// 束縛されている DocumentReader オブジェクトを開放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Release()
+        {
+            foreach (var kv in _bounds) kv.Value?.Dispose();
+            _bounds.Clear();
+
+            foreach (var kv in _images) kv.Value?.Dispose();
+            _images.Clear();
+        }
 
         #endregion
 
@@ -389,12 +430,10 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected virtual void OnReset()
         {
-            Metadata   = new Metadata();
-            Encryption = new Encryption();
-
             _pages.Clear();
             _attach.Clear();
-
+            Set(new Metadata());
+            Set(new Encryption());
             Release();
         }
 
@@ -428,60 +467,34 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected PdfReader GetRawReader(Page src)
         {
-            try
+            Debug.Assert(src != null);
+            var path = src.File.FullName;
+
+            if (src.File is PdfFile pdf)
             {
-                if (src?.File is PdfFile pdf)
-                {
-                    if (!IsBound(pdf.FullName)) Bind(new DocumentReader(pdf));
-                    return _bounds[pdf.FullName].RawObject;
-                }
-                else if (src?.File is ImageFile img)
-                {
-                    var key = img.FullName;
-                    if (!_images.ContainsKey(key)) _images.Add(key, img.CreatePdfReader());
-                    return _images[key];
-                }
+                if (!IsBound(path)) Bind(new DocumentReader(path, pdf.Password, IO));
+                return _bounds[path].RawObject.TryCast<PdfReader>();
             }
-            catch (Exception err) { this.LogError(err.Message, err); }
-
-            return null;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetRawWriter
-        ///
-        /// <summary>
-        /// PdfCopy オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected PdfCopy GetRawWriter(iTextSharp.text.Document src, string path)
-        {
-            try
+            else if (src.File is ImageFile img)
             {
-                var dest = UseSmartCopy ?
-                           new PdfSmartCopy(src, System.IO.File.Create(path)) :
-                           new PdfCopy(src, System.IO.File.Create(path));
-
-                dest.PdfVersion = Metadata.Version.Minor.ToString()[0];
-                dest.ViewerPreferences = Metadata.ViewPreferences;
-
-                return dest;
+                if (!_images.ContainsKey(path))
+                {
+                    var obj = ReaderFactory.CreateFromImage(path, IO);
+                    _images.Add(path, obj);
+                }
+                return _images[path];
             }
-            catch (Exception err) { this.LogError(err.Message, err); }
-
-            return null;
+            else return null;
         }
 
         #endregion
 
         #region Fields
-        private bool _disposed = false;
-        private List<Page> _pages = new List<Page>();
-        private List<Attachment> _attach = new List<Attachment>();
-        private IDictionary<string, DocumentReader> _bounds = new Dictionary<string, DocumentReader>();
-        private IDictionary<string, PdfReader> _images = new Dictionary<string, PdfReader>();
+        private readonly OnceAction<bool> _dispose;
+        private readonly List<Page> _pages = new List<Page>();
+        private readonly List<Attachment> _attach = new List<Attachment>();
+        private readonly IDictionary<string, DocumentReader> _bounds = new Dictionary<string, DocumentReader>();
+        private readonly IDictionary<string, PdfReader> _images = new Dictionary<string, PdfReader>();
         #endregion
     }
 }

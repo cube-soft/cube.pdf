@@ -52,16 +52,19 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Details\ImageRenderListener.cs" />
-    <Compile Include="Extensions\Images.cs" />
-    <Compile Include="Extensions\IText.cs" />
-    <Compile Include="Attachments.cs" />
+    <Compile Include="Details\EmbeddedAttachment.cs" />
+    <Compile Include="Details\EmbeddedImageCollection.cs" />
+    <Compile Include="Details\ImageExtension.cs" />
+    <Compile Include="Details\ReaderExtension.cs" />
+    <Compile Include="Details\ReaderFactory.cs" />
+    <Compile Include="Details\ReadOnlyAttachmentCollection.cs" />
+    <Compile Include="Details\ReadOnlyPageCollection.cs" />
+    <Compile Include="Details\WriterExtension.cs" />
+    <Compile Include="Details\WriterFactory.cs" />
     <Compile Include="DocumentReader.cs" />
     <Compile Include="DocumentSplitter.cs" />
     <Compile Include="DocumentWriterBase.cs" />
     <Compile Include="DocumentWriter.cs" />
-    <Compile Include="ReadOnlyAttachmentCollection.cs" />
-    <Compile Include="ReadOnlyPageCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +75,17 @@
       <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
       <Name>Cube.Pdf</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

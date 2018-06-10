@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using iTextSharp.text.pdf;
 using System.Collections.Generic;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.Itext
 {
@@ -44,7 +44,20 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentSplitter() : base() { }
+        public DocumentSplitter() : this(new IO()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentSplitter
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="io">I/O オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentSplitter(IO io) : base(io) { }
 
         #endregion
 
@@ -96,18 +109,13 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected override void OnSave(string folder)
         {
-            if (!IoEx.Directory.Exists(folder)) IoEx.Directory.CreateDirectory(folder);
-            Results.Clear();
-
             try
             {
-                foreach (var page in Pages)
-                {
-                    if (page.File is PdfFile) SavePage(page, folder);
-                    else if (page.File is ImageFile) SaveImagePage(page, folder);
-                }
+                if (!IO.Exists(folder)) IO.CreateDirectory(folder);
+                Results.Clear();
+                foreach (var page in Pages) SaveCore(page, folder);
             }
-            finally { base.OnReset(); /* see remarks */ }
+            finally { base.OnReset(); } // see remarks
         }
 
         #endregion
@@ -116,42 +124,21 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SavePage
+        /// SaveCore
         ///
         /// <summary>
         /// PDF ファイルを分割して保存します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SavePage(Page src, string folder)
+        private void SaveCore(Page src, string folder)
         {
             var reader = GetRawReader(src);
-            reader.Rotate(src);
+            if (src.File is PdfFile) reader.Rotate(src);
 
             var dest = Unique(folder, src.File, src.Number);
             SaveOne(reader, src.Number, dest);
             Results.Add(dest);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveImagePage
-        ///
-        /// <summary>
-        /// 画像ファイルを 1 ページの PDF ファイルに変換して保存します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SaveImagePage(Page src, string folder)
-        {
-            var reader = GetRawReader(src);
-            for (var i = 0; i < reader.NumberOfPages; ++i)
-            {
-                var pagenum = i + 1;
-                var dest = Unique(folder, src.File, pagenum);
-                SaveOne(reader, pagenum, dest);
-                Results.Add(dest);
-            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -165,15 +152,13 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void SaveOne(PdfReader reader, int pagenum, string dest)
         {
-            var document = new iTextSharp.text.Document();
-            var writer = GetRawWriter(document, dest);
+            var kv = WriterFactory.Create(dest, Metadata, UseSmartCopy, IO);
 
-            writer.Set(Encryption);
-            document.Open();
-            writer.AddPage(writer.GetImportedPage(reader, pagenum));
-
-            document.Close();
-            writer.Close();
+            kv.Value.Set(Encryption);
+            kv.Key.Open();
+            kv.Value.AddPage(kv.Value.GetImportedPage(reader, pagenum));
+            kv.Key.Close();
+            kv.Value.Close();
         }
 
         /* ----------------------------------------------------------------- */
@@ -185,20 +170,21 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string Unique(string folder, MediaFile src, int pagenum)
+        private string Unique(string dir, File src, int pagenum)
         {
-            var basename = IoEx.Path.GetFileNameWithoutExtension(src.FullName);
-            var digit = string.Format("D{0}", src.PageCount.ToString("D").Length);
-            for (var i = 1; i < 1000; ++i)
+            var name  = src.NameWithoutExtension;
+            var digit = string.Format("D{0}", src.Count.ToString("D").Length);
+
+            for (var i = 1; i < int.MaxValue; ++i)
             {
                 var filename = (i == 1) ?
-                               string.Format("{0}-{1}.pdf", basename, pagenum.ToString(digit)) :
-                               string.Format("{0}-{1} ({2}).pdf", basename, pagenum.ToString(digit), i);
-                var dest = IoEx.Path.Combine(folder, filename);
-                if (!IoEx.File.Exists(dest)) return dest;
+                               string.Format("{0}-{1}.pdf", name, pagenum.ToString(digit)) :
+                               string.Format("{0}-{1} ({2}).pdf", name, pagenum.ToString(digit), i);
+                var dest = IO.Combine(dir, filename);
+                if (!IO.Exists(dest)) return dest;
             }
 
-            return IoEx.Path.Combine(folder, IoEx.Path.GetRandomFileName());
+            return IO.Combine(dir, System.IO.Path.GetRandomFileName());
         }
 
         #endregion
