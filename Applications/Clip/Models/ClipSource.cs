@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Cube.Pdf.Clip.App
+namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
     ///

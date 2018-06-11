@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cube.Pdf.Pages.App.Properties {
+namespace Cube.Pdf.App.Pages.Properties {
 
 
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

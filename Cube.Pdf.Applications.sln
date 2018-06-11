@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf", "Libraries\Core\Cube.Pdf.csproj", "{5D742956-06A5-40F9-939D-5EFF66B78D8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Core", "Libraries\Core\Cube.Pdf.Core.csproj", "{5D742956-06A5-40F9-939D-5EFF66B78D8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Itext", "Libraries\Itext\Cube.Pdf.Itext.csproj", "{77E24CB7-79B1-4797-8477-EAD767685795}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests", "Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Pages.App", "Applications\Pages\Cube.Pdf.Pages.App.csproj", "{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Pages", "Applications\Pages\Cube.Pdf.App.Pages.csproj", "{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Picker.App", "Applications\Picker\Cube.Pdf.Picker.App.csproj", "{C60D1DD1-1A53-4BFF-97F9-FD9902689336}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Picker", "Applications\Picker\Cube.Pdf.App.Picker.csproj", "{C60D1DD1-1A53-4BFF-97F9-FD9902689336}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Clip.App", "Applications\Clip\Cube.Pdf.Clip.App.csproj", "{65746EF3-A052-45CE-8565-ADF0DF950DBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Clip", "Applications\Clip\Cube.Pdf.App.Clip.csproj", "{65746EF3-A052-45CE-8565-ADF0DF950DBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

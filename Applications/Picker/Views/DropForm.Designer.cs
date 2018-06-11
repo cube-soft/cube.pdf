@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.Picker.App
+﻿namespace Cube.Pdf.App.Picker
 {
     partial class DropForm
     {
@@ -36,7 +36,7 @@
             //
             // DropPanel
             //
-            this.DropPanel.BackgroundImage = global::Cube.Pdf.Picker.App.Properties.Resources.DragDrop;
+            this.DropPanel.BackgroundImage = global::Cube.Pdf.App.Picker.Properties.Resources.DragDrop;
             this.DropPanel.Controls.Add(this.ExitButton);
             this.DropPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DropPanel.Location = new System.Drawing.Point(1, 1);
@@ -54,7 +54,7 @@
             this.ExitButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExitButton.ForeColor = System.Drawing.Color.Transparent;
-            this.ExitButton.Image = global::Cube.Pdf.Picker.App.Properties.Resources.CloseButton;
+            this.ExitButton.Image = global::Cube.Pdf.App.Picker.Properties.Resources.CloseButton;
             this.ExitButton.Location = new System.Drawing.Point(84, 0);
             this.ExitButton.Margin = new System.Windows.Forms.Padding(0);
             this.ExitButton.Name = "ExitButton";

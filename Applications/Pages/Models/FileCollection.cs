@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Cube.Pdf.Pages.App
+namespace Cube.Pdf.App.Pages
 {
     /* --------------------------------------------------------------------- */
     ///

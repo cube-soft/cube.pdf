@@ -108,9 +108,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Libraries\Core\Cube.Pdf.csproj">
+    <ProjectReference Include="..\Libraries\Core\Cube.Pdf.Core.csproj">
       <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
-      <Name>Cube.Pdf</Name>
+      <Name>Cube.Pdf.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libraries\Itext\Cube.Pdf.Itext.csproj">
       <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>

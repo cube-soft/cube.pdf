@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.Picker.App
+﻿namespace Cube.Pdf.App.Picker
 {
     partial class ProgressForm
     {
@@ -102,7 +102,7 @@
             //
             // ImagePictureBox
             //
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Picker.App.Properties.Resources.HeaderImage;
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.App.Picker.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.ImagePictureBox.Location = new System.Drawing.Point(217, 0);
@@ -115,7 +115,7 @@
             // LogoPictureBox
             //
             this.LogoPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LogoPictureBox.Image = global::Cube.Pdf.Picker.App.Properties.Resources.HeaderLogo;
+            this.LogoPictureBox.Image = global::Cube.Pdf.App.Picker.Properties.Resources.HeaderLogo;
             this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
             this.LogoPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.LogoPictureBox.Name = "LogoPictureBox";

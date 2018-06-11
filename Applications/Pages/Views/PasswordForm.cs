@@ -19,7 +19,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.Pages.App
+namespace Cube.Pdf.App.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
