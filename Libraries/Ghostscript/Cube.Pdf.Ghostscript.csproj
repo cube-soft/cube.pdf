@@ -41,10 +41,11 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parameters\Device.cs" />
+    <Compile Include="Parameters\Format.cs" />
     <Compile Include="Parameters\Orientation.cs" />
     <Compile Include="Parameters\Paper.cs" />
-    <Compile Include="Interpreter.cs" />
+    <Compile Include="Argument.cs" />
+    <Compile Include="Converter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
