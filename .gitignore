@@ -26,6 +26,7 @@
 *.sbr
 *.sdf
 *.sh
+*.rb
 *.VisualState.xml
 
 [Bb]in/
