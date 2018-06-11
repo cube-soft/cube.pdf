@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,6 +54,17 @@ namespace Cube.Pdf.Clip.App
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; } = new IO();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Clips
         ///
         /// <summary>
@@ -60,8 +72,8 @@ namespace Cube.Pdf.Clip.App
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ObservableCollection<ClipItem> Clips { get; }
-            = new ObservableCollection<ClipItem>();
+        public ObservableCollection<ClipItem> Clips { get; } =
+            new ObservableCollection<ClipItem>();
 
         #endregion
 
@@ -119,11 +131,7 @@ namespace Cube.Pdf.Clip.App
             }
 
             Close();
-
-            var reader = new Cube.Pdf.Itext.DocumentReader();
-            reader.Open(src);
-            Source = reader;
-
+            Source = new Cube.Pdf.Itext.DocumentReader(src, "", IO);
             Reset();
         }
 
@@ -158,28 +166,25 @@ namespace Cube.Pdf.Clip.App
         /* ----------------------------------------------------------------- */
         public void Save()
         {
-            if (Source == null || !Source.IsOpen) return;
-
             var dest  = Source.File.FullName;
             var tmp   = System.IO.Path.GetTempFileName();
-            var items = Clips.Select(x => x.RawObject)
-                             .Where(x => System.IO.File.Exists(x.File.FullName));
+            var items = Clips.Select(e => e.RawObject).Where(e => IO.Exists(e.Source));
 
             using (var writer = new Cube.Pdf.Itext.DocumentWriter())
             {
-                writer.Metadata = Source.Metadata;
-                writer.Encryption = Source.Encryption;
                 writer.UseSmartCopy = true;
+                writer.Set(Source.Metadata);
+                writer.Set(Source.Encryption);
                 writer.Add(Source.Pages);
                 writer.Attach(items);
 
-                System.IO.File.Delete(tmp);
+                IO.TryDelete(tmp);
                 writer.Save(tmp);
             }
 
             Close();
-            System.IO.File.Copy(tmp, dest, true);
-            System.IO.File.Delete(tmp);
+            IO.Copy(tmp, dest, true);
+            IO.TryDelete(tmp);
         }
 
         /* ----------------------------------------------------------------- */
@@ -211,7 +216,7 @@ namespace Cube.Pdf.Clip.App
         /* ----------------------------------------------------------------- */
         public void Attach(string file)
         {
-            if (Clips.Any(x => x.RawObject.File.FullName == file)) return;
+            if (Clips.Any(e => e.RawObject.Source == file)) return;
 
             while (IsLocked(file))
             {
@@ -220,13 +225,7 @@ namespace Cube.Pdf.Clip.App
                 if (e.Cancel) return;
             }
 
-            var item = new Attachment
-            {
-                Name = System.IO.Path.GetFileName(file),
-                File = new PdfFile(file)
-            };
-
-            Clips.Insert(0, new ClipItem(item)
+            Clips.Insert(0, new ClipItem(new Attachment(file, IO))
             {
                 Condition = Properties.Resources.ConditionNew
             });
@@ -353,7 +352,7 @@ namespace Cube.Pdf.Clip.App
         private void Close()
         {
             Clips.Clear();
-            Source?.Dispose();
+            Source.Dispose();
             Source = null;
         }
 
@@ -381,11 +380,11 @@ namespace Cube.Pdf.Clip.App
             catch { return true; }
         }
 
+        #endregion
+
         #region Fields
         private bool _disposed = false;
         private IDocumentReader _source = null;
-        #endregion
-
         #endregion
     }
 }

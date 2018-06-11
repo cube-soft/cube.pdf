@@ -85,7 +85,7 @@ namespace Cube.Pdf.Pages.App
         /* ----------------------------------------------------------------- */
         public int Register(File file)
         {
-            var icon = file.RawObject.GetIcon(IconSize.Small);
+            var icon = file.GetIcon(IconSize.Small);
             if (icon == null) return 0;
 
             var extension = file.Extension.ToLower();

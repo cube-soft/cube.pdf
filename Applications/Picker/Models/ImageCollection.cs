@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
+using Cube.FileSystem;
 using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
@@ -24,7 +26,6 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.Picker.App
 {
@@ -72,6 +73,17 @@ namespace Cube.Pdf.Picker.App
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; } = new IO();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -131,7 +143,7 @@ namespace Cube.Pdf.Picker.App
         /* ----------------------------------------------------------------- */
         public void Save(string directory)
         {
-            var basename = IoEx.Path.GetFileNameWithoutExtension(Path);
+            var basename = IO.Get(Path).NameWithoutExtension;
             for (var index = 0; index < Items.Count; ++index)
             {
                 Save(Items[index], directory, basename, index);
@@ -149,7 +161,7 @@ namespace Cube.Pdf.Picker.App
         /* ----------------------------------------------------------------- */
         public void Save(string directory, IEnumerable<int> indices)
         {
-            var basename = IoEx.Path.GetFileNameWithoutExtension(Path);
+            var basename = IO.Get(Path).NameWithoutExtension;
             foreach (var index in indices)
             {
                 if (index < 0 || index >= Items.Count) continue;
@@ -228,19 +240,19 @@ namespace Cube.Pdf.Picker.App
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Reader_PasswordRequired
+        /// WhenPasswordRequired
         ///
         /// <summary>
         /// パスワードの要求が発生した時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Reader_PasswordRequired(object sender, QueryEventArgs<string, string> e)
+        private void WhenPasswordRequired(QueryEventArgs<string> e)
         {
             e.Cancel = true;
             throw new EncryptionException(string.Format(
                 Properties.Resources.MessagePassword,
-                IoEx.Path.GetFileName(e.Query)
+                IO.Get(e.Query).Name
             ));
         }
 
@@ -261,7 +273,7 @@ namespace Cube.Pdf.Picker.App
         {
             try
             {
-                var name = IoEx.Path.GetFileNameWithoutExtension(Path);
+                var name = IO.Get(Path).NameWithoutExtension;
                 progress.Report(Create(
                     -1,
                     string.Format(Properties.Resources.MessageBegin, name)
@@ -297,13 +309,11 @@ namespace Cube.Pdf.Picker.App
         /* ----------------------------------------------------------------- */
         private KeyValuePair<int, int> ExtractImages(IProgress<ProgressEventArgs<string>> progress)
         {
-            using (var reader = new DocumentReader())
+            var query = new Query<string>(e => WhenPasswordRequired(e));
+            using (var reader = new DocumentReader(Path, query, true, IO))
             {
-                reader.PasswordRequired += Reader_PasswordRequired;
-                reader.Open(Path, string.Empty, true);
-
                 ExtractImages(reader, progress);
-                return new KeyValuePair<int, int>(reader.Pages.Count(), Items.Count);
+                return KeyValuePair.Create(reader.Pages.Count(), Items.Count);
             }
         }
 
@@ -319,7 +329,7 @@ namespace Cube.Pdf.Picker.App
         private void ExtractImages(DocumentReader src, IProgress<ProgressEventArgs<string>> progress)
         {
             var count = src.Pages.Count();
-            var name  = IoEx.Path.GetFileNameWithoutExtension(Path);
+            var name  = IO.Get(Path).NameWithoutExtension;
 
             for (var i = 0; i < count; ++i)
             {
@@ -382,11 +392,11 @@ namespace Cube.Pdf.Picker.App
                 var filename = (i == 1) ?
                                string.Format("{0}-{1}.png", basename, index.ToString(digit)) :
                                string.Format("{0}-{1} ({2}).png", basename, index.ToString(digit), i);
-                var dest = IoEx.Path.Combine(directory, filename);
-                if (!IoEx.File.Exists(dest)) return dest;
+                var dest = IO.Combine(directory, filename);
+                if (!IO.Exists(dest)) return dest;
             }
 
-            return IoEx.Path.Combine(directory, IoEx.Path.GetRandomFileName());
+            return IO.Combine(directory, System.IO.Path.GetRandomFileName());
         }
 
         /* ----------------------------------------------------------------- */

@@ -16,12 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Log;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using IoEx = System.IO;
 
 namespace Cube.Pdf.Pages.App
 {
@@ -36,22 +36,18 @@ namespace Cube.Pdf.Pages.App
     /* --------------------------------------------------------------------- */
     public class FileCollection : ObservableCollection<File>
     {
-        #region Constructors
+        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemCollection
+        /// IO
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// I/O オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileCollection() : base() { }
-
-        #endregion
-
-        #region Properties
+        public IO IO { get; } = new IO();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,7 +73,7 @@ namespace Cube.Pdf.Pages.App
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<QueryEventArgs<string, string>> PasswordRequired;
+        public EventHandler<QueryEventArgs<string>> PasswordRequired;
 
         #endregion
 
@@ -92,11 +88,11 @@ namespace Cube.Pdf.Pages.App
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(string path, string password = "")
+        public void Add(string path)
         {
-            var ext = IoEx.Path.GetExtension(path).ToLower();
-            if (ext == ".pdf") AddDocument(path, password);
-            else lock (_lock) Add(new ImageFile(path));
+            var ext = IO.Get(path).Extension.ToLower();
+            if (ext == ".pdf") AddDocument(path);
+            else lock (_lock) Add(new ImageFile(path, IO.GetRefreshable()));
         }
 
         /* --------------------------------------------------------------------- */
@@ -118,12 +114,14 @@ namespace Cube.Pdf.Pages.App
             {
                 if (Contains(path)) continue;
 
-                if (IoEx.Directory.Exists(path))
+                var info = IO.Get(path);
+
+                if (info.IsDirectory)
                 {
                     if (hierarchy <= 0) continue;
-                    Add(IoEx.Directory.GetFiles(path), hierarchy - 1);
+                    Add(IO.GetFiles(path), hierarchy - 1);
                 }
-                else if (IoEx.File.Exists(path))
+                else if (info.Exists)
                 {
                     try { Add(path); }
                     catch (Exception err) { this.LogWarn($"Ignore:{path}", err); }
@@ -171,8 +169,8 @@ namespace Cube.Pdf.Pages.App
         /* ----------------------------------------------------------------- */
         public void Merge(string path)
         {
-            var dir = IoEx.Path.GetDirectoryName(path);
-            var tmp = IoEx.Path.Combine(dir, Guid.NewGuid().ToString("N"));
+            var dir = IO.Get(path).DirectoryName;
+            var tmp = IO.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
             {
@@ -182,18 +180,11 @@ namespace Cube.Pdf.Pages.App
                     if (file is PdfFile) AddDocument(file as PdfFile, writer);
                     else AddImage(file as ImageFile, writer);
                 }
-                writer.Metadata = Metadata;
+                writer.Set(Metadata);
                 writer.Save(tmp);
-
-                var op = new Cube.FileSystem.IO();
-                op.Failed += (s, e) =>
-                {
-                    e.Cancel = true;
-                    throw e.Exception;
-                };
-                op.Move(tmp, path, true);
+                IO.Move(tmp, path, true);
             }
-            finally { IoEx.File.Delete(tmp); }
+            finally { IO.TryDelete(tmp); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -213,7 +204,7 @@ namespace Cube.Pdf.Pages.App
                 if (item is PdfFile) AddDocument(item as PdfFile, writer);
                 else AddImage(item as ImageFile, writer);
             }
-            writer.Metadata = Metadata;
+            writer.Set(Metadata);
             writer.Save(directory);
 
             foreach (var result in writer.Results) results.Add(result);
@@ -237,7 +228,7 @@ namespace Cube.Pdf.Pages.App
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
+        protected virtual void OnPasswordRequired(QueryEventArgs<string> e)
         {
             if (PasswordRequired != null) PasswordRequired(this, e);
             else e.Cancel = true;
@@ -256,14 +247,11 @@ namespace Cube.Pdf.Pages.App
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddDocument(string path, string password)
+        private void AddDocument(string path)
         {
-            using (var reader = new Cube.Pdf.Itext.DocumentReader())
+            var query = new Query<string>(e => OnPasswordRequired(e));
+            using (var reader = new Cube.Pdf.Itext.DocumentReader(path, query, IO))
             {
-                reader.PasswordRequired += (s, e) => OnPasswordRequired(e);
-                reader.Open(path, password, true);
-                if (!reader.IsOpen) return;
-
                 lock (_lock) Add(reader.File);
             }
         }
@@ -279,13 +267,10 @@ namespace Cube.Pdf.Pages.App
         /* ----------------------------------------------------------------- */
         private void AddDocument(PdfFile src, IDocumentWriter dest)
         {
-            if (src == null) return;
-
-            using (var reader = new Cube.Pdf.Itext.DocumentReader())
+            var query = new Query<string>(e => e.Cancel = true);
+            using (var reader = new Cube.Pdf.Itext.DocumentReader(src.FullName, query, IO))
             {
-                reader.PasswordRequired += (s, e) => { e.Cancel = true; };
-                reader.Open(src.FullName, src.Password, true);
-                if (reader.IsOpen) dest.Add(reader.Pages);
+                dest.Add(reader.Pages);
             }
         }
 
@@ -300,9 +285,7 @@ namespace Cube.Pdf.Pages.App
         /* ----------------------------------------------------------------- */
         private void AddImage(ImageFile src, IDocumentWriter dest)
         {
-            if (src == null) return;
-
-            var pages = ImagePage.Create(src.FullName);
+            var pages = IO.GetImagePages(src.FullName);
             if (pages != null) dest.Add(pages);
         }
 
