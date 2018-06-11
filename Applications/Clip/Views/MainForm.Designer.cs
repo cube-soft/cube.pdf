@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.Clip.App
+﻿namespace Cube.Pdf.App.Clip
 {
     partial class MainForm
     {
@@ -42,7 +42,7 @@
             this.AttachButton = new Cube.Forms.Button();
             this.DetachButton = new Cube.Forms.Button();
             this.ResetButton = new Cube.Forms.Button();
-            this.MyClipDataView = new Cube.Pdf.Clip.App.ClipControl();
+            this.MyClipDataView = new Cube.Pdf.App.Clip.ClipControl();
             this.VersionButton = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
@@ -265,7 +265,7 @@
             this.VersionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.VersionButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.VersionButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VersionButton.Image = global::Cube.Pdf.Clip.App.Properties.Resources.HeaderImage;
+            this.VersionButton.Image = global::Cube.Pdf.App.Clip.Properties.Resources.HeaderImage;
             this.VersionButton.Location = new System.Drawing.Point(0, 0);
             this.VersionButton.Margin = new System.Windows.Forms.Padding(0);
             this.VersionButton.Name = "VersionButton";

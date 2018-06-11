@@ -21,14 +21,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Cube.Pdf.Itext.Images
+namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
     /// ImageExtension
     ///
     /// <summary>
-    /// System.Drawing.Image の拡張用クラスです。
+    /// 画像データに関連する拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,7 +38,7 @@ namespace Cube.Pdf.Itext.Images
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// GetItextImage
         ///
         /// <summary>
         /// System.Drawing.Image オブジェクトを iTextSharp.text.Image
@@ -50,15 +50,15 @@ namespace Cube.Pdf.Itext.Images
         /// <returns>変換後のオブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static iTextSharp.text.Image Convert(this Image image)
+        public static iTextSharp.text.Image GetItextImage(this Image image)
         {
-            var scale  = 72.0 / image.HorizontalResolution;
+            var scale  = 72.0f / image.HorizontalResolution;
             var format = image.GetImageFormat();
             if (!GetSupportFormats().Contains(format)) format = ImageFormat.Png;
 
             var dest = iTextSharp.text.Image.GetInstance(image, format);
             dest.SetAbsolutePosition(0, 0);
-            dest.ScalePercent((float)(scale * 100.0));
+            dest.ScalePercent(scale * 100);
 
             return dest;
         }

@@ -46,10 +46,10 @@ namespace Cube.Pdf
         /// <param name="io">入出力用オブジェクト</param>
         /// <param name="src">画像ファイルのパス</param>
         ///
-        /// <returns>File オブジェクト</returns>
+        /// <returns>ImageFile オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static File GetImageFile(this IO io, string src)
+        public static ImageFile GetImageFile(this IO io, string src)
         {
             using (var ss = io.OpenRead(src))
             using (var image = Image.FromStream(ss))
@@ -70,10 +70,10 @@ namespace Cube.Pdf
         /// <param name="src">画像ファイルのパス</param>
         /// <param name="image">画像オブジェクト</param>
         ///
-        /// <returns>File オブジェクト</returns>
+        /// <returns>ImageFile オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static File GetImageFile(this IO io, string src, Image image)
+        public static ImageFile GetImageFile(this IO io, string src, Image image)
         {
             Debug.Assert(image != null);
             Debug.Assert(image.FrameDimensionsList != null);
@@ -84,7 +84,7 @@ namespace Cube.Pdf
             var x    = image.HorizontalResolution;
             var y    = image.VerticalResolution;
 
-            return new File(src, io.GetRefreshable())
+            return new ImageFile(src, io.GetRefreshable())
             {
                 Count      = image.GetFrameCount(dim),
                 Resolution = new PointF(x, y),

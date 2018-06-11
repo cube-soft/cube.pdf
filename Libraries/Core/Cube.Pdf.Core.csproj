@@ -64,7 +64,7 @@
     <Compile Include="PageExtension.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="PermissionMethod.cs" />
-    <Compile Include="ViewPreferences.cs" />
+    <Compile Include="ViewOption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

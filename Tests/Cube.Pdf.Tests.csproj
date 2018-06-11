@@ -57,7 +57,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Detail\FileResource.cs" />
     <Compile Include="Itext\DocumentReaderTest.cs" />
     <Compile Include="Itext\DocumentWriterTest.cs" />
     <Compile Include="PageTest.cs" />
@@ -65,40 +64,43 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Packages.config" />
-    <None Include="Examples\annotation.pdf">
+    <None Include="Examples\Sample.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\attachment-cjk.pdf">
+    <None Include="Examples\SampleAnnotation.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\attachment.pdf">
+    <None Include="Examples\SampleAttachment.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\bookmark-tag.pdf">
+    <None Include="Examples\SampleAttachmentCjk.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\bookmark.pdf">
+    <None Include="Examples\SampleBookmark.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\image.pdf">
+    <None Include="Examples\SampleBookmarkTag.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\image.png">
+    <None Include="Examples\SampleImage.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\password-aes256.pdf">
+    <None Include="Examples\SamplePassword.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\password.pdf">
+    <None Include="Examples\SamplePasswordAes256.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\rotation.pdf">
+    <None Include="Examples\SampleRotation.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleImage01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleImage02.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\日本語のサンプル.md">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Examples\cubepdf.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -106,9 +108,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Libraries\Core\Cube.Pdf.csproj">
+    <ProjectReference Include="..\Libraries\Core\Cube.Pdf.Core.csproj">
       <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
-      <Name>Cube.Pdf</Name>
+      <Name>Cube.Pdf.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libraries\Itext\Cube.Pdf.Itext.csproj">
       <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>

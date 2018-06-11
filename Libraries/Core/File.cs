@@ -93,7 +93,7 @@ namespace Cube.Pdf
 
     #endregion
 
-    #region DocumentFile
+    #region PdfFile
 
     /* --------------------------------------------------------------------- */
     ///
@@ -207,6 +207,53 @@ namespace Cube.Pdf
             Password   = password;
             Resolution = new PointF(72.0f, 72.0f);
         }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region ImageFile
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ImageFile
+    ///
+    /// <summary>
+    /// 画像ファイルの情報を保持するためのクラスです。
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class ImageFile : File
+    {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageFile
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="src">ファイルまたはディレクトリのパス</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageFile(string src) : base(src) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageFile
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="src">ファイルまたはディレクトリのパス</param>
+        /// <param name="refreshable">更新用オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageFile(string src, IRefreshable refreshable) : base(src, refreshable) { }
 
         #endregion
     }

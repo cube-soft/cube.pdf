@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cube.Pdf.Clip.App.Properties {
+namespace Cube.Pdf.App.Clip.Properties {
 
 
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

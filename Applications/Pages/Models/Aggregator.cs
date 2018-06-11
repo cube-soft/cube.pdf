@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Pages.App
+namespace Cube.Pdf.App.Pages
 {
     /* --------------------------------------------------------------------- */
     ///

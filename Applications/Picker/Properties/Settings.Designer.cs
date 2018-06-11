@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cube.Pdf.Picker.App.Properties {
+namespace Cube.Pdf.App.Picker.Properties {
 
 
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

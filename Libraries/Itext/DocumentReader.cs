@@ -16,13 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using iTextSharp.text.exceptions;
+using Cube.FileSystem;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 
 namespace Cube.Pdf.Itext
 {
@@ -51,8 +51,10 @@ namespace Cube.Pdf.Itext
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="src">PDF ファイルのパス</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader() { }
+        public DocumentReader(string src) : this(src, string.Empty) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -62,10 +64,12 @@ namespace Cube.Pdf.Itext
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="path">PDF ファイルのパス</param>
+        /// <param name="src">PDF ファイルのパス</param>
+        /// <param name="password">パスワード</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string path) { Open(path); }
+        public DocumentReader(string src, string password) :
+            this(src, password, new IO()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -75,13 +79,63 @@ namespace Cube.Pdf.Itext
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="path">PDF ファイルのパス</param>
-        /// <param name="password">
-        /// オーナパスワードまたはユーザパスワード
+        /// <param name="src">PDF ファイルのパス</param>
+        /// <param name="query">パスワード用オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(string src, IQuery<string> query) :
+            this(src, query, new IO()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="src">PDF ファイルのパス</param>
+        /// <param name="password">パスワード</param>
+        /// <param name="io">I/O オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(string src, string password, IO io) :
+            this(src, password, false, io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="src">PDF ファイルのパス</param>
+        /// <param name="query">パスワード用オブジェクト</param>
+        /// <param name="io">I/O オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(string src, IQuery<string> query, IO io) :
+            this(src, query, false, io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="src">PDF ファイルのパス</param>
+        /// <param name="password">パスワード</param>
+        /// <param name="denyUserPassword">
+        /// ユーザパスワードの入力を拒否するかどうか
         /// </param>
+        /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string path, string password) { Open(path, password); }
+        public DocumentReader(string src, string password, bool denyUserPassword, IO io) :
+            this(src, new OnceQuery(password), denyUserPassword, io) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -91,14 +145,49 @@ namespace Cube.Pdf.Itext
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="file">PDF ファイルオブジェクト</param>
+        /// <param name="src">PDF ファイルのパス</param>
+        /// <param name="query">パスワード用オブジェクト</param>
+        /// <param name="denyUserPassword">
+        /// ユーザパスワードの入力を拒否するかどうか
+        /// </param>
+        /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(MediaFile file) { Open(file); }
+        public DocumentReader(string src, IQuery<string> query, bool denyUserPassword, IO io)
+        {
+            _dispose = new OnceAction<bool>(Dispose);
+            _core    = ReaderFactory.Create(src, query, denyUserPassword, out string password);
+
+            Debug.Assert(_core != null);
+
+            var f = new PdfFile(src, password, io.GetRefreshable())
+            {
+                FullAccess = _core.IsOpenedWithFullPermissions,
+                Count      = _core.NumberOfPages
+            };
+
+            IO          = io;
+            File        = f;
+            Metadata    = _core.GetMetadata();
+            Encryption  = _core.GetEncryption(f);
+            Pages       = new ReadOnlyPageCollection(_core, f);
+            Attachments = new ReadOnlyAttachmentCollection(_core, f, IO);
+        }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -109,7 +198,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MediaFile File { get; private set; } = null;
+        public File File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -120,7 +209,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; private set; } = null;
+        public Metadata Metadata { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -131,7 +220,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Encryption Encryption { get; private set; } = null;
+        public Encryption Encryption { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -142,7 +231,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page> Pages { get; private set; } = null;
+        public IEnumerable<Page> Pages { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -153,262 +242,22 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Attachment> Attachments { get; private set; } = null;
+        public IEnumerable<Attachment> Attachments { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RawObject
         ///
         /// <summary>
-        /// 内部実装のオブジェクトを取得します。
+        /// 内部実装オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PdfReader RawObject { get; private set; } = null;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsOpen
-        ///
-        /// <summary>
-        /// ファイルが正常に開いているかどうかを示す値を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool IsOpen
-            => RawObject   != null &&
-               File        != null &&
-               Metadata    != null &&
-               Encryption  != null &&
-               Pages       != null &&
-               Attachments != null;
-
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PasswordRequired
-        ///
-        /// <summary>
-        /// パスワードが要求された時に発生するイベントです。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// PasswordRequired イベントに対してイベントハンドラが登録されて
-        /// いない場合、EncryptionException が送出されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event QueryEventHandler<string, string> PasswordRequired;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnPasswordRequired
-        ///
-        /// <summary>
-        /// PasswordRequired イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnPasswordRequired(QueryEventArgs<string, string> e)
-        {
-            if (PasswordRequired != null) PasswordRequired(this, e);
-            else throw new EncryptionException(e.Query);
-        }
+        public object RawObject => _core;
 
         #endregion
 
         #region Methods
-
-        #region IDisposable
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~DocumentReader
-        ///
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// クラスで必要な終了処理は、デストラクタではなく Dispose メソッド
-        /// に記述して下さい。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~DocumentReader()
-        {
-            Dispose(false);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed) return;
-            if (disposing)
-            {
-                RawObject?.Dispose();
-                RawObject  = null;
-                File       = null;
-                Metadata   = null;
-                Encryption = null;
-                Pages      = null;
-            }
-            _disposed = true;
-        }
-
-        #endregion
-
-        #region IDocumentReader
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /// <param name="path">PDF ファイルのパス</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(string path) => Open(path, string.Empty);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /// <param name="path">PDF ファイルのパス</param>
-        /// <param name="password">
-        /// オーナパスワードまたはユーザパスワード
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(string path, string password)
-            => Open(path, password, false);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /// <param name="path">PDF ファイルのパス</param>
-        ///
-        /// <param name="password">
-        /// オーナパスワードまたはユーザパスワード
-        /// </param>
-        ///
-        /// <param name="onlyFullAccess">
-        /// フルアクセスのみを許可するかどうかを示す値
-        /// </param>
-        ///
-        /// <remarks>
-        /// onlyFullAccess が true の場合、ユーザパスワードで
-        /// PDF ファイルを開こうとすると PasswordRequired イベントが
-        /// 発生します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(string path, string password, bool onlyFullAccess)
-        {
-            SetRawObject(path, password, onlyFullAccess);
-            if (RawObject == null) return;
-
-            var file = new PdfFile(path, password)
-            {
-                FullAccess = RawObject.IsOpenedWithFullPermissions,
-                PageCount  = RawObject.NumberOfPages
-            };
-
-            File        = file;
-            Metadata    = RawObject.CreateMetadata();
-            Encryption  = RawObject.CreateEncryption(file);
-            Pages       = new ReadOnlyPageCollection(RawObject, file);
-            Attachments = new ReadOnlyAttachmentCollection(RawObject, file);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /// <param name="file">PDF ファイルオブジェクト</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(MediaFile file) => Open(file, false);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /// <param name="file">PDF ファイルオブジェクト</param>
-        /// <param name="onlyFullAccess">
-        /// フルアクセスのみを許可するかどうかを示す値
-        /// </param>
-        ///
-        /// <remarks>
-        /// onlyFullAccess が true の場合、ユーザパスワードで
-        /// PDF ファイルを開こうとすると PasswordRequired イベントが
-        /// 発生します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(MediaFile file, bool onlyFullAccess)
-        {
-            var pdf = file as PdfFile;
-            if (pdf == null) throw new System.IO.FileLoadException();
-
-            SetRawObject(pdf.FullName, pdf.Password, onlyFullAccess);
-            if (RawObject == null) return;
-
-            pdf.FullAccess = RawObject.IsOpenedWithFullPermissions;
-            pdf.PageCount = RawObject.NumberOfPages;
-
-            File = pdf;
-            Metadata = RawObject.CreateMetadata();
-            Encryption = RawObject.CreateEncryption(pdf);
-            Pages = new ReadOnlyPageCollection(RawObject, pdf);
-            Attachments = new ReadOnlyAttachmentCollection(RawObject, pdf);
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -420,15 +269,10 @@ namespace Cube.Pdf.Itext
         ///
         /// <param name="pagenum">ページ番号</param>
         ///
-        /// <returns>ページ情報を保持するオブジェクト</returns>
+        /// <returns>Page オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public Page GetPage(int pagenum)
-            => RawObject != null && File != null ?
-               RawObject.CreatePage(File, pagenum) :
-               null;
-
-        #endregion
+        public Page GetPage(int pagenum) => _core.GetPage(GetPdfFile(), pagenum);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -446,12 +290,54 @@ namespace Cube.Pdf.Itext
         public IEnumerable<Image> GetImages(int pagenum)
         {
             if (pagenum < 0 || pagenum > Pages.Count()) throw new IndexOutOfRangeException();
-
-            var parser = new iTextSharp.text.pdf.parser.PdfReaderContentParser(RawObject);
-            var listener = new ImageRenderListener();
-            parser.ProcessContent(pagenum, listener);
-            return listener.Images;
+            var dest = new EmbeddedImageCollection();
+            _core.GetContentParser().ProcessContent(pagenum, dest);
+            return dest;
         }
+
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~DocumentReader
+        ///
+        /// <summary>
+        /// オブジェクトを破棄します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~DocumentReader() { _dispose.Invoke(false); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing) _core.Dispose();
+        }
+
+        #endregion
 
         #endregion
 
@@ -459,41 +345,25 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetRawObject
+        /// GetPdfFile
         ///
         /// <summary>
-        /// RawObject を生成します。
+        /// PdfFile オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetRawObject(string path, string password, bool onlyFullAccess)
+        private PdfFile GetPdfFile()
         {
-            try
-            {
-                var bytes = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
-
-                RawObject?.Dispose();
-                RawObject = null;
-                RawObject = new PdfReader(path, bytes, true);
-
-                var reject = onlyFullAccess && !RawObject.IsOpenedWithFullPermissions;
-                if (reject) throw new BadPasswordException("owner password required");
-            }
-            catch (BadPasswordException /* err */)
-            {
-                RawObject?.Dispose();
-                RawObject = null;
-
-                var e = new QueryEventArgs<string, string>(path);
-                OnPasswordRequired(e);
-                if (!e.Cancel) Open(path, e.Result);
-            }
+            var dest = File as PdfFile;
+            Debug.Assert(dest != null);
+            return dest;
         }
 
         #endregion
 
         #region Fields
-        private bool _disposed = false;
+        private readonly OnceAction<bool> _dispose;
+        private readonly PdfReader _core;
         #endregion
     }
 }

@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
 using System;
 
 namespace Cube.Pdf
@@ -148,22 +147,6 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewLayout
-        ///
-        /// <summary>
-        /// PDF ファイルの各ページを表示する際のレイアウトを取得または
-        /// 設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ViewLayout ViewLayout
-        {
-            get => _layout;
-            set => SetProperty(ref _layout, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// ViewOption
         ///
         /// <summary>
@@ -177,52 +160,6 @@ namespace Cube.Pdf
             set => SetProperty(ref _option, value);
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewPreferences
-        ///
-        /// <summary>
-        /// PDF ファイルの表示方法に関する値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int ViewPreferences
-        {
-            get => ViewOption.TryCast<int>() & ViewLayout.TryCast<int>();
-            set
-            {
-                var s0 = SetProperty(ref _layout, ToLayout(value), nameof(ViewLayout));
-                var s1 = SetProperty(ref _option, ToMode(value), nameof(ViewOption));
-                if (s0 || s1) RaisePropertyChanged(nameof(ViewPreferences));
-            }
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ToLayout
-        ///
-        /// <summary>
-        /// ViewLayout に変換します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ViewLayout ToLayout(int src) => (src & 0x003f).TryCast(ViewLayout.SinglePage);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ToMode
-        ///
-        /// <summary>
-        /// ViewMode に変換します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ViewOption ToMode(int src) => (src & 0x0fc0).TryCast(ViewOption.None);
-
         #endregion
 
         #region Fields
@@ -233,8 +170,7 @@ namespace Cube.Pdf
         private string _keywords = string.Empty;
         private string _creator = string.Empty;
         private string _producer = string.Empty;
-        private ViewOption _option = ViewOption.None;
-        private ViewLayout _layout = ViewLayout.SinglePage;
+        private ViewOption _option = ViewOption.PageOnly;
         #endregion
     }
 }

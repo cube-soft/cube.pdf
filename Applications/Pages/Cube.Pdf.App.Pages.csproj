@@ -7,7 +7,7 @@
     <ProjectGuid>{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cube.Pdf.Pages.App</RootNamespace>
+    <RootNamespace>Cube.Pdf.App.Pages</RootNamespace>
     <AssemblyName>CubePdfPage</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -131,9 +131,9 @@
     <None Include="Resources\NotAssociated.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Core\Cube.Pdf.csproj">
+    <ProjectReference Include="..\..\Libraries\Core\Cube.Pdf.Core.csproj">
       <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
-      <Name>Cube.Pdf</Name>
+      <Name>Cube.Pdf.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Itext\Cube.Pdf.Itext.csproj">
       <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>

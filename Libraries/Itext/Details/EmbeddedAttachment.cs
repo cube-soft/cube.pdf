@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using iTextSharp.text.pdf;
 using System.Security.Cryptography;
 
@@ -30,7 +31,7 @@ namespace Cube.Pdf.Itext
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EmbeddedAttachment : Attachment
+    internal class EmbeddedAttachment : Attachment
     {
         #region Constructors
 
@@ -42,30 +43,15 @@ namespace Cube.Pdf.Itext
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="stream">添付ファイルのストリーム</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EmbeddedAttachment(PRStream stream) : this("", null, stream) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attachment
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
         /// <param name="name">添付ファイル名</param>
-        /// <param name="file">PDF ファイル情報</param>
-        /// <param name="stream">添付ファイルのストリーム</param>
+        /// <param name="src">添付元 PDF ファイルのパス</param>
+        /// <param name="core">添付ストリーム</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EmbeddedAttachment(string name, MediaFile file, PRStream stream)
-            : base()
+        public EmbeddedAttachment(string name, string src, IO io, PRStream core) :
+            base(name, src, io)
         {
-            Name = name;
-            File = file;
-            _stream = stream;
+            _core = core;
         }
 
         #endregion
@@ -81,10 +67,10 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override long GetLength()
-            => _stream?.GetAsDict(PdfName.PARAMS)?
-                       .GetAsNumber(PdfName.SIZE)?
-                       .LongValue ?? 0;
+        protected override long GetLength() =>
+            _core?.GetAsDict(PdfName.PARAMS)
+                 ?.GetAsNumber(PdfName.SIZE)
+                 ?.LongValue ?? 0;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -95,7 +81,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override byte[] GetBytes() => PdfReader.GetStreamBytes(_stream);
+        protected override byte[] GetData() => PdfReader.GetStreamBytes(_core);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -106,21 +92,13 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override byte[] GetChecksum()
-        {
-            if (_cache == null)
-            {
-                var md5 = new MD5CryptoServiceProvider();
-                _cache = md5.ComputeHash(GetBytes());
-            }
-            return _cache;
-        }
+        protected override byte[] GetChecksum() =>
+            new MD5CryptoServiceProvider().ComputeHash(Data);
 
         #endregion
 
         #region Fields
-        private PRStream _stream;
-        private byte[] _cache;
+        private readonly PRStream _core;
         #endregion
     }
 }

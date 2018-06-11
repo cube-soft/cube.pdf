@@ -22,7 +22,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.Picker.App
+namespace Cube.Pdf.App.Picker
 {
     /* --------------------------------------------------------------------- */
     ///

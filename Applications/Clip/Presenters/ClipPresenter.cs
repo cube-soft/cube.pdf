@@ -22,7 +22,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.Clip.App
+namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
