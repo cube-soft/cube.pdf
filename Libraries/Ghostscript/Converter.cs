@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.Ghostscript
 {
@@ -159,6 +160,87 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         public ICollection<Argument> Options { get; } = new List<Argument>();
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// 変換処理を実行します。
+        /// </summary>
+        ///
+        /// <param name="src">変換元ファイル</param>
+        /// <param name="dest">変換結果を保存するパス</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Invoke(string src, string dest) => Invoke(new[] { src }, dest);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// 変換処理を実行します。
+        /// </summary>
+        ///
+        /// <param name="sources">変換元ファイル一覧</param>
+        /// <param name="dest">変換結果を保存するパス</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Invoke(IEnumerable<string> sources, string dest)
+        {
+            var args = new[] { "gs" }.Concat(CreateArgs(sources, dest));
+            GsApi.NativeMethods.Invoke(args.ToArray());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateArgs
+        ///
+        /// <summary>
+        /// Ghostscript API で実行するための引数一覧を生成します。
+        /// </summary>
+        ///
+        /// <param name="sources">変換元ファイル一覧</param>
+        /// <param name="dest">変換結果を保存するパス</param>
+        ///
+        /// <returns>引数一覧</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual IEnumerable<string> CreateArgs(IEnumerable<string> sources, string dest) =>
+            CreateCore(dest)
+            .Select(e => e.ToString())
+            .Concat(new[] { "-f" })
+            .Concat(sources);
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateCore
+        ///
+        /// <summary>
+        /// Ghostscript API で実行するための引数一覧を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<Argument> CreateCore(string dest)
+        {
+            var args = new List<Argument>
+            {
+                new Argument { Key = "NOSAFER" },
+                new Argument { Key = "BATCH" },
+                new Argument { Key = "NOPAUSE" },
+            };
+
+            return args;
+        }
 
         #endregion
     }
