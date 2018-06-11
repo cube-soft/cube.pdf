@@ -83,7 +83,7 @@ namespace Cube.Pdf.Pages.App
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Register(MediaFile file)
+        public int Register(File file)
         {
             var icon = file.RawObject.GetIcon(IconSize.Small);
             if (icon == null) return 0;

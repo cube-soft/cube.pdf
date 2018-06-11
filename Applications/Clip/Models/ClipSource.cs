@@ -223,7 +223,7 @@ namespace Cube.Pdf.Clip.App
             var item = new Attachment
             {
                 Name = System.IO.Path.GetFileName(file),
-                File = new File(file)
+                File = new PdfFile(file)
             };
 
             Clips.Insert(0, new ClipItem(item)

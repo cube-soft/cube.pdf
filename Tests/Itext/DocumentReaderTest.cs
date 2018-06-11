@@ -60,7 +60,7 @@ namespace Cube.Pdf.Tests.Itext
                 var dest = reader.File as PdfFile;
 
                 Assert.That(dest.Name,         Is.EqualTo(filename));
-                Assert.That(dest.FullAccess,   Is.EqualTo(GetExamplesWith(filename)));
+                Assert.That(dest.FullName,     Is.EqualTo(GetExamplesWith(filename)));
                 Assert.That(dest.Password,     Is.EqualTo(password));
                 Assert.That(dest.FullAccess,   Is.EqualTo(fullaccess));
                 Assert.That(dest.Length,       Is.AtLeast(1));

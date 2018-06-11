@@ -34,7 +34,7 @@ namespace Cube.Pdf.Pages.App
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileCollection : ObservableCollection<MediaFile>
+    public class FileCollection : ObservableCollection<File>
     {
         #region Constructors
 
