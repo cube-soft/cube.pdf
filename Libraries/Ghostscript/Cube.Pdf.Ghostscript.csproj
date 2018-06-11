@@ -41,6 +41,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NativeMethods\GsApi.cs" />
+    <Compile Include="NativeMethods\GsApiException.cs" />
     <Compile Include="Parameters\Format.cs" />
     <Compile Include="Parameters\Orientation.cs" />
     <Compile Include="Parameters\Paper.cs" />

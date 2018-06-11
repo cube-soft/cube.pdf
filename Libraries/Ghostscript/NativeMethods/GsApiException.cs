@@ -16,28 +16,50 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.ComponentModel;
+
 namespace Cube.Pdf.Ghostscript
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Orientation
+    /// GsApiException
     ///
     /// <summary>
-    /// ページの向きを定義した列挙型です。
+    /// Ghostscript API 実行時にエラーが発生した時に送出される
+    /// 例外クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public enum Orientation
+    [Serializable]
+    public class GsApiException : Win32Exception
     {
-        /// <summary>自動</summary>
-        Auto = 10,
-        /// <summary>縦向き</summary>
-        Portrait = 0,
-        /// <summary>縦向き（180 度回転）</summary>
-        PortraitReverse = 2,
-        /// <summary>横向き</summary>
-        Landscape = 3,
-        /// <summary>横向き（180 度回転）</summary>
-        LandscapeReverse = 1,
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GsApiException
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public GsApiException() : base(-1) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GsApiException
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="error">エラーコード</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public GsApiException(int error) : base(error) { }
+
+        #endregion
     }
 }

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Ghostscript
@@ -47,6 +48,7 @@ namespace Cube.Pdf.Ghostscript
         public Converter(Format format)
         {
             Format = format;
+            Fonts.Add(Environment.GetFolderPath(Environment.SpecialFolder.Fonts));
         }
 
         #endregion
@@ -108,6 +110,44 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         public bool Quiet { get; set; } = true;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Log
+        ///
+        /// <summary>
+        /// Ghostscript の出力ログを保存するパスを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Log { get; set; } = string.Empty;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Resources
+        ///
+        /// <summary>
+        /// リソースファイルが格納されているディレクトリ一覧を取得
+        /// または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICollection<string> Resources { get; } = new List<string>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Fonts
+        ///
+        /// <summary>
+        /// フォントが格納されているディレクトリ一覧を取得または設定します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 初期値として C:\Windows\Fonts に相当するパスが設定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICollection<string> Fonts { get; } = new List<string>();
 
         /* ----------------------------------------------------------------- */
         ///

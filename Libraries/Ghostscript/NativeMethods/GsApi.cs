@@ -17,93 +17,109 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Text;
+using System.Runtime.InteropServices;
 
-namespace Cube.Pdf.Ghostscript
+namespace Cube.Pdf.Ghostscript.GsApi
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Argument
+    /// GsApi.NativeMethods
     ///
     /// <summary>
-    /// Interpreter に指定可能な引数を表すクラスです。
+    /// Ghostscript API を定義したクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Argument
+    internal static class NativeMethods
     {
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Key
-        ///
-        /// <summary>
-        /// キーを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Key { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Value
-        ///
-        /// <summary>
-        /// 値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Value { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// KeyPrefix
-        ///
-        /// <summary>
-        /// キーの接頭辞を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public char KeyPrefix { get; set; } = 'd';
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ValuePrefix
-        ///
-        /// <summary>
-        /// 値の接頭辞を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public char ValuePrefix { get; set; } = '/';
-
-        #endregion
-
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ToString
+        /// Invoke
         ///
         /// <summary>
-        /// 引数を表す文字列を取得します。
+        /// Ghostscript API を実行します。
         /// </summary>
         ///
-        /// <returns>文字列</returns>
-        ///
         /* ----------------------------------------------------------------- */
-        public override string ToString()
+        public static void Invoke(string[] args)
         {
-            if (string.IsNullOrEmpty(Key)) throw new ArgumentException(nameof(Key));
+            lock (_lock)
+            {
+                NewInstance(out IntPtr core, IntPtr.Zero);
+                if (core == IntPtr.Zero) throw new GsApiException();
 
-            var sb = new StringBuilder();
-            sb.Append($"-{KeyPrefix}{Key}");
-            if (!string.IsNullOrEmpty(Value)) sb.Append($"={ValuePrefix}{Value}");
-
-            return base.ToString();
+                try
+                {
+                    var code = InitWithArgs(core, args.Length, args);
+                    if (code < 0 && code != -101) throw new GsApiException(code);
+                }
+                finally
+                {
+                    Exit(core);
+                    DeleteInstance(core);
+                }
+            }
         }
 
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NewInstance
+        ///
+        /// <summary>
+        /// Ghostscript API 用インスタンスを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, EntryPoint = "gsapi_new_instance")]
+        private static extern int NewInstance(out IntPtr instance, IntPtr handle);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InitWithArgs
+        ///
+        /// <summary>
+        /// Ghostscript を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, EntryPoint = "gsapi_init_with_args")]
+        private static extern int InitWithArgs(IntPtr instance, int argc, string[] argv);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Exit
+        ///
+        /// <summary>
+        /// 処理を終了します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, EntryPoint = "gsapi_exit")]
+        private static extern int Exit(IntPtr instance);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DeleteInstance
+        ///
+        /// <summary>
+        /// Ghostscript API 用インスタンスを削除します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, EntryPoint = "gsapi_delete_instance")]
+        private static extern void DeleteInstance(IntPtr instance);
+
+        #endregion
+
+        #region Fields
+        private const string LibName = "gsdll32.dll";
+        private static readonly object _lock = new object();
         #endregion
     }
 }
