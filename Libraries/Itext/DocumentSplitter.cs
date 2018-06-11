@@ -76,7 +76,7 @@ namespace Cube.Pdf.Itext
 
         #endregion
 
-        #region Override Methods
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -134,7 +134,7 @@ namespace Cube.Pdf.Itext
         private void SaveCore(Page src, string folder)
         {
             var reader = GetRawReader(src);
-            if (src.File is PdfFile) reader.Rotate(src);
+            reader.Rotate(src);
 
             var dest = Unique(folder, src.File, src.Number);
             SaveOne(reader, src.Number, dest);

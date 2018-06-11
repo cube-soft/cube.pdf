@@ -81,7 +81,7 @@ namespace Cube.Pdf.Itext
             while (true)
             {
                 try { return CreateCore(src, password, denyUserPassword); }
-                catch (EncryptionException)
+                catch (BadPasswordException)
                 {
                     var e = QueryEventArgs.Create(src);
                     query.Request(e);

@@ -197,10 +197,10 @@ namespace Cube.Pdf.Itext
         private void AddPage(Page src, PdfCopy dest)
         {
             var reader = GetRawReader(src);
+            reader.Rotate(src);
             if (src.File is PdfFile)
             {
                 var n = dest.PageNumber; // see remarks
-                reader.Rotate(src);
                 reader.GetBookmarks(n, n - src.Number, Bookmarks);
             }
             dest.AddPage(dest.GetImportedPage(reader, src.Number));
