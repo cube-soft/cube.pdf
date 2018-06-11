@@ -41,6 +41,19 @@ namespace Cube.Pdf
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="path">添付ファイルのパス</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Attachment(string path) : this(path, new IO()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachment
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
         /// <param name="name">表示名</param>
         /// <param name="path">添付ファイルのパス</param>
         ///
@@ -55,9 +68,23 @@ namespace Cube.Pdf
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="path">添付ファイルのパス</param>
+        /// <param name="io">I/O オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Attachment(string path, IO io) : this(io.Get(path).Name, path, io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachment
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
         /// <param name="name">表示名</param>
         /// <param name="path">添付ファイルのパス</param>
-        /// <param name="io">入出力用オブジェクト</param>
+        /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
         public Attachment(string name, string path, IO io)
@@ -76,7 +103,7 @@ namespace Cube.Pdf
         /// IO
         ///
         /// <summary>
-        /// 入出力用オブジェクトを取得します。
+        /// I/O オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
