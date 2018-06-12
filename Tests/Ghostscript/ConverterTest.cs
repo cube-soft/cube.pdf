@@ -92,8 +92,8 @@ namespace Cube.Pdf.Tests.Ghostscript
 
                 yield return TestCase("Sample.ps", new Converter(Format.Pdf)
                 {
-                    Orientation = Orientation.PortraitReverse,
-                }, Orientation.PortraitReverse);
+                    Orientation = Orientation.UpsideDown,
+                }, Orientation.UpsideDown);
 
                 yield return TestCase("Sample.ps", new Converter(Format.Pdf)
                 {
@@ -102,8 +102,8 @@ namespace Cube.Pdf.Tests.Ghostscript
 
                 yield return TestCase("Sample.ps", new Converter(Format.Pdf)
                 {
-                    Orientation = Orientation.LandscapeReverse,
-                }, Orientation.LandscapeReverse);
+                    Orientation = Orientation.Seascape,
+                }, Orientation.Seascape);
 
                 /* --------------------------------------------------------- */
                 // Paper

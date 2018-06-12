@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-
 namespace Cube.Pdf.Ghostscript
 {
     /* --------------------------------------------------------------------- */
@@ -35,11 +34,11 @@ namespace Cube.Pdf.Ghostscript
         /// <summary>縦向き</summary>
         Portrait = 0,
         /// <summary>縦向き（180 度回転）</summary>
-        PortraitReverse = 2,
+        UpsideDown = 2,
         /// <summary>横向き</summary>
         Landscape = 3,
         /// <summary>横向き（180 度回転）</summary>
-        LandscapeReverse = 1,
+        Seascape = 1,
     }
 
     /* --------------------------------------------------------------------- */
@@ -75,7 +74,7 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetArgument
+        /// GetCode
         ///
         /// <summary>
         /// Orientation を表す Argument オブジェクトを取得します。
