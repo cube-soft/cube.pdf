@@ -43,11 +43,13 @@
   <ItemGroup>
     <Compile Include="NativeMethods\GsApi.cs" />
     <Compile Include="NativeMethods\GsApiException.cs" />
+    <Compile Include="Parameters\ColorMode.cs" />
     <Compile Include="Parameters\Format.cs" />
     <Compile Include="Parameters\Orientation.cs" />
     <Compile Include="Parameters\Paper.cs" />
     <Compile Include="Argument.cs" />
     <Compile Include="Converter.cs" />
+    <Compile Include="DocumentConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -135,9 +135,9 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public static Argument GetArgument(this Format src)
         {
-            var map = GetFormatMap();
-            Debug.Assert(map.ContainsKey(src));
-            return new Argument('s', "DEVICE", map[src].Device);
+            var result = GetFormatMap().TryGetValue(src, out var value);
+            Debug.Assert(result);
+            return new Argument('s', "DEVICE", value.Device);
         }
 
         /* ----------------------------------------------------------------- */
@@ -155,9 +155,9 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public static string GetExtension(this Format src)
         {
-            var map = GetFormatMap();
-            Debug.Assert(map.ContainsKey(src));
-            return map[src].Extension;
+            var result = GetFormatMap().TryGetValue(src, out var value);
+            Debug.Assert(result);
+            return value.Extension;
         }
 
         #endregion
