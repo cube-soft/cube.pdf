@@ -232,10 +232,10 @@ namespace Cube.Pdf.Ghostscript
                 CreateResources(),
                 CreateFonts(),
                 CreateResolution(),
-                CreatePaper(),
+                Paper.GetArgument(),
             }
             .Concat(Options)
-            .Concat(CreateOrientation());
+            .Concat(Orientation.GetArguments());
 
             return Trim(args);
         }
@@ -259,25 +259,6 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<Argument> Create() => new[] { new Argument("gs") };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateOrientation
-        ///
-        /// <summary>
-        /// Orientation を表す Argument を生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<Argument> CreateOrientation() =>
-            Orientation == Orientation.Auto ?
-            new[] { new Argument("AutoRotatePages", "PageByPage") } :
-            new[]
-            {
-                new Argument("AutoRotatePages", "None"),
-                new Argument('c'),
-                new Argument($"<</Orientation {Orientation.ToString("d")}>> setpagedevice"),
-            };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -341,20 +322,6 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private Argument CreateResolution() => new Argument('r', $"{Resolution}");
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreatePaper
-        ///
-        /// <summary>
-        /// Paper を表す Argument を生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Argument CreatePaper() =>
-            Paper != Paper.Auto ?
-            new Argument('s', "PAPERSIZE", Paper.ToString().ToLowerInvariant()) :
-            null;
 
         /* ----------------------------------------------------------------- */
         ///

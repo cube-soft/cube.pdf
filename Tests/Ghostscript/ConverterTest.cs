@@ -46,10 +46,9 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Invoke(int index, string filename, Converter conv)
+        public void Invoke(string filename, Converter conv, string name)
         {
             var lib  = IO.Get(AssemblyReader.Default.Location).DirectoryName;
-            var name = $"{nameof(Invoke)}_{index}";
             var dest = GetResultsWith($"{name}{conv.Format.GetExtension()}");
             var src  = GetExamplesWith(filename);
 
@@ -84,33 +83,66 @@ namespace Cube.Pdf.Tests.Ghostscript
         {
             get
             {
-                var n = 0;
-
-                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
-                {
-                    Paper = Paper.B4,
-                });
-
-                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
+                /* --------------------------------------------------------- */
+                // Orientation
+                /* --------------------------------------------------------- */
+                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.Portrait,
-                });
+                }, Orientation.Portrait);
 
-                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.PortraitReverse,
-                });
+                }, Orientation.PortraitReverse);
 
-                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.Landscape,
-                });
+                }, Orientation.Landscape);
 
-                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.LandscapeReverse,
-                });
+                }, Orientation.LandscapeReverse);
+
+                /* --------------------------------------------------------- */
+                // Paper
+                /* --------------------------------------------------------- */
+                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                {
+                    Paper = Paper.IsoB4,
+                }, Paper.IsoB4);
+
+                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                {
+                    Paper = Paper.JisB4,
+                }, Paper.JisB4);
+
+                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                {
+                    Paper = Paper.Letter,
+                }, Paper.Letter);
             }
+        }
+
+        #endregion
+
+        #region Helper methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TestCase
+        ///
+        /// <summary>
+        /// テストケースを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static TestCaseData TestCase<T>(string src, Converter conv, T name)
+        {
+            var cvt = $"{name.GetType().Name}_{name.ToString()}";
+            return new TestCaseData(src, conv, cvt);
         }
 
         #endregion

@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
+
 namespace Cube.Pdf.Ghostscript
 {
     /* --------------------------------------------------------------------- */
@@ -39,5 +41,50 @@ namespace Cube.Pdf.Ghostscript
         Landscape = 3,
         /// <summary>横向き（180 度回転）</summary>
         LandscapeReverse = 1,
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OrientationExtension
+    ///
+    /// <summary>
+    /// Orientation の拡張用クラスです。
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static class OrientationExtension
+    {
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetArguments
+        ///
+        /// <summary>
+        /// Orientation を表す Argument オブジェクトを取得します。
+        /// </summary>
+        ///
+        /// <param name="src">Orientation</param>
+        ///
+        /// <returns>Argument オブジェクト一覧</returns>
+        ///
+        /// <remarks>
+        /// Ghostscript API における Orientation の指定方法が特殊な形に
+        /// なっているため、指定順序によってはエラーが発生する場合が
+        /// あります。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<Argument> GetArguments(this Orientation src) =>
+            src == Orientation.Auto ?
+            new[] { new Argument("AutoRotatePages", "PageByPage") } :
+            new[]
+            {
+                new Argument("AutoRotatePages", "None"),
+                new Argument('c'),
+                new Argument($"<</Orientation {src.ToString("d")}>> setpagedevice"),
+            };
+
+        #endregion
     }
 }
