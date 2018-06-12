@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+using Cube.Generics;
 using System.Text;
 
 namespace Cube.Pdf.Ghostscript
@@ -32,51 +32,132 @@ namespace Cube.Pdf.Ghostscript
     /* --------------------------------------------------------------------- */
     public class Argument
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(char type) :
+            this(type, string.Empty, ' ', string.Empty) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(string value) :
+            this(' ', string.Empty, ' ', value) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(char type, string value) :
+            this(type, string.Empty, ' ', value) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(string name, string value) :
+            this('d', name, '/', value) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(char type, string name, string value) :
+            this(type, name, ' ', value) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(char type, string name, char prefix, string value)
+        {
+            Type  = type;
+            Name  = name;
+            Prefix = prefix;
+            Value  = value;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Key
+        /// Type
         ///
         /// <summary>
-        /// キーを取得または設定します。
+        /// 引数の種類を表す文字を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Key { get; set; }
+        public char Type { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Name
+        ///
+        /// <summary>
+        /// 名前を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Name { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Value
         ///
         /// <summary>
-        /// 値を取得または設定します。
+        /// 値を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Value { get; set; }
+        public string Value { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// KeyPrefix
+        /// Prefix
         ///
         /// <summary>
-        /// キーの接頭辞を取得または設定します。
+        /// 値の接頭辞を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public char KeyPrefix { get; set; } = 'd';
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ValuePrefix
-        ///
-        /// <summary>
-        /// 値の接頭辞を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public char ValuePrefix { get; set; } = '/';
+        public char Prefix { get; }
 
         #endregion
 
@@ -95,14 +176,34 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(Key)) throw new ArgumentException(nameof(Key));
-
             var sb = new StringBuilder();
-            sb.Append($"-{KeyPrefix}{Key}");
-            if (!string.IsNullOrEmpty(Value)) sb.Append($"={ValuePrefix}{Value}");
 
-            return base.ToString();
+            if (IsValid(Type)) sb.Append($"-{Type}");
+            if (Name.HasValue()) sb.Append(Name);
+            if (Value.HasValue())
+            {
+                if (Name.HasValue()) sb.Append('=');
+                if (IsValid(Prefix)) sb.Append(Prefix);
+                sb.Append(Value);
+            }
+
+            return sb.ToString();
         }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsValid
+        ///
+        /// <summary>
+        /// 有効な文字かどうかを判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsValid(char c) => c != default(char) && c != ' ';
 
         #endregion
     }
