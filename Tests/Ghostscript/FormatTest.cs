@@ -53,7 +53,7 @@ namespace Cube.Pdf.Tests.Ghostscript
             var dest = GetResultsWith(name);
             var src  = GetExamplesWith("Sample.eps");
 
-            new Converter(fmt).Invoke(src, dest);
+            new Converter(fmt) { Resolution = 72 }.Invoke(src, dest);
             Assert.That(IO.Exists(dest), Is.True);
         }
 

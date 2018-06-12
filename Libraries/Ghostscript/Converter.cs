@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using Cube.Log;
 using System;
 using System.Collections.Generic;
@@ -229,9 +230,17 @@ namespace Cube.Pdf.Ghostscript
                 new Argument('d', "NOSAFER"),
                 new Argument('d', "BATCH"),
                 new Argument('d', "NOPAUSE"),
-            };
+                CreateQuiet(),
+                CreateLog(),
+                CreateResources(),
+                CreateFonts(),
+                CreateResolution(),
+                CreatePaper(),
+            }
+            .Concat(Options)
+            .Concat(CreateOrientation());
 
-            return args;
+            return Trim(args);
         }
 
         #endregion
@@ -253,6 +262,114 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<Argument> Create() => new[] { new Argument("gs") };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateOrientation
+        ///
+        /// <summary>
+        /// Orientation を表す Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<Argument> CreateOrientation() =>
+            Orientation == Orientation.Auto ?
+            new[] { new Argument("AutoRotatePages", "PageByPage") } :
+            new[]
+            {
+                new Argument("AutoRotatePages", "No"),
+                new Argument('c'),
+                new Argument($"<</Orientation {Orientation.ToString("d")} >> setpagedevice")
+            };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateResources
+        ///
+        /// <summary>
+        /// リソースディレクトリ一覧を表す Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Argument CreateResources() =>
+            Resources.Count > 0 ?
+            new Argument('I', string.Join(";", Resources)) :
+            null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateFonts
+        ///
+        /// <summary>
+        /// フォントディレクトリ一覧を表す Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Argument CreateFonts() =>
+            Fonts.Count > 0 ?
+            new Argument('s', "FONTPATH", string.Join(";", Fonts)) :
+            null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateLog
+        ///
+        /// <summary>
+        /// ログファイルを表す Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Argument CreateLog() =>
+            Log.HasValue() ? new Argument('s', "stdout", Log) : null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateQuiet
+        ///
+        /// <summary>
+        /// Quiet を表す Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Argument CreateQuiet() =>
+            Quiet ? new Argument('d', "QUIET") : null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateResolution
+        ///
+        /// <summary>
+        /// Resolution を表す Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Argument CreateResolution() => new Argument('r', $"{Resolution}");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreatePaper
+        ///
+        /// <summary>
+        /// Paper を表す Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Argument CreatePaper() =>
+            Paper != Paper.Auto ?
+            new Argument('s', "PAPERSIZE", Paper.ToString().ToLowerInvariant()) :
+            null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Trim
+        ///
+        /// <summary>
+        /// null オブジェクトを除去します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<Argument> Trim(IEnumerable<Argument> src) =>
+            src.OfType<Argument>();
 
         #endregion
     }
