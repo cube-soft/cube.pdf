@@ -195,12 +195,9 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> sources, string dest) =>
             GsApi.NativeMethods.Invoke(Create()
+            .Concat(new[] { new Argument('s', "OutputFile", dest) })
             .Concat(OnCreateArguments())
-            .Concat(new[]
-            {
-                new Argument('s', "OutputFile", dest),
-                new Argument('f'),
-            })
+            .Concat(new[] { new Argument('f') })
             .Concat(sources.Select(e => new Argument(e)))
             .Select(e =>
             {
@@ -277,9 +274,9 @@ namespace Cube.Pdf.Ghostscript
             new[] { new Argument("AutoRotatePages", "PageByPage") } :
             new[]
             {
-                new Argument("AutoRotatePages", "No"),
+                new Argument("AutoRotatePages", "None"),
                 new Argument('c'),
-                new Argument($"<</Orientation {Orientation.ToString("d")} >> setpagedevice")
+                new Argument($"<</Orientation {Orientation.ToString("d")}>> setpagedevice"),
             };
 
         /* ----------------------------------------------------------------- */

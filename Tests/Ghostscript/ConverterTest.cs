@@ -18,7 +18,6 @@
 using Cube.FileSystem.Tests;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Tests.Ghostscript
@@ -33,28 +32,32 @@ namespace Cube.Pdf.Tests.Ghostscript
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class FormatTest : FileFixture
+    class ConverterTest : FileFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// Invoke
         ///
         /// <summary>
-        /// 指定されたフォーマットに変換するテストを実行します。
+        /// 変換処理テストを実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Convert(Format fmt)
+        public void Invoke(int index, string filename, Converter conv)
         {
-            var name = $"{nameof(Convert)}_{fmt.ToString()}";
-            var dest = GetResultsWith($"{name}{fmt.GetExtension()}");
-            var src  = GetExamplesWith("Sample.eps");
-            var conv = new Converter(fmt) { Resolution = 72 };
+            var lib  = IO.Get(AssemblyReader.Default.Location).DirectoryName;
+            var name = $"{nameof(Invoke)}_{index}";
+            var dest = GetResultsWith($"{name}{conv.Format.GetExtension()}");
+            var src  = GetExamplesWith(filename);
 
+            conv.Log   = GetResultsWith($"{name}.log");
+            conv.Quiet = false;
+            conv.Resources.Add(IO.Combine(lib, "lib"));
             conv.Invoke(src, dest);
+
             Assert.That(IO.Exists(dest), Is.True);
         }
 
@@ -70,15 +73,43 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// テストケース一覧を取得します。
         /// </summary>
         ///
+        /// <remarks>
+        /// Paper の設定は入力ファイルによっては反映されない場合がある。
+        /// 例えば、SampleCjk.ps を変換すると Paper の設定に関わらず常に
+        /// A4 サイズで変換される。原因を要調査。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         public static IEnumerable<TestCaseData> TestCases
         {
             get
             {
-                foreach (Format src in Enum.GetValues(typeof(Format)))
+                var n = 0;
+
+                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
                 {
-                    yield return new TestCaseData(src);
-                }
+                    Paper = Paper.B4,
+                });
+
+                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
+                {
+                    Orientation = Orientation.Portrait,
+                });
+
+                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
+                {
+                    Orientation = Orientation.PortraitReverse,
+                });
+
+                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
+                {
+                    Orientation = Orientation.Landscape,
+                });
+
+                yield return new TestCaseData(n++, "Sample.ps", new Converter(Format.Pdf)
+                {
+                    Orientation = Orientation.LandscapeReverse,
+                });
             }
         }
 
