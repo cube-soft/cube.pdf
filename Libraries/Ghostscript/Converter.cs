@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -191,31 +192,47 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="dest">変換結果を保存するパス</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Invoke(IEnumerable<string> sources, string dest)
-        {
-            var args = new[] { "gs" }.Concat(CreateArgs(sources, dest));
-            GsApi.NativeMethods.Invoke(args.ToArray());
-        }
+        public void Invoke(IEnumerable<string> sources, string dest) =>
+            GsApi.NativeMethods.Invoke(Create()
+            .Concat(OnCreateArguments())
+            .Concat(new[]
+            {
+                new Argument('s', "OutputFile", dest),
+                new Argument('f'),
+            })
+            .Concat(sources.Select(e => new Argument(e)))
+            .Select(e =>
+            {
+                var str = e.ToString();
+                this.LogDebug(str);
+                return str;
+            })
+            .ToArray()
+        );
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateArgs
+        /// OnCreateArguments
         ///
         /// <summary>
         /// Ghostscript API で実行するための引数一覧を生成します。
         /// </summary>
         ///
-        /// <param name="sources">変換元ファイル一覧</param>
-        /// <param name="dest">変換結果を保存するパス</param>
-        ///
         /// <returns>引数一覧</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual IEnumerable<string> CreateArgs(IEnumerable<string> sources, string dest) =>
-            CreateCore(dest)
-            .Select(e => e.ToString())
-            .Concat(new[] { "-f" })
-            .Concat(sources);
+        protected virtual IEnumerable<Argument> OnCreateArguments()
+        {
+            var args = new List<Argument>
+            {
+                Format.GetArgument(),
+                new Argument('d', "NOSAFER"),
+                new Argument('d', "BATCH"),
+                new Argument('d', "NOPAUSE"),
+            };
+
+            return args;
+        }
 
         #endregion
 
@@ -223,24 +240,19 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateCore
+        /// Create
         ///
         /// <summary>
-        /// Ghostscript API で実行するための引数一覧を生成します。
+        /// 引数一覧を表すコレクションを生成します。
         /// </summary>
         ///
+        /// <remarks>
+        /// Ghostscript API は最初の引数を無視するので、ダミー引数を
+        /// 設定しています。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<Argument> CreateCore(string dest)
-        {
-            var args = new List<Argument>
-            {
-                new Argument { Key = "NOSAFER" },
-                new Argument { Key = "BATCH" },
-                new Argument { Key = "NOPAUSE" },
-            };
-
-            return args;
-        }
+        private IEnumerable<Argument> Create() => new[] { new Argument("gs") };
 
         #endregion
     }
