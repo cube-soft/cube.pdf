@@ -11,6 +11,8 @@ nuget:
 platform: Any CPU
 configuration: Release
 before_build:
+    - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
+    - 7z x -o"Thirdparty\x64" gs-x64.7z
     - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
     - nuget sources add -name Cube.FileSystem -source https://ci.appveyor.com/nuget/cube.filesystem
     - nuget sources add -name Cube.Images -source https://ci.appveyor.com/nuget/cube.images
@@ -20,6 +22,9 @@ build:
     project: Cube.Pdf.sln
     publish_nuget: true
     verbosity: minimal
+after_build:
+    - xcopy /Y /I Thirdparty\x64\bin\gsdll32.dll Tests\bin\Release
+    - xcopy /Y /I Thirdparty\x64\lib\*.* Tests\bin\Release\lib
 test_script:
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
