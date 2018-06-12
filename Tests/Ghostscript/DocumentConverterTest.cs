@@ -78,17 +78,20 @@ namespace Cube.Pdf.Tests.Ghostscript
             {
                 yield return TestCase("Sample.eps", new DocumentConverter(Format.Pdf)
                 {
-                    ColorMode = ColorMode.Rgb,
+                    ColorMode   = ColorMode.Rgb,
+                    Orientation = Orientation.Portrait,
                 }, ColorMode.Rgb);
 
                 yield return TestCase("Sample.eps", new DocumentConverter(Format.Pdf)
                 {
-                    ColorMode = ColorMode.Cmyk,
+                    ColorMode   = ColorMode.Cmyk,
+                    Orientation = Orientation.Portrait,
                 }, ColorMode.Cmyk);
 
                 yield return TestCase("Sample.eps", new DocumentConverter(Format.Pdf)
                 {
-                    ColorMode = ColorMode.Grayscale,
+                    ColorMode   = ColorMode.Grayscale,
+                    Orientation = Orientation.Portrait,
                 }, ColorMode.Grayscale);
             }
         }

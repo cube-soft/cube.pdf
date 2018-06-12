@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
 
 namespace Cube.Pdf.Ghostscript
 {
@@ -58,7 +57,25 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetArguments
+        /// GetArgument
+        ///
+        /// <summary>
+        /// Orientation を表す Argument オブジェクトを取得します。
+        /// </summary>
+        ///
+        /// <param name="src">Orientation</param>
+        ///
+        /// <returns>Argument オブジェクト一覧</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Argument GetArgument(this Orientation src) =>
+            src == Orientation.Auto ?
+            new Argument("AutoRotatePages", "PageByPage") :
+            new Argument("AutoRotatePages", "None");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetArgument
         ///
         /// <summary>
         /// Orientation を表す Argument オブジェクトを取得します。
@@ -69,21 +86,15 @@ namespace Cube.Pdf.Ghostscript
         /// <returns>Argument オブジェクト一覧</returns>
         ///
         /// <remarks>
-        /// Ghostscript API における Orientation の指定方法が特殊な形に
-        /// なっているため、指定順序によってはエラーが発生する場合が
-        /// あります。
+        /// Orientation は通常の Argument に加えて PostScript コードを
+        /// 表す Argument オブジェクトが必要になります。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Argument> GetArguments(this Orientation src) =>
-            src == Orientation.Auto ?
-            new[] { new Argument("AutoRotatePages", "PageByPage") } :
-            new[]
-            {
-                new Argument("AutoRotatePages", "None"),
-                new Argument('c'),
-                new Argument($"<</Orientation {src.ToString("d")}>> setpagedevice"),
-            };
+        public static Argument GetCode(this Orientation src) =>
+            src != Orientation.Auto ?
+            new Argument($"<</Orientation {src.ToString("d")}>> setpagedevice") :
+            null;
 
         #endregion
     }

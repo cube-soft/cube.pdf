@@ -197,6 +197,7 @@ namespace Cube.Pdf.Ghostscript
             GsApi.NativeMethods.Invoke(Create()
             .Concat(new[] { new Argument('s', "OutputFile", dest) })
             .Concat(OnCreateArguments())
+            .Concat(CreateCodes())
             .Concat(new[] { new Argument('f') })
             .Concat(sources.Select(e => new Argument(e)))
             .Select(e =>
@@ -233,12 +234,27 @@ namespace Cube.Pdf.Ghostscript
                 CreateFonts(),
                 CreateResolution(),
                 Paper.GetArgument(),
+                Orientation.GetArgument(),
             }
-            .Concat(Options)
-            .Concat(Orientation.GetArguments());
+            .Concat(Options);
 
             return Trim(args);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCreateCodes
+        ///
+        /// <summary>
+        /// Ghostscript API で実行するための PostScript コードを表す
+        /// 引数一覧を生成します。
+        /// </summary>
+        ///
+        /// <returns>引数一覧</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual IEnumerable<Argument> OnCreateCodes() =>
+            Trim(new[] { Orientation.GetCode() });
 
         #endregion
 
@@ -259,6 +275,26 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<Argument> Create() => new[] { new Argument("gs") };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateCodes
+        ///
+        /// <summary>
+        /// Ghostscript API で実行するための PostScript コードを表す
+        /// 引数一覧を生成します。
+        /// </summary>
+        ///
+        /// <returns>引数一覧</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<Argument> CreateCodes()
+        {
+            var dest = OnCreateCodes();
+            return dest.Count() > 0 ?
+                   new[] { new Argument('c') }.Concat(dest) :
+                   dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
