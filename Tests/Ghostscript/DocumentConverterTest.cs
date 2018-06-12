@@ -23,15 +23,15 @@ namespace Cube.Pdf.Tests.Ghostscript
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ConverterTest
+    /// DocumentConverterTest
     ///
     /// <summary>
-    /// Converter のテスト用クラスです。
+    /// DocumentConverter のテスト用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class ConverterTest : ConverterFixture
+    class DocumentConverterTest : ConverterFixture
     {
         #region Tests
 
@@ -71,57 +71,25 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// テストケース一覧を取得します。
         /// </summary>
         ///
-        /// <remarks>
-        /// Paper の設定は入力ファイルによっては反映されない場合がある。
-        /// 例えば、SampleCjk.ps を変換すると Paper の設定に関わらず常に
-        /// A4 サイズで変換される。原因を要調査。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         public static IEnumerable<TestCaseData> TestCases
         {
             get
             {
-                /* --------------------------------------------------------- */
-                // Orientation
-                /* --------------------------------------------------------- */
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase("Sample.eps", new DocumentConverter(Format.Pdf)
                 {
-                    Orientation = Orientation.Portrait,
-                }, Orientation.Portrait);
+                    ColorMode = ColorMode.Rgb,
+                }, ColorMode.Rgb);
 
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase("Sample.eps", new DocumentConverter(Format.Pdf)
                 {
-                    Orientation = Orientation.PortraitReverse,
-                }, Orientation.PortraitReverse);
+                    ColorMode = ColorMode.Cmyk,
+                }, ColorMode.Cmyk);
 
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase("Sample.eps", new DocumentConverter(Format.Pdf)
                 {
-                    Orientation = Orientation.Landscape,
-                }, Orientation.Landscape);
-
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
-                {
-                    Orientation = Orientation.LandscapeReverse,
-                }, Orientation.LandscapeReverse);
-
-                /* --------------------------------------------------------- */
-                // Paper
-                /* --------------------------------------------------------- */
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
-                {
-                    Paper = Paper.IsoB4,
-                }, Paper.IsoB4);
-
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
-                {
-                    Paper = Paper.JisB4,
-                }, Paper.JisB4);
-
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
-                {
-                    Paper = Paper.Letter,
-                }, Paper.Letter);
+                    ColorMode = ColorMode.Grayscale,
+                }, ColorMode.Grayscale);
             }
         }
 
