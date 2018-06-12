@@ -23,3 +23,5 @@
 *.png           binary
 *.ico           binary
 *.pdf           binary
+*.ps            binary
+*.eps           binary
