@@ -1,13 +1,15 @@
 Cube.Pdf
 ====
 
-Cube.Pdf is a PDF library for CubeSoft applications.
-Cube.Pdf.Itext and some related projects are licensed under GNU AGPLv3 and the other projects are Apache 2.0.
+Cube.Pdf projects wrap [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party's PDF libraries.
+The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more.
+Note that some projects are licensed under the GNU AGPLv3. See the License section for details.
 
 ## Dependencies
 
 * [Cube.Core](https://github.com/cube-soft/Cube.Core)
 * [Cube.FileSystem](https://github.com/cube-soft/Cube.FileSystem)
+* [Ghostscript](https://www.ghostscript.com/)
 * [iTextSharp](https://www.nuget.org/packages/iTextSharp/)
 
 ## Contributing
@@ -23,6 +25,15 @@ Cube.Pdf.Itext and some related projects are licensed under GNU AGPLv3 and the o
  
 Copyright (c) 2010 [CubeSoft, Inc.](http://www.cube-soft.jp/)
 
-Cube.Pdf.Itext and some related projects are licensed under [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Itext/License.txt)
-and the other projects are [Apache 2.0](https://github.com/cube-soft/Cube.Pdf/blob/master/License.txt).
+Projects are respectively licensed as follows:
+
+* Libraries
+    * [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Core) ... [Apache 2.0](https://github.com/cube-soft/Cube.Pdf/blob/master/License.txt)
+    * [Cube.Pdf.Ghostscript](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Ghostscript) ... [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/License.txt)
+    * [Cube.Pdf.Itext](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Itext) ... [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Itext/License.txt)
+* Applications
+    * [CubePDF Clip](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Clip) ... [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Clip/License.txt)
+    * [CubePDF Page](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Pages) ... [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Pages/License.txt)
+    * [CubePDF ImagePicker](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Picker) ... [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Picker/License.txt)
+
 Note that trade names, trademarks, service marks, or logo images distributed in CubeSoft applications are not allowed to reuse or modify all or parts of them.
