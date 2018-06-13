@@ -129,32 +129,55 @@ namespace Cube.Pdf.Tests.Ghostscript
                 }, "Sample.eps", ColorMode.Grayscale);
 
                 /* --------------------------------------------------------- */
-                // ImageCompression
+                // Compression
                 /* --------------------------------------------------------- */
                 yield return TestCase(new DocumentConverter(Format.Pdf)
                 {
-                    ImageCompression = Encoding.None,
+                    Compression = Encoding.None,
                 }, "SampleMix.ps", Encoding.None);
 
                 yield return TestCase(new DocumentConverter(Format.Pdf)
                 {
-                    ImageCompression = Encoding.Flate,
+                    Compression = Encoding.Flate,
                 }, "SampleMix.ps", Encoding.Flate);
 
                 yield return TestCase(new DocumentConverter(Format.Pdf)
                 {
-                    ImageCompression = Encoding.Jpeg,
+                    Compression = Encoding.Jpeg,
                 }, "SampleMix.ps", Encoding.Jpeg);
 
                 yield return TestCase(new DocumentConverter(Format.Pdf)
                 {
-                    ImageCompression = Encoding.Lzw,
+                    Compression = Encoding.Lzw,
                 }, "SampleMix.ps", Encoding.Lzw);
 
                 yield return TestCase(new DocumentConverter(Format.Pdf)
                 {
-                    ImageCompression = Encoding.Fax,
+                    Compression = Encoding.Fax,
                 }, "SampleMix.ps", Encoding.Fax);
+
+                /* --------------------------------------------------------- */
+                // Downsampling
+                /* --------------------------------------------------------- */
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Downsampling = Downsampling.None,
+                }, "SampleMix.ps", Downsampling.None);
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Downsampling = Downsampling.Average,
+                }, "SampleMix.ps", Downsampling.Average);
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Downsampling = Downsampling.Bicubic,
+                }, "SampleMix.ps", Downsampling.Bicubic);
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Downsampling = Downsampling.Subsample,
+                }, "SampleMix.ps", Downsampling.Subsample);
             }
         }
 

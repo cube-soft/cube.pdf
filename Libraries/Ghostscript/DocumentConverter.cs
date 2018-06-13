@@ -30,6 +30,8 @@ namespace Cube.Pdf.Ghostscript
     /// PDF などのドキュメント形式に変換するためのクラスです。
     /// </summary>
     ///
+    /// <see href="https://www.ghostscript.com/doc/9.23/VectorDevices.htm" />
+    ///
     /* --------------------------------------------------------------------- */
     public class DocumentConverter : Converter
     {
@@ -87,14 +89,26 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ImageCompression
+        /// Compression
         ///
         /// <summary>
         /// 埋め込まれた画像データの圧縮方法を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Encoding ImageCompression { get; set; } = Encoding.Flate;
+        public Encoding Compression { get; set; } = Encoding.Flate;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Downsampling
+        ///
+        /// <summary>
+        /// 埋め込まれた画像データのダウンサンプリング方法を取得または
+        /// 設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Downsampling Downsampling { get; set; } = Downsampling.None;
 
         #endregion
 
@@ -179,15 +193,21 @@ namespace Cube.Pdf.Ghostscript
             new Argument("ColorImageResolution",  Resolution),
             new Argument("GrayImageResolution",   Resolution),
             new Argument("MonoImageResolution",   GetMonoResolution()),
-            new Argument("EncodeColorImages",     ImageCompression != Encoding.None),
-            new Argument("EncodeGrayImages",      ImageCompression != Encoding.None),
-            new Argument("EncodeMonoImages",      ImageCompression != Encoding.None),
+            new Argument("DownsampleColorImages", Downsampling != Downsampling.None),
+            new Argument("DownsampleGrayImages",  Downsampling != Downsampling.None),
+            new Argument("DownsampleMonoImages",  Downsampling != Downsampling.None),
+            new Argument("EncodeColorImages",     Compression != Encoding.None),
+            new Argument("EncodeGrayImages",      Compression != Encoding.None),
+            new Argument("EncodeMonoImages",      Compression != Encoding.None),
             new Argument("AutoFilterColorImages", false),
             new Argument("AutoFilterGrayImages",  false),
             new Argument("AutoFilterMonoImages",  false),
-            ImageCompression.GetArgument("ColorImageFilter"),
-            ImageCompression.GetArgument("GrayImageFilter"),
-            ImageCompression.GetArgument("MonoImageFilter"),
+            Downsampling.GetArgument("ColorImageDownsampleType"),
+            Downsampling.GetArgument("GrayImageDownsampleType"),
+            Downsampling.GetArgument("MonoImageDownsampleType"),
+            Compression.GetArgument("ColorImageFilter"),
+            Compression.GetArgument("GrayImageFilter"),
+            Compression.GetArgument("MonoImageFilter"),
         });
 
         /* ----------------------------------------------------------------- */
