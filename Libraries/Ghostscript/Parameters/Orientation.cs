@@ -77,22 +77,23 @@ namespace Cube.Pdf.Ghostscript
         /// GetCode
         ///
         /// <summary>
-        /// Orientation を表す Argument オブジェクトを取得します。
+        /// Orientation を表す Code オブジェクトを取得します。
         /// </summary>
         ///
         /// <param name="src">Orientation</param>
         ///
-        /// <returns>Argument オブジェクト一覧</returns>
+        /// <returns>Code オブジェクト一覧</returns>
         ///
         /// <remarks>
-        /// Orientation は通常の Argument に加えて PostScript コードを
-        /// 表す Argument オブジェクトが必要になります。
+        /// Orientation に対応する内容を Ghostscript に指定する際、通常の
+        /// 引数に加えていくつかの PostScript コードが必要になる場合が
+        /// あります。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static Argument GetCode(this Orientation src) =>
+        public static Code GetCode(this Orientation src) =>
             src != Orientation.Auto ?
-            new Argument($"<</Orientation {src.ToString("d")}>> setpagedevice") :
+            new Code($"<</Orientation {src.ToString("d")}>> setpagedevice") :
             null;
 
         #endregion

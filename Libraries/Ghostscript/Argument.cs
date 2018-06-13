@@ -26,8 +26,10 @@ namespace Cube.Pdf.Ghostscript
     /// Argument
     ///
     /// <summary>
-    /// Interpreter に指定可能な引数を表すクラスです。
+    /// Ghostscript の引数を表すクラスです。
     /// </summary>
+    ///
+    /// <see href="https://www.ghostscript.com/doc/current/Use.htm" />
     ///
     /* --------------------------------------------------------------------- */
     public class Argument
@@ -42,9 +44,18 @@ namespace Cube.Pdf.Ghostscript
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="name">名前</param>
+        /// <param name="value">値</param>
+        ///
+        /// <remarks>
+        /// このコンストラクタのみ、値をリテラルオブジェクトと見なします。
+        /// これ以外でリテラルオブジェクトと見なす必要がある場合、
+        /// Argument(string, string, string, bool) コンストラクタを実行
+        /// して下さい。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public Argument(char type) :
-            this(type, string.Empty, ' ', string.Empty) { }
+        public Argument(string name, string value) : this('d', name, value, true) { } // see remarks.
 
         /* ----------------------------------------------------------------- */
         ///
@@ -54,9 +65,10 @@ namespace Cube.Pdf.Ghostscript
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="type">引数の種類</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public Argument(string value) :
-            this(' ', string.Empty, ' ', value) { }
+        public Argument(char type) : this(type, string.Empty, string.Empty) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,9 +78,15 @@ namespace Cube.Pdf.Ghostscript
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="type">引数の種類</param>
+        /// <param name="value">値</param>
+        ///
+        /// <remarks>
+        /// 主に d オプション以外で利用されます (e.g, -r72)。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public Argument(char type, string value) :
-            this(type, string.Empty, ' ', value) { }
+        public Argument(char type, int value) : this(type, string.Empty, value) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -78,9 +96,15 @@ namespace Cube.Pdf.Ghostscript
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="type">引数の種類</param>
+        /// <param name="name">名前</param>
+        ///
+        /// <remarks>
+        /// 主に d オプションで利用されます (e.g, -dBATCH)。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public Argument(string name, string value) :
-            this('d', name, '/', value) { }
+        public Argument(char type, string name) : this(type, name, string.Empty) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,10 +113,74 @@ namespace Cube.Pdf.Ghostscript
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
+        ///
+        /// <param name="name">名前</param>
+        /// <param name="value">値</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(string name, bool value) : this('d', name, value) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="name">名前</param>
+        /// <param name="value">値</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(string name, int value) : this('d', name, value) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="type">引数の種類</param>
+        /// <param name="name">名前</param>
+        /// <param name="value">値</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(char type, string name, bool value) :
+            this(type, name, value.ToString().ToLowerInvariant()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="type">引数の種類</param>
+        /// <param name="name">名前</param>
+        /// <param name="value">値</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Argument(char type, string name, int value) :
+            this(type, name, value.ToString()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="type">引数の種類</param>
+        /// <param name="name">名前</param>
+        /// <param name="value">値</param>
         ///
         /* ----------------------------------------------------------------- */
         public Argument(char type, string name, string value) :
-            this(type, name, ' ', value) { }
+            this(type, name, value, false) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -102,18 +190,57 @@ namespace Cube.Pdf.Ghostscript
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="type">引数の種類</param>
+        /// <param name="name">名前</param>
+        /// <param name="value">値</param>
+        /// <param name="literal">値がリテラルオブジェクトかどうか</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public Argument(char type, string name, char prefix, string value)
+        public Argument(char type, string name, string value, bool literal)
         {
-            Type  = type;
-            Name  = name;
-            Prefix = prefix;
-            Value  = value;
+            Type      = type;
+            Name      = name;
+            Value     = value;
+            IsLiteral = literal;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Argument
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="description">コード内容</param>
+        ///
+        /// <remarks>
+        /// 主に PostScript コードを保持する際に利用されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected Argument(string description) :
+            this(default(char), string.Empty, description, false) { }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dummy
+        ///
+        /// <summary>
+        /// ダミー用 Argument オブジェクトを取得します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Ghostscript は最初の引数を無視するため、主に最初の引数として
+        /// 利用されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Argument Dummy { get; } = new Argument("gs");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -150,14 +277,14 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Prefix
+        /// IsLiteral
         ///
         /// <summary>
-        /// 値の接頭辞を取得します。
+        /// 値がリテラルオブジェクトかどうかを示す値を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public char Prefix { get; }
+        public bool IsLiteral { get; }
 
         #endregion
 
@@ -178,12 +305,12 @@ namespace Cube.Pdf.Ghostscript
         {
             var sb = new StringBuilder();
 
-            if (IsValid(Type)) sb.Append($"-{Type}");
+            if (Type != default(char)) sb.Append($"-{Type}");
             if (Name.HasValue()) sb.Append(Name);
             if (Value.HasValue())
             {
                 if (Name.HasValue()) sb.Append('=');
-                if (IsValid(Prefix)) sb.Append(Prefix);
+                if (IsLiteral) sb.Append('/');
                 sb.Append(Value);
             }
 
@@ -191,19 +318,37 @@ namespace Cube.Pdf.Ghostscript
         }
 
         #endregion
+    }
 
-        #region Implementations
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Code
+    ///
+    /// <summary>
+    /// Ghostscript で実行される PostScript コードを表すクラスです。
+    /// </summary>
+    ///
+    /// <remarks>
+    /// Argument.Value プロパティに保持する形で実装されます。
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class Code : Argument
+    {
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsValid
+        /// Code
         ///
         /// <summary>
-        /// 有効な文字かどうかを判別します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="description">コード内容</param>
+        ///
         /* ----------------------------------------------------------------- */
-        private bool IsValid(char c) => c != default(char) && c != ' ';
+        public Code(string description) : base(description) { }
 
         #endregion
     }

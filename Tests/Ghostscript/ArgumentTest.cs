@@ -70,20 +70,36 @@ namespace Cube.Pdf.Tests.Ghostscript
                 ).Returns("-sDEVICE=pdfwrite");
 
                 yield return new TestCaseData(
+                    new Argument('I', string.Empty, @"Path\To\Resources")
+                ).Returns(@"-IPath\To\Resources");
+
+                yield return new TestCaseData(
                     new Argument("ColorConversionStrategy", "RGB")
                 ).Returns("-dColorConversionStrategy=/RGB");
 
                 yield return new TestCaseData(
-                    new Argument('r', "600")
+                    new Argument("DownsampleColorImages", true)
+                ).Returns("-dDownsampleColorImages=true");
+
+                yield return new TestCaseData(
+                    new Argument("ColorImageResolution", 300)
+                ).Returns("-dColorImageResolution=300");
+
+                yield return new TestCaseData(
+                    new Argument('r', 600)
                 ).Returns("-r600");
+
+                yield return new TestCaseData(
+                    new Argument('d', "BATCH")
+                ).Returns("-dBATCH");
 
                 yield return new TestCaseData(
                     new Argument('f')
                 ).Returns("-f");
 
                 yield return new TestCaseData(
-                    new Argument(@"c:\path\to\input.ps")
-                ).Returns(@"c:\path\to\input.ps");
+                    new Code("<</Orientation 1}>> setpagedevice")
+                ).Returns("<</Orientation 1}>> setpagedevice");
             }
         }
 

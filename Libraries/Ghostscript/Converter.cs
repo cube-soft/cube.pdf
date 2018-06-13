@@ -199,13 +199,9 @@ namespace Cube.Pdf.Ghostscript
             .Concat(OnCreateArguments())
             .Concat(CreateCodes())
             .Concat(new[] { new Argument('f') })
-            .Concat(sources.Select(e => new Argument(e)))
-            .Select(e =>
-            {
-                var str = e.ToString();
-                this.LogDebug(str);
-                return str;
-            })
+            .Select(e => e.ToString())
+            .Concat(sources)
+            .Where(e => { this.LogDebug(e); return true; }) // for debug
             .ToArray()
         );
 
@@ -253,7 +249,7 @@ namespace Cube.Pdf.Ghostscript
         /// <returns>引数一覧</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual IEnumerable<Argument> OnCreateCodes() =>
+        protected virtual IEnumerable<Code> OnCreateCodes() =>
             Trim(new[] { Orientation.GetCode() });
 
         #endregion
@@ -269,12 +265,12 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <remarks>
-        /// Ghostscript API は最初の引数を無視するので、ダミー引数を
-        /// 設定しています。
+        /// Ghostscript API は最初の引数を無視するため、引数の先頭に
+        /// ダミーオブジェクトを配置します。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<Argument> Create() => new[] { new Argument("gs") };
+        private IEnumerable<Argument> Create() => new[] { Argument.Dummy };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -307,7 +303,7 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private Argument CreateResources() =>
             Resources.Count > 0 ?
-            new Argument('I', string.Join(";", Resources)) :
+            new Argument('I', string.Empty, string.Join(";", Resources)) :
             null;
 
         /* ----------------------------------------------------------------- */
@@ -357,7 +353,7 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Argument CreateResolution() => new Argument('r', $"{Resolution}");
+        private Argument CreateResolution() => new Argument('r', Resolution);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -368,8 +364,7 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<Argument> Trim(IEnumerable<Argument> src) =>
-            src.OfType<Argument>();
+        private IEnumerable<T> Trim<T>(IEnumerable<T> src) => src.OfType<T>();
 
         #endregion
     }
