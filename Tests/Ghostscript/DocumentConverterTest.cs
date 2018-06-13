@@ -79,6 +79,35 @@ namespace Cube.Pdf.Tests.Ghostscript
                 }, "SampleCjk.ps", new Version(1, 2));
 
                 /* --------------------------------------------------------- */
+                //
+                // EmbedFonts
+                //
+                // TODO: EmbedFonts が false の場合、変換後の PDF ファイル
+                // に文字化けが発生します。回避方法を要調査。
+                //
+                /* --------------------------------------------------------- */
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    EmbedFonts = true,
+                }, "Sample.ps", "EmbedFonts_True_1");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    EmbedFonts  = true,
+                    Orientation = Orientation.Portrait,
+                }, "Sample.ps", "EmbedFonts_True_2");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    EmbedFonts = false,
+                }, "Sample.ps", "EmbedFonts_False");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    EmbedFonts = false,
+                }, "SampleCjk.ps", "EmbedFonts_False_Cjk");
+
+                /* --------------------------------------------------------- */
                 // ColorMode
                 /* --------------------------------------------------------- */
                 yield return TestCase(new DocumentConverter(Format.Pdf)

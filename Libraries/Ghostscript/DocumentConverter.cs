@@ -74,6 +74,17 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public ColorMode ColorMode { get; set; } = ColorMode.SameAsSource;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EmbedFonts
+        ///
+        /// <summary>
+        /// フォントを埋め込むかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool EmbedFonts { get; set; } = true;
+
         #endregion
 
         #region Implementations
@@ -95,7 +106,24 @@ namespace Cube.Pdf.Ghostscript
             {
                 CreateVersion(),
                 ColorMode.GetArgument(),
-            });
+            })
+            .Concat(CreateEmbedFonts());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCreateCodes
+        ///
+        /// <summary>
+        /// Ghostscript API で実行するための PostScript コードを表す
+        /// 引数一覧を生成します。
+        /// </summary>
+        ///
+        /// <returns>引数一覧</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override IEnumerable<Code> OnCreateCodes() =>
+            base.OnCreateCodes()
+            .Concat(Trim(new[] { CreateEmbedFontsCode() }));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,6 +136,47 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private Argument CreateVersion() =>
             new Argument('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateEmbedFonts
+        ///
+        /// <summary>
+        /// フォントの埋め込み設定に関する Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<Argument> CreateEmbedFonts()
+        {
+            var dest = new List<Argument> { new Argument("EmbedAllFonts", EmbedFonts) };
+            if (EmbedFonts) dest.Add(new Argument("SubsetFonts", true));
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateEmbedFontsCode
+        ///
+        /// <summary>
+        /// フォントの埋め込み設定に関する PostScript コードを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Code CreateEmbedFontsCode() =>
+            EmbedFonts ?
+            new Code(".setpdfwrite <</NeverEmbed [ ]>> setdistillerparams") :
+            null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Trim
+        ///
+        /// <summary>
+        /// null オブジェクトを除去します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<T> Trim<T>(IEnumerable<T> src) => src.OfType<T>();
 
         #endregion
     }
