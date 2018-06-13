@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -53,6 +54,17 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Version
+        ///
+        /// <summary>
+        /// バージョンを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Version Version { get; set; } = new Version(1, 7);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ColorMode
         ///
         /// <summary>
@@ -81,8 +93,21 @@ namespace Cube.Pdf.Ghostscript
             base.OnCreateArguments()
             .Concat(new[]
             {
-                ColorMode.GetArgument()
+                CreateVersion(),
+                ColorMode.GetArgument(),
             });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateVersion
+        ///
+        /// <summary>
+        /// バージョン番号を表す Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Argument CreateVersion() =>
+            new Argument('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}");
 
         #endregion
     }

@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Tests.Ghostscript
@@ -69,6 +70,17 @@ namespace Cube.Pdf.Tests.Ghostscript
         {
             get
             {
+                /* --------------------------------------------------------- */
+                // Version
+                /* --------------------------------------------------------- */
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Version = new Version(1, 2),
+                }, "SampleCjk.ps", new Version(1, 2));
+
+                /* --------------------------------------------------------- */
+                // ColorMode
+                /* --------------------------------------------------------- */
                 yield return TestCase(new DocumentConverter(Format.Pdf)
                 {
                     ColorMode   = ColorMode.Rgb,
