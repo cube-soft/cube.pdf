@@ -46,17 +46,9 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Invoke(string filename, Converter conv, string name)
+        public void Invoke(Converter cv, string srcname, string destname)
         {
-            var lib  = IO.Get(AssemblyReader.Default.Location).DirectoryName;
-            var dest = GetResultsWith($"{name}{conv.Format.GetExtension()}");
-            var src  = GetExamplesWith(filename);
-
-            conv.Log   = GetResultsWith($"{name}.log");
-            conv.Quiet = false;
-            conv.Resources.Add(IO.Combine(lib, "lib"));
-            conv.Invoke(src, dest);
-
+            var dest = Run(cv, srcname, destname);
             Assert.That(IO.Exists(dest), Is.True);
         }
 
@@ -86,43 +78,43 @@ namespace Cube.Pdf.Tests.Ghostscript
                 /* --------------------------------------------------------- */
                 // Orientation
                 /* --------------------------------------------------------- */
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase(new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.Portrait,
-                }, Orientation.Portrait);
+                }, "Sample.ps", Orientation.Portrait);
 
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase(new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.UpsideDown,
-                }, Orientation.UpsideDown);
+                }, "Sample.ps", Orientation.UpsideDown);
 
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase(new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.Landscape,
-                }, Orientation.Landscape);
+                }, "Sample.ps", Orientation.Landscape);
 
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase(new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.Seascape,
-                }, Orientation.Seascape);
+                }, "Sample.ps", Orientation.Seascape);
 
                 /* --------------------------------------------------------- */
                 // Paper
                 /* --------------------------------------------------------- */
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase(new Converter(Format.Pdf)
                 {
                     Paper = Paper.IsoB4,
-                }, Paper.IsoB4);
+                }, "Sample.ps", Paper.IsoB4);
 
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase(new Converter(Format.Pdf)
                 {
                     Paper = Paper.JisB4,
-                }, Paper.JisB4);
+                }, "Sample.ps", Paper.JisB4);
 
-                yield return TestCase("Sample.ps", new Converter(Format.Pdf)
+                yield return TestCase(new Converter(Format.Pdf)
                 {
                     Paper = Paper.Letter,
-                }, Paper.Letter);
+                }, "Sample.ps", Paper.Letter);
             }
         }
 

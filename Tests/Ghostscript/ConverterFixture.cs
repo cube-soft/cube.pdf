@@ -31,9 +31,38 @@ namespace Cube.Pdf.Tests.Ghostscript
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    class ConverterFixture : FileFixture
+    abstract class ConverterFixture : FileFixture
     {
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Run
+        ///
+        /// <summary>
+        /// Converter オブジェクトを実行します。
+        /// </summary>
+        ///
+        /// <param name="cv">Converter オブジェクト</param>
+        /// <param name="src">入力ファイル名</param>
+        /// <param name="dest">拡張子を含まない出力ファイル名</param>
+        ///
+        /// <returns>出力パス</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected string Run(Converter cv, string src, string dest)
+        {
+            var sp  = GetExamplesWith(src);
+            var dp  = GetResultsWith($"{dest}{cv.Format.GetExtension()}");
+            var dir = IO.Get(AssemblyReader.Default.Location).DirectoryName;
+
+            cv.Log   = GetResultsWith($"{dest}.log");
+            cv.Quiet = false;
+            cv.Resources.Add(IO.Combine(dir, "lib"));
+            cv.Invoke(sp, dp);
+
+            return dp;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -43,12 +72,36 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// テストケースを生成します。
         /// </summary>
         ///
+        /// <param name="cv">Converter オブジェクト</param>
+        /// <param name="src">入力ファイル名</param>
+        /// <param name="obj">出力ファイル名を決定するオブジェクト</param>
+        ///
+        /// <returns>テストケースオブジェクト</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData TestCase<T>(string src, Converter conv, T name)
+        protected static TestCaseData TestCase<T>(Converter cv, string src, T obj)
         {
-            var cvt = $"{name.GetType().Name}_{name.ToString()}";
-            return new TestCaseData(src, conv, cvt);
+            var cvt = $"{obj.GetType().Name}_{obj.ToString()}";
+            return TestCase(cv, src, cvt);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TestCase
+        ///
+        /// <summary>
+        /// テストケースを生成します。
+        /// </summary>
+        ///
+        /// <param name="cv">Converter オブジェクト</param>
+        /// <param name="src">入力ファイル名</param>
+        /// <param name="dest">拡張子を含まない出力ファイル名</param>
+        ///
+        /// <returns>テストケースオブジェクト</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected static TestCaseData TestCase(Converter cv, string src, string dest) =>
+            new TestCaseData(cv, src, dest);
 
         #endregion
     }

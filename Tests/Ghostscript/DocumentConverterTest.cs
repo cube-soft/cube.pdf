@@ -46,17 +46,9 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Invoke(string filename, Converter conv, string name)
+        public void Invoke(Converter cv, string srcname, string destname)
         {
-            var lib  = IO.Get(AssemblyReader.Default.Location).DirectoryName;
-            var dest = GetResultsWith($"{name}{conv.Format.GetExtension()}");
-            var src  = GetExamplesWith(filename);
-
-            conv.Log   = GetResultsWith($"{name}.log");
-            conv.Quiet = false;
-            conv.Resources.Add(IO.Combine(lib, "lib"));
-            conv.Invoke(src, dest);
-
+            var dest = Run(cv, srcname, destname);
             Assert.That(IO.Exists(dest), Is.True);
         }
 
@@ -77,23 +69,23 @@ namespace Cube.Pdf.Tests.Ghostscript
         {
             get
             {
-                yield return TestCase("Sample.eps", new DocumentConverter(Format.Pdf)
+                yield return TestCase(new DocumentConverter(Format.Pdf)
                 {
                     ColorMode   = ColorMode.Rgb,
                     Orientation = Orientation.Portrait,
-                }, ColorMode.Rgb);
+                }, "Sample.eps", ColorMode.Rgb);
 
-                yield return TestCase("Sample.eps", new DocumentConverter(Format.Pdf)
+                yield return TestCase(new DocumentConverter(Format.Pdf)
                 {
                     ColorMode   = ColorMode.Cmyk,
                     Orientation = Orientation.Portrait,
-                }, ColorMode.Cmyk);
+                }, "Sample.eps", ColorMode.Cmyk);
 
-                yield return TestCase("Sample.eps", new DocumentConverter(Format.Pdf)
+                yield return TestCase(new DocumentConverter(Format.Pdf)
                 {
                     ColorMode   = ColorMode.Grayscale,
                     Orientation = Orientation.Portrait,
-                }, ColorMode.Grayscale);
+                }, "Sample.eps", ColorMode.Grayscale);
             }
         }
 
