@@ -44,6 +44,7 @@
     <Compile Include="NativeMethods\GsApi.cs" />
     <Compile Include="NativeMethods\GsApiException.cs" />
     <Compile Include="Parameters\ColorMode.cs" />
+    <Compile Include="Parameters\Encoding.cs" />
     <Compile Include="Parameters\Format.cs" />
     <Compile Include="Parameters\Orientation.cs" />
     <Compile Include="Parameters\Paper.cs" />
