@@ -65,6 +65,17 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// EmbedFonts
+        ///
+        /// <summary>
+        /// フォントを埋め込むかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool EmbedFonts { get; set; } = true;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ColorMode
         ///
         /// <summary>
@@ -76,14 +87,14 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EmbedFonts
+        /// ImageCompression
         ///
         /// <summary>
-        /// フォントを埋め込むかどうかを示す値を取得または設定します。
+        /// 埋め込まれた画像データの圧縮形式を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool EmbedFonts { get; set; } = true;
+        public Encoding ImageCompression { get; set; } = Encoding.Flate;
 
         #endregion
 
@@ -107,7 +118,8 @@ namespace Cube.Pdf.Ghostscript
                 CreateVersion(),
                 ColorMode.GetArgument(),
             })
-            .Concat(CreateEmbedFonts());
+            .Concat(CreateFontArguments())
+            .Concat(CreateImageArguments());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -139,19 +151,41 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateEmbedFonts
+        /// CreateFontArguments
         ///
         /// <summary>
-        /// フォントの埋め込み設定に関する Argument を生成します。
+        /// フォントに関する Argument を生成します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<Argument> CreateEmbedFonts()
+        private IEnumerable<Argument> CreateFontArguments()
         {
             var dest = new List<Argument> { new Argument("EmbedAllFonts", EmbedFonts) };
             if (EmbedFonts) dest.Add(new Argument("SubsetFonts", true));
             return dest;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateImageArguments
+        ///
+        /// <summary>
+        /// 埋め込まれた画像に関する Argument を生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<Argument> CreateImageArguments() => Trim(new[]
+        {
+            new Argument("ColorImageResolution",  Resolution),
+            new Argument("GrayImageResolution",   Resolution),
+            new Argument("MonoImageResolution",   GetMonoResolution()),
+            new Argument("AutoFilterColorImages", false),
+            new Argument("AutoFilterGrayImages",  false),
+            new Argument("AutoFilterMonoImages",  false),
+            GetImageCompression().GetArgument("ColorImageFilter"),
+            GetImageCompression().GetArgument("GrayImageFilter"),
+            GetImageCompression().GetArgument("MonoImageFilter"),
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -166,6 +200,32 @@ namespace Cube.Pdf.Ghostscript
             EmbedFonts ?
             new Code(".setpdfwrite <</NeverEmbed [ ]>> setdistillerparams") :
             null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetMonoResolution
+        ///
+        /// <summary>
+        /// モノクロ画像に適用する解像度を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private int GetMonoResolution() =>
+            Resolution <  300 ?  300 :
+            Resolution < 1200 ? 1200 :
+            Resolution;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImageCompression
+        ///
+        /// <summary>
+        /// 画像の圧縮形式を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Encoding GetImageCompression() =>
+            ImageCompression != Encoding.None ? ImageCompression : Encoding.Flate;
 
         /* ----------------------------------------------------------------- */
         ///

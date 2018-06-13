@@ -127,6 +127,34 @@ namespace Cube.Pdf.Tests.Ghostscript
                     ColorMode   = ColorMode.Grayscale,
                     Orientation = Orientation.Portrait,
                 }, "Sample.eps", ColorMode.Grayscale);
+
+                /* --------------------------------------------------------- */
+                // ImageCompression
+                /* --------------------------------------------------------- */
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    ImageCompression = Encoding.None,
+                }, "SampleMix.ps", Encoding.None);
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    ImageCompression = Encoding.Flate,
+                }, "SampleMix.ps", Encoding.Flate);
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    ImageCompression = Encoding.Jpeg,
+                }, "SampleMix.ps", Encoding.Jpeg);
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    ImageCompression = Encoding.Lzw,
+                }, "SampleMix.ps", Encoding.Lzw);
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    ImageCompression = Encoding.Fax,
+                }, "SampleMix.ps", Encoding.Fax);
             }
         }
 
