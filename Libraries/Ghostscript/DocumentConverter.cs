@@ -179,12 +179,15 @@ namespace Cube.Pdf.Ghostscript
             new Argument("ColorImageResolution",  Resolution),
             new Argument("GrayImageResolution",   Resolution),
             new Argument("MonoImageResolution",   GetMonoResolution()),
+            new Argument("EncodeColorImages",     ImageCompression != Encoding.None),
+            new Argument("EncodeGrayImages",      ImageCompression != Encoding.None),
+            new Argument("EncodeMonoImages",      ImageCompression != Encoding.None),
             new Argument("AutoFilterColorImages", false),
             new Argument("AutoFilterGrayImages",  false),
             new Argument("AutoFilterMonoImages",  false),
-            GetImageCompression().GetArgument("ColorImageFilter"),
-            GetImageCompression().GetArgument("GrayImageFilter"),
-            GetImageCompression().GetArgument("MonoImageFilter"),
+            ImageCompression.GetArgument("ColorImageFilter"),
+            ImageCompression.GetArgument("GrayImageFilter"),
+            ImageCompression.GetArgument("MonoImageFilter"),
         });
 
         /* ----------------------------------------------------------------- */
@@ -214,18 +217,6 @@ namespace Cube.Pdf.Ghostscript
             Resolution <  300 ?  300 :
             Resolution < 1200 ? 1200 :
             Resolution;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImageCompression
-        ///
-        /// <summary>
-        /// 画像の圧縮形式を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Encoding GetImageCompression() =>
-            ImageCompression != Encoding.None ? ImageCompression : Encoding.Flate;
 
         /* ----------------------------------------------------------------- */
         ///
