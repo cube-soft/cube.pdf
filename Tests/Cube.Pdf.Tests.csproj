@@ -62,6 +62,7 @@
     <Compile Include="Ghostscript\ConverterTest.cs" />
     <Compile Include="Ghostscript\DocumentConverterTest.cs" />
     <Compile Include="Ghostscript\FormatTest.cs" />
+    <Compile Include="Ghostscript\ImageConverterTest.cs" />
     <Compile Include="Itext\DocumentReaderTest.cs" />
     <Compile Include="Itext\DocumentWriterTest.cs" />
     <Compile Include="GlobalSetup.cs" />

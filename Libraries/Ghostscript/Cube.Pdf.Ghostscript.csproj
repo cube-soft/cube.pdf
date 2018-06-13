@@ -50,6 +50,7 @@
     <Compile Include="Argument.cs" />
     <Compile Include="Converter.cs" />
     <Compile Include="DocumentConverter.cs" />
+    <Compile Include="ImageConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
