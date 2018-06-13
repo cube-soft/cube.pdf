@@ -41,7 +41,9 @@ namespace Cube.Pdf.Ghostscript
         Fax,
         /// <summary>LZW encoding</summary>
         Lzw,
-        /// <summary>PackBits, Run Length Encoding (RLE)</summary>
+        /// <summary>Run Length Encoding (RLE)</summary>
+        Rle,
+        /// <summary>PackBits RLE</summary>
         PackBits,
         /// <summary>Base64 encoding</summary>
         Base64,
