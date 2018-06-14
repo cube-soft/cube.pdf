@@ -56,7 +56,36 @@
             this.DestinationTextBox = new System.Windows.Forms.TextBox();
             this.DestinationComboBox = new System.Windows.Forms.ComboBox();
             this.DocumentPage = new System.Windows.Forms.TabPage();
-            this.SecurityTabPage = new System.Windows.Forms.TabPage();
+            this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
+            this.ViewOptionLabel = new System.Windows.Forms.Label();
+            this.CreatorTextBox = new System.Windows.Forms.TextBox();
+            this.CreatorLabel = new System.Windows.Forms.Label();
+            this.KeywordsTextBox = new System.Windows.Forms.TextBox();
+            this.KeywordsLabel = new System.Windows.Forms.Label();
+            this.SubjectTextBox = new System.Windows.Forms.TextBox();
+            this.SubjectLabel = new System.Windows.Forms.Label();
+            this.AuthorTextBox = new System.Windows.Forms.TextBox();
+            this.AuthorLabel = new System.Windows.Forms.Label();
+            this.TitleTextBox = new System.Windows.Forms.TextBox();
+            this.TitleLabel = new System.Windows.Forms.Label();
+            this.EncryptionTabPage = new System.Windows.Forms.TabPage();
+            this.EncryptionOuterPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.EnableEncryptionCheckBox = new System.Windows.Forms.CheckBox();
+            this.EncryptionPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.UserPasswordCheckBox = new System.Windows.Forms.CheckBox();
+            this.OperationLabel = new System.Windows.Forms.Label();
+            this.OwnerConfirmTextBox = new System.Windows.Forms.TextBox();
+            this.OwnerConfirmLabel = new System.Windows.Forms.Label();
+            this.OwnerPasswordTextBox = new System.Windows.Forms.TextBox();
+            this.OwnerPasswordLabel = new System.Windows.Forms.Label();
+            this.OperationPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.SharePasswordCheckBox = new System.Windows.Forms.CheckBox();
+            this.UserPasswordPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.UserConfirmTextBox = new System.Windows.Forms.TextBox();
+            this.UserPasswordTextBox = new System.Windows.Forms.TextBox();
+            this.UserConfirmLabel = new System.Windows.Forms.Label();
+            this.UserPasswordLabel = new System.Windows.Forms.Label();
             this.OthersTabPage = new System.Windows.Forms.TabPage();
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -64,19 +93,11 @@
             this.ApplyButton = new Cube.Forms.FlatButton();
             this.ConvertButton = new Cube.Forms.FlatButton();
             this.ExitButton = new Cube.Forms.FlatButton();
-            this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.TitleLabel = new System.Windows.Forms.Label();
-            this.TitleTextBox = new System.Windows.Forms.TextBox();
-            this.AuthorLabel = new System.Windows.Forms.Label();
-            this.AuthorTextBox = new System.Windows.Forms.TextBox();
-            this.SubjectLabel = new System.Windows.Forms.Label();
-            this.SubjectTextBox = new System.Windows.Forms.TextBox();
-            this.KeywordsLabel = new System.Windows.Forms.Label();
-            this.KeywordsTextBox = new System.Windows.Forms.TextBox();
-            this.CreatorLabel = new System.Windows.Forms.Label();
-            this.CreatorTextBox = new System.Windows.Forms.TextBox();
-            this.ViewOptionLabel = new System.Windows.Forms.Label();
-            this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
+            this.AllowPrintCheckBox = new System.Windows.Forms.CheckBox();
+            this.AllowCopyCheckBox = new System.Windows.Forms.CheckBox();
+            this.AllowFormCheckBox = new System.Windows.Forms.CheckBox();
+            this.AllowModifyCheckBox = new System.Windows.Forms.CheckBox();
+            this.PermissionPanel = new System.Windows.Forms.TableLayoutPanel();
             this.RootPanel.SuspendLayout();
             this.SettingsPanel.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
@@ -87,9 +108,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
             this.DestinationPanel.SuspendLayout();
             this.DocumentPage.SuspendLayout();
+            this.DocumentPanel.SuspendLayout();
+            this.EncryptionTabPage.SuspendLayout();
+            this.EncryptionOuterPanel.SuspendLayout();
+            this.EncryptionPanel.SuspendLayout();
+            this.OperationPanel.SuspendLayout();
+            this.UserPasswordPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
-            this.DocumentPanel.SuspendLayout();
+            this.PermissionPanel.SuspendLayout();
             this.SuspendLayout();
             //
             // RootPanel
@@ -124,6 +151,7 @@
             this.HeaderButton.Styles.NormalStyle.BackgroundImage = global::Cube.Pdf.App.Converter.Properties.Resources.Header;
             this.HeaderButton.Styles.NormalStyle.BorderSize = 0;
             this.HeaderButton.TabIndex = 0;
+            this.HeaderButton.TabStop = false;
             this.HeaderButton.Text = "button1";
             this.HeaderButton.UseVisualStyleBackColor = true;
             //
@@ -142,7 +170,7 @@
             //
             this.SettingsTabControl.Controls.Add(this.GeneralTabPage);
             this.SettingsTabControl.Controls.Add(this.DocumentPage);
-            this.SettingsTabControl.Controls.Add(this.SecurityTabPage);
+            this.SettingsTabControl.Controls.Add(this.EncryptionTabPage);
             this.SettingsTabControl.Controls.Add(this.OthersTabPage);
             this.SettingsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SettingsTabControl.ItemSize = new System.Drawing.Size(100, 20);
@@ -464,16 +492,374 @@
             this.DocumentPage.Text = "Document";
             this.DocumentPage.UseVisualStyleBackColor = true;
             //
-            // SecurityTabPage
+            // DocumentPanel
             //
-            this.SecurityTabPage.AutoScroll = true;
-            this.SecurityTabPage.Location = new System.Drawing.Point(4, 24);
-            this.SecurityTabPage.Name = "SecurityTabPage";
-            this.SecurityTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
-            this.SecurityTabPage.Size = new System.Drawing.Size(452, 362);
-            this.SecurityTabPage.TabIndex = 2;
-            this.SecurityTabPage.Text = "Security";
-            this.SecurityTabPage.UseVisualStyleBackColor = true;
+            this.DocumentPanel.ColumnCount = 2;
+            this.DocumentPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.DocumentPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.DocumentPanel.Controls.Add(this.ViewOptionComboBox, 1, 5);
+            this.DocumentPanel.Controls.Add(this.ViewOptionLabel, 0, 5);
+            this.DocumentPanel.Controls.Add(this.CreatorTextBox, 1, 4);
+            this.DocumentPanel.Controls.Add(this.CreatorLabel, 0, 4);
+            this.DocumentPanel.Controls.Add(this.KeywordsTextBox, 1, 3);
+            this.DocumentPanel.Controls.Add(this.KeywordsLabel, 0, 3);
+            this.DocumentPanel.Controls.Add(this.SubjectTextBox, 1, 2);
+            this.DocumentPanel.Controls.Add(this.SubjectLabel, 0, 2);
+            this.DocumentPanel.Controls.Add(this.AuthorTextBox, 1, 1);
+            this.DocumentPanel.Controls.Add(this.AuthorLabel, 0, 1);
+            this.DocumentPanel.Controls.Add(this.TitleTextBox, 1, 0);
+            this.DocumentPanel.Controls.Add(this.TitleLabel, 0, 0);
+            this.DocumentPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.DocumentPanel.Location = new System.Drawing.Point(9, 18);
+            this.DocumentPanel.Name = "DocumentPanel";
+            this.DocumentPanel.RowCount = 6;
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.DocumentPanel.Size = new System.Drawing.Size(434, 180);
+            this.DocumentPanel.TabIndex = 0;
+            //
+            // ViewOptionComboBox
+            //
+            this.ViewOptionComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ViewOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ViewOptionComboBox.FormattingEnabled = true;
+            this.ViewOptionComboBox.Location = new System.Drawing.Point(103, 153);
+            this.ViewOptionComboBox.Name = "ViewOptionComboBox";
+            this.ViewOptionComboBox.Size = new System.Drawing.Size(328, 23);
+            this.ViewOptionComboBox.TabIndex = 5;
+            //
+            // ViewOptionLabel
+            //
+            this.ViewOptionLabel.AutoSize = true;
+            this.ViewOptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ViewOptionLabel.Location = new System.Drawing.Point(3, 153);
+            this.ViewOptionLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.ViewOptionLabel.Name = "ViewOptionLabel";
+            this.ViewOptionLabel.Size = new System.Drawing.Size(94, 24);
+            this.ViewOptionLabel.TabIndex = 0;
+            this.ViewOptionLabel.Text = "View option";
+            this.ViewOptionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // CreatorTextBox
+            //
+            this.CreatorTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CreatorTextBox.Location = new System.Drawing.Point(103, 123);
+            this.CreatorTextBox.Name = "CreatorTextBox";
+            this.CreatorTextBox.Size = new System.Drawing.Size(328, 23);
+            this.CreatorTextBox.TabIndex = 4;
+            //
+            // CreatorLabel
+            //
+            this.CreatorLabel.AutoSize = true;
+            this.CreatorLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CreatorLabel.Location = new System.Drawing.Point(3, 123);
+            this.CreatorLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.CreatorLabel.Name = "CreatorLabel";
+            this.CreatorLabel.Size = new System.Drawing.Size(94, 24);
+            this.CreatorLabel.TabIndex = 0;
+            this.CreatorLabel.Text = "Creator";
+            this.CreatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // KeywordsTextBox
+            //
+            this.KeywordsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.KeywordsTextBox.Location = new System.Drawing.Point(103, 93);
+            this.KeywordsTextBox.Name = "KeywordsTextBox";
+            this.KeywordsTextBox.Size = new System.Drawing.Size(328, 23);
+            this.KeywordsTextBox.TabIndex = 3;
+            //
+            // KeywordsLabel
+            //
+            this.KeywordsLabel.AutoSize = true;
+            this.KeywordsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.KeywordsLabel.Location = new System.Drawing.Point(3, 93);
+            this.KeywordsLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.KeywordsLabel.Name = "KeywordsLabel";
+            this.KeywordsLabel.Size = new System.Drawing.Size(94, 24);
+            this.KeywordsLabel.TabIndex = 0;
+            this.KeywordsLabel.Text = "Keywords";
+            this.KeywordsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // SubjectTextBox
+            //
+            this.SubjectTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SubjectTextBox.Location = new System.Drawing.Point(103, 63);
+            this.SubjectTextBox.Name = "SubjectTextBox";
+            this.SubjectTextBox.Size = new System.Drawing.Size(328, 23);
+            this.SubjectTextBox.TabIndex = 2;
+            //
+            // SubjectLabel
+            //
+            this.SubjectLabel.AutoSize = true;
+            this.SubjectLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SubjectLabel.Location = new System.Drawing.Point(3, 63);
+            this.SubjectLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.SubjectLabel.Name = "SubjectLabel";
+            this.SubjectLabel.Size = new System.Drawing.Size(94, 24);
+            this.SubjectLabel.TabIndex = 0;
+            this.SubjectLabel.Text = "Subject";
+            this.SubjectLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // AuthorTextBox
+            //
+            this.AuthorTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AuthorTextBox.Location = new System.Drawing.Point(103, 33);
+            this.AuthorTextBox.Name = "AuthorTextBox";
+            this.AuthorTextBox.Size = new System.Drawing.Size(328, 23);
+            this.AuthorTextBox.TabIndex = 1;
+            //
+            // AuthorLabel
+            //
+            this.AuthorLabel.AutoSize = true;
+            this.AuthorLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AuthorLabel.Location = new System.Drawing.Point(3, 33);
+            this.AuthorLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.AuthorLabel.Name = "AuthorLabel";
+            this.AuthorLabel.Size = new System.Drawing.Size(94, 24);
+            this.AuthorLabel.TabIndex = 0;
+            this.AuthorLabel.Text = "Author";
+            this.AuthorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // TitleTextBox
+            //
+            this.TitleTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TitleTextBox.Location = new System.Drawing.Point(103, 3);
+            this.TitleTextBox.Name = "TitleTextBox";
+            this.TitleTextBox.Size = new System.Drawing.Size(328, 23);
+            this.TitleTextBox.TabIndex = 0;
+            //
+            // TitleLabel
+            //
+            this.TitleLabel.AutoSize = true;
+            this.TitleLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TitleLabel.Location = new System.Drawing.Point(3, 3);
+            this.TitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.TitleLabel.Name = "TitleLabel";
+            this.TitleLabel.Size = new System.Drawing.Size(94, 24);
+            this.TitleLabel.TabIndex = 0;
+            this.TitleLabel.Text = "Title";
+            this.TitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // EncryptionTabPage
+            //
+            this.EncryptionTabPage.AutoScroll = true;
+            this.EncryptionTabPage.Controls.Add(this.EncryptionOuterPanel);
+            this.EncryptionTabPage.Location = new System.Drawing.Point(4, 24);
+            this.EncryptionTabPage.Name = "EncryptionTabPage";
+            this.EncryptionTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
+            this.EncryptionTabPage.Size = new System.Drawing.Size(452, 362);
+            this.EncryptionTabPage.TabIndex = 2;
+            this.EncryptionTabPage.Text = "Security";
+            this.EncryptionTabPage.UseVisualStyleBackColor = true;
+            //
+            // EncryptionOuterPanel
+            //
+            this.EncryptionOuterPanel.ColumnCount = 1;
+            this.EncryptionOuterPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.EncryptionOuterPanel.Controls.Add(this.EnableEncryptionCheckBox, 0, 0);
+            this.EncryptionOuterPanel.Controls.Add(this.EncryptionPanel, 0, 1);
+            this.EncryptionOuterPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.EncryptionOuterPanel.Location = new System.Drawing.Point(9, 18);
+            this.EncryptionOuterPanel.Name = "EncryptionOuterPanel";
+            this.EncryptionOuterPanel.RowCount = 2;
+            this.EncryptionOuterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.EncryptionOuterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.EncryptionOuterPanel.Size = new System.Drawing.Size(434, 292);
+            this.EncryptionOuterPanel.TabIndex = 0;
+            //
+            // EnableEncryptionCheckBox
+            //
+            this.EnableEncryptionCheckBox.AutoSize = true;
+            this.EnableEncryptionCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EnableEncryptionCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.EnableEncryptionCheckBox.Name = "EnableEncryptionCheckBox";
+            this.EnableEncryptionCheckBox.Size = new System.Drawing.Size(428, 19);
+            this.EnableEncryptionCheckBox.TabIndex = 0;
+            this.EnableEncryptionCheckBox.Text = "Encrypt the PDF with password";
+            this.EnableEncryptionCheckBox.UseVisualStyleBackColor = true;
+            //
+            // EncryptionPanel
+            //
+            this.EncryptionPanel.ColumnCount = 2;
+            this.EncryptionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.EncryptionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.EncryptionPanel.Controls.Add(this.UserPasswordCheckBox, 1, 2);
+            this.EncryptionPanel.Controls.Add(this.OperationLabel, 0, 2);
+            this.EncryptionPanel.Controls.Add(this.OwnerConfirmTextBox, 1, 1);
+            this.EncryptionPanel.Controls.Add(this.OwnerConfirmLabel, 0, 1);
+            this.EncryptionPanel.Controls.Add(this.OwnerPasswordTextBox, 1, 0);
+            this.EncryptionPanel.Controls.Add(this.OwnerPasswordLabel, 0, 0);
+            this.EncryptionPanel.Controls.Add(this.OperationPanel, 1, 3);
+            this.EncryptionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EncryptionPanel.Location = new System.Drawing.Point(0, 25);
+            this.EncryptionPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.EncryptionPanel.Name = "EncryptionPanel";
+            this.EncryptionPanel.RowCount = 4;
+            this.EncryptionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.EncryptionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.EncryptionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.EncryptionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.EncryptionPanel.Size = new System.Drawing.Size(434, 267);
+            this.EncryptionPanel.TabIndex = 1;
+            //
+            // UserPasswordCheckBox
+            //
+            this.UserPasswordCheckBox.AutoSize = true;
+            this.UserPasswordCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserPasswordCheckBox.Location = new System.Drawing.Point(103, 63);
+            this.UserPasswordCheckBox.Name = "UserPasswordCheckBox";
+            this.UserPasswordCheckBox.Size = new System.Drawing.Size(328, 24);
+            this.UserPasswordCheckBox.TabIndex = 2;
+            this.UserPasswordCheckBox.Text = "Open with password";
+            this.UserPasswordCheckBox.UseVisualStyleBackColor = true;
+            //
+            // OperationLabel
+            //
+            this.OperationLabel.AutoSize = true;
+            this.OperationLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OperationLabel.Location = new System.Drawing.Point(3, 63);
+            this.OperationLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.OperationLabel.Name = "OperationLabel";
+            this.OperationLabel.Size = new System.Drawing.Size(94, 24);
+            this.OperationLabel.TabIndex = 0;
+            this.OperationLabel.Text = "Operations";
+            this.OperationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // OwnerConfirmTextBox
+            //
+            this.OwnerConfirmTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OwnerConfirmTextBox.Location = new System.Drawing.Point(103, 33);
+            this.OwnerConfirmTextBox.Name = "OwnerConfirmTextBox";
+            this.OwnerConfirmTextBox.Size = new System.Drawing.Size(328, 23);
+            this.OwnerConfirmTextBox.TabIndex = 1;
+            //
+            // OwnerConfirmLabel
+            //
+            this.OwnerConfirmLabel.AutoSize = true;
+            this.OwnerConfirmLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OwnerConfirmLabel.Location = new System.Drawing.Point(3, 33);
+            this.OwnerConfirmLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.OwnerConfirmLabel.Name = "OwnerConfirmLabel";
+            this.OwnerConfirmLabel.Size = new System.Drawing.Size(94, 24);
+            this.OwnerConfirmLabel.TabIndex = 0;
+            this.OwnerConfirmLabel.Text = "Confirm";
+            this.OwnerConfirmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // OwnerPasswordTextBox
+            //
+            this.OwnerPasswordTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OwnerPasswordTextBox.Location = new System.Drawing.Point(103, 3);
+            this.OwnerPasswordTextBox.Name = "OwnerPasswordTextBox";
+            this.OwnerPasswordTextBox.Size = new System.Drawing.Size(328, 23);
+            this.OwnerPasswordTextBox.TabIndex = 0;
+            //
+            // OwnerPasswordLabel
+            //
+            this.OwnerPasswordLabel.AutoSize = true;
+            this.OwnerPasswordLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OwnerPasswordLabel.Location = new System.Drawing.Point(3, 3);
+            this.OwnerPasswordLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.OwnerPasswordLabel.Name = "OwnerPasswordLabel";
+            this.OwnerPasswordLabel.Size = new System.Drawing.Size(94, 24);
+            this.OwnerPasswordLabel.TabIndex = 0;
+            this.OwnerPasswordLabel.Text = "Password";
+            this.OwnerPasswordLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // OperationPanel
+            //
+            this.OperationPanel.ColumnCount = 1;
+            this.OperationPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.OperationPanel.Controls.Add(this.SharePasswordCheckBox, 0, 1);
+            this.OperationPanel.Controls.Add(this.UserPasswordPanel, 0, 0);
+            this.OperationPanel.Controls.Add(this.PermissionPanel, 0, 2);
+            this.OperationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OperationPanel.Location = new System.Drawing.Point(100, 90);
+            this.OperationPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.OperationPanel.Name = "OperationPanel";
+            this.OperationPanel.RowCount = 3;
+            this.OperationPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
+            this.OperationPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.OperationPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.OperationPanel.Size = new System.Drawing.Size(334, 177);
+            this.OperationPanel.TabIndex = 3;
+            //
+            // SharePasswordCheckBox
+            //
+            this.SharePasswordCheckBox.AutoSize = true;
+            this.SharePasswordCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SharePasswordCheckBox.Location = new System.Drawing.Point(93, 55);
+            this.SharePasswordCheckBox.Margin = new System.Windows.Forms.Padding(93, 3, 3, 3);
+            this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
+            this.SharePasswordCheckBox.Size = new System.Drawing.Size(238, 19);
+            this.SharePasswordCheckBox.TabIndex = 1;
+            this.SharePasswordCheckBox.Text = "Use owner password";
+            this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
+            //
+            // UserPasswordPanel
+            //
+            this.UserPasswordPanel.ColumnCount = 2;
+            this.UserPasswordPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.UserPasswordPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.UserPasswordPanel.Controls.Add(this.UserConfirmTextBox, 1, 1);
+            this.UserPasswordPanel.Controls.Add(this.UserPasswordTextBox, 1, 0);
+            this.UserPasswordPanel.Controls.Add(this.UserConfirmLabel, 0, 1);
+            this.UserPasswordPanel.Controls.Add(this.UserPasswordLabel, 0, 0);
+            this.UserPasswordPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserPasswordPanel.Location = new System.Drawing.Point(0, 0);
+            this.UserPasswordPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.UserPasswordPanel.Name = "UserPasswordPanel";
+            this.UserPasswordPanel.RowCount = 2;
+            this.UserPasswordPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.UserPasswordPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.UserPasswordPanel.Size = new System.Drawing.Size(334, 52);
+            this.UserPasswordPanel.TabIndex = 0;
+            //
+            // UserConfirmTextBox
+            //
+            this.UserConfirmTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserConfirmTextBox.Location = new System.Drawing.Point(93, 27);
+            this.UserConfirmTextBox.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.UserConfirmTextBox.Name = "UserConfirmTextBox";
+            this.UserConfirmTextBox.Size = new System.Drawing.Size(238, 23);
+            this.UserConfirmTextBox.TabIndex = 1;
+            //
+            // UserPasswordTextBox
+            //
+            this.UserPasswordTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserPasswordTextBox.Location = new System.Drawing.Point(93, 1);
+            this.UserPasswordTextBox.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.UserPasswordTextBox.Name = "UserPasswordTextBox";
+            this.UserPasswordTextBox.Size = new System.Drawing.Size(238, 23);
+            this.UserPasswordTextBox.TabIndex = 0;
+            //
+            // UserConfirmLabel
+            //
+            this.UserConfirmLabel.AutoSize = true;
+            this.UserConfirmLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserConfirmLabel.Location = new System.Drawing.Point(3, 29);
+            this.UserConfirmLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.UserConfirmLabel.Name = "UserConfirmLabel";
+            this.UserConfirmLabel.Size = new System.Drawing.Size(84, 20);
+            this.UserConfirmLabel.TabIndex = 0;
+            this.UserConfirmLabel.Text = "Confirm";
+            this.UserConfirmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // UserPasswordLabel
+            //
+            this.UserPasswordLabel.AutoSize = true;
+            this.UserPasswordLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UserPasswordLabel.Location = new System.Drawing.Point(3, 3);
+            this.UserPasswordLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.UserPasswordLabel.Name = "UserPasswordLabel";
+            this.UserPasswordLabel.Size = new System.Drawing.Size(84, 20);
+            this.UserPasswordLabel.TabIndex = 0;
+            this.UserPasswordLabel.Text = "Password";
+            this.UserPasswordLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // OthersTabPage
             //
@@ -590,158 +976,69 @@
             this.ExitButton.Text = "button2";
             this.ExitButton.UseVisualStyleBackColor = true;
             //
-            // DocumentPanel
+            // AllowPrintCheckBox
             //
-            this.DocumentPanel.ColumnCount = 2;
-            this.DocumentPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.DocumentPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.DocumentPanel.Controls.Add(this.ViewOptionComboBox, 1, 5);
-            this.DocumentPanel.Controls.Add(this.ViewOptionLabel, 0, 5);
-            this.DocumentPanel.Controls.Add(this.CreatorTextBox, 1, 4);
-            this.DocumentPanel.Controls.Add(this.CreatorLabel, 0, 4);
-            this.DocumentPanel.Controls.Add(this.KeywordsTextBox, 1, 3);
-            this.DocumentPanel.Controls.Add(this.KeywordsLabel, 0, 3);
-            this.DocumentPanel.Controls.Add(this.SubjectTextBox, 1, 2);
-            this.DocumentPanel.Controls.Add(this.SubjectLabel, 0, 2);
-            this.DocumentPanel.Controls.Add(this.AuthorTextBox, 1, 1);
-            this.DocumentPanel.Controls.Add(this.AuthorLabel, 0, 1);
-            this.DocumentPanel.Controls.Add(this.TitleTextBox, 1, 0);
-            this.DocumentPanel.Controls.Add(this.TitleLabel, 0, 0);
-            this.DocumentPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.DocumentPanel.Location = new System.Drawing.Point(9, 18);
-            this.DocumentPanel.Name = "DocumentPanel";
-            this.DocumentPanel.RowCount = 6;
-            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.DocumentPanel.Size = new System.Drawing.Size(434, 180);
-            this.DocumentPanel.TabIndex = 0;
+            this.AllowPrintCheckBox.AutoSize = true;
+            this.AllowPrintCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AllowPrintCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.AllowPrintCheckBox.Name = "AllowPrintCheckBox";
+            this.AllowPrintCheckBox.Size = new System.Drawing.Size(328, 19);
+            this.AllowPrintCheckBox.TabIndex = 0;
+            this.AllowPrintCheckBox.Text = "Allow printing";
+            this.AllowPrintCheckBox.UseVisualStyleBackColor = true;
             //
-            // TitleLabel
+            // AllowCopyCheckBox
             //
-            this.TitleLabel.AutoSize = true;
-            this.TitleLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TitleLabel.Location = new System.Drawing.Point(3, 3);
-            this.TitleLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.TitleLabel.Name = "TitleLabel";
-            this.TitleLabel.Size = new System.Drawing.Size(94, 24);
-            this.TitleLabel.TabIndex = 1;
-            this.TitleLabel.Text = "Title";
-            this.TitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.AllowCopyCheckBox.AutoSize = true;
+            this.AllowCopyCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AllowCopyCheckBox.Location = new System.Drawing.Point(3, 28);
+            this.AllowCopyCheckBox.Name = "AllowCopyCheckBox";
+            this.AllowCopyCheckBox.Size = new System.Drawing.Size(328, 19);
+            this.AllowCopyCheckBox.TabIndex = 1;
+            this.AllowCopyCheckBox.Text = "Allow copying text and images";
+            this.AllowCopyCheckBox.UseVisualStyleBackColor = true;
             //
-            // TitleTextBox
+            // AllowFormCheckBox
             //
-            this.TitleTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TitleTextBox.Location = new System.Drawing.Point(103, 3);
-            this.TitleTextBox.Name = "TitleTextBox";
-            this.TitleTextBox.Size = new System.Drawing.Size(328, 23);
-            this.TitleTextBox.TabIndex = 2;
+            this.AllowFormCheckBox.AutoSize = true;
+            this.AllowFormCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AllowFormCheckBox.Location = new System.Drawing.Point(3, 53);
+            this.AllowFormCheckBox.Name = "AllowFormCheckBox";
+            this.AllowFormCheckBox.Size = new System.Drawing.Size(328, 19);
+            this.AllowFormCheckBox.TabIndex = 2;
+            this.AllowFormCheckBox.Text = "Allow filling in forms";
+            this.AllowFormCheckBox.UseVisualStyleBackColor = true;
             //
-            // AuthorLabel
+            // AllowModifyCheckBox
             //
-            this.AuthorLabel.AutoSize = true;
-            this.AuthorLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AuthorLabel.Location = new System.Drawing.Point(3, 33);
-            this.AuthorLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.AuthorLabel.Name = "AuthorLabel";
-            this.AuthorLabel.Size = new System.Drawing.Size(94, 24);
-            this.AuthorLabel.TabIndex = 3;
-            this.AuthorLabel.Text = "Author";
-            this.AuthorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.AllowModifyCheckBox.AutoSize = true;
+            this.AllowModifyCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AllowModifyCheckBox.Location = new System.Drawing.Point(3, 78);
+            this.AllowModifyCheckBox.Name = "AllowModifyCheckBox";
+            this.AllowModifyCheckBox.Size = new System.Drawing.Size(328, 19);
+            this.AllowModifyCheckBox.TabIndex = 3;
+            this.AllowModifyCheckBox.Text = "Allow inserting and removing pages";
+            this.AllowModifyCheckBox.UseVisualStyleBackColor = true;
             //
-            // AuthorTextBox
+            // PermissionPanel
             //
-            this.AuthorTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AuthorTextBox.Location = new System.Drawing.Point(103, 33);
-            this.AuthorTextBox.Name = "AuthorTextBox";
-            this.AuthorTextBox.Size = new System.Drawing.Size(328, 23);
-            this.AuthorTextBox.TabIndex = 4;
-            //
-            // SubjectLabel
-            //
-            this.SubjectLabel.AutoSize = true;
-            this.SubjectLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SubjectLabel.Location = new System.Drawing.Point(3, 63);
-            this.SubjectLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.SubjectLabel.Name = "SubjectLabel";
-            this.SubjectLabel.Size = new System.Drawing.Size(94, 24);
-            this.SubjectLabel.TabIndex = 5;
-            this.SubjectLabel.Text = "Subject";
-            this.SubjectLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
-            // SubjectTextBox
-            //
-            this.SubjectTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SubjectTextBox.Location = new System.Drawing.Point(103, 63);
-            this.SubjectTextBox.Name = "SubjectTextBox";
-            this.SubjectTextBox.Size = new System.Drawing.Size(328, 23);
-            this.SubjectTextBox.TabIndex = 6;
-            //
-            // KeywordsLabel
-            //
-            this.KeywordsLabel.AutoSize = true;
-            this.KeywordsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.KeywordsLabel.Location = new System.Drawing.Point(3, 93);
-            this.KeywordsLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.KeywordsLabel.Name = "KeywordsLabel";
-            this.KeywordsLabel.Size = new System.Drawing.Size(94, 24);
-            this.KeywordsLabel.TabIndex = 7;
-            this.KeywordsLabel.Text = "Keywords";
-            this.KeywordsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
-            // KeywordsTextBox
-            //
-            this.KeywordsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.KeywordsTextBox.Location = new System.Drawing.Point(103, 93);
-            this.KeywordsTextBox.Name = "KeywordsTextBox";
-            this.KeywordsTextBox.Size = new System.Drawing.Size(328, 23);
-            this.KeywordsTextBox.TabIndex = 8;
-            //
-            // CreatorLabel
-            //
-            this.CreatorLabel.AutoSize = true;
-            this.CreatorLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CreatorLabel.Location = new System.Drawing.Point(3, 123);
-            this.CreatorLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.CreatorLabel.Name = "CreatorLabel";
-            this.CreatorLabel.Size = new System.Drawing.Size(94, 24);
-            this.CreatorLabel.TabIndex = 9;
-            this.CreatorLabel.Text = "Creator";
-            this.CreatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
-            // CreatorTextBox
-            //
-            this.CreatorTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CreatorTextBox.Location = new System.Drawing.Point(103, 123);
-            this.CreatorTextBox.Name = "CreatorTextBox";
-            this.CreatorTextBox.Size = new System.Drawing.Size(328, 23);
-            this.CreatorTextBox.TabIndex = 10;
-            //
-            // ViewOptionLabel
-            //
-            this.ViewOptionLabel.AutoSize = true;
-            this.ViewOptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ViewOptionLabel.Location = new System.Drawing.Point(3, 153);
-            this.ViewOptionLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.ViewOptionLabel.Name = "ViewOptionLabel";
-            this.ViewOptionLabel.Size = new System.Drawing.Size(94, 24);
-            this.ViewOptionLabel.TabIndex = 11;
-            this.ViewOptionLabel.Text = "View option";
-            this.ViewOptionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
-            // ViewOptionComboBox
-            //
-            this.ViewOptionComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ViewOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ViewOptionComboBox.FormattingEnabled = true;
-            this.ViewOptionComboBox.Location = new System.Drawing.Point(103, 153);
-            this.ViewOptionComboBox.Name = "ViewOptionComboBox";
-            this.ViewOptionComboBox.Size = new System.Drawing.Size(328, 23);
-            this.ViewOptionComboBox.TabIndex = 12;
+            this.PermissionPanel.ColumnCount = 1;
+            this.PermissionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.PermissionPanel.Controls.Add(this.AllowModifyCheckBox, 0, 3);
+            this.PermissionPanel.Controls.Add(this.AllowFormCheckBox, 0, 2);
+            this.PermissionPanel.Controls.Add(this.AllowCopyCheckBox, 0, 1);
+            this.PermissionPanel.Controls.Add(this.AllowPrintCheckBox, 0, 0);
+            this.PermissionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PermissionPanel.Location = new System.Drawing.Point(0, 77);
+            this.PermissionPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.PermissionPanel.Name = "PermissionPanel";
+            this.PermissionPanel.RowCount = 4;
+            this.PermissionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.PermissionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.PermissionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.PermissionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.PermissionPanel.Size = new System.Drawing.Size(334, 100);
+            this.PermissionPanel.TabIndex = 2;
             //
             // MainForm
             //
@@ -771,10 +1068,21 @@
             this.DestinationPanel.ResumeLayout(false);
             this.DestinationPanel.PerformLayout();
             this.DocumentPage.ResumeLayout(false);
-            this.FooterPanel.ResumeLayout(false);
-            this.ToolsPanel.ResumeLayout(false);
             this.DocumentPanel.ResumeLayout(false);
             this.DocumentPanel.PerformLayout();
+            this.EncryptionTabPage.ResumeLayout(false);
+            this.EncryptionOuterPanel.ResumeLayout(false);
+            this.EncryptionOuterPanel.PerformLayout();
+            this.EncryptionPanel.ResumeLayout(false);
+            this.EncryptionPanel.PerformLayout();
+            this.OperationPanel.ResumeLayout(false);
+            this.OperationPanel.PerformLayout();
+            this.UserPasswordPanel.ResumeLayout(false);
+            this.UserPasswordPanel.PerformLayout();
+            this.FooterPanel.ResumeLayout(false);
+            this.ToolsPanel.ResumeLayout(false);
+            this.PermissionPanel.ResumeLayout(false);
+            this.PermissionPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -786,7 +1094,7 @@
         private System.Windows.Forms.TabControl SettingsTabControl;
         private System.Windows.Forms.TabPage GeneralTabPage;
         private System.Windows.Forms.TabPage DocumentPage;
-        private System.Windows.Forms.TabPage SecurityTabPage;
+        private System.Windows.Forms.TabPage EncryptionTabPage;
         private System.Windows.Forms.TabPage OthersTabPage;
         private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
         private System.Windows.Forms.ProgressBar ConvertProgressBar;
@@ -829,6 +1137,27 @@
         private System.Windows.Forms.TextBox CreatorTextBox;
         private System.Windows.Forms.Label ViewOptionLabel;
         private System.Windows.Forms.ComboBox ViewOptionComboBox;
+        private System.Windows.Forms.TableLayoutPanel EncryptionOuterPanel;
+        private System.Windows.Forms.CheckBox EnableEncryptionCheckBox;
+        private System.Windows.Forms.TableLayoutPanel EncryptionPanel;
+        private System.Windows.Forms.Label OwnerPasswordLabel;
+        private System.Windows.Forms.TextBox OwnerPasswordTextBox;
+        private System.Windows.Forms.TextBox OwnerConfirmTextBox;
+        private System.Windows.Forms.Label OwnerConfirmLabel;
+        private System.Windows.Forms.Label OperationLabel;
+        private System.Windows.Forms.CheckBox UserPasswordCheckBox;
+        private System.Windows.Forms.TableLayoutPanel OperationPanel;
+        private System.Windows.Forms.TableLayoutPanel UserPasswordPanel;
+        private System.Windows.Forms.CheckBox SharePasswordCheckBox;
+        private System.Windows.Forms.TextBox UserConfirmTextBox;
+        private System.Windows.Forms.TextBox UserPasswordTextBox;
+        private System.Windows.Forms.Label UserConfirmLabel;
+        private System.Windows.Forms.Label UserPasswordLabel;
+        private System.Windows.Forms.TableLayoutPanel PermissionPanel;
+        private System.Windows.Forms.CheckBox AllowModifyCheckBox;
+        private System.Windows.Forms.CheckBox AllowFormCheckBox;
+        private System.Windows.Forms.CheckBox AllowCopyCheckBox;
+        private System.Windows.Forms.CheckBox AllowPrintCheckBox;
     }
 }
 
