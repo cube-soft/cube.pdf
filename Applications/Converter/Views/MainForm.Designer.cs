@@ -92,26 +92,26 @@
             this.AllowCopyCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowPrintCheckBox = new System.Windows.Forms.CheckBox();
             this.OthersTabPage = new System.Windows.Forms.TabPage();
+            this.OthersPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.LanguageComboBox = new System.Windows.Forms.ComboBox();
+            this.LanguageLabel = new System.Windows.Forms.Label();
+            this.OptionsLabel = new System.Windows.Forms.Label();
+            this.OptionsPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
+            this.LinearizeCheckBox = new System.Windows.Forms.CheckBox();
+            this.ImageCompressionCheckBox = new System.Windows.Forms.CheckBox();
+            this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ConvertProgressBar = new System.Windows.Forms.ProgressBar();
             this.ApplyButton = new Cube.Forms.FlatButton();
             this.ConvertButton = new Cube.Forms.FlatButton();
             this.ExitButton = new Cube.Forms.FlatButton();
-            this.OthersPanel = new System.Windows.Forms.TableLayoutPanel();
             this.OrientationLabel = new System.Windows.Forms.Label();
             this.OrientationPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.OptionsLabel = new System.Windows.Forms.Label();
-            this.OptionsPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.LanguageLabel = new System.Windows.Forms.Label();
-            this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.PortraitRadioButton = new System.Windows.Forms.RadioButton();
             this.LandscapeRadioButton = new System.Windows.Forms.RadioButton();
             this.AutoRadioButton = new System.Windows.Forms.RadioButton();
-            this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
-            this.ImageCompressionCheckBox = new System.Windows.Forms.CheckBox();
-            this.LinearizeCheckBox = new System.Windows.Forms.CheckBox();
-            this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.RootPanel.SuspendLayout();
             this.SettingsPanel.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
@@ -130,11 +130,11 @@
             this.UserPasswordPanel.SuspendLayout();
             this.PermissionPanel.SuspendLayout();
             this.OthersTabPage.SuspendLayout();
+            this.OthersPanel.SuspendLayout();
+            this.OptionsPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
-            this.OthersPanel.SuspendLayout();
             this.OrientationPanel.SuspendLayout();
-            this.OptionsPanel.SuspendLayout();
             this.SuspendLayout();
             //
             // RootPanel
@@ -217,29 +217,33 @@
             this.GeneralPanel.ColumnCount = 2;
             this.GeneralPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.GeneralPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.GeneralPanel.Controls.Add(this.SourcePanel, 1, 5);
-            this.GeneralPanel.Controls.Add(this.SourceLabel, 0, 5);
-            this.GeneralPanel.Controls.Add(this.PostProcessPanel, 1, 4);
-            this.GeneralPanel.Controls.Add(this.PostProcessLabel, 0, 4);
-            this.GeneralPanel.Controls.Add(this.DestinationLabel, 0, 3);
+            this.GeneralPanel.Controls.Add(this.OrientationPanel, 1, 3);
+            this.GeneralPanel.Controls.Add(this.OrientationLabel, 0, 3);
+            this.GeneralPanel.Controls.Add(this.SourcePanel, 1, 6);
+            this.GeneralPanel.Controls.Add(this.SourceLabel, 0, 6);
+            this.GeneralPanel.Controls.Add(this.PostProcessPanel, 1, 5);
+            this.GeneralPanel.Controls.Add(this.PostProcessLabel, 0, 5);
+            this.GeneralPanel.Controls.Add(this.DestinationLabel, 0, 4);
             this.GeneralPanel.Controls.Add(this.ResolutionLabel, 0, 2);
             this.GeneralPanel.Controls.Add(this.VersionComboBox, 1, 1);
             this.GeneralPanel.Controls.Add(this.VersionLabel, 0, 1);
             this.GeneralPanel.Controls.Add(this.FormatLabel, 0, 0);
             this.GeneralPanel.Controls.Add(this.FormatComboBox, 1, 0);
             this.GeneralPanel.Controls.Add(this.ResolutionControl, 1, 2);
-            this.GeneralPanel.Controls.Add(this.DestinationPanel, 1, 3);
+            this.GeneralPanel.Controls.Add(this.DestinationPanel, 1, 4);
             this.GeneralPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.GeneralPanel.Location = new System.Drawing.Point(9, 18);
             this.GeneralPanel.Name = "GeneralPanel";
-            this.GeneralPanel.RowCount = 6;
+            this.GeneralPanel.RowCount = 7;
             this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.GeneralPanel.Size = new System.Drawing.Size(434, 180);
+            this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.GeneralPanel.Size = new System.Drawing.Size(434, 210);
             this.GeneralPanel.TabIndex = 0;
             //
             // SourcePanel
@@ -250,13 +254,13 @@
             this.SourcePanel.Controls.Add(this.SourceButton, 0, 0);
             this.SourcePanel.Controls.Add(this.SourceTextBox, 0, 0);
             this.SourcePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SourcePanel.Location = new System.Drawing.Point(100, 150);
+            this.SourcePanel.Location = new System.Drawing.Point(100, 180);
             this.SourcePanel.Margin = new System.Windows.Forms.Padding(0);
             this.SourcePanel.Name = "SourcePanel";
             this.SourcePanel.RowCount = 1;
             this.SourcePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.SourcePanel.Size = new System.Drawing.Size(334, 30);
-            this.SourcePanel.TabIndex = 5;
+            this.SourcePanel.TabIndex = 6;
             //
             // SourceButton
             //
@@ -282,7 +286,7 @@
             //
             this.SourceLabel.AutoSize = true;
             this.SourceLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SourceLabel.Location = new System.Drawing.Point(3, 153);
+            this.SourceLabel.Location = new System.Drawing.Point(3, 183);
             this.SourceLabel.Margin = new System.Windows.Forms.Padding(3);
             this.SourceLabel.Name = "SourceLabel";
             this.SourceLabel.Size = new System.Drawing.Size(94, 24);
@@ -300,13 +304,13 @@
             this.PostProcessPanel.Controls.Add(this.PostProcessTextBox, 0, 0);
             this.PostProcessPanel.Controls.Add(this.PostProcessComboBox, 0, 0);
             this.PostProcessPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PostProcessPanel.Location = new System.Drawing.Point(100, 120);
+            this.PostProcessPanel.Location = new System.Drawing.Point(100, 150);
             this.PostProcessPanel.Margin = new System.Windows.Forms.Padding(0);
             this.PostProcessPanel.Name = "PostProcessPanel";
             this.PostProcessPanel.RowCount = 1;
             this.PostProcessPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.PostProcessPanel.Size = new System.Drawing.Size(334, 30);
-            this.PostProcessPanel.TabIndex = 4;
+            this.PostProcessPanel.TabIndex = 5;
             //
             // PostProcessButton
             //
@@ -343,7 +347,7 @@
             //
             this.PostProcessLabel.AutoSize = true;
             this.PostProcessLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PostProcessLabel.Location = new System.Drawing.Point(3, 123);
+            this.PostProcessLabel.Location = new System.Drawing.Point(3, 153);
             this.PostProcessLabel.Margin = new System.Windows.Forms.Padding(3);
             this.PostProcessLabel.Name = "PostProcessLabel";
             this.PostProcessLabel.Size = new System.Drawing.Size(94, 24);
@@ -355,7 +359,7 @@
             //
             this.DestinationLabel.AutoSize = true;
             this.DestinationLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DestinationLabel.Location = new System.Drawing.Point(3, 93);
+            this.DestinationLabel.Location = new System.Drawing.Point(3, 123);
             this.DestinationLabel.Margin = new System.Windows.Forms.Padding(3);
             this.DestinationLabel.Name = "DestinationLabel";
             this.DestinationLabel.Size = new System.Drawing.Size(94, 24);
@@ -459,13 +463,13 @@
             this.DestinationPanel.Controls.Add(this.DestinationTextBox, 1, 0);
             this.DestinationPanel.Controls.Add(this.DestinationComboBox, 0, 0);
             this.DestinationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DestinationPanel.Location = new System.Drawing.Point(100, 90);
+            this.DestinationPanel.Location = new System.Drawing.Point(100, 120);
             this.DestinationPanel.Margin = new System.Windows.Forms.Padding(0);
             this.DestinationPanel.Name = "DestinationPanel";
             this.DestinationPanel.RowCount = 1;
             this.DestinationPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.DestinationPanel.Size = new System.Drawing.Size(334, 30);
-            this.DestinationPanel.TabIndex = 3;
+            this.DestinationPanel.TabIndex = 4;
             //
             // DestinationButton
             //
@@ -955,6 +959,122 @@
             this.OthersTabPage.Text = "Others";
             this.OthersTabPage.UseVisualStyleBackColor = true;
             //
+            // OthersPanel
+            //
+            this.OthersPanel.ColumnCount = 2;
+            this.OthersPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.OthersPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 1);
+            this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 1);
+            this.OthersPanel.Controls.Add(this.OptionsLabel, 0, 0);
+            this.OthersPanel.Controls.Add(this.OptionsPanel, 1, 0);
+            this.OthersPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.OthersPanel.Location = new System.Drawing.Point(9, 18);
+            this.OthersPanel.Name = "OthersPanel";
+            this.OthersPanel.RowCount = 2;
+            this.OthersPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.OthersPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.OthersPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.OthersPanel.Size = new System.Drawing.Size(434, 130);
+            this.OthersPanel.TabIndex = 0;
+            //
+            // LanguageComboBox
+            //
+            this.LanguageComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LanguageComboBox.FormattingEnabled = true;
+            this.LanguageComboBox.Location = new System.Drawing.Point(103, 103);
+            this.LanguageComboBox.Name = "LanguageComboBox";
+            this.LanguageComboBox.Size = new System.Drawing.Size(328, 23);
+            this.LanguageComboBox.TabIndex = 3;
+            //
+            // LanguageLabel
+            //
+            this.LanguageLabel.AutoSize = true;
+            this.LanguageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LanguageLabel.Location = new System.Drawing.Point(3, 103);
+            this.LanguageLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.LanguageLabel.Name = "LanguageLabel";
+            this.LanguageLabel.Size = new System.Drawing.Size(94, 24);
+            this.LanguageLabel.TabIndex = 0;
+            this.LanguageLabel.Text = "Language";
+            this.LanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // OptionsLabel
+            //
+            this.OptionsLabel.AutoSize = true;
+            this.OptionsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OptionsLabel.Location = new System.Drawing.Point(3, 4);
+            this.OptionsLabel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
+            this.OptionsLabel.Name = "OptionsLabel";
+            this.OptionsLabel.Size = new System.Drawing.Size(94, 93);
+            this.OptionsLabel.TabIndex = 0;
+            this.OptionsLabel.Text = "Options";
+            //
+            // OptionsPanel
+            //
+            this.OptionsPanel.ColumnCount = 1;
+            this.OptionsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.OptionsPanel.Controls.Add(this.UpdateCheckBox, 0, 3);
+            this.OptionsPanel.Controls.Add(this.LinearizeCheckBox, 0, 2);
+            this.OptionsPanel.Controls.Add(this.ImageCompressionCheckBox, 0, 1);
+            this.OptionsPanel.Controls.Add(this.GrayscaleCheckBox, 0, 0);
+            this.OptionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OptionsPanel.Location = new System.Drawing.Point(100, 0);
+            this.OptionsPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.OptionsPanel.Name = "OptionsPanel";
+            this.OptionsPanel.RowCount = 4;
+            this.OptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.OptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.OptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.OptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.OptionsPanel.Size = new System.Drawing.Size(334, 100);
+            this.OptionsPanel.TabIndex = 1;
+            //
+            // UpdateCheckBox
+            //
+            this.UpdateCheckBox.AutoSize = true;
+            this.UpdateCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.UpdateCheckBox.Location = new System.Drawing.Point(3, 78);
+            this.UpdateCheckBox.Name = "UpdateCheckBox";
+            this.UpdateCheckBox.Size = new System.Drawing.Size(328, 19);
+            this.UpdateCheckBox.TabIndex = 3;
+            this.UpdateCheckBox.Text = "Check for update when launched";
+            this.UpdateCheckBox.UseVisualStyleBackColor = true;
+            //
+            // LinearizeCheckBox
+            //
+            this.LinearizeCheckBox.AutoSize = true;
+            this.LinearizeCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LinearizeCheckBox.Location = new System.Drawing.Point(3, 53);
+            this.LinearizeCheckBox.Name = "LinearizeCheckBox";
+            this.LinearizeCheckBox.Size = new System.Drawing.Size(328, 19);
+            this.LinearizeCheckBox.TabIndex = 2;
+            this.LinearizeCheckBox.Text = "Optimize PDF for fast Web view";
+            this.LinearizeCheckBox.UseVisualStyleBackColor = true;
+            //
+            // ImageCompressionCheckBox
+            //
+            this.ImageCompressionCheckBox.AutoSize = true;
+            this.ImageCompressionCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImageCompressionCheckBox.Location = new System.Drawing.Point(3, 28);
+            this.ImageCompressionCheckBox.Name = "ImageCompressionCheckBox";
+            this.ImageCompressionCheckBox.Size = new System.Drawing.Size(328, 19);
+            this.ImageCompressionCheckBox.TabIndex = 1;
+            this.ImageCompressionCheckBox.Text = "Compress images in the document";
+            this.ImageCompressionCheckBox.UseVisualStyleBackColor = true;
+            //
+            // GrayscaleCheckBox
+            //
+            this.GrayscaleCheckBox.AutoSize = true;
+            this.GrayscaleCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GrayscaleCheckBox.Location = new System.Drawing.Point(3, 3);
+            this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
+            this.GrayscaleCheckBox.Size = new System.Drawing.Size(328, 19);
+            this.GrayscaleCheckBox.TabIndex = 0;
+            this.GrayscaleCheckBox.Text = "Grayscale";
+            this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
+            //
             // FooterPanel
             //
             this.FooterPanel.ColumnCount = 3;
@@ -1059,33 +1179,11 @@
             this.ExitButton.Text = "button2";
             this.ExitButton.UseVisualStyleBackColor = true;
             //
-            // OthersPanel
-            //
-            this.OthersPanel.ColumnCount = 2;
-            this.OthersPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.OthersPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 2);
-            this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 2);
-            this.OthersPanel.Controls.Add(this.OptionsLabel, 0, 1);
-            this.OthersPanel.Controls.Add(this.OrientationLabel, 0, 0);
-            this.OthersPanel.Controls.Add(this.OrientationPanel, 1, 0);
-            this.OthersPanel.Controls.Add(this.OptionsPanel, 1, 1);
-            this.OthersPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.OthersPanel.Location = new System.Drawing.Point(9, 18);
-            this.OthersPanel.Name = "OthersPanel";
-            this.OthersPanel.RowCount = 3;
-            this.OthersPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.OthersPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.OthersPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.OthersPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.OthersPanel.Size = new System.Drawing.Size(434, 160);
-            this.OthersPanel.TabIndex = 0;
-            //
             // OrientationLabel
             //
             this.OrientationLabel.AutoSize = true;
             this.OrientationLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OrientationLabel.Location = new System.Drawing.Point(3, 3);
+            this.OrientationLabel.Location = new System.Drawing.Point(3, 93);
             this.OrientationLabel.Margin = new System.Windows.Forms.Padding(3);
             this.OrientationLabel.Name = "OrientationLabel";
             this.OrientationLabel.Size = new System.Drawing.Size(94, 24);
@@ -1099,64 +1197,11 @@
             this.OrientationPanel.Controls.Add(this.LandscapeRadioButton);
             this.OrientationPanel.Controls.Add(this.AutoRadioButton);
             this.OrientationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OrientationPanel.Location = new System.Drawing.Point(100, 0);
+            this.OrientationPanel.Location = new System.Drawing.Point(100, 90);
             this.OrientationPanel.Margin = new System.Windows.Forms.Padding(0);
             this.OrientationPanel.Name = "OrientationPanel";
             this.OrientationPanel.Size = new System.Drawing.Size(334, 30);
-            this.OrientationPanel.TabIndex = 0;
-            //
-            // OptionsLabel
-            //
-            this.OptionsLabel.AutoSize = true;
-            this.OptionsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OptionsLabel.Location = new System.Drawing.Point(3, 34);
-            this.OptionsLabel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
-            this.OptionsLabel.Name = "OptionsLabel";
-            this.OptionsLabel.Size = new System.Drawing.Size(94, 93);
-            this.OptionsLabel.TabIndex = 0;
-            this.OptionsLabel.Text = "Options";
-            //
-            // OptionsPanel
-            //
-            this.OptionsPanel.ColumnCount = 1;
-            this.OptionsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.OptionsPanel.Controls.Add(this.UpdateCheckBox, 0, 3);
-            this.OptionsPanel.Controls.Add(this.LinearizeCheckBox, 0, 2);
-            this.OptionsPanel.Controls.Add(this.ImageCompressionCheckBox, 0, 1);
-            this.OptionsPanel.Controls.Add(this.GrayscaleCheckBox, 0, 0);
-            this.OptionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OptionsPanel.Location = new System.Drawing.Point(100, 30);
-            this.OptionsPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.OptionsPanel.Name = "OptionsPanel";
-            this.OptionsPanel.RowCount = 4;
-            this.OptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.OptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.OptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.OptionsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.OptionsPanel.Size = new System.Drawing.Size(334, 100);
-            this.OptionsPanel.TabIndex = 1;
-            //
-            // LanguageLabel
-            //
-            this.LanguageLabel.AutoSize = true;
-            this.LanguageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LanguageLabel.Location = new System.Drawing.Point(3, 133);
-            this.LanguageLabel.Margin = new System.Windows.Forms.Padding(3);
-            this.LanguageLabel.Name = "LanguageLabel";
-            this.LanguageLabel.Size = new System.Drawing.Size(94, 24);
-            this.LanguageLabel.TabIndex = 0;
-            this.LanguageLabel.Text = "Language";
-            this.LanguageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
-            // LanguageComboBox
-            //
-            this.LanguageComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.LanguageComboBox.FormattingEnabled = true;
-            this.LanguageComboBox.Location = new System.Drawing.Point(103, 133);
-            this.LanguageComboBox.Name = "LanguageComboBox";
-            this.LanguageComboBox.Size = new System.Drawing.Size(328, 23);
-            this.LanguageComboBox.TabIndex = 3;
+            this.OrientationPanel.TabIndex = 3;
             //
             // PortraitRadioButton
             //
@@ -1193,50 +1238,6 @@
             this.AutoRadioButton.TabStop = true;
             this.AutoRadioButton.Text = "Auto";
             this.AutoRadioButton.UseVisualStyleBackColor = true;
-            //
-            // GrayscaleCheckBox
-            //
-            this.GrayscaleCheckBox.AutoSize = true;
-            this.GrayscaleCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GrayscaleCheckBox.Location = new System.Drawing.Point(3, 3);
-            this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
-            this.GrayscaleCheckBox.Size = new System.Drawing.Size(328, 19);
-            this.GrayscaleCheckBox.TabIndex = 0;
-            this.GrayscaleCheckBox.Text = "Grayscale";
-            this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
-            //
-            // ImageCompressionCheckBox
-            //
-            this.ImageCompressionCheckBox.AutoSize = true;
-            this.ImageCompressionCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImageCompressionCheckBox.Location = new System.Drawing.Point(3, 28);
-            this.ImageCompressionCheckBox.Name = "ImageCompressionCheckBox";
-            this.ImageCompressionCheckBox.Size = new System.Drawing.Size(328, 19);
-            this.ImageCompressionCheckBox.TabIndex = 1;
-            this.ImageCompressionCheckBox.Text = "Compress images in the document";
-            this.ImageCompressionCheckBox.UseVisualStyleBackColor = true;
-            //
-            // LinearizeCheckBox
-            //
-            this.LinearizeCheckBox.AutoSize = true;
-            this.LinearizeCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LinearizeCheckBox.Location = new System.Drawing.Point(3, 53);
-            this.LinearizeCheckBox.Name = "LinearizeCheckBox";
-            this.LinearizeCheckBox.Size = new System.Drawing.Size(328, 19);
-            this.LinearizeCheckBox.TabIndex = 2;
-            this.LinearizeCheckBox.Text = "Optimize PDF for fast Web view";
-            this.LinearizeCheckBox.UseVisualStyleBackColor = true;
-            //
-            // UpdateCheckBox
-            //
-            this.UpdateCheckBox.AutoSize = true;
-            this.UpdateCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.UpdateCheckBox.Location = new System.Drawing.Point(3, 78);
-            this.UpdateCheckBox.Name = "UpdateCheckBox";
-            this.UpdateCheckBox.Size = new System.Drawing.Size(328, 19);
-            this.UpdateCheckBox.TabIndex = 3;
-            this.UpdateCheckBox.Text = "Check for update when launched";
-            this.UpdateCheckBox.UseVisualStyleBackColor = true;
             //
             // MainForm
             //
@@ -1280,14 +1281,14 @@
             this.PermissionPanel.ResumeLayout(false);
             this.PermissionPanel.PerformLayout();
             this.OthersTabPage.ResumeLayout(false);
-            this.FooterPanel.ResumeLayout(false);
-            this.ToolsPanel.ResumeLayout(false);
             this.OthersPanel.ResumeLayout(false);
             this.OthersPanel.PerformLayout();
-            this.OrientationPanel.ResumeLayout(false);
-            this.OrientationPanel.PerformLayout();
             this.OptionsPanel.ResumeLayout(false);
             this.OptionsPanel.PerformLayout();
+            this.FooterPanel.ResumeLayout(false);
+            this.ToolsPanel.ResumeLayout(false);
+            this.OrientationPanel.ResumeLayout(false);
+            this.OrientationPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1364,19 +1365,19 @@
         private System.Windows.Forms.CheckBox AllowCopyCheckBox;
         private System.Windows.Forms.CheckBox AllowPrintCheckBox;
         private System.Windows.Forms.TableLayoutPanel OthersPanel;
-        private System.Windows.Forms.Label OrientationLabel;
-        private System.Windows.Forms.FlowLayoutPanel OrientationPanel;
         private System.Windows.Forms.Label OptionsLabel;
         private System.Windows.Forms.ComboBox LanguageComboBox;
         private System.Windows.Forms.Label LanguageLabel;
         private System.Windows.Forms.TableLayoutPanel OptionsPanel;
-        private System.Windows.Forms.RadioButton PortraitRadioButton;
-        private System.Windows.Forms.RadioButton LandscapeRadioButton;
-        private System.Windows.Forms.RadioButton AutoRadioButton;
         private System.Windows.Forms.CheckBox LinearizeCheckBox;
         private System.Windows.Forms.CheckBox ImageCompressionCheckBox;
         private System.Windows.Forms.CheckBox GrayscaleCheckBox;
         private System.Windows.Forms.CheckBox UpdateCheckBox;
+        private System.Windows.Forms.Label OrientationLabel;
+        private System.Windows.Forms.FlowLayoutPanel OrientationPanel;
+        private System.Windows.Forms.RadioButton PortraitRadioButton;
+        private System.Windows.Forms.RadioButton LandscapeRadioButton;
+        private System.Windows.Forms.RadioButton AutoRadioButton;
     }
 }
 
