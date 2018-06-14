@@ -34,6 +34,27 @@
             this.SettingsPanel = new Cube.Forms.SettingsControl();
             this.SettingsTabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
+            this.GeneralPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.SourcePanel = new System.Windows.Forms.TableLayoutPanel();
+            this.SourceButton = new System.Windows.Forms.Button();
+            this.SourceTextBox = new System.Windows.Forms.TextBox();
+            this.SourceLabel = new System.Windows.Forms.Label();
+            this.PostProcessPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.PostProcessButton = new System.Windows.Forms.Button();
+            this.PostProcessTextBox = new System.Windows.Forms.TextBox();
+            this.PostProcessComboBox = new System.Windows.Forms.ComboBox();
+            this.PostProcessLabel = new System.Windows.Forms.Label();
+            this.DestinationLabel = new System.Windows.Forms.Label();
+            this.ResolutionLabel = new System.Windows.Forms.Label();
+            this.VersionComboBox = new System.Windows.Forms.ComboBox();
+            this.VersionLabel = new System.Windows.Forms.Label();
+            this.FormatLabel = new System.Windows.Forms.Label();
+            this.FormatComboBox = new System.Windows.Forms.ComboBox();
+            this.ResolutionControl = new System.Windows.Forms.NumericUpDown();
+            this.DestinationPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.DestinationButton = new System.Windows.Forms.Button();
+            this.DestinationTextBox = new System.Windows.Forms.TextBox();
+            this.DestinationComboBox = new System.Windows.Forms.ComboBox();
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.SecurityTabPage = new System.Windows.Forms.TabPage();
             this.OthersTabPage = new System.Windows.Forms.TabPage();
@@ -46,6 +67,12 @@
             this.RootPanel.SuspendLayout();
             this.SettingsPanel.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
+            this.GeneralTabPage.SuspendLayout();
+            this.GeneralPanel.SuspendLayout();
+            this.SourcePanel.SuspendLayout();
+            this.PostProcessPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
+            this.DestinationPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
             this.SuspendLayout();
@@ -114,13 +141,301 @@
             //
             // GeneralTabPage
             //
+            this.GeneralTabPage.AutoScroll = true;
+            this.GeneralTabPage.Controls.Add(this.GeneralPanel);
             this.GeneralTabPage.Location = new System.Drawing.Point(4, 24);
             this.GeneralTabPage.Name = "GeneralTabPage";
-            this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
             this.GeneralTabPage.Size = new System.Drawing.Size(452, 355);
             this.GeneralTabPage.TabIndex = 0;
             this.GeneralTabPage.Text = "General";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
+            //
+            // GeneralPanel
+            //
+            this.GeneralPanel.ColumnCount = 2;
+            this.GeneralPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.GeneralPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.GeneralPanel.Controls.Add(this.SourcePanel, 1, 5);
+            this.GeneralPanel.Controls.Add(this.SourceLabel, 0, 5);
+            this.GeneralPanel.Controls.Add(this.PostProcessPanel, 1, 4);
+            this.GeneralPanel.Controls.Add(this.PostProcessLabel, 0, 4);
+            this.GeneralPanel.Controls.Add(this.DestinationLabel, 0, 3);
+            this.GeneralPanel.Controls.Add(this.ResolutionLabel, 0, 2);
+            this.GeneralPanel.Controls.Add(this.VersionComboBox, 1, 1);
+            this.GeneralPanel.Controls.Add(this.VersionLabel, 0, 1);
+            this.GeneralPanel.Controls.Add(this.FormatLabel, 0, 0);
+            this.GeneralPanel.Controls.Add(this.FormatComboBox, 1, 0);
+            this.GeneralPanel.Controls.Add(this.ResolutionControl, 1, 2);
+            this.GeneralPanel.Controls.Add(this.DestinationPanel, 1, 3);
+            this.GeneralPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.GeneralPanel.Location = new System.Drawing.Point(9, 18);
+            this.GeneralPanel.Name = "GeneralPanel";
+            this.GeneralPanel.RowCount = 6;
+            this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.GeneralPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.GeneralPanel.Size = new System.Drawing.Size(434, 180);
+            this.GeneralPanel.TabIndex = 0;
+            //
+            // SourcePanel
+            //
+            this.SourcePanel.ColumnCount = 2;
+            this.SourcePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.SourcePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.SourcePanel.Controls.Add(this.SourceButton, 0, 0);
+            this.SourcePanel.Controls.Add(this.SourceTextBox, 0, 0);
+            this.SourcePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SourcePanel.Location = new System.Drawing.Point(100, 150);
+            this.SourcePanel.Margin = new System.Windows.Forms.Padding(0);
+            this.SourcePanel.Name = "SourcePanel";
+            this.SourcePanel.RowCount = 1;
+            this.SourcePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.SourcePanel.Size = new System.Drawing.Size(334, 30);
+            this.SourcePanel.TabIndex = 5;
+            //
+            // SourceButton
+            //
+            this.SourceButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SourceButton.Location = new System.Drawing.Point(291, 3);
+            this.SourceButton.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
+            this.SourceButton.Name = "SourceButton";
+            this.SourceButton.Size = new System.Drawing.Size(40, 24);
+            this.SourceButton.TabIndex = 1;
+            this.SourceButton.Text = "...";
+            this.SourceButton.UseVisualStyleBackColor = true;
+            //
+            // SourceTextBox
+            //
+            this.SourceTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SourceTextBox.Location = new System.Drawing.Point(3, 3);
+            this.SourceTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 1, 3);
+            this.SourceTextBox.Name = "SourceTextBox";
+            this.SourceTextBox.Size = new System.Drawing.Size(286, 23);
+            this.SourceTextBox.TabIndex = 0;
+            //
+            // SourceLabel
+            //
+            this.SourceLabel.AutoSize = true;
+            this.SourceLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SourceLabel.Location = new System.Drawing.Point(3, 153);
+            this.SourceLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.SourceLabel.Name = "SourceLabel";
+            this.SourceLabel.Size = new System.Drawing.Size(94, 24);
+            this.SourceLabel.TabIndex = 0;
+            this.SourceLabel.Text = "Source";
+            this.SourceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // PostProcessPanel
+            //
+            this.PostProcessPanel.ColumnCount = 3;
+            this.PostProcessPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.PostProcessPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.PostProcessPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.PostProcessPanel.Controls.Add(this.PostProcessButton, 0, 0);
+            this.PostProcessPanel.Controls.Add(this.PostProcessTextBox, 0, 0);
+            this.PostProcessPanel.Controls.Add(this.PostProcessComboBox, 0, 0);
+            this.PostProcessPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PostProcessPanel.Location = new System.Drawing.Point(100, 120);
+            this.PostProcessPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.PostProcessPanel.Name = "PostProcessPanel";
+            this.PostProcessPanel.RowCount = 1;
+            this.PostProcessPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.PostProcessPanel.Size = new System.Drawing.Size(334, 30);
+            this.PostProcessPanel.TabIndex = 4;
+            //
+            // PostProcessButton
+            //
+            this.PostProcessButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PostProcessButton.Location = new System.Drawing.Point(291, 3);
+            this.PostProcessButton.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
+            this.PostProcessButton.Name = "PostProcessButton";
+            this.PostProcessButton.Size = new System.Drawing.Size(40, 24);
+            this.PostProcessButton.TabIndex = 2;
+            this.PostProcessButton.Text = "...";
+            this.PostProcessButton.UseVisualStyleBackColor = true;
+            //
+            // PostProcessTextBox
+            //
+            this.PostProcessTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PostProcessTextBox.Location = new System.Drawing.Point(91, 3);
+            this.PostProcessTextBox.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
+            this.PostProcessTextBox.Name = "PostProcessTextBox";
+            this.PostProcessTextBox.Size = new System.Drawing.Size(198, 23);
+            this.PostProcessTextBox.TabIndex = 1;
+            //
+            // PostProcessComboBox
+            //
+            this.PostProcessComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PostProcessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PostProcessComboBox.FormattingEnabled = true;
+            this.PostProcessComboBox.Location = new System.Drawing.Point(3, 3);
+            this.PostProcessComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 1, 3);
+            this.PostProcessComboBox.Name = "PostProcessComboBox";
+            this.PostProcessComboBox.Size = new System.Drawing.Size(86, 23);
+            this.PostProcessComboBox.TabIndex = 0;
+            //
+            // PostProcessLabel
+            //
+            this.PostProcessLabel.AutoSize = true;
+            this.PostProcessLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PostProcessLabel.Location = new System.Drawing.Point(3, 123);
+            this.PostProcessLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.PostProcessLabel.Name = "PostProcessLabel";
+            this.PostProcessLabel.Size = new System.Drawing.Size(94, 24);
+            this.PostProcessLabel.TabIndex = 0;
+            this.PostProcessLabel.Text = "Post-process";
+            this.PostProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // DestinationLabel
+            //
+            this.DestinationLabel.AutoSize = true;
+            this.DestinationLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DestinationLabel.Location = new System.Drawing.Point(3, 93);
+            this.DestinationLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.DestinationLabel.Name = "DestinationLabel";
+            this.DestinationLabel.Size = new System.Drawing.Size(94, 24);
+            this.DestinationLabel.TabIndex = 0;
+            this.DestinationLabel.Text = "Destination";
+            this.DestinationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // ResolutionLabel
+            //
+            this.ResolutionLabel.AutoSize = true;
+            this.ResolutionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ResolutionLabel.Location = new System.Drawing.Point(3, 63);
+            this.ResolutionLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.ResolutionLabel.Name = "ResolutionLabel";
+            this.ResolutionLabel.Size = new System.Drawing.Size(94, 24);
+            this.ResolutionLabel.TabIndex = 0;
+            this.ResolutionLabel.Text = "Resolutioin";
+            this.ResolutionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // VersionComboBox
+            //
+            this.VersionComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VersionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VersionComboBox.FormattingEnabled = true;
+            this.VersionComboBox.Location = new System.Drawing.Point(103, 33);
+            this.VersionComboBox.Name = "VersionComboBox";
+            this.VersionComboBox.Size = new System.Drawing.Size(328, 23);
+            this.VersionComboBox.TabIndex = 1;
+            //
+            // VersionLabel
+            //
+            this.VersionLabel.AutoSize = true;
+            this.VersionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VersionLabel.Location = new System.Drawing.Point(3, 33);
+            this.VersionLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.VersionLabel.Name = "VersionLabel";
+            this.VersionLabel.Size = new System.Drawing.Size(94, 24);
+            this.VersionLabel.TabIndex = 0;
+            this.VersionLabel.Text = "PDF Version";
+            this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // FormatLabel
+            //
+            this.FormatLabel.AutoSize = true;
+            this.FormatLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FormatLabel.Location = new System.Drawing.Point(3, 3);
+            this.FormatLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.FormatLabel.Name = "FormatLabel";
+            this.FormatLabel.Size = new System.Drawing.Size(94, 24);
+            this.FormatLabel.TabIndex = 0;
+            this.FormatLabel.Text = "Format";
+            this.FormatLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // FormatComboBox
+            //
+            this.FormatComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.FormatComboBox.FormattingEnabled = true;
+            this.FormatComboBox.Location = new System.Drawing.Point(103, 3);
+            this.FormatComboBox.Name = "FormatComboBox";
+            this.FormatComboBox.Size = new System.Drawing.Size(328, 23);
+            this.FormatComboBox.TabIndex = 0;
+            //
+            // ResolutionControl
+            //
+            this.ResolutionControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ResolutionControl.ImeMode = System.Windows.Forms.ImeMode.Disable;
+            this.ResolutionControl.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.ResolutionControl.Location = new System.Drawing.Point(103, 63);
+            this.ResolutionControl.Maximum = new decimal(new int[] {
+            6000,
+            0,
+            0,
+            0});
+            this.ResolutionControl.Minimum = new decimal(new int[] {
+            72,
+            0,
+            0,
+            0});
+            this.ResolutionControl.Name = "ResolutionControl";
+            this.ResolutionControl.Size = new System.Drawing.Size(328, 23);
+            this.ResolutionControl.TabIndex = 2;
+            this.ResolutionControl.ThousandsSeparator = true;
+            this.ResolutionControl.Value = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            //
+            // DestinationPanel
+            //
+            this.DestinationPanel.ColumnCount = 3;
+            this.DestinationPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.DestinationPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.DestinationPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.DestinationPanel.Controls.Add(this.DestinationButton, 2, 0);
+            this.DestinationPanel.Controls.Add(this.DestinationTextBox, 1, 0);
+            this.DestinationPanel.Controls.Add(this.DestinationComboBox, 0, 0);
+            this.DestinationPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DestinationPanel.Location = new System.Drawing.Point(100, 90);
+            this.DestinationPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.DestinationPanel.Name = "DestinationPanel";
+            this.DestinationPanel.RowCount = 1;
+            this.DestinationPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.DestinationPanel.Size = new System.Drawing.Size(334, 30);
+            this.DestinationPanel.TabIndex = 3;
+            //
+            // DestinationButton
+            //
+            this.DestinationButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DestinationButton.Location = new System.Drawing.Point(291, 3);
+            this.DestinationButton.Margin = new System.Windows.Forms.Padding(1, 3, 3, 3);
+            this.DestinationButton.Name = "DestinationButton";
+            this.DestinationButton.Size = new System.Drawing.Size(40, 24);
+            this.DestinationButton.TabIndex = 2;
+            this.DestinationButton.Text = "...";
+            this.DestinationButton.UseVisualStyleBackColor = true;
+            //
+            // DestinationTextBox
+            //
+            this.DestinationTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DestinationTextBox.Location = new System.Drawing.Point(91, 3);
+            this.DestinationTextBox.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
+            this.DestinationTextBox.Name = "DestinationTextBox";
+            this.DestinationTextBox.Size = new System.Drawing.Size(198, 23);
+            this.DestinationTextBox.TabIndex = 1;
+            //
+            // DestinationComboBox
+            //
+            this.DestinationComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DestinationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DestinationComboBox.FormattingEnabled = true;
+            this.DestinationComboBox.Location = new System.Drawing.Point(3, 3);
+            this.DestinationComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 1, 3);
+            this.DestinationComboBox.Name = "DestinationComboBox";
+            this.DestinationComboBox.Size = new System.Drawing.Size(86, 23);
+            this.DestinationComboBox.TabIndex = 0;
             //
             // DocumentPage
             //
@@ -273,6 +588,16 @@
             this.RootPanel.ResumeLayout(false);
             this.SettingsPanel.ResumeLayout(false);
             this.SettingsTabControl.ResumeLayout(false);
+            this.GeneralTabPage.ResumeLayout(false);
+            this.GeneralPanel.ResumeLayout(false);
+            this.GeneralPanel.PerformLayout();
+            this.SourcePanel.ResumeLayout(false);
+            this.SourcePanel.PerformLayout();
+            this.PostProcessPanel.ResumeLayout(false);
+            this.PostProcessPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
+            this.DestinationPanel.ResumeLayout(false);
+            this.DestinationPanel.PerformLayout();
             this.FooterPanel.ResumeLayout(false);
             this.ToolsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -295,6 +620,27 @@
         private Cube.Forms.FlatButton ConvertButton;
         private Cube.Forms.FlatButton ExitButton;
         private Cube.Forms.FlatButton ApplyButton;
+        private System.Windows.Forms.TableLayoutPanel GeneralPanel;
+        private System.Windows.Forms.Label FormatLabel;
+        private System.Windows.Forms.ComboBox FormatComboBox;
+        private System.Windows.Forms.ComboBox VersionComboBox;
+        private System.Windows.Forms.Label VersionLabel;
+        private System.Windows.Forms.Label ResolutionLabel;
+        private System.Windows.Forms.NumericUpDown ResolutionControl;
+        private System.Windows.Forms.Label DestinationLabel;
+        private System.Windows.Forms.TableLayoutPanel DestinationPanel;
+        private System.Windows.Forms.Label PostProcessLabel;
+        private System.Windows.Forms.TableLayoutPanel PostProcessPanel;
+        private System.Windows.Forms.TableLayoutPanel SourcePanel;
+        private System.Windows.Forms.Label SourceLabel;
+        private System.Windows.Forms.Button PostProcessButton;
+        private System.Windows.Forms.TextBox PostProcessTextBox;
+        private System.Windows.Forms.ComboBox PostProcessComboBox;
+        private System.Windows.Forms.Button SourceButton;
+        private System.Windows.Forms.TextBox SourceTextBox;
+        private System.Windows.Forms.Button DestinationButton;
+        private System.Windows.Forms.TextBox DestinationTextBox;
+        private System.Windows.Forms.ComboBox DestinationComboBox;
     }
 }
 
