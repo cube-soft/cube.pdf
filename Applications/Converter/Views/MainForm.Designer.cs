@@ -64,6 +64,19 @@
             this.ApplyButton = new Cube.Forms.FlatButton();
             this.ConvertButton = new Cube.Forms.FlatButton();
             this.ExitButton = new Cube.Forms.FlatButton();
+            this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.TitleLabel = new System.Windows.Forms.Label();
+            this.TitleTextBox = new System.Windows.Forms.TextBox();
+            this.AuthorLabel = new System.Windows.Forms.Label();
+            this.AuthorTextBox = new System.Windows.Forms.TextBox();
+            this.SubjectLabel = new System.Windows.Forms.Label();
+            this.SubjectTextBox = new System.Windows.Forms.TextBox();
+            this.KeywordsLabel = new System.Windows.Forms.Label();
+            this.KeywordsTextBox = new System.Windows.Forms.TextBox();
+            this.CreatorLabel = new System.Windows.Forms.Label();
+            this.CreatorTextBox = new System.Windows.Forms.TextBox();
+            this.ViewOptionLabel = new System.Windows.Forms.Label();
+            this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
             this.RootPanel.SuspendLayout();
             this.SettingsPanel.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
@@ -73,8 +86,10 @@
             this.PostProcessPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
             this.DestinationPanel.SuspendLayout();
+            this.DocumentPage.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
+            this.DocumentPanel.SuspendLayout();
             this.SuspendLayout();
             //
             // RootPanel
@@ -440,10 +455,11 @@
             // DocumentPage
             //
             this.DocumentPage.AutoScroll = true;
+            this.DocumentPage.Controls.Add(this.DocumentPanel);
             this.DocumentPage.Location = new System.Drawing.Point(4, 24);
             this.DocumentPage.Name = "DocumentPage";
             this.DocumentPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
-            this.DocumentPage.Size = new System.Drawing.Size(452, 355);
+            this.DocumentPage.Size = new System.Drawing.Size(452, 362);
             this.DocumentPage.TabIndex = 1;
             this.DocumentPage.Text = "Document";
             this.DocumentPage.UseVisualStyleBackColor = true;
@@ -454,7 +470,7 @@
             this.SecurityTabPage.Location = new System.Drawing.Point(4, 24);
             this.SecurityTabPage.Name = "SecurityTabPage";
             this.SecurityTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
-            this.SecurityTabPage.Size = new System.Drawing.Size(452, 355);
+            this.SecurityTabPage.Size = new System.Drawing.Size(452, 362);
             this.SecurityTabPage.TabIndex = 2;
             this.SecurityTabPage.Text = "Security";
             this.SecurityTabPage.UseVisualStyleBackColor = true;
@@ -574,6 +590,159 @@
             this.ExitButton.Text = "button2";
             this.ExitButton.UseVisualStyleBackColor = true;
             //
+            // DocumentPanel
+            //
+            this.DocumentPanel.ColumnCount = 2;
+            this.DocumentPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.DocumentPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.DocumentPanel.Controls.Add(this.ViewOptionComboBox, 1, 5);
+            this.DocumentPanel.Controls.Add(this.ViewOptionLabel, 0, 5);
+            this.DocumentPanel.Controls.Add(this.CreatorTextBox, 1, 4);
+            this.DocumentPanel.Controls.Add(this.CreatorLabel, 0, 4);
+            this.DocumentPanel.Controls.Add(this.KeywordsTextBox, 1, 3);
+            this.DocumentPanel.Controls.Add(this.KeywordsLabel, 0, 3);
+            this.DocumentPanel.Controls.Add(this.SubjectTextBox, 1, 2);
+            this.DocumentPanel.Controls.Add(this.SubjectLabel, 0, 2);
+            this.DocumentPanel.Controls.Add(this.AuthorTextBox, 1, 1);
+            this.DocumentPanel.Controls.Add(this.AuthorLabel, 0, 1);
+            this.DocumentPanel.Controls.Add(this.TitleTextBox, 1, 0);
+            this.DocumentPanel.Controls.Add(this.TitleLabel, 0, 0);
+            this.DocumentPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.DocumentPanel.Location = new System.Drawing.Point(9, 18);
+            this.DocumentPanel.Name = "DocumentPanel";
+            this.DocumentPanel.RowCount = 6;
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.DocumentPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.DocumentPanel.Size = new System.Drawing.Size(434, 180);
+            this.DocumentPanel.TabIndex = 0;
+            //
+            // TitleLabel
+            //
+            this.TitleLabel.AutoSize = true;
+            this.TitleLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TitleLabel.Location = new System.Drawing.Point(3, 3);
+            this.TitleLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.TitleLabel.Name = "TitleLabel";
+            this.TitleLabel.Size = new System.Drawing.Size(94, 24);
+            this.TitleLabel.TabIndex = 1;
+            this.TitleLabel.Text = "Title";
+            this.TitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // TitleTextBox
+            //
+            this.TitleTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TitleTextBox.Location = new System.Drawing.Point(103, 3);
+            this.TitleTextBox.Name = "TitleTextBox";
+            this.TitleTextBox.Size = new System.Drawing.Size(328, 23);
+            this.TitleTextBox.TabIndex = 2;
+            //
+            // AuthorLabel
+            //
+            this.AuthorLabel.AutoSize = true;
+            this.AuthorLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AuthorLabel.Location = new System.Drawing.Point(3, 33);
+            this.AuthorLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.AuthorLabel.Name = "AuthorLabel";
+            this.AuthorLabel.Size = new System.Drawing.Size(94, 24);
+            this.AuthorLabel.TabIndex = 3;
+            this.AuthorLabel.Text = "Author";
+            this.AuthorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // AuthorTextBox
+            //
+            this.AuthorTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AuthorTextBox.Location = new System.Drawing.Point(103, 33);
+            this.AuthorTextBox.Name = "AuthorTextBox";
+            this.AuthorTextBox.Size = new System.Drawing.Size(328, 23);
+            this.AuthorTextBox.TabIndex = 4;
+            //
+            // SubjectLabel
+            //
+            this.SubjectLabel.AutoSize = true;
+            this.SubjectLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SubjectLabel.Location = new System.Drawing.Point(3, 63);
+            this.SubjectLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.SubjectLabel.Name = "SubjectLabel";
+            this.SubjectLabel.Size = new System.Drawing.Size(94, 24);
+            this.SubjectLabel.TabIndex = 5;
+            this.SubjectLabel.Text = "Subject";
+            this.SubjectLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // SubjectTextBox
+            //
+            this.SubjectTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SubjectTextBox.Location = new System.Drawing.Point(103, 63);
+            this.SubjectTextBox.Name = "SubjectTextBox";
+            this.SubjectTextBox.Size = new System.Drawing.Size(328, 23);
+            this.SubjectTextBox.TabIndex = 6;
+            //
+            // KeywordsLabel
+            //
+            this.KeywordsLabel.AutoSize = true;
+            this.KeywordsLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.KeywordsLabel.Location = new System.Drawing.Point(3, 93);
+            this.KeywordsLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.KeywordsLabel.Name = "KeywordsLabel";
+            this.KeywordsLabel.Size = new System.Drawing.Size(94, 24);
+            this.KeywordsLabel.TabIndex = 7;
+            this.KeywordsLabel.Text = "Keywords";
+            this.KeywordsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // KeywordsTextBox
+            //
+            this.KeywordsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.KeywordsTextBox.Location = new System.Drawing.Point(103, 93);
+            this.KeywordsTextBox.Name = "KeywordsTextBox";
+            this.KeywordsTextBox.Size = new System.Drawing.Size(328, 23);
+            this.KeywordsTextBox.TabIndex = 8;
+            //
+            // CreatorLabel
+            //
+            this.CreatorLabel.AutoSize = true;
+            this.CreatorLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CreatorLabel.Location = new System.Drawing.Point(3, 123);
+            this.CreatorLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.CreatorLabel.Name = "CreatorLabel";
+            this.CreatorLabel.Size = new System.Drawing.Size(94, 24);
+            this.CreatorLabel.TabIndex = 9;
+            this.CreatorLabel.Text = "Creator";
+            this.CreatorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // CreatorTextBox
+            //
+            this.CreatorTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CreatorTextBox.Location = new System.Drawing.Point(103, 123);
+            this.CreatorTextBox.Name = "CreatorTextBox";
+            this.CreatorTextBox.Size = new System.Drawing.Size(328, 23);
+            this.CreatorTextBox.TabIndex = 10;
+            //
+            // ViewOptionLabel
+            //
+            this.ViewOptionLabel.AutoSize = true;
+            this.ViewOptionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ViewOptionLabel.Location = new System.Drawing.Point(3, 153);
+            this.ViewOptionLabel.Margin = new System.Windows.Forms.Padding(3);
+            this.ViewOptionLabel.Name = "ViewOptionLabel";
+            this.ViewOptionLabel.Size = new System.Drawing.Size(94, 24);
+            this.ViewOptionLabel.TabIndex = 11;
+            this.ViewOptionLabel.Text = "View option";
+            this.ViewOptionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // ViewOptionComboBox
+            //
+            this.ViewOptionComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ViewOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ViewOptionComboBox.FormattingEnabled = true;
+            this.ViewOptionComboBox.Location = new System.Drawing.Point(103, 153);
+            this.ViewOptionComboBox.Name = "ViewOptionComboBox";
+            this.ViewOptionComboBox.Size = new System.Drawing.Size(328, 23);
+            this.ViewOptionComboBox.TabIndex = 12;
+            //
             // MainForm
             //
             this.AcceptButton = this.ConvertButton;
@@ -601,8 +770,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
             this.DestinationPanel.ResumeLayout(false);
             this.DestinationPanel.PerformLayout();
+            this.DocumentPage.ResumeLayout(false);
             this.FooterPanel.ResumeLayout(false);
             this.ToolsPanel.ResumeLayout(false);
+            this.DocumentPanel.ResumeLayout(false);
+            this.DocumentPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -644,6 +816,19 @@
         private System.Windows.Forms.Button DestinationButton;
         private System.Windows.Forms.TextBox DestinationTextBox;
         private System.Windows.Forms.ComboBox DestinationComboBox;
+        private System.Windows.Forms.TableLayoutPanel DocumentPanel;
+        private System.Windows.Forms.Label TitleLabel;
+        private System.Windows.Forms.TextBox TitleTextBox;
+        private System.Windows.Forms.Label AuthorLabel;
+        private System.Windows.Forms.TextBox AuthorTextBox;
+        private System.Windows.Forms.Label SubjectLabel;
+        private System.Windows.Forms.Label KeywordsLabel;
+        private System.Windows.Forms.TextBox SubjectTextBox;
+        private System.Windows.Forms.Label CreatorLabel;
+        private System.Windows.Forms.TextBox KeywordsTextBox;
+        private System.Windows.Forms.TextBox CreatorTextBox;
+        private System.Windows.Forms.Label ViewOptionLabel;
+        private System.Windows.Forms.ComboBox ViewOptionComboBox;
     }
 }
 
