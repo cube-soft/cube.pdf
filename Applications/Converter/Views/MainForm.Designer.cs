@@ -151,7 +151,7 @@
             this.RootPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.RootPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.RootPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.RootPanel.Size = new System.Drawing.Size(484, 481);
+            this.RootPanel.Size = new System.Drawing.Size(484, 471);
             this.RootPanel.TabIndex = 0;
             //
             // SettingsPanel
@@ -162,7 +162,7 @@
             this.SettingsPanel.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.SettingsPanel.Name = "SettingsPanel";
             this.SettingsPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.SettingsPanel.Size = new System.Drawing.Size(466, 366);
+            this.SettingsPanel.Size = new System.Drawing.Size(466, 356);
             this.SettingsPanel.TabIndex = 0;
             //
             // SettingsTabControl
@@ -177,7 +177,7 @@
             this.SettingsTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.SettingsTabControl.Name = "SettingsTabControl";
             this.SettingsTabControl.SelectedIndex = 0;
-            this.SettingsTabControl.Size = new System.Drawing.Size(460, 360);
+            this.SettingsTabControl.Size = new System.Drawing.Size(460, 350);
             this.SettingsTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.SettingsTabControl.TabIndex = 0;
             //
@@ -188,7 +188,7 @@
             this.GeneralTabPage.Location = new System.Drawing.Point(4, 24);
             this.GeneralTabPage.Name = "GeneralTabPage";
             this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
-            this.GeneralTabPage.Size = new System.Drawing.Size(452, 332);
+            this.GeneralTabPage.Size = new System.Drawing.Size(452, 322);
             this.GeneralTabPage.TabIndex = 0;
             this.GeneralTabPage.Text = "General";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
@@ -1129,7 +1129,7 @@
             this.FooterPanel.Controls.Add(this.ConvertButton, 1, 0);
             this.FooterPanel.Controls.Add(this.ExitButton, 2, 0);
             this.FooterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FooterPanel.Location = new System.Drawing.Point(9, 431);
+            this.FooterPanel.Location = new System.Drawing.Point(9, 421);
             this.FooterPanel.Margin = new System.Windows.Forms.Padding(9, 3, 9, 9);
             this.FooterPanel.Name = "FooterPanel";
             this.FooterPanel.RowCount = 1;
@@ -1239,7 +1239,7 @@
             this.AcceptButton = this.ConvertButton;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.ExitButton;
-            this.ClientSize = new System.Drawing.Size(484, 481);
+            this.ClientSize = new System.Drawing.Size(484, 471);
             this.Controls.Add(this.RootPanel);
             this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1290,6 +1290,7 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel RootPanel;
+        private System.Windows.Forms.PictureBox HeaderPictureBox;
         private System.Windows.Forms.TableLayoutPanel FooterPanel;
         private System.Windows.Forms.TabControl SettingsTabControl;
         private System.Windows.Forms.TabPage GeneralTabPage;
@@ -1371,7 +1372,6 @@
         private Cube.Forms.FlatButton ConvertButton;
         private Cube.Forms.FlatButton ExitButton;
         private Cube.Forms.FlatButton ApplyButton;
-        private System.Windows.Forms.PictureBox HeaderPictureBox;
     }
 }
 
