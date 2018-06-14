@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
@@ -29,7 +30,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Form
+    public partial class MainForm : Cube.Forms.StandardForm
     {
         #region Constructors
 
@@ -45,8 +46,45 @@ namespace Cube.Pdf.App.Converter
         public MainForm()
         {
             InitializeComponent();
+
+            ExitButton.Click += (s, e) => Close();
+
+            SettingsPanel.ApplyButton = ApplyButton;
+            IsBusy = false;
         }
 
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBusy
+        ///
+        /// <summary>
+        /// 実行中かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool IsBusy
+        {
+            get => _busy;
+            set
+            {
+                _busy = value;
+                ConvertButton.Enabled = !value;
+                ApplyButton.Visible = !value;
+                ConvertProgressBar.Visible = value;
+                Cursor = value ? Cursors.WaitCursor : Cursors.Default;
+            }
+        }
+
+        #endregion
+
+        #region Fields
+        private bool _busy;
         #endregion
     }
 }

@@ -7,7 +7,7 @@
     <ProjectGuid>{467EEF80-0390-46E8-A403-CAB70FC2D8E1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Cube.Pdf.App.Converter</RootNamespace>
-    <AssemblyName>Cube.Pdf.App.Converter</AssemblyName>
+    <AssemblyName>CubePdf</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -69,6 +69,7 @@
     <None Include="App.config" />
     <None Include="App.manifest" />
     <None Include="Packages.config" />
+    <None Include="Resources\Header.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Views\MainForm.cs">
@@ -80,6 +81,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
