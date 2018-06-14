@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.HeaderButton = new Cube.Forms.FlatButton();
             this.SettingsPanel = new Cube.Forms.SettingsControl();
             this.SettingsTabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
@@ -112,6 +111,7 @@
             this.ApplyButton = new Cube.Forms.FlatButton();
             this.ConvertButton = new Cube.Forms.FlatButton();
             this.ExitButton = new Cube.Forms.FlatButton();
+            this.HeaderPictureBox = new System.Windows.Forms.PictureBox();
             this.RootPanel.SuspendLayout();
             this.SettingsPanel.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
@@ -134,15 +134,16 @@
             this.OthersPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).BeginInit();
             this.SuspendLayout();
             //
             // RootPanel
             //
             this.RootPanel.ColumnCount = 1;
             this.RootPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.RootPanel.Controls.Add(this.HeaderButton, 0, 0);
             this.RootPanel.Controls.Add(this.SettingsPanel, 0, 1);
             this.RootPanel.Controls.Add(this.FooterPanel, 0, 2);
+            this.RootPanel.Controls.Add(this.HeaderPictureBox, 0, 0);
             this.RootPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RootPanel.Location = new System.Drawing.Point(0, 0);
             this.RootPanel.Name = "RootPanel";
@@ -153,25 +154,6 @@
             this.RootPanel.Size = new System.Drawing.Size(484, 481);
             this.RootPanel.TabIndex = 0;
             //
-            // HeaderButton
-            //
-            this.HeaderButton.Content = "";
-            this.HeaderButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HeaderButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HeaderButton.FlatAppearance.BorderSize = 0;
-            this.HeaderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HeaderButton.Image = null;
-            this.HeaderButton.Location = new System.Drawing.Point(0, 0);
-            this.HeaderButton.Margin = new System.Windows.Forms.Padding(0);
-            this.HeaderButton.Name = "HeaderButton";
-            this.HeaderButton.Size = new System.Drawing.Size(484, 50);
-            this.HeaderButton.Styles.NormalStyle.BackgroundImage = global::Cube.Pdf.App.Converter.Properties.Resources.Header;
-            this.HeaderButton.Styles.NormalStyle.BorderSize = 0;
-            this.HeaderButton.TabIndex = 0;
-            this.HeaderButton.TabStop = false;
-            this.HeaderButton.Text = "button1";
-            this.HeaderButton.UseVisualStyleBackColor = true;
-            //
             // SettingsPanel
             //
             this.SettingsPanel.Controls.Add(this.SettingsTabControl);
@@ -181,7 +163,7 @@
             this.SettingsPanel.Name = "SettingsPanel";
             this.SettingsPanel.Padding = new System.Windows.Forms.Padding(3);
             this.SettingsPanel.Size = new System.Drawing.Size(466, 366);
-            this.SettingsPanel.TabIndex = 1;
+            this.SettingsPanel.TabIndex = 0;
             //
             // SettingsTabControl
             //
@@ -206,7 +188,7 @@
             this.GeneralTabPage.Location = new System.Drawing.Point(4, 24);
             this.GeneralTabPage.Name = "GeneralTabPage";
             this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
-            this.GeneralTabPage.Size = new System.Drawing.Size(452, 362);
+            this.GeneralTabPage.Size = new System.Drawing.Size(452, 332);
             this.GeneralTabPage.TabIndex = 0;
             this.GeneralTabPage.Text = "General";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
@@ -568,7 +550,7 @@
             this.DocumentPage.Location = new System.Drawing.Point(4, 24);
             this.DocumentPage.Name = "DocumentPage";
             this.DocumentPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
-            this.DocumentPage.Size = new System.Drawing.Size(452, 362);
+            this.DocumentPage.Size = new System.Drawing.Size(452, 332);
             this.DocumentPage.TabIndex = 1;
             this.DocumentPage.Text = "Document";
             this.DocumentPage.UseVisualStyleBackColor = true;
@@ -1013,7 +995,7 @@
             this.OthersTabPage.Location = new System.Drawing.Point(4, 24);
             this.OthersTabPage.Name = "OthersTabPage";
             this.OthersTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
-            this.OthersTabPage.Size = new System.Drawing.Size(452, 362);
+            this.OthersTabPage.Size = new System.Drawing.Size(452, 332);
             this.OthersTabPage.TabIndex = 3;
             this.OthersTabPage.Text = "Others";
             this.OthersTabPage.UseVisualStyleBackColor = true;
@@ -1131,11 +1113,11 @@
             this.VersionPanel.Image = null;
             this.VersionPanel.Location = new System.Drawing.Point(103, 98);
             this.VersionPanel.Name = "VersionPanel";
-            this.VersionPanel.Product = "Cube.Core";
+            this.VersionPanel.Product = "CubePDF";
             this.VersionPanel.Size = new System.Drawing.Size(328, 114);
             this.VersionPanel.TabIndex = 3;
             this.VersionPanel.Uri = null;
-            this.VersionPanel.Version = "Version 1.10.0.0";
+            this.VersionPanel.Version = "Version 1.0.0 (x64)";
             //
             // FooterPanel
             //
@@ -1153,7 +1135,7 @@
             this.FooterPanel.RowCount = 1;
             this.FooterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.FooterPanel.Size = new System.Drawing.Size(466, 41);
-            this.FooterPanel.TabIndex = 2;
+            this.FooterPanel.TabIndex = 1;
             //
             // ToolsPanel
             //
@@ -1241,6 +1223,17 @@
             this.ExitButton.Text = "button2";
             this.ExitButton.UseVisualStyleBackColor = true;
             //
+            // HeaderPictureBox
+            //
+            this.HeaderPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HeaderPictureBox.Image = global::Cube.Pdf.App.Converter.Properties.Resources.Header;
+            this.HeaderPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.HeaderPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.HeaderPictureBox.Name = "HeaderPictureBox";
+            this.HeaderPictureBox.Size = new System.Drawing.Size(484, 50);
+            this.HeaderPictureBox.TabIndex = 3;
+            this.HeaderPictureBox.TabStop = false;
+            //
             // MainForm
             //
             this.AcceptButton = this.ConvertButton;
@@ -1289,6 +1282,7 @@
             this.OthersPanel.PerformLayout();
             this.FooterPanel.ResumeLayout(false);
             this.ToolsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1374,10 +1368,10 @@
         private System.Windows.Forms.CheckBox LinearizeCheckBox;
         private Cube.Forms.VersionControl VersionPanel;
         private Cube.Forms.SettingsControl SettingsPanel;
-        private Cube.Forms.FlatButton HeaderButton;
         private Cube.Forms.FlatButton ConvertButton;
         private Cube.Forms.FlatButton ExitButton;
         private Cube.Forms.FlatButton ApplyButton;
+        private System.Windows.Forms.PictureBox HeaderPictureBox;
     }
 }
 
