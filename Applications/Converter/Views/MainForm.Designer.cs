@@ -90,7 +90,7 @@
             this.RootPanel.RowCount = 3;
             this.RootPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.RootPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.RootPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.RootPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
             this.RootPanel.Size = new System.Drawing.Size(484, 511);
             this.RootPanel.TabIndex = 0;
             //
@@ -120,7 +120,7 @@
             this.SettingsPanel.Margin = new System.Windows.Forms.Padding(9, 9, 9, 3);
             this.SettingsPanel.Name = "SettingsPanel";
             this.SettingsPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.SettingsPanel.Size = new System.Drawing.Size(466, 389);
+            this.SettingsPanel.Size = new System.Drawing.Size(466, 396);
             this.SettingsPanel.TabIndex = 1;
             //
             // SettingsTabControl
@@ -135,7 +135,7 @@
             this.SettingsTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.SettingsTabControl.Name = "SettingsTabControl";
             this.SettingsTabControl.SelectedIndex = 0;
-            this.SettingsTabControl.Size = new System.Drawing.Size(460, 383);
+            this.SettingsTabControl.Size = new System.Drawing.Size(460, 390);
             this.SettingsTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.SettingsTabControl.TabIndex = 0;
             //
@@ -146,7 +146,7 @@
             this.GeneralTabPage.Location = new System.Drawing.Point(4, 24);
             this.GeneralTabPage.Name = "GeneralTabPage";
             this.GeneralTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
-            this.GeneralTabPage.Size = new System.Drawing.Size(452, 355);
+            this.GeneralTabPage.Size = new System.Drawing.Size(452, 362);
             this.GeneralTabPage.TabIndex = 0;
             this.GeneralTabPage.Text = "General";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
@@ -287,7 +287,7 @@
             this.PostProcessLabel.Name = "PostProcessLabel";
             this.PostProcessLabel.Size = new System.Drawing.Size(94, 24);
             this.PostProcessLabel.TabIndex = 0;
-            this.PostProcessLabel.Text = "Post-process";
+            this.PostProcessLabel.Text = "Post process";
             this.PostProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // DestinationLabel
@@ -333,7 +333,7 @@
             this.VersionLabel.Name = "VersionLabel";
             this.VersionLabel.Size = new System.Drawing.Size(94, 24);
             this.VersionLabel.TabIndex = 0;
-            this.VersionLabel.Text = "PDF Version";
+            this.VersionLabel.Text = "PDF version";
             this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // FormatLabel
@@ -439,9 +439,10 @@
             //
             // DocumentPage
             //
+            this.DocumentPage.AutoScroll = true;
             this.DocumentPage.Location = new System.Drawing.Point(4, 24);
             this.DocumentPage.Name = "DocumentPage";
-            this.DocumentPage.Padding = new System.Windows.Forms.Padding(3);
+            this.DocumentPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
             this.DocumentPage.Size = new System.Drawing.Size(452, 355);
             this.DocumentPage.TabIndex = 1;
             this.DocumentPage.Text = "Document";
@@ -449,9 +450,10 @@
             //
             // SecurityTabPage
             //
+            this.SecurityTabPage.AutoScroll = true;
             this.SecurityTabPage.Location = new System.Drawing.Point(4, 24);
             this.SecurityTabPage.Name = "SecurityTabPage";
-            this.SecurityTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.SecurityTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
             this.SecurityTabPage.Size = new System.Drawing.Size(452, 355);
             this.SecurityTabPage.TabIndex = 2;
             this.SecurityTabPage.Text = "Security";
@@ -459,10 +461,11 @@
             //
             // OthersTabPage
             //
+            this.OthersTabPage.AutoScroll = true;
             this.OthersTabPage.Location = new System.Drawing.Point(4, 24);
             this.OthersTabPage.Name = "OthersTabPage";
-            this.OthersTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.OthersTabPage.Size = new System.Drawing.Size(452, 355);
+            this.OthersTabPage.Padding = new System.Windows.Forms.Padding(9, 18, 9, 9);
+            this.OthersTabPage.Size = new System.Drawing.Size(452, 362);
             this.OthersTabPage.TabIndex = 3;
             this.OthersTabPage.Text = "Others";
             this.OthersTabPage.UseVisualStyleBackColor = true;
@@ -477,12 +480,12 @@
             this.FooterPanel.Controls.Add(this.ConvertButton, 1, 0);
             this.FooterPanel.Controls.Add(this.ExitButton, 2, 0);
             this.FooterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FooterPanel.Location = new System.Drawing.Point(9, 454);
+            this.FooterPanel.Location = new System.Drawing.Point(9, 461);
             this.FooterPanel.Margin = new System.Windows.Forms.Padding(9, 3, 9, 9);
             this.FooterPanel.Name = "FooterPanel";
             this.FooterPanel.RowCount = 1;
             this.FooterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.FooterPanel.Size = new System.Drawing.Size(466, 48);
+            this.FooterPanel.Size = new System.Drawing.Size(466, 41);
             this.FooterPanel.TabIndex = 2;
             //
             // ToolsPanel
@@ -494,12 +497,12 @@
             this.ToolsPanel.Location = new System.Drawing.Point(0, 0);
             this.ToolsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ToolsPanel.Name = "ToolsPanel";
-            this.ToolsPanel.Size = new System.Drawing.Size(206, 48);
+            this.ToolsPanel.Size = new System.Drawing.Size(206, 41);
             this.ToolsPanel.TabIndex = 0;
             //
             // ConvertProgressBar
             //
-            this.ConvertProgressBar.Location = new System.Drawing.Point(3, 30);
+            this.ConvertProgressBar.Location = new System.Drawing.Point(3, 23);
             this.ConvertProgressBar.Name = "ConvertProgressBar";
             this.ConvertProgressBar.Size = new System.Drawing.Size(200, 15);
             this.ConvertProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -513,7 +516,7 @@
             this.ApplyButton.FlatAppearance.BorderSize = 0;
             this.ApplyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ApplyButton.Image = null;
-            this.ApplyButton.Location = new System.Drawing.Point(209, 15);
+            this.ApplyButton.Location = new System.Drawing.Point(209, 8);
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.Size = new System.Drawing.Size(100, 30);
             this.ApplyButton.Styles.DisabledStyle.BackColor = System.Drawing.Color.Gainsboro;
@@ -538,7 +541,7 @@
             this.ConvertButton.Image = null;
             this.ConvertButton.Location = new System.Drawing.Point(209, 3);
             this.ConvertButton.Name = "ConvertButton";
-            this.ConvertButton.Size = new System.Drawing.Size(134, 42);
+            this.ConvertButton.Size = new System.Drawing.Size(134, 35);
             this.ConvertButton.Styles.MouseDownStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
             this.ConvertButton.Styles.MouseOverStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
             this.ConvertButton.Styles.NormalStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
@@ -560,7 +563,7 @@
             this.ExitButton.Image = null;
             this.ExitButton.Location = new System.Drawing.Point(349, 3);
             this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(114, 42);
+            this.ExitButton.Size = new System.Drawing.Size(114, 35);
             this.ExitButton.Styles.MouseDownStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.ExitButton.Styles.MouseOverStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
             this.ExitButton.Styles.NormalStyle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
