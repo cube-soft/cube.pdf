@@ -50,15 +50,17 @@
             this.PostProcessLabel = new System.Windows.Forms.Label();
             this.DestinationLabel = new System.Windows.Forms.Label();
             this.ResolutionLabel = new System.Windows.Forms.Label();
-            this.VersionComboBox = new System.Windows.Forms.ComboBox();
-            this.VersionLabel = new System.Windows.Forms.Label();
             this.FormatLabel = new System.Windows.Forms.Label();
-            this.FormatComboBox = new System.Windows.Forms.ComboBox();
-            this.ResolutionControl = new System.Windows.Forms.NumericUpDown();
             this.DestinationPanel = new System.Windows.Forms.TableLayoutPanel();
             this.DestinationButton = new System.Windows.Forms.Button();
             this.DestinationTextBox = new System.Windows.Forms.TextBox();
             this.DestinationComboBox = new System.Windows.Forms.ComboBox();
+            this.FormatPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.VersionComboBox = new System.Windows.Forms.ComboBox();
+            this.FormatComboBox = new System.Windows.Forms.ComboBox();
+            this.ResolutionPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
+            this.ResolutionControl = new System.Windows.Forms.NumericUpDown();
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
@@ -97,13 +99,12 @@
             this.AllowPrintCheckBox = new System.Windows.Forms.CheckBox();
             this.OthersTabPage = new System.Windows.Forms.TabPage();
             this.OthersPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
+            this.OptionsLabel = new System.Windows.Forms.Label();
             this.ImageCompressionCheckBox = new System.Windows.Forms.CheckBox();
             this.LinearizeCheckBox = new System.Windows.Forms.CheckBox();
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.LanguageLabel = new System.Windows.Forms.Label();
-            this.OptionsLabel = new System.Windows.Forms.Label();
             this.VersionPanel = new Cube.Forms.VersionControl();
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -120,8 +121,10 @@
             this.OrientationPanel.SuspendLayout();
             this.SourcePanel.SuspendLayout();
             this.PostProcessPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
             this.DestinationPanel.SuspendLayout();
+            this.FormatPanel.SuspendLayout();
+            this.ResolutionPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
             this.DocumentPage.SuspendLayout();
             this.DocumentPanel.SuspendLayout();
             this.EncryptionTabPage.SuspendLayout();
@@ -136,23 +139,23 @@
             this.ToolsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // RootPanel
-            //
+            // 
             resources.ApplyResources(this.RootPanel, "RootPanel");
             this.RootPanel.Controls.Add(this.SettingsPanel, 0, 1);
             this.RootPanel.Controls.Add(this.FooterPanel, 0, 2);
             this.RootPanel.Controls.Add(this.HeaderPictureBox, 0, 0);
             this.RootPanel.Name = "RootPanel";
-            //
+            // 
             // SettingsPanel
-            //
+            // 
             this.SettingsPanel.Controls.Add(this.SettingsTabControl);
             resources.ApplyResources(this.SettingsPanel, "SettingsPanel");
             this.SettingsPanel.Name = "SettingsPanel";
-            //
+            // 
             // SettingsTabControl
-            //
+            // 
             this.SettingsTabControl.Controls.Add(this.GeneralTabPage);
             this.SettingsTabControl.Controls.Add(this.DocumentPage);
             this.SettingsTabControl.Controls.Add(this.EncryptionTabPage);
@@ -161,157 +164,196 @@
             this.SettingsTabControl.Name = "SettingsTabControl";
             this.SettingsTabControl.SelectedIndex = 0;
             this.SettingsTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            //
+            // 
             // GeneralTabPage
-            //
+            // 
             resources.ApplyResources(this.GeneralTabPage, "GeneralTabPage");
             this.GeneralTabPage.Controls.Add(this.GeneralPanel);
             this.GeneralTabPage.Name = "GeneralTabPage";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
-            //
+            // 
             // GeneralPanel
-            //
+            // 
             resources.ApplyResources(this.GeneralPanel, "GeneralPanel");
-            this.GeneralPanel.Controls.Add(this.OrientationPanel, 1, 3);
-            this.GeneralPanel.Controls.Add(this.OrientationLabel, 0, 3);
-            this.GeneralPanel.Controls.Add(this.SourcePanel, 1, 6);
-            this.GeneralPanel.Controls.Add(this.SourceLabel, 0, 6);
-            this.GeneralPanel.Controls.Add(this.PostProcessPanel, 1, 5);
-            this.GeneralPanel.Controls.Add(this.PostProcessLabel, 0, 5);
-            this.GeneralPanel.Controls.Add(this.DestinationLabel, 0, 4);
-            this.GeneralPanel.Controls.Add(this.ResolutionLabel, 0, 2);
-            this.GeneralPanel.Controls.Add(this.VersionComboBox, 1, 1);
-            this.GeneralPanel.Controls.Add(this.VersionLabel, 0, 1);
+            this.GeneralPanel.Controls.Add(this.OrientationPanel, 1, 2);
+            this.GeneralPanel.Controls.Add(this.OrientationLabel, 0, 2);
+            this.GeneralPanel.Controls.Add(this.SourcePanel, 1, 5);
+            this.GeneralPanel.Controls.Add(this.SourceLabel, 0, 5);
+            this.GeneralPanel.Controls.Add(this.PostProcessPanel, 1, 4);
+            this.GeneralPanel.Controls.Add(this.PostProcessLabel, 0, 4);
+            this.GeneralPanel.Controls.Add(this.DestinationLabel, 0, 3);
+            this.GeneralPanel.Controls.Add(this.ResolutionLabel, 0, 1);
             this.GeneralPanel.Controls.Add(this.FormatLabel, 0, 0);
-            this.GeneralPanel.Controls.Add(this.FormatComboBox, 1, 0);
-            this.GeneralPanel.Controls.Add(this.ResolutionControl, 1, 2);
-            this.GeneralPanel.Controls.Add(this.DestinationPanel, 1, 4);
+            this.GeneralPanel.Controls.Add(this.DestinationPanel, 1, 3);
+            this.GeneralPanel.Controls.Add(this.FormatPanel, 1, 0);
+            this.GeneralPanel.Controls.Add(this.ResolutionPanel, 1, 1);
             this.GeneralPanel.Name = "GeneralPanel";
-            //
+            // 
             // OrientationPanel
-            //
+            // 
             this.OrientationPanel.Controls.Add(this.PortraitRadioButton);
             this.OrientationPanel.Controls.Add(this.LandscapeRadioButton);
             this.OrientationPanel.Controls.Add(this.AutoRadioButton);
             resources.ApplyResources(this.OrientationPanel, "OrientationPanel");
             this.OrientationPanel.Name = "OrientationPanel";
-            //
+            // 
             // PortraitRadioButton
-            //
+            // 
             resources.ApplyResources(this.PortraitRadioButton, "PortraitRadioButton");
             this.PortraitRadioButton.Name = "PortraitRadioButton";
             this.PortraitRadioButton.TabStop = true;
             this.PortraitRadioButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // LandscapeRadioButton
-            //
+            // 
             resources.ApplyResources(this.LandscapeRadioButton, "LandscapeRadioButton");
             this.LandscapeRadioButton.Name = "LandscapeRadioButton";
             this.LandscapeRadioButton.TabStop = true;
             this.LandscapeRadioButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // AutoRadioButton
-            //
+            // 
             resources.ApplyResources(this.AutoRadioButton, "AutoRadioButton");
             this.AutoRadioButton.Name = "AutoRadioButton";
             this.AutoRadioButton.TabStop = true;
             this.AutoRadioButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // OrientationLabel
-            //
+            // 
             resources.ApplyResources(this.OrientationLabel, "OrientationLabel");
             this.OrientationLabel.Name = "OrientationLabel";
-            //
+            // 
             // SourcePanel
-            //
+            // 
             resources.ApplyResources(this.SourcePanel, "SourcePanel");
             this.SourcePanel.Controls.Add(this.SourceButton, 0, 0);
             this.SourcePanel.Controls.Add(this.SourceTextBox, 0, 0);
             this.SourcePanel.Name = "SourcePanel";
-            //
+            // 
             // SourceButton
-            //
+            // 
             resources.ApplyResources(this.SourceButton, "SourceButton");
             this.SourceButton.Name = "SourceButton";
             this.SourceButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // SourceTextBox
-            //
+            // 
             resources.ApplyResources(this.SourceTextBox, "SourceTextBox");
             this.SourceTextBox.Name = "SourceTextBox";
-            //
+            // 
             // SourceLabel
-            //
+            // 
             resources.ApplyResources(this.SourceLabel, "SourceLabel");
             this.SourceLabel.Name = "SourceLabel";
-            //
+            // 
             // PostProcessPanel
-            //
+            // 
             resources.ApplyResources(this.PostProcessPanel, "PostProcessPanel");
             this.PostProcessPanel.Controls.Add(this.PostProcessButton, 0, 0);
             this.PostProcessPanel.Controls.Add(this.PostProcessTextBox, 0, 0);
             this.PostProcessPanel.Controls.Add(this.PostProcessComboBox, 0, 0);
             this.PostProcessPanel.Name = "PostProcessPanel";
-            //
+            // 
             // PostProcessButton
-            //
+            // 
             resources.ApplyResources(this.PostProcessButton, "PostProcessButton");
             this.PostProcessButton.Name = "PostProcessButton";
             this.PostProcessButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // PostProcessTextBox
-            //
+            // 
             resources.ApplyResources(this.PostProcessTextBox, "PostProcessTextBox");
             this.PostProcessTextBox.Name = "PostProcessTextBox";
-            //
+            // 
             // PostProcessComboBox
-            //
+            // 
             resources.ApplyResources(this.PostProcessComboBox, "PostProcessComboBox");
             this.PostProcessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PostProcessComboBox.FormattingEnabled = true;
             this.PostProcessComboBox.Name = "PostProcessComboBox";
-            //
+            // 
             // PostProcessLabel
-            //
+            // 
             resources.ApplyResources(this.PostProcessLabel, "PostProcessLabel");
             this.PostProcessLabel.Name = "PostProcessLabel";
-            //
+            // 
             // DestinationLabel
-            //
+            // 
             resources.ApplyResources(this.DestinationLabel, "DestinationLabel");
             this.DestinationLabel.Name = "DestinationLabel";
-            //
+            // 
             // ResolutionLabel
-            //
+            // 
             resources.ApplyResources(this.ResolutionLabel, "ResolutionLabel");
             this.ResolutionLabel.Name = "ResolutionLabel";
-            //
+            // 
+            // FormatLabel
+            // 
+            resources.ApplyResources(this.FormatLabel, "FormatLabel");
+            this.FormatLabel.Name = "FormatLabel";
+            // 
+            // DestinationPanel
+            // 
+            resources.ApplyResources(this.DestinationPanel, "DestinationPanel");
+            this.DestinationPanel.Controls.Add(this.DestinationButton, 2, 0);
+            this.DestinationPanel.Controls.Add(this.DestinationTextBox, 1, 0);
+            this.DestinationPanel.Controls.Add(this.DestinationComboBox, 0, 0);
+            this.DestinationPanel.Name = "DestinationPanel";
+            // 
+            // DestinationButton
+            // 
+            resources.ApplyResources(this.DestinationButton, "DestinationButton");
+            this.DestinationButton.Name = "DestinationButton";
+            this.DestinationButton.UseVisualStyleBackColor = true;
+            // 
+            // DestinationTextBox
+            // 
+            resources.ApplyResources(this.DestinationTextBox, "DestinationTextBox");
+            this.DestinationTextBox.Name = "DestinationTextBox";
+            // 
+            // DestinationComboBox
+            // 
+            resources.ApplyResources(this.DestinationComboBox, "DestinationComboBox");
+            this.DestinationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DestinationComboBox.FormattingEnabled = true;
+            this.DestinationComboBox.Name = "DestinationComboBox";
+            // 
+            // FormatPanel
+            // 
+            resources.ApplyResources(this.FormatPanel, "FormatPanel");
+            this.FormatPanel.Controls.Add(this.VersionComboBox, 0, 0);
+            this.FormatPanel.Controls.Add(this.FormatComboBox, 0, 0);
+            this.FormatPanel.Name = "FormatPanel";
+            // 
             // VersionComboBox
-            //
+            // 
             resources.ApplyResources(this.VersionComboBox, "VersionComboBox");
             this.VersionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.VersionComboBox.FormattingEnabled = true;
             this.VersionComboBox.Name = "VersionComboBox";
-            //
-            // VersionLabel
-            //
-            resources.ApplyResources(this.VersionLabel, "VersionLabel");
-            this.VersionLabel.Name = "VersionLabel";
-            //
-            // FormatLabel
-            //
-            resources.ApplyResources(this.FormatLabel, "FormatLabel");
-            this.FormatLabel.Name = "FormatLabel";
-            //
+            // 
             // FormatComboBox
-            //
+            // 
             resources.ApplyResources(this.FormatComboBox, "FormatComboBox");
             this.FormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FormatComboBox.FormattingEnabled = true;
             this.FormatComboBox.Name = "FormatComboBox";
-            //
+            // 
+            // ResolutionPanel
+            // 
+            resources.ApplyResources(this.ResolutionPanel, "ResolutionPanel");
+            this.ResolutionPanel.Controls.Add(this.GrayscaleCheckBox, 0, 0);
+            this.ResolutionPanel.Controls.Add(this.ResolutionControl, 0, 0);
+            this.ResolutionPanel.Name = "ResolutionPanel";
+            // 
+            // GrayscaleCheckBox
+            // 
+            resources.ApplyResources(this.GrayscaleCheckBox, "GrayscaleCheckBox");
+            this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
+            this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
+            // 
             // ResolutionControl
-            //
+            // 
             resources.ApplyResources(this.ResolutionControl, "ResolutionControl");
             this.ResolutionControl.Increment = new decimal(new int[] {
             50,
@@ -334,42 +376,16 @@
             0,
             0,
             0});
-            //
-            // DestinationPanel
-            //
-            resources.ApplyResources(this.DestinationPanel, "DestinationPanel");
-            this.DestinationPanel.Controls.Add(this.DestinationButton, 2, 0);
-            this.DestinationPanel.Controls.Add(this.DestinationTextBox, 1, 0);
-            this.DestinationPanel.Controls.Add(this.DestinationComboBox, 0, 0);
-            this.DestinationPanel.Name = "DestinationPanel";
-            //
-            // DestinationButton
-            //
-            resources.ApplyResources(this.DestinationButton, "DestinationButton");
-            this.DestinationButton.Name = "DestinationButton";
-            this.DestinationButton.UseVisualStyleBackColor = true;
-            //
-            // DestinationTextBox
-            //
-            resources.ApplyResources(this.DestinationTextBox, "DestinationTextBox");
-            this.DestinationTextBox.Name = "DestinationTextBox";
-            //
-            // DestinationComboBox
-            //
-            resources.ApplyResources(this.DestinationComboBox, "DestinationComboBox");
-            this.DestinationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DestinationComboBox.FormattingEnabled = true;
-            this.DestinationComboBox.Name = "DestinationComboBox";
-            //
+            // 
             // DocumentPage
-            //
+            // 
             resources.ApplyResources(this.DocumentPage, "DocumentPage");
             this.DocumentPage.Controls.Add(this.DocumentPanel);
             this.DocumentPage.Name = "DocumentPage";
             this.DocumentPage.UseVisualStyleBackColor = true;
-            //
+            // 
             // DocumentPanel
-            //
+            // 
             resources.ApplyResources(this.DocumentPanel, "DocumentPanel");
             this.DocumentPanel.Controls.Add(this.ViewOptionComboBox, 1, 5);
             this.DocumentPanel.Controls.Add(this.ViewOptionLabel, 0, 5);
@@ -384,91 +400,91 @@
             this.DocumentPanel.Controls.Add(this.TitleTextBox, 1, 0);
             this.DocumentPanel.Controls.Add(this.TitleLabel, 0, 0);
             this.DocumentPanel.Name = "DocumentPanel";
-            //
+            // 
             // ViewOptionComboBox
-            //
+            // 
             resources.ApplyResources(this.ViewOptionComboBox, "ViewOptionComboBox");
             this.ViewOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ViewOptionComboBox.FormattingEnabled = true;
             this.ViewOptionComboBox.Name = "ViewOptionComboBox";
-            //
+            // 
             // ViewOptionLabel
-            //
+            // 
             resources.ApplyResources(this.ViewOptionLabel, "ViewOptionLabel");
             this.ViewOptionLabel.Name = "ViewOptionLabel";
-            //
+            // 
             // CreatorTextBox
-            //
+            // 
             resources.ApplyResources(this.CreatorTextBox, "CreatorTextBox");
             this.CreatorTextBox.Name = "CreatorTextBox";
-            //
+            // 
             // CreatorLabel
-            //
+            // 
             resources.ApplyResources(this.CreatorLabel, "CreatorLabel");
             this.CreatorLabel.Name = "CreatorLabel";
-            //
+            // 
             // KeywordsTextBox
-            //
+            // 
             resources.ApplyResources(this.KeywordsTextBox, "KeywordsTextBox");
             this.KeywordsTextBox.Name = "KeywordsTextBox";
-            //
+            // 
             // KeywordsLabel
-            //
+            // 
             resources.ApplyResources(this.KeywordsLabel, "KeywordsLabel");
             this.KeywordsLabel.Name = "KeywordsLabel";
-            //
+            // 
             // SubjectTextBox
-            //
+            // 
             resources.ApplyResources(this.SubjectTextBox, "SubjectTextBox");
             this.SubjectTextBox.Name = "SubjectTextBox";
-            //
+            // 
             // SubjectLabel
-            //
+            // 
             resources.ApplyResources(this.SubjectLabel, "SubjectLabel");
             this.SubjectLabel.Name = "SubjectLabel";
-            //
+            // 
             // AuthorTextBox
-            //
+            // 
             resources.ApplyResources(this.AuthorTextBox, "AuthorTextBox");
             this.AuthorTextBox.Name = "AuthorTextBox";
-            //
+            // 
             // AuthorLabel
-            //
+            // 
             resources.ApplyResources(this.AuthorLabel, "AuthorLabel");
             this.AuthorLabel.Name = "AuthorLabel";
-            //
+            // 
             // TitleTextBox
-            //
+            // 
             resources.ApplyResources(this.TitleTextBox, "TitleTextBox");
             this.TitleTextBox.Name = "TitleTextBox";
-            //
+            // 
             // TitleLabel
-            //
+            // 
             resources.ApplyResources(this.TitleLabel, "TitleLabel");
             this.TitleLabel.Name = "TitleLabel";
-            //
+            // 
             // EncryptionTabPage
-            //
+            // 
             resources.ApplyResources(this.EncryptionTabPage, "EncryptionTabPage");
             this.EncryptionTabPage.Controls.Add(this.EncryptionOuterPanel);
             this.EncryptionTabPage.Name = "EncryptionTabPage";
             this.EncryptionTabPage.UseVisualStyleBackColor = true;
-            //
+            // 
             // EncryptionOuterPanel
-            //
+            // 
             resources.ApplyResources(this.EncryptionOuterPanel, "EncryptionOuterPanel");
             this.EncryptionOuterPanel.Controls.Add(this.EnableEncryptionCheckBox, 0, 0);
             this.EncryptionOuterPanel.Controls.Add(this.EncryptionPanel, 0, 1);
             this.EncryptionOuterPanel.Name = "EncryptionOuterPanel";
-            //
+            // 
             // EnableEncryptionCheckBox
-            //
+            // 
             resources.ApplyResources(this.EnableEncryptionCheckBox, "EnableEncryptionCheckBox");
             this.EnableEncryptionCheckBox.Name = "EnableEncryptionCheckBox";
             this.EnableEncryptionCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // EncryptionPanel
-            //
+            // 
             resources.ApplyResources(this.EncryptionPanel, "EncryptionPanel");
             this.EncryptionPanel.Controls.Add(this.UserPasswordCheckBox, 1, 2);
             this.EncryptionPanel.Controls.Add(this.OperationLabel, 0, 2);
@@ -478,212 +494,206 @@
             this.EncryptionPanel.Controls.Add(this.OwnerPasswordLabel, 0, 0);
             this.EncryptionPanel.Controls.Add(this.OperationPanel, 1, 3);
             this.EncryptionPanel.Name = "EncryptionPanel";
-            //
+            // 
             // UserPasswordCheckBox
-            //
+            // 
             resources.ApplyResources(this.UserPasswordCheckBox, "UserPasswordCheckBox");
             this.UserPasswordCheckBox.Name = "UserPasswordCheckBox";
             this.UserPasswordCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // OperationLabel
-            //
+            // 
             resources.ApplyResources(this.OperationLabel, "OperationLabel");
             this.OperationLabel.Name = "OperationLabel";
             this.EncryptionPanel.SetRowSpan(this.OperationLabel, 2);
-            //
+            // 
             // OwnerConfirmTextBox
-            //
+            // 
             resources.ApplyResources(this.OwnerConfirmTextBox, "OwnerConfirmTextBox");
             this.OwnerConfirmTextBox.Name = "OwnerConfirmTextBox";
-            //
+            // 
             // OwnerConfirmLabel
-            //
+            // 
             resources.ApplyResources(this.OwnerConfirmLabel, "OwnerConfirmLabel");
             this.OwnerConfirmLabel.Name = "OwnerConfirmLabel";
-            //
+            // 
             // OwnerPasswordTextBox
-            //
+            // 
             resources.ApplyResources(this.OwnerPasswordTextBox, "OwnerPasswordTextBox");
             this.OwnerPasswordTextBox.Name = "OwnerPasswordTextBox";
-            //
+            // 
             // OwnerPasswordLabel
-            //
+            // 
             resources.ApplyResources(this.OwnerPasswordLabel, "OwnerPasswordLabel");
             this.OwnerPasswordLabel.Name = "OwnerPasswordLabel";
-            //
+            // 
             // OperationPanel
-            //
+            // 
             resources.ApplyResources(this.OperationPanel, "OperationPanel");
             this.OperationPanel.Controls.Add(this.SharePasswordCheckBox, 0, 1);
             this.OperationPanel.Controls.Add(this.UserPasswordPanel, 0, 0);
             this.OperationPanel.Controls.Add(this.PermissionPanel, 0, 2);
             this.OperationPanel.Name = "OperationPanel";
-            //
+            // 
             // SharePasswordCheckBox
-            //
+            // 
             resources.ApplyResources(this.SharePasswordCheckBox, "SharePasswordCheckBox");
             this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
             this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // UserPasswordPanel
-            //
+            // 
             resources.ApplyResources(this.UserPasswordPanel, "UserPasswordPanel");
             this.UserPasswordPanel.Controls.Add(this.UserConfirmTextBox, 1, 1);
             this.UserPasswordPanel.Controls.Add(this.UserPasswordTextBox, 1, 0);
             this.UserPasswordPanel.Controls.Add(this.UserConfirmLabel, 0, 1);
             this.UserPasswordPanel.Controls.Add(this.UserPasswordLabel, 0, 0);
             this.UserPasswordPanel.Name = "UserPasswordPanel";
-            //
+            // 
             // UserConfirmTextBox
-            //
+            // 
             resources.ApplyResources(this.UserConfirmTextBox, "UserConfirmTextBox");
             this.UserConfirmTextBox.Name = "UserConfirmTextBox";
-            //
+            // 
             // UserPasswordTextBox
-            //
+            // 
             resources.ApplyResources(this.UserPasswordTextBox, "UserPasswordTextBox");
             this.UserPasswordTextBox.Name = "UserPasswordTextBox";
-            //
+            // 
             // UserConfirmLabel
-            //
+            // 
             resources.ApplyResources(this.UserConfirmLabel, "UserConfirmLabel");
             this.UserConfirmLabel.Name = "UserConfirmLabel";
-            //
+            // 
             // UserPasswordLabel
-            //
+            // 
             resources.ApplyResources(this.UserPasswordLabel, "UserPasswordLabel");
             this.UserPasswordLabel.Name = "UserPasswordLabel";
-            //
+            // 
             // PermissionPanel
-            //
+            // 
             resources.ApplyResources(this.PermissionPanel, "PermissionPanel");
             this.PermissionPanel.Controls.Add(this.AllowModifyCheckBox, 0, 3);
             this.PermissionPanel.Controls.Add(this.AllowFormCheckBox, 0, 2);
             this.PermissionPanel.Controls.Add(this.AllowCopyCheckBox, 0, 1);
             this.PermissionPanel.Controls.Add(this.AllowPrintCheckBox, 0, 0);
             this.PermissionPanel.Name = "PermissionPanel";
-            //
+            // 
             // AllowModifyCheckBox
-            //
+            // 
             resources.ApplyResources(this.AllowModifyCheckBox, "AllowModifyCheckBox");
             this.AllowModifyCheckBox.Name = "AllowModifyCheckBox";
             this.AllowModifyCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // AllowFormCheckBox
-            //
+            // 
             resources.ApplyResources(this.AllowFormCheckBox, "AllowFormCheckBox");
             this.AllowFormCheckBox.Name = "AllowFormCheckBox";
             this.AllowFormCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // AllowCopyCheckBox
-            //
+            // 
             resources.ApplyResources(this.AllowCopyCheckBox, "AllowCopyCheckBox");
             this.AllowCopyCheckBox.Name = "AllowCopyCheckBox";
             this.AllowCopyCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // AllowPrintCheckBox
-            //
+            // 
             resources.ApplyResources(this.AllowPrintCheckBox, "AllowPrintCheckBox");
             this.AllowPrintCheckBox.Name = "AllowPrintCheckBox";
             this.AllowPrintCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // OthersTabPage
-            //
+            // 
             resources.ApplyResources(this.OthersTabPage, "OthersTabPage");
             this.OthersTabPage.Controls.Add(this.OthersPanel);
             this.OthersTabPage.Name = "OthersTabPage";
             this.OthersTabPage.UseVisualStyleBackColor = true;
-            //
+            // 
             // OthersPanel
-            //
+            // 
             resources.ApplyResources(this.OthersPanel, "OthersPanel");
-            this.OthersPanel.Controls.Add(this.GrayscaleCheckBox, 1, 0);
-            this.OthersPanel.Controls.Add(this.ImageCompressionCheckBox, 1, 1);
-            this.OthersPanel.Controls.Add(this.LinearizeCheckBox, 1, 2);
-            this.OthersPanel.Controls.Add(this.UpdateCheckBox, 1, 5);
-            this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 6);
-            this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 4);
             this.OthersPanel.Controls.Add(this.OptionsLabel, 0, 0);
-            this.OthersPanel.Controls.Add(this.VersionPanel, 1, 4);
+            this.OthersPanel.Controls.Add(this.ImageCompressionCheckBox, 1, 0);
+            this.OthersPanel.Controls.Add(this.LinearizeCheckBox, 1, 1);
+            this.OthersPanel.Controls.Add(this.UpdateCheckBox, 1, 4);
+            this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 5);
+            this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 3);
+            this.OthersPanel.Controls.Add(this.VersionPanel, 1, 3);
             this.OthersPanel.Name = "OthersPanel";
-            //
-            // GrayscaleCheckBox
-            //
-            resources.ApplyResources(this.GrayscaleCheckBox, "GrayscaleCheckBox");
-            this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
-            this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
+            // OptionsLabel
+            // 
+            resources.ApplyResources(this.OptionsLabel, "OptionsLabel");
+            this.OptionsLabel.Name = "OptionsLabel";
+            // 
             // ImageCompressionCheckBox
-            //
+            // 
             resources.ApplyResources(this.ImageCompressionCheckBox, "ImageCompressionCheckBox");
             this.ImageCompressionCheckBox.Name = "ImageCompressionCheckBox";
             this.ImageCompressionCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // LinearizeCheckBox
-            //
+            // 
             resources.ApplyResources(this.LinearizeCheckBox, "LinearizeCheckBox");
             this.LinearizeCheckBox.Name = "LinearizeCheckBox";
             this.LinearizeCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // UpdateCheckBox
-            //
+            // 
             resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
             this.UpdateCheckBox.Name = "UpdateCheckBox";
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // LanguageComboBox
-            //
+            // 
             resources.ApplyResources(this.LanguageComboBox, "LanguageComboBox");
             this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LanguageComboBox.FormattingEnabled = true;
             this.LanguageComboBox.Name = "LanguageComboBox";
-            //
+            // 
             // LanguageLabel
-            //
+            // 
             resources.ApplyResources(this.LanguageLabel, "LanguageLabel");
             this.LanguageLabel.Name = "LanguageLabel";
             this.OthersPanel.SetRowSpan(this.LanguageLabel, 3);
-            //
-            // OptionsLabel
-            //
-            resources.ApplyResources(this.OptionsLabel, "OptionsLabel");
-            this.OptionsLabel.Name = "OptionsLabel";
-            this.OthersPanel.SetRowSpan(this.OptionsLabel, 3);
-            //
+            // 
             // VersionPanel
-            //
+            // 
             this.VersionPanel.Copyright = "Copyright © 2010 CubeSoft, Inc.";
             this.VersionPanel.Description = "";
             resources.ApplyResources(this.VersionPanel, "VersionPanel");
             this.VersionPanel.Image = null;
             this.VersionPanel.Name = "VersionPanel";
+            this.VersionPanel.OneLine = true;
             this.VersionPanel.Product = "CubePDF";
+            this.VersionPanel.TabStop = false;
             this.VersionPanel.Uri = null;
-            this.VersionPanel.Version = "Version 1.0.0 (x64)";
-            //
+            this.VersionPanel.Version = "1.0.0 (x64)";
+            // 
             // FooterPanel
-            //
+            // 
             resources.ApplyResources(this.FooterPanel, "FooterPanel");
             this.FooterPanel.Controls.Add(this.ToolsPanel, 0, 0);
             this.FooterPanel.Controls.Add(this.ConvertButton, 1, 0);
             this.FooterPanel.Controls.Add(this.ExitButton, 2, 0);
             this.FooterPanel.Name = "FooterPanel";
-            //
+            // 
             // ToolsPanel
-            //
+            // 
             this.ToolsPanel.Controls.Add(this.ConvertProgressBar);
             this.ToolsPanel.Controls.Add(this.ApplyButton);
             resources.ApplyResources(this.ToolsPanel, "ToolsPanel");
             this.ToolsPanel.Name = "ToolsPanel";
-            //
+            // 
             // ConvertProgressBar
-            //
+            // 
             resources.ApplyResources(this.ConvertProgressBar, "ConvertProgressBar");
             this.ConvertProgressBar.Name = "ConvertProgressBar";
             this.ConvertProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            //
+            // 
             // ApplyButton
-            //
+            // 
             this.ApplyButton.Content = "設定を保存";
             this.ApplyButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ApplyButton.FlatAppearance.BorderSize = 0;
@@ -698,9 +708,9 @@
             this.ApplyButton.Styles.NormalStyle.BorderSize = 1;
             this.ApplyButton.Styles.NormalStyle.ContentColor = System.Drawing.Color.Black;
             this.ApplyButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // ConvertButton
-            //
+            // 
             this.ConvertButton.Content = "変換";
             this.ConvertButton.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.ConvertButton, "ConvertButton");
@@ -713,9 +723,9 @@
             this.ConvertButton.Styles.NormalStyle.BorderSize = 1;
             this.ConvertButton.Styles.NormalStyle.ContentColor = System.Drawing.Color.White;
             this.ConvertButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // ExitButton
-            //
+            // 
             this.ExitButton.Content = "キャンセル";
             this.ExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -729,16 +739,16 @@
             this.ExitButton.Styles.NormalStyle.BorderSize = 1;
             this.ExitButton.Styles.NormalStyle.ContentColor = System.Drawing.Color.White;
             this.ExitButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // HeaderPictureBox
-            //
+            // 
             resources.ApplyResources(this.HeaderPictureBox, "HeaderPictureBox");
             this.HeaderPictureBox.Image = global::Cube.Pdf.App.Converter.Properties.Resources.Header;
             this.HeaderPictureBox.Name = "HeaderPictureBox";
             this.HeaderPictureBox.TabStop = false;
-            //
+            // 
             // MainForm
-            //
+            // 
             this.AcceptButton = this.ConvertButton;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.ExitButton;
@@ -758,9 +768,12 @@
             this.SourcePanel.PerformLayout();
             this.PostProcessPanel.ResumeLayout(false);
             this.PostProcessPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
             this.DestinationPanel.ResumeLayout(false);
             this.DestinationPanel.PerformLayout();
+            this.FormatPanel.ResumeLayout(false);
+            this.ResolutionPanel.ResumeLayout(false);
+            this.ResolutionPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
             this.DocumentPage.ResumeLayout(false);
             this.DocumentPanel.ResumeLayout(false);
             this.DocumentPanel.PerformLayout();
@@ -799,11 +812,7 @@
         private System.Windows.Forms.ProgressBar ConvertProgressBar;
         private System.Windows.Forms.TableLayoutPanel GeneralPanel;
         private System.Windows.Forms.Label FormatLabel;
-        private System.Windows.Forms.ComboBox FormatComboBox;
-        private System.Windows.Forms.ComboBox VersionComboBox;
-        private System.Windows.Forms.Label VersionLabel;
         private System.Windows.Forms.Label ResolutionLabel;
-        private System.Windows.Forms.NumericUpDown ResolutionControl;
         private System.Windows.Forms.Label DestinationLabel;
         private System.Windows.Forms.TableLayoutPanel DestinationPanel;
         private System.Windows.Forms.Label PostProcessLabel;
@@ -853,7 +862,6 @@
         private System.Windows.Forms.CheckBox AllowCopyCheckBox;
         private System.Windows.Forms.CheckBox AllowPrintCheckBox;
         private System.Windows.Forms.TableLayoutPanel OthersPanel;
-        private System.Windows.Forms.Label OptionsLabel;
         private System.Windows.Forms.ComboBox LanguageComboBox;
         private System.Windows.Forms.Label LanguageLabel;
         private System.Windows.Forms.Label OrientationLabel;
@@ -862,7 +870,6 @@
         private System.Windows.Forms.RadioButton LandscapeRadioButton;
         private System.Windows.Forms.RadioButton AutoRadioButton;
         private System.Windows.Forms.CheckBox UpdateCheckBox;
-        private System.Windows.Forms.CheckBox GrayscaleCheckBox;
         private System.Windows.Forms.CheckBox ImageCompressionCheckBox;
         private System.Windows.Forms.CheckBox LinearizeCheckBox;
         private Cube.Forms.VersionControl VersionPanel;
@@ -870,6 +877,13 @@
         private Cube.Forms.FlatButton ConvertButton;
         private Cube.Forms.FlatButton ExitButton;
         private Cube.Forms.FlatButton ApplyButton;
+        private System.Windows.Forms.TableLayoutPanel FormatPanel;
+        private System.Windows.Forms.ComboBox VersionComboBox;
+        private System.Windows.Forms.ComboBox FormatComboBox;
+        private System.Windows.Forms.TableLayoutPanel ResolutionPanel;
+        private System.Windows.Forms.CheckBox GrayscaleCheckBox;
+        private System.Windows.Forms.NumericUpDown ResolutionControl;
+        private System.Windows.Forms.Label OptionsLabel;
     }
 }
 
