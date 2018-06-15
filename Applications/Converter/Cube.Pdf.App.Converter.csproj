@@ -70,6 +70,7 @@
     <None Include="App.manifest" />
     <None Include="Packages.config" />
     <None Include="Resources\Header.png" />
+    <None Include="Resources\Logo.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Views\MainForm.cs">
