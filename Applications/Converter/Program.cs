@@ -16,7 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Log;
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
@@ -44,9 +46,27 @@ namespace Cube.Pdf.App.Converter
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            var type = typeof(Program);
+
+            try
+            {
+                Logger.Configure();
+                Logger.ObserveTaskException();
+                Logger.Info(type, Assembly.GetExecutingAssembly());
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                var settings = new SettingsFolder();
+                settings.Load();
+
+                var vm   = new MainViewModel(settings);
+                var view = new MainForm();
+                view.Bind(vm);
+
+                Application.Run(view);
+            }
+            catch (Exception err) { Logger.Error(type, err.ToString()); }
         }
     }
 }

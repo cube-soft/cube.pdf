@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="Models\Settings\Parameters.cs" />
     <Compile Include="Models\Settings\Settings.cs" />
+    <Compile Include="Models\Settings\SettingsFolder.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\ViewResource.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +77,7 @@
     <None Include="Packages.config" />
     <None Include="Resources\Header.png" />
     <None Include="Resources\Logo.png" />
+    <None Include="Properties\DataSources\MainViewModel.datasource" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Views\MainForm.cs">

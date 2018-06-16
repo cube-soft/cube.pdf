@@ -16,105 +16,83 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms.Controls;
-using System.ComponentModel;
-using System.Windows.Forms;
-
 namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainForm
+    /// SettingsFolder
     ///
     /// <summary>
-    /// CubePDF メイン画面を表示するクラスです。
+    /// 各種設定を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.StandardForm
+    public class SettingsFolder : SettingsFolder<Settings>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainForm
+        /// SettingsFolder
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainForm()
-        {
-            InitializeComponent();
-
-            ExitButton.Click += (s, e) => Close();
-
-            FormatComboBox.Bind(ViewResource.Formats);
-            FormatOptionComboBox.Bind(ViewResource.FormatOptions);
-            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
-            ViewOptionComboBox.Bind(ViewResource.ViewOptions);
-            PostProcessComboBox.Bind(ViewResource.PostProcesses);
-            LanguageComboBox.Bind(ViewResource.Languages);
-
-            SettingsPanel.ApplyButton = ApplyButton;
-            IsBusy = false;
-        }
-
-        #endregion
-
-        #region Methods
+        public SettingsFolder() : this(
+            Cube.DataContract.Format.Registry,
+            @"CubeSoft\CubePDF\v2"
+        ) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Bind
+        /// SettingsFolder
         ///
         /// <summary>
-        /// オブジェクトを関連付けます。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="vm">ViewModel オブジェクト</param>
+        /// <param name="format">設定情報の保存方法</param>
+        /// <param name="path">設定情報の保存パス</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Bind(MainViewModel vm)
+        public SettingsFolder(Cube.DataContract.Format format, string path) : base(format, path)
         {
-            if (vm == null) return;
+            AutoSave       = false;
+            Version.Digit  = 3;
+            Version.Suffix = $"RC{AssemblyReader.Default.Version.Revision}";
 
-            SettingsBindingSource.DataSource = vm;
+            var dir = System.IO.Path.GetDirectoryName(AssemblyReader.Default.Location);
+            Startup.Command = $"\"{System.IO.Path.Combine(dir, "cubepdf-checker.exe")}\"";
+            Startup.Name = "cubeice-checker";
         }
 
         #endregion
 
-        #region Properties
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsBusy
+        /// OnLoaded
         ///
         /// <summary>
-        /// 実行中かどうかを示す値を取得または設定します。
+        /// 読み込み時に実行されます。
         /// </summary>
         ///
+        /// <remarks>
+        /// 1.0.0RC12 より Resolution を ComboBox のインデックスに対応
+        /// する値から直接の値に変更しました。これに伴い、インデックスを
+        /// 指していると予想される値を初期値にリセットしています。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool IsBusy
+        protected override void OnLoaded(ValueChangedEventArgs<Settings> e)
         {
-            get => _busy;
-            set
-            {
-                _busy = value;
-                ConvertButton.Enabled = !value;
-                ApplyButton.Visible = !value;
-                ConvertProgressBar.Visible = value;
-                Cursor = value ? Cursors.WaitCursor : Cursors.Default;
-            }
+            if (e.NewValue.Resolution < 72) e.NewValue.Resolution = 600;
+            base.OnLoaded(e);
         }
 
-        #endregion
-
-        #region Fields
-        private bool _busy;
         #endregion
     }
 }
