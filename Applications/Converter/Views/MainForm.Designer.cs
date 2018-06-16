@@ -37,9 +37,9 @@
             this.GeneralPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ResolutionControl = new System.Windows.Forms.NumericUpDown();
             this.PostProcessComboBox = new System.Windows.Forms.ComboBox();
-            this.PostProcessPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.PostProcessButton = new System.Windows.Forms.Button();
-            this.PostProcessTextBox = new System.Windows.Forms.TextBox();
+            this.UserProgramPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.UserProgramButton = new System.Windows.Forms.Button();
+            this.UserProgramTextBox = new System.Windows.Forms.TextBox();
             this.OrientationPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.PortraitRadioButton = new System.Windows.Forms.RadioButton();
             this.LandscapeRadioButton = new System.Windows.Forms.RadioButton();
@@ -123,7 +123,7 @@
             this.GeneralTabPage.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
-            this.PostProcessPanel.SuspendLayout();
+            this.UserProgramPanel.SuspendLayout();
             this.OrientationPanel.SuspendLayout();
             this.SourcePanel.SuspendLayout();
             this.DestinationPanel.SuspendLayout();
@@ -184,7 +184,7 @@
             resources.ApplyResources(this.GeneralPanel, "GeneralPanel");
             this.GeneralPanel.Controls.Add(this.ResolutionControl, 1, 1);
             this.GeneralPanel.Controls.Add(this.PostProcessComboBox, 1, 4);
-            this.GeneralPanel.Controls.Add(this.PostProcessPanel, 1, 5);
+            this.GeneralPanel.Controls.Add(this.UserProgramPanel, 1, 5);
             this.GeneralPanel.Controls.Add(this.OrientationPanel, 1, 2);
             this.GeneralPanel.Controls.Add(this.OrientationLabel, 0, 2);
             this.GeneralPanel.Controls.Add(this.SourcePanel, 1, 6);
@@ -231,25 +231,25 @@
             this.PostProcessComboBox.FormattingEnabled = true;
             this.PostProcessComboBox.Name = "PostProcessComboBox";
             // 
-            // PostProcessPanel
+            // UserProgramPanel
             // 
-            resources.ApplyResources(this.PostProcessPanel, "PostProcessPanel");
-            this.PostProcessPanel.Controls.Add(this.PostProcessButton, 0, 0);
-            this.PostProcessPanel.Controls.Add(this.PostProcessTextBox, 0, 0);
-            this.PostProcessPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "IsOtherPostProcess", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.PostProcessPanel.Name = "PostProcessPanel";
+            resources.ApplyResources(this.UserProgramPanel, "UserProgramPanel");
+            this.UserProgramPanel.Controls.Add(this.UserProgramButton, 0, 0);
+            this.UserProgramPanel.Controls.Add(this.UserProgramTextBox, 0, 0);
+            this.UserProgramPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "EnableUserProgram", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.UserProgramPanel.Name = "UserProgramPanel";
             // 
-            // PostProcessButton
+            // UserProgramButton
             // 
-            resources.ApplyResources(this.PostProcessButton, "PostProcessButton");
-            this.PostProcessButton.Name = "PostProcessButton";
-            this.PostProcessButton.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.UserProgramButton, "UserProgramButton");
+            this.UserProgramButton.Name = "UserProgramButton";
+            this.UserProgramButton.UseVisualStyleBackColor = true;
             // 
-            // PostProcessTextBox
+            // UserProgramTextBox
             // 
-            this.PostProcessTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingsBindingSource, "UserProgram", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            resources.ApplyResources(this.PostProcessTextBox, "PostProcessTextBox");
-            this.PostProcessTextBox.Name = "PostProcessTextBox";
+            this.UserProgramTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingsBindingSource, "UserProgram", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            resources.ApplyResources(this.UserProgramTextBox, "UserProgramTextBox");
+            this.UserProgramTextBox.Name = "UserProgramTextBox";
             // 
             // OrientationPanel
             // 
@@ -372,6 +372,7 @@
             // FormatOptionComboBox
             // 
             this.FormatOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "FormatOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.FormatOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "EnableFormatOption", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             resources.ApplyResources(this.FormatOptionComboBox, "FormatOptionComboBox");
             this.FormatOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FormatOptionComboBox.FormattingEnabled = true;
@@ -804,8 +805,8 @@
             this.GeneralPanel.ResumeLayout(false);
             this.GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
-            this.PostProcessPanel.ResumeLayout(false);
-            this.PostProcessPanel.PerformLayout();
+            this.UserProgramPanel.ResumeLayout(false);
+            this.UserProgramPanel.PerformLayout();
             this.OrientationPanel.ResumeLayout(false);
             this.OrientationPanel.PerformLayout();
             this.SourcePanel.ResumeLayout(false);
@@ -914,9 +915,9 @@
         private System.Windows.Forms.Label OptionsLabel;
         private System.Windows.Forms.ComboBox SaveOptionComboBox;
         private System.Windows.Forms.ComboBox PostProcessComboBox;
-        private System.Windows.Forms.TableLayoutPanel PostProcessPanel;
-        private System.Windows.Forms.Button PostProcessButton;
-        private System.Windows.Forms.TextBox PostProcessTextBox;
+        private System.Windows.Forms.TableLayoutPanel UserProgramPanel;
+        private System.Windows.Forms.Button UserProgramButton;
+        private System.Windows.Forms.TextBox UserProgramTextBox;
         private System.Windows.Forms.CheckBox GrayscaleCheckBox;
         private System.Windows.Forms.NumericUpDown ResolutionControl;
         private System.Windows.Forms.Button ConvertButton;

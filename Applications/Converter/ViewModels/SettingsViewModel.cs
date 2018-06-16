@@ -66,7 +66,11 @@ namespace Cube.Pdf.App.Converter
         public Format Format
         {
             get => _model.Format;
-            set => _model.Format = value;
+            set
+            {
+                _model.Format = value;
+                RaisePropertyChanged(nameof(EnableFormatOption));
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -111,7 +115,11 @@ namespace Cube.Pdf.App.Converter
         public PostProcess PostProcess
         {
             get => _model.PostProcess;
-            set => _model.PostProcess = value;
+            set
+            {
+                _model.PostProcess = value;
+                RaisePropertyChanged(nameof(EnableUserProgram));
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -300,14 +308,25 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsOtherPostProcess
+        /// EnableFormatOption
         ///
         /// <summary>
-        /// ポストプロセスが Others かどうかを示す値を取得します。
+        /// FormatOption の項目が選択可能かどうかを示す値を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsOtherPostProcess => _model.PostProcess == PostProcess.Others;
+        public bool EnableFormatOption => Format == Format.Pdf;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EnableUserProgram
+        ///
+        /// <summary>
+        /// UserProgram が入力可能かどうかを示す値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool EnableUserProgram => PostProcess == PostProcess.Others;
 
         #endregion
 

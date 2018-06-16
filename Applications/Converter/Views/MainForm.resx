@@ -186,98 +186,98 @@
   <data name="&gt;&gt;PostProcessComboBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="PostProcessPanel.ColumnCount" type="System.Int32, mscorlib">
+  <data name="UserProgramPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="PostProcessButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="UserProgramButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="PostProcessButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="UserProgramButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="PostProcessButton.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="UserProgramButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>291, 2</value>
   </data>
-  <data name="PostProcessButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="UserProgramButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 2, 3, 3</value>
   </data>
-  <data name="PostProcessButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="UserProgramButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 25</value>
   </data>
-  <data name="PostProcessButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="UserProgramButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="PostProcessButton.Text" xml:space="preserve">
+  <data name="UserProgramButton.Text" xml:space="preserve">
     <value>...</value>
   </data>
-  <data name="&gt;&gt;PostProcessButton.Name" xml:space="preserve">
-    <value>PostProcessButton</value>
+  <data name="&gt;&gt;UserProgramButton.Name" xml:space="preserve">
+    <value>UserProgramButton</value>
   </data>
-  <data name="&gt;&gt;PostProcessButton.Type" xml:space="preserve">
+  <data name="&gt;&gt;UserProgramButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;PostProcessButton.Parent" xml:space="preserve">
-    <value>PostProcessPanel</value>
+  <data name="&gt;&gt;UserProgramButton.Parent" xml:space="preserve">
+    <value>UserProgramPanel</value>
   </data>
-  <data name="&gt;&gt;PostProcessButton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;UserProgramButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="PostProcessTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="UserProgramTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="PostProcessTextBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="UserProgramTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
-  <data name="PostProcessTextBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="UserProgramTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>284, 23</value>
   </data>
-  <data name="PostProcessTextBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="UserProgramTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;PostProcessTextBox.Name" xml:space="preserve">
-    <value>PostProcessTextBox</value>
+  <data name="&gt;&gt;UserProgramTextBox.Name" xml:space="preserve">
+    <value>UserProgramTextBox</value>
   </data>
-  <data name="&gt;&gt;PostProcessTextBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;UserProgramTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;PostProcessTextBox.Parent" xml:space="preserve">
-    <value>PostProcessPanel</value>
+  <data name="&gt;&gt;UserProgramTextBox.Parent" xml:space="preserve">
+    <value>UserProgramPanel</value>
   </data>
-  <data name="&gt;&gt;PostProcessTextBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;UserProgramTextBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="PostProcessPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="UserProgramPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="PostProcessPanel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="UserProgramPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>100, 150</value>
   </data>
-  <data name="PostProcessPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="UserProgramPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
-  <data name="PostProcessPanel.RowCount" type="System.Int32, mscorlib">
+  <data name="UserProgramPanel.RowCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="PostProcessPanel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="UserProgramPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>334, 30</value>
   </data>
-  <data name="PostProcessPanel.TabIndex" type="System.Int32, mscorlib">
+  <data name="UserProgramPanel.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;PostProcessPanel.Name" xml:space="preserve">
-    <value>PostProcessPanel</value>
+  <data name="&gt;&gt;UserProgramPanel.Name" xml:space="preserve">
+    <value>UserProgramPanel</value>
   </data>
-  <data name="&gt;&gt;PostProcessPanel.Type" xml:space="preserve">
+  <data name="&gt;&gt;UserProgramPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;PostProcessPanel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;UserProgramPanel.Parent" xml:space="preserve">
     <value>GeneralPanel</value>
   </data>
-  <data name="&gt;&gt;PostProcessPanel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;UserProgramPanel.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="PostProcessPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="PostProcessButton" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessTextBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,44" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="UserProgramPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="UserProgramButton" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="UserProgramTextBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,44" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="PortraitRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -964,7 +964,7 @@
     <value>0</value>
   </data>
   <data name="GeneralPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ResolutionControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessComboBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessPanel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SourcePanel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SourceLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FormatPanel" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ResolutionControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessComboBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserProgramPanel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SourcePanel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SourceLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FormatPanel" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="GeneralTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -3256,6 +3256,9 @@
         oN1i1KDij5HddD1PAsA/VqNu250AvLaV//8G6rbiZ7DntqKwgQSA/1hlxxehdtjpQa2175SJRaKMAnY3
         QNgiY5rmrYZhvKLruga8Y3eDhD3+P7iSjT2feOJVAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>500, 600</value>
