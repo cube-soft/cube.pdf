@@ -529,6 +529,7 @@
             // 
             resources.ApplyResources(this.OwnerConfirmTextBox, "OwnerConfirmTextBox");
             this.OwnerConfirmTextBox.Name = "OwnerConfirmTextBox";
+            this.OwnerConfirmTextBox.UseSystemPasswordChar = true;
             // 
             // OwnerConfirmLabel
             // 
@@ -540,6 +541,7 @@
             this.OwnerPasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.EncryptionBindingSource, "OwnerPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.OwnerPasswordTextBox, "OwnerPasswordTextBox");
             this.OwnerPasswordTextBox.Name = "OwnerPasswordTextBox";
+            this.OwnerPasswordTextBox.UseSystemPasswordChar = true;
             // 
             // OwnerPasswordLabel
             // 
@@ -576,12 +578,14 @@
             // 
             resources.ApplyResources(this.UserConfirmTextBox, "UserConfirmTextBox");
             this.UserConfirmTextBox.Name = "UserConfirmTextBox";
+            this.UserConfirmTextBox.UseSystemPasswordChar = true;
             // 
             // UserPasswordTextBox
             // 
             this.UserPasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.EncryptionBindingSource, "UserPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.UserPasswordTextBox, "UserPasswordTextBox");
             this.UserPasswordTextBox.Name = "UserPasswordTextBox";
+            this.UserPasswordTextBox.UseSystemPasswordChar = true;
             // 
             // UserConfirmLabel
             // 

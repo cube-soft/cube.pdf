@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Forms.Behaviors;
 using Cube.Forms.Controls;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -50,12 +51,8 @@ namespace Cube.Pdf.App.Converter
 
             ExitButton.Click += (s, e) => Close();
 
-            FormatComboBox.Bind(ViewResource.Formats);
-            FormatOptionComboBox.Bind(ViewResource.FormatOptions);
-            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
-            ViewOptionComboBox.Bind(ViewResource.ViewOptions);
-            PostProcessComboBox.Bind(ViewResource.PostProcesses);
-            LanguageComboBox.Bind(ViewResource.Languages);
+            new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox);
+            new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox);
 
             SettingsPanel.ApplyButton = ApplyButton;
             IsBusy = false;
@@ -80,9 +77,16 @@ namespace Cube.Pdf.App.Converter
         {
             if (vm == null) return;
 
-            MainBindingSource.DataSource        = vm;
-            SettingsBindingSource.DataSource = vm.Settings;
-            MetadataBindingSource.DataSource = vm.Metadata;
+            FormatComboBox.Bind(ViewResource.Formats);
+            FormatOptionComboBox.Bind(ViewResource.FormatOptions);
+            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
+            ViewOptionComboBox.Bind(ViewResource.ViewOptions);
+            PostProcessComboBox.Bind(ViewResource.PostProcesses);
+            LanguageComboBox.Bind(ViewResource.Languages);
+
+            MainBindingSource.DataSource       = vm;
+            SettingsBindingSource.DataSource   = vm.Settings;
+            MetadataBindingSource.DataSource   = vm.Metadata;
             EncryptionBindingSource.DataSource = vm.Encryption;
         }
 

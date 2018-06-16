@@ -3257,9 +3257,6 @@
         QNgiY5rmrYZhvKLruga8Y3eDhD3+P7iSjT2feOJVAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>500, 600</value>
   </data>
