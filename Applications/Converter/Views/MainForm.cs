@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Forms.Controls;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -49,11 +50,15 @@ namespace Cube.Pdf.App.Converter
 
             ExitButton.Click += (s, e) => Close();
 
+            FormatComboBox.Bind(ViewResource.Formats);
+            FormatOptionComboBox.Bind(ViewResource.FormatOptions);
+            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
+            ViewOptionComboBox.Bind(ViewResource.ViewOptions);
+            PostProcessComboBox.Bind(ViewResource.PostProcesses);
+            LanguageComboBox.Bind(ViewResource.Languages);
+
             SettingsPanel.ApplyButton = ApplyButton;
             IsBusy = false;
-
-            SourcePanel.Visible = false;
-            SourceLabel.Visible = false;
         }
 
         #endregion

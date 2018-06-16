@@ -702,31 +702,31 @@
   <data name="DestinationPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="DestinationComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="SaveOptionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="DestinationComboBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SaveOptionComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>245, 3</value>
   </data>
-  <data name="DestinationComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="SaveOptionComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 3, 3, 3</value>
   </data>
-  <data name="DestinationComboBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SaveOptionComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>86, 23</value>
   </data>
-  <data name="DestinationComboBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="SaveOptionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;DestinationComboBox.Name" xml:space="preserve">
-    <value>DestinationComboBox</value>
+  <data name="&gt;&gt;SaveOptionComboBox.Name" xml:space="preserve">
+    <value>SaveOptionComboBox</value>
   </data>
-  <data name="&gt;&gt;DestinationComboBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;SaveOptionComboBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;DestinationComboBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SaveOptionComboBox.Parent" xml:space="preserve">
     <value>DestinationPanel</value>
   </data>
-  <data name="&gt;&gt;DestinationComboBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SaveOptionComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="DestinationButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -814,33 +814,33 @@
     <value>11</value>
   </data>
   <data name="DestinationPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="DestinationComboBox" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="DestinationButton" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DestinationTextBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,44,Absolute,90" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SaveOptionComboBox" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="DestinationButton" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DestinationTextBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,44,Absolute,90" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="FormatPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="VersionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="FormatOptionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="VersionComboBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="FormatOptionComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>203, 3</value>
   </data>
-  <data name="VersionComboBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="FormatOptionComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 23</value>
   </data>
-  <data name="VersionComboBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="FormatOptionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;VersionComboBox.Name" xml:space="preserve">
-    <value>VersionComboBox</value>
+  <data name="&gt;&gt;FormatOptionComboBox.Name" xml:space="preserve">
+    <value>FormatOptionComboBox</value>
   </data>
-  <data name="&gt;&gt;VersionComboBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;FormatOptionComboBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;VersionComboBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;FormatOptionComboBox.Parent" xml:space="preserve">
     <value>FormatPanel</value>
   </data>
-  <data name="&gt;&gt;VersionComboBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;FormatOptionComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="FormatComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -898,7 +898,7 @@
     <value>12</value>
   </data>
   <data name="FormatPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="VersionComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,60,Percent,40" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="FormatOptionComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,60,Percent,40" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="GeneralPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>

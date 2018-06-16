@@ -98,6 +98,27 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ViewOptions
+        ///
+        /// <summary>
+        /// 表示文字列と ViewOption の対応関係を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IList<KeyValuePair<string, ViewOption>> ViewOptions => _viewOptions ?? (
+            _viewOptions = new List<KeyValuePair<string, ViewOption>>
+            {
+                Pair(Properties.Resources.MenuSinglePage,     ViewOption.SinglePage),
+                Pair(Properties.Resources.MenuOneColumn,      ViewOption.OneColumn),
+                Pair(Properties.Resources.MenuTwoColumnLeft,  ViewOption.TwoColumnLeft),
+                Pair(Properties.Resources.MenuTwoColumnRight, ViewOption.TwoColumnRight),
+                Pair(Properties.Resources.MenuTwoPageLeft,    ViewOption.TwoPageLeft),
+                Pair(Properties.Resources.MenuTwoPageRight,   ViewOption.TwoPageRight),
+            }
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// PostProcesses
         ///
         /// <summary>
@@ -155,6 +176,7 @@ namespace Cube.Pdf.App.Converter
         private static IList<KeyValuePair<string, Format>> _formats;
         private static IList<KeyValuePair<string, FormatOption>> _formatOptions;
         private static IList<KeyValuePair<string, SaveOption>> _saveOptions;
+        private static IList<KeyValuePair<string, ViewOption>> _viewOptions;
         private static IList<KeyValuePair<string, PostProcess>> _postProcesses;
         private static IList<KeyValuePair<string, Language>> _languages;
         #endregion

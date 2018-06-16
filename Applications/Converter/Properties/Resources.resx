@@ -142,6 +142,9 @@
   <data name="MenuNone" xml:space="preserve">
     <value>None</value>
   </data>
+  <data name="MenuOneColumn" xml:space="preserve">
+    <value>One column</value>
+  </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
   </data>
@@ -156,5 +159,20 @@
   </data>
   <data name="MenuRename" xml:space="preserve">
     <value>Rename</value>
+  </data>
+  <data name="MenuSinglePage" xml:space="preserve">
+    <value>Single page</value>
+  </data>
+  <data name="MenuTwoColumnLeft" xml:space="preserve">
+    <value>Two column (left)</value>
+  </data>
+  <data name="MenuTwoColumnRight" xml:space="preserve">
+    <value>Two column (right)</value>
+  </data>
+  <data name="MenuTwoPageLeft" xml:space="preserve">
+    <value>Two page (left)</value>
+  </data>
+  <data name="MenuTwoPageRight" xml:space="preserve">
+    <value>Two page (right)</value>
   </data>
 </root>
