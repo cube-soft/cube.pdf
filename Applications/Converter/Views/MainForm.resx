@@ -127,14 +127,164 @@
   <data name="GeneralPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ResolutionControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ResolutionControl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Disable</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ResolutionControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 33</value>
+  </data>
+  <data name="ResolutionControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 23</value>
+  </data>
+  <data name="ResolutionControl.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="ResolutionControl.ThousandsSeparator" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;ResolutionControl.Name" xml:space="preserve">
+    <value>ResolutionControl</value>
+  </data>
+  <data name="&gt;&gt;ResolutionControl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ResolutionControl.Parent" xml:space="preserve">
+    <value>GeneralPanel</value>
+  </data>
+  <data name="&gt;&gt;ResolutionControl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PostProcessComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PostProcessComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 123</value>
+  </data>
+  <data name="PostProcessComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 1, 3</value>
+  </data>
+  <data name="PostProcessComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>330, 23</value>
+  </data>
+  <data name="PostProcessComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;PostProcessComboBox.Name" xml:space="preserve">
+    <value>PostProcessComboBox</value>
+  </data>
+  <data name="&gt;&gt;PostProcessComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PostProcessComboBox.Parent" xml:space="preserve">
+    <value>GeneralPanel</value>
+  </data>
+  <data name="&gt;&gt;PostProcessComboBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PostProcessPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="PostProcessButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PostProcessButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PostProcessButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>291, 3</value>
+  </data>
+  <data name="PostProcessButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 3, 3</value>
+  </data>
+  <data name="PostProcessButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 24</value>
+  </data>
+  <data name="PostProcessButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="PostProcessButton.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="&gt;&gt;PostProcessButton.Name" xml:space="preserve">
+    <value>PostProcessButton</value>
+  </data>
+  <data name="&gt;&gt;PostProcessButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PostProcessButton.Parent" xml:space="preserve">
+    <value>PostProcessPanel</value>
+  </data>
+  <data name="&gt;&gt;PostProcessButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PostProcessTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PostProcessTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="PostProcessTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>284, 23</value>
+  </data>
+  <data name="PostProcessTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;PostProcessTextBox.Name" xml:space="preserve">
+    <value>PostProcessTextBox</value>
+  </data>
+  <data name="&gt;&gt;PostProcessTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PostProcessTextBox.Parent" xml:space="preserve">
+    <value>PostProcessPanel</value>
+  </data>
+  <data name="&gt;&gt;PostProcessTextBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PostProcessPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PostProcessPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 150</value>
+  </data>
+  <data name="PostProcessPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="PostProcessPanel.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="PostProcessPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>334, 30</value>
+  </data>
+  <data name="PostProcessPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;PostProcessPanel.Name" xml:space="preserve">
+    <value>PostProcessPanel</value>
+  </data>
+  <data name="&gt;&gt;PostProcessPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PostProcessPanel.Parent" xml:space="preserve">
+    <value>GeneralPanel</value>
+  </data>
+  <data name="&gt;&gt;PostProcessPanel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="PostProcessPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="PostProcessButton" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessTextBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,44" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
   <data name="PortraitRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PortraitRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 5</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="PortraitRadioButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 5, 12, 3</value>
   </data>
@@ -244,7 +394,7 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;OrientationPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="OrientationLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -280,7 +430,7 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;OrientationLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="SourcePanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
@@ -321,11 +471,8 @@
   <data name="SourceTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
-  <data name="SourceTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 1, 3</value>
-  </data>
   <data name="SourceTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>286, 23</value>
+    <value>284, 23</value>
   </data>
   <data name="SourceTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -346,7 +493,7 @@
     <value>Fill</value>
   </data>
   <data name="SourcePanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 150</value>
+    <value>100, 180</value>
   </data>
   <data name="SourcePanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -358,7 +505,7 @@
     <value>334, 30</value>
   </data>
   <data name="SourcePanel.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;SourcePanel.Name" xml:space="preserve">
     <value>SourcePanel</value>
@@ -370,7 +517,7 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;SourcePanel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="SourcePanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SourceButton" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SourceTextBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,44" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -382,7 +529,7 @@
     <value>Fill</value>
   </data>
   <data name="SourceLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 153</value>
+    <value>3, 183</value>
   </data>
   <data name="SourceLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -409,127 +556,7 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;SourceLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="PostProcessPanel.ColumnCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="PostProcessButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PostProcessButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 3</value>
-  </data>
-  <data name="PostProcessButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 3, 3</value>
-  </data>
-  <data name="PostProcessButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 24</value>
-  </data>
-  <data name="PostProcessButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="PostProcessButton.Text" xml:space="preserve">
-    <value>...</value>
-  </data>
-  <data name="&gt;&gt;PostProcessButton.Name" xml:space="preserve">
-    <value>PostProcessButton</value>
-  </data>
-  <data name="&gt;&gt;PostProcessButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PostProcessButton.Parent" xml:space="preserve">
-    <value>PostProcessPanel</value>
-  </data>
-  <data name="&gt;&gt;PostProcessButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PostProcessTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PostProcessTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>91, 3</value>
-  </data>
-  <data name="PostProcessTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 1, 3</value>
-  </data>
-  <data name="PostProcessTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 23</value>
-  </data>
-  <data name="PostProcessTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;PostProcessTextBox.Name" xml:space="preserve">
-    <value>PostProcessTextBox</value>
-  </data>
-  <data name="&gt;&gt;PostProcessTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PostProcessTextBox.Parent" xml:space="preserve">
-    <value>PostProcessPanel</value>
-  </data>
-  <data name="&gt;&gt;PostProcessTextBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="PostProcessComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PostProcessComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="PostProcessComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 1, 3</value>
-  </data>
-  <data name="PostProcessComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>86, 23</value>
-  </data>
-  <data name="PostProcessComboBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;PostProcessComboBox.Name" xml:space="preserve">
-    <value>PostProcessComboBox</value>
-  </data>
-  <data name="&gt;&gt;PostProcessComboBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PostProcessComboBox.Parent" xml:space="preserve">
-    <value>PostProcessPanel</value>
-  </data>
-  <data name="&gt;&gt;PostProcessComboBox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="PostProcessPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PostProcessPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 120</value>
-  </data>
-  <data name="PostProcessPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="PostProcessPanel.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="PostProcessPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>334, 30</value>
-  </data>
-  <data name="PostProcessPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;PostProcessPanel.Name" xml:space="preserve">
-    <value>PostProcessPanel</value>
-  </data>
-  <data name="&gt;&gt;PostProcessPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PostProcessPanel.Parent" xml:space="preserve">
-    <value>GeneralPanel</value>
-  </data>
-  <data name="&gt;&gt;PostProcessPanel.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="PostProcessPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="PostProcessButton" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessTextBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,90,Percent,100,Absolute,44" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>6</value>
   </data>
   <data name="PostProcessLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -565,7 +592,7 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;PostProcessLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="DestinationLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -601,7 +628,7 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;DestinationLabel.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="ResolutionLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -637,7 +664,7 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;ResolutionLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="FormatLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -673,16 +700,43 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;FormatLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="DestinationPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
+  </data>
+  <data name="DestinationComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="DestinationComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>247, 3</value>
+  </data>
+  <data name="DestinationComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 1, 3</value>
+  </data>
+  <data name="DestinationComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 23</value>
+  </data>
+  <data name="DestinationComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;DestinationComboBox.Name" xml:space="preserve">
+    <value>DestinationComboBox</value>
+  </data>
+  <data name="&gt;&gt;DestinationComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DestinationComboBox.Parent" xml:space="preserve">
+    <value>DestinationPanel</value>
+  </data>
+  <data name="&gt;&gt;DestinationComboBox.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="DestinationButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="DestinationButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 3</value>
+    <value>201, 3</value>
   </data>
   <data name="DestinationButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 3, 3, 3</value>
@@ -691,7 +745,7 @@
     <value>40, 24</value>
   </data>
   <data name="DestinationButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="DestinationButton.Text" xml:space="preserve">
     <value>...</value>
@@ -706,22 +760,19 @@
     <value>DestinationPanel</value>
   </data>
   <data name="&gt;&gt;DestinationButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="DestinationTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="DestinationTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>91, 3</value>
-  </data>
-  <data name="DestinationTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 1, 3</value>
+    <value>3, 3</value>
   </data>
   <data name="DestinationTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 23</value>
+    <value>194, 23</value>
   </data>
   <data name="DestinationTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;DestinationTextBox.Name" xml:space="preserve">
     <value>DestinationTextBox</value>
@@ -733,33 +784,6 @@
     <value>DestinationPanel</value>
   </data>
   <data name="&gt;&gt;DestinationTextBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="DestinationComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="DestinationComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="DestinationComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 1, 3</value>
-  </data>
-  <data name="DestinationComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>86, 23</value>
-  </data>
-  <data name="DestinationComboBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;DestinationComboBox.Name" xml:space="preserve">
-    <value>DestinationComboBox</value>
-  </data>
-  <data name="&gt;&gt;DestinationComboBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;DestinationComboBox.Parent" xml:space="preserve">
-    <value>DestinationPanel</value>
-  </data>
-  <data name="&gt;&gt;DestinationComboBox.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="DestinationPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -790,10 +814,10 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;DestinationPanel.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="DestinationPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="DestinationButton" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="DestinationTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DestinationComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,90,Percent,100,Absolute,44" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="DestinationComboBox" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="DestinationButton" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DestinationTextBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,44,Absolute,90" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="FormatPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
@@ -874,112 +898,10 @@
     <value>GeneralPanel</value>
   </data>
   <data name="&gt;&gt;FormatPanel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="FormatPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="VersionComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="ResolutionPanel.ColumnCount" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="GrayscaleCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="GrayscaleCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="GrayscaleCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="GrayscaleCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>170, 3</value>
-  </data>
-  <data name="GrayscaleCheckBox.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 0, 0</value>
-  </data>
-  <data name="GrayscaleCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 24</value>
-  </data>
-  <data name="GrayscaleCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="GrayscaleCheckBox.Text" xml:space="preserve">
-    <value>Grayscale</value>
-  </data>
-  <data name="&gt;&gt;GrayscaleCheckBox.Name" xml:space="preserve">
-    <value>GrayscaleCheckBox</value>
-  </data>
-  <data name="&gt;&gt;GrayscaleCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GrayscaleCheckBox.Parent" xml:space="preserve">
-    <value>ResolutionPanel</value>
-  </data>
-  <data name="&gt;&gt;GrayscaleCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ResolutionControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ResolutionControl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Disable</value>
-  </data>
-  <data name="ResolutionControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="ResolutionControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 23</value>
-  </data>
-  <data name="ResolutionControl.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="ResolutionControl.ThousandsSeparator" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;ResolutionControl.Name" xml:space="preserve">
-    <value>ResolutionControl</value>
-  </data>
-  <data name="&gt;&gt;ResolutionControl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ResolutionControl.Parent" xml:space="preserve">
-    <value>ResolutionPanel</value>
-  </data>
-  <data name="&gt;&gt;ResolutionControl.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="ResolutionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ResolutionPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 30</value>
-  </data>
-  <data name="ResolutionPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="ResolutionPanel.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="ResolutionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>334, 30</value>
-  </data>
-  <data name="ResolutionPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ResolutionPanel.Name" xml:space="preserve">
-    <value>ResolutionPanel</value>
-  </data>
-  <data name="&gt;&gt;ResolutionPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ResolutionPanel.Parent" xml:space="preserve">
-    <value>GeneralPanel</value>
-  </data>
-  <data name="&gt;&gt;ResolutionPanel.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="ResolutionPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionControl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="GeneralPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -988,10 +910,10 @@
     <value>9, 18</value>
   </data>
   <data name="GeneralPanel.RowCount" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="GeneralPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 180</value>
+    <value>434, 210</value>
   </data>
   <data name="GeneralPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1009,7 +931,7 @@
     <value>0</value>
   </data>
   <data name="GeneralPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="OrientationPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SourcePanel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SourceLabel" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FormatPanel" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionPanel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ResolutionControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessComboBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessPanel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SourcePanel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SourceLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FormatPanel" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="GeneralTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -2166,6 +2088,42 @@
   <data name="OthersPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="GrayscaleCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="GrayscaleCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="GrayscaleCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="GrayscaleCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 3</value>
+  </data>
+  <data name="GrayscaleCheckBox.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 0, 0</value>
+  </data>
+  <data name="GrayscaleCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 19</value>
+  </data>
+  <data name="GrayscaleCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="GrayscaleCheckBox.Text" xml:space="preserve">
+    <value>Grayscale</value>
+  </data>
+  <data name="&gt;&gt;GrayscaleCheckBox.Name" xml:space="preserve">
+    <value>GrayscaleCheckBox</value>
+  </data>
+  <data name="&gt;&gt;GrayscaleCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GrayscaleCheckBox.Parent" xml:space="preserve">
+    <value>OthersPanel</value>
+  </data>
+  <data name="&gt;&gt;GrayscaleCheckBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="OptionsLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2200,7 +2158,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;OptionsLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="ImageCompressionCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2209,16 +2167,16 @@
     <value>Fill</value>
   </data>
   <data name="ImageCompressionCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 3</value>
+    <value>103, 28</value>
   </data>
   <data name="ImageCompressionCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 19</value>
   </data>
   <data name="ImageCompressionCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="ImageCompressionCheckBox.Text" xml:space="preserve">
-    <value>Compress images in the document</value>
+    <value>Compress PDF images as JPEG</value>
   </data>
   <data name="&gt;&gt;ImageCompressionCheckBox.Name" xml:space="preserve">
     <value>ImageCompressionCheckBox</value>
@@ -2230,7 +2188,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;ImageCompressionCheckBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="LinearizeCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2239,13 +2197,13 @@
     <value>Fill</value>
   </data>
   <data name="LinearizeCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 28</value>
+    <value>103, 53</value>
   </data>
   <data name="LinearizeCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 19</value>
   </data>
   <data name="LinearizeCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="LinearizeCheckBox.Text" xml:space="preserve">
     <value>Optimize PDF for fast Web view</value>
@@ -2260,7 +2218,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;LinearizeCheckBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="UpdateCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2269,13 +2227,13 @@
     <value>Fill</value>
   </data>
   <data name="UpdateCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 178</value>
+    <value>103, 208</value>
   </data>
   <data name="UpdateCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 19</value>
   </data>
   <data name="UpdateCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="UpdateCheckBox.Text" xml:space="preserve">
     <value>Check for update when launched</value>
@@ -2290,19 +2248,19 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;UpdateCheckBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="LanguageComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="LanguageComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 203</value>
+    <value>103, 233</value>
   </data>
   <data name="LanguageComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 23</value>
   </data>
   <data name="LanguageComboBox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;LanguageComboBox.Name" xml:space="preserve">
     <value>LanguageComboBox</value>
@@ -2314,7 +2272,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;LanguageComboBox.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="LanguageLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2323,13 +2281,13 @@
     <value>Fill</value>
   </data>
   <data name="LanguageLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 73</value>
+    <value>3, 98</value>
   </data>
   <data name="LanguageLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="LanguageLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 154</value>
+    <value>94, 159</value>
   </data>
   <data name="LanguageLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2347,19 +2305,19 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;LanguageLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="VersionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="VersionPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 73</value>
+    <value>103, 98</value>
   </data>
   <data name="VersionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 99</value>
+    <value>328, 104</value>
   </data>
   <data name="VersionPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Name" xml:space="preserve">
     <value>VersionPanel</value>
@@ -2371,7 +2329,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;VersionPanel.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="OthersPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -2380,10 +2338,10 @@
     <value>9, 18</value>
   </data>
   <data name="OthersPanel.RowCount" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="OthersPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 230</value>
+    <value>434, 260</value>
   </data>
   <data name="OthersPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2401,7 +2359,7 @@
     <value>0</value>
   </data>
   <data name="OthersPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ImageCompressionCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LinearizeCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageLabel" Row="3" RowSpan="3" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ImageCompressionCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LinearizeCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageLabel" Row="4" RowSpan="3" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="OthersTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>

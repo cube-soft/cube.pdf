@@ -34,6 +34,11 @@
             this.SettingsTabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.ResolutionControl = new System.Windows.Forms.NumericUpDown();
+            this.PostProcessComboBox = new System.Windows.Forms.ComboBox();
+            this.PostProcessPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.PostProcessButton = new System.Windows.Forms.Button();
+            this.PostProcessTextBox = new System.Windows.Forms.TextBox();
             this.OrientationPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.PortraitRadioButton = new System.Windows.Forms.RadioButton();
             this.LandscapeRadioButton = new System.Windows.Forms.RadioButton();
@@ -43,24 +48,17 @@
             this.SourceButton = new System.Windows.Forms.Button();
             this.SourceTextBox = new System.Windows.Forms.TextBox();
             this.SourceLabel = new System.Windows.Forms.Label();
-            this.PostProcessPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.PostProcessButton = new System.Windows.Forms.Button();
-            this.PostProcessTextBox = new System.Windows.Forms.TextBox();
-            this.PostProcessComboBox = new System.Windows.Forms.ComboBox();
             this.PostProcessLabel = new System.Windows.Forms.Label();
             this.DestinationLabel = new System.Windows.Forms.Label();
             this.ResolutionLabel = new System.Windows.Forms.Label();
             this.FormatLabel = new System.Windows.Forms.Label();
             this.DestinationPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.DestinationComboBox = new System.Windows.Forms.ComboBox();
             this.DestinationButton = new System.Windows.Forms.Button();
             this.DestinationTextBox = new System.Windows.Forms.TextBox();
-            this.DestinationComboBox = new System.Windows.Forms.ComboBox();
             this.FormatPanel = new System.Windows.Forms.TableLayoutPanel();
             this.VersionComboBox = new System.Windows.Forms.ComboBox();
             this.FormatComboBox = new System.Windows.Forms.ComboBox();
-            this.ResolutionPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
-            this.ResolutionControl = new System.Windows.Forms.NumericUpDown();
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
@@ -99,6 +97,7 @@
             this.AllowPrintCheckBox = new System.Windows.Forms.CheckBox();
             this.OthersTabPage = new System.Windows.Forms.TabPage();
             this.OthersPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
             this.OptionsLabel = new System.Windows.Forms.Label();
             this.ImageCompressionCheckBox = new System.Windows.Forms.CheckBox();
             this.LinearizeCheckBox = new System.Windows.Forms.CheckBox();
@@ -118,13 +117,12 @@
             this.SettingsTabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
+            this.PostProcessPanel.SuspendLayout();
             this.OrientationPanel.SuspendLayout();
             this.SourcePanel.SuspendLayout();
-            this.PostProcessPanel.SuspendLayout();
             this.DestinationPanel.SuspendLayout();
             this.FormatPanel.SuspendLayout();
-            this.ResolutionPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
             this.DocumentPage.SuspendLayout();
             this.DocumentPanel.SuspendLayout();
             this.EncryptionTabPage.SuspendLayout();
@@ -175,19 +173,70 @@
             // GeneralPanel
             // 
             resources.ApplyResources(this.GeneralPanel, "GeneralPanel");
+            this.GeneralPanel.Controls.Add(this.ResolutionControl, 1, 1);
+            this.GeneralPanel.Controls.Add(this.PostProcessComboBox, 1, 4);
+            this.GeneralPanel.Controls.Add(this.PostProcessPanel, 1, 5);
             this.GeneralPanel.Controls.Add(this.OrientationPanel, 1, 2);
             this.GeneralPanel.Controls.Add(this.OrientationLabel, 0, 2);
-            this.GeneralPanel.Controls.Add(this.SourcePanel, 1, 5);
-            this.GeneralPanel.Controls.Add(this.SourceLabel, 0, 5);
-            this.GeneralPanel.Controls.Add(this.PostProcessPanel, 1, 4);
+            this.GeneralPanel.Controls.Add(this.SourcePanel, 1, 6);
+            this.GeneralPanel.Controls.Add(this.SourceLabel, 0, 6);
             this.GeneralPanel.Controls.Add(this.PostProcessLabel, 0, 4);
             this.GeneralPanel.Controls.Add(this.DestinationLabel, 0, 3);
             this.GeneralPanel.Controls.Add(this.ResolutionLabel, 0, 1);
             this.GeneralPanel.Controls.Add(this.FormatLabel, 0, 0);
             this.GeneralPanel.Controls.Add(this.DestinationPanel, 1, 3);
             this.GeneralPanel.Controls.Add(this.FormatPanel, 1, 0);
-            this.GeneralPanel.Controls.Add(this.ResolutionPanel, 1, 1);
             this.GeneralPanel.Name = "GeneralPanel";
+            // 
+            // ResolutionControl
+            // 
+            resources.ApplyResources(this.ResolutionControl, "ResolutionControl");
+            this.ResolutionControl.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.ResolutionControl.Maximum = new decimal(new int[] {
+            6000,
+            0,
+            0,
+            0});
+            this.ResolutionControl.Minimum = new decimal(new int[] {
+            72,
+            0,
+            0,
+            0});
+            this.ResolutionControl.Name = "ResolutionControl";
+            this.ResolutionControl.Value = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            // 
+            // PostProcessComboBox
+            // 
+            resources.ApplyResources(this.PostProcessComboBox, "PostProcessComboBox");
+            this.PostProcessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PostProcessComboBox.FormattingEnabled = true;
+            this.PostProcessComboBox.Name = "PostProcessComboBox";
+            // 
+            // PostProcessPanel
+            // 
+            resources.ApplyResources(this.PostProcessPanel, "PostProcessPanel");
+            this.PostProcessPanel.Controls.Add(this.PostProcessButton, 0, 0);
+            this.PostProcessPanel.Controls.Add(this.PostProcessTextBox, 0, 0);
+            this.PostProcessPanel.Name = "PostProcessPanel";
+            // 
+            // PostProcessButton
+            // 
+            resources.ApplyResources(this.PostProcessButton, "PostProcessButton");
+            this.PostProcessButton.Name = "PostProcessButton";
+            this.PostProcessButton.UseVisualStyleBackColor = true;
+            // 
+            // PostProcessTextBox
+            // 
+            resources.ApplyResources(this.PostProcessTextBox, "PostProcessTextBox");
+            this.PostProcessTextBox.Name = "PostProcessTextBox";
             // 
             // OrientationPanel
             // 
@@ -246,32 +295,6 @@
             resources.ApplyResources(this.SourceLabel, "SourceLabel");
             this.SourceLabel.Name = "SourceLabel";
             // 
-            // PostProcessPanel
-            // 
-            resources.ApplyResources(this.PostProcessPanel, "PostProcessPanel");
-            this.PostProcessPanel.Controls.Add(this.PostProcessButton, 0, 0);
-            this.PostProcessPanel.Controls.Add(this.PostProcessTextBox, 0, 0);
-            this.PostProcessPanel.Controls.Add(this.PostProcessComboBox, 0, 0);
-            this.PostProcessPanel.Name = "PostProcessPanel";
-            // 
-            // PostProcessButton
-            // 
-            resources.ApplyResources(this.PostProcessButton, "PostProcessButton");
-            this.PostProcessButton.Name = "PostProcessButton";
-            this.PostProcessButton.UseVisualStyleBackColor = true;
-            // 
-            // PostProcessTextBox
-            // 
-            resources.ApplyResources(this.PostProcessTextBox, "PostProcessTextBox");
-            this.PostProcessTextBox.Name = "PostProcessTextBox";
-            // 
-            // PostProcessComboBox
-            // 
-            resources.ApplyResources(this.PostProcessComboBox, "PostProcessComboBox");
-            this.PostProcessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.PostProcessComboBox.FormattingEnabled = true;
-            this.PostProcessComboBox.Name = "PostProcessComboBox";
-            // 
             // PostProcessLabel
             // 
             resources.ApplyResources(this.PostProcessLabel, "PostProcessLabel");
@@ -295,10 +318,17 @@
             // DestinationPanel
             // 
             resources.ApplyResources(this.DestinationPanel, "DestinationPanel");
-            this.DestinationPanel.Controls.Add(this.DestinationButton, 2, 0);
-            this.DestinationPanel.Controls.Add(this.DestinationTextBox, 1, 0);
-            this.DestinationPanel.Controls.Add(this.DestinationComboBox, 0, 0);
+            this.DestinationPanel.Controls.Add(this.DestinationComboBox, 2, 0);
+            this.DestinationPanel.Controls.Add(this.DestinationButton, 1, 0);
+            this.DestinationPanel.Controls.Add(this.DestinationTextBox, 0, 0);
             this.DestinationPanel.Name = "DestinationPanel";
+            // 
+            // DestinationComboBox
+            // 
+            resources.ApplyResources(this.DestinationComboBox, "DestinationComboBox");
+            this.DestinationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DestinationComboBox.FormattingEnabled = true;
+            this.DestinationComboBox.Name = "DestinationComboBox";
             // 
             // DestinationButton
             // 
@@ -310,13 +340,6 @@
             // 
             resources.ApplyResources(this.DestinationTextBox, "DestinationTextBox");
             this.DestinationTextBox.Name = "DestinationTextBox";
-            // 
-            // DestinationComboBox
-            // 
-            resources.ApplyResources(this.DestinationComboBox, "DestinationComboBox");
-            this.DestinationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DestinationComboBox.FormattingEnabled = true;
-            this.DestinationComboBox.Name = "DestinationComboBox";
             // 
             // FormatPanel
             // 
@@ -338,44 +361,6 @@
             this.FormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FormatComboBox.FormattingEnabled = true;
             this.FormatComboBox.Name = "FormatComboBox";
-            // 
-            // ResolutionPanel
-            // 
-            resources.ApplyResources(this.ResolutionPanel, "ResolutionPanel");
-            this.ResolutionPanel.Controls.Add(this.GrayscaleCheckBox, 0, 0);
-            this.ResolutionPanel.Controls.Add(this.ResolutionControl, 0, 0);
-            this.ResolutionPanel.Name = "ResolutionPanel";
-            // 
-            // GrayscaleCheckBox
-            // 
-            resources.ApplyResources(this.GrayscaleCheckBox, "GrayscaleCheckBox");
-            this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
-            this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // ResolutionControl
-            // 
-            resources.ApplyResources(this.ResolutionControl, "ResolutionControl");
-            this.ResolutionControl.Increment = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.ResolutionControl.Maximum = new decimal(new int[] {
-            6000,
-            0,
-            0,
-            0});
-            this.ResolutionControl.Minimum = new decimal(new int[] {
-            72,
-            0,
-            0,
-            0});
-            this.ResolutionControl.Name = "ResolutionControl";
-            this.ResolutionControl.Value = new decimal(new int[] {
-            600,
-            0,
-            0,
-            0});
             // 
             // DocumentPage
             // 
@@ -613,14 +598,21 @@
             // OthersPanel
             // 
             resources.ApplyResources(this.OthersPanel, "OthersPanel");
+            this.OthersPanel.Controls.Add(this.GrayscaleCheckBox, 1, 0);
             this.OthersPanel.Controls.Add(this.OptionsLabel, 0, 0);
-            this.OthersPanel.Controls.Add(this.ImageCompressionCheckBox, 1, 0);
-            this.OthersPanel.Controls.Add(this.LinearizeCheckBox, 1, 1);
-            this.OthersPanel.Controls.Add(this.UpdateCheckBox, 1, 4);
-            this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 5);
-            this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 3);
-            this.OthersPanel.Controls.Add(this.VersionPanel, 1, 3);
+            this.OthersPanel.Controls.Add(this.ImageCompressionCheckBox, 1, 1);
+            this.OthersPanel.Controls.Add(this.LinearizeCheckBox, 1, 2);
+            this.OthersPanel.Controls.Add(this.UpdateCheckBox, 1, 5);
+            this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 6);
+            this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 4);
+            this.OthersPanel.Controls.Add(this.VersionPanel, 1, 4);
             this.OthersPanel.Name = "OthersPanel";
+            // 
+            // GrayscaleCheckBox
+            // 
+            resources.ApplyResources(this.GrayscaleCheckBox, "GrayscaleCheckBox");
+            this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
+            this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
             // 
             // OptionsLabel
             // 
@@ -711,8 +703,9 @@
             // 
             // ConvertButton
             // 
-            this.ConvertButton.Content = "変換";
+            this.ConvertButton.Content = "Convert";
             this.ConvertButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ConvertButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             resources.ApplyResources(this.ConvertButton, "ConvertButton");
             this.ConvertButton.FlatAppearance.BorderSize = 0;
             this.ConvertButton.Name = "ConvertButton";
@@ -726,7 +719,7 @@
             // 
             // ExitButton
             // 
-            this.ExitButton.Content = "キャンセル";
+            this.ExitButton.Content = "Cancel";
             this.ExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.ExitButton, "ExitButton");
@@ -762,18 +755,16 @@
             this.GeneralTabPage.ResumeLayout(false);
             this.GeneralPanel.ResumeLayout(false);
             this.GeneralPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
+            this.PostProcessPanel.ResumeLayout(false);
+            this.PostProcessPanel.PerformLayout();
             this.OrientationPanel.ResumeLayout(false);
             this.OrientationPanel.PerformLayout();
             this.SourcePanel.ResumeLayout(false);
             this.SourcePanel.PerformLayout();
-            this.PostProcessPanel.ResumeLayout(false);
-            this.PostProcessPanel.PerformLayout();
             this.DestinationPanel.ResumeLayout(false);
             this.DestinationPanel.PerformLayout();
             this.FormatPanel.ResumeLayout(false);
-            this.ResolutionPanel.ResumeLayout(false);
-            this.ResolutionPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
             this.DocumentPage.ResumeLayout(false);
             this.DocumentPanel.ResumeLayout(false);
             this.DocumentPanel.PerformLayout();
@@ -816,17 +807,12 @@
         private System.Windows.Forms.Label DestinationLabel;
         private System.Windows.Forms.TableLayoutPanel DestinationPanel;
         private System.Windows.Forms.Label PostProcessLabel;
-        private System.Windows.Forms.TableLayoutPanel PostProcessPanel;
         private System.Windows.Forms.TableLayoutPanel SourcePanel;
         private System.Windows.Forms.Label SourceLabel;
-        private System.Windows.Forms.Button PostProcessButton;
-        private System.Windows.Forms.TextBox PostProcessTextBox;
-        private System.Windows.Forms.ComboBox PostProcessComboBox;
         private System.Windows.Forms.Button SourceButton;
         private System.Windows.Forms.TextBox SourceTextBox;
         private System.Windows.Forms.Button DestinationButton;
         private System.Windows.Forms.TextBox DestinationTextBox;
-        private System.Windows.Forms.ComboBox DestinationComboBox;
         private System.Windows.Forms.TableLayoutPanel DocumentPanel;
         private System.Windows.Forms.Label TitleLabel;
         private System.Windows.Forms.TextBox TitleTextBox;
@@ -880,10 +866,14 @@
         private System.Windows.Forms.TableLayoutPanel FormatPanel;
         private System.Windows.Forms.ComboBox VersionComboBox;
         private System.Windows.Forms.ComboBox FormatComboBox;
-        private System.Windows.Forms.TableLayoutPanel ResolutionPanel;
+        private System.Windows.Forms.Label OptionsLabel;
+        private System.Windows.Forms.ComboBox DestinationComboBox;
+        private System.Windows.Forms.ComboBox PostProcessComboBox;
+        private System.Windows.Forms.TableLayoutPanel PostProcessPanel;
+        private System.Windows.Forms.Button PostProcessButton;
+        private System.Windows.Forms.TextBox PostProcessTextBox;
         private System.Windows.Forms.CheckBox GrayscaleCheckBox;
         private System.Windows.Forms.NumericUpDown ResolutionControl;
-        private System.Windows.Forms.Label OptionsLabel;
     }
 }
 

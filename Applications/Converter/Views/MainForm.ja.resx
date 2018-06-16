@@ -173,9 +173,6 @@
   <data name="SourceLabel.Text" xml:space="preserve">
     <value>入力ファイル</value>
   </data>
-  <data name="PostProcessButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="PostProcessLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -193,12 +190,6 @@
   </data>
   <data name="ResolutionLabel.Text" xml:space="preserve">
     <value>解像度</value>
-  </data>
-  <data name="VersionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="VersionLabel.Text" xml:space="preserve">
-    <value>PDF バージョン</value>
   </data>
   <data name="FormatLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -326,17 +317,17 @@
   <data name="OthersTabPage.Text" xml:space="preserve">
     <value>その他</value>
   </data>
-  <data name="GrayscaleCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="GrayscaleCheckBox.Text" xml:space="preserve">
     <value>グレースケール</value>
+  </data>
+  <data name="OptionsLabel.Text" xml:space="preserve">
+    <value>オプション</value>
   </data>
   <data name="ImageCompressionCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="ImageCompressionCheckBox.Text" xml:space="preserve">
-    <value>PDF ファイル中の画像を圧縮する</value>
+    <value>PDF ファイル中の画像を JPEG 形式で圧縮する</value>
   </data>
   <data name="LinearizeCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -355,12 +346,6 @@
   </data>
   <data name="LanguageLabel.Text" xml:space="preserve">
     <value>バージョン情報</value>
-  </data>
-  <data name="OptionsLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="OptionsLabel.Text" xml:space="preserve">
-    <value>オプション</value>
   </data>
   <data name="ConvertProgressBar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>

@@ -51,6 +51,9 @@ namespace Cube.Pdf.App.Converter
 
             SettingsPanel.ApplyButton = ApplyButton;
             IsBusy = false;
+
+            SourcePanel.Visible = false;
+            SourceLabel.Visible = false;
         }
 
         #endregion
