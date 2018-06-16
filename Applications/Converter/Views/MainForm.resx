@@ -193,13 +193,13 @@
     <value>NoControl</value>
   </data>
   <data name="PostProcessButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 3</value>
+    <value>291, 2</value>
   </data>
   <data name="PostProcessButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 3, 3</value>
+    <value>1, 2, 3, 3</value>
   </data>
   <data name="PostProcessButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 24</value>
+    <value>40, 25</value>
   </data>
   <data name="PostProcessButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -436,13 +436,13 @@
     <value>Fill</value>
   </data>
   <data name="SourceButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 3</value>
+    <value>291, 2</value>
   </data>
   <data name="SourceButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 3, 3</value>
+    <value>1, 2, 3, 3</value>
   </data>
   <data name="SourceButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 24</value>
+    <value>40, 25</value>
   </data>
   <data name="SourceButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -733,13 +733,13 @@
     <value>Fill</value>
   </data>
   <data name="DestinationButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>201, 3</value>
+    <value>201, 2</value>
   </data>
   <data name="DestinationButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 3, 3</value>
+    <value>1, 2, 3, 3</value>
   </data>
   <data name="DestinationButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 24</value>
+    <value>40, 25</value>
   </data>
   <data name="DestinationButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
