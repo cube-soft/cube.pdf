@@ -80,7 +80,10 @@ namespace Cube.Pdf.App.Converter
         {
             if (vm == null) return;
 
-            SettingsBindingSource.DataSource = vm;
+            MainBindingSource.DataSource        = vm;
+            SettingsBindingSource.DataSource = vm.Settings;
+            MetadataBindingSource.DataSource = vm.Metadata;
+            EncryptionBindingSource.DataSource = vm.Encryption;
         }
 
         #endregion

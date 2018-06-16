@@ -16,42 +16,36 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
-
 namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainViewModel
+    /// MetadataViewModel
     ///
     /// <summary>
-    /// Settings とメイン画面を関連付ける ViewModel を表すクラスです。
+    /// 文書プロパティタブを表す ViewModel です。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainViewModel : ObservableProperty
+    public class MetadataViewModel : ObservableProperty
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainViewModel
+        /// MetadataViewModel
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="settings">設定情報</param>
+        /// <param name="model">PDF メタ情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingsFolder settings)
+        public MetadataViewModel(Metadata model)
         {
-            _settings = settings;
-            _settings.PropertyChanged += (s, e) => OnPropertyChanged(e);
-
-            Settings = new SettingsViewModel(settings.Value);
-            Metadata = new MetadataViewModel(settings.Value.Metadata);
-            Encryption = new EncryptionViewModel(settings.Value.Encryption);
+            _model = model;
+            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
@@ -60,104 +54,98 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Product
+        /// Title
         ///
         /// <summary>
-        /// 製品名を取得します。
+        /// タイトルを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Product => _settings.Product;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Version
-        ///
-        /// <summary>
-        /// バージョンを表す文字列を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Version => _settings.Version.ToString(true);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Uri
-        ///
-        /// <summary>
-        /// Web ページの URL を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Uri Uri => new Uri("https://www.cube-soft.jp/cubepdf/");
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// アップデートを確認するかどうかを示す値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool CheckUpdate
+        public string Title
         {
-            get => _settings.Value.CheckUpdate;
-            set => _settings.Value.CheckUpdate = value;
+            get => _model.Title;
+            set => _model.Title = value;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Language
+        /// Author
         ///
         /// <summary>
-        /// 表示言語を取得または設定します。
+        /// 作成者を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Language Language
+        public string Author
         {
-            get => _settings.Value.Language;
-            set => _settings.Value.Language = value;
+            get => _model.Author;
+            set => _model.Author = value;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// Subtitle
         ///
         /// <summary>
-        /// 一般およびその他タブを表す ViewModel を取得します。
+        /// サブタイトルを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsViewModel Settings { get; }
+        public string Subtitle
+        {
+            get => _model.Subtitle;
+            set => _model.Subtitle = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Metadata
+        /// Keywords
         ///
         /// <summary>
-        /// 文書プロパティ・タブを表す ViewModel を取得します。
+        /// キーワードを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataViewModel Metadata { get; }
+        public string Keywords
+        {
+            get => _model.Keywords;
+            set => _model.Keywords = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Encryption
+        /// Creator
         ///
         /// <summary>
-        /// セキュリティ・タブを表す ViewModel を取得します。
+        /// アプリケーションを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionViewModel Encryption { get; }
+        public string Creator
+        {
+            get => _model.Creator;
+            set => _model.Creator = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewOption
+        ///
+        /// <summary>
+        /// 表示オプションを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ViewOption ViewOption
+        {
+            get => _model.ViewOption;
+            set => _model.ViewOption = value;
+        }
 
         #endregion
 
         #region Fields
-        private readonly SettingsFolder _settings;
+        private readonly Metadata _model;
         #endregion
     }
 }

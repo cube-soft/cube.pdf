@@ -127,6 +127,9 @@
   <data name="GeneralPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <metadata name="SettingsBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>191, 17</value>
+  </metadata>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ResolutionControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -279,6 +282,9 @@
   <data name="PortraitRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="PortraitRadioButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="PortraitRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 5</value>
   </data>
@@ -309,6 +315,9 @@
   <data name="LandscapeRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="LandscapeRadioButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="LandscapeRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>87, 5</value>
   </data>
@@ -338,6 +347,9 @@
   </data>
   <data name="AutoRadioButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="AutoRadioButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="AutoRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>188, 5</value>
@@ -399,6 +411,9 @@
   <data name="OrientationLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="OrientationLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="OrientationLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 63</value>
   </data>
@@ -434,6 +449,9 @@
   </data>
   <data name="SourceButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="SourceButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="SourceButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>291, 2</value>
@@ -525,6 +543,9 @@
   <data name="SourceLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="SourceLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="SourceLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 183</value>
   </data>
@@ -560,6 +581,9 @@
   </data>
   <data name="PostProcessLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="PostProcessLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="PostProcessLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 123</value>
@@ -597,6 +621,9 @@
   <data name="DestinationLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="DestinationLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="DestinationLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 93</value>
   </data>
@@ -633,6 +660,9 @@
   <data name="ResolutionLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="ResolutionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="ResolutionLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 33</value>
   </data>
@@ -668,6 +698,9 @@
   </data>
   <data name="FormatLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="FormatLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="FormatLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
@@ -731,6 +764,9 @@
   </data>
   <data name="DestinationButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="DestinationButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="DestinationButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>201, 2</value>
@@ -963,6 +999,9 @@
   <data name="DocumentPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <metadata name="MetadataBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>407, 17</value>
+  </metadata>
   <data name="ViewOptionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -992,6 +1031,9 @@
   </data>
   <data name="ViewOptionLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="ViewOptionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="ViewOptionLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 153</value>
@@ -1053,6 +1095,9 @@
   <data name="CreatorLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="CreatorLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="CreatorLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 123</value>
   </data>
@@ -1112,6 +1157,9 @@
   </data>
   <data name="KeywordsLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="KeywordsLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="KeywordsLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 93</value>
@@ -1173,6 +1221,9 @@
   <data name="SubjectLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="SubjectLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="SubjectLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 63</value>
   </data>
@@ -1186,7 +1237,7 @@
     <value>0</value>
   </data>
   <data name="SubjectLabel.Text" xml:space="preserve">
-    <value>Subject</value>
+    <value>Subtitle</value>
   </data>
   <data name="SubjectLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -1232,6 +1283,9 @@
   </data>
   <data name="AuthorLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="AuthorLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="AuthorLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 33</value>
@@ -1292,6 +1346,9 @@
   </data>
   <data name="TitleLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="TitleLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="TitleLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
@@ -1389,8 +1446,14 @@
   <data name="EnableEncryptionCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <metadata name="EncryptionBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>589, 17</value>
+  </metadata>
   <data name="EnableEncryptionCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="EnableEncryptionCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="EnableEncryptionCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
@@ -1425,6 +1488,9 @@
   <data name="UserPasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="UserPasswordCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="UserPasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 63</value>
   </data>
@@ -1454,6 +1520,9 @@
   </data>
   <data name="OperationLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="OperationLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="OperationLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 64</value>
@@ -1511,6 +1580,9 @@
   </data>
   <data name="OwnerConfirmLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="OwnerConfirmLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="OwnerConfirmLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 33</value>
@@ -1572,6 +1644,9 @@
   <data name="OwnerPasswordLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="OwnerPasswordLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="OwnerPasswordLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
@@ -1610,6 +1685,9 @@
   </data>
   <data name="SharePasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="SharePasswordCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="SharePasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 55</value>
@@ -1701,6 +1779,9 @@
   <data name="UserConfirmLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="UserConfirmLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="UserConfirmLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 29</value>
   </data>
@@ -1736,6 +1817,9 @@
   </data>
   <data name="UserPasswordLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="UserPasswordLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="UserPasswordLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
@@ -1809,6 +1893,9 @@
   <data name="AllowModifyCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="AllowModifyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="AllowModifyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 78</value>
   </data>
@@ -1838,6 +1925,9 @@
   </data>
   <data name="AllowFormCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="AllowFormCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="AllowFormCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 53</value>
@@ -1869,6 +1959,9 @@
   <data name="AllowCopyCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="AllowCopyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="AllowCopyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 28</value>
   </data>
@@ -1898,6 +1991,9 @@
   </data>
   <data name="AllowPrintCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="AllowPrintCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="AllowPrintCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
@@ -2160,6 +2256,9 @@
   <data name="ImageCompressionCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="ImageCompressionCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="ImageCompressionCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 28</value>
   </data>
@@ -2184,44 +2283,50 @@
   <data name="&gt;&gt;ImageCompressionCheckBox.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="LinearizeCheckBox.AutoSize" type="System.Boolean, mscorlib">
+  <data name="WebOptimizationCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="LinearizeCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="WebOptimizationCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="LinearizeCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="WebOptimizationCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="WebOptimizationCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 53</value>
   </data>
-  <data name="LinearizeCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="WebOptimizationCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 19</value>
   </data>
-  <data name="LinearizeCheckBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="WebOptimizationCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="LinearizeCheckBox.Text" xml:space="preserve">
+  <data name="WebOptimizationCheckBox.Text" xml:space="preserve">
     <value>Optimize PDF for fast Web view</value>
   </data>
-  <data name="&gt;&gt;LinearizeCheckBox.Name" xml:space="preserve">
-    <value>LinearizeCheckBox</value>
+  <data name="&gt;&gt;WebOptimizationCheckBox.Name" xml:space="preserve">
+    <value>WebOptimizationCheckBox</value>
   </data>
-  <data name="&gt;&gt;LinearizeCheckBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;WebOptimizationCheckBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LinearizeCheckBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;WebOptimizationCheckBox.Parent" xml:space="preserve">
     <value>OthersPanel</value>
   </data>
-  <data name="&gt;&gt;LinearizeCheckBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;WebOptimizationCheckBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="UpdateCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <metadata name="SettingsBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="MainBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <data name="UpdateCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="UpdateCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="UpdateCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 208</value>
@@ -2276,6 +2381,9 @@
   </data>
   <data name="LanguageLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="LanguageLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="LanguageLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 98</value>
@@ -2356,7 +2464,7 @@
     <value>0</value>
   </data>
   <data name="OthersPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ImageCompressionCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LinearizeCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageLabel" Row="4" RowSpan="3" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ImageCompressionCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="WebOptimizationCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageLabel" Row="4" RowSpan="3" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="OthersTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -2478,6 +2586,9 @@
   <data name="ApplyButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="ApplyButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="ApplyButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>209, 8</value>
   </data>
@@ -2538,6 +2649,9 @@
   <data name="ConvertButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="ConvertButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="ConvertButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>209, 3</value>
   </data>
@@ -2567,6 +2681,9 @@
   </data>
   <data name="ExitButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
+  </data>
+  <data name="ExitButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="ExitButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>349, 3</value>
@@ -2627,6 +2744,9 @@
   </data>
   <data name="HeaderPictureBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="HeaderPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="HeaderPictureBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -3150,6 +3270,24 @@
     <value>SettingsBindingSource</value>
   </data>
   <data name="&gt;&gt;SettingsBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MetadataBindingSource.Name" xml:space="preserve">
+    <value>MetadataBindingSource</value>
+  </data>
+  <data name="&gt;&gt;MetadataBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EncryptionBindingSource.Name" xml:space="preserve">
+    <value>EncryptionBindingSource</value>
+  </data>
+  <data name="&gt;&gt;EncryptionBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MainBindingSource.Name" xml:space="preserve">
+    <value>MainBindingSource</value>
+  </data>
+  <data name="&gt;&gt;MainBindingSource.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

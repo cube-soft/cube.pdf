@@ -89,6 +89,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         protected override void OnLoaded(ValueChangedEventArgs<Settings> e)
         {
+            e.NewValue.Metadata.Creator = Product;
+            e.NewValue.Metadata.ViewOption = ViewOption.OneColumn;
             if (e.NewValue.Resolution < 72) e.NewValue.Resolution = 600;
             base.OnLoaded(e);
         }
