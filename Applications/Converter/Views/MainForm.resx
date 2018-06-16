@@ -165,11 +165,8 @@
   <data name="PostProcessComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 123</value>
   </data>
-  <data name="PostProcessComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 1, 3</value>
-  </data>
   <data name="PostProcessComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>330, 23</value>
+    <value>328, 23</value>
   </data>
   <data name="PostProcessComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -709,10 +706,10 @@
     <value>Fill</value>
   </data>
   <data name="DestinationComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>247, 3</value>
+    <value>245, 3</value>
   </data>
   <data name="DestinationComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 1, 3</value>
+    <value>1, 3, 3, 3</value>
   </data>
   <data name="DestinationComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>86, 23</value>
@@ -826,10 +823,10 @@
     <value>Fill</value>
   </data>
   <data name="VersionComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>170, 3</value>
+    <value>203, 3</value>
   </data>
   <data name="VersionComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 23</value>
+    <value>128, 23</value>
   </data>
   <data name="VersionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -853,7 +850,7 @@
     <value>3, 3</value>
   </data>
   <data name="FormatComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 23</value>
+    <value>194, 23</value>
   </data>
   <data name="FormatComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -901,7 +898,7 @@
     <value>12</value>
   </data>
   <data name="FormatPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="VersionComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="VersionComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,60,Percent,40" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="GeneralPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -2451,6 +2448,9 @@
   <data name="FooterPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
+  <data name="ConvertProgressBar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="ConvertProgressBar.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 23</value>
   </data>
@@ -2478,9 +2478,6 @@
   <data name="ApplyButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="ApplyButton.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="ApplyButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>209, 8</value>
   </data>
@@ -2491,13 +2488,13 @@
     <value>1</value>
   </data>
   <data name="ApplyButton.Text" xml:space="preserve">
-    <value>button1</value>
+    <value>Save settings</value>
   </data>
   <data name="&gt;&gt;ApplyButton.Name" xml:space="preserve">
     <value>ApplyButton</value>
   </data>
   <data name="&gt;&gt;ApplyButton.Type" xml:space="preserve">
-    <value>Cube.Forms.FlatButton, Cube.Forms, Version=1.10.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ApplyButton.Parent" xml:space="preserve">
     <value>ToolsPanel</value>
@@ -2541,9 +2538,6 @@
   <data name="ConvertButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="ConvertButton.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="ConvertButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>209, 3</value>
   </data>
@@ -2554,13 +2548,13 @@
     <value>1</value>
   </data>
   <data name="ConvertButton.Text" xml:space="preserve">
-    <value>button1</value>
+    <value>Convert</value>
   </data>
   <data name="&gt;&gt;ConvertButton.Name" xml:space="preserve">
     <value>ConvertButton</value>
   </data>
   <data name="&gt;&gt;ConvertButton.Type" xml:space="preserve">
-    <value>Cube.Forms.FlatButton, Cube.Forms, Version=1.10.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ConvertButton.Parent" xml:space="preserve">
     <value>FooterPanel</value>
@@ -2574,9 +2568,6 @@
   <data name="ExitButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="ExitButton.Image" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="ExitButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>349, 3</value>
   </data>
@@ -2587,13 +2578,13 @@
     <value>2</value>
   </data>
   <data name="ExitButton.Text" xml:space="preserve">
-    <value>button2</value>
+    <value>Cancel</value>
   </data>
   <data name="&gt;&gt;ExitButton.Name" xml:space="preserve">
     <value>ExitButton</value>
   </data>
   <data name="&gt;&gt;ExitButton.Type" xml:space="preserve">
-    <value>Cube.Forms.FlatButton, Cube.Forms, Version=1.10.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ExitButton.Parent" xml:space="preserve">
     <value>FooterPanel</value>
