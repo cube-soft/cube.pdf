@@ -23,24 +23,36 @@ namespace Cube.Pdf.App.Converter
     /// FormatOption
     ///
     /// <summary>
-    /// ファイル形式のオプションを表す列挙型です。
+    /// 変換形式に関するオプションオプションを表す列挙型です。
     /// </summary>
+    ///
+    /// <remarks>
+    /// 旧 CubePDF で PDFVersion と呼んでいたものを汎用化した形で定義
+    /// しています。ただし、現在定義されているものは PDF のバージョン
+    /// のみです。
+    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     public enum FormatOption
     {
-        /// <summary>PDF 1.7</summary>
-        Pdf17,
-        /// <summary>PDF 1.6</summary>
-        Pdf16,
-        /// <summary>PDF 1.5</summary>
-        Pdf15,
-        /// <summary>PDF 1.4</summary>
-        Pdf14,
-        /// <summary>PDF 1.3</summary>
-        Pdf13,
         /// <summary>PDF 1.2</summary>
-        Pdf12,
+        Pdf12 = 5,
+        /// <summary>PDF 1.3</summary>
+        Pdf13 = 4,
+        /// <summary>PDF 1.4</summary>
+        Pdf14 = 3,
+        /// <summary>PDF 1.5</summary>
+        Pdf15 = 2,
+        /// <summary>PDF 1.6</summary>
+        Pdf16 = 1,
+        /// <summary>PDF 1.7</summary>
+        Pdf17 = 0,
+        /// <summary>PDF/A</summary>
+        PdfA = 6,
+        /// <summary>PDF/X-1a</summary>
+        PdfX1a = 7,
+        /// <summary>PDF/X-3</summary>
+        PdfX3 = 8,
     }
 
     /* --------------------------------------------------------------------- */
@@ -55,13 +67,13 @@ namespace Cube.Pdf.App.Converter
     public enum SaveOption
     {
         /// <summary>上書き</summary>
-        Overwrite,
+        Overwrite = 0,
         /// <summary>先頭に結合</summary>
-        MergeHead,
+        MergeHead = 1,
         /// <summary>末尾に結合</summary>
-        MergeTail,
+        MergeTail = 2,
         /// <summary>リネーム</summary>
-        Rename,
+        Rename = 3,
     }
 
     /* --------------------------------------------------------------------- */
@@ -76,11 +88,13 @@ namespace Cube.Pdf.App.Converter
     public enum PostProcess
     {
         /// <summary>開く</summary>
-        Open,
+        Open = 0,
+        /// <summary>保存フォルダを開く</summary>
+        OpenFolder = 3,
         /// <summary>何もしない</summary>
-        None,
+        None = 1,
         /// <summary>その他（ユーザプログラム）</summary>
-        Others,
+        Others = 2,
     }
 
     /* --------------------------------------------------------------------- */
@@ -95,10 +109,10 @@ namespace Cube.Pdf.App.Converter
     public enum Language
     {
         /// <summary>自動</summary>
-        Auto,
+        Auto = 0,
         /// <summary>英語</summary>
-        English,
+        English = 1,
         /// <summary>日本語</summary>
-        Japanese,
+        Japanese = 2,
     }
 }

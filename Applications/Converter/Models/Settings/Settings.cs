@@ -59,6 +59,12 @@ namespace Cube.Pdf.App.Converter
         /// 変換形式に関するオプションを取得または設定します。
         /// </summary>
         ///
+        /// <remarks>
+        /// 旧 CubePDF で PDFVersion と呼んでいたものを汎用化した形で定義
+        /// しています。PDF のバージョン以外のオプションが定義された段階で
+        /// レジストリ等の設定項目名も変更する予定です。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         [DataMember(Name = "PDFVersion")]
         public FormatOption FormatOption

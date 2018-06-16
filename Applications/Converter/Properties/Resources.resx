@@ -124,4 +124,37 @@
   <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MenuAuto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="MenuEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="MenuJapanese" xml:space="preserve">
+    <value>Japanese</value>
+  </data>
+  <data name="MenuMergeHead" xml:space="preserve">
+    <value>Merge head</value>
+  </data>
+  <data name="MenuMergeTail" xml:space="preserve">
+    <value>Merge tail</value>
+  </data>
+  <data name="MenuNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="MenuOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="MenuOpenFolder" xml:space="preserve">
+    <value>Open folder</value>
+  </data>
+  <data name="MenuOthers" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="MenuOverwrite" xml:space="preserve">
+    <value>Overwrite</value>
+  </data>
+  <data name="MenuRename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
 </root>

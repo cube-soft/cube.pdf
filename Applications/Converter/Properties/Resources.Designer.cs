@@ -79,5 +79,104 @@ namespace Cube.Pdf.App.Converter.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Auto に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAuto {
+            get {
+                return ResourceManager.GetString("MenuAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   English に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuEnglish {
+            get {
+                return ResourceManager.GetString("MenuEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Japanese に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuJapanese {
+            get {
+                return ResourceManager.GetString("MenuJapanese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Merge head に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuMergeHead {
+            get {
+                return ResourceManager.GetString("MenuMergeHead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Merge tail に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuMergeTail {
+            get {
+                return ResourceManager.GetString("MenuMergeTail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   None に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuNone {
+            get {
+                return ResourceManager.GetString("MenuNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Open に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOpen {
+            get {
+                return ResourceManager.GetString("MenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Open folder に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOpenFolder {
+            get {
+                return ResourceManager.GetString("MenuOpenFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Others に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOthers {
+            get {
+                return ResourceManager.GetString("MenuOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Overwrite に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOverwrite {
+            get {
+                return ResourceManager.GetString("MenuOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Rename に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuRename {
+            get {
+                return ResourceManager.GetString("MenuRename", resourceCulture);
+            }
+        }
     }
 }

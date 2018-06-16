@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Models\Settings\Parameters.cs" />
     <Compile Include="Models\Settings\Settings.cs" />
+    <Compile Include="Views\ViewResource.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
