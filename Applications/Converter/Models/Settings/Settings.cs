@@ -33,6 +33,24 @@ namespace Cube.Pdf.App.Converter
     [DataContract]
     public class Settings : ObservableProperty
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Settings()
+        {
+            Reset();
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -327,6 +345,36 @@ namespace Cube.Pdf.App.Converter
             set => SetProperty(ref _destination, value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// PDF のメタ情報を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata Metadata
+        {
+            get => _metadata;
+            set => SetProperty(ref _metadata, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// PDF の暗号化情報を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encryption Encryption
+        {
+            get => _encryption;
+            set => SetProperty(ref _encryption, value);
+        }
+
         #endregion
 
         #region Implementations
@@ -359,6 +407,8 @@ namespace Cube.Pdf.App.Converter
             _source           = string.Empty;
             _destination      = string.Empty;
             _userProgram      = string.Empty;
+            _metadata         = new Metadata();
+            _encryption       = new Encryption();
         }
 
         /* ----------------------------------------------------------------- */
@@ -393,6 +443,8 @@ namespace Cube.Pdf.App.Converter
         private string _source;
         private string _destination;
         private string _userProgram;
+        private Metadata _metadata;
+        private Encryption _encryption;
         #endregion
     }
 }
