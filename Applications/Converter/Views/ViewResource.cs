@@ -110,10 +110,10 @@ namespace Cube.Pdf.App.Converter
             {
                 Pair(Properties.Resources.MenuSinglePage,     ViewOption.SinglePage),
                 Pair(Properties.Resources.MenuOneColumn,      ViewOption.OneColumn),
-                Pair(Properties.Resources.MenuTwoColumnLeft,  ViewOption.TwoColumnLeft),
-                Pair(Properties.Resources.MenuTwoColumnRight, ViewOption.TwoColumnRight),
                 Pair(Properties.Resources.MenuTwoPageLeft,    ViewOption.TwoPageLeft),
                 Pair(Properties.Resources.MenuTwoPageRight,   ViewOption.TwoPageRight),
+                Pair(Properties.Resources.MenuTwoColumnLeft,  ViewOption.TwoColumnLeft),
+                Pair(Properties.Resources.MenuTwoColumnRight, ViewOption.TwoColumnRight),
             }
         );
 

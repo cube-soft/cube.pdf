@@ -2097,9 +2097,6 @@
   <data name="GrayscaleCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 3</value>
   </data>
-  <data name="GrayscaleCheckBox.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 0, 0</value>
-  </data>
   <data name="GrayscaleCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 19</value>
   </data>
