@@ -91,6 +91,8 @@ namespace Cube.Pdf.App.Converter
         {
             e.NewValue.Metadata.Creator = Product;
             e.NewValue.Metadata.ViewOption = ViewOption.OneColumn;
+            e.NewValue.Encryption.DenyAll();
+            e.NewValue.Encryption.Permission.Accessibility = PermissionMethod.Allow;
             if (e.NewValue.Resolution < 72) e.NewValue.Resolution = 600;
             base.OnLoaded(e);
         }

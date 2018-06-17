@@ -53,6 +53,7 @@
     <Compile Include="Attachment.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="EncryptionException.cs" />
+    <Compile Include="EncryptionExtension.cs" />
     <Compile Include="EncryptionMethod.cs" />
     <Compile Include="File.cs" />
     <Compile Include="FileExtension.cs" />
