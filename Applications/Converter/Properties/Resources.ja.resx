@@ -206,7 +206,7 @@
     <value>名前を付けて保存</value>
   </data>
   <data name="TitleBroseUserProgram" xml:space="preserve">
-    <value>ユーザプログラムを選択</value>
+    <value>変換完了時に実行するプログラムを選択</value>
   </data>
   <data name="TitleBrowseSource" xml:space="preserve">
     <value>入力ファイルを選択</value>
