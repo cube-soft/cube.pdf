@@ -55,7 +55,6 @@ namespace Cube.Pdf.App.Converter
             new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox);
 
             SettingsPanel.ApplyButton = ApplyButton;
-            IsBusy = false;
         }
 
         #endregion
@@ -88,6 +87,17 @@ namespace Cube.Pdf.App.Converter
             SettingsBindingSource.DataSource   = vm.Settings;
             MetadataBindingSource.DataSource   = vm.Metadata;
             EncryptionBindingSource.DataSource = vm.Encryption;
+
+            vm.Messenger.MessageBox.Subscribe(e => new MessageBoxBehavior().Invoke(e));
+            vm.Messenger.OpenFileDialog.Subscribe(e => new OpenFileBehavior().Invoke(e));
+            vm.Messenger.SaveFileDialog.Subscribe(e => new SaveFileBehavior().Invoke(e));
+
+            SourceButton.Click      += (s, e) => vm.BrowseSource();
+            DestinationButton.Click += (s, e) => vm.BrowseDestination();
+            UserProgramButton.Click += (s, e) => vm.BrowseUserProgram();
+
+            DataBindings.Add(new Binding(nameof(IsBusy), MainBindingSource,
+                nameof(IsBusy), false, DataSourceUpdateMode.OnPropertyChanged));
         }
 
         #endregion
@@ -112,6 +122,7 @@ namespace Cube.Pdf.App.Converter
             {
                 _busy = value;
                 ConvertButton.Enabled = !value;
+                SettingsTabControl.Enabled = !value;
                 ApplyButton.Visible = !value;
                 ConvertProgressBar.Visible = value;
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
@@ -121,7 +132,7 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Fields
-        private bool _busy;
+        private bool _busy = false;
         #endregion
     }
 }

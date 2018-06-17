@@ -36,6 +36,7 @@
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ResolutionControl = new System.Windows.Forms.NumericUpDown();
+            this.SettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.PostProcessComboBox = new System.Windows.Forms.ComboBox();
             this.UserProgramPanel = new System.Windows.Forms.TableLayoutPanel();
             this.UserProgramButton = new System.Windows.Forms.Button();
@@ -63,6 +64,7 @@
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
+            this.MetadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ViewOptionLabel = new System.Windows.Forms.Label();
             this.CreatorTextBox = new System.Windows.Forms.TextBox();
             this.CreatorLabel = new System.Windows.Forms.Label();
@@ -77,6 +79,7 @@
             this.EncryptionTabPage = new System.Windows.Forms.TabPage();
             this.EncryptionOuterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.EnableEncryptionCheckBox = new System.Windows.Forms.CheckBox();
+            this.EncryptionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.EncryptionPanel = new System.Windows.Forms.TableLayoutPanel();
             this.UserPasswordCheckBox = new System.Windows.Forms.CheckBox();
             this.OperationLabel = new System.Windows.Forms.Label();
@@ -103,6 +106,7 @@
             this.ImageCompressionCheckBox = new System.Windows.Forms.CheckBox();
             this.WebOptimizationCheckBox = new System.Windows.Forms.CheckBox();
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
+            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.LanguageLabel = new System.Windows.Forms.Label();
             this.VersionPanel = new Cube.Forms.VersionControl();
@@ -113,16 +117,13 @@
             this.ConvertButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
             this.HeaderPictureBox = new System.Windows.Forms.PictureBox();
-            this.SettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.MetadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.EncryptionBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.RootPanel.SuspendLayout();
             this.SettingsPanel.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingsBindingSource)).BeginInit();
             this.UserProgramPanel.SuspendLayout();
             this.OrientationPanel.SuspendLayout();
             this.SourcePanel.SuspendLayout();
@@ -130,21 +131,20 @@
             this.FormatPanel.SuspendLayout();
             this.DocumentPage.SuspendLayout();
             this.DocumentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).BeginInit();
             this.EncryptionTabPage.SuspendLayout();
             this.EncryptionOuterPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.EncryptionBindingSource)).BeginInit();
             this.EncryptionPanel.SuspendLayout();
             this.OperationPanel.SuspendLayout();
             this.UserPasswordPanel.SuspendLayout();
             this.PermissionPanel.SuspendLayout();
             this.OthersTabPage.SuspendLayout();
             this.OthersPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).BeginInit();
             this.FooterPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EncryptionBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // RootPanel
@@ -222,6 +222,10 @@
             0,
             0,
             0});
+            // 
+            // SettingsBindingSource
+            // 
+            this.SettingsBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.SettingsViewModel);
             // 
             // PostProcessComboBox
             // 
@@ -418,6 +422,10 @@
             this.ViewOptionComboBox.FormattingEnabled = true;
             this.ViewOptionComboBox.Name = "ViewOptionComboBox";
             // 
+            // MetadataBindingSource
+            // 
+            this.MetadataBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MetadataViewModel);
+            // 
             // ViewOptionLabel
             // 
             resources.ApplyResources(this.ViewOptionLabel, "ViewOptionLabel");
@@ -498,6 +506,10 @@
             this.EnableEncryptionCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "Enabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.EnableEncryptionCheckBox.Name = "EnableEncryptionCheckBox";
             this.EnableEncryptionCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // EncryptionBindingSource
+            // 
+            this.EncryptionBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.EncryptionViewModel);
             // 
             // EncryptionPanel
             // 
@@ -688,6 +700,10 @@
             this.UpdateCheckBox.Name = "UpdateCheckBox";
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
             // 
+            // MainBindingSource
+            // 
+            this.MainBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MainViewModel);
+            // 
             // LanguageComboBox
             // 
             this.LanguageComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MainBindingSource, "Language", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -777,22 +793,6 @@
             this.HeaderPictureBox.Name = "HeaderPictureBox";
             this.HeaderPictureBox.TabStop = false;
             // 
-            // SettingsBindingSource
-            // 
-            this.SettingsBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.SettingsViewModel);
-            // 
-            // MetadataBindingSource
-            // 
-            this.MetadataBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MetadataViewModel);
-            // 
-            // EncryptionBindingSource
-            // 
-            this.EncryptionBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.EncryptionViewModel);
-            // 
-            // MainBindingSource
-            // 
-            this.MainBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MainViewModel);
-            // 
             // MainForm
             // 
             this.AcceptButton = this.ConvertButton;
@@ -809,6 +809,7 @@
             this.GeneralPanel.ResumeLayout(false);
             this.GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingsBindingSource)).EndInit();
             this.UserProgramPanel.ResumeLayout(false);
             this.UserProgramPanel.PerformLayout();
             this.OrientationPanel.ResumeLayout(false);
@@ -821,9 +822,11 @@
             this.DocumentPage.ResumeLayout(false);
             this.DocumentPanel.ResumeLayout(false);
             this.DocumentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).EndInit();
             this.EncryptionTabPage.ResumeLayout(false);
             this.EncryptionOuterPanel.ResumeLayout(false);
             this.EncryptionOuterPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.EncryptionBindingSource)).EndInit();
             this.EncryptionPanel.ResumeLayout(false);
             this.EncryptionPanel.PerformLayout();
             this.OperationPanel.ResumeLayout(false);
@@ -835,13 +838,10 @@
             this.OthersTabPage.ResumeLayout(false);
             this.OthersPanel.ResumeLayout(false);
             this.OthersPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).EndInit();
             this.FooterPanel.ResumeLayout(false);
             this.ToolsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.EncryptionBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

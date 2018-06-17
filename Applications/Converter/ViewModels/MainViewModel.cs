@@ -16,7 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
 {
@@ -49,14 +52,51 @@ namespace Cube.Pdf.App.Converter
             _settings = settings;
             _settings.PropertyChanged += (s, e) => OnPropertyChanged(e);
 
-            Settings = new SettingsViewModel(settings.Value);
-            Metadata = new MetadataViewModel(settings.Value.Metadata);
+            Settings   = new SettingsViewModel(settings.Value);
+            Metadata   = new MetadataViewModel(settings.Value.Metadata);
             Encryption = new EncryptionViewModel(settings.Value.Encryption);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBusy
+        ///
+        /// <summary>
+        /// 処理中かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsBusy
+        {
+            get => _busy;
+            set => SetProperty(ref _busy, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Messenger
+        ///
+        /// <summary>
+        /// Messenger オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Messenger Messenger { get; } = new Messenger();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; } = new IO();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -156,8 +196,69 @@ namespace Cube.Pdf.App.Converter
 
         #endregion
 
+        #region Commands
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BrowseSource
+        ///
+        /// <summary>
+        /// 入力ファイルの選択画面を表示するためのコマンドです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void BrowseSource()
+        {
+            var e = MessageFactory.CreateSource(Settings.Source, IO);
+            Messenger.OpenFileDialog.Publish(e);
+            if (e.Result == DialogResult.Cancel) return;
+            Settings.Source = e.FileName;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BrowseDestination
+        ///
+        /// <summary>
+        /// 保存パスの選択画面を表示するためのコマンドです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void BrowseDestination()
+        {
+            var e = MessageFactory.CreateDestination(Settings.Destination, IO);
+            Messenger.SaveFileDialog.Publish(e);
+            if (e.Result == DialogResult.Cancel) return;
+
+            Debug.Assert(e.FilterIndex > 0);
+            Debug.Assert(e.FilterIndex <= ViewResource.Formats.Count);
+
+            Settings.Destination = e.FileName;
+            Settings.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BrowseUserProgram
+        ///
+        /// <summary>
+        /// ユーザプログラムの選択画面を表示するためのコマンドです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void BrowseUserProgram()
+        {
+            var e = MessageFactory.CreateUserProgram(Settings.UserProgram, IO);
+            Messenger.OpenFileDialog.Publish(e);
+            if (e.Result == DialogResult.Cancel) return;
+            Settings.UserProgram = e.FileName;
+        }
+
+        #endregion
+
         #region Fields
         private readonly SettingsFolder _settings;
+        private bool _busy = false;
         #endregion
     }
 }

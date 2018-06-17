@@ -61,6 +61,87 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   All files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterAll {
+            get {
+                return ResourceManager.GetString("FilterAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   BMP files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterBmp {
+            get {
+                return ResourceManager.GetString("FilterBmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   EPS files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterEps {
+            get {
+                return ResourceManager.GetString("FilterEps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Executable files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterExecutable {
+            get {
+                return ResourceManager.GetString("FilterExecutable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   JPEG files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterJpeg {
+            get {
+                return ResourceManager.GetString("FilterJpeg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PDF files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterPdf {
+            get {
+                return ResourceManager.GetString("FilterPdf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PNG files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterPng {
+            get {
+                return ResourceManager.GetString("FilterPng", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PS files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterPs {
+            get {
+                return ResourceManager.GetString("FilterPs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   TIFF files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterTiff {
+            get {
+                return ResourceManager.GetString("FilterTiff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Header {
@@ -230,6 +311,33 @@ namespace Cube.Pdf.App.Converter.Properties {
         internal static string MenuTwoPageRight {
             get {
                 return ResourceManager.GetString("MenuTwoPageRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select save path に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleBroseDestination {
+            get {
+                return ResourceManager.GetString("TitleBroseDestination", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select user program に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleBroseUserProgram {
+            get {
+                return ResourceManager.GetString("TitleBroseUserProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select source file に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleBrowseSource {
+            get {
+                return ResourceManager.GetString("TitleBrowseSource", resourceCulture);
             }
         }
     }
