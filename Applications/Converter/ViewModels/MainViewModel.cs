@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -50,7 +51,7 @@ namespace Cube.Pdf.App.Converter
         public MainViewModel(SettingsFolder settings)
         {
             _settings = settings;
-            _settings.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            _settings.PropertyChanged += WhenPropertyChanged;
 
             Settings   = new SettingsViewModel(settings.Value);
             Metadata   = new MetadataViewModel(settings.Value.Metadata);
@@ -252,6 +253,28 @@ namespace Cube.Pdf.App.Converter
             Messenger.OpenFileDialog.Publish(e);
             if (e.Result == DialogResult.Cancel) return;
             Settings.UserProgram = e.FileName;
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenPropertyChanged
+        ///
+        /// <summary>
+        /// プロパティの変更時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var show = e.PropertyName == nameof(Settings.PostProcess) &&
+                       Settings.PostProcess == PostProcess.Others;
+            if (show) BrowseUserProgram();
+
+            OnPropertyChanged(e);
         }
 
         #endregion
