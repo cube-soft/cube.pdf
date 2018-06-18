@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Forms.Behaviors;
 using Cube.Forms.Controls;
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
@@ -179,12 +180,28 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private void SetComboBox()
         {
-            FormatComboBox.Bind(ViewResource.Formats);
-            FormatOptionComboBox.Bind(ViewResource.FormatOptions);
-            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
-            ViewOptionComboBox.Bind(ViewResource.ViewOptions);
-            PostProcessComboBox.Bind(ViewResource.PostProcesses);
-            LanguageComboBox.Bind(ViewResource.Languages);
+            Preserve(FormatComboBox,       e => e.Bind(ViewResource.Formats));
+            Preserve(FormatOptionComboBox, e => e.Bind(ViewResource.FormatOptions));
+            Preserve(SaveOptionComboBox,   e => e.Bind(ViewResource.SaveOptions));
+            Preserve(ViewOptionComboBox,   e => e.Bind(ViewResource.ViewOptions));
+            Preserve(PostProcessComboBox,  e => e.Bind(ViewResource.PostProcesses));
+            Preserve(LanguageComboBox,     e => e.Bind(ViewResource.Languages));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Preserve
+        ///
+        /// <summary>
+        /// ComboBox.SelectedValue の内容を保持したまま処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Preserve(ComboBox src, Action<ComboBox> action)
+        {
+            var value = src.SelectedValue;
+            action(src);
+            if (value != null) src.SelectedValue = value;
         }
 
         #endregion

@@ -86,15 +86,14 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, SaveOption>> SaveOptions => _saveOptions ?? (
-            _saveOptions = new List<KeyValuePair<string, SaveOption>>
+        public static IList<KeyValuePair<string, SaveOption>> SaveOptions =>
+            new List<KeyValuePair<string, SaveOption>>
             {
                 Pair(Properties.Resources.MenuOverwrite, SaveOption.Overwrite),
                 Pair(Properties.Resources.MenuMergeHead, SaveOption.MergeHead),
                 Pair(Properties.Resources.MenuMergeTail, SaveOption.MergeTail),
                 Pair(Properties.Resources.MenuRename,    SaveOption.Rename),
-            }
-        );
+            };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -105,8 +104,8 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, ViewOption>> ViewOptions => _viewOptions ?? (
-            _viewOptions = new List<KeyValuePair<string, ViewOption>>
+        public static IList<KeyValuePair<string, ViewOption>> ViewOptions =>
+            new List<KeyValuePair<string, ViewOption>>
             {
                 Pair(Properties.Resources.MenuSinglePage,     ViewOption.SinglePage),
                 Pair(Properties.Resources.MenuOneColumn,      ViewOption.OneColumn),
@@ -114,8 +113,7 @@ namespace Cube.Pdf.App.Converter
                 Pair(Properties.Resources.MenuTwoPageRight,   ViewOption.TwoPageRight),
                 Pair(Properties.Resources.MenuTwoColumnLeft,  ViewOption.TwoColumnLeft),
                 Pair(Properties.Resources.MenuTwoColumnRight, ViewOption.TwoColumnRight),
-            }
-        );
+            };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -126,15 +124,14 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, PostProcess>> PostProcesses => _postProcesses ?? (
-            _postProcesses = new List<KeyValuePair<string, PostProcess>>
+        public static IList<KeyValuePair<string, PostProcess>> PostProcesses =>
+            new List<KeyValuePair<string, PostProcess>>
             {
                 Pair(Properties.Resources.MenuOpen,       PostProcess.Open),
                 Pair(Properties.Resources.MenuOpenFolder, PostProcess.OpenFolder),
                 Pair(Properties.Resources.MenuNone,       PostProcess.None),
                 Pair(Properties.Resources.MenuOthers,     PostProcess.Others),
-            }
-        );
+            };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -145,14 +142,13 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, Orientation>> Orientations => _orientations ?? (
-            _orientations = new List<KeyValuePair<string, Orientation>>
+        public static IList<KeyValuePair<string, Orientation>> Orientations =>
+            new List<KeyValuePair<string, Orientation>>
             {
                 Pair(Properties.Resources.MenuAuto,      Orientation.Auto),
                 Pair(Properties.Resources.MenuPortrait,  Orientation.Portrait),
                 Pair(Properties.Resources.MenuLandscape, Orientation.Landscape),
-            }
-        );
+            };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -163,14 +159,13 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, Language>> Languages => _languages ?? (
-            _languages = new List<KeyValuePair<string, Language>>
+        public static IList<KeyValuePair<string, Language>> Languages =>
+            new List<KeyValuePair<string, Language>>
             {
                 Pair(Properties.Resources.MenuAuto,     Language.Auto),
                 Pair(Properties.Resources.MenuEnglish,  Language.English),
                 Pair(Properties.Resources.MenuJapanese, Language.Japanese),
-            }
-        );
+            };
 
         #endregion
 
@@ -193,11 +188,6 @@ namespace Cube.Pdf.App.Converter
         #region Fields
         private static IList<KeyValuePair<string, Format>> _formats;
         private static IList<KeyValuePair<string, FormatOption>> _formatOptions;
-        private static IList<KeyValuePair<string, SaveOption>> _saveOptions;
-        private static IList<KeyValuePair<string, ViewOption>> _viewOptions;
-        private static IList<KeyValuePair<string, PostProcess>> _postProcesses;
-        private static IList<KeyValuePair<string, Orientation>> _orientations;
-        private static IList<KeyValuePair<string, Language>> _languages;
         #endregion
     }
 }
