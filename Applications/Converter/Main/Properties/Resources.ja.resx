@@ -160,6 +160,9 @@
   <data name="MenuJapanese" xml:space="preserve">
     <value>日本語</value>
   </data>
+  <data name="MenuLandscape" xml:space="preserve">
+    <value>横</value>
+  </data>
   <data name="MenuMergeHead" xml:space="preserve">
     <value>先頭に結合</value>
   </data>
@@ -183,6 +186,9 @@
   </data>
   <data name="MenuOverwrite" xml:space="preserve">
     <value>上書き</value>
+  </data>
+  <data name="MenuPortrait" xml:space="preserve">
+    <value>縦</value>
   </data>
   <data name="MenuRename" xml:space="preserve">
     <value>リネーム</value>
