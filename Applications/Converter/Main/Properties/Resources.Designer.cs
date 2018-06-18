@@ -189,6 +189,15 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   Landscape に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuLandscape {
+            get {
+                return ResourceManager.GetString("MenuLandscape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Merge head に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuMergeHead {
@@ -261,6 +270,15 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   Portrait に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPortrait {
+            get {
+                return ResourceManager.GetString("MenuPortrait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Rename に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRename {
@@ -315,7 +333,7 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
-        ///   Select save path に類似しているローカライズされた文字列を検索します。
+        ///   Save as に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleBroseDestination {
             get {

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Linq;
 using System.Reflection;
 
 namespace Cube.Pdf.App.Converter
@@ -94,13 +95,58 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         protected override void OnLoaded(ValueChangedEventArgs<Settings> e)
         {
+            e.NewValue.Format = NormalizeFormat(e.NewValue);
+            e.NewValue.Resolution = NormalizeResolution(e.NewValue);
+            e.NewValue.Orientation = NormalizeOrientation(e.NewValue);
             e.NewValue.Metadata.Creator = Product;
             e.NewValue.Metadata.ViewOption = ViewOption.OneColumn;
             e.NewValue.Encryption.DenyAll();
             e.NewValue.Encryption.Permission.Accessibility = PermissionMethod.Allow;
-            if (e.NewValue.Resolution < 72) e.NewValue.Resolution = 600;
+
             base.OnLoaded(e);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NormalizeFormat
+        ///
+        /// <summary>
+        /// Format の値を正規化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Ghostscript.Format NormalizeFormat(Settings src) =>
+            ViewResource.Formats.Any(e => e.Value == src.Format) ?
+            src.Format :
+            Ghostscript.Format.Pdf;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NormalizeOrientation
+        ///
+        /// <summary>
+        /// Orientation の値を正規化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Ghostscript.Orientation NormalizeOrientation(Settings src) =>
+            ViewResource.Orientations.Any(e => e.Value == src.Orientation) ?
+            src.Orientation :
+            Ghostscript.Orientation.Auto;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// NormalizeResolution
+        ///
+        /// <summary>
+        /// Resolution の値を正規化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private int NormalizeResolution(Settings src) =>
+            src.Resolution >= 72 ?
+            src.Resolution :
+            600;
 
         #endregion
     }

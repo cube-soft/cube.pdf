@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -117,25 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="HeaderPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="GeneralTabPage.Text" xml:space="preserve">
-    <value>一般</value>
-  </data>
-  <data name="PortraitRadioButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PortraitRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 19</value>
   </data>
   <data name="PortraitRadioButton.Text" xml:space="preserve">
     <value>縦</value>
-  </data>
-  <data name="LandscapeRadioButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="LandscapeRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>55, 5</value>
@@ -146,9 +133,6 @@
   <data name="LandscapeRadioButton.Text" xml:space="preserve">
     <value>横</value>
   </data>
-  <data name="AutoRadioButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="AutoRadioButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>107, 5</value>
   </data>
@@ -158,164 +142,86 @@
   <data name="AutoRadioButton.Text" xml:space="preserve">
     <value>自動</value>
   </data>
-  <data name="OrientationLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="OrientationLabel.Text" xml:space="preserve">
     <value>ページの向き</value>
-  </data>
-  <data name="SourceButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="SourceLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="SourceLabel.Text" xml:space="preserve">
     <value>入力ファイル</value>
   </data>
-  <data name="PostProcessLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="PostProcessLabel.Text" xml:space="preserve">
     <value>ポストプロセス</value>
-  </data>
-  <data name="DestinationLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="DestinationLabel.Text" xml:space="preserve">
     <value>出力ファイル</value>
   </data>
-  <data name="ResolutionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="ResolutionLabel.Text" xml:space="preserve">
     <value>解像度</value>
-  </data>
-  <data name="FormatLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="FormatLabel.Text" xml:space="preserve">
     <value>ファイルタイプ</value>
   </data>
-  <data name="DestinationButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="DocumentPage.Text" xml:space="preserve">
-    <value>文書プロパティ</value>
-  </data>
-  <data name="ViewOptionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="GeneralTabPage.Text" xml:space="preserve">
+    <value>一般</value>
   </data>
   <data name="ViewOptionLabel.Text" xml:space="preserve">
     <value>表示オプション</value>
   </data>
-  <data name="CreatorLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="CreatorLabel.Text" xml:space="preserve">
     <value>変換ソフト</value>
-  </data>
-  <data name="KeywordsLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="KeywordsLabel.Text" xml:space="preserve">
     <value>キーワード</value>
   </data>
-  <data name="SubjectLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="SubjectLabel.Text" xml:space="preserve">
     <value>サブタイトル</value>
-  </data>
-  <data name="AuthorLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="AuthorLabel.Text" xml:space="preserve">
     <value>作成者</value>
   </data>
-  <data name="TitleLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="TitleLabel.Text" xml:space="preserve">
     <value>タイトル</value>
   </data>
-  <data name="EncryptionTabPage.Text" xml:space="preserve">
-    <value>セキュリティ</value>
-  </data>
-  <data name="EnableEncryptionCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="DocumentPage.Text" xml:space="preserve">
+    <value>文書プロパティ</value>
   </data>
   <data name="EnableEncryptionCheckBox.Text" xml:space="preserve">
     <value>PDF ファイルをパスワードで保護する</value>
   </data>
-  <data name="UserPasswordCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="UserPasswordCheckBox.Text" xml:space="preserve">
     <value>PDF ファイルを開く時にパスワードを要求する</value>
-  </data>
-  <data name="OperationLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="OperationLabel.Text" xml:space="preserve">
     <value>操作</value>
   </data>
-  <data name="OwnerConfirmLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="OwnerConfirmLabel.Text" xml:space="preserve">
     <value>パスワード確認</value>
-  </data>
-  <data name="OwnerPasswordLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="OwnerPasswordLabel.Text" xml:space="preserve">
     <value>管理用パスワード</value>
   </data>
-  <data name="SharePasswordCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="SharePasswordCheckBox.Text" xml:space="preserve">
     <value>管理用パスワードと共用する</value>
-  </data>
-  <data name="UserConfirmLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="UserConfirmLabel.Text" xml:space="preserve">
     <value>パスワード確認</value>
   </data>
-  <data name="UserPasswordLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="UserPasswordLabel.Text" xml:space="preserve">
     <value>閲覧用パスワード</value>
-  </data>
-  <data name="AllowModifyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="AllowModifyCheckBox.Text" xml:space="preserve">
     <value>ページの挿入、回転、削除を許可する</value>
   </data>
-  <data name="AllowFormCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="AllowFormCheckBox.Text" xml:space="preserve">
     <value>フォームへの入力を許可する</value>
-  </data>
-  <data name="AllowCopyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="AllowCopyCheckBox.Text" xml:space="preserve">
     <value>テキストや画像のコピーを許可する</value>
   </data>
-  <data name="AllowPrintCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="AllowPrintCheckBox.Text" xml:space="preserve">
     <value>印刷を許可する</value>
   </data>
-  <data name="OthersTabPage.Text" xml:space="preserve">
-    <value>その他</value>
+  <data name="EncryptionTabPage.Text" xml:space="preserve">
+    <value>セキュリティ</value>
   </data>
   <data name="GrayscaleCheckBox.Text" xml:space="preserve">
     <value>グレースケール</value>
@@ -323,44 +229,26 @@
   <data name="OptionsLabel.Text" xml:space="preserve">
     <value>オプション</value>
   </data>
-  <data name="ImageCompressionCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="ImageCompressionCheckBox.Text" xml:space="preserve">
     <value>PDF ファイル中の画像を JPEG 形式で圧縮する</value>
-  </data>
-  <data name="WebOptimizationCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="WebOptimizationCheckBox.Text" xml:space="preserve">
     <value>PDF ファイルを Web 表示用に最適化する</value>
   </data>
-  <data name="UpdateCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="UpdateCheckBox.Text" xml:space="preserve">
     <value>起動時にアップデートを確認する</value>
-  </data>
-  <data name="LanguageLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="LanguageLabel.Text" xml:space="preserve">
     <value>バージョン情報</value>
   </data>
-  <data name="ApplyButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="OthersTabPage.Text" xml:space="preserve">
+    <value>その他</value>
   </data>
   <data name="ApplyButton.Text" xml:space="preserve">
     <value>設定を保存</value>
   </data>
-  <data name="ConvertButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="ConvertButton.Text" xml:space="preserve">
     <value>変換</value>
-  </data>
-  <data name="ExitButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="ExitButton.Text" xml:space="preserve">
     <value>キャンセル</value>

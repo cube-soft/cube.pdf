@@ -76,17 +76,17 @@ namespace Cube.Pdf.App.Converter
         {
             if (vm == null) return;
 
+            MainBindingSource.DataSource       = vm;
+            SettingsBindingSource.DataSource   = vm.Settings;
+            MetadataBindingSource.DataSource   = vm.Metadata;
+            EncryptionBindingSource.DataSource = vm.Encryption;
+
             FormatComboBox.Bind(ViewResource.Formats);
             FormatOptionComboBox.Bind(ViewResource.FormatOptions);
             SaveOptionComboBox.Bind(ViewResource.SaveOptions);
             ViewOptionComboBox.Bind(ViewResource.ViewOptions);
             PostProcessComboBox.Bind(ViewResource.PostProcesses);
             LanguageComboBox.Bind(ViewResource.Languages);
-
-            MainBindingSource.DataSource       = vm;
-            SettingsBindingSource.DataSource   = vm.Settings;
-            MetadataBindingSource.DataSource   = vm.Metadata;
-            EncryptionBindingSource.DataSource = vm.Encryption;
 
             vm.Messenger.MessageBox.Subscribe(e => new MessageBoxBehavior().Invoke(e));
             vm.Messenger.OpenFileDialog.Subscribe(e => new OpenFileBehavior().Invoke(e));

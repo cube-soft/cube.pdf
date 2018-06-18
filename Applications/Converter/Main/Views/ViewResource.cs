@@ -138,6 +138,24 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Orientations
+        ///
+        /// <summary>
+        /// 表示文字列と Orientation の対応関係を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IList<KeyValuePair<string, Orientation>> Orientations => _orientations ?? (
+            _orientations = new List<KeyValuePair<string, Orientation>>
+            {
+                Pair(Properties.Resources.MenuAuto,      Orientation.Auto),
+                Pair(Properties.Resources.MenuPortrait,  Orientation.Portrait),
+                Pair(Properties.Resources.MenuLandscape, Orientation.Landscape),
+            }
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Languages
         ///
         /// <summary>
@@ -178,6 +196,7 @@ namespace Cube.Pdf.App.Converter
         private static IList<KeyValuePair<string, SaveOption>> _saveOptions;
         private static IList<KeyValuePair<string, ViewOption>> _viewOptions;
         private static IList<KeyValuePair<string, PostProcess>> _postProcesses;
+        private static IList<KeyValuePair<string, Orientation>> _orientations;
         private static IList<KeyValuePair<string, Language>> _languages;
         #endregion
     }
