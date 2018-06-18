@@ -175,7 +175,7 @@ namespace Cube.Pdf.App.Converter
             var src = new ArgumentCollection(args, '/');
             var opt = src.Options;
 
-            Value.DeleteSource = opt.ContainsKey("DeleteInput");
+            Value.DeleteSource = opt.ContainsKey("DeleteOnClose");
 
             if (opt.TryGetValue("MachineName", out var pc)) MachineName = pc;
             if (opt.TryGetValue("UserName", out var user)) UserName = user;

@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Converter;
 using NUnit.Framework;
+using System;
 
 namespace Cube.Pdf.Tests.Converter
 {
@@ -59,6 +60,67 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(dest.Startup.Name,       Is.EqualTo("cubepdf-checker"));
             Assert.That(dest.Startup.Command,    Does.EndWith("cubepdf-checker.exe\""));
             Assert.That(dest.Value,              Is.Not.Null);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// プログラム引数で更新するテストを実行します
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Set()
+        {
+            var src = new[]
+            {
+                "/DeleteOnClose",
+                "/DocumentName",
+                "(234) Twitter",
+                "/InputFile",
+                @"C:\WINDOWS\CubePDF\PS3AEE.tmp",
+                "/MachineName",
+                @"\\APOLLON",
+                "/ThreadID",
+                "15180",
+                "/UserName",
+                "clown",
+                "/Exec",
+                @"C:\Program Files\CubePDF\cubepdf.exe",
+            };
+
+            var dest = new SettingsFolder();
+            dest.Set(src);
+
+            Assert.That(dest.MachineName,        Is.EqualTo(@"\\APOLLON"));
+            Assert.That(dest.UserName,           Is.EqualTo("clown"));
+            Assert.That(dest.DocumentName,       Is.EqualTo("(234) Twitter"));
+            Assert.That(dest.Value.DeleteSource, Is.True);
+            Assert.That(dest.Value.Source,       Is.EqualTo(@"C:\WINDOWS\CubePDF\PS3AEE.tmp"));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set_Empty
+        ///
+        /// <summary>
+        /// プログラム引数が空の時の挙動を確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Set_Empty()
+        {
+            var dest = new SettingsFolder();
+            dest.Set(new string[0]);
+
+            Assert.That(dest.MachineName,        Is.EqualTo(Environment.MachineName));
+            Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));
+            Assert.That(dest.DocumentName,       Is.Empty);
+            Assert.That(dest.Value.DeleteSource, Is.False);
+            Assert.That(dest.Value.Source,       Is.Empty);
         }
 
         #endregion

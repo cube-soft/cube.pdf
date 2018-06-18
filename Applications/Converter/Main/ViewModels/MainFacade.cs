@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Forms;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
@@ -50,7 +49,6 @@ namespace Cube.Pdf.App.Converter
         public MainFacade(SettingsFolder settings)
         {
             Settings = settings;
-            SystemLanguageName = Thread.CurrentThread.CurrentUICulture.Name;
         }
 
         #endregion
@@ -67,17 +65,6 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder Settings { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SystemLanguageName
-        ///
-        /// <summary>
-        /// システムの言語名を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string SystemLanguageName { get; }
 
         #endregion
 

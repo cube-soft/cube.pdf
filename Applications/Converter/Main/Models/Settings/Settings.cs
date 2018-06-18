@@ -334,22 +334,6 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Source
-        ///
-        /// <summary>
-        /// 入力ファイルのパスを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember(Name = "LastInputAccess")]
-        public string Source
-        {
-            get => _source;
-            set => SetProperty(ref _source, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Destination
         ///
         /// <summary>
@@ -395,6 +379,21 @@ namespace Cube.Pdf.App.Converter
         {
             get => _deleteSource;
             set => SetProperty(ref _deleteSource, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Source
+        ///
+        /// <summary>
+        /// 入力ファイルのパスを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Source
+        {
+            get => _source;
+            set => SetProperty(ref _source, value);
         }
 
         /* ----------------------------------------------------------------- */
