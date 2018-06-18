@@ -383,6 +383,22 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// DeleteSource
+        ///
+        /// <summary>
+        /// 変換処理完了後に入力ファイルを削除するかどうかを示す値を
+        /// 取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool DeleteSource
+        {
+            get => _deleteSource;
+            set => SetProperty(ref _deleteSource, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Metadata
         ///
         /// <summary>
@@ -447,6 +463,7 @@ namespace Cube.Pdf.App.Converter
             _metadata         = new Metadata();
             _encryption       = new Encryption();
             _busy             = false;
+            _deleteSource     = false;
         }
 
         /* ----------------------------------------------------------------- */
@@ -485,6 +502,7 @@ namespace Cube.Pdf.App.Converter
         private Metadata _metadata;
         private Encryption _encryption;
         private bool _busy;
+        private bool _deleteSource;
         #endregion
     }
 }

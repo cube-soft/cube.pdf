@@ -16,6 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
+using Cube.FileSystem;
+using Cube.Generics;
+using Microsoft.Win32;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -46,7 +50,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public SettingsFolder() : this(
             Cube.DataContract.Format.Registry,
-            @"CubeSoft\CubePDF\v2"
+            @"CubeSoft\CubePDF\v2",
+            new IO()
         ) { }
 
         /* ----------------------------------------------------------------- */
@@ -59,26 +64,79 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <param name="format">設定情報の保存方法</param>
         /// <param name="path">設定情報の保存パス</param>
+        /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Cube.DataContract.Format format, string path) :
+        public SettingsFolder(Cube.DataContract.Format format, string path, IO io) :
             base(format, path, Assembly.GetExecutingAssembly())
         {
+            IO            = io;
             AutoSave      = false;
-            WorkDirectory = GetDefaultWorkDirectory();
+            MachineName   = Environment.MachineName;
+            UserName      = Environment.UserName;
+            DocumentName  = string.Empty;
+            WorkDirectory = GetWorkDirectory();
 
             var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
             Version.Digit  = 3;
             Version.Suffix = $"RC{asm.Version.Revision}";
 
-            var dir = System.IO.Path.GetDirectoryName(asm.Location);
-            Startup.Command = $"\"{System.IO.Path.Combine(dir, "cubepdf-checker.exe")}\"";
+            var dir = IO.Get(asm.Location).DirectoryName;
+            Startup.Command = $"\"{IO.Combine(dir, "cubepdf-checker.exe")}\"";
             Startup.Name    = "cubepdf-checker";
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MachineName
+        ///
+        /// <summary>
+        /// 端末名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string MachineName { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MachineName
+        ///
+        /// <summary>
+        /// ユーザ名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string UserName { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentName
+        ///
+        /// <summary>
+        /// ドキュメント名を取得または設定します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 主に仮想プリンタ経由時に指定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string DocumentName { get; private set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -96,6 +154,34 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public string WorkDirectory { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// プログラム引数の内容を設定します。
+        /// </summary>
+        ///
+        /// <param name="args">プログラム引数</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Set(string[] args)
+        {
+            var src = new ArgumentCollection(args, '/');
+            var opt = src.Options;
+
+            Value.DeleteSource = opt.ContainsKey("DeleteInput");
+
+            if (opt.TryGetValue("MachineName", out var pc)) MachineName = pc;
+            if (opt.TryGetValue("UserName", out var user)) UserName = user;
+            if (opt.TryGetValue("DocumentName", out var doc)) DocumentName = doc;
+            if (opt.TryGetValue("InputFile", out var input)) Value.Source = input;
+        }
 
         #endregion
 
@@ -121,6 +207,7 @@ namespace Cube.Pdf.App.Converter
             e.NewValue.Format = NormalizeFormat(e.NewValue);
             e.NewValue.Resolution = NormalizeResolution(e.NewValue);
             e.NewValue.Orientation = NormalizeOrientation(e.NewValue);
+            e.NewValue.Destination = NormalizeDestination(e.NewValue);
             e.NewValue.Metadata.Creator = Product;
             e.NewValue.Metadata.ViewOption = ViewOption.OneColumn;
             e.NewValue.Encryption.DenyAll();
@@ -173,18 +260,50 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetDefaultWorkDirectory
+        /// NormalizeDestination
         ///
         /// <summary>
-        /// 作業ディレクトリの初期値を取得します。
+        /// 保存パスを正規化します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// パスにファイル名が残っている場合、ファイル名部分を除去します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string NormalizeDestination(Settings src)
+        {
+            var dest = IO.Get(src.Destination);
+            return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetWorkDirectory
+        ///
+        /// <summary>
+        /// 作業ディレクトリのパスを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetDefaultWorkDirectory() => System.IO.Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-            Company,
-            Product
-        );
+        private string GetWorkDirectory()
+        {
+            var name = $@"Software\{Company}\{Product}";
+            using (var key = Registry.LocalMachine.OpenSubKey(name, false))
+            {
+                if (key != null)
+                {
+                    var dest = key.GetValue("LibPath") as string;
+                    if (dest.HasValue()) return dest;
+                }
+            }
+
+            return IO.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                Company,
+                Product
+            );
+        }
 
         #endregion
     }
