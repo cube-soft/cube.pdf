@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Tests.Ghostscript
@@ -51,6 +52,36 @@ namespace Cube.Pdf.Tests.Ghostscript
             var dest = Run(cv, srcname, destname);
             Assert.That(IO.Exists(dest), Is.True);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create_DocumentConverter_Throws
+        ///
+        /// <summary>
+        /// 無効な変換形式を指定した時の挙動を確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Create_DocumentConverter_Throws() => Assert.That(
+            () => new DocumentConverter(Format.Bmp),
+            Throws.TypeOf<NotSupportedException>()
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create_ImageConverter_Throws
+        ///
+        /// <summary>
+        /// 無効な変換形式を指定した時の挙動を確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Create_ImageConverter_Throws() => Assert.That(
+            () => new ImageConverter(Format.Pdf),
+            Throws.TypeOf<NotSupportedException>()
+        );
 
         #endregion
 

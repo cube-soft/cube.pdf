@@ -48,11 +48,31 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="format">変換後のフォーマット</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentConverter(Format format) : base(format) { }
+        public DocumentConverter(Format format) : base(format)
+        {
+            if (!SupportedFormats.Contains(format)) throw new NotSupportedException();
+        }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SupportedFormats
+        ///
+        /// <summary>
+        /// サポートする形式一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
+        {
+            Format.Text,
+            Format.Ps,
+            Format.Eps,
+            Format.Pdf,
+        };
 
         /* ----------------------------------------------------------------- */
         ///

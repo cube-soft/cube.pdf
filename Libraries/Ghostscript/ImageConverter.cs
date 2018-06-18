@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,11 +46,57 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="format">変換後のフォーマット</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageConverter(Format format) : base(format) { }
+        public ImageConverter(Format format) : base(format)
+        {
+            if (!SupportedFormats.Contains(format)) throw new NotSupportedException();
+        }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SupportedFormats
+        ///
+        /// <summary>
+        /// サポートする形式一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
+        {
+            Format.Psd,
+            Format.PsdRgb,
+            Format.PsdCmyk,
+            Format.PsdCmykog,
+            Format.Jpeg,
+            Format.Jpeg24bppRgb,
+            Format.Jpeg32bppCmyk,
+            Format.Jpeg8bppGrayscale,
+            Format.Png,
+            Format.Png24bppRgb,
+            Format.Png32bppArgb,
+            Format.Png4bppIndexed,
+            Format.Png8bppIndexed,
+            Format.Png8bppGrayscale,
+            Format.Png1bppMonochrome,
+            Format.Bmp,
+            Format.Bmp24bppRgb,
+            Format.Bmp32bppArgb,
+            Format.Bmp4bppIndexed,
+            Format.Bmp8bppIndexed,
+            Format.Bmp8bppGrayscale,
+            Format.Bmp1bppMonochrome,
+            Format.Tiff,
+            Format.Tiff12bppRgb,
+            Format.Tiff24bppRgb,
+            Format.Tiff48bppRgb,
+            Format.Tiff32bppCmyk,
+            Format.Tiff64bppCmyk,
+            Format.Tiff8bppGrayscale,
+            Format.Tiff1bppMonochrome,
+        };
 
         /* ----------------------------------------------------------------- */
         ///
