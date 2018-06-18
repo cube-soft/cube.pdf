@@ -96,23 +96,4 @@ namespace Cube.Pdf.App.Converter
         /// <summary>その他（ユーザプログラム）</summary>
         Others = 2,
     }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Language
-    ///
-    /// <summary>
-    /// 表示言語を表す列挙型です。
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public enum Language
-    {
-        /// <summary>自動</summary>
-        Auto = 0,
-        /// <summary>英語</summary>
-        English = 1,
-        /// <summary>日本語</summary>
-        Japanese = 2,
-    }
 }
