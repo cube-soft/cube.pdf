@@ -16,8 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
+using Cube.Forms;
+using System.Diagnostics;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
 {
@@ -47,7 +49,6 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public MainFacade(SettingsFolder settings)
         {
-            IO = new IO();
             Settings = settings;
             SystemLanguageName = Thread.CurrentThread.CurrentUICulture.Name;
         }
@@ -55,17 +56,6 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// I/O オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -111,6 +101,62 @@ namespace Cube.Pdf.App.Converter
                 gs.Invoke(Settings.Value.Source, Settings.Value.Destination);
             }
             finally { Settings.Value.IsBusy = false; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateSource
+        ///
+        /// <summary>
+        /// Source プロパティを更新します。
+        /// </summary>
+        ///
+        /// <param name="e">ユーザの選択結果</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateSource(FileEventArgs e)
+        {
+            if (e.Result == DialogResult.Cancel) return;
+            Settings.Value.Source = e.FileName;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateDestination
+        ///
+        /// <summary>
+        /// Destination および Format プロパティを更新します。
+        /// </summary>
+        ///
+        /// <param name="e">ユーザの選択結果</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateDestination(FileEventArgs e)
+        {
+            if (e.Result == DialogResult.Cancel) return;
+
+            Debug.Assert(e.FilterIndex > 0);
+            Debug.Assert(e.FilterIndex <= ViewResource.Formats.Count);
+
+            Settings.Value.Destination = e.FileName;
+            Settings.Value.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateUserProgram
+        ///
+        /// <summary>
+        /// UserProgram プロパティを更新します。
+        /// </summary>
+        ///
+        /// <param name="e">ユーザの選択結果</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateUserProgram(FileEventArgs e)
+        {
+            if (e.Result == DialogResult.Cancel) return;
+            Settings.Value.UserProgram = e.FileName;
         }
 
         #endregion

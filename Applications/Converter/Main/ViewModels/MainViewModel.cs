@@ -20,8 +20,6 @@ using Cube.FileSystem;
 using Cube.Log;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
 {
@@ -76,6 +74,17 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IO IO => Model.Settings.IO;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Messenger
         ///
         /// <summary>
@@ -84,17 +93,6 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public Messenger Messenger { get; } = new Messenger();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// I/O オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO => Model.IO;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -249,8 +247,7 @@ namespace Cube.Pdf.App.Converter
         {
             var e = MessageFactory.CreateSource(Settings.Source, IO);
             Messenger.OpenFileDialog.Publish(e);
-            if (e.Result == DialogResult.Cancel) return;
-            Settings.Source = e.FileName;
+            Model.UpdateSource(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -266,13 +263,7 @@ namespace Cube.Pdf.App.Converter
         {
             var e = MessageFactory.CreateDestination(Settings.Destination, IO);
             Messenger.SaveFileDialog.Publish(e);
-            if (e.Result == DialogResult.Cancel) return;
-
-            Debug.Assert(e.FilterIndex > 0);
-            Debug.Assert(e.FilterIndex <= ViewResource.Formats.Count);
-
-            Settings.Destination = e.FileName;
-            Settings.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
+            Model.UpdateDestination(e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -288,8 +279,7 @@ namespace Cube.Pdf.App.Converter
         {
             var e = MessageFactory.CreateUserProgram(Settings.UserProgram, IO);
             Messenger.OpenFileDialog.Publish(e);
-            if (e.Result == DialogResult.Cancel) return;
-            Settings.UserProgram = e.FileName;
+            Model.UpdateUserProgram(e);
         }
 
         #endregion
