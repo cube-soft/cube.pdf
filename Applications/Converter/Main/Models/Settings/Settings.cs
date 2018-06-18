@@ -53,6 +53,8 @@ namespace Cube.Pdf.App.Converter
 
         #region Properties
 
+        #region DataMember
+
         /* ----------------------------------------------------------------- */
         ///
         /// Format
@@ -345,6 +347,23 @@ namespace Cube.Pdf.App.Converter
             set => SetProperty(ref _destination, value);
         }
 
+        #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBusy
+        ///
+        /// <summary>
+        /// 変換処理中かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsBusy
+        {
+            get => _busy;
+            set => SetProperty(ref _busy, value);
+        }
+
         /* ----------------------------------------------------------------- */
         ///
         /// Metadata
@@ -409,6 +428,7 @@ namespace Cube.Pdf.App.Converter
             _userProgram      = string.Empty;
             _metadata         = new Metadata();
             _encryption       = new Encryption();
+            _busy             = false;
         }
 
         /* ----------------------------------------------------------------- */
@@ -445,6 +465,7 @@ namespace Cube.Pdf.App.Converter
         private string _userProgram;
         private Metadata _metadata;
         private Encryption _encryption;
+        private bool _busy;
         #endregion
     }
 }

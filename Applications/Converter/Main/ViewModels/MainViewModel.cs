@@ -76,21 +76,6 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsBusy
-        ///
-        /// <summary>
-        /// 処理中かどうかを示す値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool IsBusy
-        {
-            get => _busy;
-            set => SetProperty(ref _busy, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Messenger
         ///
         /// <summary>
@@ -143,6 +128,21 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public Uri Uri => new Uri("https://www.cube-soft.jp/cubepdf/");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBusy
+        ///
+        /// <summary>
+        /// 処理中かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsBusy
+        {
+            get => Model.Settings.Value.IsBusy;
+            set => Model.Settings.Value.CheckUpdate = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -224,7 +224,6 @@ namespace Cube.Pdf.App.Converter
         {
             try
             {
-                IsBusy = true;
                 Model.Convert();
                 Messenger.Close.Publish();
             }
@@ -235,7 +234,6 @@ namespace Cube.Pdf.App.Converter
                 Messenger.MessageBox.Publish(MessageFactory.CreateError(err.Message));
                 Messenger.Close.Publish();
             }
-            finally { IsBusy = false; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -316,10 +314,6 @@ namespace Cube.Pdf.App.Converter
             OnPropertyChanged(e);
         }
 
-        #endregion
-
-        #region Fields
-        private bool _busy = false;
         #endregion
     }
 }

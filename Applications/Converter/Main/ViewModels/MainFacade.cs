@@ -104,8 +104,13 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            var gs = GhostscriptFactory.Create(Settings);
-            gs.Invoke(Settings.Value.Source, Settings.Value.Destination);
+            try
+            {
+                Settings.Value.IsBusy = true;
+                var gs = GhostscriptFactory.Create(Settings);
+                gs.Invoke(Settings.Value.Source, Settings.Value.Destination);
+            }
+            finally { Settings.Value.IsBusy = false; }
         }
 
         #endregion
