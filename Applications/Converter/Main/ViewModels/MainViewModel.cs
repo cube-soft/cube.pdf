@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Log;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -50,8 +51,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public MainViewModel(SettingsFolder settings)
         {
-            _settings = settings;
-            _settings.PropertyChanged += WhenPropertyChanged;
+            Model = new MainFacade(settings);
+            settings.PropertyChanged += WhenPropertyChanged;
 
             Settings   = new SettingsViewModel(settings.Value);
             Metadata   = new MetadataViewModel(settings.Value.Metadata);
@@ -61,6 +62,17 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model
+        ///
+        /// <summary>
+        /// Model オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected MainFacade Model { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -97,7 +109,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IO IO { get; } = new IO();
+        public IO IO => Model.IO;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,7 +120,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Product => _settings.Product;
+        public string Product => Model.Settings.Product;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -119,7 +131,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Version => _settings.Version.ToString(true);
+        public string Version => Model.Settings.Version.ToString(true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -143,8 +155,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool CheckUpdate
         {
-            get => _settings.Value.CheckUpdate;
-            set => _settings.Value.CheckUpdate = value;
+            get => Model.Settings.Value.CheckUpdate;
+            set => Model.Settings.Value.CheckUpdate = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -158,8 +170,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public Language Language
         {
-            get => _settings.Value.Language;
-            set => _settings.Value.Language = value;
+            get => Model.Settings.Value.Language;
+            set => Model.Settings.Value.Language = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -198,6 +210,33 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Commands
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// 変換処理を実行するためのコマンドです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Convert()
+        {
+            try
+            {
+                IsBusy = true;
+                Model.Convert();
+                Messenger.Close.Publish();
+            }
+            catch (OperationCanceledException) { }
+            catch (Exception err)
+            {
+                this.LogError(err.ToString(), err);
+                Messenger.MessageBox.Publish(MessageFactory.CreateError(err.Message));
+                Messenger.Close.Publish();
+            }
+            finally { IsBusy = false; }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -280,7 +319,6 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Fields
-        private readonly SettingsFolder _settings;
         private bool _busy = false;
         #endregion
     }

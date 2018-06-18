@@ -88,6 +88,7 @@ namespace Cube.Pdf.App.Converter
             PostProcessComboBox.Bind(ViewResource.PostProcesses);
             LanguageComboBox.Bind(ViewResource.Languages);
 
+            vm.Messenger.Close.Subscribe(() => Close());
             vm.Messenger.MessageBox.Subscribe(e => new MessageBoxBehavior().Invoke(e));
             vm.Messenger.OpenFileDialog.Subscribe(e => new OpenFileBehavior().Invoke(e));
             vm.Messenger.SaveFileDialog.Subscribe(e => new SaveFileBehavior().Invoke(e));
@@ -95,6 +96,7 @@ namespace Cube.Pdf.App.Converter
             SourceButton.Click      += (s, e) => vm.BrowseSource();
             DestinationButton.Click += (s, e) => vm.BrowseDestination();
             UserProgramButton.Click += (s, e) => vm.BrowseUserProgram();
+            ConvertButton.Click     += (s, e) => vm.Convert();
 
             DataBindings.Add(new Binding(nameof(IsBusy), MainBindingSource,
                 nameof(IsBusy), false, DataSourceUpdateMode.OnPropertyChanged));

@@ -16,69 +16,97 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
+using Cube.FileSystem;
+using System.Threading;
 
 namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Messenger
+    /// MainFacade
     ///
     /// <summary>
-    /// ViewModel から View を操作するためのクラスです。
+    /// メイン処理を表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Messenger : IAggregator
+    public class MainFacade
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MainFacade
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="settings">設定情報</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainFacade(SettingsFolder settings)
+        {
+            IO = new IO();
+            Settings = settings;
+            SystemLanguageName = Thread.CurrentThread.CurrentUICulture.Name;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Close
+        /// IO
         ///
         /// <summary>
-        /// 画面を閉じるイベントを取得します。
+        /// I/O オブジェクトを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent Close { get; } = new RelayEvent();
+        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MessageBox
+        /// Settings
         ///
         /// <summary>
-        /// MessageBox を表示するイベントを取得します。
+        /// 設定情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<MessageEventArgs> MessageBox { get; } =
-            new RelayEvent<MessageEventArgs>();
+        public SettingsFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OpenFileDialog
+        /// SystemLanguageName
         ///
         /// <summary>
-        /// OpenFileDialog を表示するイベントを取得します。
+        /// システムの言語名を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<OpenFileEventArgs> OpenFileDialog { get; } =
-            new RelayEvent<OpenFileEventArgs>();
+        public string SystemLanguageName { get; }
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveFileDialog
+        /// Convert
         ///
         /// <summary>
-        /// SaveFileDialog を表示するイベントを取得します。
+        /// 変換処理を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<SaveFileEventArgs> SaveFileDialog { get; } =
-            new RelayEvent<SaveFileEventArgs>();
+        public void Convert()
+        {
+            var gs = GhostscriptFactory.Create(Settings);
+            gs.Invoke(Settings.Value.Source, Settings.Value.Destination);
+        }
 
         #endregion
     }

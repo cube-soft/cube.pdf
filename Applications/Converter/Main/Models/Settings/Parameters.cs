@@ -20,43 +20,6 @@ namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FormatOption
-    ///
-    /// <summary>
-    /// 変換形式に関するオプションオプションを表す列挙型です。
-    /// </summary>
-    ///
-    /// <remarks>
-    /// 旧 CubePDF で PDFVersion と呼んでいたものを汎用化した形で定義
-    /// しています。ただし、現在定義されているものは PDF のバージョン
-    /// のみです。
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    public enum FormatOption
-    {
-        /// <summary>PDF 1.2</summary>
-        Pdf12 = 5,
-        /// <summary>PDF 1.3</summary>
-        Pdf13 = 4,
-        /// <summary>PDF 1.4</summary>
-        Pdf14 = 3,
-        /// <summary>PDF 1.5</summary>
-        Pdf15 = 2,
-        /// <summary>PDF 1.6</summary>
-        Pdf16 = 1,
-        /// <summary>PDF 1.7</summary>
-        Pdf17 = 0,
-        /// <summary>PDF/A</summary>
-        PdfA = 6,
-        /// <summary>PDF/X-1a</summary>
-        PdfX1a = 7,
-        /// <summary>PDF/X-3</summary>
-        PdfX3 = 8,
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// SaveOption
     ///
     /// <summary>

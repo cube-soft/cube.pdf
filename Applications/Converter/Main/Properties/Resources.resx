@@ -217,4 +217,10 @@
   <data name="TitleBrowseSource" xml:space="preserve">
     <value>Select source file</value>
   </data>
+  <data name="TitleError" xml:space="preserve">
+    <value>CubePDF error</value>
+  </data>
+  <data name="TitleWarning" xml:space="preserve">
+    <value>CubePDF warning</value>
+  </data>
 </root>

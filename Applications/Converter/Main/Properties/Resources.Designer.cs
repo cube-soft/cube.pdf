@@ -358,5 +358,23 @@ namespace Cube.Pdf.App.Converter.Properties {
                 return ResourceManager.GetString("TitleBrowseSource", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   CubePDF error に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleError {
+            get {
+                return ResourceManager.GetString("TitleError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CubePDF warning に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleWarning {
+            get {
+                return ResourceManager.GetString("TitleWarning", resourceCulture);
+            }
+        }
     }
 }

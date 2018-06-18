@@ -108,6 +108,46 @@ namespace Cube.Pdf.App.Converter
             Filter           = GetFilter(GetUserProgramFilters()),
         };
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateWarning
+        ///
+        /// <summary>
+        /// 警告メッセージを生成します。
+        /// </summary>
+        ///
+        /// <param name="src">メッセージ内容</param>
+        ///
+        /// <returns>MessageEventArgs</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static MessageEventArgs CreateWarning(string src) => new MessageEventArgs(
+            src,
+            Properties.Resources.TitleWarning,
+            System.Windows.Forms.MessageBoxButtons.YesNo,
+            System.Windows.Forms.MessageBoxIcon.Warning
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateError
+        ///
+        /// <summary>
+        /// エラーメッセージを生成します。
+        /// </summary>
+        ///
+        /// <param name="src">メッセージ内容</param>
+        ///
+        /// <returns>MessageEventArgs</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static MessageEventArgs CreateError(string src) => new MessageEventArgs(
+            src,
+            Properties.Resources.TitleError,
+            System.Windows.Forms.MessageBoxButtons.OK,
+            System.Windows.Forms.MessageBoxIcon.Error
+        );
+
         #endregion
 
         #region Implementations
