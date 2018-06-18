@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Reflection;
+
 namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
@@ -57,15 +59,18 @@ namespace Cube.Pdf.App.Converter
         /// <param name="path">設定情報の保存パス</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Cube.DataContract.Format format, string path) : base(format, path)
+        public SettingsFolder(Cube.DataContract.Format format, string path) :
+            base(format, path, Assembly.GetExecutingAssembly())
         {
-            AutoSave       = false;
-            Version.Digit  = 3;
-            Version.Suffix = $"RC{AssemblyReader.Default.Version.Revision}";
+            AutoSave = false;
 
-            var dir = System.IO.Path.GetDirectoryName(AssemblyReader.Default.Location);
+            var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
+            Version.Digit  = 3;
+            Version.Suffix = $"RC{asm.Version.Revision}";
+
+            var dir = System.IO.Path.GetDirectoryName(asm.Location);
             Startup.Command = $"\"{System.IO.Path.Combine(dir, "cubepdf-checker.exe")}\"";
-            Startup.Name = "cubeice-checker";
+            Startup.Name    = "cubepdf-checker";
         }
 
         #endregion

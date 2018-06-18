@@ -13,7 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests", "Tests\Cub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Clip", "Applications\Clip\Cube.Pdf.App.Clip.csproj", "{65746EF3-A052-45CE-8565-ADF0DF950DBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Converter", "Applications\Converter\Cube.Pdf.App.Converter.csproj", "{467EEF80-0390-46E8-A403-CAB70FC2D8E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Converter", "Applications\Converter\Main\Cube.Pdf.App.Converter.csproj", "{467EEF80-0390-46E8-A403-CAB70FC2D8E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests.Converter", "Applications\Converter\Tests\Cube.Pdf.Tests.Converter.csproj", "{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.App.Pages", "Applications\Pages\Cube.Pdf.App.Pages.csproj", "{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}"
 EndProject
@@ -49,6 +51,10 @@ Global
 		{467EEF80-0390-46E8-A403-CAB70FC2D8E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{467EEF80-0390-46E8-A403-CAB70FC2D8E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{467EEF80-0390-46E8-A403-CAB70FC2D8E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU

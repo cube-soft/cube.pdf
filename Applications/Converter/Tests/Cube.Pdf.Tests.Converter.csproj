@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cube.Pdf.Tests.Converter</RootNamespace>
+    <AssemblyName>Cube.Pdf.Tests.Converter</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AlphaFS">
+      <HintPath>..\..\..\..\packages\AlphaFS.2.2.1\lib\net45\AlphaFS.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Core">
+      <HintPath>..\..\..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.FileSystem">
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Images">
+      <HintPath>..\..\..\..\packages\Cube.Images.1.10.0\lib\net45\Cube.Images.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Forms">
+      <HintPath>..\..\..\..\packages\Cube.Forms.1.10.0\lib\net45\Cube.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Settings\SettingsTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Cube.Pdf.Core.csproj">
+      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
+      <Name>Cube.Pdf.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj">
+      <Project>{781aa3bc-29d6-43ba-b76b-7ef1c5532ba5}</Project>
+      <Name>Cube.Pdf.Ghostscript</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj">
+      <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
+      <Name>Cube.Pdf.Itext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Main\Cube.Pdf.App.Converter.csproj">
+      <Project>{467eef80-0390-46e8-a403-cab70fc2d8e1}</Project>
+      <Name>Cube.Pdf.App.Converter</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
