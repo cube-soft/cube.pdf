@@ -16,7 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Cube.Pdf.App.Converter
 {
@@ -50,6 +52,24 @@ namespace Cube.Pdf.App.Converter
     /* --------------------------------------------------------------------- */
     public static class LanguageExtension
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LanguageExtension
+        ///
+        /// <summary>
+        /// 静的フィールドを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static LanguageExtension()
+        {
+            _system = Thread.CurrentThread.CurrentUICulture.Name;
+        }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -60,9 +80,21 @@ namespace Cube.Pdf.App.Converter
         /// Language に対応する名前を取得します。
         /// </summary>
         ///
+        /// <param name="src">Language</param>
+        ///
+        /// <returns>表示言語を表す名前</returns>
+        ///
+        /// <remarks>
+        /// Language.Auto または未対応の値が指定された場合、プログラム
+        /// 起動時の名前を返します。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public static string GetName(this Language src) =>
-            GetLanguageMap().TryGetValue(src, out var value) ? value : string.Empty;
+        public static string GetName(this Language src)
+        {
+            var dest = GetLanguageMap().TryGetValue(src, out var value) ? value : string.Empty;
+            return dest.HasValue() ? dest : _system;
+        }
 
         #endregion
 
@@ -89,6 +121,7 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Fields
+        private static readonly string _system;
         private static IDictionary<Language, string> _map;
         #endregion
     }

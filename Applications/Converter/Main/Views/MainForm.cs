@@ -19,6 +19,8 @@
 using Cube.Forms.Behaviors;
 using Cube.Forms.Controls;
 using System.ComponentModel;
+using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
@@ -54,6 +56,7 @@ namespace Cube.Pdf.App.Converter
             new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox);
             new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox);
 
+            SetComboBox();
             SettingsPanel.ApplyButton = ApplyButton;
         }
 
@@ -81,14 +84,8 @@ namespace Cube.Pdf.App.Converter
             MetadataBindingSource.DataSource   = vm.Metadata;
             EncryptionBindingSource.DataSource = vm.Encryption;
 
-            FormatComboBox.Bind(ViewResource.Formats);
-            FormatOptionComboBox.Bind(ViewResource.FormatOptions);
-            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
-            ViewOptionComboBox.Bind(ViewResource.ViewOptions);
-            PostProcessComboBox.Bind(ViewResource.PostProcesses);
-            LanguageComboBox.Bind(ViewResource.Languages);
-
             vm.Messenger.Close.Subscribe(() => Close());
+            vm.Messenger.SetCulture.Subscribe(e => SetCulture(e));
             vm.Messenger.MessageBox.Subscribe(e => new MessageBoxBehavior().Invoke(e));
             vm.Messenger.OpenFileDialog.Subscribe(e => new OpenFileBehavior().Invoke(e));
             vm.Messenger.SaveFileDialog.Subscribe(e => new SaveFileBehavior().Invoke(e));
@@ -129,6 +126,65 @@ namespace Cube.Pdf.App.Converter
                 ConvertProgressBar.Visible = value;
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
             }
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetCulture
+        ///
+        /// <summary>
+        /// 表示言語を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetCulture(string name)
+        {
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(name);
+            ComponentResourceManager src = new ComponentResourceManager(typeof(MainForm));
+            src.ApplyResources(this, "$this");
+            SetCulture(src, Controls);
+            SetComboBox();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetCulture
+        ///
+        /// <summary>
+        /// 表示言語を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetCulture(ComponentResourceManager src, Control.ControlCollection controls)
+        {
+            foreach (Control control in controls)
+            {
+                src.ApplyResources(control, control.Name);
+                SetCulture(src, control.Controls);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetComboBox
+        ///
+        /// <summary>
+        /// ComboBox の内容を設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetComboBox()
+        {
+            FormatComboBox.Bind(ViewResource.Formats);
+            FormatOptionComboBox.Bind(ViewResource.FormatOptions);
+            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
+            ViewOptionComboBox.Bind(ViewResource.ViewOptions);
+            PostProcessComboBox.Bind(ViewResource.PostProcesses);
+            LanguageComboBox.Bind(ViewResource.Languages);
         }
 
         #endregion

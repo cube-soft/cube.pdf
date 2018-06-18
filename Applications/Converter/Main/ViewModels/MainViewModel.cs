@@ -297,11 +297,18 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private void WhenPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var show = e.PropertyName == nameof(Settings.PostProcess) &&
-                       Settings.PostProcess == PostProcess.Others;
-            if (show) BrowseUserProgram();
-
-            OnPropertyChanged(e);
+            switch (e.PropertyName)
+            {
+                case nameof(Settings.PostProcess):
+                    if (Settings.PostProcess == PostProcess.Others) BrowseUserProgram();
+                    break;
+                case nameof(Language):
+                    Messenger.SetCulture.Publish(Language.GetName());
+                    break;
+                default:
+                    OnPropertyChanged(e);
+                    break;
+            }
         }
 
         #endregion
