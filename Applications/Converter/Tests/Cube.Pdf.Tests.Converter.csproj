@@ -58,7 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Settings\SettingsTest.cs" />
+    <Compile Include="MainFacadeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Core\Cube.Pdf.Core.csproj">

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using Cube.Pdf.App.Converter;
 using NUnit.Framework;
 
@@ -23,18 +24,16 @@ namespace Cube.Pdf.Tests.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsTest
+    /// MainFacadeTest
     ///
     /// <summary>
-    /// SettingsFolder のテスト用クラスです。
+    /// MainFacade のテスト用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SettingsTest
+    class MainFacadeTest
     {
-        #region Tests
-
         /* ----------------------------------------------------------------- */
         ///
         /// Create
@@ -47,19 +46,9 @@ namespace Cube.Pdf.Tests.Converter
         [Test]
         public void Create()
         {
-            var dest = new SettingsFolder();
+            var dest = new MainFacade(new SettingsFolder());
 
-            Assert.That(dest.Format,             Is.EqualTo(Cube.DataContract.Format.Registry));
-            Assert.That(dest.AutoSave,           Is.False);
-            Assert.That(dest.Company,            Is.EqualTo("CubeSoft"));
-            Assert.That(dest.Product,            Is.EqualTo("CubePDF"));
-            Assert.That(dest.Location,           Is.EqualTo(@"CubeSoft\CubePDF\v2"));
-            Assert.That(dest.Version.ToString(), Is.EqualTo("1.0.0RC12"));
-            Assert.That(dest.Startup.Name,       Is.EqualTo("cubepdf-checker"));
-            Assert.That(dest.Startup.Command,    Does.EndWith("cubepdf-checker.exe\""));
-            Assert.That(dest.Value,              Is.Not.Null);
+            Assert.That(dest.SystemLanguageName.HasValue(), Is.True);
         }
-
-        #endregion
     }
 }
