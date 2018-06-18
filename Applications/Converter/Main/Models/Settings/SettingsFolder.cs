@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -63,7 +64,8 @@ namespace Cube.Pdf.App.Converter
         public SettingsFolder(Cube.DataContract.Format format, string path) :
             base(format, path, Assembly.GetExecutingAssembly())
         {
-            AutoSave = false;
+            AutoSave      = false;
+            WorkDirectory = GetDefaultWorkDirectory();
 
             var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
             Version.Digit  = 3;
@@ -73,6 +75,27 @@ namespace Cube.Pdf.App.Converter
             Startup.Command = $"\"{System.IO.Path.Combine(dir, "cubepdf-checker.exe")}\"";
             Startup.Name    = "cubepdf-checker";
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WorkDirectory
+        ///
+        /// <summary>
+        /// 作業ディレクトリのパスを取得または設定します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Ghostscript はパスにマルチバイト文字が含まれる場合、処理に
+        /// 失敗する場合があります。そのため、マルチバイト文字の含まれない
+        /// ディレクトリに移動して処理を実行します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string WorkDirectory { get; set; }
 
         #endregion
 
@@ -147,6 +170,21 @@ namespace Cube.Pdf.App.Converter
             src.Resolution >= 72 ?
             src.Resolution :
             600;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetDefaultWorkDirectory
+        ///
+        /// <summary>
+        /// 作業ディレクトリの初期値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetDefaultWorkDirectory() => System.IO.Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+            Company,
+            Product
+        );
 
         #endregion
     }
