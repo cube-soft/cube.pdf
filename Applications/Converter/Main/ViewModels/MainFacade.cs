@@ -84,8 +84,10 @@ namespace Cube.Pdf.App.Converter
             try
             {
                 Settings.Value.IsBusy = true;
+                var fs = new FileTransfer(Settings.Value.Format, Settings.Value.Destination, Settings.IO);
                 var gs = GhostscriptFactory.Create(Settings);
-                gs.Invoke(Settings.Value.Source, Settings.Value.Destination);
+                gs.Invoke(Settings.Value.Source, fs.Value);
+                fs.Invoke();
             }
             finally { Settings.Value.IsBusy = false; }
         }
