@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,21 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="format">変換後のフォーマット</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentConverter(Format format) : base(format)
+        public DocumentConverter(Format format) : this(format, new IO()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentConverter
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="format">変換後のフォーマット</param>
+        /// <param name="io">I/O オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentConverter(Format format, IO io) : base(format, io)
         {
             if (!SupportedFormats.Contains(format)) throw new NotSupportedException();
         }
