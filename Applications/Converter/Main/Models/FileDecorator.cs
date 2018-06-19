@@ -50,8 +50,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public FileDecorator(SettingsFolder settings)
         {
-            IO    = settings.IO;
-            Value = settings.Value;
+            Settings = settings;
         }
 
         #endregion
@@ -67,7 +66,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IO IO { get; }
+        public IO IO => Settings.IO;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -78,7 +77,18 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings Value { get; }
+        public Settings Value => Settings.Value;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        ///
+        /// <summary>
+        /// 設定情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected SettingsFolder Settings { get; }
 
         #endregion
 
@@ -99,6 +109,25 @@ namespace Cube.Pdf.App.Converter
         {
             if (Value.Format != Ghostscript.Format.Pdf) return;
 
+            InvokeItext(src);
+            InvokeLinearization(src);
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InvokeItext
+        ///
+        /// <summary>
+        /// iTextSharp による処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InvokeItext(string src)
+        {
             var tmp = IO.Combine(IO.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
 
             using (var writer = new DocumentWriter(IO))
@@ -116,9 +145,25 @@ namespace Cube.Pdf.App.Converter
             IO.Move(tmp, src, true);
         }
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InvokeLinearization
+        ///
+        /// <summary>
+        /// Web 表示用に最適化 (Linearization) を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InvokeLinearization(string src)
+        {
+            if (!Value.Linearization || Value.Encryption.Enabled) return;
 
-        #region Implementations
+            var tmp = IO.Combine(IO.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
+            var gs  = GhostscriptFactory.Create(Settings);
+            gs.Options.Add(new Ghostscript.Argument('d', "FastWebView"));
+            gs.Invoke(src, tmp);
+            IO.Move(tmp, src, true);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

@@ -219,7 +219,7 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WebOptimization
+        /// Linearization
         ///
         /// <summary>
         /// PDF ファイルを Web 表示用に最適化するかどうかを示す値を取得
@@ -228,10 +228,10 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         [DataMember(Name = "WebOptimize")]
-        public bool WebOptimization
+        public bool Linearization
         {
-            get => _webOptimization;
-            set => SetProperty(ref _webOptimization, value);
+            get => _linearization;
+            set => SetProperty(ref _linearization, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -453,7 +453,7 @@ namespace Cube.Pdf.App.Converter
             _grayscale        = false;
             _embedFonts       = true;
             _imageCompression = true;
-            _webOptimization  = false;
+            _linearization    = false;
             _sourceVisible    = false;
             _checkUpdate      = true;
             _source           = string.Empty;
@@ -492,7 +492,7 @@ namespace Cube.Pdf.App.Converter
         private bool _grayscale;
         private bool _embedFonts;
         private bool _imageCompression;
-        private bool _webOptimization;
+        private bool _linearization;
         private bool _sourceVisible;
         private bool _checkUpdate;
         private string _source;

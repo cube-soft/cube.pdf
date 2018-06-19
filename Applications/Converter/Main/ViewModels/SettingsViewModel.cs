@@ -281,7 +281,7 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WebOptimization
+        /// Linearization
         ///
         /// <summary>
         /// PDF ファイルを Web 表示用に最適化するかどうかを示す値を取得
@@ -289,10 +289,10 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool WebOptimization
+        public bool Linearization
         {
-            get => _model.WebOptimization;
-            set => _model.WebOptimization = value;
+            get => _model.Linearization;
+            set => _model.Linearization = value;
         }
 
         /* ----------------------------------------------------------------- */

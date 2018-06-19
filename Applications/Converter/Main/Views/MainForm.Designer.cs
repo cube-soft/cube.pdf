@@ -698,7 +698,7 @@
             // WebOptimizationCheckBox
             //
             resources.ApplyResources(this.WebOptimizationCheckBox, "WebOptimizationCheckBox");
-            this.WebOptimizationCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "WebOptimization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.WebOptimizationCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "Linearization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.WebOptimizationCheckBox.Name = "WebOptimizationCheckBox";
             this.WebOptimizationCheckBox.UseVisualStyleBackColor = true;
             //
