@@ -2181,6 +2181,45 @@
   <data name="OthersPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="LanguageLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LanguageLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="LanguageLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LanguageLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 233</value>
+  </data>
+  <data name="LanguageLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="LanguageLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 24</value>
+  </data>
+  <data name="LanguageLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="LanguageLabel.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;LanguageLabel.Name" xml:space="preserve">
+    <value>LanguageLabel</value>
+  </data>
+  <data name="&gt;&gt;LanguageLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LanguageLabel.Parent" xml:space="preserve">
+    <value>OthersPanel</value>
+  </data>
+  <data name="&gt;&gt;LanguageLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="GrayscaleCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2212,7 +2251,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;GrayscaleCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="OptionsLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2248,7 +2287,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;OptionsLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="ImageCompressionCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2281,7 +2320,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;ImageCompressionCheckBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="WebOptimizationCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2314,7 +2353,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;WebOptimizationCheckBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="UpdateCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2350,7 +2389,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;UpdateCheckBox.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="LanguageComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -2374,43 +2413,43 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;LanguageComboBox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
-  <data name="LanguageLabel.AutoSize" type="System.Boolean, mscorlib">
+  <data name="AboutLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="LanguageLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="AboutLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="LanguageLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="AboutLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="LanguageLabel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="AboutLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 98</value>
   </data>
-  <data name="LanguageLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="AboutLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="LanguageLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 159</value>
+  <data name="AboutLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 129</value>
   </data>
-  <data name="LanguageLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="AboutLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="LanguageLabel.Text" xml:space="preserve">
+  <data name="AboutLabel.Text" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="&gt;&gt;LanguageLabel.Name" xml:space="preserve">
-    <value>LanguageLabel</value>
+  <data name="&gt;&gt;AboutLabel.Name" xml:space="preserve">
+    <value>AboutLabel</value>
   </data>
-  <data name="&gt;&gt;LanguageLabel.Type" xml:space="preserve">
+  <data name="&gt;&gt;AboutLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LanguageLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;AboutLabel.Parent" xml:space="preserve">
     <value>OthersPanel</value>
   </data>
-  <data name="&gt;&gt;LanguageLabel.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;AboutLabel.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="VersionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -2434,7 +2473,7 @@
     <value>OthersPanel</value>
   </data>
   <data name="&gt;&gt;VersionPanel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="OthersPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -2464,7 +2503,7 @@
     <value>0</value>
   </data>
   <data name="OthersPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ImageCompressionCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="WebOptimizationCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageLabel" Row="4" RowSpan="3" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LanguageLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ImageCompressionCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="WebOptimizationCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AboutLabel" Row="4" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="OthersTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>

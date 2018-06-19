@@ -101,6 +101,7 @@
             this.AllowPrintCheckBox = new System.Windows.Forms.CheckBox();
             this.OthersTabPage = new System.Windows.Forms.TabPage();
             this.OthersPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.LanguageLabel = new System.Windows.Forms.Label();
             this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
             this.OptionsLabel = new System.Windows.Forms.Label();
             this.ImageCompressionCheckBox = new System.Windows.Forms.CheckBox();
@@ -108,7 +109,7 @@
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
-            this.LanguageLabel = new System.Windows.Forms.Label();
+            this.AboutLabel = new System.Windows.Forms.Label();
             this.VersionPanel = new Cube.Forms.VersionControl();
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -146,23 +147,23 @@
             this.ToolsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // RootPanel
-            //
+            // 
             resources.ApplyResources(this.RootPanel, "RootPanel");
             this.RootPanel.Controls.Add(this.SettingsPanel, 0, 1);
             this.RootPanel.Controls.Add(this.FooterPanel, 0, 2);
             this.RootPanel.Controls.Add(this.HeaderPictureBox, 0, 0);
             this.RootPanel.Name = "RootPanel";
-            //
+            // 
             // SettingsPanel
-            //
+            // 
             this.SettingsPanel.Controls.Add(this.SettingsTabControl);
             resources.ApplyResources(this.SettingsPanel, "SettingsPanel");
             this.SettingsPanel.Name = "SettingsPanel";
-            //
+            // 
             // SettingsTabControl
-            //
+            // 
             this.SettingsTabControl.Controls.Add(this.GeneralTabPage);
             this.SettingsTabControl.Controls.Add(this.DocumentPage);
             this.SettingsTabControl.Controls.Add(this.EncryptionTabPage);
@@ -171,16 +172,16 @@
             this.SettingsTabControl.Name = "SettingsTabControl";
             this.SettingsTabControl.SelectedIndex = 0;
             this.SettingsTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            //
+            // 
             // GeneralTabPage
-            //
+            // 
             resources.ApplyResources(this.GeneralTabPage, "GeneralTabPage");
             this.GeneralTabPage.Controls.Add(this.GeneralPanel);
             this.GeneralTabPage.Name = "GeneralTabPage";
             this.GeneralTabPage.UseVisualStyleBackColor = true;
-            //
+            // 
             // GeneralPanel
-            //
+            // 
             resources.ApplyResources(this.GeneralPanel, "GeneralPanel");
             this.GeneralPanel.Controls.Add(this.ResolutionControl, 1, 1);
             this.GeneralPanel.Controls.Add(this.PostProcessComboBox, 1, 4);
@@ -196,9 +197,9 @@
             this.GeneralPanel.Controls.Add(this.DestinationPanel, 1, 3);
             this.GeneralPanel.Controls.Add(this.FormatPanel, 1, 0);
             this.GeneralPanel.Name = "GeneralPanel";
-            //
+            // 
             // ResolutionControl
-            //
+            // 
             this.ResolutionControl.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.SettingsBindingSource, "Resolution", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.ResolutionControl, "ResolutionControl");
             this.ResolutionControl.Increment = new decimal(new int[] {
@@ -222,183 +223,183 @@
             0,
             0,
             0});
-            //
+            // 
             // SettingsBindingSource
-            //
+            // 
             this.SettingsBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.SettingsViewModel);
-            //
+            // 
             // PostProcessComboBox
-            //
+            // 
             this.PostProcessComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "PostProcess", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.PostProcessComboBox, "PostProcessComboBox");
             this.PostProcessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PostProcessComboBox.FormattingEnabled = true;
             this.PostProcessComboBox.Name = "PostProcessComboBox";
-            //
+            // 
             // UserProgramPanel
-            //
+            // 
             resources.ApplyResources(this.UserProgramPanel, "UserProgramPanel");
             this.UserProgramPanel.Controls.Add(this.UserProgramButton, 0, 0);
             this.UserProgramPanel.Controls.Add(this.UserProgramTextBox, 0, 0);
             this.UserProgramPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "EnableUserProgram", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.UserProgramPanel.Name = "UserProgramPanel";
-            //
+            // 
             // UserProgramButton
-            //
+            // 
             resources.ApplyResources(this.UserProgramButton, "UserProgramButton");
             this.UserProgramButton.Name = "UserProgramButton";
             this.UserProgramButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // UserProgramTextBox
-            //
+            // 
             this.UserProgramTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingsBindingSource, "UserProgram", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.UserProgramTextBox, "UserProgramTextBox");
             this.UserProgramTextBox.Name = "UserProgramTextBox";
-            //
+            // 
             // OrientationPanel
-            //
+            // 
             this.OrientationPanel.Controls.Add(this.PortraitRadioButton);
             this.OrientationPanel.Controls.Add(this.LandscapeRadioButton);
             this.OrientationPanel.Controls.Add(this.AutoRadioButton);
             resources.ApplyResources(this.OrientationPanel, "OrientationPanel");
             this.OrientationPanel.Name = "OrientationPanel";
-            //
+            // 
             // PortraitRadioButton
-            //
+            // 
             resources.ApplyResources(this.PortraitRadioButton, "PortraitRadioButton");
             this.PortraitRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "IsPortrait", true));
             this.PortraitRadioButton.Name = "PortraitRadioButton";
             this.PortraitRadioButton.TabStop = true;
             this.PortraitRadioButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // LandscapeRadioButton
-            //
+            // 
             resources.ApplyResources(this.LandscapeRadioButton, "LandscapeRadioButton");
             this.LandscapeRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "IsLandscape", true));
             this.LandscapeRadioButton.Name = "LandscapeRadioButton";
             this.LandscapeRadioButton.TabStop = true;
             this.LandscapeRadioButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // AutoRadioButton
-            //
+            // 
             resources.ApplyResources(this.AutoRadioButton, "AutoRadioButton");
             this.AutoRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "IsAutoOrientation", true));
             this.AutoRadioButton.Name = "AutoRadioButton";
             this.AutoRadioButton.TabStop = true;
             this.AutoRadioButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // OrientationLabel
-            //
+            // 
             resources.ApplyResources(this.OrientationLabel, "OrientationLabel");
             this.OrientationLabel.Name = "OrientationLabel";
-            //
+            // 
             // SourcePanel
-            //
+            // 
             resources.ApplyResources(this.SourcePanel, "SourcePanel");
             this.SourcePanel.Controls.Add(this.SourceButton, 0, 0);
             this.SourcePanel.Controls.Add(this.SourceTextBox, 0, 0);
             this.SourcePanel.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.SettingsBindingSource, "SourceVisible", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.SourcePanel.Name = "SourcePanel";
-            //
+            // 
             // SourceButton
-            //
+            // 
             resources.ApplyResources(this.SourceButton, "SourceButton");
             this.SourceButton.Name = "SourceButton";
             this.SourceButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // SourceTextBox
-            //
+            // 
             this.SourceTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingsBindingSource, "Source", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.SourceTextBox, "SourceTextBox");
             this.SourceTextBox.Name = "SourceTextBox";
-            //
+            // 
             // SourceLabel
-            //
+            // 
             resources.ApplyResources(this.SourceLabel, "SourceLabel");
             this.SourceLabel.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.SettingsBindingSource, "SourceVisible", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.SourceLabel.Name = "SourceLabel";
-            //
+            // 
             // PostProcessLabel
-            //
+            // 
             resources.ApplyResources(this.PostProcessLabel, "PostProcessLabel");
             this.PostProcessLabel.Name = "PostProcessLabel";
-            //
+            // 
             // DestinationLabel
-            //
+            // 
             resources.ApplyResources(this.DestinationLabel, "DestinationLabel");
             this.DestinationLabel.Name = "DestinationLabel";
-            //
+            // 
             // ResolutionLabel
-            //
+            // 
             resources.ApplyResources(this.ResolutionLabel, "ResolutionLabel");
             this.ResolutionLabel.Name = "ResolutionLabel";
-            //
+            // 
             // FormatLabel
-            //
+            // 
             resources.ApplyResources(this.FormatLabel, "FormatLabel");
             this.FormatLabel.Name = "FormatLabel";
-            //
+            // 
             // DestinationPanel
-            //
+            // 
             resources.ApplyResources(this.DestinationPanel, "DestinationPanel");
             this.DestinationPanel.Controls.Add(this.SaveOptionComboBox, 2, 0);
             this.DestinationPanel.Controls.Add(this.DestinationButton, 1, 0);
             this.DestinationPanel.Controls.Add(this.DestinationTextBox, 0, 0);
             this.DestinationPanel.Name = "DestinationPanel";
-            //
+            // 
             // SaveOptionComboBox
-            //
+            // 
             this.SaveOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "SaveOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.SaveOptionComboBox, "SaveOptionComboBox");
             this.SaveOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SaveOptionComboBox.FormattingEnabled = true;
             this.SaveOptionComboBox.Name = "SaveOptionComboBox";
-            //
+            // 
             // DestinationButton
-            //
+            // 
             resources.ApplyResources(this.DestinationButton, "DestinationButton");
             this.DestinationButton.Name = "DestinationButton";
             this.DestinationButton.UseVisualStyleBackColor = true;
-            //
+            // 
             // DestinationTextBox
-            //
+            // 
             this.DestinationTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingsBindingSource, "Destination", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.DestinationTextBox, "DestinationTextBox");
             this.DestinationTextBox.Name = "DestinationTextBox";
-            //
+            // 
             // FormatPanel
-            //
+            // 
             resources.ApplyResources(this.FormatPanel, "FormatPanel");
             this.FormatPanel.Controls.Add(this.FormatOptionComboBox, 0, 0);
             this.FormatPanel.Controls.Add(this.FormatComboBox, 0, 0);
             this.FormatPanel.Name = "FormatPanel";
-            //
+            // 
             // FormatOptionComboBox
-            //
+            // 
             this.FormatOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "FormatOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.FormatOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "EnableFormatOption", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             resources.ApplyResources(this.FormatOptionComboBox, "FormatOptionComboBox");
             this.FormatOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FormatOptionComboBox.FormattingEnabled = true;
             this.FormatOptionComboBox.Name = "FormatOptionComboBox";
-            //
+            // 
             // FormatComboBox
-            //
+            // 
             this.FormatComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "Format", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.FormatComboBox, "FormatComboBox");
             this.FormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FormatComboBox.FormattingEnabled = true;
             this.FormatComboBox.Name = "FormatComboBox";
-            //
+            // 
             // DocumentPage
-            //
+            // 
             resources.ApplyResources(this.DocumentPage, "DocumentPage");
             this.DocumentPage.Controls.Add(this.DocumentPanel);
             this.DocumentPage.Name = "DocumentPage";
             this.DocumentPage.UseVisualStyleBackColor = true;
-            //
+            // 
             // DocumentPanel
-            //
+            // 
             resources.ApplyResources(this.DocumentPanel, "DocumentPanel");
             this.DocumentPanel.Controls.Add(this.ViewOptionComboBox, 1, 5);
             this.DocumentPanel.Controls.Add(this.ViewOptionLabel, 0, 5);
@@ -413,106 +414,106 @@
             this.DocumentPanel.Controls.Add(this.TitleTextBox, 1, 0);
             this.DocumentPanel.Controls.Add(this.TitleLabel, 0, 0);
             this.DocumentPanel.Name = "DocumentPanel";
-            //
+            // 
             // ViewOptionComboBox
-            //
+            // 
             this.ViewOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "ViewOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.ViewOptionComboBox, "ViewOptionComboBox");
             this.ViewOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ViewOptionComboBox.FormattingEnabled = true;
             this.ViewOptionComboBox.Name = "ViewOptionComboBox";
-            //
+            // 
             // MetadataBindingSource
-            //
+            // 
             this.MetadataBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MetadataViewModel);
-            //
+            // 
             // ViewOptionLabel
-            //
+            // 
             resources.ApplyResources(this.ViewOptionLabel, "ViewOptionLabel");
             this.ViewOptionLabel.Name = "ViewOptionLabel";
-            //
+            // 
             // CreatorTextBox
-            //
+            // 
             this.CreatorTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Creator", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.CreatorTextBox, "CreatorTextBox");
             this.CreatorTextBox.Name = "CreatorTextBox";
-            //
+            // 
             // CreatorLabel
-            //
+            // 
             resources.ApplyResources(this.CreatorLabel, "CreatorLabel");
             this.CreatorLabel.Name = "CreatorLabel";
-            //
+            // 
             // KeywordsTextBox
-            //
+            // 
             this.KeywordsTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Keywords", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.KeywordsTextBox, "KeywordsTextBox");
             this.KeywordsTextBox.Name = "KeywordsTextBox";
-            //
+            // 
             // KeywordsLabel
-            //
+            // 
             resources.ApplyResources(this.KeywordsLabel, "KeywordsLabel");
             this.KeywordsLabel.Name = "KeywordsLabel";
-            //
+            // 
             // SubjectTextBox
-            //
+            // 
             this.SubjectTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Subtitle", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.SubjectTextBox, "SubjectTextBox");
             this.SubjectTextBox.Name = "SubjectTextBox";
-            //
+            // 
             // SubjectLabel
-            //
+            // 
             resources.ApplyResources(this.SubjectLabel, "SubjectLabel");
             this.SubjectLabel.Name = "SubjectLabel";
-            //
+            // 
             // AuthorTextBox
-            //
+            // 
             this.AuthorTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Author", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.AuthorTextBox, "AuthorTextBox");
             this.AuthorTextBox.Name = "AuthorTextBox";
-            //
+            // 
             // AuthorLabel
-            //
+            // 
             resources.ApplyResources(this.AuthorLabel, "AuthorLabel");
             this.AuthorLabel.Name = "AuthorLabel";
-            //
+            // 
             // TitleTextBox
-            //
+            // 
             this.TitleTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Title", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.TitleTextBox, "TitleTextBox");
             this.TitleTextBox.Name = "TitleTextBox";
-            //
+            // 
             // TitleLabel
-            //
+            // 
             resources.ApplyResources(this.TitleLabel, "TitleLabel");
             this.TitleLabel.Name = "TitleLabel";
-            //
+            // 
             // EncryptionTabPage
-            //
+            // 
             resources.ApplyResources(this.EncryptionTabPage, "EncryptionTabPage");
             this.EncryptionTabPage.Controls.Add(this.EncryptionOuterPanel);
             this.EncryptionTabPage.Name = "EncryptionTabPage";
             this.EncryptionTabPage.UseVisualStyleBackColor = true;
-            //
+            // 
             // EncryptionOuterPanel
-            //
+            // 
             resources.ApplyResources(this.EncryptionOuterPanel, "EncryptionOuterPanel");
             this.EncryptionOuterPanel.Controls.Add(this.EnableEncryptionCheckBox, 0, 0);
             this.EncryptionOuterPanel.Controls.Add(this.EncryptionPanel, 0, 1);
             this.EncryptionOuterPanel.Name = "EncryptionOuterPanel";
-            //
+            // 
             // EnableEncryptionCheckBox
-            //
+            // 
             resources.ApplyResources(this.EnableEncryptionCheckBox, "EnableEncryptionCheckBox");
             this.EnableEncryptionCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "Enabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.EnableEncryptionCheckBox.Name = "EnableEncryptionCheckBox";
             this.EnableEncryptionCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // EncryptionBindingSource
-            //
+            // 
             this.EncryptionBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.EncryptionViewModel);
-            //
+            // 
             // EncryptionPanel
-            //
+            // 
             resources.ApplyResources(this.EncryptionPanel, "EncryptionPanel");
             this.EncryptionPanel.Controls.Add(this.UserPasswordCheckBox, 1, 2);
             this.EncryptionPanel.Controls.Add(this.OperationLabel, 0, 2);
@@ -523,61 +524,61 @@
             this.EncryptionPanel.Controls.Add(this.OperationPanel, 1, 3);
             this.EncryptionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.EncryptionBindingSource, "Enabled", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.EncryptionPanel.Name = "EncryptionPanel";
-            //
+            // 
             // UserPasswordCheckBox
-            //
+            // 
             resources.ApplyResources(this.UserPasswordCheckBox, "UserPasswordCheckBox");
             this.UserPasswordCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "OpenWithPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.UserPasswordCheckBox.Name = "UserPasswordCheckBox";
             this.UserPasswordCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // OperationLabel
-            //
+            // 
             resources.ApplyResources(this.OperationLabel, "OperationLabel");
             this.OperationLabel.Name = "OperationLabel";
             this.EncryptionPanel.SetRowSpan(this.OperationLabel, 2);
-            //
+            // 
             // OwnerConfirmTextBox
-            //
+            // 
             resources.ApplyResources(this.OwnerConfirmTextBox, "OwnerConfirmTextBox");
             this.OwnerConfirmTextBox.Name = "OwnerConfirmTextBox";
             this.OwnerConfirmTextBox.UseSystemPasswordChar = true;
-            //
+            // 
             // OwnerConfirmLabel
-            //
+            // 
             resources.ApplyResources(this.OwnerConfirmLabel, "OwnerConfirmLabel");
             this.OwnerConfirmLabel.Name = "OwnerConfirmLabel";
-            //
+            // 
             // OwnerPasswordTextBox
-            //
+            // 
             this.OwnerPasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.EncryptionBindingSource, "OwnerPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.OwnerPasswordTextBox, "OwnerPasswordTextBox");
             this.OwnerPasswordTextBox.Name = "OwnerPasswordTextBox";
             this.OwnerPasswordTextBox.UseSystemPasswordChar = true;
-            //
+            // 
             // OwnerPasswordLabel
-            //
+            // 
             resources.ApplyResources(this.OwnerPasswordLabel, "OwnerPasswordLabel");
             this.OwnerPasswordLabel.Name = "OwnerPasswordLabel";
-            //
+            // 
             // OperationPanel
-            //
+            // 
             resources.ApplyResources(this.OperationPanel, "OperationPanel");
             this.OperationPanel.Controls.Add(this.SharePasswordCheckBox, 0, 1);
             this.OperationPanel.Controls.Add(this.UserPasswordPanel, 0, 0);
             this.OperationPanel.Controls.Add(this.PermissionPanel, 0, 2);
             this.OperationPanel.Name = "OperationPanel";
-            //
+            // 
             // SharePasswordCheckBox
-            //
+            // 
             resources.ApplyResources(this.SharePasswordCheckBox, "SharePasswordCheckBox");
             this.SharePasswordCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "UseOwnerPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.SharePasswordCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.EncryptionBindingSource, "OpenWithPassword", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
             this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // UserPasswordPanel
-            //
+            // 
             resources.ApplyResources(this.UserPasswordPanel, "UserPasswordPanel");
             this.UserPasswordPanel.Controls.Add(this.UserConfirmTextBox, 1, 1);
             this.UserPasswordPanel.Controls.Add(this.UserPasswordTextBox, 1, 0);
@@ -585,32 +586,32 @@
             this.UserPasswordPanel.Controls.Add(this.UserPasswordLabel, 0, 0);
             this.UserPasswordPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.EncryptionBindingSource, "EnableUserPassword", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.UserPasswordPanel.Name = "UserPasswordPanel";
-            //
+            // 
             // UserConfirmTextBox
-            //
+            // 
             resources.ApplyResources(this.UserConfirmTextBox, "UserConfirmTextBox");
             this.UserConfirmTextBox.Name = "UserConfirmTextBox";
             this.UserConfirmTextBox.UseSystemPasswordChar = true;
-            //
+            // 
             // UserPasswordTextBox
-            //
+            // 
             this.UserPasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.EncryptionBindingSource, "UserPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.UserPasswordTextBox, "UserPasswordTextBox");
             this.UserPasswordTextBox.Name = "UserPasswordTextBox";
             this.UserPasswordTextBox.UseSystemPasswordChar = true;
-            //
+            // 
             // UserConfirmLabel
-            //
+            // 
             resources.ApplyResources(this.UserConfirmLabel, "UserConfirmLabel");
             this.UserConfirmLabel.Name = "UserConfirmLabel";
-            //
+            // 
             // UserPasswordLabel
-            //
+            // 
             resources.ApplyResources(this.UserPasswordLabel, "UserPasswordLabel");
             this.UserPasswordLabel.Name = "UserPasswordLabel";
-            //
+            // 
             // PermissionPanel
-            //
+            // 
             resources.ApplyResources(this.PermissionPanel, "PermissionPanel");
             this.PermissionPanel.Controls.Add(this.AllowModifyCheckBox, 0, 3);
             this.PermissionPanel.Controls.Add(this.AllowFormCheckBox, 0, 2);
@@ -618,108 +619,114 @@
             this.PermissionPanel.Controls.Add(this.AllowPrintCheckBox, 0, 0);
             this.PermissionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.EncryptionBindingSource, "EnablePermission", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.PermissionPanel.Name = "PermissionPanel";
-            //
+            // 
             // AllowModifyCheckBox
-            //
+            // 
             resources.ApplyResources(this.AllowModifyCheckBox, "AllowModifyCheckBox");
             this.AllowModifyCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowModify", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowModifyCheckBox.Name = "AllowModifyCheckBox";
             this.AllowModifyCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // AllowFormCheckBox
-            //
+            // 
             resources.ApplyResources(this.AllowFormCheckBox, "AllowFormCheckBox");
             this.AllowFormCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowFillInFormFields", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowFormCheckBox.Name = "AllowFormCheckBox";
             this.AllowFormCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // AllowCopyCheckBox
-            //
+            // 
             resources.ApplyResources(this.AllowCopyCheckBox, "AllowCopyCheckBox");
             this.AllowCopyCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowCopy", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowCopyCheckBox.Name = "AllowCopyCheckBox";
             this.AllowCopyCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // AllowPrintCheckBox
-            //
+            // 
             resources.ApplyResources(this.AllowPrintCheckBox, "AllowPrintCheckBox");
             this.AllowPrintCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowPrint", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowPrintCheckBox.Name = "AllowPrintCheckBox";
             this.AllowPrintCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // OthersTabPage
-            //
+            // 
             resources.ApplyResources(this.OthersTabPage, "OthersTabPage");
             this.OthersTabPage.Controls.Add(this.OthersPanel);
             this.OthersTabPage.Name = "OthersTabPage";
             this.OthersTabPage.UseVisualStyleBackColor = true;
-            //
+            // 
             // OthersPanel
-            //
+            // 
             resources.ApplyResources(this.OthersPanel, "OthersPanel");
+            this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 6);
             this.OthersPanel.Controls.Add(this.GrayscaleCheckBox, 1, 0);
             this.OthersPanel.Controls.Add(this.OptionsLabel, 0, 0);
             this.OthersPanel.Controls.Add(this.ImageCompressionCheckBox, 1, 1);
             this.OthersPanel.Controls.Add(this.WebOptimizationCheckBox, 1, 2);
             this.OthersPanel.Controls.Add(this.UpdateCheckBox, 1, 5);
             this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 6);
-            this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 4);
+            this.OthersPanel.Controls.Add(this.AboutLabel, 0, 4);
             this.OthersPanel.Controls.Add(this.VersionPanel, 1, 4);
             this.OthersPanel.Name = "OthersPanel";
-            //
+            // 
+            // LanguageLabel
+            // 
+            resources.ApplyResources(this.LanguageLabel, "LanguageLabel");
+            this.LanguageLabel.Name = "LanguageLabel";
+            // 
             // GrayscaleCheckBox
-            //
+            // 
             resources.ApplyResources(this.GrayscaleCheckBox, "GrayscaleCheckBox");
             this.GrayscaleCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "Grayscale", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
             this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // OptionsLabel
-            //
+            // 
             resources.ApplyResources(this.OptionsLabel, "OptionsLabel");
             this.OptionsLabel.Name = "OptionsLabel";
-            //
+            // 
             // ImageCompressionCheckBox
-            //
+            // 
             resources.ApplyResources(this.ImageCompressionCheckBox, "ImageCompressionCheckBox");
             this.ImageCompressionCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "ImageCompression", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.ImageCompressionCheckBox.Name = "ImageCompressionCheckBox";
             this.ImageCompressionCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // WebOptimizationCheckBox
-            //
+            // 
             resources.ApplyResources(this.WebOptimizationCheckBox, "WebOptimizationCheckBox");
             this.WebOptimizationCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "WebOptimization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.WebOptimizationCheckBox.Name = "WebOptimizationCheckBox";
             this.WebOptimizationCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // UpdateCheckBox
-            //
+            // 
             resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
             this.UpdateCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.MainBindingSource, "CheckUpdate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.UpdateCheckBox.Name = "UpdateCheckBox";
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
-            //
+            // 
             // MainBindingSource
-            //
+            // 
             this.MainBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MainViewModel);
-            //
+            // 
             // LanguageComboBox
-            //
+            // 
             this.LanguageComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MainBindingSource, "Language", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.LanguageComboBox, "LanguageComboBox");
             this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LanguageComboBox.FormattingEnabled = true;
             this.LanguageComboBox.Name = "LanguageComboBox";
-            //
-            // LanguageLabel
-            //
-            resources.ApplyResources(this.LanguageLabel, "LanguageLabel");
-            this.LanguageLabel.Name = "LanguageLabel";
-            this.OthersPanel.SetRowSpan(this.LanguageLabel, 3);
-            //
+            // 
+            // AboutLabel
+            // 
+            resources.ApplyResources(this.AboutLabel, "AboutLabel");
+            this.AboutLabel.Name = "AboutLabel";
+            this.OthersPanel.SetRowSpan(this.AboutLabel, 2);
+            // 
             // VersionPanel
-            //
+            // 
             this.VersionPanel.Copyright = "Copyright © 2010 CubeSoft, Inc.";
             this.VersionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Product", this.MainBindingSource, "Product", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.VersionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Uri", this.MainBindingSource, "Uri", true, System.Windows.Forms.DataSourceUpdateMode.Never));
@@ -733,39 +740,39 @@
             this.VersionPanel.TabStop = false;
             this.VersionPanel.Uri = null;
             this.VersionPanel.Version = "1.0.0 (x64)";
-            //
+            // 
             // FooterPanel
-            //
+            // 
             resources.ApplyResources(this.FooterPanel, "FooterPanel");
             this.FooterPanel.Controls.Add(this.ToolsPanel, 0, 0);
             this.FooterPanel.Controls.Add(this.ConvertButton, 1, 0);
             this.FooterPanel.Controls.Add(this.ExitButton, 2, 0);
             this.FooterPanel.Name = "FooterPanel";
-            //
+            // 
             // ToolsPanel
-            //
+            // 
             this.ToolsPanel.Controls.Add(this.ConvertProgressBar);
             this.ToolsPanel.Controls.Add(this.ApplyButton);
             resources.ApplyResources(this.ToolsPanel, "ToolsPanel");
             this.ToolsPanel.Name = "ToolsPanel";
-            //
+            // 
             // ConvertProgressBar
-            //
+            // 
             resources.ApplyResources(this.ConvertProgressBar, "ConvertProgressBar");
             this.ConvertProgressBar.Name = "ConvertProgressBar";
             this.ConvertProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            //
+            // 
             // ApplyButton
-            //
+            // 
             this.ApplyButton.BackColor = System.Drawing.Color.White;
             this.ApplyButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
             resources.ApplyResources(this.ApplyButton, "ApplyButton");
             this.ApplyButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.UseVisualStyleBackColor = false;
-            //
+            // 
             // ConvertButton
-            //
+            // 
             this.ConvertButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.ConvertButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ConvertButton.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -774,9 +781,9 @@
             this.ConvertButton.ForeColor = System.Drawing.Color.White;
             this.ConvertButton.Name = "ConvertButton";
             this.ConvertButton.UseVisualStyleBackColor = false;
-            //
+            // 
             // ExitButton
-            //
+            // 
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.ExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -785,16 +792,16 @@
             this.ExitButton.ForeColor = System.Drawing.Color.White;
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.UseVisualStyleBackColor = false;
-            //
+            // 
             // HeaderPictureBox
-            //
+            // 
             resources.ApplyResources(this.HeaderPictureBox, "HeaderPictureBox");
             this.HeaderPictureBox.Image = global::Cube.Pdf.App.Converter.Properties.Resources.Header;
             this.HeaderPictureBox.Name = "HeaderPictureBox";
             this.HeaderPictureBox.TabStop = false;
-            //
+            // 
             // MainForm
-            //
+            // 
             this.AcceptButton = this.ConvertButton;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.ExitButton;
@@ -905,7 +912,7 @@
         private System.Windows.Forms.CheckBox AllowPrintCheckBox;
         private System.Windows.Forms.TableLayoutPanel OthersPanel;
         private System.Windows.Forms.ComboBox LanguageComboBox;
-        private System.Windows.Forms.Label LanguageLabel;
+        private System.Windows.Forms.Label AboutLabel;
         private System.Windows.Forms.Label OrientationLabel;
         private System.Windows.Forms.FlowLayoutPanel OrientationPanel;
         private System.Windows.Forms.RadioButton PortraitRadioButton;
@@ -936,6 +943,7 @@
         private System.Windows.Forms.BindingSource SettingsBindingSource;
         private System.Windows.Forms.BindingSource MetadataBindingSource;
         private System.Windows.Forms.BindingSource EncryptionBindingSource;
+        private System.Windows.Forms.Label LanguageLabel;
     }
 }
 

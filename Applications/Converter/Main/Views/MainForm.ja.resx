@@ -223,6 +223,9 @@
   <data name="EncryptionTabPage.Text" xml:space="preserve">
     <value>セキュリティ</value>
   </data>
+  <data name="LanguageLabel.Text" xml:space="preserve">
+    <value>表示言語</value>
+  </data>
   <data name="GrayscaleCheckBox.Text" xml:space="preserve">
     <value>グレースケール</value>
   </data>
@@ -238,7 +241,7 @@
   <data name="UpdateCheckBox.Text" xml:space="preserve">
     <value>起動時にアップデートを確認する</value>
   </data>
-  <data name="LanguageLabel.Text" xml:space="preserve">
+  <data name="AboutLabel.Text" xml:space="preserve">
     <value>バージョン情報</value>
   </data>
   <data name="OthersTabPage.Text" xml:space="preserve">
@@ -698,5 +701,9 @@
         oN1i1KDij5HddD1PAsA/VqNu250AvLaV//8G6rbiZ7DntqKwgQSA/1hlxxehdtjpQa2175SJRaKMAnY3
         QNgiY5rmrYZhvKLruga8Y3eDhD3+P7iSjT2feOJVAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
 </root>
