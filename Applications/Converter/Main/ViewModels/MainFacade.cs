@@ -16,7 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
+using Cube.FileSystem.Mixin;
 using Cube.Forms;
+using Cube.Pdf.Ghostscript;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -49,6 +53,7 @@ namespace Cube.Pdf.App.Converter
         public MainFacade(SettingsFolder settings)
         {
             Settings = settings;
+            Settings.PropertyChanged += WhenPropertyChanged;
         }
 
         #endregion
@@ -65,6 +70,28 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder Settings { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        ///
+        /// <summary>
+        /// 設定情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Settings Value => Settings.Value;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO => Settings.IO;
 
         #endregion
 
@@ -92,19 +119,17 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            var src = Settings.Value;
-
             try
             {
-                src.IsBusy = true;
+                Value.IsBusy = true;
 
-                var fs = new FileTransfer(src.Format, src.Destination, Settings.IO);
-                GhostscriptFactory.Create(Settings).Invoke(src.Source, fs.Value);
+                var fs = new FileTransfer(Value.Format, Value.Destination, IO);
+                GhostscriptFactory.Create(Settings).Invoke(Value.Source, fs.Value);
                 new FileDecorator(Settings).Invoke(fs.Value);
                 var dest = fs.Invoke();
                 new PostLauncher(Settings).Invoke(dest);
             }
-            finally { src.IsBusy = false; }
+            finally { Value.IsBusy = false; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -121,7 +146,7 @@ namespace Cube.Pdf.App.Converter
         public void UpdateSource(FileEventArgs e)
         {
             if (e.Result == DialogResult.Cancel) return;
-            Settings.Value.Source = e.FileName;
+            Value.Source = e.FileName;
         }
 
         /* ----------------------------------------------------------------- */
@@ -142,8 +167,8 @@ namespace Cube.Pdf.App.Converter
             Debug.Assert(e.FilterIndex > 0);
             Debug.Assert(e.FilterIndex <= ViewResource.Formats.Count);
 
-            Settings.Value.Destination = e.FileName;
-            Settings.Value.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
+            Value.Destination = e.FileName;
+            Value.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -160,8 +185,38 @@ namespace Cube.Pdf.App.Converter
         public void UpdateUserProgram(FileEventArgs e)
         {
             if (e.Result == DialogResult.Cancel) return;
-            Settings.Value.UserProgram = e.FileName;
+            Value.UserProgram = e.FileName;
         }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenPropertyChanged
+        ///
+        /// <summary>
+        /// プロパティ変更時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Settings.Value.Format)) UpdateExtension();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateExtension
+        ///
+        /// <summary>
+        /// 拡張子を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateExtension() =>
+            Value.Destination = IO.ChangeExtension(Value.Destination, Value.Format.GetExtension());
 
         #endregion
     }

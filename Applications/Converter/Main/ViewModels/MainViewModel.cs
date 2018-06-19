@@ -81,7 +81,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IO IO => Model.Settings.IO;
+        protected IO IO => Model.IO;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -138,8 +138,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool IsBusy
         {
-            get => Model.Settings.Value.IsBusy;
-            set => Model.Settings.Value.CheckUpdate = value;
+            get => Model.Value.IsBusy;
+            set => Model.Value.CheckUpdate = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -153,8 +153,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool CheckUpdate
         {
-            get => Model.Settings.Value.CheckUpdate;
-            set => Model.Settings.Value.CheckUpdate = value;
+            get => Model.Value.CheckUpdate;
+            set => Model.Value.CheckUpdate = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -168,8 +168,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public Language Language
         {
-            get => Model.Settings.Value.Language;
-            set => Model.Settings.Value.Language = value;
+            get => Model.Value.Language;
+            set => Model.Value.Language = value;
         }
 
         /* ----------------------------------------------------------------- */
