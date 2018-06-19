@@ -104,6 +104,13 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <param name="vm">ViewModel オブジェクト</param>
         ///
+        /// <remarks>
+        /// タイトルバーの表示テキストに対して Binding すると挙動が不安定
+        /// になる現象が確認されています。タイトルバーの値は動的に変更
+        /// しないため、Bind メソッドが実行されるタイミングで直接代入する
+        /// 事とします。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         public void Bind(MainViewModel vm)
         {
@@ -128,6 +135,8 @@ namespace Cube.Pdf.App.Converter
 
             DataBindings.Add(new Binding(nameof(IsBusy), MainBindingSource,
                 nameof(IsBusy), false, DataSourceUpdateMode.OnPropertyChanged));
+
+            Text = vm.Title; // see remarks
         }
 
         #endregion
