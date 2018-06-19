@@ -81,7 +81,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IO IO => Model.IO;
+        public IO IO => Model.IO;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -231,6 +231,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
+            if (!this.Validate()) return;
+
             try
             {
                 Model.Convert();
