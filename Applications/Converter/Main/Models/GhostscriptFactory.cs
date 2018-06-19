@@ -75,7 +75,7 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         private static Ghostscript.Converter CreateDocumentConverter(SettingsFolder src) =>
-            new DocumentConverter(src.Value.Format)
+            new DocumentConverter(src.Value.Format, src.IO)
             {
                 ColorMode    = src.Value.Grayscale ? ColorMode.Grayscale : ColorMode.Rgb,
                 Compression  = src.Value.ImageCompression ? Encoding.Jpeg : Encoding.Flate,
@@ -99,7 +99,8 @@ namespace Cube.Pdf.App.Converter
             var map = GetFormatMap();
 
             Debug.Assert(map.ContainsKey(key));
-            return new ImageConverter(GetFormatMap()[key])
+
+            return new ImageConverter(GetFormatMap()[key], src.IO)
             {
                 AntiAlias = true,
             };
