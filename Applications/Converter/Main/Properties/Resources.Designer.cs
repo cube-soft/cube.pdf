@@ -369,6 +369,15 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   Your password and confirmation password do not match. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessagePassword {
+            get {
+                return ResourceManager.GetString("MessagePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Save as に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleBroseDestination {

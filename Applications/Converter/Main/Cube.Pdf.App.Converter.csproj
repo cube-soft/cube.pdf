@@ -79,7 +79,7 @@
     <Compile Include="ViewModels\EncryptionViewModel.cs" />
     <Compile Include="ViewModels\MainFacade.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModelExtension.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\MetadataViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\ViewResource.cs" />

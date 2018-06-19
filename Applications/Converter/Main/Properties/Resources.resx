@@ -220,6 +220,9 @@
   <data name="MessageOverwrite" xml:space="preserve">
     <value>Do you want to overwrite the file?</value>
   </data>
+  <data name="MessagePassword" xml:space="preserve">
+    <value>Your password and confirmation password do not match.</value>
+  </data>
   <data name="TitleBroseDestination" xml:space="preserve">
     <value>Save as</value>
   </data>

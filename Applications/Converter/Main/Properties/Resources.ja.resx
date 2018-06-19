@@ -220,6 +220,9 @@
   <data name="MessageOverwrite" xml:space="preserve">
     <value>上書きしますか？</value>
   </data>
+  <data name="MessagePassword" xml:space="preserve">
+    <value>入力されたパスワードが一致しません。パスワード欄およびパスワード確認欄を再度ご確認下さい。</value>
+  </data>
   <data name="TitleBroseDestination" xml:space="preserve">
     <value>名前を付けて保存</value>
   </data>

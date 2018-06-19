@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -24,18 +25,18 @@ namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainViewModelExtension
+    /// MessageViewModel
     ///
     /// <summary>
-    /// MainViewModel の拡張用クラスです。
+    /// 各種メッセージを表示するための ViewModel です。
     /// </summary>
     ///
     /// <remarks>
-    /// 各種 ViewModel が保持するプロパティの最終チェック処理を記載します。
+    /// MainViewModel の拡張クラスとして実装しています。
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public static class MainViewModelExtension
+    public static class MessageViewModel
     {
         #region Methods
 
@@ -54,21 +55,85 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public static bool Validate(this MainViewModel src)
         {
+            if (!ValidateDestination(src)) return false;
+            if (!ValidateOwnerPassword(src)) return false;
+            if (!ValidateUserPassword(src)) return false;
+            return true;
+        }
+
+        #endregion
+
+        #region Implementations
+
+        #region Validate
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ValidateDestination
+        ///
+        /// <summary>
+        /// 保存パスのチェックを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static bool ValidateDestination(MainViewModel src)
+        {
             var dest = src.Settings.Destination;
             var so   = src.Settings.SaveOption;
 
             if (!src.IO.Exists(dest) || so == SaveOption.Rename) return true;
 
-            var msg = CreateMessage(dest, so);
+            var msg  = CreateMessage(dest, so);
             var args = MessageFactory.CreateWarning(msg);
 
             src.Messenger.MessageBox.Publish(args);
             return args.Result != DialogResult.Cancel;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ValidateOwnerPassword
+        ///
+        /// <summary>
+        /// 管理用パスワードのチェックを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static bool ValidateOwnerPassword(MainViewModel src)
+        {
+            var eo  = src.Encryption;
+            var opt = StringComparison.InvariantCultureIgnoreCase;
+            if (!eo.Enabled || eo.OwnerPassword.Equals(eo.OwnerConfirm, opt)) return true;
+
+            var args = MessageFactory.CreateError(Properties.Resources.MessagePassword);
+            src.Messenger.MessageBox.Publish(args);
+            return false;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ValidateUserPassword
+        ///
+        /// <summary>
+        /// 閲覧用パスワードのチェックを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static bool ValidateUserPassword(MainViewModel src)
+        {
+            var eo  = src.Encryption;
+            var opt = StringComparison.InvariantCultureIgnoreCase;
+            if (!eo.Enabled || !eo.OpenWithPassword || eo.UseOwnerPassword) return true;
+            if (eo.UserPassword.Equals(eo.UserConfirm, opt)) return true;
+
+            var args = MessageFactory.CreateError(Properties.Resources.MessagePassword);
+            src.Messenger.MessageBox.Publish(args);
+            return false;
+        }
+
         #endregion
 
-        #region Implementations
+        #region CreateMessage
 
         /* ----------------------------------------------------------------- */
         ///
@@ -94,6 +159,8 @@ namespace Cube.Pdf.App.Converter
 
             return $"{head} {tail}";
         }
+
+        #endregion
 
         #endregion
     }
