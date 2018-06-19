@@ -46,6 +46,7 @@ namespace Cube.Pdf.App.Converter
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="format">変換形式</param>
         /// <param name="dest">最終的な保存パス</param>
         /// <param name="io">I/O オブジェクト</param>
         ///

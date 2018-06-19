@@ -43,6 +43,7 @@ namespace Cube.Pdf.Itext
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="io">I/O オブジェクト</param>
         /// <param name="name">添付ファイル名</param>
         /// <param name="src">添付元 PDF ファイルのパス</param>
         /// <param name="core">添付ストリーム</param>

@@ -34,6 +34,10 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\Release\Cube.Pdf.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\Cube.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
@@ -71,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Cube.snk" />
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
