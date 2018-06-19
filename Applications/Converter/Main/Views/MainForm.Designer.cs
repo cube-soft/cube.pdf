@@ -298,7 +298,6 @@
             resources.ApplyResources(this.SourcePanel, "SourcePanel");
             this.SourcePanel.Controls.Add(this.SourceButton, 0, 0);
             this.SourcePanel.Controls.Add(this.SourceTextBox, 0, 0);
-            this.SourcePanel.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.SettingsBindingSource, "SourceVisible", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.SourcePanel.Name = "SourcePanel";
             //
             // SourceButton
@@ -316,7 +315,6 @@
             // SourceLabel
             //
             resources.ApplyResources(this.SourceLabel, "SourceLabel");
-            this.SourceLabel.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.SettingsBindingSource, "SourceVisible", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.SourceLabel.Name = "SourceLabel";
             //
             // PostProcessLabel

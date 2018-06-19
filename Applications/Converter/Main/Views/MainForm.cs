@@ -105,10 +105,10 @@ namespace Cube.Pdf.App.Converter
         /// <param name="vm">ViewModel オブジェクト</param>
         ///
         /// <remarks>
-        /// タイトルバーの表示テキストに対して Binding すると挙動が不安定
-        /// になる現象が確認されています。タイトルバーの値は動的に変更
-        /// しないため、Bind メソッドが実行されるタイミングで直接代入する
-        /// 事とします。
+        /// MainForm.Text および各種コントロールの Visible プロパティに
+        /// 対して、デザイナから Binding を設定すると意図しない動作に
+        /// なる現象が確認されています。暫定的な回避策と Binding を手動
+        /// 設定する事とします。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -133,10 +133,11 @@ namespace Cube.Pdf.App.Converter
             ConvertButton.Click     += (s, e) => vm.Convert();
             SettingsPanel.Apply     += (s, e) => vm.Save();
 
-            DataBindings.Add(new Binding(nameof(IsBusy), MainBindingSource,
-                nameof(IsBusy), false, DataSourceUpdateMode.OnPropertyChanged));
-
-            Text = vm.Title; // see remarks
+            // see remarks
+            SourceLabel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
+            SourcePanel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
+            DataBindings.Add("Text",   MainBindingSource, "Title",  false, DataSourceUpdateMode.Never);
+            DataBindings.Add("IsBusy", MainBindingSource, "IsBusy", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         #endregion
