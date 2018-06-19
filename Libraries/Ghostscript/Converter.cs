@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Log;
 using System;
@@ -48,8 +49,23 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="format">変換後のフォーマット</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Converter(Format format)
+        public Converter(Format format) : this(format, new IO()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Converter
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="format">変換後のフォーマット</param>
+        /// <param name="io">I/O オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Converter(Format format, IO io)
         {
+            IO = io;
             Format = format;
             Fonts.Add(Environment.GetFolderPath(Environment.SpecialFolder.Fonts));
         }
@@ -57,6 +73,17 @@ namespace Cube.Pdf.Ghostscript
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -127,6 +154,22 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// WorkDirectory
+        ///
+        /// <summary>
+        /// 作業ディレクトリのパスを取得または設定します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// このプロパティに値を設定した場合、変換処理の際に一時的に
+        /// TEMP 環境変数が変更されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string WorkDirectory { get; set; } = string.Empty;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Resources
         ///
         /// <summary>
@@ -194,16 +237,16 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> sources, string dest) =>
-            GsApi.NativeMethods.Invoke(Create()
-            .Concat(new[] { new Argument('s', "OutputFile", dest) })
-            .Concat(OnCreateArguments())
-            .Concat(CreateCodes())
-            .Concat(new[] { new Argument('f') })
-            .Select(e => e.ToString())
-            .Concat(sources)
-            .Where(e => { this.LogDebug(e); return true; }) // for debug
-            .ToArray()
-        );
+            SetWorkDirectory(() => GsApi.NativeMethods.Invoke(Create()
+                .Concat(new[] { new Argument('s', "OutputFile", dest) })
+                .Concat(OnCreateArguments())
+                .Concat(CreateCodes())
+                .Concat(new[] { new Argument('f') })
+                .Select(e => e.ToString())
+                .Concat(sources)
+                .Where(e => { this.LogDebug(e); return true; }) // for debug
+                .ToArray()
+            ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -365,6 +408,48 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<T> Trim<T>(IEnumerable<T> src) => src.OfType<T>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetWorkDirectory
+        ///
+        /// <summary>
+        /// 作業ディレクトリを設定した後 Action を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetWorkDirectory(Action action)
+        {
+            var name = "TEMP";
+            var prev = Environment.GetEnvironmentVariable(name);
+
+            try
+            {
+                if (WorkDirectory.HasValue())
+                {
+                    if (!IO.Exists(WorkDirectory)) IO.CreateDirectory(WorkDirectory);
+                    SetVariable(name, WorkDirectory);
+                }
+                action();
+            }
+            finally { SetVariable(name, prev); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetVariable
+        ///
+        /// <summary>
+        /// 環境変数を設定します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 設定された環境変数は実行プロセス中でのみ有効です。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetVariable(string key, string value) =>
+            Environment.SetEnvironmentVariable(key, value, EnvironmentVariableTarget.Process);
 
         #endregion
     }

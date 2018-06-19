@@ -49,6 +49,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         [TestCaseSource(nameof(TestCases))]
         public void Invoke(Converter cv, string srcname, string destname)
         {
+            cv.WorkDirectory = GetResultsWith("Tmp");
             var dest = Run(cv, srcname, destname);
             Assert.That(IO.Exists(dest), Is.True);
         }
