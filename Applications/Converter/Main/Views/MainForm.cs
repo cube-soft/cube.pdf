@@ -63,6 +63,35 @@ namespace Cube.Pdf.App.Converter
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBusy
+        ///
+        /// <summary>
+        /// 実行中かどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool IsBusy
+        {
+            get => _busy;
+            set
+            {
+                _busy = value;
+                ConvertButton.Enabled = !value;
+                SettingsTabControl.Enabled = !value;
+                ApplyButton.Visible = !value;
+                ConvertProgressBar.Visible = value;
+                Cursor = value ? Cursors.WaitCursor : Cursors.Default;
+            }
+        }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -99,35 +128,6 @@ namespace Cube.Pdf.App.Converter
 
             DataBindings.Add(new Binding(nameof(IsBusy), MainBindingSource,
                 nameof(IsBusy), false, DataSourceUpdateMode.OnPropertyChanged));
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsBusy
-        ///
-        /// <summary>
-        /// 実行中かどうかを示す値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool IsBusy
-        {
-            get => _busy;
-            set
-            {
-                _busy = value;
-                ConvertButton.Enabled = !value;
-                SettingsTabControl.Enabled = !value;
-                ApplyButton.Visible = !value;
-                ConvertProgressBar.Visible = value;
-                Cursor = value ? Cursors.WaitCursor : Cursors.Default;
-            }
         }
 
         #endregion
