@@ -16,39 +16,42 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
-using System.Diagnostics;
-using System.Windows.Forms;
+using Cube.FileSystem;
+using Cube.Pdf.Itext;
+using Cube.Pdf.Mixin;
+using System;
 
 namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainFacade
+    /// FileDecorator
     ///
     /// <summary>
-    /// メイン処理を表すクラスです。
+    /// Ghostscript API を用いて生成されたファイルに対して付随的な処理を
+    /// 実行するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainFacade
+    public class FileDecorator
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainFacade
+        /// FileDecorator
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="settings">設定情報</param>
+        /// <param name="src">設定情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingsFolder settings)
+        public FileDecorator(SettingsFolder src)
         {
-            Settings = settings;
+            IO    = src.IO;
+            Value = src.Value;
         }
 
         #endregion
@@ -57,14 +60,25 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Value
         ///
         /// <summary>
         /// 設定情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
+        public Settings Value { get; }
 
         #endregion
 
@@ -72,86 +86,58 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// Invoke
         ///
         /// <summary>
-        /// 変換処理を実行します。
+        /// 処理を実行します。
         /// </summary>
         ///
+        /// <param name="src">生成されたファイルのパス</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Convert()
+        public void Invoke(string src)
         {
-            var src = Settings.Value;
+            if (Value.Format != Ghostscript.Format.Pdf) return;
 
-            try
+            var tmp = IO.Combine(IO.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
+
+            using (var writer = new DocumentWriter(IO))
             {
-                src.IsBusy = true;
+                Value.Metadata.Version = Value.FormatOption.GetVersion();
 
-                var fd = new FileDecorator(Settings);
-                var ft = new FileTransfer(src.Format, src.Destination, Settings.IO);
-                var gs = GhostscriptFactory.Create(Settings);
-
-                gs.Invoke(src.Source, ft.Value);
-                fd.Invoke(ft.Value);
-                ft.Invoke();
+                writer.Set(Value.Metadata);
+                writer.Set(Value.Encryption);
+                Add(writer, Value.Destination, SaveOption.MergeTail);
+                writer.Add(new DocumentReader(src, string.Empty, IO));
+                Add(writer, Value.Destination, SaveOption.MergeHead);
+                writer.Save(tmp);
             }
-            finally { src.IsBusy = false; }
+
+            IO.Move(tmp, src, true);
         }
 
+        #endregion
+
+        #region Implementations
+
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateSource
+        /// Add
         ///
         /// <summary>
-        /// Source プロパティを更新します。
+        /// Page オブジェクト一覧を追加します。
         /// </summary>
         ///
-        /// <param name="e">ユーザの選択結果</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public void UpdateSource(FileEventArgs e)
+        private void Add(DocumentWriter src, string path, SaveOption condition)
         {
-            if (e.Result == DialogResult.Cancel) return;
-            Settings.Value.Source = e.FileName;
-        }
+            if (Value.SaveOption != condition || !IO.Exists(path)) return;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateDestination
-        ///
-        /// <summary>
-        /// Destination および Format プロパティを更新します。
-        /// </summary>
-        ///
-        /// <param name="e">ユーザの選択結果</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void UpdateDestination(FileEventArgs e)
-        {
-            if (e.Result == DialogResult.Cancel) return;
+            var password = Value.Encryption.Enabled ?
+                           Value.Encryption.OwnerPassword :
+                           string.Empty;
 
-            Debug.Assert(e.FilterIndex > 0);
-            Debug.Assert(e.FilterIndex <= ViewResource.Formats.Count);
-
-            Settings.Value.Destination = e.FileName;
-            Settings.Value.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateUserProgram
-        ///
-        /// <summary>
-        /// UserProgram プロパティを更新します。
-        /// </summary>
-        ///
-        /// <param name="e">ユーザの選択結果</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void UpdateUserProgram(FileEventArgs e)
-        {
-            if (e.Result == DialogResult.Cancel) return;
-            Settings.Value.UserProgram = e.FileName;
+            src.Add(new DocumentReader(path, password, IO));
         }
 
         #endregion

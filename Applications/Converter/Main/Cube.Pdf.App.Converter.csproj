@@ -69,6 +69,7 @@
     <Compile Include="Models\Settings\Settings.cs" />
     <Compile Include="Models\Settings\SettingsFolder.cs" />
     <Compile Include="Models\DocumentName.cs" />
+    <Compile Include="Models\FileDecorator.cs" />
     <Compile Include="Models\FileTransfer.cs" />
     <Compile Include="Models\GhostscriptFactory.cs" />
     <Compile Include="Models\MessageFactory.cs" />
