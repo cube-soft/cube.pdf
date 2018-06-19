@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.FileSystem.Mixin;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,18 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public Format Format { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AutoRename
+        ///
+        /// <summary>
+        /// 同名のファイルが存在する場合、自動的にリネームするかどうかを
+        /// 示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AutoRename { get; set; } = false;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -180,6 +193,21 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         private string GetDestination(int index, int count)
+        {
+            var dest = GetDestinationCore(index, count);
+            return (AutoRename && IO.Exists(dest)) ? IO.GetUniqueName(dest) : dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetDestinationCore
+        ///
+        /// <summary>
+        /// 保存パスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetDestinationCore(int index, int count)
         {
             if (count <= 1) return Information.FullName;
 

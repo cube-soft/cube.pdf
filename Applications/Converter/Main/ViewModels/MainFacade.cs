@@ -20,6 +20,7 @@ using Cube.FileSystem;
 using Cube.FileSystem.Mixin;
 using Cube.Forms;
 using Cube.Pdf.Ghostscript;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -123,11 +124,15 @@ namespace Cube.Pdf.App.Converter
             {
                 Value.IsBusy = true;
 
-                var fs = new FileTransfer(Value.Format, Value.Destination, IO);
-                GhostscriptFactory.Create(Settings).Invoke(Value.Source, fs.Value);
-                new FileDecorator(Settings).Invoke(fs.Value);
+                var fs = new FileTransfer(Value.Format, Value.Destination, IO)
+                {
+                    AutoRename = Value.SaveOption == SaveOption.Rename,
+                };
+
+                InvokeGhostscript(fs.Value);
+                InvokeDecorator(fs.Value);
                 var dest = fs.Invoke();
-                new PostLauncher(Settings).Invoke(dest);
+                InvokePostProcess(dest);
             }
             finally { Value.IsBusy = false; }
         }
@@ -217,6 +222,43 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private void UpdateExtension() =>
             Value.Destination = IO.ChangeExtension(Value.Destination, Value.Format.GetExtension());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InvokeGhostscript
+        ///
+        /// <summary>
+        /// Ghostscript API を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InvokeGhostscript(string dest) =>
+            GhostscriptFactory.Create(Settings).Invoke(Value.Source, dest);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InvokeDecorator
+        ///
+        /// <summary>
+        /// Ghostscript API で生成されたファイルに対して付随的な処理を
+        /// 実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InvokeDecorator(string dest) =>
+            new FileDecorator(Settings).Invoke(dest);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InvokePostProcess
+        ///
+        /// <summary>
+        /// ポストプロセスを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InvokePostProcess(IEnumerable<string> dest) =>
+            new PostLauncher(Settings).Invoke(dest);
 
         #endregion
     }
