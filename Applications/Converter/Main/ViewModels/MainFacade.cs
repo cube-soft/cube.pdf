@@ -87,13 +87,11 @@ namespace Cube.Pdf.App.Converter
             {
                 src.IsBusy = true;
 
-                var fd = new FileDecorator(Settings);
-                var ft = new FileTransfer(src.Format, src.Destination, Settings.IO);
-                var gs = GhostscriptFactory.Create(Settings);
-
-                gs.Invoke(src.Source, ft.Value);
-                fd.Invoke(ft.Value);
-                ft.Invoke();
+                var fs = new FileTransfer(src.Format, src.Destination, Settings.IO);
+                GhostscriptFactory.Create(Settings).Invoke(src.Source, fs.Value);
+                new FileDecorator(Settings).Invoke(fs.Value);
+                var dest = fs.Invoke();
+                new PostLauncher(Settings).Invoke(dest);
             }
             finally { src.IsBusy = false; }
         }

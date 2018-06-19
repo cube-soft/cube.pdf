@@ -74,6 +74,7 @@
     <Compile Include="Models\GhostscriptFactory.cs" />
     <Compile Include="Models\MessageFactory.cs" />
     <Compile Include="Models\Messenger.cs" />
+    <Compile Include="Models\PostLauncher.cs" />
     <Compile Include="ViewModels\EncryptionViewModel.cs" />
     <Compile Include="ViewModels\MainFacade.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

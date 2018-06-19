@@ -53,7 +53,7 @@ namespace Cube.Pdf.App.Converter
         /// <summary>開く</summary>
         Open = 0,
         /// <summary>保存フォルダを開く</summary>
-        OpenFolder = 3,
+        OpenDirectory = 3,
         /// <summary>何もしない</summary>
         None = 1,
         /// <summary>その他（ユーザプログラム）</summary>

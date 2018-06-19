@@ -128,7 +128,7 @@ namespace Cube.Pdf.App.Converter
             new List<KeyValuePair<string, PostProcess>>
             {
                 Pair(Properties.Resources.MenuOpen,       PostProcess.Open),
-                Pair(Properties.Resources.MenuOpenFolder, PostProcess.OpenFolder),
+                Pair(Properties.Resources.MenuOpenFolder, PostProcess.OpenDirectory),
                 Pair(Properties.Resources.MenuNone,       PostProcess.None),
                 Pair(Properties.Resources.MenuOthers,     PostProcess.Others),
             };

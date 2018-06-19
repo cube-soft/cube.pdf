@@ -45,13 +45,13 @@ namespace Cube.Pdf.App.Converter
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="src">設定情報</param>
+        /// <param name="settings">設定情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileDecorator(SettingsFolder src)
+        public FileDecorator(SettingsFolder settings)
         {
-            IO    = src.IO;
-            Value = src.Value;
+            IO    = settings.IO;
+            Value = settings.Value;
         }
 
         #endregion
