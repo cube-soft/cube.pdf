@@ -258,7 +258,7 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         private void InvokePostProcess(IEnumerable<string> dest) =>
-            new PostLauncher(Settings).Invoke(dest);
+            new ProcessLauncher(Settings).Invoke(dest);
 
         #endregion
     }

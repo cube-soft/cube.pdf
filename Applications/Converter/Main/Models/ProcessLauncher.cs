@@ -27,20 +27,20 @@ namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PostLauncher
+    /// ProcessLauncher
     ///
     /// <summary>
     /// ポストプロセスを実行するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PostLauncher
+    public class ProcessLauncher
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PostLauncher
+        /// ProcessLauncher
         ///
         /// <summary>
         /// オブジェクトを初期化します。
@@ -49,7 +49,7 @@ namespace Cube.Pdf.App.Converter
         /// <param name="settings">設定情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PostLauncher(SettingsFolder settings)
+        public ProcessLauncher(SettingsFolder settings)
         {
             IO    = settings.IO;
             Value = settings.Value;
@@ -98,14 +98,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> src)
         {
-            var dic = new Dictionary<PostProcess, Action<IEnumerable<string>>>
-            {
-                { PostProcess.Open,          Open          },
-                { PostProcess.OpenDirectory, OpenDirectory },
-                { PostProcess.Others,        InvokeCore    },
-            };
-
-            if (dic.TryGetValue(Value.PostProcess, out var dest)) dest(src);
+            if (GetProcessMap().TryGetValue(Value.PostProcess, out var dest)) dest(src);
         }
 
         #endregion
@@ -183,6 +176,28 @@ namespace Cube.Pdf.App.Converter
             WindowStyle     = ProcessWindowStyle.Normal,
         };
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetProcessMap
+        ///
+        /// <summary>
+        /// ポストプロセスと実行内容の対応関係一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IDictionary<PostProcess, Action<IEnumerable<string>>> GetProcessMap() =>
+            _processes ?? (_processes = new Dictionary<PostProcess, Action<IEnumerable<string>>>
+            {
+                { PostProcess.Open,          Open          },
+                { PostProcess.OpenDirectory, OpenDirectory },
+                { PostProcess.Others,        InvokeCore    },
+            }
+        );
+
+        #endregion
+
+        #region Fields
+        private IDictionary<PostProcess, Action<IEnumerable<string>>> _processes;
         #endregion
     }
 }
