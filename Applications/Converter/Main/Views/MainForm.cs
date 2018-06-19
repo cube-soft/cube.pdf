@@ -121,11 +121,11 @@ namespace Cube.Pdf.App.Converter
             MetadataBindingSource.DataSource   = vm.Metadata;
             EncryptionBindingSource.DataSource = vm.Encryption;
 
-            vm.Messenger.Close.Subscribe(() => Close());
-            vm.Messenger.SetCulture.Subscribe(e => SetCulture(e));
-            vm.Messenger.MessageBox.Subscribe(e => new MessageBoxBehavior().Invoke(e));
-            vm.Messenger.OpenFileDialog.Subscribe(e => new OpenFileBehavior().Invoke(e));
-            vm.Messenger.SaveFileDialog.Subscribe(e => new SaveFileBehavior().Invoke(e));
+            // see remarks
+            SourceLabel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
+            SourcePanel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
+            DataBindings.Add("Text",   MainBindingSource, "Title",  false, DataSourceUpdateMode.Never);
+            DataBindings.Add("IsBusy", MainBindingSource, "IsBusy", false, DataSourceUpdateMode.OnPropertyChanged);
 
             SourceButton.Click      += (s, e) => vm.BrowseSource();
             DestinationButton.Click += (s, e) => vm.BrowseDestination();
@@ -133,11 +133,13 @@ namespace Cube.Pdf.App.Converter
             ConvertButton.Click     += (s, e) => vm.Convert();
             SettingsPanel.Apply     += (s, e) => vm.Save();
 
-            // see remarks
-            SourceLabel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
-            SourcePanel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
-            DataBindings.Add("Text",   MainBindingSource, "Title",  false, DataSourceUpdateMode.Never);
-            DataBindings.Add("IsBusy", MainBindingSource, "IsBusy", false, DataSourceUpdateMode.OnPropertyChanged);
+            vm.Messenger.Close.Subscribe(() => Close());
+            vm.Messenger.SetCulture.Subscribe(e => SetCulture(e));
+            vm.Messenger.MessageBox.Subscribe(e => new MessageBoxBehavior().Invoke(e));
+            vm.Messenger.OpenFileDialog.Subscribe(e => new OpenFileBehavior().Invoke(e));
+            vm.Messenger.SaveFileDialog.Subscribe(e => new SaveFileBehavior().Invoke(e));
+
+            vm.SetCulture();
         }
 
         #endregion

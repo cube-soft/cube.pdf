@@ -229,7 +229,7 @@ namespace Cube.Pdf.App.Converter
         /// Save
         ///
         /// <summary>
-        /// 設定を保存するためのコマンドです。
+        /// 設定を保存するコマンドです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -240,7 +240,7 @@ namespace Cube.Pdf.App.Converter
         /// Convert
         ///
         /// <summary>
-        /// 変換処理を実行するためのコマンドです。
+        /// 変換処理を実行するコマンドです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -267,7 +267,7 @@ namespace Cube.Pdf.App.Converter
         /// BrowseSource
         ///
         /// <summary>
-        /// 入力ファイルの選択画面を表示するためのコマンドです。
+        /// 入力ファイルの選択画面を表示するコマンドです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -283,7 +283,7 @@ namespace Cube.Pdf.App.Converter
         /// BrowseDestination
         ///
         /// <summary>
-        /// 保存パスの選択画面を表示するためのコマンドです。
+        /// 保存パスの選択画面を表示するコマンドです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -299,7 +299,7 @@ namespace Cube.Pdf.App.Converter
         /// BrowseUserProgram
         ///
         /// <summary>
-        /// ユーザプログラムの選択画面を表示するためのコマンドです。
+        /// ユーザプログラムの選択画面を表示するコマンドです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -309,6 +309,18 @@ namespace Cube.Pdf.App.Converter
             Messenger.OpenFileDialog.Publish(e);
             Model.UpdateUserProgram(e);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetCulture
+        ///
+        /// <summary>
+        /// 表示言語を設定するコマンドです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void SetCulture() => Messenger.SetCulture.Publish(Language.GetName());
+
 
         #endregion
 
@@ -331,7 +343,7 @@ namespace Cube.Pdf.App.Converter
                     if (Settings.PostProcess == PostProcess.Others) BrowseUserProgram();
                     break;
                 case nameof(Language):
-                    Messenger.SetCulture.Publish(Language.GetName());
+                    SetCulture();
                     break;
                 default:
                     OnPropertyChanged(e);
