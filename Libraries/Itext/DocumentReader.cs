@@ -170,8 +170,8 @@ namespace Cube.Pdf.Itext
             File        = f;
             Metadata    = _core.GetMetadata();
             Encryption  = _core.GetEncryption(f);
-            Pages       = new ReadOnlyPageCollection(_core, f);
-            Attachments = new ReadOnlyAttachmentCollection(_core, f, IO);
+            Pages       = new ReadOnlyPageList(_core, f);
+            Attachments = new ReadOnlyAttachmentList(_core, f, IO);
         }
 
         #endregion
@@ -261,21 +261,6 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetPage
-        ///
-        /// <summary>
-        /// 指定されたページ番号に対応するページ情報を取得します。
-        /// </summary>
-        ///
-        /// <param name="pagenum">ページ番号</param>
-        ///
-        /// <returns>Page オブジェクト</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Page GetPage(int pagenum) => _core.GetPage(GetPdfFile(), pagenum);
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// GetImages
         ///
         /// <summary>
@@ -289,7 +274,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public IEnumerable<Image> GetImages(int pagenum)
         {
-            if (pagenum < 0 || pagenum > Pages.Count()) throw new IndexOutOfRangeException();
+            if (pagenum <= 0 || pagenum > Pages.Count()) throw new IndexOutOfRangeException();
             var dest = new EmbeddedImageCollection();
             _core.GetContentParser().ProcessContent(pagenum, dest);
             return dest;
@@ -338,26 +323,6 @@ namespace Cube.Pdf.Itext
         }
 
         #endregion
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetPdfFile
-        ///
-        /// <summary>
-        /// PdfFile オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private PdfFile GetPdfFile()
-        {
-            var dest = File as PdfFile;
-            Debug.Assert(dest != null);
-            return dest;
-        }
 
         #endregion
 

@@ -247,10 +247,18 @@ namespace Cube.Pdf.Itext
         /// ページを追加します。
         /// </summary>
         ///
-        /// <param name="page">ページ情報</param>
+        /// <param name="pages">ページ情報一覧</param>
+        ///
+        /// <remarks>
+        /// DocumentReader.Pages オブジェクトを指定する場合
+        /// Add(IEnumerable{Page}, IDocumentReader) メソッドを利用
+        /// 下さい。
+        /// </remarks>
+        ///
+        /// <see cref="Add(IEnumerable{Page}, IDocumentReader)"/>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(Page page) => _pages.Add(page);
+        public void Add(IEnumerable<Page> pages) => _pages.AddRange(pages);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -261,25 +269,19 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="pages">ページ情報一覧</param>
+        /// <param name="hint">IDocumentReader オブジェクト</param>
+        ///
+        /// <remarks>
+        /// IDocumentReader オブジェクトの所有権がこのクラスに移譲に
+        /// され、自動的に Dispose が実行されます。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IEnumerable<Page> pages)
+        public void Add(IEnumerable<Page> pages, IDocumentReader hint)
         {
-            foreach (var page in pages) Add(page);
+            Add(pages);
+            Bind(hint);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attach
-        ///
-        /// <summary>
-        /// ファイルを添付します。
-        /// </summary>
-        ///
-        /// <param name="file">添付ファイル</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Attach(Attachment file) => _attach.Add(file);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -292,10 +294,7 @@ namespace Cube.Pdf.Itext
         /// <param name="files">添付ファイル一覧</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach(IEnumerable<Attachment> files)
-        {
-            foreach (var item in files) Attach(item);
-        }
+        public void Attach(IEnumerable<Attachment> files) => _attach.AddRange(files);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -324,100 +323,6 @@ namespace Cube.Pdf.Itext
         public void Set(Encryption src) => Encryption = src;
 
         #endregion
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Bind
-        ///
-        /// <summary>
-        /// DocumentReader オブジェクトを束縛します。
-        /// </summary>
-        ///
-        /// <param name="src">DocumentReader オブジェクト</param>
-        ///
-        /// <remarks>
-        /// 指定された DocumentReader オブジェクトは DocumentWriter
-        /// オブジェクトに所有権が移り、Dispose 等の処理も自動的に
-        /// 実行されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Bind(DocumentReader src)
-        {
-            var key = src.File.FullName;
-
-            if (_bounds.ContainsKey(key))
-            {
-                if (_bounds[key] != src)
-                {
-                    this.LogWarn($"{key}:Other instance has already bound.");
-                    src.Dispose();
-                }
-            }
-            else _bounds.Add(key, src);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsBound
-        ///
-        /// <summary>
-        /// 指定されたパスを指す DocumentReader オブジェクトが束縛されて
-        /// いるかどうかを判別します。
-        /// </summary>
-        ///
-        /// <param name="src">PDF ファイルのパス</param>
-        ///
-        /// <returns>束縛されているかどうかを示す値</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool IsBound(string src) => _bounds.ContainsKey(src);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsBound
-        ///
-        /// <summary>
-        /// 指定された DocumentReader オブジェクトが束縛されているか
-        /// どうかを判別します。
-        /// </summary>
-        ///
-        /// <param name="src">DocumentReader オブジェクト</param>
-        ///
-        /// <returns>束縛されているかどうかを示す値</returns>
-        ///
-        /// <remarks>
-        /// このメソッドは、引数に指定されたオブジェクトと完全に等しい
-        /// オブジェクトが束縛されているかどうかを判別します。そのため、
-        /// このメソッドが false を返した場合でも、同じパスの別の
-        /// DocumentReader オブジェクトが束縛されている可能性があります。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool IsBound(DocumentReader src) =>
-            _bounds.TryGetValue(src.File.FullName, out DocumentReader dest) && src == dest;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Release
-        ///
-        /// <summary>
-        /// 束縛されている DocumentReader オブジェクトを開放します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void Release()
-        {
-            foreach (var kv in _bounds) kv.Value?.Dispose();
-            _bounds.Clear();
-
-            foreach (var kv in _images) kv.Value?.Dispose();
-            _images.Clear();
-        }
-
-        #endregion
-
-        #region Virtual methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -450,11 +355,98 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnSave(string path) { }
+        protected abstract void OnSave(string path);
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Bind
+        ///
+        /// <summary>
+        /// DocumentReader オブジェクトを束縛します。
+        /// </summary>
+        ///
+        /// <param name="src">DocumentReader オブジェクト</param>
+        ///
+        /// <remarks>
+        /// 指定された DocumentReader オブジェクトは DocumentWriter
+        /// オブジェクトに所有権が移り、Dispose 等の処理も自動的に
+        /// 実行されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Bind(IDocumentReader src)
+        {
+            var key = src.File.FullName;
 
-        #region Helper methods
+            if (_bounds.ContainsKey(key))
+            {
+                if (_bounds[key] != src)
+                {
+                    _bounds[key].Dispose();
+                    _bounds[key] = src;
+                    this.LogWarn($"{key}:Other instance has already bound.");
+                }
+            }
+            else _bounds.Add(key, src);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBound
+        ///
+        /// <summary>
+        /// 指定されたパスを指す DocumentReader オブジェクトが束縛されて
+        /// いるかどうかを判別します。
+        /// </summary>
+        ///
+        /// <param name="src">PDF ファイルのパス</param>
+        ///
+        /// <returns>束縛されているかどうかを示す値</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected bool IsBound(string src) => _bounds.ContainsKey(src);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBound
+        ///
+        /// <summary>
+        /// 指定された DocumentReader オブジェクトが束縛されているか
+        /// どうかを判別します。
+        /// </summary>
+        ///
+        /// <param name="src">DocumentReader オブジェクト</param>
+        ///
+        /// <returns>束縛されているかどうかを示す値</returns>
+        ///
+        /// <remarks>
+        /// このメソッドは、引数に指定されたオブジェクトと完全に等しい
+        /// オブジェクトが束縛されているかどうかを判別します。そのため、
+        /// このメソッドが false を返した場合でも、同じパスの別の
+        /// IDocumentReader オブジェクトが束縛されている可能性があります。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected bool IsBound(IDocumentReader src) =>
+            _bounds.TryGetValue(src.File.FullName, out IDocumentReader dest) && src == dest;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Release
+        ///
+        /// <summary>
+        /// 束縛されている DocumentReader オブジェクトを開放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Release()
+        {
+            foreach (var kv in _bounds) kv.Value?.Dispose();
+            _bounds.Clear();
+
+            foreach (var kv in _images) kv.Value?.Dispose();
+            _images.Clear();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -468,23 +460,51 @@ namespace Cube.Pdf.Itext
         protected PdfReader GetRawReader(Page src)
         {
             Debug.Assert(src != null);
-            var path = src.File.FullName;
+            if (src.File is PdfFile pdf) return GetRawReader(src, pdf);
+            if (src.File is ImageFile img) return GetRawReader(src, img);
+            return null;
+        }
 
-            if (src.File is PdfFile pdf)
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetRawReader
+        ///
+        /// <summary>
+        /// PdfReader オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private PdfReader GetRawReader(Page src, PdfFile file)
+        {
+            var path = src.File.FullName;
+            if (!IsBound(path)) Bind(new DocumentReader(path, file.Password, IO));
+
+            return _bounds[path] is DocumentReader dest ?
+                   dest.RawObject.TryCast<PdfReader>() :
+                   null;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetRawReader
+        ///
+        /// <summary>
+        /// PdfReader オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private PdfReader GetRawReader(Page src, ImageFile file)
+        {
+            var path = src.File.FullName;
+            if (!_images.ContainsKey(path))
             {
-                if (!IsBound(path)) Bind(new DocumentReader(path, pdf.Password, IO));
-                return _bounds[path].RawObject.TryCast<PdfReader>();
+                _images.Add(path, ReaderFactory.CreateFromImage(path, IO));
             }
-            else if (src.File is ImageFile img)
-            {
-                if (!_images.ContainsKey(path))
-                {
-                    var obj = ReaderFactory.CreateFromImage(path, IO);
-                    _images.Add(path, obj);
-                }
-                return _images[path];
-            }
-            else return null;
+            return _images[path];
         }
 
         #endregion
@@ -493,7 +513,7 @@ namespace Cube.Pdf.Itext
         private readonly OnceAction<bool> _dispose;
         private readonly List<Page> _pages = new List<Page>();
         private readonly List<Attachment> _attach = new List<Attachment>();
-        private readonly IDictionary<string, DocumentReader> _bounds = new Dictionary<string, DocumentReader>();
+        private readonly IDictionary<string, IDocumentReader> _bounds = new Dictionary<string, IDocumentReader>();
         private readonly IDictionary<string, PdfReader> _images = new Dictionary<string, PdfReader>();
         #endregion
     }

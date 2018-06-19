@@ -57,8 +57,8 @@
     <Compile Include="Details\ImageExtension.cs" />
     <Compile Include="Details\ReaderExtension.cs" />
     <Compile Include="Details\ReaderFactory.cs" />
-    <Compile Include="Details\ReadOnlyAttachmentCollection.cs" />
-    <Compile Include="Details\ReadOnlyPageCollection.cs" />
+    <Compile Include="Details\ReadOnlyAttachmentList.cs" />
+    <Compile Include="Details\ReadOnlyPageList.cs" />
     <Compile Include="Details\WriterExtension.cs" />
     <Compile Include="Details\WriterFactory.cs" />
     <Compile Include="DocumentReader.cs" />

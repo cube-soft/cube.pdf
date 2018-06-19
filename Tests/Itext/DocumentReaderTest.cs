@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.Tests;
 using Cube.Pdf.Itext;
+using Cube.Pdf.Mixin;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

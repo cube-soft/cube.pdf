@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.Tests;
 using Cube.Pdf.Itext;
+using Cube.Pdf.Mixin;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,8 +104,7 @@ namespace Cube.Pdf.Tests.Itext
                 writer.UseSmartCopy = true;
                 writer.Set(reader.Metadata);
                 writer.Set(reader.Encryption);
-                writer.Add(Rotate(reader.Pages, degree));
-                writer.Bind(reader);
+                writer.Add(Rotate(reader.Pages, degree), reader);
                 writer.Save(dest);
             }
 
@@ -230,10 +230,9 @@ namespace Cube.Pdf.Tests.Itext
                 writer.UseSmartCopy = true;
                 writer.Set(reader.Metadata);
                 writer.Set(reader.Encryption);
-                writer.Add(reader.Pages);
+                writer.Add(reader);
                 writer.Attach(reader.Attachments);
                 writer.Attach(new Attachment(GetExamplesWith(file), IO));
-                writer.Bind(reader);
                 writer.Save(dest);
             }
 

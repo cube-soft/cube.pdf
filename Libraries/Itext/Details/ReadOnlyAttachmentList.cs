@@ -26,20 +26,20 @@ namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ReadOnlyAttachmentCollection
+    /// ReadOnlyAttachmentList
     ///
     /// <summary>
     /// 読み取り専用で添付ファイル一覧へアクセスするためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ReadOnlyAttachmentCollection : IReadOnlyCollection<Attachment>
+    public class ReadOnlyAttachmentList : IReadOnlyList<Attachment>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReadOnlyAttachmentCollection
+        /// ReadOnlyAttachmentList
         ///
         /// <summary>
         /// オブジェクトを初期化します。
@@ -50,7 +50,7 @@ namespace Cube.Pdf.Itext
         /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyAttachmentCollection(PdfReader core, PdfFile file, IO io)
+        public ReadOnlyAttachmentList(PdfReader core, PdfFile file, IO io)
         {
             File  = file;
             IO    = io;
@@ -95,6 +95,17 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public int Count => _values.Count();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Item[int]
+        ///
+        /// <summary>
+        /// Attachment オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Attachment this[int index] => _values[index];
 
         #endregion
 

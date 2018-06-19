@@ -24,20 +24,20 @@ namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ReadOnlyPageCollection
+    /// ReadOnlyPageList
     ///
     /// <summary>
     /// 読み取り専用で PDF ページ一覧へアクセスするためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class ReadOnlyPageCollection : IReadOnlyCollection<Page>
+    internal class ReadOnlyPageList : IReadOnlyList<Page>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReadOnlyPageCollection
+        /// ReadOnlyPageList
         ///
         /// <summary>
         /// オブジェクトを初期化します。
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Itext
         /// <param name="file">PDF ファイル情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageCollection(PdfReader core, PdfFile file)
+        public ReadOnlyPageList(PdfReader core, PdfFile file)
         {
             File  = file;
             _core = core;
@@ -79,6 +79,17 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public int Count => _core?.NumberOfPages ?? 0;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Item[int]
+        ///
+        /// <summary>
+        /// Page オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Page this[int index] => _core.GetPage(File, index + 1);
+
         #endregion
 
         #region Methods
@@ -96,7 +107,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public IEnumerator<Page> GetEnumerator()
         {
-            for (var i = 0; i < Count; ++i) yield return _core.GetPage(File, i + 1);
+            for (var i = 0; i < Count; ++i) yield return this[i];
         }
 
         /* ----------------------------------------------------------------- */
