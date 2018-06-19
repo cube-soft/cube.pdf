@@ -342,6 +342,15 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   Ghostscript error ({0}) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageGhostscript {
+            get {
+                return ResourceManager.GetString("MessageGhostscript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Do you want to merge at the beginning of the existing file? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageMergeHead {

@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Generics;
-using Cube.Log;
 using System;
 using System.ComponentModel;
 
@@ -253,13 +252,7 @@ namespace Cube.Pdf.App.Converter
                 Model.Convert();
                 Messenger.Close.Publish();
             }
-            catch (OperationCanceledException) { }
-            catch (Exception err)
-            {
-                this.LogError(err.ToString(), err);
-                Messenger.MessageBox.Publish(MessageFactory.CreateError(err.Message));
-                Messenger.Close.Publish();
-            }
+            catch (Exception err) { this.Show(err); }
         }
 
         /* ----------------------------------------------------------------- */

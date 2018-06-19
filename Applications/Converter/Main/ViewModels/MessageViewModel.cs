@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Log;
+using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -59,6 +61,34 @@ namespace Cube.Pdf.App.Converter
             if (!ValidateOwnerPassword(src)) return false;
             if (!ValidateUserPassword(src)) return false;
             return true;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Show
+        ///
+        /// <summary>
+        /// エラーメッセージを表示します。
+        /// </summary>
+        ///
+        /// <param name="src">MainViewModel</param>
+        /// <param name="err">例外オブジェクト</param>
+        ///
+        /// <remarks>
+        /// OperationCanceledException 以外の例外が発生した場合、
+        /// エラーメッセージ表示後に Close イベントを発行します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Show(this MainViewModel src, Exception err)
+        {
+            if (err is OperationCanceledException) return;
+
+            src.LogError(err.ToString(), err);
+            var msg  = err is GsApiException gse ? CreateMessage(gse) : err.Message;
+            var args = MessageFactory.CreateError(msg);
+            src.Messenger.MessageBox.Publish(args);
+            src.Messenger.Close.Publish();
         }
 
         #endregion
@@ -159,6 +189,19 @@ namespace Cube.Pdf.App.Converter
 
             return $"{head} {tail}";
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMessage
+        ///
+        /// <summary>
+        /// Ghostscript API の実行中にエラーが発生した時のメッセージを
+        /// 生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string CreateMessage(GsApiException err) =>
+            string.Format(Properties.Resources.MessageGhostscript, err.ErrorCode);
 
         #endregion
 

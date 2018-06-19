@@ -211,6 +211,9 @@
   <data name="MessageExists" xml:space="preserve">
     <value>{0} は既に存在します。</value>
   </data>
+  <data name="MessageGhostscript" xml:space="preserve">
+    <value>Ghostscript API による変換中にエラーが発生しました。このエラーは入力ファイルの内容を変更する事で回避できる場合があります。({0})</value>
+  </data>
   <data name="MessageMergeHead" xml:space="preserve">
     <value>先頭に結合しますか？</value>
   </data>
