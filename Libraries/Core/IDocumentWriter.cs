@@ -61,10 +61,10 @@ namespace Cube.Pdf
         /// ページを追加します。
         /// </summary>
         ///
-        /// <param name="page">ページオブジェクト</param>
+        /// <param name="pages">ページ一覧</param>
         ///
         /* ----------------------------------------------------------------- */
-        void Add(Page page);
+        void Add(IEnumerable<Page> pages);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -75,22 +75,12 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <param name="pages">ページ一覧</param>
+        /// <param name="hint">
+        /// ページの詳細情報を取得するためのオブジェクト
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        void Add(IEnumerable<Page> pages);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attach
-        ///
-        /// <summary>
-        /// ファイルを添付します。
-        /// </summary>
-        ///
-        /// <param name="file">添付ファイルオブジェクト</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Attach(Attachment file);
+        void Add(IEnumerable<Page> pages, IDocumentReader hint);
 
         /* ----------------------------------------------------------------- */
         ///
