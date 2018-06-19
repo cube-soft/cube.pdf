@@ -105,7 +105,7 @@
             this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
             this.OptionsLabel = new System.Windows.Forms.Label();
             this.ImageCompressionCheckBox = new System.Windows.Forms.CheckBox();
-            this.WebOptimizationCheckBox = new System.Windows.Forms.CheckBox();
+            this.LinearizationCheckBox = new System.Windows.Forms.CheckBox();
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
@@ -664,7 +664,7 @@
             this.OthersPanel.Controls.Add(this.GrayscaleCheckBox, 1, 0);
             this.OthersPanel.Controls.Add(this.OptionsLabel, 0, 0);
             this.OthersPanel.Controls.Add(this.ImageCompressionCheckBox, 1, 1);
-            this.OthersPanel.Controls.Add(this.WebOptimizationCheckBox, 1, 2);
+            this.OthersPanel.Controls.Add(this.LinearizationCheckBox, 1, 2);
             this.OthersPanel.Controls.Add(this.UpdateCheckBox, 1, 5);
             this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 6);
             this.OthersPanel.Controls.Add(this.AboutLabel, 0, 4);
@@ -695,12 +695,12 @@
             this.ImageCompressionCheckBox.Name = "ImageCompressionCheckBox";
             this.ImageCompressionCheckBox.UseVisualStyleBackColor = true;
             //
-            // WebOptimizationCheckBox
+            // LinearizationCheckBox
             //
-            resources.ApplyResources(this.WebOptimizationCheckBox, "WebOptimizationCheckBox");
-            this.WebOptimizationCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "Linearization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.WebOptimizationCheckBox.Name = "WebOptimizationCheckBox";
-            this.WebOptimizationCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.LinearizationCheckBox, "LinearizationCheckBox");
+            this.LinearizationCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "Linearization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.LinearizationCheckBox.Name = "LinearizationCheckBox";
+            this.LinearizationCheckBox.UseVisualStyleBackColor = true;
             //
             // UpdateCheckBox
             //
@@ -922,7 +922,7 @@
         private System.Windows.Forms.RadioButton AutoRadioButton;
         private System.Windows.Forms.CheckBox UpdateCheckBox;
         private System.Windows.Forms.CheckBox ImageCompressionCheckBox;
-        private System.Windows.Forms.CheckBox WebOptimizationCheckBox;
+        private System.Windows.Forms.CheckBox LinearizationCheckBox;
         private System.Windows.Forms.TableLayoutPanel FormatPanel;
         private System.Windows.Forms.ComboBox FormatOptionComboBox;
         private System.Windows.Forms.ComboBox FormatComboBox;

@@ -2322,37 +2322,37 @@
   <data name="&gt;&gt;ImageCompressionCheckBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="WebOptimizationCheckBox.AutoSize" type="System.Boolean, mscorlib">
+  <data name="LinearizationCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="WebOptimizationCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="LinearizationCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="WebOptimizationCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="LinearizationCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="WebOptimizationCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="LinearizationCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 53</value>
   </data>
-  <data name="WebOptimizationCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="LinearizationCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 19</value>
   </data>
-  <data name="WebOptimizationCheckBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="LinearizationCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="WebOptimizationCheckBox.Text" xml:space="preserve">
+  <data name="LinearizationCheckBox.Text" xml:space="preserve">
     <value>Optimize PDF for fast Web view</value>
   </data>
-  <data name="&gt;&gt;WebOptimizationCheckBox.Name" xml:space="preserve">
-    <value>WebOptimizationCheckBox</value>
+  <data name="&gt;&gt;LinearizationCheckBox.Name" xml:space="preserve">
+    <value>LinearizationCheckBox</value>
   </data>
-  <data name="&gt;&gt;WebOptimizationCheckBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;LinearizationCheckBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;WebOptimizationCheckBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;LinearizationCheckBox.Parent" xml:space="preserve">
     <value>OthersPanel</value>
   </data>
-  <data name="&gt;&gt;WebOptimizationCheckBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;LinearizationCheckBox.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="UpdateCheckBox.AutoSize" type="System.Boolean, mscorlib">
@@ -2503,7 +2503,7 @@
     <value>0</value>
   </data>
   <data name="OthersPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LanguageLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ImageCompressionCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="WebOptimizationCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AboutLabel" Row="4" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LanguageLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ImageCompressionCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LinearizationCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AboutLabel" Row="4" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="OthersTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
