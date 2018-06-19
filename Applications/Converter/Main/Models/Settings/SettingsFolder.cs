@@ -224,6 +224,51 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnSaved
+        ///
+        /// <summary>
+        /// 保存時に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnSaved(KeyValueEventArgs<Cube.DataContract.Format, string> e)
+        {
+            if (Value != null) Startup.Enabled = Value.CheckUpdate;
+            base.OnSaved(e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetWorkDirectory
+        ///
+        /// <summary>
+        /// 作業ディレクトリのパスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetWorkDirectory()
+        {
+            var name = $@"Software\{Company}\{Product}";
+            using (var key = Registry.LocalMachine.OpenSubKey(name, false))
+            {
+                if (key != null)
+                {
+                    var dest = key.GetValue("LibPath") as string;
+                    if (dest.HasValue()) return dest;
+                }
+            }
+
+            return IO.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                Company,
+                Product
+            );
+        }
+
+        #region Normalize
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// NormalizeFormat
         ///
         /// <summary>
@@ -231,7 +276,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Ghostscript.Format NormalizeFormat(Settings src) =>
+        private Format NormalizeFormat(Settings src) =>
             ViewResource.Formats.Any(e => e.Value == src.Format) ?
             src.Format :
             Ghostscript.Format.Pdf;
@@ -245,10 +290,10 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Ghostscript.Orientation NormalizeOrientation(Settings src) =>
+        private Orientation NormalizeOrientation(Settings src) =>
             ViewResource.Orientations.Any(e => e.Value == src.Orientation) ?
             src.Orientation :
-            Ghostscript.Orientation.Auto;
+            Orientation.Auto;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -286,33 +331,7 @@ namespace Cube.Pdf.App.Converter
             return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetWorkDirectory
-        ///
-        /// <summary>
-        /// 作業ディレクトリのパスを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetWorkDirectory()
-        {
-            var name = $@"Software\{Company}\{Product}";
-            using (var key = Registry.LocalMachine.OpenSubKey(name, false))
-            {
-                if (key != null)
-                {
-                    var dest = key.GetValue("LibPath") as string;
-                    if (dest.HasValue()) return dest;
-                }
-            }
-
-            return IO.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                Company,
-                Product
-            );
-        }
+        #endregion
 
         #endregion
     }
