@@ -208,6 +208,18 @@
   <data name="MenuTwoPageRight" xml:space="preserve">
     <value>Two page (right)</value>
   </data>
+  <data name="MessageExists" xml:space="preserve">
+    <value>{0} already exists.</value>
+  </data>
+  <data name="MessageMergeHead" xml:space="preserve">
+    <value>Do you want to merge at the beginning of the existing file?</value>
+  </data>
+  <data name="MessageMergeTail" xml:space="preserve">
+    <value>Do you want to merge at the end of the existing file?</value>
+  </data>
+  <data name="MessageOverwrite" xml:space="preserve">
+    <value>Do you want to overwrite the file?</value>
+  </data>
   <data name="TitleBroseDestination" xml:space="preserve">
     <value>Save as</value>
   </data>

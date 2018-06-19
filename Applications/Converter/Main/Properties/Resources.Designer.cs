@@ -333,6 +333,42 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   {0} already exists. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageExists {
+            get {
+                return ResourceManager.GetString("MessageExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Do you want to merge at the beginning of the existing file? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageMergeHead {
+            get {
+                return ResourceManager.GetString("MessageMergeHead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Do you want to merge at the end of the existing file? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageMergeTail {
+            get {
+                return ResourceManager.GetString("MessageMergeTail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Do you want to overwrite the file? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageOverwrite {
+            get {
+                return ResourceManager.GetString("MessageOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Save as に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleBroseDestination {

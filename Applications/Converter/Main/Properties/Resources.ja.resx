@@ -208,6 +208,18 @@
   <data name="MenuTwoPageRight" xml:space="preserve">
     <value>見開きページ（右綴じ）</value>
   </data>
+  <data name="MessageExists" xml:space="preserve">
+    <value>{0} は既に存在します。</value>
+  </data>
+  <data name="MessageMergeHead" xml:space="preserve">
+    <value>先頭に結合しますか？</value>
+  </data>
+  <data name="MessageMergeTail" xml:space="preserve">
+    <value>末尾に結合しますか？</value>
+  </data>
+  <data name="MessageOverwrite" xml:space="preserve">
+    <value>上書きしますか？</value>
+  </data>
   <data name="TitleBroseDestination" xml:space="preserve">
     <value>名前を付けて保存</value>
   </data>
