@@ -55,7 +55,7 @@ namespace Cube.Pdf.App.Converter
             Format        = format;
             Information   = io.Get(dest);
             WorkDirectory = IO.Combine(Information.DirectoryName, Guid.NewGuid().ToString("D"));
-            Value         = GetName();
+            Value         = IO.Combine(WorkDirectory, GetName());
         }
 
         #endregion
@@ -142,10 +142,12 @@ namespace Cube.Pdf.App.Converter
 
             for (var i = 0; i < src.Length; ++i)
             {
-                var path = GetDestination(i, src.Length);
+                var path = GetDestination(i + 1, src.Length);
                 IO.Move(src[i], path, true);
                 dest.Add(path);
             }
+
+            IO.TryDelete(WorkDirectory);
 
             return dest;
         }
@@ -183,7 +185,7 @@ namespace Cube.Pdf.App.Converter
 
             var name  = Information.NameWithoutExtension;
             var ext   = Information.Extension;
-            var digit = string.Format("D{0}", count.ToString("D").Length);
+            var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
             var dest  = string.Format("{0}-{1}{2}", name, index.ToString(digit), ext);
 
             return IO.Combine(Information.DirectoryName, dest);

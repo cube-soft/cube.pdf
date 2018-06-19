@@ -240,7 +240,7 @@
             resources.ApplyResources(this.UserProgramPanel, "UserProgramPanel");
             this.UserProgramPanel.Controls.Add(this.UserProgramButton, 0, 0);
             this.UserProgramPanel.Controls.Add(this.UserProgramTextBox, 0, 0);
-            this.UserProgramPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "EnableUserProgram", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.UserProgramPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "EnableUserProgram", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.UserProgramPanel.Name = "UserProgramPanel";
             //
             // UserProgramButton

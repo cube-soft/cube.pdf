@@ -237,7 +237,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> sources, string dest) =>
-            SetWorkDirectory(() => GsApi.NativeMethods.Invoke(Create()
+            Invoke(() => GsApi.NativeMethods.Invoke(Create()
                 .Concat(new[] { new Argument('s', "OutputFile", dest) })
                 .Concat(OnCreateArguments())
                 .Concat(CreateCodes())
@@ -246,7 +246,7 @@ namespace Cube.Pdf.Ghostscript
                 .Concat(sources)
                 .Where(e => { this.LogDebug(e); return true; }) // for debug
                 .ToArray()
-            ));
+            ), dest);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -411,20 +411,23 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetWorkDirectory
+        /// Invoke
         ///
         /// <summary>
         /// 作業ディレクトリを設定した後 Action を実行します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetWorkDirectory(Action action)
+        private void Invoke(Action action, string dest)
         {
             var name = "TEMP";
             var prev = Environment.GetEnvironmentVariable(name);
 
             try
             {
+                var info = IO.Get(dest);
+                if (!IO.Exists(info.DirectoryName)) IO.CreateDirectory(info.DirectoryName);
+
                 if (WorkDirectory.HasValue())
                 {
                     if (!IO.Exists(WorkDirectory)) IO.CreateDirectory(WorkDirectory);

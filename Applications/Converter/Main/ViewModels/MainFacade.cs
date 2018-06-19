@@ -81,15 +81,19 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
+            var src = Settings.Value;
+
             try
             {
-                Settings.Value.IsBusy = true;
-                var fs = new FileTransfer(Settings.Value.Format, Settings.Value.Destination, Settings.IO);
+                src.IsBusy = true;
+
+                var fs = new FileTransfer(src.Format, src.Destination, Settings.IO);
                 var gs = GhostscriptFactory.Create(Settings);
-                gs.Invoke(Settings.Value.Source, fs.Value);
+
+                gs.Invoke(src.Source, fs.Value);
                 fs.Invoke();
             }
-            finally { Settings.Value.IsBusy = false; }
+            finally { src.IsBusy = false; }
         }
 
         /* ----------------------------------------------------------------- */
