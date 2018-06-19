@@ -44,7 +44,7 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             var type = typeof(Program);
 
@@ -59,6 +59,7 @@ namespace Cube.Pdf.App.Converter
 
                 var settings = new SettingsFolder();
                 settings.Load();
+                settings.Set(args);
 
                 var vm   = new MainViewModel(settings);
                 var view = new MainForm();

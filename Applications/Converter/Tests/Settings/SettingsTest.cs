@@ -51,11 +51,15 @@ namespace Cube.Pdf.Tests.Converter
             var dest = new SettingsFolder();
 
             Assert.That(dest.Format,             Is.EqualTo(Cube.DataContract.Format.Registry));
+            Assert.That(dest.Location,           Is.EqualTo(@"CubeSoft\CubePDF\v2"));
+            Assert.That(dest.WorkDirectory,      Does.EndWith("CubePDF"));
             Assert.That(dest.AutoSave,           Is.False);
             Assert.That(dest.Company,            Is.EqualTo("CubeSoft"));
             Assert.That(dest.Product,            Is.EqualTo("CubePDF"));
-            Assert.That(dest.Location,           Is.EqualTo(@"CubeSoft\CubePDF\v2"));
-            Assert.That(dest.WorkDirectory,      Does.EndWith("CubePDF"));
+            Assert.That(dest.MachineName,        Is.EqualTo(Environment.MachineName));
+            Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));
+            Assert.That(dest.DocumentName.Value, Is.Empty);
+            Assert.That(dest.DocumentName.Name,  Is.EqualTo("CubePDF"));
             Assert.That(dest.Version.ToString(), Is.EqualTo("1.0.0RC12"));
             Assert.That(dest.Startup.Name,       Is.EqualTo("cubepdf-checker"));
             Assert.That(dest.Startup.Command,    Does.EndWith("cubepdf-checker.exe\""));
@@ -78,7 +82,7 @@ namespace Cube.Pdf.Tests.Converter
             {
                 "/DeleteOnClose",
                 "/DocumentName",
-                "(234) Twitter",
+                "(234)?File.txt - Sample Application",
                 "/InputFile",
                 @"C:\WINDOWS\CubePDF\PS3AEE.tmp",
                 "/MachineName",
@@ -94,11 +98,18 @@ namespace Cube.Pdf.Tests.Converter
             var dest = new SettingsFolder();
             dest.Set(src);
 
+            var path = System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                System.IO.Path.ChangeExtension(dest.DocumentName.Name, ".pdf")
+            );
+
             Assert.That(dest.MachineName,        Is.EqualTo(@"\\APOLLON"));
             Assert.That(dest.UserName,           Is.EqualTo("clown"));
-            Assert.That(dest.DocumentName,       Is.EqualTo("(234) Twitter"));
+            Assert.That(dest.DocumentName.Value, Is.EqualTo("(234)?File.txt - Sample Application"));
+            Assert.That(dest.DocumentName.Name,  Is.EqualTo("(234)_File.txt"));
             Assert.That(dest.Value.DeleteSource, Is.True);
             Assert.That(dest.Value.Source,       Is.EqualTo(@"C:\WINDOWS\CubePDF\PS3AEE.tmp"));
+            Assert.That(dest.Value.Destination,  Is.EqualTo(path));
         }
 
         /* ----------------------------------------------------------------- */
@@ -118,7 +129,7 @@ namespace Cube.Pdf.Tests.Converter
 
             Assert.That(dest.MachineName,        Is.EqualTo(Environment.MachineName));
             Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));
-            Assert.That(dest.DocumentName,       Is.Empty);
+            Assert.That(dest.DocumentName.Name,  Is.EqualTo("CubePDF"));
             Assert.That(dest.Value.DeleteSource, Is.False);
             Assert.That(dest.Value.Source,       Is.Empty);
         }

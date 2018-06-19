@@ -457,7 +457,7 @@ namespace Cube.Pdf.App.Converter
             _sourceVisible    = false;
             _checkUpdate      = true;
             _source           = string.Empty;
-            _destination      = string.Empty;
+            _destination      = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             _userProgram      = string.Empty;
             _metadata         = new Metadata();
             _encryption       = new Encryption();

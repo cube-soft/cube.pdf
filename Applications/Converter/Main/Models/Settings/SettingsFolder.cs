@@ -19,6 +19,7 @@
 using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Generics;
+using Cube.Pdf.Ghostscript;
 using Microsoft.Win32;
 using System;
 using System.Linq;
@@ -74,7 +75,7 @@ namespace Cube.Pdf.App.Converter
             AutoSave      = false;
             MachineName   = Environment.MachineName;
             UserName      = Environment.UserName;
-            DocumentName  = string.Empty;
+            DocumentName  = new DocumentName(string.Empty, Product, IO);
             WorkDirectory = GetWorkDirectory();
 
             var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
@@ -103,6 +104,21 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// DocumentName
+        ///
+        /// <summary>
+        /// ドキュメント名を取得します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 主に仮想プリンタ経由時に指定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentName DocumentName { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// MachineName
         ///
         /// <summary>
@@ -122,21 +138,6 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public string UserName { get; private set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentName
-        ///
-        /// <summary>
-        /// ドキュメント名を取得または設定します。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 主に仮想プリンタ経由時に指定されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string DocumentName { get; private set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -175,12 +176,17 @@ namespace Cube.Pdf.App.Converter
             var src = new ArgumentCollection(args, '/');
             var opt = src.Options;
 
-            Value.DeleteSource = opt.ContainsKey("DeleteOnClose");
-
             if (opt.TryGetValue("MachineName", out var pc)) MachineName = pc;
             if (opt.TryGetValue("UserName", out var user)) UserName = user;
-            if (opt.TryGetValue("DocumentName", out var doc)) DocumentName = doc;
+            if (opt.TryGetValue("DocumentName", out var doc)) DocumentName = new DocumentName(doc, Product, IO);
             if (opt.TryGetValue("InputFile", out var input)) Value.Source = input;
+
+            var dest = IO.Get(IO.Combine(Value.Destination, DocumentName.Name));
+            var name = dest.NameWithoutExtension;
+            var ext  = Value.Format.GetExtension();
+
+            Value.Destination  = IO.Combine(dest.DirectoryName, $"{name}{ext}");
+            Value.DeleteSource = opt.ContainsKey("DeleteOnClose");
         }
 
         #endregion
@@ -273,6 +279,9 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private string NormalizeDestination(Settings src)
         {
+            var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (!src.Destination.HasValue()) return desktop;
+
             var dest = IO.Get(src.Destination);
             return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
         }
