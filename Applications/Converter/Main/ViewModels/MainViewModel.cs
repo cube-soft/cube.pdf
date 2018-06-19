@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Generics;
 using Cube.Log;
 using System;
 using System.ComponentModel;
@@ -93,6 +94,20 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public Messenger Messenger { get; } = new Messenger();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Title
+        ///
+        /// <summary>
+        /// タイトルを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Title =>
+            Model.Settings.DocumentName.Value.HasValue() ?
+            $"{Model.Settings.DocumentName.Value} - {Product} {Version}" :
+            $"{Product} {Version}";
 
         /* ----------------------------------------------------------------- */
         ///

@@ -150,8 +150,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         protected override void OnShown(EventArgs e)
         {
-            base.OnShown(e);
             BringToFront();
+            base.OnShown(e);
         }
 
         /* ----------------------------------------------------------------- */

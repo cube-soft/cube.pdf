@@ -124,7 +124,7 @@ namespace Cube.Pdf.App.Converter
         public static MessageEventArgs CreateWarning(string src) => new MessageEventArgs(
             src,
             Properties.Resources.TitleWarning,
-            System.Windows.Forms.MessageBoxButtons.YesNo,
+            System.Windows.Forms.MessageBoxButtons.OKCancel,
             System.Windows.Forms.MessageBoxIcon.Warning
         );
 

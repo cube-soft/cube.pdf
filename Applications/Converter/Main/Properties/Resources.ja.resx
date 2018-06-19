@@ -229,4 +229,10 @@
   <data name="TitleBrowseSource" xml:space="preserve">
     <value>入力ファイルを選択</value>
   </data>
+  <data name="TitleError" xml:space="preserve">
+    <value>CubePDF エラー</value>
+  </data>
+  <data name="TitleWarning" xml:space="preserve">
+    <value>CubePDF 警告</value>
+  </data>
 </root>

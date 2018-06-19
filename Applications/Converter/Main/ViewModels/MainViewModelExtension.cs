@@ -63,7 +63,7 @@ namespace Cube.Pdf.App.Converter
             var args = MessageFactory.CreateWarning(msg);
 
             src.Messenger.MessageBox.Publish(args);
-            return args.Result != DialogResult.No;
+            return args.Result != DialogResult.Cancel;
         }
 
         #endregion
