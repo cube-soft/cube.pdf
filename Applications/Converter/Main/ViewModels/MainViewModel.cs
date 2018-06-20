@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Generics;
+using Cube.Tasks;
 using System;
 using System.ComponentModel;
 
@@ -47,7 +48,7 @@ namespace Cube.Pdf.App.Converter
         /// <param name="settings">設定情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingsFolder settings) : base(new Messenger())
+        public MainViewModel(SettingsFolder settings) : base(new Messenger(), System.Threading.SynchronizationContext.Current)
         {
             Model = new MainFacade(settings);
             settings.PropertyChanged += WhenPropertyChanged;
@@ -232,7 +233,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Convert()
+        public void Convert() => Async(() =>
         {
             if (!this.Validate()) return;
 
@@ -242,7 +243,7 @@ namespace Cube.Pdf.App.Converter
                 Messenger.Close.Publish();
             }
             catch (Exception err) { this.Show(err); }
-        }
+        }).Forget();
 
         /* ----------------------------------------------------------------- */
         ///

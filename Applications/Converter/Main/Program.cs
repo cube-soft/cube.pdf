@@ -63,11 +63,12 @@ namespace Cube.Pdf.App.Converter
                 settings.Set(args);
                 settings.CheckUpdate();
 
-                var vm   = new MainViewModel(settings);
                 var view = new MainForm();
-                view.Bind(vm);
-
-                Application.Run(view);
+                using (var vm = new MainViewModel(settings))
+                {
+                    view.Bind(vm);
+                    Application.Run(view);
+                }
             }
             catch (Exception err) { Logger.Error(type, err.ToString()); }
         }
