@@ -19,9 +19,11 @@
 using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Generics;
+using Cube.Log;
 using Cube.Pdf.Ghostscript;
 using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -189,6 +191,31 @@ namespace Cube.Pdf.App.Converter
             Value.DeleteSource = opt.ContainsKey("DeleteOnClose");
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CheckUpdate
+        ///
+        /// <summary>
+        /// アップデートの確認を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void CheckUpdate()
+        {
+            try
+            {
+                if (!Value.CheckUpdate) return;
+                var time = GetLastCheckUpdate();
+                this.LogDebug($"LastCheckUpdate:{time}");
+                if (time.AddDays(1) < DateTime.Now) Process.Start(Startup.Command);
+            }
+            catch (Exception err)
+            {
+                this.LogWarn(nameof(CheckUpdate));
+                this.LogWarn(err.ToString(), err);
+            }
+        }
+
         #endregion
 
         #region Implementations
@@ -263,6 +290,29 @@ namespace Cube.Pdf.App.Converter
                 Company,
                 Product
             );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetLastCheckUpdate
+        ///
+        /// <summary>
+        /// 最後にアップデートの更新を実行した日時を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private DateTime GetLastCheckUpdate()
+        {
+            var name = $@"Software\{Company}\{Product}";
+            using (var key = Registry.CurrentUser.OpenSubKey(name, false))
+            {
+                if (key != null)
+                {
+                    var dest = key.GetValue("LastCheckUpdate") as string;
+                    if (dest.HasValue()) DateTime.Parse(dest).ToLocalTime();
+                }
+            }
+            return DateTime.MinValue;
         }
 
         #region Normalize

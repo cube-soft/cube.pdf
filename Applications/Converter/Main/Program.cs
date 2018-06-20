@@ -53,6 +53,7 @@ namespace Cube.Pdf.App.Converter
                 Logger.Configure();
                 Logger.ObserveTaskException();
                 Logger.Info(type, Assembly.GetExecutingAssembly());
+                Logger.Info(typeof(Program), $"Arguments:{string.Join(" ", args)}");
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -60,6 +61,7 @@ namespace Cube.Pdf.App.Converter
                 var settings = new SettingsFolder();
                 settings.Load();
                 settings.Set(args);
+                settings.CheckUpdate();
 
                 var vm   = new MainViewModel(settings);
                 var view = new MainForm();

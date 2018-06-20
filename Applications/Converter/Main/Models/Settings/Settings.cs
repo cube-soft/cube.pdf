@@ -270,22 +270,6 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// LastCheckUpdate
-        ///
-        /// <summary>
-        /// 最後にアップデートの確認を実行した日時を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public DateTime? LastCheckUpdate
-        {
-            get => _lastCheckUpdate;
-            set => SetProperty(ref _lastCheckUpdate, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Language
         ///
         /// <summary>
@@ -448,7 +432,6 @@ namespace Cube.Pdf.App.Converter
             _downsampling     = Downsampling.Bicubic;
             _postProcess      = PostProcess.Open;
             _language         = Language.Auto;
-            _lastCheckUpdate  = null;
             _resolution       = 600;
             _grayscale        = false;
             _embedFonts       = true;
@@ -487,7 +470,6 @@ namespace Cube.Pdf.App.Converter
         private Downsampling _downsampling;
         private PostProcess _postProcess;
         private Language _language;
-        private DateTime? _lastCheckUpdate;
         private int _resolution;
         private bool _grayscale;
         private bool _embedFonts;
