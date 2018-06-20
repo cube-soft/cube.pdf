@@ -52,15 +52,20 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public static Ghostscript.Converter Create(SettingsFolder src)
         {
+            var dir  = src.IO.Get(AssemblyReader.Default.Location).DirectoryName;
             var dest = DocumentConverter.SupportedFormats.Contains(src.Value.Format) ?
                        CreateDocumentConverter(src) :
                        CreateImageConverter(src);
 
-            dest.Resolution  = src.Value.Resolution;
-            dest.Orientation = src.Value.Orientation;
+            dest.Quiet         = false;
+            dest.WorkDirectory = src.WorkDirectory;
+            dest.Resolution    = src.Value.Resolution;
+            dest.Orientation   = src.Value.Orientation;
+            dest.Resources.Add(src.IO.Combine(dir, "lib"));
 
             return dest;
         }
+
         #endregion
 
         #region Implementations

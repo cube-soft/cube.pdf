@@ -19,6 +19,7 @@
 using Cube.FileSystem;
 using Cube.FileSystem.Mixin;
 using Cube.Forms;
+using Cube.Log;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
@@ -120,24 +121,22 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Convert()
+        public void Convert() => Invoke(() =>
         {
-            try
+            using (var fs = new FileTransfer(Value.Format, Value.Destination, IO))
             {
-                Value.IsBusy = true;
+                this.LogDebug($"Work:{Settings.WorkDirectory}");
 
-                var fs = new FileTransfer(Value.Format, Value.Destination, IO)
-                {
-                    AutoRename = Value.SaveOption == SaveOption.Rename,
-                };
-
+                fs.AutoRename = Value.SaveOption == SaveOption.Rename;
                 InvokeGhostscript(fs.Value);
                 InvokeDecorator(fs.Value);
+
                 var dest = fs.Invoke();
+                foreach (var f in dest) this.LogDebug($"Destination:{f}");
+
                 InvokePostProcess(dest);
             }
-            finally { Value.IsBusy = false; }
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -236,10 +235,7 @@ namespace Cube.Pdf.App.Converter
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
-
-        }
+        protected virtual void Dispose(bool disposing) { }
 
         #endregion
 
@@ -272,6 +268,29 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private void UpdateExtension() =>
             Value.Destination = IO.ChangeExtension(Value.Destination, Value.Format.GetExtension());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// 処理を実行します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 処理中は IsBusy プロパティが true に設定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Action action)
+        {
+            try
+            {
+                Value.IsBusy = true;
+                action();
+            }
+            finally { Value.IsBusy = false; }
+        }
 
         /* ----------------------------------------------------------------- */
         ///

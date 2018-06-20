@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileTransfer
+    public class FileTransfer : IDisposable
     {
         #region Constructors
 
@@ -53,6 +53,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public FileTransfer(Format format, string dest, IO io)
         {
+            _dispose      = new OnceAction<bool>(Dispose);
             IO            = io;
             Format        = format;
             Information   = io.Get(dest);
@@ -161,10 +162,53 @@ namespace Cube.Pdf.App.Converter
                 dest.Add(path);
             }
 
-            IO.TryDelete(WorkDirectory);
-
             return dest;
         }
+
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~FileTransfer
+        ///
+        /// <summary>
+        /// オブジェクトを破棄します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~FileTransfer() { _dispose.Invoke(false); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// リソースを解放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// リソースを解放します。
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// マネージリソースを解放するかどうか
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing) => IO.TryDelete(WorkDirectory);
+
+        #endregion
 
         #endregion
 
@@ -220,6 +264,10 @@ namespace Cube.Pdf.App.Converter
             return IO.Combine(Information.DirectoryName, dest);
         }
 
+        #endregion
+
+        #region Fields
+        private readonly OnceAction<bool> _dispose;
         #endregion
     }
 }
