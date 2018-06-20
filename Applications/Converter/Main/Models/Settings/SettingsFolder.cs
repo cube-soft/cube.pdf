@@ -209,11 +209,7 @@ namespace Cube.Pdf.App.Converter
                 this.LogDebug($"LastCheckUpdate:{time}");
                 if (time.AddDays(1) < DateTime.Now) Process.Start(Startup.Command);
             }
-            catch (Exception err)
-            {
-                this.LogWarn(nameof(CheckUpdate));
-                this.LogWarn(err.ToString(), err);
-            }
+            catch (Exception err) { this.LogWarn($"{nameof(CheckUpdate)}:{err}", err); }
         }
 
         #endregion
@@ -309,7 +305,7 @@ namespace Cube.Pdf.App.Converter
                 if (key != null)
                 {
                     var dest = key.GetValue("LastCheckUpdate") as string;
-                    if (dest.HasValue()) DateTime.Parse(dest).ToLocalTime();
+                    if (dest.HasValue()) return DateTime.Parse(dest).ToLocalTime();
                 }
             }
             return DateTime.MinValue;
