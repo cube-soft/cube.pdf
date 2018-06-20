@@ -182,7 +182,7 @@ namespace Cube.Pdf.App.Converter
         private string GetName() =>
             DocumentConverter.SupportedFormats.Any(e => e == Format) ?
             Information.Name :
-            $"{Information.NameWithoutExtension}-%8d{Information.Extension}";
+            $"{Information.NameWithoutExtension}-%08d{Information.Extension}";
 
         /* ----------------------------------------------------------------- */
         ///

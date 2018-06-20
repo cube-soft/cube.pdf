@@ -114,18 +114,22 @@ namespace Cube.Pdf.App.Converter
         /// Format の対応関係を取得します。
         /// </summary>
         ///
+        /// <remarks>
+        /// Key は (Format, Grayscale) のペアになります。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         private static IDictionary<KeyValuePair<Format, bool>, Format> GetFormatMap() => _formats ?? (
             _formats = new Dictionary<KeyValuePair<Format, bool>, Format>
             {
-                { KeyValuePair.Create(Format.Jpeg, true ), Format.Jpeg24bppRgb      },
-                { KeyValuePair.Create(Format.Jpeg, false), Format.Jpeg8bppGrayscale },
-                { KeyValuePair.Create(Format.Png,  true ), Format.Png24bppRgb       },
-                { KeyValuePair.Create(Format.Png,  false), Format.Png8bppGrayscale  },
-                { KeyValuePair.Create(Format.Bmp,  true ), Format.Bmp24bppRgb       },
-                { KeyValuePair.Create(Format.Bmp,  false), Format.Bmp8bppGrayscale  },
-                { KeyValuePair.Create(Format.Tiff, true ), Format.Tiff24bppRgb      },
-                { KeyValuePair.Create(Format.Tiff, false), Format.Tiff8bppGrayscale },
+                { KeyValuePair.Create(Format.Jpeg, false), Format.Jpeg24bppRgb      },
+                { KeyValuePair.Create(Format.Jpeg, true ), Format.Jpeg8bppGrayscale },
+                { KeyValuePair.Create(Format.Png,  false), Format.Png24bppRgb       },
+                { KeyValuePair.Create(Format.Png,  true ), Format.Png8bppGrayscale  },
+                { KeyValuePair.Create(Format.Bmp,  false), Format.Bmp24bppRgb       },
+                { KeyValuePair.Create(Format.Bmp,  true ), Format.Bmp8bppGrayscale  },
+                { KeyValuePair.Create(Format.Tiff, false), Format.Tiff24bppRgb      },
+                { KeyValuePair.Create(Format.Tiff, true ), Format.Tiff8bppGrayscale },
             }
         );
 

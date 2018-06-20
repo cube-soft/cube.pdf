@@ -27,7 +27,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MetadataViewModel : ObservableProperty
+    public class MetadataViewModel : Cube.Forms.ViewModelBase<Messenger>
     {
         #region Constructors
 
@@ -40,9 +40,10 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /// <param name="model">PDF メタ情報</param>
+        /// <param name="messenger">Messenger オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataViewModel(Metadata model)
+        public MetadataViewModel(Metadata model, Messenger messenger) : base(messenger)
         {
             _model = model;
             _model.PropertyChanged += (s, e) => OnPropertyChanged(e);

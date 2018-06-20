@@ -29,7 +29,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsViewModel : ObservableProperty
+    public class SettingsViewModel : Cube.Forms.ViewModelBase<Messenger>
     {
         #region Constructors
 
@@ -42,9 +42,10 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /// <param name="model">設定情報</param>
+        /// <param name="messenger">Messenger オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsViewModel(Settings model)
+        public SettingsViewModel(Settings model, Messenger messenger) : base(messenger)
         {
             _model = model;
             _model.PropertyChanged += (s, e) => OnPropertyChanged(e);

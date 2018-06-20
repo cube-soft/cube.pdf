@@ -52,6 +52,9 @@ namespace Cube.Pdf.App.Converter
             Shown += (s, e) => BringToFront();
             ExitButton.Click += (s, e) => Close();
 
+            new PathBehavior(SourceTextBox);
+            new PathBehavior(DestinationTextBox);
+            new PathBehavior(UserProgramTextBox);
             new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox);
             new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox);
 

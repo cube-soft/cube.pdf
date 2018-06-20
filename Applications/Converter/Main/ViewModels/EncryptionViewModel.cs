@@ -27,7 +27,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EncryptionViewModel : ObservableProperty
+    public class EncryptionViewModel : Cube.Forms.ViewModelBase<Messenger>
     {
         #region Constructors
 
@@ -40,9 +40,10 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /// <param name="model">PDF 暗号化情報</param>
+        /// <param name="messenger">Messenger オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionViewModel(Encryption model)
+        public EncryptionViewModel(Encryption model, Messenger messenger) : base(messenger)
         {
             _model = model;
             _model.PropertyChanged += (s, e) => OnPropertyChanged(e);

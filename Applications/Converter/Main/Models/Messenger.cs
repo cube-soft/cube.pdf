@@ -16,8 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
-
 namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
@@ -29,20 +27,9 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Messenger : IAggregator
+    public class Messenger : Cube.Forms.Messenger
     {
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Close
-        ///
-        /// <summary>
-        /// 画面を閉じるイベントを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Close { get; } = new RelayEvent();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -54,42 +41,6 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public RelayEvent<string> SetCulture { get; } = new RelayEvent<string>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MessageBox
-        ///
-        /// <summary>
-        /// MessageBox を表示するイベントを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent<MessageEventArgs> MessageBox { get; } =
-            new RelayEvent<MessageEventArgs>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OpenFileDialog
-        ///
-        /// <summary>
-        /// OpenFileDialog を表示するイベントを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent<OpenFileEventArgs> OpenFileDialog { get; } =
-            new RelayEvent<OpenFileEventArgs>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveFileDialog
-        ///
-        /// <summary>
-        /// SaveFileDialog を表示するイベントを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent<SaveFileEventArgs> SaveFileDialog { get; } =
-            new RelayEvent<SaveFileEventArgs>();
 
         #endregion
     }

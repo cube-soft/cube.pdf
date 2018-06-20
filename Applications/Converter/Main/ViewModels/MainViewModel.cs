@@ -32,7 +32,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainViewModel : ObservableProperty
+    public class MainViewModel : Cube.Forms.ViewModelBase<Messenger>
     {
         #region Constructors
 
@@ -47,14 +47,14 @@ namespace Cube.Pdf.App.Converter
         /// <param name="settings">設定情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingsFolder settings)
+        public MainViewModel(SettingsFolder settings) : base(new Messenger())
         {
             Model = new MainFacade(settings);
             settings.PropertyChanged += WhenPropertyChanged;
 
-            Settings   = new SettingsViewModel(settings.Value);
-            Metadata   = new MetadataViewModel(settings.Value.Metadata);
-            Encryption = new EncryptionViewModel(settings.Value.Encryption);
+            Settings   = new SettingsViewModel(settings.Value, Messenger);
+            Metadata   = new MetadataViewModel(settings.Value.Metadata, Messenger);
+            Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger);
         }
 
         #endregion
@@ -82,17 +82,6 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public IO IO => Model.IO;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Messenger
-        ///
-        /// <summary>
-        /// Messenger オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Messenger Messenger { get; } = new Messenger();
 
         /* ----------------------------------------------------------------- */
         ///

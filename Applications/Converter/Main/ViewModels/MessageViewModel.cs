@@ -87,8 +87,12 @@ namespace Cube.Pdf.App.Converter
             src.LogError(err.ToString(), err);
             var msg  = err is GsApiException gse ? CreateMessage(gse) : err.Message;
             var args = MessageFactory.CreateError(msg);
-            src.Messenger.MessageBox.Publish(args);
-            src.Messenger.Close.Publish();
+
+            src.SyncWait(() =>
+            {
+                src.Messenger.MessageBox.Publish(args);
+                src.Messenger.Close.Publish();
+            });
         }
 
         #endregion
@@ -116,7 +120,7 @@ namespace Cube.Pdf.App.Converter
             var msg  = CreateMessage(dest, so);
             var args = MessageFactory.CreateWarning(msg);
 
-            src.Messenger.MessageBox.Publish(args);
+            src.SyncWait(() => src.Messenger.MessageBox.Publish(args));
             return args.Result != DialogResult.Cancel;
         }
 
@@ -136,7 +140,7 @@ namespace Cube.Pdf.App.Converter
             if (!eo.Enabled || eo.OwnerPassword.Equals(eo.OwnerConfirm, opt)) return true;
 
             var args = MessageFactory.CreateError(Properties.Resources.MessagePassword);
-            src.Messenger.MessageBox.Publish(args);
+            src.SyncWait(() => src.Messenger.MessageBox.Publish(args));
             return false;
         }
 
@@ -157,7 +161,7 @@ namespace Cube.Pdf.App.Converter
             if (eo.UserPassword.Equals(eo.UserConfirm, opt)) return true;
 
             var args = MessageFactory.CreateError(Properties.Resources.MessagePassword);
-            src.Messenger.MessageBox.Publish(args);
+            src.SyncWait(() => src.Messenger.MessageBox.Publish(args));
             return false;
         }
 
