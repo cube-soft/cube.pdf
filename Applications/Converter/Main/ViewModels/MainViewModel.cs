@@ -48,14 +48,14 @@ namespace Cube.Pdf.App.Converter
         /// <param name="settings">設定情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingsFolder settings) : base(new Messenger(), System.Threading.SynchronizationContext.Current)
+        public MainViewModel(SettingsFolder settings) : base(new Messenger())
         {
-            Model = new MainFacade(settings);
-            settings.PropertyChanged += WhenPropertyChanged;
-
+            Model      = new MainFacade(settings);
             Settings   = new SettingsViewModel(settings.Value, Messenger);
             Metadata   = new MetadataViewModel(settings.Value.Metadata, Messenger);
             Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger);
+
+            settings.PropertyChanged += WhenPropertyChanged;
         }
 
         #endregion
@@ -308,6 +308,21 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// リソースを解放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) Model.Dispose();
+            base.Dispose(disposing);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

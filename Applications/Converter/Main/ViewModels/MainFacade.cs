@@ -20,6 +20,7 @@ using Cube.FileSystem;
 using Cube.FileSystem.Mixin;
 using Cube.Forms;
 using Cube.Pdf.Ghostscript;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -36,7 +37,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainFacade
+    public class MainFacade : IDisposable
     {
         #region Constructors
 
@@ -53,6 +54,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public MainFacade(SettingsFolder settings)
         {
+            _dispose = new OnceAction<bool>(Dispose);
             Settings = settings;
             Settings.PropertyChanged += WhenPropertyChanged;
         }
@@ -193,6 +195,54 @@ namespace Cube.Pdf.App.Converter
             Value.UserProgram = e.FileName;
         }
 
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~MainFacade
+        ///
+        /// <summary>
+        /// オブジェクトを破棄します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~MainFacade() { _dispose.Invoke(false); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// リソースを解放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// リソースを解放します。
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// マネージリソースを解放するかどうか
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+
+        }
+
+        #endregion
+
         #endregion
 
         #region Implementations
@@ -260,6 +310,10 @@ namespace Cube.Pdf.App.Converter
         private void InvokePostProcess(IEnumerable<string> dest) =>
             new ProcessLauncher(Settings).Invoke(dest);
 
+        #endregion
+
+        #region Fields
+        private readonly OnceAction<bool> _dispose;
         #endregion
     }
 }
