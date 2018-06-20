@@ -18,10 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Forms.Behaviors;
 using Cube.Forms.Controls;
-using System;
 using System.ComponentModel;
-using System.Globalization;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
@@ -52,6 +49,7 @@ namespace Cube.Pdf.App.Converter
         {
             InitializeComponent();
 
+            Shown += (s, e) => BringToFront();
             ExitButton.Click += (s, e) => Close();
 
             new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox);
@@ -148,62 +146,6 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnShown
-        ///
-        /// <summary>
-        /// 初回表示時に実行されます。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 前面に表示されない場合があるため、明示的に前面表示する記述を
-        /// 追加しています。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnShown(EventArgs e)
-        {
-            BringToFront();
-            base.OnShown(e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetCulture
-        ///
-        /// <summary>
-        /// 表示言語を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetCulture(string name)
-        {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(name);
-            ComponentResourceManager src = new ComponentResourceManager(typeof(MainForm));
-            src.ApplyResources(this, "$this");
-            SetCulture(src, Controls);
-            SetComboBox();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetCulture
-        ///
-        /// <summary>
-        /// 表示言語を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetCulture(ComponentResourceManager src, Control.ControlCollection controls)
-        {
-            foreach (Control control in controls)
-            {
-                src.ApplyResources(control, control.Name);
-                SetCulture(src, control.Controls);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// SetComboBox
         ///
         /// <summary>
@@ -213,28 +155,27 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private void SetComboBox()
         {
-            Preserve(FormatComboBox,       e => e.Bind(ViewResource.Formats));
-            Preserve(FormatOptionComboBox, e => e.Bind(ViewResource.FormatOptions));
-            Preserve(SaveOptionComboBox,   e => e.Bind(ViewResource.SaveOptions));
-            Preserve(ViewOptionComboBox,   e => e.Bind(ViewResource.ViewOptions));
-            Preserve(PostProcessComboBox,  e => e.Bind(ViewResource.PostProcesses));
-            Preserve(LanguageComboBox,     e => e.Bind(ViewResource.Languages));
+            FormatComboBox.Bind(ViewResource.Formats);
+            FormatOptionComboBox.Bind(ViewResource.FormatOptions);
+            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
+            ViewOptionComboBox.Bind(ViewResource.ViewOptions);
+            PostProcessComboBox.Bind(ViewResource.PostProcesses);
+            LanguageComboBox.Bind(ViewResource.Languages);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Preserve
+        /// SetCulture
         ///
         /// <summary>
-        /// ComboBox.SelectedValue の内容を保持したまま処理を実行します。
+        /// 表示言語を設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Preserve(ComboBox src, Action<ComboBox> action)
+        private void SetCulture(string name)
         {
-            var value = src.SelectedValue;
-            action(src);
-            if (value != null) src.SelectedValue = value;
+            this.UpdateCulture(name);
+            SetComboBox();
         }
 
         #endregion
