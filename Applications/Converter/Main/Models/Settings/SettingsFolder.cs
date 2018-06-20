@@ -260,6 +260,8 @@ namespace Cube.Pdf.App.Converter
             base.OnSaved(e);
         }
 
+        #region Get
+
         /* ----------------------------------------------------------------- */
         ///
         /// GetWorkDirectory
@@ -271,16 +273,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private string GetWorkDirectory()
         {
-            var name = $@"Software\{Company}\{Product}";
-            using (var key = Registry.LocalMachine.OpenSubKey(name, false))
-            {
-                if (key != null)
-                {
-                    var dest = key.GetValue("LibPath") as string;
-                    if (dest.HasValue()) return dest;
-                }
-            }
-
+            var str = GetString(Registry.LocalMachine, "LibPath");
+            if (str.HasValue()) return str;
             return IO.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 Company,
@@ -299,17 +293,30 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private DateTime GetLastCheckUpdate()
         {
-            var name = $@"Software\{Company}\{Product}";
-            using (var key = Registry.CurrentUser.OpenSubKey(name, false))
-            {
-                if (key != null)
-                {
-                    var dest = key.GetValue("LastCheckUpdate") as string;
-                    if (dest.HasValue()) return DateTime.Parse(dest).ToLocalTime();
-                }
-            }
-            return DateTime.MinValue;
+            var str = GetString(Registry.CurrentUser, "LastCheckUpdate");
+            return str.HasValue() ?
+                   DateTime.Parse(str).ToLocalTime() :
+                   DateTime.MinValue;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetString
+        ///
+        /// <summary>
+        /// レジストリから文字列を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetString(RegistryKey root, string name)
+        {
+            using (var key = root.OpenSubKey($@"Software\{Company}\{Product}", false))
+            {
+                return key?.GetValue(name) as string;
+            }
+        }
+
+        #endregion
 
         #region Normalize
 
