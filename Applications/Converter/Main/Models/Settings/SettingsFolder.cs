@@ -284,13 +284,14 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private string GetWorkDirectory()
         {
-            var str = GetString(Registry.LocalMachine, "LibPath");
-            if (str.HasValue()) return str;
-            return IO.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                Company,
-                Product
-            );
+            var str   = GetString(Registry.LocalMachine, "LibPath");
+            var root  = str.HasValue() ?
+                        str :
+                        IO.Combine(
+                            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                            Company, Product
+                        );
+            return IO.Combine(root, Guid.NewGuid().ToString("D"));
         }
 
         /* ----------------------------------------------------------------- */

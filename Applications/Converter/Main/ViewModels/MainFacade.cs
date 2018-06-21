@@ -24,6 +24,7 @@ using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
@@ -37,7 +38,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainFacade : IDisposable
+    public sealed class MainFacade : IDisposable
     {
         #region Constructors
 
@@ -54,7 +55,6 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public MainFacade(SettingsFolder settings)
         {
-            _dispose = new OnceAction<bool>(Dispose);
             Settings = settings;
         }
 
@@ -123,15 +123,11 @@ namespace Cube.Pdf.App.Converter
         {
             using (var fs = new FileTransfer(Value.Format, Value.Destination, IO))
             {
-                this.LogDebug($"{nameof(Settings.WorkDirectory)}:{Settings.WorkDirectory}");
-
                 fs.AutoRename = Value.SaveOption == SaveOption.Rename;
+                this.LogDebug($"{nameof(Settings.WorkDirectory)}:{Settings.WorkDirectory}");
                 InvokeGhostscript(fs.Value);
                 InvokeDecorator(fs.Value);
-
-                var paths = fs.Invoke();
-                foreach (var f in paths) this.LogDebug($"Save:{f}");
-
+                InvokeTransfer(fs, out var paths);
                 InvokePostProcess(paths);
             }
         });
@@ -215,7 +211,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~MainFacade() { _dispose.Invoke(false); }
+        ~MainFacade() { Dispose(false); }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -228,7 +224,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void Dispose()
         {
-            _dispose.Invoke(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -245,13 +241,39 @@ namespace Cube.Pdf.App.Converter
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing) { }
+        private void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            _disposed = true;
+
+            Poll(10).Wait();
+            IO.TryDelete(Settings.WorkDirectory);
+            if (Value.DeleteSource) IO.TryDelete(Value.Source);
+        }
 
         #endregion
 
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Poll
+        ///
+        /// <summary>
+        /// 実行が終了するまで非同期で待機します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private async Task Poll(int sec)
+        {
+            for (var i = 0; i < sec; ++i)
+            {
+                if (!Value.IsBusy) return;
+                await Task.Delay(1000).ConfigureAwait(false);
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -278,6 +300,20 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// InvokeUnlessDisposed
+        ///
+        /// <summary>
+        /// Dispose 前に限り処理を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InvokeUnlessDisposed(Action action)
+        {
+            if (!_disposed) action();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// InvokeGhostscript
         ///
         /// <summary>
@@ -286,7 +322,9 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         private void InvokeGhostscript(string dest) =>
-            GhostscriptFactory.Create(Settings).Invoke(Value.Source, dest);
+            InvokeUnlessDisposed(() =>
+                GhostscriptFactory.Create(Settings).Invoke(Value.Source, dest)
+            );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -299,7 +337,27 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         private void InvokeDecorator(string dest) =>
-            new FileDecorator(Settings).Invoke(dest);
+            InvokeUnlessDisposed(() => new FileDecorator(Settings).Invoke(dest));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InvokeTransfer
+        ///
+        /// <summary>
+        /// 作業フォルダに生成されたファイルの移動処理を実行します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// out 引数の都合で、このメソッドのみ InvokeUnlessDisposed に
+        /// 相当する処理を直接記述しています。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InvokeTransfer(FileTransfer src, out IEnumerable<string> paths)
+        {
+            paths = !_disposed ? src.Invoke() : new string[0];
+            foreach (var f in paths) this.LogDebug($"Save:{f}");
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -311,12 +369,12 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         private void InvokePostProcess(IEnumerable<string> dest) =>
-            new ProcessLauncher(Settings).Invoke(dest);
+            InvokeUnlessDisposed(() => new ProcessLauncher(Settings).Invoke(dest));
 
         #endregion
 
         #region Fields
-        private readonly OnceAction<bool> _dispose;
+        private bool _disposed = false;
         #endregion
     }
 }
