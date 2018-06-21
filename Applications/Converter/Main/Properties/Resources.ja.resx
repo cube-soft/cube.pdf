@@ -239,6 +239,6 @@
     <value>CubePDF エラー</value>
   </data>
   <data name="TitleWarning" xml:space="preserve">
-    <value>CubePDF 警告</value>
+    <value>CubePDF 確認</value>
   </data>
 </root>
