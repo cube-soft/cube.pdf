@@ -321,10 +321,12 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InvokeGhostscript(string dest) =>
-            InvokeUnlessDisposed(() =>
-                GhostscriptFactory.Create(Settings).Invoke(Value.Source, dest)
-            );
+        private void InvokeGhostscript(string dest) => InvokeUnlessDisposed(() =>
+        {
+            var gs = GhostscriptFactory.Create(Settings);
+            gs.Invoke(Value.Source, dest);
+            gs.LogDebug();
+        });
 
         /* ----------------------------------------------------------------- */
         ///

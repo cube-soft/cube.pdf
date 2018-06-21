@@ -17,9 +17,13 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
+using Cube.Generics;
+using Cube.Log;
 using Cube.Pdf.Ghostscript;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace Cube.Pdf.App.Converter
@@ -59,11 +63,36 @@ namespace Cube.Pdf.App.Converter
 
             dest.Quiet         = false;
             dest.WorkDirectory = src.WorkDirectory;
+            dest.Log           = src.IO.Combine(src.WorkDirectory, Guid.NewGuid().ToString("D"));
             dest.Resolution    = src.Value.Resolution;
             dest.Orientation   = src.Value.Orientation;
             dest.Resources.Add(src.IO.Combine(dir, "lib"));
 
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LogDebug
+        ///
+        /// <summary>
+        /// Ghostscript API のログを出力します。
+        /// </summary>
+        ///
+        /// <param name="src">Ghostscript オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void LogDebug(this Ghostscript.Converter src)
+        {
+            try
+            {
+                if (!src.Log.HasValue() || !src.IO.Exists(src.Log)) return;
+                using (var ss = new StreamReader(src.IO.OpenRead(src.Log)))
+                {
+                    while (!ss.EndOfStream) src.LogDebug(ss.ReadLine());
+                }
+            }
+            catch (Exception err) { src.LogDebug(err.Message); }
         }
 
         #endregion
