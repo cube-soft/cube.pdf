@@ -703,7 +703,7 @@
             // UpdateCheckBox
             //
             resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
-            this.UpdateCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.MainBindingSource, "CheckUpdate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.UpdateCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "CheckUpdate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.UpdateCheckBox.Name = "UpdateCheckBox";
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
             //
@@ -713,7 +713,7 @@
             //
             // LanguageComboBox
             //
-            this.LanguageComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MainBindingSource, "Language", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.LanguageComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "Language", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.LanguageComboBox, "LanguageComboBox");
             this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LanguageComboBox.FormattingEnabled = true;

@@ -32,6 +32,12 @@ namespace Cube.Pdf.App.Converter
     /// Settings とメイン画面を関連付ける ViewModel を表すクラスです。
     /// </summary>
     ///
+    /// <remarks>
+    /// Convert 以外では、Messenger 経由でイベントを発生させる際に
+    /// Sync を利用していません。これらのコマンドが非同期で実行される
+    /// 可能性がある場合、Sync を利用する形に修正して下さい。
+    /// </remarks>
+    ///
     /* --------------------------------------------------------------------- */
     public class MainViewModel : Cube.Forms.ViewModelBase<Messenger>
     {
@@ -129,7 +135,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri => new Uri("https://www.cube-soft.jp/cubepdf/");
+        public Uri Uri => Model.Settings.Uri;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -143,37 +149,7 @@ namespace Cube.Pdf.App.Converter
         public bool IsBusy
         {
             get => Model.Value.IsBusy;
-            set => Model.Value.CheckUpdate = value;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// アップデートを確認するかどうかを示す値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool CheckUpdate
-        {
-            get => Model.Value.CheckUpdate;
-            set => Model.Value.CheckUpdate = value;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Language
-        ///
-        /// <summary>
-        /// 表示言語を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Language Language
-        {
-            get => Model.Value.Language;
-            set => Model.Value.Language = value;
+            set => Model.Value.IsBusy = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -215,6 +191,18 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Convert
+        ///
+        /// <summary>
+        /// 変換処理を実行するコマンドです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Convert() =>
+            Async(() => this.Invoke(() => Model.Convert())).Forget();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Save
         ///
         /// <summary>
@@ -223,27 +211,6 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void Save() => Model.Save();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Convert
-        ///
-        /// <summary>
-        /// 変換処理を実行するコマンドです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Convert() => Async(() =>
-        {
-            if (!this.Validate()) return;
-
-            try
-            {
-                Model.Convert();
-                Messenger.Close.Publish();
-            }
-            catch (Exception err) { this.Show(err); }
-        }).Forget();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -302,7 +269,8 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SetCulture() => Messenger.SetCulture.Publish(Language.GetName());
+        public void SetCulture() =>
+            Messenger.SetCulture.Publish(Settings.Language.GetName());
 
 
         #endregion
@@ -337,6 +305,9 @@ namespace Cube.Pdf.App.Converter
         {
             switch (e.PropertyName)
             {
+                case nameof(Settings.Format):
+                    Model.UpdateExtension();
+                    break;
                 case nameof(Settings.PostProcess):
                     if (Settings.PostProcess == PostProcess.Others) BrowseUserProgram();
                     break;

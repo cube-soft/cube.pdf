@@ -45,13 +45,24 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public EncryptionViewModel(Encryption model, Messenger messenger) : base(messenger)
         {
-            _model = model;
-            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Model = model;
+            Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model
+        ///
+        /// <summary>
+        /// PDF 暗号化情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected Encryption Model { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,8 +75,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool Enabled
         {
-            get => _model.Enabled;
-            set => _model.Enabled = value;
+            get => Model.Enabled;
+            set => Model.Enabled = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -79,8 +90,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string OwnerPassword
         {
-            get => _model.OwnerPassword;
-            set => _model.OwnerPassword = value;
+            get => Model.OwnerPassword;
+            set => Model.OwnerPassword = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -105,8 +116,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string UserPassword
         {
-            get => _model.UserPassword;
-            set => _model.UserPassword = value;
+            get => Model.UserPassword;
+            set => Model.UserPassword = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -132,10 +143,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool OpenWithPassword
         {
-            get => _model.OpenWithPassword;
+            get => Model.OpenWithPassword;
             set
             {
-                _model.OpenWithPassword = value;
+                Model.OpenWithPassword = value;
                 RaisePropertyChanged(nameof(EnableUserPassword));
                 RaisePropertyChanged(nameof(EnablePermission));
             }
@@ -203,10 +214,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowPrint
         {
-            get => _model.Permission.Print == PermissionMethod.Allow;
+            get => Model.Permission.Print == PermissionMethod.Allow;
             set
             {
-                _model.Permission.Print = GetMethod(value);
+                Model.Permission.Print = GetMethod(value);
                 RaisePropertyChanged(nameof(AllowPrint));
             }
         }
@@ -222,10 +233,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowCopy
         {
-            get => _model.Permission.CopyContents == PermissionMethod.Allow;
+            get => Model.Permission.CopyContents == PermissionMethod.Allow;
             set
             {
-                _model.Permission.CopyContents = GetMethod(value);
+                Model.Permission.CopyContents = GetMethod(value);
                 RaisePropertyChanged(nameof(AllowCopy));
             }
         }
@@ -241,10 +252,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowFillInFormFields
         {
-            get => _model.Permission.FillInFormFields == PermissionMethod.Allow;
+            get => Model.Permission.FillInFormFields == PermissionMethod.Allow;
             set
             {
-                _model.Permission.FillInFormFields  = GetMethod(value);
+                Model.Permission.FillInFormFields  = GetMethod(value);
                 RaisePropertyChanged(nameof(AllowFillInFormFields));
             }
         }
@@ -260,12 +271,12 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowModify
         {
-            get => _model.Permission.ModifyContents == PermissionMethod.Allow;
+            get => Model.Permission.ModifyContents == PermissionMethod.Allow;
             set
             {
-                _model.Permission.Assemble          = GetMethod(value);
-                _model.Permission.ModifyContents    = GetMethod(value);
-                _model.Permission.ModifyAnnotations = GetMethod(value);
+                Model.Permission.Assemble          = GetMethod(value);
+                Model.Permission.ModifyContents    = GetMethod(value);
+                Model.Permission.ModifyAnnotations = GetMethod(value);
                 RaisePropertyChanged(nameof(AllowModify));
             }
         }
@@ -289,7 +300,6 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Fields
-        private readonly Encryption _model;
         private bool _useOwnerPassword;
         #endregion
     }

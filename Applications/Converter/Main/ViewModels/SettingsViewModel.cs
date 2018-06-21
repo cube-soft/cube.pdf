@@ -47,13 +47,24 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public SettingsViewModel(Settings model, Messenger messenger) : base(messenger)
         {
-            _model = model;
-            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Model = model;
+            Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model
+        ///
+        /// <summary>
+        /// 設定情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected Settings Model { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,10 +77,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public Format Format
         {
-            get => _model.Format;
+            get => Model.Format;
             set
             {
-                _model.Format = value;
+                Model.Format = value;
                 RaisePropertyChanged(nameof(EnableFormatOption));
             }
         }
@@ -85,8 +96,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public FormatOption FormatOption
         {
-            get => _model.FormatOption;
-            set => _model.FormatOption = value;
+            get => Model.FormatOption;
+            set => Model.FormatOption = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -100,8 +111,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public SaveOption SaveOption
         {
-            get => _model.SaveOption;
-            set => _model.SaveOption = value;
+            get => Model.SaveOption;
+            set => Model.SaveOption = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -115,10 +126,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public PostProcess PostProcess
         {
-            get => _model.PostProcess;
+            get => Model.PostProcess;
             set
             {
-                _model.PostProcess = value;
+                Model.PostProcess = value;
                 RaisePropertyChanged(nameof(EnableUserProgram));
             }
         }
@@ -134,8 +145,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string Source
         {
-            get => _model.Source;
-            set => _model.Source = value;
+            get => Model.Source;
+            set => Model.Source = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -149,8 +160,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string Destination
         {
-            get => _model.Destination;
-            set => _model.Destination = value;
+            get => Model.Destination;
+            set => Model.Destination = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -164,8 +175,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string UserProgram
         {
-            get => _model.UserProgram;
-            set => _model.UserProgram = value;
+            get => Model.UserProgram;
+            set => Model.UserProgram = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -179,8 +190,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public int Resolution
         {
-            get => _model.Resolution;
-            set => _model.Resolution = value;
+            get => Model.Resolution;
+            set => Model.Resolution = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -194,12 +205,12 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool IsAutoOrientation
         {
-            get => _model.Orientation == Orientation.Auto;
+            get => Model.Orientation == Orientation.Auto;
             set
             {
                 if (value)
                 {
-                    _model.Orientation = Orientation.Auto;
+                    Model.Orientation = Orientation.Auto;
                     RaisePropertyChanged(nameof(IsAutoOrientation));
                 }
             }
@@ -216,12 +227,12 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool IsPortrait
         {
-            get => _model.Orientation == Orientation.Portrait;
+            get => Model.Orientation == Orientation.Portrait;
             set
             {
                 if (value)
                 {
-                    _model.Orientation = Orientation.Portrait;
+                    Model.Orientation = Orientation.Portrait;
                     RaisePropertyChanged(nameof(IsPortrait));
                 }
             }
@@ -238,12 +249,12 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool IsLandscape
         {
-            get => _model.Orientation == Orientation.Landscape;
+            get => Model.Orientation == Orientation.Landscape;
             set
             {
                 if (value)
                 {
-                    _model.Orientation = Orientation.Landscape;
+                    Model.Orientation = Orientation.Landscape;
                     RaisePropertyChanged(nameof(IsLandscape));
                 }
             }
@@ -260,8 +271,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool Grayscale
         {
-            get => _model.Grayscale;
-            set => _model.Grayscale = value;
+            get => Model.Grayscale;
+            set => Model.Grayscale = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -276,8 +287,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool ImageCompression
         {
-            get => _model.ImageCompression;
-            set => _model.ImageCompression = value;
+            get => Model.ImageCompression;
+            set => Model.ImageCompression = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -292,8 +303,38 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool Linearization
         {
-            get => _model.Linearization;
-            set => _model.Linearization = value;
+            get => Model.Linearization;
+            set => Model.Linearization = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CheckUpdate
+        ///
+        /// <summary>
+        /// アップデートを確認するかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CheckUpdate
+        {
+            get => Model.CheckUpdate;
+            set => Model.CheckUpdate = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Language
+        ///
+        /// <summary>
+        /// 表示言語を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Language Language
+        {
+            get => Model.Language;
+            set => Model.Language = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -305,7 +346,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool SourceVisible => _model.SourceVisible;
+        public bool SourceVisible => Model.SourceVisible;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -329,10 +370,6 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool EnableUserProgram => PostProcess == PostProcess.Others;
 
-        #endregion
-
-        #region Fields
-        private readonly Settings _model;
         #endregion
     }
 }

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Forms;
 using Cube.Log;
 using Cube.Pdf.Ghostscript;
 using System;
@@ -44,23 +45,31 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Validate
+        /// Invoke
         ///
         /// <summary>
-        /// 各種プロパティの値をチェックします。
+        /// 処理を実行します。各種プロパティの値をチェックします。
         /// </summary>
         ///
         /// <param name="src">MainViewModel</param>
+        /// <param name="action">処理内容</param>
         ///
-        /// <returns>正常な値かどうか</returns>
+        /// <remarks>
+        /// 事前チェックおよびエラー発生時にメッセージを表示するための
+        /// イベントを発行します。また、処理実行後は成功・失敗に
+        /// 関わらず Close イベントを発行します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static bool Validate(this MainViewModel src)
+        public static void Invoke(this MainViewModel src, Action action)
         {
-            if (!ValidateDestination(src)) return false;
-            if (!ValidateOwnerPassword(src)) return false;
-            if (!ValidateUserPassword(src)) return false;
-            return true;
+            if (!ValidateDestination(src)) return;
+            if (!ValidateOwnerPassword(src)) return;
+            if (!ValidateUserPassword(src)) return;
+
+            try { action(); }
+            catch (Exception err) { src.Show(err); }
+            finally { src.Sync(() => src.Messenger.Close.Publish()); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -86,14 +95,23 @@ namespace Cube.Pdf.App.Converter
 
             src.LogError(err.ToString(), err);
             var msg  = err is GsApiException gse ? CreateMessage(gse) : err.Message;
-            var args = MessageFactory.CreateError(msg);
-
-            src.SyncWait(() =>
-            {
-                src.Messenger.MessageBox.Publish(args);
-                src.Messenger.Close.Publish();
-            });
+            src.Show(MessageFactory.CreateError(msg));
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Show
+        ///
+        /// <summary>
+        /// メッセージを表示します。
+        /// </summary>
+        ///
+        /// <param name="src">MainViewModel</param>
+        /// <param name="e">メッセージオブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Show(this MainViewModel src, MessageEventArgs e) =>
+            src.SyncWait(() => src.Messenger.MessageBox.Publish(e));
 
         #endregion
 
@@ -120,7 +138,7 @@ namespace Cube.Pdf.App.Converter
             var msg  = CreateMessage(dest, so);
             var args = MessageFactory.CreateWarning(msg);
 
-            src.SyncWait(() => src.Messenger.MessageBox.Publish(args));
+            src.Show(args);
             return args.Result != DialogResult.Cancel;
         }
 
@@ -139,8 +157,7 @@ namespace Cube.Pdf.App.Converter
             var opt = StringComparison.InvariantCultureIgnoreCase;
             if (!eo.Enabled || eo.OwnerPassword.Equals(eo.OwnerConfirm, opt)) return true;
 
-            var args = MessageFactory.CreateError(Properties.Resources.MessagePassword);
-            src.SyncWait(() => src.Messenger.MessageBox.Publish(args));
+            src.Show(MessageFactory.CreateError(Properties.Resources.MessagePassword));
             return false;
         }
 
@@ -160,8 +177,7 @@ namespace Cube.Pdf.App.Converter
             if (!eo.Enabled || !eo.OpenWithPassword || eo.UseOwnerPassword) return true;
             if (eo.UserPassword.Equals(eo.UserConfirm, opt)) return true;
 
-            var args = MessageFactory.CreateError(Properties.Resources.MessagePassword);
-            src.SyncWait(() => src.Messenger.MessageBox.Publish(args));
+            src.Show(MessageFactory.CreateError(Properties.Resources.MessagePassword));
             return false;
         }
 
@@ -180,18 +196,16 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private static string CreateMessage(string path, SaveOption option)
         {
-            var dic = new Dictionary<SaveOption, string>
+            var s0 = string.Format(Properties.Resources.MessageExists, path);
+            var ok = new Dictionary<SaveOption, string>
             {
                 { SaveOption.Overwrite, Properties.Resources.MessageOverwrite },
                 { SaveOption.MergeHead, Properties.Resources.MessageMergeHead },
                 { SaveOption.MergeTail, Properties.Resources.MessageMergeTail },
-            };
+            }.TryGetValue(option, out var s1);
 
-            var head = string.Format(Properties.Resources.MessageExists, path);
-            var status = dic.TryGetValue(option, out var tail);
-            Debug.Assert(status);
-
-            return $"{head} {tail}";
+            Debug.Assert(ok);
+            return $"{s0} {s1}";
         }
 
         /* ----------------------------------------------------------------- */

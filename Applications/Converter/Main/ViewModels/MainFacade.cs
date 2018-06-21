@@ -23,7 +23,6 @@ using Cube.Log;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -57,7 +56,6 @@ namespace Cube.Pdf.App.Converter
         {
             _dispose = new OnceAction<bool>(Dispose);
             Settings = settings;
-            Settings.PropertyChanged += WhenPropertyChanged;
         }
 
         #endregion
@@ -125,16 +123,16 @@ namespace Cube.Pdf.App.Converter
         {
             using (var fs = new FileTransfer(Value.Format, Value.Destination, IO))
             {
-                this.LogDebug($"Work:{Settings.WorkDirectory}");
+                this.LogDebug($"{nameof(Settings.WorkDirectory)}:{Settings.WorkDirectory}");
 
                 fs.AutoRename = Value.SaveOption == SaveOption.Rename;
                 InvokeGhostscript(fs.Value);
                 InvokeDecorator(fs.Value);
 
-                var dest = fs.Invoke();
-                foreach (var f in dest) this.LogDebug($"Destination:{f}");
+                var paths = fs.Invoke();
+                foreach (var f in paths) this.LogDebug($"Save:{f}");
 
-                InvokePostProcess(dest);
+                InvokePostProcess(paths);
             }
         });
 
@@ -194,6 +192,18 @@ namespace Cube.Pdf.App.Converter
             Value.UserProgram = e.FileName;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateExtension
+        ///
+        /// <summary>
+        /// Destination の拡張子を Format に応じて更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void UpdateExtension() => Value.Destination =
+            IO.ChangeExtension(Value.Destination, Value.Format.GetExtension());
+
         #region IDisposable
 
         /* ----------------------------------------------------------------- */
@@ -242,32 +252,6 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenPropertyChanged
-        ///
-        /// <summary>
-        /// プロパティ変更時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(Settings.Value.Format)) UpdateExtension();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateExtension
-        ///
-        /// <summary>
-        /// 拡張子を更新します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void UpdateExtension() =>
-            Value.Destination = IO.ChangeExtension(Value.Destination, Value.Format.GetExtension());
 
         /* ----------------------------------------------------------------- */
         ///

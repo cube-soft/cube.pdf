@@ -45,13 +45,24 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public MetadataViewModel(Metadata model, Messenger messenger) : base(messenger)
         {
-            _model = model;
-            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Model = model;
+            Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model
+        ///
+        /// <summary>
+        /// PDF メタ情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected Metadata Model { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,8 +75,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string Title
         {
-            get => _model.Title;
-            set => _model.Title = value;
+            get => Model.Title;
+            set => Model.Title = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -79,8 +90,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string Author
         {
-            get => _model.Author;
-            set => _model.Author = value;
+            get => Model.Author;
+            set => Model.Author = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -94,8 +105,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string Subtitle
         {
-            get => _model.Subtitle;
-            set => _model.Subtitle = value;
+            get => Model.Subtitle;
+            set => Model.Subtitle = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -109,8 +120,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string Keywords
         {
-            get => _model.Keywords;
-            set => _model.Keywords = value;
+            get => Model.Keywords;
+            set => Model.Keywords = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -124,8 +135,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string Creator
         {
-            get => _model.Creator;
-            set => _model.Creator = value;
+            get => Model.Creator;
+            set => Model.Creator = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -139,14 +150,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public ViewOption ViewOption
         {
-            get => _model.ViewOption;
-            set => _model.ViewOption = value;
+            get => Model.ViewOption;
+            set => Model.ViewOption = value;
         }
 
-        #endregion
-
-        #region Fields
-        private readonly Metadata _model;
         #endregion
     }
 }
