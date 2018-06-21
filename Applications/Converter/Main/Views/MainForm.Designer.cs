@@ -107,10 +107,10 @@
             this.ImageCompressionCheckBox = new System.Windows.Forms.CheckBox();
             this.LinearizationCheckBox = new System.Windows.Forms.CheckBox();
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
-            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.AboutLabel = new System.Windows.Forms.Label();
             this.VersionPanel = new Cube.Forms.VersionControl();
+            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ConvertProgressBar = new System.Windows.Forms.ProgressBar();
@@ -298,6 +298,7 @@
             resources.ApplyResources(this.SourcePanel, "SourcePanel");
             this.SourcePanel.Controls.Add(this.SourceButton, 0, 0);
             this.SourcePanel.Controls.Add(this.SourceTextBox, 0, 0);
+            this.SourcePanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "SourceEditable", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.SourcePanel.Name = "SourcePanel";
             //
             // SourceButton
@@ -707,10 +708,6 @@
             this.UpdateCheckBox.Name = "UpdateCheckBox";
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
             //
-            // MainBindingSource
-            //
-            this.MainBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MainViewModel);
-            //
             // LanguageComboBox
             //
             this.LanguageComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "Language", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -740,6 +737,10 @@
             this.VersionPanel.TabStop = false;
             this.VersionPanel.Uri = null;
             this.VersionPanel.Version = "1.0.0 (x64)";
+            //
+            // MainBindingSource
+            //
+            this.MainBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MainViewModel);
             //
             // FooterPanel
             //
