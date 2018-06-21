@@ -360,6 +360,15 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   Set the owner password of the PDF file to be merged in the Security tab. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageMergePassword {
+            get {
+                return ResourceManager.GetString("MessageMergePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Do you want to merge at the end of the existing file? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageMergeTail {

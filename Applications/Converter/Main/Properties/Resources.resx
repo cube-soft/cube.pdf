@@ -217,6 +217,9 @@
   <data name="MessageMergeHead" xml:space="preserve">
     <value>Do you want to merge at the beginning of the existing file?</value>
   </data>
+  <data name="MessageMergePassword" xml:space="preserve">
+    <value>Set the owner password of the PDF file to be merged in the Security tab.</value>
+  </data>
   <data name="MessageMergeTail" xml:space="preserve">
     <value>Do you want to merge at the end of the existing file?</value>
   </data>

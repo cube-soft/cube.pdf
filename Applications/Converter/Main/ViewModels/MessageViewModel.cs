@@ -94,7 +94,9 @@ namespace Cube.Pdf.App.Converter
             if (err is OperationCanceledException) return;
 
             src.LogError(err.ToString(), err);
-            var msg  = err is GsApiException gse ? CreateMessage(gse) : err.Message;
+            var msg = err is GsApiException gse      ? CreateMessage(gse) :
+                      err is EncryptionException ece ? CreateMessage(ece) :
+                      $"{err.Message} ({err.GetType().Name})";
             src.Show(MessageFactory.CreateError(msg));
         }
 
@@ -220,6 +222,19 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private static string CreateMessage(GsApiException err) =>
             string.Format(Properties.Resources.MessageGhostscript, err.ErrorCode);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMessage
+        ///
+        /// <summary>
+        /// PDF の結合中に暗号化に関わるエラーが発生した時のメッセージを
+        /// 生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string CreateMessage(EncryptionException err) =>
+            Properties.Resources.MessageMergePassword;
 
         #endregion
 

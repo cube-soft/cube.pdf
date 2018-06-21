@@ -118,6 +118,7 @@
             this.ConvertButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
             this.HeaderPictureBox = new System.Windows.Forms.PictureBox();
+            this.PathToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.RootPanel.SuspendLayout();
             this.SettingsPanel.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
@@ -801,6 +802,10 @@
             this.HeaderPictureBox.Name = "HeaderPictureBox";
             this.HeaderPictureBox.TabStop = false;
             //
+            // PathToolTip
+            //
+            this.PathToolTip.ToolTipTitle = "ファイル名には次の文字は使えません";
+            //
             // MainForm
             //
             this.AcceptButton = this.ConvertButton;
@@ -944,6 +949,7 @@
         private System.Windows.Forms.BindingSource MetadataBindingSource;
         private System.Windows.Forms.BindingSource EncryptionBindingSource;
         private System.Windows.Forms.Label LanguageLabel;
+        private System.Windows.Forms.ToolTip PathToolTip;
     }
 }
 
