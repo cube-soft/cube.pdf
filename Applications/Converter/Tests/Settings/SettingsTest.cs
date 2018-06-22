@@ -52,7 +52,7 @@ namespace Cube.Pdf.Tests.Converter
 
             Assert.That(dest.Format,             Is.EqualTo(Cube.DataContract.Format.Registry));
             Assert.That(dest.Location,           Is.EqualTo(@"CubeSoft\CubePDF\v2"));
-            Assert.That(dest.WorkDirectory,      Does.EndWith("CubePDF"));
+            Assert.That(dest.WorkDirectory,      Does.Contain("CubePDF"));
             Assert.That(dest.AutoSave,           Is.False);
             Assert.That(dest.Company,            Is.EqualTo("CubeSoft"));
             Assert.That(dest.Product,            Is.EqualTo("CubePDF"));

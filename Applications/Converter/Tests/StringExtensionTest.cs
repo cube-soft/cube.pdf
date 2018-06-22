@@ -16,55 +16,43 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Pdf.App.Converter;
+using NUnit.Framework;
 using System;
-using System.Text.RegularExpressions;
 
-namespace Cube.Pdf.App.Converter
+namespace Cube.Pdf.Tests.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// StringExtension
+    /// StringExtensionTest
     ///
     /// <summary>
-    /// 文字列の拡張用クラスです。
+    /// StringExtension のテスト用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class StringExtension
+    [TestFixture]
+    class StringExtensionTest
     {
-        #region Methods
+        #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
         /// WordWrap
         ///
         /// <summary>
-        /// 指定した文字数で折り返します。
+        /// 特定の文字数で折り返すテストを実行します。
         /// </summary>
         ///
-        /// <param name="src">元の文字列</param>
-        /// <param name="n">折り返す文字数</param>
-        ///
-        /// <returns>変換後の文字列</returns>
-        ///
         /* ----------------------------------------------------------------- */
-        public static string WordWrap(this string src, int n)
-            => Regex.Replace(src, $@"(?<=\G.{{{n}}})(?!$)", Environment.NewLine);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Quote
-        ///
-        /// <summary>
-        /// 文字数を引用符で囲みます。
-        /// </summary>
-        ///
-        /// <param name="src">元の文字列</param>
-        ///
-        /// <returns>変換後の文字列</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static string Quote(this string src) => $"\"{src}\"";
+        [TestCase("a",       5, ExpectedResult = 1)]
+        [TestCase("abcde",   5, ExpectedResult = 1)]
+        [TestCase("abcdefg", 5, ExpectedResult = 2)]
+        [TestCase("",        5, ExpectedResult = 1)]
+        public int WordWrap(string src, int n) =>
+            src.WordWrap(n)
+               .Split(new[] { Environment.NewLine }, StringSplitOptions.None)
+               .Length;
 
         #endregion
     }
