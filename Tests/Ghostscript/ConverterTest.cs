@@ -47,12 +47,34 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Invoke(Converter cv, string srcname, string destname)
-        {
-            cv.WorkDirectory = GetResultsWith("Tmp");
-            var dest = Run(cv, srcname, destname);
-            Assert.That(IO.Exists(dest), Is.True);
-        }
+        public void Invoke(Converter cv, string srcname, string destname) =>
+            Assert.That(IO.Exists(Run(cv, srcname, destname)), Is.True);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke_Cjk_Failed
+        ///
+        /// <summary>
+        /// 出力ファイル名に日本語を指定した時の挙動を確認します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Ghostscript API はマルチバイト文字を含むパスを指定した場合、
+        /// 変換処理には成功しますが、出力ファイル名に文字化けが発生
+        /// します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Invoke_Cjk_Failed() => Assert.That(
+            IO.Exists(Run(
+                new Converter(Format.Pdf),
+                "Sample.eps",
+                "日本語のファイル",
+                "Invoke_Cjk_Failed"
+            )),
+            Is.False
+        );
 
         /* ----------------------------------------------------------------- */
         ///

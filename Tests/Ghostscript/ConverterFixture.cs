@@ -50,14 +50,34 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// <returns>出力パス</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected string Run(Converter cv, string src, string dest)
+        protected string Run(Converter cv, string src, string dest) =>
+            Run(cv, src, dest, dest);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Run
+        ///
+        /// <summary>
+        /// Converter オブジェクトを実行します。
+        /// </summary>
+        ///
+        /// <param name="cv">Converter オブジェクト</param>
+        /// <param name="src">入力ファイル名</param>
+        /// <param name="dest">拡張子を含まない出力ファイル名</param>
+        /// <param name="log">拡張子を含まないログファイル名</param>
+        ///
+        /// <returns>出力パス</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected string Run(Converter cv, string src, string dest, string log)
         {
             var sp  = GetExamplesWith(src);
             var dp  = GetResultsWith($"{dest}{cv.Format.GetExtension()}");
             var dir = IO.Get(AssemblyReader.Default.Location).DirectoryName;
 
-            cv.Log   = GetResultsWith($"{dest}.log");
-            cv.Quiet = false;
+            cv.Log           = GetResultsWith($"{log}.log");
+            cv.Quiet         = false;
+            cv.WorkDirectory = GetResultsWith("Tmp");
             cv.Resources.Add(IO.Combine(dir, "lib"));
             cv.Invoke(sp, dp);
 
