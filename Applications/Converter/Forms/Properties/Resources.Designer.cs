@@ -351,6 +351,24 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   Path cannot contain any of the following characters に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageInvalidChars {
+            get {
+                return ResourceManager.GetString("MessageInvalidChars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Fast web view option is ignored when the password encryption is enabled. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageLinearization {
+            get {
+                return ResourceManager.GetString("MessageLinearization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Do you want to merge at the beginning of the existing file? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageMergeHead {
@@ -392,6 +410,15 @@ namespace Cube.Pdf.App.Converter.Properties {
         internal static string MessagePassword {
             get {
                 return ResourceManager.GetString("MessagePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   When you share user password with owner password and open with the password, all permissions are allowed. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageSecurity {
+            get {
+                return ResourceManager.GetString("MessageSecurity", resourceCulture);
             }
         }
         

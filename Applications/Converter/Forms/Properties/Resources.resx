@@ -214,6 +214,12 @@
   <data name="MessageGhostscript" xml:space="preserve">
     <value>Ghostscript error ({0})</value>
   </data>
+  <data name="MessageInvalidChars" xml:space="preserve">
+    <value>Path cannot contain any of the following characters</value>
+  </data>
+  <data name="MessageLinearization" xml:space="preserve">
+    <value>Fast web view option is ignored when the password encryption is enabled.</value>
+  </data>
   <data name="MessageMergeHead" xml:space="preserve">
     <value>Do you want to merge at the beginning of the existing file?</value>
   </data>
@@ -228,6 +234,9 @@
   </data>
   <data name="MessagePassword" xml:space="preserve">
     <value>Your password and confirmation password do not match.</value>
+  </data>
+  <data name="MessageSecurity" xml:space="preserve">
+    <value>When you share user password with owner password and open with the password, all permissions are allowed.</value>
   </data>
   <data name="TitleBroseDestination" xml:space="preserve">
     <value>Save as</value>

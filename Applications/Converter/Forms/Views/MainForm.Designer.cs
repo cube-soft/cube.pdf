@@ -119,6 +119,7 @@
             this.ExitButton = new System.Windows.Forms.Button();
             this.HeaderPictureBox = new System.Windows.Forms.PictureBox();
             this.PathToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.RootPanel.SuspendLayout();
             this.SettingsPanel.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
@@ -802,9 +803,11 @@
             this.HeaderPictureBox.Name = "HeaderPictureBox";
             this.HeaderPictureBox.TabStop = false;
             //
-            // PathToolTip
+            // MainToolTip
             //
-            this.PathToolTip.ToolTipTitle = "ファイル名には次の文字は使えません";
+            this.MainToolTip.AutoPopDelay = 30000;
+            this.MainToolTip.InitialDelay = 100;
+            this.MainToolTip.ReshowDelay = 100;
             //
             // MainForm
             //
@@ -950,6 +953,7 @@
         private System.Windows.Forms.BindingSource EncryptionBindingSource;
         private System.Windows.Forms.Label LanguageLabel;
         private System.Windows.Forms.ToolTip PathToolTip;
+        private System.Windows.Forms.ToolTip MainToolTip;
     }
 }
 

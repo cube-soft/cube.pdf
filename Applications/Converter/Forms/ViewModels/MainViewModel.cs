@@ -311,7 +311,7 @@ namespace Cube.Pdf.App.Converter
                 case nameof(Settings.PostProcess):
                     if (Settings.PostProcess == PostProcess.Others) BrowseUserProgram();
                     break;
-                case nameof(Language):
+                case nameof(Settings.Language):
                     SetCulture();
                     break;
                 default:

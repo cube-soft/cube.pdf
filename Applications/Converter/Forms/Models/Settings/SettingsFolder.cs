@@ -85,7 +85,7 @@ namespace Cube.Pdf.App.Converter
             Version.Suffix = $"RC{asm.Version.Revision}";
 
             var dir = IO.Get(asm.Location).DirectoryName;
-            Startup.Command = $"\"{IO.Combine(dir, "cubepdf-checker.exe")}\"";
+            Startup.Command = IO.Combine(dir, "cubepdf-checker.exe").Quote();
             Startup.Name    = "cubepdf-checker";
         }
 
