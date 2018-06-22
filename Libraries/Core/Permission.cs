@@ -250,9 +250,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         private bool Set(PermissionFlags src, PermissionMethod method, [CallerMemberName] string name = null)
         {
-            var dest = method == PermissionMethod.Allow ?
-                       _flags |  src :
-                       _flags & ~src ;
+            var dest = method.IsAllowed() ? (_flags | src) : (_flags & ~src);
             return Set(ref _flags, dest, name);
         }
 
@@ -267,7 +265,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         private bool SetPrintPermission(PermissionMethod method)
         {
-            var dest = method == PermissionMethod.Allow ?
+            var dest = method.IsAllowed() ?
                        _flags |  PermissionFlags.PrintHighQuality :
                        _flags & ~PermissionFlags.PrintHighQuality ;
             if (method == PermissionMethod.Restrict) dest |= PermissionFlags.Print;

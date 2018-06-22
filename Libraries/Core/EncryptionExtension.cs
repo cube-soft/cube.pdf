@@ -56,6 +56,36 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public static void AllowAll(this Encryption src) => src.SetAll(PermissionMethod.Allow);
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsAllowed
+        ///
+        /// <summary>
+        /// 操作が許可されているかどうかを判別します。
+        /// </summary>
+        ///
+        /// <param name="src">判別対象の操作</param>
+        ///
+        /// <returns>許可されているかどうか</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsAllowed(this PermissionMethod src) => src == PermissionMethod.Allow;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsDenid
+        ///
+        /// <summary>
+        /// 操作が禁止されているかどうかを判別します。
+        /// </summary>
+        ///
+        /// <param name="src">判別対象の操作</param>
+        ///
+        /// <returns>禁止されているかどうか</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsDenid(this PermissionMethod src) => src == PermissionMethod.Deny;
+
         #endregion
 
         #region Implementations
