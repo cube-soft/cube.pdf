@@ -80,7 +80,7 @@
       <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
       <Name>Cube.Pdf.Itext</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Main\Cube.Pdf.App.Converter.csproj">
+    <ProjectReference Include="..\Forms\Cube.Pdf.App.Converter.csproj">
       <Project>{467eef80-0390-46e8-a403-cab70fc2d8e1}</Project>
       <Name>Cube.Pdf.App.Converter</Name>
     </ProjectReference>
