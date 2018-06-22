@@ -20,6 +20,7 @@ using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Cube.Pdf.Tests.Ghostscript
 {
@@ -60,20 +61,24 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /// <remarks>
         /// Ghostscript API はマルチバイト文字を含むパスを指定した場合、
-        /// 変換処理には成功しますが、出力ファイル名に文字化けが発生
-        /// します。
+        /// 変換処理に失敗します。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
         public void Invoke_Cjk_Failed() => Assert.That(
-            IO.Exists(Run(
-                new Converter(Format.Pdf),
-                "Sample.eps",
-                "日本語のファイル",
-                "Invoke_Cjk_Failed"
-            )),
-            Is.False
+            () =>
+            {
+                var dest = Run(new Converter(Format.Pdf),
+                    "Sample.eps",
+                    "日本語のファイル",
+                    "Invoke_Cjk_Failed"
+                );
+
+                if (!IO.Exists(dest)) throw new FileNotFoundException("ErrorTest");
+            },
+            Throws.TypeOf<FileNotFoundException>().Or
+                  .TypeOf<GsApiException>()
         );
 
         /* ----------------------------------------------------------------- */

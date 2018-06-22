@@ -214,7 +214,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowPrint
         {
-            get => Model.Permission.Print == PermissionMethod.Allow;
+            get => Model.Permission.Print.IsAllowed();
             set
             {
                 Model.Permission.Print = GetMethod(value);
@@ -233,7 +233,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowCopy
         {
-            get => Model.Permission.CopyContents == PermissionMethod.Allow;
+            get => Model.Permission.CopyContents.IsAllowed();
             set
             {
                 Model.Permission.CopyContents = GetMethod(value);
@@ -252,10 +252,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowFillInFormFields
         {
-            get => Model.Permission.FillInFormFields == PermissionMethod.Allow;
+            get => Model.Permission.FillInFormFields.IsAllowed();
             set
             {
-                Model.Permission.FillInFormFields  = GetMethod(value);
+                Model.Permission.FillInFormFields = GetMethod(value);
                 RaisePropertyChanged(nameof(AllowFillInFormFields));
             }
         }
@@ -271,7 +271,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowModify
         {
-            get => Model.Permission.ModifyContents == PermissionMethod.Allow;
+            get => Model.Permission.ModifyContents.IsAllowed();
             set
             {
                 Model.Permission.Assemble          = GetMethod(value);

@@ -56,17 +56,33 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Settings\SettingsTest.cs" />
+    <Compile Include="Details\GlobalSetup.cs" />
+    <Compile Include="Details\ViewModelFixture.cs" />
+    <Compile Include="ConverterTest.cs" />
     <Compile Include="DocumentNameTest.cs" />
+    <Compile Include="SettingsTest.cs" />
     <Compile Include="StringExtensionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Packages.config" />
+    <None Include="Examples\Sample.eps">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\Sample.ps">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleCjk.ps">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleMix.ps">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Libraries\Core\Cube.Pdf.Core.csproj">
@@ -86,5 +102,6 @@
       <Name>Cube.Pdf.App.Converter</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
