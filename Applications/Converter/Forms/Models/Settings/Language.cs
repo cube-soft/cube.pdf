@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace Cube.Pdf.App.Converter
@@ -92,7 +93,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public static string GetName(this Language src)
         {
-            var dest = GetLanguageMap().TryGetValue(src, out var value) ? value : string.Empty;
+            var status = GetLanguageMap().TryGetValue(src, out var dest);
+            Debug.Assert(status);
             return dest.HasValue() ? dest : _system;
         }
 
