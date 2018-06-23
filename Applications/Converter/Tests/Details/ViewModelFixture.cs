@@ -39,6 +39,21 @@ namespace Cube.Pdf.Tests.Converter
     /* --------------------------------------------------------------------- */
     class ViewModelFixture : FileFixture
     {
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Message
+        ///
+        /// <summary>
+        /// エラーメッセージを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected string Message { get; private set; }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -191,12 +206,13 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         protected void Error(MessageEventArgs e)
         {
+            Message  = e.Message;
             e.Result = System.Windows.Forms.DialogResult.Cancel;
+
             Assert.That(e.Icon,
                 Is.EqualTo(System.Windows.Forms.MessageBoxIcon.Error).Or
                   .EqualTo(System.Windows.Forms.MessageBoxIcon.Warning)
             );
-            Assert.Fail(e.Message);
         }
 
         /* ----------------------------------------------------------------- */
@@ -214,6 +230,7 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         protected bool Wait(MainViewModel vm)
         {
+            Message = string.Empty;
             if (!WaitAsync(vm, true).Result) return false;
             return WaitAsync(vm, false).Result;
         }

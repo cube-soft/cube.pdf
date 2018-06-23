@@ -72,6 +72,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Packages.config" />
+    <None Include="Examples\Sample.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\Sample.eps">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -103,6 +106,5 @@
       <Name>Cube.Pdf.App.Converter</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
