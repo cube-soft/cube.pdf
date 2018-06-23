@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Converter;
+using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -48,14 +49,17 @@ namespace Cube.Pdf.Tests.Converter
         [TestCaseSource(nameof(TestCases))]
         public void Invoke(Settings src, string[] args, string filename)
         {
-            var ss = Create(Combine(args, filename));
+            var dest = Create(Combine(args, filename));
 
-            using (var vm = new MainViewModel(ss))
+            using (var vm = new MainViewModel(dest))
             {
                 Set(vm, src);
 
-                Assert.That(IO.Exists(vm.Settings.Source),      Is.True,  vm.Settings.Source);
-                Assert.That(IO.Exists(vm.Settings.Destination), Is.False, vm.Settings.Destination);
+                var vms = vm.Settings;
+                Assert.That(vms.Destination, Does.EndWith(vms.Format.GetExtension()));
+
+                Assert.That(IO.Exists(vms.Source),      Is.True,  vms.Source);
+                Assert.That(IO.Exists(vms.Destination), Is.False, vms.Destination);
 
                 Assert.That(vm.IsBusy, Is.False);
                 vm.Messenger.MessageBox.Subscribe(Error);
@@ -63,8 +67,41 @@ namespace Cube.Pdf.Tests.Converter
                 Assert.That(Wait(vm), Is.True, "Timeout");
             }
 
-            Assert.That(IO.Exists(ss.Value.Source),      Is.False, ss.Value.Source);
-            Assert.That(IO.Exists(ss.Value.Destination), Is.True,  ss.Value.Destination);
+            Assert.That(IO.Exists(dest.Value.Source),      Is.False, dest.Value.Source);
+            Assert.That(IsCreated(dest.Value.Destination), Is.True,  dest.DocumentName.Value);
+        }
+
+        #endregion
+
+        #region Helper methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsCreated
+        ///
+        /// <summary>
+        /// ファイルが生成されたかどうかを判別します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 不完全なファイルが生成されたかどうかも併せて判別するため、
+        /// 1 KB 以上のファイルであれば正常に生成されたと見なしています。
+        /// また、画像形式で変換した場合、元のファイル名に連番が付与された
+        /// ファイルが生成されるため、そのチェックを実行します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsCreated(string dest)
+        {
+            var delta = 1000;
+
+            if (IO.Exists(dest)) return IO.Get(dest).Length > delta;
+
+            var info = IO.Get(dest);
+            var name = $"{info.NameWithoutExtension}-01{info.Extension}";
+            var cvt  = IO.Combine(info.DirectoryName, name);
+
+            return IO.Get(cvt).Length > delta;
         }
 
         #endregion
@@ -79,6 +116,13 @@ namespace Cube.Pdf.Tests.Converter
         /// テストケースを取得します。
         /// </summary>
         ///
+        /// <remarks>
+        /// テストケースには、以下の順で指定します。
+        /// - 設定情報
+        /// - プログラム引数一覧
+        /// - 入力ファイル名（省略時 SampleMix.ps）
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         public static IEnumerable<TestCaseData> TestCases
         {
@@ -87,7 +131,7 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Ghostscript.Format.Pdf,
+                        Format      = Format.Pdf,
                         Grayscale   = false,
                         Resolution  = 72,
                     },
@@ -97,17 +141,17 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Ghostscript.Format.Pdf,
+                        Format      = Format.Pdf,
                         Grayscale   = true,
                         Resolution  = 72,
                     },
-                    CreateArgs("Pdf_Grayscale")
+                    CreateArgs("Pdf_Gray")
                 );
 
                 yield return Create(
                     new Settings
                     {
-                        Format      = Ghostscript.Format.Ps,
+                        Format      = Format.Ps,
                         Grayscale   = false,
                         Resolution  = 72,
                     },
@@ -117,17 +161,17 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Ghostscript.Format.Ps,
+                        Format      = Format.Ps,
                         Grayscale   = true,
                         Resolution  = 72,
                     },
-                    CreateArgs("Ps_Grayscale")
+                    CreateArgs("Ps_Gray")
                 );
 
                 yield return Create(
                     new Settings
                     {
-                        Format      = Ghostscript.Format.Eps,
+                        Format      = Format.Eps,
                         Grayscale   = false,
                         Resolution  = 72,
                     },
@@ -137,11 +181,112 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Ghostscript.Format.Eps,
+                        Format      = Format.Eps,
                         Grayscale   = true,
                         Resolution  = 72,
                     },
-                    CreateArgs("Eps_Grayscale")
+                    CreateArgs("Eps_Gray")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Png,
+                        Grayscale   = false,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Png")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Png,
+                        Grayscale   = false,
+                        Resolution  = 144,
+                    },
+                    CreateArgs("Png_R144")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Png,
+                        Grayscale   = true,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Png_Gray")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Png,
+                        Grayscale   = true,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Png_Multi"),
+                    "SampleCjk.ps"
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Jpeg,
+                        Grayscale   = false,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Jpeg")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Jpeg,
+                        Grayscale   = true,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Jpeg_Gray")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Bmp,
+                        Grayscale   = false,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Bmp")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Bmp,
+                        Grayscale   = true,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Bmp_Gray")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Tiff,
+                        Grayscale   = false,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Tiff")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Format.Tiff,
+                        Grayscale   = true,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Tiff_Gray")
                 );
             }
         }
