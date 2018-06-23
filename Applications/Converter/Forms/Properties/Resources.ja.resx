@@ -212,7 +212,7 @@
     <value>{0} は既に存在します。</value>
   </data>
   <data name="MessageGhostscript" xml:space="preserve">
-    <value>Ghostscript API による変換中にエラーが発生しました。このエラーは入力ファイルの内容を変更する事で回避できる場合があります。({0})</value>
+    <value>Ghostscript API による変換中にエラーが発生しました。({0:D})</value>
   </data>
   <data name="MessageInvalidChars" xml:space="preserve">
     <value>ファイル名に次の文字を使用する事はできません</value>
