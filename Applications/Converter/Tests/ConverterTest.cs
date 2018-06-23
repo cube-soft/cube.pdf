@@ -45,11 +45,20 @@ namespace Cube.Pdf.Tests.Converter
         /// CubePDF による変換処理のテストを実行します。
         /// </summary>
         ///
+        /// <remarks>
+        /// いくつかのオプションはメイン画面から設定できないようにして
+        /// いるため、テスト用として直接設定しています。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
         public void Invoke(Settings src, string[] args, string filename)
         {
             var dest = Create(Combine(args, filename));
+
+            // see remarks
+            dest.Value.EmbedFonts   = src.EmbedFonts;
+            dest.Value.Downsampling = src.Downsampling;
 
             using (var vm = new MainViewModel(dest))
             {
