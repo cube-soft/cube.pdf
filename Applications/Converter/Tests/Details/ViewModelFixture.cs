@@ -84,6 +84,23 @@ namespace Cube.Pdf.Tests.Converter
         ///
         /// <param name="src">設定情報</param>
         /// <param name="args">プログラム引数</param>
+        ///
+        /// <returns>テストケース</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected static TestCaseData Create(Settings src, string[] args) =>
+            Create(src, args, "SampleCjk.ps");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// テストケースを生成します。
+        /// </summary>
+        ///
+        /// <param name="src">設定情報</param>
+        /// <param name="args">プログラム引数</param>
         /// <param name="filename">入力ファイル名</param>
         ///
         /// <returns>テストケース</returns>
@@ -107,7 +124,10 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         protected SettingsFolder Create(string[] args)
         {
-            var dest = new SettingsFolder();
+            var dest = new SettingsFolder
+            {
+                WorkDirectory = GetResultsWith("Tmp"),
+            };
 
             dest.Value.Destination = Results;
             dest.Set(args);

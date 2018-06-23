@@ -221,7 +221,7 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         private static string CreateMessage(GsApiException err) =>
-            string.Format(Properties.Resources.MessageGhostscript, err.ErrorCode);
+            string.Format(Properties.Resources.MessageGhostscript, err.Status);
 
         /* ----------------------------------------------------------------- */
         ///

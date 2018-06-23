@@ -87,10 +87,61 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Resolution = 72,
+                        Format      = Ghostscript.Format.Pdf,
+                        Grayscale   = false,
+                        Resolution  = 72,
                     },
-                    CreateArgs("DefaultSettings"),
-                    "SampleCjk.ps"
+                    CreateArgs("Pdf")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Ghostscript.Format.Pdf,
+                        Grayscale   = true,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Pdf_Grayscale")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Ghostscript.Format.Ps,
+                        Grayscale   = false,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Ps")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Ghostscript.Format.Ps,
+                        Grayscale   = true,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Ps_Grayscale")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Ghostscript.Format.Eps,
+                        Grayscale   = false,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Eps")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format      = Ghostscript.Format.Eps,
+                        Grayscale   = true,
+                        Resolution  = 72,
+                    },
+                    CreateArgs("Eps_Grayscale")
                 );
             }
         }
