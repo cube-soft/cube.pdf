@@ -89,7 +89,7 @@ namespace Cube.Pdf.Tests.Converter
         ///
         /* ----------------------------------------------------------------- */
         protected static TestCaseData Create(Settings src, string[] args) =>
-            Create(src, args, "SampleCjk.ps");
+            Create(src, args, "SampleMix.ps");
 
         /* ----------------------------------------------------------------- */
         ///
