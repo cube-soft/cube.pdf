@@ -128,7 +128,7 @@ namespace Cube.Pdf.App.Converter
             new List<KeyValuePair<string, PostProcess>>
             {
                 Pair(Properties.Resources.MenuOpen,       PostProcess.Open),
-                Pair(Properties.Resources.MenuOpenFolder, PostProcess.OpenDirectory),
+                Pair(Properties.Resources.MenuOpenDirectory, PostProcess.OpenDirectory),
                 Pair(Properties.Resources.MenuNone,       PostProcess.None),
                 Pair(Properties.Resources.MenuOthers,     PostProcess.Others),
             };
@@ -145,9 +145,9 @@ namespace Cube.Pdf.App.Converter
         public static IList<KeyValuePair<string, Orientation>> Orientations =>
             new List<KeyValuePair<string, Orientation>>
             {
-                Pair(Properties.Resources.MenuAuto,      Orientation.Auto),
                 Pair(Properties.Resources.MenuPortrait,  Orientation.Portrait),
                 Pair(Properties.Resources.MenuLandscape, Orientation.Landscape),
+                Pair(Properties.Resources.MenuAuto,      Orientation.Auto),
             };
 
         /* ----------------------------------------------------------------- */

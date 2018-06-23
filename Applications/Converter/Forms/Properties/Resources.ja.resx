@@ -178,8 +178,8 @@
   <data name="MenuOpen" xml:space="preserve">
     <value>開く</value>
   </data>
-  <data name="MenuOpenFolder" xml:space="preserve">
-    <value>保存されたフォルダを開く</value>
+  <data name="MenuOpenDirectory" xml:space="preserve">
+    <value>フォルダを開く</value>
   </data>
   <data name="MenuOthers" xml:space="preserve">
     <value>その他</value>

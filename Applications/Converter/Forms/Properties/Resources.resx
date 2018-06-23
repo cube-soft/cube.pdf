@@ -178,8 +178,8 @@
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
   </data>
-  <data name="MenuOpenFolder" xml:space="preserve">
-    <value>Open folder</value>
+  <data name="MenuOpenDirectory" xml:space="preserve">
+    <value>Open directory</value>
   </data>
   <data name="MenuOthers" xml:space="preserve">
     <value>Others</value>

@@ -245,9 +245,9 @@ namespace Cube.Pdf.App.Converter.Properties {
         /// <summary>
         ///   Open folder に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuOpenFolder {
+        internal static string MenuOpenDirectory {
             get {
-                return ResourceManager.GetString("MenuOpenFolder", resourceCulture);
+                return ResourceManager.GetString("MenuOpenDirectory", resourceCulture);
             }
         }
         
