@@ -333,7 +333,7 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         private async Task<bool> WaitAsync(MainViewModel vm, bool enabled)
         {
-            for (var i = 0; i < 100; ++i)
+            for (var i = 0; i < 300; ++i)
             {
                 if (vm.IsBusy == enabled) return true;
                 await Task.Delay(100).ConfigureAwait(false);
