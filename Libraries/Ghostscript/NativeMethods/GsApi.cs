@@ -48,12 +48,13 @@ namespace Cube.Pdf.Ghostscript.GsApi
             lock (_lock)
             {
                 NewInstance(out IntPtr core, IntPtr.Zero);
-                if (core == IntPtr.Zero) throw new GsApiException();
+                if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, nameof(NewInstance));
 
                 try
                 {
-                    var code = InitWithArgs(core, args.Length, args);
-                    if (code < 0 && code != -101) throw new GsApiException(code);
+                    var status = InitWithArgs(core, args.Length, args);
+                    var error  = status < 0 && status != (int)GsApiStatus.Quit && status != (int)GsApiStatus.Info;
+                    if (error) throw new GsApiException(status);
                 }
                 finally
                 {

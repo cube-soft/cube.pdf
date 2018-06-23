@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.ComponentModel;
 
 namespace Cube.Pdf.Ghostscript
 {
@@ -32,7 +31,7 @@ namespace Cube.Pdf.Ghostscript
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public class GsApiException : Win32Exception
+    public class GsApiException : Exception
     {
         #region Constructors
 
@@ -45,7 +44,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public GsApiException() : base(-1) { }
+        public GsApiException(int status) :
+            this((GsApiStatus)Enum.ToObject(typeof(GsApiStatus), status)) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -55,10 +55,42 @@ namespace Cube.Pdf.Ghostscript
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="error">エラーコード</param>
+        /// <param name="status">ステータスコード</param>
         ///
         /* ----------------------------------------------------------------- */
-        public GsApiException(int error) : base(error) { }
+        public GsApiException(GsApiStatus status) : this(status, status.ToString()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GsApiException
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="status">ステータスコード</param>
+        /// <param name="message">メッセージ</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public GsApiException(GsApiStatus status, string message) : base(message)
+        {
+            Status = status;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Status
+        ///
+        /// <summary>
+        /// ステータスコードを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public GsApiStatus Status { get; }
 
         #endregion
     }
