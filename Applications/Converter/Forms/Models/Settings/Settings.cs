@@ -135,8 +135,8 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /// <remarks>
-        /// 大きな効果が見込めないため、Bycubic で固定しユーザからは選択
-        /// 不可能にしてえいます。
+        /// 大きな効果が見込めないため、None で固定しユーザからは選択
+        /// 不可能にしています。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -429,7 +429,7 @@ namespace Cube.Pdf.App.Converter
             _formatOption     = FormatOption.Pdf17;
             _saveOption       = SaveOption.Overwrite;
             _orientation      = Orientation.Auto;
-            _downsampling     = Downsampling.Bicubic;
+            _downsampling     = Downsampling.None;
             _postProcess      = PostProcess.Open;
             _language         = Language.Auto;
             _resolution       = 600;
