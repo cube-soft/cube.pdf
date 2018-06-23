@@ -105,6 +105,7 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(dest.PostProcess,      Is.EqualTo(PostProcess.Open));
             Assert.That(dest.UserProgram,      Is.Empty);
             Assert.That(dest.DeleteSource,     Is.False);
+            Assert.That(dest.SourceVisible,    Is.False);
             Assert.That(dest.Source,           Is.Empty);
             Assert.That(dest.Destination,      Is.EqualTo(desktop));
             Assert.That(dest.IsBusy,           Is.False);

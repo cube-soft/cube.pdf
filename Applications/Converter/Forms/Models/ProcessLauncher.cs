@@ -127,7 +127,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private void OpenDirectory(IEnumerable<string> src) => InvokeCore(Create(
             "explorer.exe",
-            $"\"{IO.Get(src.First()).DirectoryName}\""
+            IO.Get(src.First()).DirectoryName.Quote()
         ));
 
         /* ----------------------------------------------------------------- */
@@ -142,7 +142,7 @@ namespace Cube.Pdf.App.Converter
         private void InvokeCore(IEnumerable<string> src)
         {
             if (!Value.UserProgram.HasValue()) return;
-            InvokeCore(Create(Value.UserProgram, $"\"{src.First()}\""));
+            InvokeCore(Create(Value.UserProgram, src.First().Quote()));
         }
 
         /* ----------------------------------------------------------------- */

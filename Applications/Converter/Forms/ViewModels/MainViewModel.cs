@@ -142,15 +142,11 @@ namespace Cube.Pdf.App.Converter
         /// IsBusy
         ///
         /// <summary>
-        /// 処理中かどうかを示す値を取得または設定します。
+        /// 処理中かどうかを示す値を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsBusy
-        {
-            get => Model.Value.IsBusy;
-            set => Model.Value.IsBusy = value;
-        }
+        public bool IsBusy => Model.Value.IsBusy;
 
         /* ----------------------------------------------------------------- */
         ///

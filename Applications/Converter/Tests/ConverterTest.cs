@@ -19,6 +19,7 @@
 using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Tests.Converter
@@ -66,6 +67,10 @@ namespace Cube.Pdf.Tests.Converter
 
                 var vms = vm.Settings;
                 Assert.That(vms.Destination, Does.EndWith(vms.Format.GetExtension()));
+                Assert.That(vm.Title,        Does.StartWith(dest.DocumentName.Value));
+                Assert.That(vm.Title,        Does.Contain(vm.Product));
+                Assert.That(vm.Title,        Does.Contain(vm.Version));
+                Assert.That(vm.Uri,          Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdf/")));
 
                 Assert.That(IO.Exists(vms.Source),      Is.True,  vms.Source);
                 Assert.That(IO.Exists(vms.Destination), Is.False, vms.Destination);

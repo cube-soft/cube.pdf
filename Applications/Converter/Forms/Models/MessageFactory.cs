@@ -221,15 +221,13 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static DisplayFilter[] GetSourceFilters() => _src ?? (
-            _src = new[]
-            {
-                new DisplayFilter(Properties.Resources.FilterPs,  ".ps"),
-                new DisplayFilter(Properties.Resources.FilterEps, ".eps"),
-                new DisplayFilter(Properties.Resources.FilterPdf, ".pdf"),
-                new DisplayFilter(Properties.Resources.FilterAll, ".*"),
-            }
-        );
+        private static DisplayFilter[] GetSourceFilters() => new[]
+        {
+            new DisplayFilter(Properties.Resources.FilterPs,  ".ps"),
+            new DisplayFilter(Properties.Resources.FilterEps, ".eps"),
+            new DisplayFilter(Properties.Resources.FilterPdf, ".pdf"),
+            new DisplayFilter(Properties.Resources.FilterAll, ".*"),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -240,18 +238,16 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static DisplayFilter[] GetDestinationFilters() => _dest ?? (
-            _dest = new[]
-            {
-                new DisplayFilter(Properties.Resources.FilterPdf,  ".pdf"),
-                new DisplayFilter(Properties.Resources.FilterPs,   ".ps"),
-                new DisplayFilter(Properties.Resources.FilterEps,  ".eps"),
-                new DisplayFilter(Properties.Resources.FilterPng,  ".png"),
-                new DisplayFilter(Properties.Resources.FilterJpeg, ".jpg", ".jpeg"),
-                new DisplayFilter(Properties.Resources.FilterBmp,  ".bmp"),
-                new DisplayFilter(Properties.Resources.FilterTiff, ".tiff", ".tif"),
-          }
-        );
+        private static DisplayFilter[] GetDestinationFilters() => new[]
+        {
+            new DisplayFilter(Properties.Resources.FilterPdf,  ".pdf"),
+            new DisplayFilter(Properties.Resources.FilterPs,   ".ps"),
+            new DisplayFilter(Properties.Resources.FilterEps,  ".eps"),
+            new DisplayFilter(Properties.Resources.FilterPng,  ".png"),
+            new DisplayFilter(Properties.Resources.FilterJpeg, ".jpg", ".jpeg"),
+            new DisplayFilter(Properties.Resources.FilterBmp,  ".bmp"),
+            new DisplayFilter(Properties.Resources.FilterTiff, ".tiff", ".tif"),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -262,20 +258,12 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static DisplayFilter[] GetUserProgramFilters() => _user ?? (
-            _user = new[]
-            {
-                new DisplayFilter(Properties.Resources.FilterExecutable, ".exe", ".bat"),
-                new DisplayFilter(Properties.Resources.FilterAll, ".*"),
-            }
-        );
+        private static DisplayFilter[] GetUserProgramFilters() => new[]
+        {
+            new DisplayFilter(Properties.Resources.FilterExecutable, ".exe", ".bat"),
+            new DisplayFilter(Properties.Resources.FilterAll, ".*"),
+        };
 
-        #endregion
-
-        #region Fields
-        private static DisplayFilter[] _src;
-        private static DisplayFilter[] _dest;
-        private static DisplayFilter[] _user;
         #endregion
     }
 }
