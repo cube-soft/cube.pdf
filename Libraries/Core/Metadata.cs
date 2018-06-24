@@ -86,17 +86,17 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Subtitle
+        /// Subject
         ///
         /// <summary>
         /// サブタイトルを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Subtitle
+        public string Subject
         {
-            get => _subtitle;
-            set => SetProperty(ref _subtitle, value);
+            get => _subject;
+            set => SetProperty(ref _subject, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -166,7 +166,7 @@ namespace Cube.Pdf
         private Version _version = new Version(1, 2);
         private string _author = string.Empty;
         private string _title = string.Empty;
-        private string _subtitle = string.Empty;
+        private string _subject = string.Empty;
         private string _keywords = string.Empty;
         private string _creator = string.Empty;
         private string _producer = string.Empty;

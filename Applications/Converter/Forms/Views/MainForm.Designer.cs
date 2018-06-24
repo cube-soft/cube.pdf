@@ -457,7 +457,7 @@
             //
             // SubjectTextBox
             //
-            this.SubjectTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Subtitle", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.SubjectTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Subject", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.SubjectTextBox, "SubjectTextBox");
             this.SubjectTextBox.Name = "SubjectTextBox";
             //

@@ -51,7 +51,7 @@ namespace Cube.Pdf.Itext
         public static void Set(this PdfStamper src, Metadata data, IDictionary<string, string> original)
         {
             original.Update("Title",    data.Title);
-            original.Update("Subject",  data.Subtitle);
+            original.Update("Subject",  data.Subject);
             original.Update("Keywords", data.Keywords);
             original.Update("Creator",  data.Creator);
             original.Update("Author",   data.Author);

@@ -1237,7 +1237,7 @@
     <value>0</value>
   </data>
   <data name="SubjectLabel.Text" xml:space="preserve">
-    <value>Subtitle</value>
+    <value>Subject</value>
   </data>
   <data name="SubjectLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>

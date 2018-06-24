@@ -100,17 +100,17 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Subtitle
+        /// Subject
         ///
         /// <summary>
         /// サブタイトルを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Subtitle
+        public string Subject
         {
-            get => Model.Subtitle;
-            set => Model.Subtitle = value;
+            get => Model.Subject;
+            set => Model.Subject = value;
         }
 
         /* ----------------------------------------------------------------- */
