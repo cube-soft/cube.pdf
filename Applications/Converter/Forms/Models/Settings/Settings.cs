@@ -140,7 +140,7 @@ namespace Cube.Pdf.App.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember(Name = "DownSampling")]
+        [DataMember]
         public Downsampling Downsampling
         {
             get => _downsampling;
@@ -193,7 +193,7 @@ namespace Cube.Pdf.App.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember(Name = "EmbedFont")]
+        [DataMember]
         public bool EmbedFonts
         {
             get => _embedFonts;
