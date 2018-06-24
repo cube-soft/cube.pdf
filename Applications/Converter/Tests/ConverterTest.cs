@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
 using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
@@ -85,31 +84,6 @@ namespace Cube.Pdf.Tests.Converter
 
             Assert.That(IO.Exists(dest.Value.Source),      Is.False, dest.Value.Source);
             Assert.That(IsCreated(dest.Value.Destination), Is.True,  dest.DocumentName.Value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke_Error
-        ///
-        /// <summary>
-        /// 変換中にエラーが発生した時の挙動を確認します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Invoke_Error()
-        {
-            var args = CreateArgs(nameof(Invoke_Error));
-            var dest = Create(Combine(args, "Sample.txt"));
-
-            using (var vm = new MainViewModel(dest))
-            {
-                vm.Messenger.MessageBox.Subscribe(Error);
-                vm.Convert();
-                Assert.That(Wait(vm), Is.True, "Timeout");
-            }
-
-            Assert.That(Message.HasValue(), Is.True);
         }
 
         #endregion
