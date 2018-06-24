@@ -194,8 +194,11 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Convert() =>
+        public void Convert()
+        {
+            Model.UpdateExtension();
             Async(() => this.Invoke(() => Model.Convert())).Forget();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
