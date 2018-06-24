@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Ghostscript;
+using System.Threading;
 
 namespace Cube.Pdf.App.Converter
 {
@@ -35,7 +36,7 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GeneralViewModel
+        /// SettingsViewModel
         ///
         /// <summary>
         /// オブジェクトを初期化します。
@@ -43,9 +44,11 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <param name="model">設定情報</param>
         /// <param name="messenger">Messenger オブジェクト</param>
+        /// <param name="context">同期用コンテキスト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsViewModel(Settings model, Messenger messenger) : base(messenger)
+        public SettingsViewModel(Settings model, Messenger messenger,
+            SynchronizationContext context) : base(messenger, context)
         {
             Model = model;
             Model.PropertyChanged += (s, e) => OnPropertyChanged(e);

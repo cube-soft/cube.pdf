@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Threading;
+
 namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
@@ -41,9 +43,11 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <param name="model">PDF メタ情報</param>
         /// <param name="messenger">Messenger オブジェクト</param>
+        /// <param name="context">同期用コンテキスト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataViewModel(Metadata model, Messenger messenger) : base(messenger)
+        public MetadataViewModel(Metadata model, Messenger messenger,
+            SynchronizationContext context) : base(messenger, context)
         {
             Model = model;
             Model.PropertyChanged += (s, e) => OnPropertyChanged(e);

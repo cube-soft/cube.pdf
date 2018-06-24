@@ -97,7 +97,7 @@ namespace Cube.Pdf.App.Converter
             var msg = err is GsApiException gse      ? CreateMessage(gse) :
                       err is EncryptionException ece ? CreateMessage(ece) :
                       $"{err.Message} ({err.GetType().Name})";
-            src.Show(MessageFactory.CreateError(msg));
+            src.Show(() => MessageFactory.CreateError(msg));
         }
 
         /* ----------------------------------------------------------------- */
@@ -109,11 +109,17 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /// <param name="src">MainViewModel</param>
-        /// <param name="e">メッセージオブジェクト</param>
+        /// <param name="get">メッセージ生成オブジェクト</param>
+        ///
+        /// <remarks>
+        /// UICulture の都合上、メッセージオブジェクトは UI スレッドで
+        /// 生成する必要があります。そのため、メッセージオブジェクトを
+        /// 直接指定せず関数オブジェクトを経由する形にしています。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Show(this MainViewModel src, MessageEventArgs e) =>
-            src.SyncWait(() => src.Messenger.MessageBox.Publish(e));
+        public static void Show(this MainViewModel src, Func<MessageEventArgs> get) =>
+            src.SyncWait(() => src.Messenger.MessageBox.Publish(get()));
 
         #endregion
 
@@ -140,7 +146,7 @@ namespace Cube.Pdf.App.Converter
             var msg  = CreateMessage(dest, so);
             var args = MessageFactory.CreateWarning(msg);
 
-            src.Show(args);
+            src.Show(() => args);
             return args.Result != DialogResult.Cancel;
         }
 
@@ -159,7 +165,7 @@ namespace Cube.Pdf.App.Converter
             var opt = StringComparison.InvariantCultureIgnoreCase;
             if (!eo.Enabled || eo.OwnerPassword.Equals(eo.OwnerConfirm, opt)) return true;
 
-            src.Show(MessageFactory.CreateError(Properties.Resources.MessagePassword));
+            src.Show(() => MessageFactory.CreateError(Properties.Resources.MessagePassword));
             return false;
         }
 
@@ -179,7 +185,7 @@ namespace Cube.Pdf.App.Converter
             if (!eo.Enabled || !eo.OpenWithPassword || eo.UseOwnerPassword) return true;
             if (eo.UserPassword.Equals(eo.UserConfirm, opt)) return true;
 
-            src.Show(MessageFactory.CreateError(Properties.Resources.MessagePassword));
+            src.Show(() => MessageFactory.CreateError(Properties.Resources.MessagePassword));
             return false;
         }
 

@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Threading;
+
 namespace Cube.Pdf.App.Converter
 {
     /* --------------------------------------------------------------------- */
@@ -41,9 +43,11 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <param name="model">PDF 暗号化情報</param>
         /// <param name="messenger">Messenger オブジェクト</param>
+        /// <param name="context">同期用コンテキスト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionViewModel(Encryption model, Messenger messenger) : base(messenger)
+        public EncryptionViewModel(Encryption model, Messenger messenger,
+            SynchronizationContext context) : base(messenger, context)
         {
             Model = model;
             Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
@@ -103,7 +107,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string OwnerConfirm { get; set; }
+        public string OwnerConfirm { get; set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -129,7 +133,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string UserConfirm { get; set; }
+        public string UserConfirm { get; set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///

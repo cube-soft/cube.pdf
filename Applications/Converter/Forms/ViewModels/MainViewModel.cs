@@ -21,6 +21,7 @@ using Cube.Generics;
 using Cube.Tasks;
 using System;
 using System.ComponentModel;
+using System.Threading;
 
 namespace Cube.Pdf.App.Converter
 {
@@ -54,12 +55,28 @@ namespace Cube.Pdf.App.Converter
         /// <param name="settings">設定情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingsFolder settings) : base(new Messenger())
+        public MainViewModel(SettingsFolder settings) :
+            this(settings, SynchronizationContext.Current) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MainViewModel
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="settings">設定情報</param>
+        /// <param name="context">同期用コンテキスト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainViewModel(SettingsFolder settings, SynchronizationContext context) :
+            base(new Messenger(), context)
         {
             Model      = new MainFacade(settings);
-            Settings   = new SettingsViewModel(settings.Value, Messenger);
-            Metadata   = new MetadataViewModel(settings.Value.Metadata, Messenger);
-            Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger);
+            Settings   = new SettingsViewModel(settings.Value, Messenger, SynchronizationContext);
+            Metadata   = new MetadataViewModel(settings.Value.Metadata, Messenger, SynchronizationContext);
+            Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger, SynchronizationContext);
 
             settings.PropertyChanged += WhenPropertyChanged;
         }
