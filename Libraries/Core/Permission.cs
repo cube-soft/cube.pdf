@@ -164,17 +164,17 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FillInFormFields
+        /// InputForms
         ///
         /// <summary>
         /// フォームフィールドへの入力操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod FillInFormFields
+        public PermissionMethod InputForms
         {
-            get => Get(PermissionFlags.FillInFormFields);
-            set => Set(PermissionFlags.FillInFormFields, value);
+            get => Get(PermissionFlags.InputForms);
+            set => Set(PermissionFlags.InputForms, value);
         }
 
         /* ----------------------------------------------------------------- */

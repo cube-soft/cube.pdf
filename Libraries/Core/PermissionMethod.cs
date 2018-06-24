@@ -96,7 +96,7 @@ namespace Cube.Pdf
         /// Fill in existing interactive form fields (including signature
         /// fields), even if bit 6 is clear.
         /// </summary>
-        FillInFormFields = 0x00000100,
+        InputForms = 0x00000100,
 
         /// <summary>
         /// Extract text and graphics (in support of accessibility to users

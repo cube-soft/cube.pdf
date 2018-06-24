@@ -243,20 +243,20 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// AllowFillInFormFields
+        /// AllowInputForms
         ///
         /// <summary>
         /// フォームへの入力を許可するかどうかを示す値を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool AllowFillInFormFields
+        public bool AllowInputForms
         {
-            get => Model.Permission.FillInFormFields.IsAllowed();
+            get => Model.Permission.InputForms.IsAllowed();
             set
             {
-                Model.Permission.FillInFormFields = GetMethod(value);
-                RaisePropertyChanged(nameof(AllowFillInFormFields));
+                Model.Permission.InputForms = GetMethod(value);
+                RaisePropertyChanged(nameof(AllowInputForms));
             }
         }
 

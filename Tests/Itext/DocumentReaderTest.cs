@@ -124,7 +124,7 @@ namespace Cube.Pdf.Tests.Itext
                 Assert.That(dpm.Accessibility,     Is.EqualTo(epm.Accessibility),     nameof(dpm.Accessibility));
                 Assert.That(dpm.Assemble,          Is.EqualTo(epm.Assemble),          nameof(dpm.Assemble));
                 Assert.That(dpm.CopyContents,      Is.EqualTo(epm.CopyContents),      nameof(dpm.CopyContents));
-                Assert.That(dpm.FillInFormFields,  Is.EqualTo(epm.FillInFormFields),  nameof(dpm.FillInFormFields));
+                Assert.That(dpm.InputForms,  Is.EqualTo(epm.InputForms),  nameof(dpm.InputForms));
                 Assert.That(dpm.ModifyAnnotations, Is.EqualTo(epm.ModifyAnnotations), nameof(dpm.ModifyAnnotations));
                 Assert.That(dpm.ModifyContents,    Is.EqualTo(epm.ModifyContents),    nameof(dpm.ModifyContents));
                 Assert.That(dpm.Print,             Is.EqualTo(epm.Print),             nameof(dpm.Print));
@@ -277,7 +277,7 @@ namespace Cube.Pdf.Tests.Itext
                         Accessibility     = PermissionMethod.Deny,
                         Assemble          = PermissionMethod.Allow,
                         CopyContents      = PermissionMethod.Deny,
-                        FillInFormFields  = PermissionMethod.Deny,
+                        InputForms        = PermissionMethod.Deny,
                         ModifyAnnotations = PermissionMethod.Deny,
                         ModifyContents    = PermissionMethod.Deny,
                         Print             = PermissionMethod.Allow,
@@ -295,7 +295,7 @@ namespace Cube.Pdf.Tests.Itext
                         Accessibility     = PermissionMethod.Allow,
                         Assemble          = PermissionMethod.Allow,
                         CopyContents      = PermissionMethod.Allow,
-                        FillInFormFields  = PermissionMethod.Allow,
+                        InputForms        = PermissionMethod.Allow,
                         ModifyAnnotations = PermissionMethod.Allow,
                         ModifyContents    = PermissionMethod.Allow,
                         Print             = PermissionMethod.Allow,

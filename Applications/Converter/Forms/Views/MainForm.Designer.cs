@@ -633,7 +633,7 @@
             // AllowFormCheckBox
             //
             resources.ApplyResources(this.AllowFormCheckBox, "AllowFormCheckBox");
-            this.AllowFormCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowFillInFormFields", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.AllowFormCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowInputForms", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowFormCheckBox.Name = "AllowFormCheckBox";
             this.AllowFormCheckBox.UseVisualStyleBackColor = true;
             //

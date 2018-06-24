@@ -104,7 +104,7 @@ namespace Cube.Pdf
             src.Permission.Accessibility     = method;
             src.Permission.Assemble          = method;
             src.Permission.CopyContents      = method;
-            src.Permission.FillInFormFields  = method;
+            src.Permission.InputForms        = method;
             src.Permission.ModifyAnnotations = method;
             src.Permission.ModifyContents    = method;
             src.Permission.Print             = method;
