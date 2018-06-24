@@ -66,6 +66,7 @@
     <Compile Include="DocumentNameTest.cs" />
     <Compile Include="SettingsTest.cs" />
     <Compile Include="StringExtensionTest.cs" />
+    <Compile Include="ViewModelTest.cs" />
     <Compile Include="ViewResourceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

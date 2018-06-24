@@ -20,8 +20,6 @@ using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 using System;
-using System.Globalization;
-using System.Threading;
 
 namespace Cube.Pdf.Tests.Converter
 {
@@ -409,18 +407,6 @@ namespace Cube.Pdf.Tests.Converter
                 action(vm);
             }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetUiCulture
-        ///
-        /// <summary>
-        /// SetCulture イベント発生時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetUiCulture(string name) =>
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(name);
 
         #endregion
     }

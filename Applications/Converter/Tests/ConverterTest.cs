@@ -19,7 +19,6 @@
 using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Tests.Converter
@@ -67,10 +66,6 @@ namespace Cube.Pdf.Tests.Converter
 
                 var vms = vm.Settings;
                 Assert.That(vms.Destination, Does.EndWith(vms.Format.GetExtension()));
-                Assert.That(vm.Title,        Does.StartWith(dest.DocumentName.Value));
-                Assert.That(vm.Title,        Does.Contain(vm.Product));
-                Assert.That(vm.Title,        Does.Contain(vm.Version));
-                Assert.That(vm.Uri,          Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdf/")));
 
                 Assert.That(IO.Exists(vms.Source),      Is.True,  vms.Source);
                 Assert.That(IO.Exists(vms.Destination), Is.False, vms.Destination);
@@ -79,8 +74,7 @@ namespace Cube.Pdf.Tests.Converter
                 IO.Copy(GetExamplesWith("Sample.pdf"), vms.Destination);
 
                 Assert.That(vm.IsBusy, Is.False);
-                vm.Messenger.MessageBox.Subscribe(Error);
-                vm.Convert();
+                vm.Messenger.MessageBox.Subscribe(SetMessage);
                 Assert.That(Wait(vm), Is.True, "Timeout");
             }
 
@@ -106,14 +100,13 @@ namespace Cube.Pdf.Tests.Converter
 
             using (var vm = new MainViewModel(dest))
             {
-                vm.Messenger.MessageBox.Subscribe(Error);
+                vm.Messenger.MessageBox.Subscribe(SetMessage);
                 vm.Messenger.OpenFileDialog.Subscribe(e => e.FileName = exec);
                 vm.Settings.PostProcess = PostProcess.Others;
 
                 Assert.That(vm.Settings.UserProgram, Is.EqualTo(exec));
                 Assert.That(vm.IsBusy, Is.False);
-                vm.Convert();
-                Assert.That(WaitError(vm), Is.True, "Timeout (error)");
+                Assert.That(WaitMessage(vm), Is.True, "Timeout (error)");
             }
 
             Assert.Pass(Message);

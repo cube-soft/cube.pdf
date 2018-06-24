@@ -23,8 +23,10 @@ using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Cube.Pdf.Tests.Converter
@@ -140,11 +142,13 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         protected SettingsFolder Create(string[] args)
         {
-            var dest = new SettingsFolder
+            var path = $@"CubeSoft\CubePDF\{GetType().Name}";
+            var dest = new SettingsFolder(DataContract.Format.Registry, path, IO)
             {
                 WorkDirectory = GetResultsWith("Tmp"),
             };
 
+            dest.Load();
             dest.Value.Destination = Results;
             dest.Set(args);
 
@@ -198,14 +202,14 @@ namespace Cube.Pdf.Tests.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Error
+        /// SetMessage
         ///
         /// <summary>
-        /// メッセージボックス表示時のイベントハンドラです。
+        /// メッセージボックス表示時に実行されるハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Error(MessageEventArgs e)
+        protected void SetMessage(MessageEventArgs e)
         {
             Assert.That(e.Icon,
                 Is.EqualTo(System.Windows.Forms.MessageBoxIcon.Error).Or
@@ -215,6 +219,18 @@ namespace Cube.Pdf.Tests.Converter
             Message  = e.Message;
             e.Result = System.Windows.Forms.DialogResult.OK;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetUiCulture
+        ///
+        /// <summary>
+        /// SetCulture イベント発生時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void SetUiCulture(string name) =>
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(name);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -232,26 +248,28 @@ namespace Cube.Pdf.Tests.Converter
         protected bool Wait(MainViewModel vm)
         {
             Message = string.Empty;
+            vm.Convert();
             if (!WaitAsync(vm, () => vm.IsBusy == true).Result) return false;
             return WaitAsync(vm, () => vm.IsBusy == false).Result;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WaitError
+        /// WaitMessage
         ///
         /// <summary>
-        /// エラーが発生する場合の処理を待機します。
+        /// メッセージを受信するまで待機します。
         /// </summary>
         ///
         /// <param name="vm">ViewModel</param>
         ///
-        /// <returns>処理中にエラーが発生したかどうか</returns>
+        /// <returns>メッセージを受信したかどうか</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected bool WaitError(MainViewModel vm)
+        protected bool WaitMessage(MainViewModel vm)
         {
             Message = string.Empty;
+            vm.Convert();
             return WaitAsync(vm, () => Message.HasValue()).Result;
         }
 
@@ -329,17 +347,17 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         private void Set(EncryptionViewModel vm, Encryption src)
         {
-            vm.Enabled               = src.Enabled;
-            vm.OwnerPassword         = src.OwnerPassword;
-            vm.OwnerConfirm          = src.OwnerPassword;
-            vm.OpenWithPassword      = src.OpenWithPassword;
-            vm.UserPassword          = src.UserPassword;
-            vm.UserConfirm           = src.UserPassword;
+            vm.Enabled          = src.Enabled;
+            vm.OwnerPassword    = src.OwnerPassword;
+            vm.OwnerConfirm     = src.OwnerPassword;
+            vm.OpenWithPassword = src.OpenWithPassword;
+            vm.UserPassword     = src.UserPassword;
+            vm.UserConfirm      = src.UserPassword;
 
-            vm.AllowPrint            = src.Permission.Print.IsAllowed();
-            vm.AllowCopy             = src.Permission.CopyContents.IsAllowed();
-            vm.AllowFillInFormFields = src.Permission.FillInFormFields.IsAllowed();
-            vm.AllowModify           = src.Permission.ModifyContents.IsAllowed();
+            vm.AllowPrint       = src.Permission.Print.IsAllowed();
+            vm.AllowCopy        = src.Permission.CopyContents.IsAllowed();
+            vm.AllowInputForms  = src.Permission.InputForms.IsAllowed();
+            vm.AllowModify      = src.Permission.ModifyContents.IsAllowed();
         }
 
         /* ----------------------------------------------------------------- */
