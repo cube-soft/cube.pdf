@@ -269,66 +269,6 @@ namespace Cube.Pdf.Tests.Converter
                     CreateArgs("Png_Multi"),
                     "SampleCjk.ps"
                 );
-
-                yield return Create(
-                    new Settings
-                    {
-                        Format      = Format.Jpeg,
-                        Grayscale   = false,
-                        Resolution  = 72,
-                    },
-                    CreateArgs("Jpeg")
-                );
-
-                yield return Create(
-                    new Settings
-                    {
-                        Format      = Format.Jpeg,
-                        Grayscale   = true,
-                        Resolution  = 72,
-                    },
-                    CreateArgs("Jpeg_Gray")
-                );
-
-                yield return Create(
-                    new Settings
-                    {
-                        Format      = Format.Bmp,
-                        Grayscale   = false,
-                        Resolution  = 72,
-                    },
-                    CreateArgs("Bmp")
-                );
-
-                yield return Create(
-                    new Settings
-                    {
-                        Format      = Format.Bmp,
-                        Grayscale   = true,
-                        Resolution  = 72,
-                    },
-                    CreateArgs("Bmp_Gray")
-                );
-
-                yield return Create(
-                    new Settings
-                    {
-                        Format      = Format.Tiff,
-                        Grayscale   = false,
-                        Resolution  = 72,
-                    },
-                    CreateArgs("Tiff")
-                );
-
-                yield return Create(
-                    new Settings
-                    {
-                        Format      = Format.Tiff,
-                        Grayscale   = true,
-                        Resolution  = 72,
-                    },
-                    CreateArgs("Tiff_Gray")
-                );
             }
         }
 
