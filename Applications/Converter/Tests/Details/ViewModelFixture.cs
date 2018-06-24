@@ -207,13 +207,13 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         protected void Error(MessageEventArgs e)
         {
-            Message  = e.Message;
-            e.Result = System.Windows.Forms.DialogResult.Cancel;
-
             Assert.That(e.Icon,
                 Is.EqualTo(System.Windows.Forms.MessageBoxIcon.Error).Or
                   .EqualTo(System.Windows.Forms.MessageBoxIcon.Warning)
             );
+
+            Message  = e.Message;
+            e.Result = System.Windows.Forms.DialogResult.OK;
         }
 
         /* ----------------------------------------------------------------- */

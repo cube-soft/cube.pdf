@@ -75,6 +75,9 @@
     <None Include="Examples\Sample.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\Sample.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\Sample.eps">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

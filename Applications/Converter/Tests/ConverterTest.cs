@@ -75,49 +75,17 @@ namespace Cube.Pdf.Tests.Converter
                 Assert.That(IO.Exists(vms.Source),      Is.True,  vms.Source);
                 Assert.That(IO.Exists(vms.Destination), Is.False, vms.Destination);
 
+                // Test for SaveOption
+                IO.Copy(GetExamplesWith("Sample.pdf"), vms.Destination);
+
                 Assert.That(vm.IsBusy, Is.False);
                 vm.Messenger.MessageBox.Subscribe(Error);
                 vm.Convert();
                 Assert.That(Wait(vm), Is.True, "Timeout");
-                Assert.That(Message,  Is.Empty);
             }
 
             Assert.That(IO.Exists(dest.Value.Source),      Is.False, dest.Value.Source);
             Assert.That(IsCreated(dest.Value.Destination), Is.True,  dest.DocumentName.Value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UserProgram_Empty
-        ///
-        /// <summary>
-        /// ユーザプログラムが指定されなかった時の挙動を確認します。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// PostProcess.None と同様の挙動を示します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void UserProgram_Empty()
-        {
-            var args = CreateArgs(nameof(UserProgram_Empty));
-            var dest = Create(Combine(args, "Sample.ps"));
-
-            using (var vm = new MainViewModel(dest))
-            {
-                vm.Messenger.MessageBox.Subscribe(Error);
-                vm.Messenger.OpenFileDialog.Subscribe(e => e.FileName = "");
-                vm.Settings.PostProcess = PostProcess.Others;
-
-                Assert.That(vm.Settings.UserProgram, Is.Empty);
-                Assert.That(vm.IsBusy, Is.False);
-                vm.Convert();
-                Assert.That(Wait(vm), Is.True, "Timeout");
-            }
-
-            Assert.That(Message, Is.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -211,9 +179,9 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Pdf,
-                        Grayscale   = false,
-                        Resolution  = 72,
+                        Format          = Format.Pdf,
+                        Grayscale       = false,
+                        Resolution      = 72,
                     },
                     CreateArgs("Pdf")
                 );
@@ -221,9 +189,10 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Pdf,
-                        Grayscale   = true,
-                        Resolution  = 72,
+                        Format          = Format.Pdf,
+                        Grayscale       = true,
+                        Resolution      = 72,
+                        PostProcess     = PostProcess.Others,
                     },
                     CreateArgs("Pdf_Gray")
                 );
@@ -231,9 +200,53 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Ps,
-                        Grayscale   = false,
-                        Resolution  = 72,
+                        Format          = Format.Pdf,
+                        Grayscale       = false,
+                        Resolution      = 72,
+                        SaveOption      = SaveOption.MergeHead,
+                    },
+                    CreateArgs("Pdf_MergeHead")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format          = Format.Pdf,
+                        Grayscale       = false,
+                        Resolution      = 72,
+                        SaveOption      = SaveOption.MergeTail,
+                    },
+                    CreateArgs("Pdf_MergeTail")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format          = Format.Pdf,
+                        Grayscale       = false,
+                        Resolution      = 72,
+                        SaveOption      = SaveOption.Rename,
+                    },
+                    CreateArgs("Pdf_Rename")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format          = Format.Pdf,
+                        Grayscale       = false,
+                        Resolution      = 72,
+                        Linearization   = true,
+                    },
+                    CreateArgs("Pdf_Linearization")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format          = Format.Ps,
+                        Grayscale       = false,
+                        Resolution      = 72,
                     },
                     CreateArgs("Ps")
                 );
@@ -241,9 +254,9 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Ps,
-                        Grayscale   = true,
-                        Resolution  = 72,
+                        Format          = Format.Ps,
+                        Grayscale       = true,
+                        Resolution      = 72,
                     },
                     CreateArgs("Ps_Gray")
                 );
@@ -251,9 +264,9 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Eps,
-                        Grayscale   = false,
-                        Resolution  = 72,
+                        Format          = Format.Eps,
+                        Grayscale       = false,
+                        Resolution      = 72,
                     },
                     CreateArgs("Eps")
                 );
@@ -261,9 +274,9 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Eps,
-                        Grayscale   = true,
-                        Resolution  = 72,
+                        Format          = Format.Eps,
+                        Grayscale       = true,
+                        Resolution      = 72,
                     },
                     CreateArgs("Eps_Gray")
                 );
@@ -271,9 +284,9 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Png,
-                        Grayscale   = false,
-                        Resolution  = 72,
+                        Format          = Format.Png,
+                        Grayscale       = false,
+                        Resolution      = 72,
                     },
                     CreateArgs("Png")
                 );
@@ -281,19 +294,19 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Png,
-                        Grayscale   = false,
-                        Resolution  = 144,
+                        Format          = Format.Png,
+                        Grayscale       = false,
+                        Resolution      = 144,
                     },
-                    CreateArgs("Png_R144")
+                    CreateArgs("Png_144")
                 );
 
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Png,
-                        Grayscale   = true,
-                        Resolution  = 72,
+                        Format          = Format.Png,
+                        Grayscale       = true,
+                        Resolution      = 72,
                     },
                     CreateArgs("Png_Gray")
                 );
@@ -301,9 +314,9 @@ namespace Cube.Pdf.Tests.Converter
                 yield return Create(
                     new Settings
                     {
-                        Format      = Format.Png,
-                        Grayscale   = true,
-                        Resolution  = 72,
+                        Format          = Format.Png,
+                        Grayscale       = true,
+                        Resolution      = 72,
                     },
                     CreateArgs("Png_Multi"),
                     "SampleCjk.ps"
