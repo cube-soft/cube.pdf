@@ -330,7 +330,7 @@ namespace Cube.Pdf.Tests.Converter
         {
             vm.Title      = src.Title;
             vm.Author     = src.Author;
-            vm.Creator    = src.Creator;
+            vm.Subject    = src.Subject;
             vm.Keywords   = src.Keywords;
             vm.Creator    = src.Creator;
             vm.ViewOption = src.ViewOption;

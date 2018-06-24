@@ -77,17 +77,36 @@ namespace Cube.Pdf.Tests.Converter
         public void SettingsViewModel() => Invoke(vm =>
         {
             var vms = vm.Settings;
+            Assert.That(vms.FormatOption,       Is.EqualTo(FormatOption.Pdf17));
+            Assert.That(vms.Resolution,         Is.EqualTo(600));
+            Assert.That(vms.Language,           Is.EqualTo(Language.Auto));
+            Assert.That(vms.IsAutoOrientation,  Is.True,  nameof(vms.IsAutoOrientation));
+            Assert.That(vms.IsPortrait,         Is.False, nameof(vms.IsPortrait));
+            Assert.That(vms.IsLandscape,        Is.False, nameof(vms.IsLandscape));
+            Assert.That(vms.Grayscale,          Is.False, nameof(vms.Grayscale));
+            Assert.That(vms.ImageCompression,   Is.True,  nameof(vms.ImageCompression));
+            Assert.That(vms.Linearization,      Is.False, nameof(vms.Linearization));
+            Assert.That(vms.CheckUpdate,        Is.True,  nameof(vms.CheckUpdate));
             Assert.That(vms.EnableFormatOption, Is.True,  nameof(vms.EnableFormatOption));
             Assert.That(vms.EnableUserProgram,  Is.False, nameof(vms.EnableUserProgram));
             Assert.That(vms.SourceEditable,     Is.False, nameof(vms.SourceEditable));
             Assert.That(vms.SourceVisible,      Is.False, nameof(vms.SourceVisible));
-            Assert.That(vms.Language,           Is.EqualTo(Language.Auto));
 
             vms.Format = Format.Png;
             Assert.That(vms.EnableFormatOption, Is.False, nameof(vms.EnableFormatOption));
 
             vms.PostProcess = PostProcess.Others;
             Assert.That(vms.EnableUserProgram,  Is.True,  nameof(vms.EnableUserProgram));
+
+            vms.IsPortrait = true;
+            Assert.That(vms.IsAutoOrientation,  Is.False, nameof(vms.IsAutoOrientation));
+            Assert.That(vms.IsPortrait,         Is.True,  nameof(vms.IsPortrait));
+            Assert.That(vms.IsLandscape,        Is.False, nameof(vms.IsLandscape));
+
+            vms.IsLandscape = true;
+            Assert.That(vms.IsAutoOrientation,  Is.False, nameof(vms.IsAutoOrientation));
+            Assert.That(vms.IsPortrait,         Is.False, nameof(vms.IsPortrait));
+            Assert.That(vms.IsLandscape,        Is.True,  nameof(vms.IsLandscape));
         });
 
         /* ----------------------------------------------------------------- */
@@ -105,7 +124,7 @@ namespace Cube.Pdf.Tests.Converter
             var vmm = vm.Metadata;
             Assert.That(vmm.Title,      Is.Empty, nameof(vmm.Title));
             Assert.That(vmm.Author,     Is.Empty, nameof(vmm.Author));
-            Assert.That(vmm.Subtitle,   Is.Empty, nameof(vmm.Subtitle));
+            Assert.That(vmm.Subject,    Is.Empty, nameof(vmm.Subject));
             Assert.That(vmm.Keywords,   Is.Empty, nameof(vmm.Keywords));
             Assert.That(vmm.Creator,    Is.EqualTo("CubePDF"));
             Assert.That(vmm.ViewOption, Is.EqualTo(ViewOption.OneColumn));

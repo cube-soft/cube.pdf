@@ -265,8 +265,55 @@ namespace Cube.Pdf.Tests.Converter
                         Grayscale        = false,
                         Resolution       = 72,
                         Linearization    = true,
+                        Metadata         = new Metadata
+                        {
+                            Title      = "Linearization test title",
+                            Author     = "Linearization test author",
+                            Subject    = "Linearization test Subject",
+                            Keywords   = "Linearization test keywords",
+                            Creator    = "Linearization test creator",
+                            ViewOption = ViewOption.SinglePage,
+                        }
                     },
                     CreateArgs("Pdf_Linearization")
+                );
+
+                yield return Create(
+                    new Settings
+                    {
+                        Format           = Format.Pdf,
+                        Grayscale        = false,
+                        Resolution       = 72,
+                        Linearization    = true, // ignore
+                        Encryption       = new Encryption
+                        {
+                            Enabled          = true,
+                            OwnerPassword    = "Password",
+                            UserPassword     = "User",
+                            OpenWithPassword = true,
+                            Method           = EncryptionMethod.Aes256,
+                            Permission       = new Permission
+                            {
+                                Accessibility     = PermissionMethod.Allow,
+                                Assemble          = PermissionMethod.Deny,
+                                CopyContents      = PermissionMethod.Deny,
+                                InputForms        = PermissionMethod.Allow,
+                                ModifyAnnotations = PermissionMethod.Deny,
+                                ModifyContents    = PermissionMethod.Deny,
+                                Print             = PermissionMethod.Deny,
+                            }
+                        },
+                        Metadata = new Metadata
+                        {
+                            Title      = "Encryption test title",
+                            Author     = "Encryption test author",
+                            Subject    = "Encryption test Subject",
+                            Keywords   = "Encryption test keywords",
+                            Creator    = "Encryption test creator",
+                            ViewOption = ViewOption.SinglePage,
+                        }
+                    },
+                    CreateArgs("Pdf_Encryption")
                 );
 
                 yield return Create(

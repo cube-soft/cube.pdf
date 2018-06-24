@@ -113,7 +113,7 @@ namespace Cube.Pdf.Tests.Converter
             var md = dest.Metadata;
             Assert.That(md.Title,              Is.Empty);
             Assert.That(md.Author,             Is.Empty);
-            Assert.That(md.Subtitle,           Is.Empty);
+            Assert.That(md.Subject,            Is.Empty);
             Assert.That(md.Keywords,           Is.Empty);
             Assert.That(md.Creator,            Is.EqualTo("CubePDF"));
 
