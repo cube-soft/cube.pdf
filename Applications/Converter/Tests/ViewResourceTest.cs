@@ -292,6 +292,99 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(ja[2].Key, Is.EqualTo("日本語"));
         });
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SourceFilters
+        ///
+        /// <summary>
+        /// 入力ファイル選択画面のフィルタに関する表示文字列を確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void SourceFilters() => Create(vm =>
+        {
+            var v = ViewResource.SourceFilters;
+            Assert.That(v.Count, Is.EqualTo(4));
+
+            vm.Settings.Language = Language.English;
+            var en = ViewResource.SourceFilters;
+            Assert.That(en[0].ToString(), Does.StartWith("PS files"));
+            Assert.That(en[1].ToString(), Does.StartWith("EPS files"));
+            Assert.That(en[2].ToString(), Does.StartWith("PDF files"));
+            Assert.That(en[3].ToString(), Does.StartWith("All files"));
+
+            vm.Settings.Language = Language.Japanese;
+            var ja = ViewResource.SourceFilters;
+            Assert.That(ja[0].ToString(), Does.StartWith("PS ファイル"));
+            Assert.That(ja[1].ToString(), Does.StartWith("EPS ファイル"));
+            Assert.That(ja[2].ToString(), Does.StartWith("PDF ファイル"));
+            Assert.That(ja[3].ToString(), Does.StartWith("すべてのファイル"));
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DestinationFilters
+        ///
+        /// <summary>
+        /// 保存パス選択画面のフィルタに関する表示文字列を確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void DestinationFilters() => Create(vm =>
+        {
+            var v = ViewResource.DestinationFilters;
+            Assert.That(v.Count, Is.EqualTo(7));
+
+            vm.Settings.Language = Language.English;
+            var en = ViewResource.DestinationFilters;
+            Assert.That(en[0].ToString(), Does.StartWith("PDF files"));
+            Assert.That(en[1].ToString(), Does.StartWith("PS files"));
+            Assert.That(en[2].ToString(), Does.StartWith("EPS files"));
+            Assert.That(en[3].ToString(), Does.StartWith("PNG files"));
+            Assert.That(en[4].ToString(), Does.StartWith("JPEG files"));
+            Assert.That(en[5].ToString(), Does.StartWith("BMP files"));
+            Assert.That(en[6].ToString(), Does.StartWith("TIFF files"));
+
+            vm.Settings.Language = Language.Japanese;
+            var ja = ViewResource.DestinationFilters;
+            Assert.That(ja[0].ToString(), Does.StartWith("PDF ファイル"));
+            Assert.That(ja[1].ToString(), Does.StartWith("PS ファイル"));
+            Assert.That(ja[2].ToString(), Does.StartWith("EPS ファイル"));
+            Assert.That(ja[3].ToString(), Does.StartWith("PNG ファイル"));
+            Assert.That(ja[4].ToString(), Does.StartWith("JPEG ファイル"));
+            Assert.That(ja[5].ToString(), Does.StartWith("BMP ファイル"));
+            Assert.That(ja[6].ToString(), Does.StartWith("TIFF ファイル"));
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserProgramFilters
+        ///
+        /// <summary>
+        /// ユーザプログラム選択画面のフィルタに関する表示文字列を
+        /// 確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void UserProgramFilters() => Create(vm =>
+        {
+            var v = ViewResource.UserProgramFilters;
+            Assert.That(v.Count, Is.EqualTo(2));
+
+            vm.Settings.Language = Language.English;
+            var en = ViewResource.UserProgramFilters;
+            Assert.That(en[0].ToString(), Does.StartWith("Executable files"));
+            Assert.That(en[1].ToString(), Does.StartWith("All files"));
+
+            vm.Settings.Language = Language.Japanese;
+            var ja = ViewResource.UserProgramFilters;
+            Assert.That(ja[0].ToString(), Does.StartWith("実行可能なファイル"));
+            Assert.That(ja[1].ToString(), Does.StartWith("すべてのファイル"));
+        });
+
         #endregion
 
         #region Helper methods
@@ -312,6 +405,7 @@ namespace Cube.Pdf.Tests.Converter
             using (var vm = new MainViewModel(src))
             {
                 vm.Messenger.SetCulture.Subscribe(SetUiCulture);
+                vm.Settings.Language = Language.Auto;
                 action(vm);
             }
         }

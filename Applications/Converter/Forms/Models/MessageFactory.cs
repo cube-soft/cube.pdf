@@ -20,6 +20,7 @@ using Cube.FileSystem;
 using Cube.Forms;
 using Cube.Generics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cube.Pdf.App.Converter
@@ -57,8 +58,8 @@ namespace Cube.Pdf.App.Converter
             FileName         = GetFileName(src, io),
             InitialDirectory = GetDirectoryName(src, io),
             Multiselect      = false,
-            Filter           = GetFilter(GetSourceFilters()),
-            FilterIndex      = GetFilterIndex(src, io, GetSourceFilters()),
+            Filter           = GetFilter(ViewResource.SourceFilters),
+            FilterIndex      = GetFilterIndex(src, io, ViewResource.SourceFilters),
         };
 
         /* ----------------------------------------------------------------- */
@@ -81,8 +82,8 @@ namespace Cube.Pdf.App.Converter
             FileName         = GetFileName(src, io),
             InitialDirectory = GetDirectoryName(src, io),
             OverwritePrompt  = false,
-            Filter           = GetFilter(GetDestinationFilters()),
-            FilterIndex      = GetFilterIndex(src, io, GetDestinationFilters()),
+            Filter           = GetFilter(ViewResource.DestinationFilters),
+            FilterIndex      = GetFilterIndex(src, io, ViewResource.DestinationFilters),
         };
 
         /* ----------------------------------------------------------------- */
@@ -105,7 +106,7 @@ namespace Cube.Pdf.App.Converter
             FileName         = GetFileName(src, io),
             InitialDirectory = GetDirectoryName(src, io),
             Multiselect      = false,
-            Filter           = GetFilter(GetUserProgramFilters()),
+            Filter           = GetFilter(ViewResource.UserProgramFilters),
         };
 
         /* ----------------------------------------------------------------- */
@@ -185,7 +186,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetFilter(DisplayFilter[] src) =>
+        private static string GetFilter(IList<DisplayFilter> src) =>
             src.Select(e => e.ToString()).Aggregate((x, y) => $"{x}|{y}");
 
         /* ----------------------------------------------------------------- */
@@ -197,12 +198,12 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static int GetFilterIndex(string src, IO io, DisplayFilter[] filters)
+        private static int GetFilterIndex(string src, IO io, IList<DisplayFilter> filters)
         {
             if (src.HasValue())
             {
                 var ext = io.Get(src).Extension;
-                for (var i = 0; i < filters.Length; ++i)
+                for (var i = 0; i < filters.Count; ++i)
                 {
                     var cmp = filters[i];
                     var opt = StringComparison.InvariantCultureIgnoreCase;
@@ -211,58 +212,6 @@ namespace Cube.Pdf.App.Converter
             }
             return 0;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetSourceFilters
-        ///
-        /// <summary>
-        /// 入力ファイルのフィルタ一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static DisplayFilter[] GetSourceFilters() => new[]
-        {
-            new DisplayFilter(Properties.Resources.FilterPs,  ".ps"),
-            new DisplayFilter(Properties.Resources.FilterEps, ".eps"),
-            new DisplayFilter(Properties.Resources.FilterPdf, ".pdf"),
-            new DisplayFilter(Properties.Resources.FilterAll, ".*"),
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetDestinationFilters
-        ///
-        /// <summary>
-        /// 保存パスのフィルタ一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static DisplayFilter[] GetDestinationFilters() => new[]
-        {
-            new DisplayFilter(Properties.Resources.FilterPdf,  ".pdf"),
-            new DisplayFilter(Properties.Resources.FilterPs,   ".ps"),
-            new DisplayFilter(Properties.Resources.FilterEps,  ".eps"),
-            new DisplayFilter(Properties.Resources.FilterPng,  ".png"),
-            new DisplayFilter(Properties.Resources.FilterJpeg, ".jpg", ".jpeg"),
-            new DisplayFilter(Properties.Resources.FilterBmp,  ".bmp"),
-            new DisplayFilter(Properties.Resources.FilterTiff, ".tiff", ".tif"),
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetUserProgramFilters
-        ///
-        /// <summary>
-        /// ユーザプログラムのフィルタ一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static DisplayFilter[] GetUserProgramFilters() => new[]
-        {
-            new DisplayFilter(Properties.Resources.FilterExecutable, ".exe", ".bat"),
-            new DisplayFilter(Properties.Resources.FilterAll, ".*"),
-        };
 
         #endregion
     }

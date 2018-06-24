@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using System.Collections.Generic;
 
@@ -44,7 +45,7 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, Format>> Formats => _formats ?? (
-            _formats = new List<KeyValuePair<string, Format>>
+            _formats = new []
             {
                 Pair("PDF",  Format.Pdf),
                 Pair("PS",   Format.Ps),
@@ -65,8 +66,8 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, FormatOption>> FormatOptions => _formatOptions ?? (
-            _formatOptions = new List<KeyValuePair<string, FormatOption>>
+        public static IList<KeyValuePair<string, FormatOption>> FormatOptions =>
+            _formatOptions ?? (_formatOptions = new []
             {
                 Pair("PDF 1.7", FormatOption.Pdf17),
                 Pair("PDF 1.6", FormatOption.Pdf16),
@@ -86,14 +87,13 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, SaveOption>> SaveOptions =>
-            new List<KeyValuePair<string, SaveOption>>
-            {
-                Pair(Properties.Resources.MenuOverwrite, SaveOption.Overwrite),
-                Pair(Properties.Resources.MenuMergeHead, SaveOption.MergeHead),
-                Pair(Properties.Resources.MenuMergeTail, SaveOption.MergeTail),
-                Pair(Properties.Resources.MenuRename,    SaveOption.Rename),
-            };
+        public static IList<KeyValuePair<string, SaveOption>> SaveOptions => new []
+        {
+            Pair(Properties.Resources.MenuOverwrite, SaveOption.Overwrite),
+            Pair(Properties.Resources.MenuMergeHead, SaveOption.MergeHead),
+            Pair(Properties.Resources.MenuMergeTail, SaveOption.MergeTail),
+            Pair(Properties.Resources.MenuRename,    SaveOption.Rename),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -104,16 +104,15 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, ViewOption>> ViewOptions =>
-            new List<KeyValuePair<string, ViewOption>>
-            {
-                Pair(Properties.Resources.MenuSinglePage,     ViewOption.SinglePage),
-                Pair(Properties.Resources.MenuOneColumn,      ViewOption.OneColumn),
-                Pair(Properties.Resources.MenuTwoPageLeft,    ViewOption.TwoPageLeft),
-                Pair(Properties.Resources.MenuTwoPageRight,   ViewOption.TwoPageRight),
-                Pair(Properties.Resources.MenuTwoColumnLeft,  ViewOption.TwoColumnLeft),
-                Pair(Properties.Resources.MenuTwoColumnRight, ViewOption.TwoColumnRight),
-            };
+        public static IList<KeyValuePair<string, ViewOption>> ViewOptions => new []
+        {
+            Pair(Properties.Resources.MenuSinglePage,     ViewOption.SinglePage),
+            Pair(Properties.Resources.MenuOneColumn,      ViewOption.OneColumn),
+            Pair(Properties.Resources.MenuTwoPageLeft,    ViewOption.TwoPageLeft),
+            Pair(Properties.Resources.MenuTwoPageRight,   ViewOption.TwoPageRight),
+            Pair(Properties.Resources.MenuTwoColumnLeft,  ViewOption.TwoColumnLeft),
+            Pair(Properties.Resources.MenuTwoColumnRight, ViewOption.TwoColumnRight),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -124,14 +123,13 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, PostProcess>> PostProcesses =>
-            new List<KeyValuePair<string, PostProcess>>
-            {
-                Pair(Properties.Resources.MenuOpen,       PostProcess.Open),
-                Pair(Properties.Resources.MenuOpenDirectory, PostProcess.OpenDirectory),
-                Pair(Properties.Resources.MenuNone,       PostProcess.None),
-                Pair(Properties.Resources.MenuOthers,     PostProcess.Others),
-            };
+        public static IList<KeyValuePair<string, PostProcess>> PostProcesses => new []
+        {
+            Pair(Properties.Resources.MenuOpen,          PostProcess.Open),
+            Pair(Properties.Resources.MenuOpenDirectory, PostProcess.OpenDirectory),
+            Pair(Properties.Resources.MenuNone,          PostProcess.None),
+            Pair(Properties.Resources.MenuOthers,        PostProcess.Others),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -142,13 +140,12 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, Orientation>> Orientations =>
-            new List<KeyValuePair<string, Orientation>>
-            {
-                Pair(Properties.Resources.MenuPortrait,  Orientation.Portrait),
-                Pair(Properties.Resources.MenuLandscape, Orientation.Landscape),
-                Pair(Properties.Resources.MenuAuto,      Orientation.Auto),
-            };
+        public static IList<KeyValuePair<string, Orientation>> Orientations => new []
+        {
+            Pair(Properties.Resources.MenuPortrait,  Orientation.Portrait),
+            Pair(Properties.Resources.MenuLandscape, Orientation.Landscape),
+            Pair(Properties.Resources.MenuAuto,      Orientation.Auto),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -159,13 +156,64 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, Language>> Languages =>
-            new List<KeyValuePair<string, Language>>
-            {
-                Pair(Properties.Resources.MenuAuto,     Language.Auto),
-                Pair(Properties.Resources.MenuEnglish,  Language.English),
-                Pair(Properties.Resources.MenuJapanese, Language.Japanese),
-            };
+        public static IList<KeyValuePair<string, Language>> Languages => new []
+        {
+            Pair(Properties.Resources.MenuAuto,     Language.Auto),
+            Pair(Properties.Resources.MenuEnglish,  Language.English),
+            Pair(Properties.Resources.MenuJapanese, Language.Japanese),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SourceFilters
+        ///
+        /// <summary>
+        /// 入力ファイルのフィルタ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IList<DisplayFilter> SourceFilters => new[]
+        {
+            new DisplayFilter(Properties.Resources.FilterPs,  ".ps"),
+            new DisplayFilter(Properties.Resources.FilterEps, ".eps"),
+            new DisplayFilter(Properties.Resources.FilterPdf, ".pdf"),
+            new DisplayFilter(Properties.Resources.FilterAll, ".*"),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DestinationFilters
+        ///
+        /// <summary>
+        /// 保存パスのフィルタ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IList<DisplayFilter> DestinationFilters => new[]
+        {
+            new DisplayFilter(Properties.Resources.FilterPdf,  ".pdf"),
+            new DisplayFilter(Properties.Resources.FilterPs,   ".ps"),
+            new DisplayFilter(Properties.Resources.FilterEps,  ".eps"),
+            new DisplayFilter(Properties.Resources.FilterPng,  ".png"),
+            new DisplayFilter(Properties.Resources.FilterJpeg, ".jpg", ".jpeg"),
+            new DisplayFilter(Properties.Resources.FilterBmp,  ".bmp"),
+            new DisplayFilter(Properties.Resources.FilterTiff, ".tiff", ".tif"),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserProgramFilters
+        ///
+        /// <summary>
+        /// ユーザプログラムのフィルタ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IList<DisplayFilter> UserProgramFilters => new[]
+        {
+            new DisplayFilter(Properties.Resources.FilterExecutable, ".exe", ".bat"),
+            new DisplayFilter(Properties.Resources.FilterAll, ".*"),
+        };
 
         #endregion
 
