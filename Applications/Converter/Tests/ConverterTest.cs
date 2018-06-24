@@ -86,6 +86,71 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(IsCreated(dest.Value.Destination), Is.True,  dest.DocumentName.Value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserProgram_Empty
+        ///
+        /// <summary>
+        /// ユーザプログラムが指定されなかった時の挙動を確認します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// PostProcess.None と同様の挙動を示します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void UserProgram_Empty()
+        {
+            var args = CreateArgs(nameof(UserProgram_Empty));
+            var dest = Create(Combine(args, "Sample.ps"));
+
+            using (var vm = new MainViewModel(dest))
+            {
+                vm.Messenger.MessageBox.Subscribe(Error);
+                vm.Messenger.OpenFileDialog.Subscribe(e => e.FileName = "");
+                vm.Settings.PostProcess = PostProcess.Others;
+
+                Assert.That(vm.Settings.UserProgram, Is.Empty);
+                Assert.That(vm.IsBusy, Is.False);
+                vm.Convert();
+                Assert.That(Wait(vm), Is.True, "Timeout");
+            }
+
+            Assert.That(Message, Is.Empty);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserProgram_Error
+        ///
+        /// <summary>
+        /// ユーザプログラムの実行中にエラーが発生した時の挙動を確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void UserProgram_Error()
+        {
+            var exec = "NotFound.exe";
+            var args = CreateArgs(nameof(UserProgram_Error));
+            var dest = Create(Combine(args, "Sample.ps"));
+
+            using (var vm = new MainViewModel(dest))
+            {
+                vm.Messenger.MessageBox.Subscribe(Error);
+                vm.Messenger.OpenFileDialog.Subscribe(e => e.FileName = exec);
+                vm.Settings.PostProcess = PostProcess.Others;
+
+                Assert.That(vm.Settings.UserProgram, Is.EqualTo(exec));
+                Assert.That(vm.IsBusy, Is.False);
+                vm.Convert();
+                Assert.That(WaitError(vm), Is.True, "Timeout (error)");
+            }
+
+            Assert.Pass(Message);
+        }
+
         #endregion
 
         #region Helper methods

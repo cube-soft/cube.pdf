@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.Tests;
 using Cube.Forms;
+using Cube.Generics;
 using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
@@ -200,7 +201,7 @@ namespace Cube.Pdf.Tests.Converter
         /// Error
         ///
         /// <summary>
-        /// メッセージボックスが表示された場合、エラーとして扱います。
+        /// メッセージボックス表示時のイベントハンドラです。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -231,8 +232,27 @@ namespace Cube.Pdf.Tests.Converter
         protected bool Wait(MainViewModel vm)
         {
             Message = string.Empty;
-            if (!WaitAsync(vm, true).Result) return false;
-            return WaitAsync(vm, false).Result;
+            if (!WaitAsync(vm, () => vm.IsBusy == true).Result) return false;
+            return WaitAsync(vm, () => vm.IsBusy == false).Result;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WaitError
+        ///
+        /// <summary>
+        /// エラーが発生する場合の処理を待機します。
+        /// </summary>
+        ///
+        /// <param name="vm">ViewModel</param>
+        ///
+        /// <returns>処理中にエラーが発生したかどうか</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected bool WaitError(MainViewModel vm)
+        {
+            Message = string.Empty;
+            return WaitAsync(vm, () => Message.HasValue()).Result;
         }
 
         #endregion
@@ -331,11 +351,11 @@ namespace Cube.Pdf.Tests.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async Task<bool> WaitAsync(MainViewModel vm, bool enabled)
+        private async Task<bool> WaitAsync(MainViewModel vm, Func<bool> cond)
         {
             for (var i = 0; i < 100; ++i)
             {
-                if (vm.IsBusy == enabled) return true;
+                if (cond()) return true;
                 await Task.Delay(100).ConfigureAwait(false);
             }
             return false;
