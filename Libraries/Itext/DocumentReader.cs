@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 
 namespace Cube.Pdf.Itext
 {
@@ -274,7 +273,6 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public IEnumerable<Image> GetImages(int pagenum)
         {
-            if (pagenum <= 0 || pagenum > Pages.Count()) throw new IndexOutOfRangeException();
             var dest = new EmbeddedImageCollection();
             _core.GetContentParser().ProcessContent(pagenum, dest);
             return dest;

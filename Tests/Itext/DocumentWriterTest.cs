@@ -20,6 +20,7 @@ using Cube.FileSystem.Tests;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -238,8 +239,9 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var reader = new DocumentReader(dest, "", IO))
             {
-                var items = reader.Attachments;
-                Assert.That(items.Any(x => x.Name.ToLower() == file.ToLower()), Is.True);
+                var items  = reader.Attachments;
+                var option = StringComparison.InvariantCultureIgnoreCase;
+                Assert.That(items.Any(x => x.Name.Equals(file, option)), Is.True);
                 return items.Count();
             }
         }

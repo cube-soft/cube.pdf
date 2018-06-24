@@ -42,7 +42,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionException() : base() { }
+        public EncryptionException() : this(string.Empty) { }
 
         /* ----------------------------------------------------------------- */
         ///

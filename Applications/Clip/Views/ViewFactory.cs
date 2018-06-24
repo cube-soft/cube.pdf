@@ -58,8 +58,7 @@ namespace Cube.Pdf.App.Clip
         /// <returns>PDF ファイルの選択画面</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public virtual OpenFileDialog CreateOpenView()
-            => new OpenFileDialog
+        public virtual OpenFileDialog CreateOpenView() => new OpenFileDialog
         {
             Title           = Properties.Resources.SourceTitle,
             Filter          = Properties.Resources.SourceFilter,
@@ -78,8 +77,7 @@ namespace Cube.Pdf.App.Clip
         /// <returns>添付ファイルの選択画面</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public virtual OpenFileDialog CreateAttachView()
-            => new OpenFileDialog
+        public virtual OpenFileDialog CreateAttachView() => new OpenFileDialog
         {
             Title                        = Properties.Resources.AttachTitle,
             Filter                       = Properties.Resources.AttachFilter,
@@ -102,17 +100,17 @@ namespace Cube.Pdf.App.Clip
         /// <returns>バージョン画面</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public virtual Cube.Forms.VersionForm CreateVersionView(string version, Icon icon)
-            => new Cube.Forms.VersionForm
-        {
-            AutoScaleMode = AutoScaleMode.None,
-            Icon          = icon,
-            Image         = Properties.Resources.Logo,
-            StartPosition = FormStartPosition.CenterParent,
-            Text          = Properties.Resources.VersionTitle,
-            Uri           = new Uri(Properties.Resources.VersionWeb),
-            Version       = version,
-        };
+        public virtual Cube.Forms.VersionForm CreateVersionView(string version, Icon icon) =>
+            new Cube.Forms.VersionForm
+            {
+                AutoScaleMode = AutoScaleMode.None,
+                Icon          = icon,
+                Image         = Properties.Resources.Logo,
+                StartPosition = FormStartPosition.CenterParent,
+                Text          = Properties.Resources.VersionTitle,
+                Uri           = new Uri(Properties.Resources.VersionWeb),
+                Version       = version,
+            };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -127,8 +125,8 @@ namespace Cube.Pdf.App.Clip
         /// <returns>DialogResult オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public virtual DialogResult ShowMessage(string message, MessageBoxButtons buttons)
-            => MessageBox.Show(
+        public virtual DialogResult ShowMessage(string message, MessageBoxButtons buttons) =>
+            MessageBox.Show(
                 message,
                 Application.ProductName,
                 buttons,
@@ -148,13 +146,12 @@ namespace Cube.Pdf.App.Clip
         /// <returns>DialogResult オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public virtual DialogResult ShowError(string message)
-            => MessageBox.Show(
-                message,
-                Application.ProductName,
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-            );
+        public virtual DialogResult ShowError(string message) => MessageBox.Show(
+            message,
+            Application.ProductName,
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error
+        );
     }
 
     /* --------------------------------------------------------------------- */
@@ -202,8 +199,10 @@ namespace Cube.Pdf.App.Clip
         public static Cube.Forms.VersionForm CreateVersionView(string version, Icon icon)
             => _factory?.CreateVersionView(version, icon);
 
-        public static DialogResult ShowMessage(string message,
-            MessageBoxButtons buttons = MessageBoxButtons.OK)
+        public static DialogResult ShowMessage(string message)
+            => ShowMessage(message, MessageBoxButtons.OK);
+
+        public static DialogResult ShowMessage(string message, MessageBoxButtons buttons)
             => _factory?.ShowMessage(message, buttons) ?? DialogResult.Cancel;
 
         public static DialogResult ShowError(string message)

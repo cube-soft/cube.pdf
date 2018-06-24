@@ -44,8 +44,7 @@ namespace Cube.Pdf.App.Pages
         /// <returns>ファイル選択画面</returns>
         ///
         /* --------------------------------------------------------------------- */
-        public OpenFileDialog CreateAddView()
-            => new OpenFileDialog()
+        public OpenFileDialog CreateAddView() => new OpenFileDialog
         {
             CheckFileExists = true,
             Multiselect     = true,
@@ -62,8 +61,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public PasswordForm CreatePasswordView(string path)
-            => new PasswordForm
+        public PasswordForm CreatePasswordView(string path) => new PasswordForm
         {
             Path = path,
             ShowInTaskbar = false,
@@ -79,8 +77,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public SaveFileDialog CreateMergeView()
-            => new SaveFileDialog
+        public SaveFileDialog CreateMergeView() => new SaveFileDialog
         {
             OverwritePrompt = true,
             Title = Properties.Resources.MergeTitle,
@@ -96,8 +93,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public FolderBrowserDialog CreateSplitView()
-            => new FolderBrowserDialog
+        public FolderBrowserDialog CreateSplitView() => new FolderBrowserDialog
         {
             Description = Properties.Resources.SplitDescription,
             ShowNewFolderButton = true,
@@ -134,8 +130,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public DialogResult ShowConfirmMessage(string message)
-            => MessageBox.Show(
+        public DialogResult ShowConfirmMessage(string message) => MessageBox.Show(
             message,
             Application.ProductName,
             MessageBoxButtons.YesNo,
@@ -151,8 +146,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public DialogResult ShowErrorMessage(Exception err)
-            => MessageBox.Show(
+        public DialogResult ShowErrorMessage(Exception err) => MessageBox.Show(
             err.Message,
             Application.ProductName,
             MessageBoxButtons.OK,
@@ -202,7 +196,7 @@ namespace Cube.Pdf.App.Pages
         #endregion
 
         #region Fields
-        private static ViewFactory _factory = new ViewFactory();
+        private static readonly ViewFactory _factory = new ViewFactory();
         #endregion
     }
 }

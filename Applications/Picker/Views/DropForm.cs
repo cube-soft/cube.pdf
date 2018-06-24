@@ -99,7 +99,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EventHandler<ValueEventArgs<string[]>> Open;
+        public event EventHandler<ValueEventArgs<string[]>> Open;
 
         #endregion
 

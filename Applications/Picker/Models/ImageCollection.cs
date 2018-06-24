@@ -115,7 +115,7 @@ namespace Cube.Pdf.App.Picker
             {
                 using (_source = new CancellationTokenSource())
                 {
-                    await Task.Run(() => Extract(progress));
+                    await Task.Run(() => Extract(progress)).ConfigureAwait(false);
                 }
             }
             finally { _source = null; }
@@ -414,10 +414,10 @@ namespace Cube.Pdf.App.Picker
         #endregion
 
         #region Fields
+        private readonly object _lock = new object();
         private bool _disposed = false;
-        private object _lock = new object();
         private CancellationTokenSource _source;
-        private IList<Image> _allImages = new List<Image>();
+        private readonly IList<Image> _allImages = new List<Image>();
         #endregion
     }
 }

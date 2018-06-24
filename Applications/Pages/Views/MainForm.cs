@@ -276,8 +276,7 @@ namespace Cube.Pdf.App.Pages
         {
             base.OnDragDrop(e);
 
-            var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
-            if (files == null) return;
+            if (!(e.Data.GetData(DataFormats.FileDrop, false) is string[] files)) return;
 
             Aggregator.GetEvents()?.Add.Publish(files);
         }
@@ -296,16 +295,13 @@ namespace Cube.Pdf.App.Pages
             //foreach (ListViewItem item in FileListView.Items) item.Selected = true;
         }
 
-        #region Models
-        private FileCollection Files = new FileCollection();
-        private IconCollection Icons = new IconCollection();
-        private Settings Settings = new Settings();
         #endregion
 
-        #region Views
-        private FileMenuControl FileMenu = new FileMenuControl();
-        #endregion
-
+        #region Fields
+        private readonly FileCollection Files = new FileCollection();
+        private readonly IconCollection Icons = new IconCollection();
+        private readonly Settings Settings = new Settings();
+        private readonly FileMenuControl FileMenu = new FileMenuControl();
         #endregion
     }
 }

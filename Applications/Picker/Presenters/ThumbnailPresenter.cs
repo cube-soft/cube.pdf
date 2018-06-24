@@ -214,7 +214,7 @@ namespace Cube.Pdf.App.Picker
         #endregion
 
         #region Fields
-        private IList<IDisposable> _events = new List<IDisposable>();
+        private readonly IList<IDisposable> _events = new List<IDisposable>();
         #endregion
     }
 }

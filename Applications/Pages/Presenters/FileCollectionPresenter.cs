@@ -20,7 +20,6 @@ using Cube.Forms.Controls;
 using Cube.Log;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -51,8 +50,8 @@ namespace Cube.Pdf.App.Pages
         ///
         /* --------------------------------------------------------------------- */
         public FileCollectionPresenter(ListView view, FileCollection model,
-            Settings settings, IAggregator events)
-            : base(view, model, settings, events)
+            Settings settings, IAggregator events) :
+            base(view, model, settings, events)
         {
             Aggregator.GetEvents()?.Preview.Subscribe(Preview_Handle);
             Aggregator.GetEvents()?.Add.Subscribe(Add_Handle);
@@ -110,13 +109,12 @@ namespace Cube.Pdf.App.Pages
         /// </remarks>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Add_Handle(string[] value)
-            => await ExecuteAsync(() =>
+        private async void Add_Handle(string[] value) => await ExecuteAsync(() =>
         {
             var files = GetFiles(value);
             if (files == null || files.Length == 0) return;
             Model.Add(files, 1);
-        });
+        }).ConfigureAwait(false);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -127,13 +125,12 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Remove_Handle()
-            => await ExecuteAsync(() =>
+        private async void Remove_Handle() => await ExecuteAsync(() =>
         {
             var indices = SyncWait(() => View.SelectedIndices.Descend().ToArray());
             if (indices == null || indices.Length == 0) return;
             foreach (var index in indices) Model.RemoveAt(index);
-        });
+        }).ConfigureAwait(false);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -144,8 +141,8 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Clear_Handle()
-            => await ExecuteAsync(() => Model.Clear());
+        private async void Clear_Handle() =>
+            await ExecuteAsync(() => Model.Clear()).ConfigureAwait(false);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -156,13 +153,12 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Move_Handle(int value)
-            => await ExecuteAsync(() =>
+        private async void Move_Handle(int value) => await ExecuteAsync(() =>
         {
             var indices = SyncWait(() => View.SelectedIndices.Ascend().ToArray());
             if (indices == null || indices.Length == 0) return;
             Model.Move(indices, value);
-        });
+        }).ConfigureAwait(false);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -173,8 +169,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Merge_Handle()
-            => await ExecuteAsync(() =>
+        private async void Merge_Handle() => await ExecuteAsync(() =>
         {
             var dest = GetMergeFile();
             if (string.IsNullOrEmpty(dest)) return;
@@ -185,7 +180,7 @@ namespace Cube.Pdf.App.Pages
             var message = string.Format(Properties.Resources.MergeSuccess, Model.Count);
             Model.Clear();
             PostProcess(new string[] { dest }, message);
-        });
+        }).ConfigureAwait(false);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -196,8 +191,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private async void Split_Handle()
-            => await ExecuteAsync(() =>
+        private async void Split_Handle() => await ExecuteAsync(() =>
         {
             var dest = GetSplitFolder();
             if (string.IsNullOrEmpty(dest)) return;
@@ -209,7 +203,7 @@ namespace Cube.Pdf.App.Pages
             var message = string.Format(Properties.Resources.SplitSuccess, Model.Count);
             Model.Clear();
             PostProcess(results.ToArray(), message);
-        });
+        }).ConfigureAwait(false);
 
         #endregion
 
@@ -224,8 +218,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void Model_PasswordRequired(object sender, QueryEventArgs<string, string> e)
-            => SyncWait(() =>
+        private void Model_PasswordRequired(object sender, QueryEventArgs<string, string> e) => SyncWait(() =>
         {
             var dialog = Views.CreatePasswordView(e.Query);
             var result = dialog.ShowDialog(View);
@@ -294,8 +287,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private string GetMergeFile()
-            =>  SyncWait(() =>
+        private string GetMergeFile() =>  SyncWait(() =>
         {
             var dialog = Views.CreateMergeView();
             if (dialog.ShowDialog() == DialogResult.Cancel) return string.Empty;
@@ -311,8 +303,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private string GetSplitFolder()
-            => SyncWait(() =>
+        private string GetSplitFolder() => SyncWait(() =>
         {
             var dialog = Views.CreateSplitView();
             if (dialog.ShowDialog() == DialogResult.Cancel) return string.Empty;
@@ -328,8 +319,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        private void PostProcess(string[] files, string message)
-            => SyncWait(() =>
+        private void PostProcess(string[] files, string message) => SyncWait(() =>
         {
             var result = Views.ShowConfirmMessage(message);
             if (result == DialogResult.No) return;

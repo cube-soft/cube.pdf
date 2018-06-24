@@ -42,7 +42,7 @@ namespace Cube.Pdf.App.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileMenuControl() : base()
+        public FileMenuControl()
         {
             PreviewMenu = new ToolStripMenuItem(Properties.Resources.MenuPreview);
             UpMenu      = new ToolStripMenuItem(Properties.Resources.MenuUp);

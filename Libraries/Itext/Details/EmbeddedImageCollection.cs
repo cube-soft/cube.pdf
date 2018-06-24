@@ -103,7 +103,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void RenderText(TextRenderInfo info) { }
+        public void RenderText(TextRenderInfo info) { /* Ignore */ }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,7 +114,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void BeginTextBlock() { }
+        public void BeginTextBlock() { /* Ignore */ }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -125,7 +125,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void EndTextBlock() { }
+        public void EndTextBlock() { /* Ignore */ }
 
         #endregion
 
@@ -164,7 +164,7 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Fields
-        private IList<Image> _inner = new List<Image>();
+        private readonly IList<Image> _inner = new List<Image>();
         #endregion
     }
 }

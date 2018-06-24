@@ -123,7 +123,7 @@ namespace Cube.Pdf.App.Pages
         #endregion
 
         #region Fields
-        private Dictionary<string, int> _map = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _map = new Dictionary<string, int>();
         #endregion
     }
 }

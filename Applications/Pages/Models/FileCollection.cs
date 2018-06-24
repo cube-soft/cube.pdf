@@ -317,7 +317,7 @@ namespace Cube.Pdf.App.Pages
         #endregion
 
         #region Fields
-        private object _lock = new object();
+        private readonly object _lock = new object();
         #endregion
     }
 }
