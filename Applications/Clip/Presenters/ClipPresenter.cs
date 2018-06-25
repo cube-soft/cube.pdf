@@ -1,26 +1,26 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Forms.Bindings;
+using Cube.Log;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using Cube.Forms.Bindings;
-using Cube.Log;
 
 namespace Cube.Pdf.App.Clip
 {
@@ -40,31 +40,30 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// ClipPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ClipPresenter(IClipView view)
-            : base(view, new ClipSource(), new EventAggregator())
+        public ClipPresenter(IClipView view) : base(view, new ClipSource(), new Aggregator())
         {
             // View
-            View.EventAggregator = EventAggregator;
+            View.Aggregator = Aggregator;
             View.DataSource = Model.Clips.ToBindingSource();
 
             // Model
             Model.PropertyChanged += WhenModelChanged;
             Model.Locked          += WhenLocked;
 
-            // EventAggregator
-            EventAggregator?.GetEvents()?.Open.Subscribe(WhenOpen);
-            EventAggregator?.GetEvents()?.Attach.Subscribe(WhenAttach);
-            EventAggregator?.GetEvents()?.Detach.Subscribe(WhenDetach);
-            EventAggregator?.GetEvents()?.Reset.Subscribe(WhenReset);
-            EventAggregator?.GetEvents()?.Save.Subscribe(WhenSave);
-            EventAggregator?.GetEvents()?.Message.Subscribe(WhenMessage);
-            EventAggregator?.GetEvents()?.Error.Subscribe(WhenError);
+            // Aggregator
+            Aggregator?.GetEvents()?.Open.Subscribe(WhenOpen);
+            Aggregator?.GetEvents()?.Attach.Subscribe(WhenAttach);
+            Aggregator?.GetEvents()?.Detach.Subscribe(WhenDetach);
+            Aggregator?.GetEvents()?.Reset.Subscribe(WhenReset);
+            Aggregator?.GetEvents()?.Save.Subscribe(WhenSave);
+            Aggregator?.GetEvents()?.Message.Subscribe(WhenMessage);
+            Aggregator?.GetEvents()?.Error.Subscribe(WhenError);
         }
 
         #endregion
@@ -74,11 +73,11 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
-        /// 
+        ///
         /// <summary>
         /// リソースを開放します。
         /// </summary>
-        /// 
+        ///
         /// <param name="disposing">
         /// マネージオブジェクトを開放するかどうかを示す値
         /// </param>
@@ -86,22 +85,18 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (!_disposed)
-            {
-                if (disposing) Model.Dispose();
-                _disposed = true;
-            }
+            if (disposing) Model.Dispose();
             base.Dispose(disposing);
         }
 
         #endregion
 
-        #region Event handlers
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
         /// WhenModelChanged
-        /// 
+        ///
         /// <summary>
         /// Model のプロパティが変化した時に実行されます。
         /// </summary>
@@ -116,7 +111,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenLocked
-        /// 
+        ///
         /// <summary>
         /// ファイルがロックされている時に実行されるハンドラです。
         /// </summary>
@@ -135,14 +130,13 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenOpen
-        /// 
+        ///
         /// <summary>
         /// Open イベント発生時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenOpen(string[] files)
-            => Async(() =>
+        private void WhenOpen(string[] files) => Async(() =>
         {
             foreach (var file in files)
             {
@@ -154,7 +148,7 @@ namespace Cube.Pdf.App.Clip
                 catch (EncryptionException err)
                 {
                     this.LogError(err.Message, err);
-                    EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
+                    Aggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
                     break;
                 }
                 catch (Exception err) { this.LogWarn(err.Message, err); }
@@ -164,7 +158,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenAttach
-        /// 
+        ///
         /// <summary>
         /// Attach イベント発生時に実行されます。
         /// </summary>
@@ -176,7 +170,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenDetach
-        /// 
+        ///
         /// <summary>
         /// Detach イベント発生時に実行されます。
         /// </summary>
@@ -191,19 +185,18 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenReset
-        /// 
+        ///
         /// <summary>
         /// Reset イベント発生時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenReset()
-            => Async(() => Model.Reset());
+        private void WhenReset() => Async(() => Model.Reset());
 
         /* ----------------------------------------------------------------- */
         ///
         /// WhenSave
-        /// 
+        ///
         /// <summary>
         /// Save イベント発生時に実行されます。
         /// </summary>
@@ -215,12 +208,12 @@ namespace Cube.Pdf.App.Clip
             {
                 SyncWait(() => View.IsBusy = true);
                 await Async(() => Model.Save());
-                EventAggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
+                Aggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
             }
             catch (Exception err)
             {
                 this.LogError(err.Message, err);
-                EventAggregator?.GetEvents()?.Error.Publish(err.Message);
+                Aggregator?.GetEvents()?.Error.Publish(err.Message);
             }
             finally { SyncWait(() => View.IsBusy = false); }
         }
@@ -228,31 +221,25 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenMessage
-        /// 
+        ///
         /// <summary>
         /// Message イベント発生時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenMessage(string message)
-            => Sync(() => Views.ShowMessage(message));
+        private void WhenMessage(string message) => Sync(() => Views.ShowMessage(message));
 
         /* ----------------------------------------------------------------- */
         ///
         /// WhenError
-        /// 
+        ///
         /// <summary>
         /// Error イベント発生時に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenError(string message)
-            => Sync(() => Views.ShowError(message));
+        private void WhenError(string message) => Sync(() => Views.ShowError(message));
 
-        #endregion
-
-        #region Fields
-        private bool _disposed = false;
         #endregion
     }
 }

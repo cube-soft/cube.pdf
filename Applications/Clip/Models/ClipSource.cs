@@ -1,33 +1,33 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Cube.Log;
 
 namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
     /// ClipSource
-    /// 
+    ///
     /// <summary>
     /// PDF ファイルおよび添付ファイル一覧を管理するためのクラスです。
     /// </summary>
@@ -40,7 +40,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// Source
-        /// 
+        ///
         /// <summary>
         /// 添付元の PDF ファイルを取得します。
         /// </summary>
@@ -54,15 +54,26 @@ namespace Cube.Pdf.App.Clip
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IO
+        ///
+        /// <summary>
+        /// I/O オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; } = new IO();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Clips
-        /// 
+        ///
         /// <summary>
         /// 添付ファイル一覧を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ObservableCollection<ClipItem> Clips { get; }
-            = new ObservableCollection<ClipItem>();
+        public ObservableCollection<ClipItem> Clips { get; } =
+            new ObservableCollection<ClipItem>();
 
         #endregion
 
@@ -106,7 +117,7 @@ namespace Cube.Pdf.App.Clip
         /// <summary>
         /// PDF ファイルを読み込みます。
         /// </summary>
-        /// 
+        ///
         /// <param name="src">PDF ファイルのパス</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -120,11 +131,7 @@ namespace Cube.Pdf.App.Clip
             }
 
             Close();
-            
-            var reader = new Cube.Pdf.Editing.DocumentReader();
-            reader.Open(src);
-            Source = reader;
-
+            Source = new Cube.Pdf.Itext.DocumentReader(src, "", IO);
             Reset();
         }
 
@@ -159,28 +166,25 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         public void Save()
         {
-            if (Source == null || !Source.IsOpen) return;
-
             var dest  = Source.File.FullName;
             var tmp   = System.IO.Path.GetTempFileName();
-            var items = Clips.Select(x => x.RawObject)
-                             .Where(x => System.IO.File.Exists(x.File.FullName));
+            var items = Clips.Select(e => e.RawObject).Where(e => IO.Exists(e.Source));
 
-            using (var writer = new Cube.Pdf.Editing.DocumentWriter())
+            using (var writer = new Cube.Pdf.Itext.DocumentWriter())
             {
-                writer.Metadata = Source.Metadata;
-                writer.Encryption = Source.Encryption;
                 writer.UseSmartCopy = true;
+                writer.Set(Source.Metadata);
+                writer.Set(Source.Encryption);
                 writer.Add(Source.Pages);
                 writer.Attach(items);
 
-                System.IO.File.Delete(tmp);
+                IO.TryDelete(tmp);
                 writer.Save(tmp);
             }
 
             Close();
-            System.IO.File.Copy(tmp, dest, true);
-            System.IO.File.Delete(tmp);
+            IO.Copy(tmp, dest, true);
+            IO.TryDelete(tmp);
         }
 
         /* ----------------------------------------------------------------- */
@@ -190,7 +194,7 @@ namespace Cube.Pdf.App.Clip
         /// <summary>
         /// 新しいファイルを添付します。
         /// </summary>
-        /// 
+        ///
         /// <param name="files">添付ファイル一覧</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -206,13 +210,13 @@ namespace Cube.Pdf.App.Clip
         /// <summary>
         /// 新しいファイルを添付します。
         /// </summary>
-        /// 
+        ///
         /// <param name="file">添付ファイル</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Attach(string file)
         {
-            if (Clips.Any(x => x.RawObject.File.FullName == file)) return;
+            if (Clips.Any(e => e.RawObject.Source == file)) return;
 
             while (IsLocked(file))
             {
@@ -221,13 +225,7 @@ namespace Cube.Pdf.App.Clip
                 if (e.Cancel) return;
             }
 
-            var item = new Attachment
-            {
-                Name = System.IO.Path.GetFileName(file),
-                File = new File(file)
-            };
-
-            Clips.Insert(0, new ClipItem(item)
+            Clips.Insert(0, new ClipItem(new Attachment(file, IO))
             {
                 Condition = Properties.Resources.ConditionNew
             });
@@ -240,7 +238,7 @@ namespace Cube.Pdf.App.Clip
         /// <summary>
         /// 添付ファイルを削除します。
         /// </summary>
-        /// 
+        ///
         /// <param name="indices">
         /// 削除する添付ファイルのインデックス一覧
         /// </param>
@@ -261,7 +259,7 @@ namespace Cube.Pdf.App.Clip
         /// <summary>
         /// 添付ファイルを削除します。
         /// </summary>
-        /// 
+        ///
         /// <param name="index">削除する添付ファイルのインデックス</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -280,7 +278,7 @@ namespace Cube.Pdf.App.Clip
         /// <summary>
         /// オブジェクトを破棄します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Dispose(bool) にアンマネージリソースを解放するコードが含まれる
         /// 場合にのみ、ファイナライザーをオーバーライドします。
@@ -299,7 +297,7 @@ namespace Cube.Pdf.App.Clip
         /// <summary>
         /// リソースを開放します。
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// クリーンアップコードを Dispose(bool) に記述します。
         /// </remarks>
@@ -321,7 +319,7 @@ namespace Cube.Pdf.App.Clip
         /// <summary>
         /// リソースを開放します。
         /// </summary>
-        /// 
+        ///
         /// <param name="disposing">
         /// マネージオブジェクトを開放するかどうかを表す値
         /// </param>
@@ -354,7 +352,7 @@ namespace Cube.Pdf.App.Clip
         private void Close()
         {
             Clips.Clear();
-            Source?.Dispose();
+            Source.Dispose();
             Source = null;
         }
 
@@ -382,11 +380,11 @@ namespace Cube.Pdf.App.Clip
             catch { return true; }
         }
 
+        #endregion
+
         #region Fields
         private bool _disposed = false;
         private IDocumentReader _source = null;
-        #endregion
-
         #endregion
     }
 }

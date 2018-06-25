@@ -1,59 +1,44 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Conversions;
 using System.Drawing;
 using System.Windows.Forms;
-using Cube.Conversions;
 
 namespace Cube.Pdf.App.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ClipDataControl
-    /// 
+    /// ClipControl
+    ///
     /// <summary>
     /// 添付ファイル一覧を表示するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ClipDataControl : DataGridView
+    public class ClipControl : DataGridView
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ClipDataView
-        /// 
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ClipDataControl() : base() { }
-
-        #endregion
-
         #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
         /// OnCreateControl
-        /// 
+        ///
         /// <summary>
         /// コントロール生成時に実行されます。
         /// </summary>
@@ -105,7 +90,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// OnCellFormatting
-        /// 
+        ///
         /// <summary>
         /// セルの書式整形時に実行されます。
         /// </summary>

@@ -1,26 +1,24 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// ProgressPresenter.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Log;
 using System;
 using System.Windows.Forms;
-using Cube.Log;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Picker
@@ -41,20 +39,24 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// ProgressPresenter
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="view">View オブジェクト</param>
+        /// <param name="model">Model オブジェクト</param>
+        /// <param name="ea">イベント集約オブジェクト</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public ProgressPresenter(ProgressForm view, ImageCollection model, IEventAggregator events)
-            : base(view, model, events)
+        public ProgressPresenter(ProgressForm view, ImageCollection model, IAggregator ea) :
+            base(view, model, ea)
         {
             View.FileName = IoEx.Path.GetFileName(Model.Path);
-            View.EventAggregator = EventAggregator;
+            View.Aggregator = Aggregator;
 
-            EventAggregator.GetEvents()?.Save.Subscribe(Save_Handle);
-            EventAggregator.GetEvents()?.Preview.Subscribe(Preview_Handle);
+            Aggregator.GetEvents()?.Save.Subscribe(Save_Handle);
+            Aggregator.GetEvents()?.Preview.Subscribe(Preview_Handle);
 
             View.Shown += View_Shown;
         }
@@ -63,16 +65,16 @@ namespace Cube.Pdf.App.Picker
 
         #region Event handlers
 
-        #region EventAggregator
+        #region EventHub
 
         /* ----------------------------------------------------------------- */
         ///
         /// Save_Handle
-        /// 
+        ///
         /// <summary>
         /// 抽出画像が保存される時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private async void Save_Handle(int[] files)
         {
@@ -88,7 +90,7 @@ namespace Cube.Pdf.App.Picker
                     if (files == null) Model.Save(path);
                     else Model.Save(path, files);
                 });
-                EventAggregator.GetEvents()?.SaveComplete.Publish();
+                Aggregator.GetEvents()?.SaveComplete.Publish();
             }
             catch (Exception err) { this.LogError(err.Message, err); }
 
@@ -102,11 +104,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Preview_Handle
-        /// 
+        ///
         /// <summary>
         /// 抽出画像のプレビュー画面を表示する時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void Preview_Handle()
             => Sync(() =>
@@ -114,7 +116,7 @@ namespace Cube.Pdf.App.Picker
             Model.Restore();
 
             var sview = new ThumbnailForm();
-            var _     = new ThumbnailPresenter(sview, Model, EventAggregator);
+            var _     = new ThumbnailPresenter(sview, Model, Aggregator);
 
             sview.FormClosed += (s, ev) =>
             {
@@ -133,11 +135,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// View_Shown
-        /// 
+        ///
         /// <summary>
         /// 画面が表示された時に実行されるハンドラです。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private async void View_Shown(object sender, EventArgs ev)
         {
@@ -161,13 +163,13 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Report
-        /// 
+        ///
         /// <summary>
         /// 進捗状況を更新します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        private void Report(ProgressEventArgs<string> e) { Report(e.Percentage, e.Value); }
+        private void Report(ProgressEventArgs<string> e) { Report(e.Ratio, e.Value); }
         private void Report(double pecentage, string message)
         {
             View.Value = (int)pecentage;
@@ -177,11 +179,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// GetSaveFile
-        /// 
+        ///
         /// <summary>
         /// 保存ファイル名を取得します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private string GetSaveFile()
             => SyncWait(() =>

@@ -1,30 +1,28 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// ThumbnailForm.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Linq;
 using Cube.Forms.Controls;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Picker
 {
@@ -37,14 +35,14 @@ namespace Cube.Pdf.App.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class ThumbnailForm : Cube.Forms.FormBase
+    public partial class ThumbnailForm : Cube.Forms.StandardForm
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
         /// ThumbnailForm
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -64,7 +62,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// MenuControl
-        /// 
+        ///
         /// <summary>
         /// コンテキストメニューを取得します。
         /// </summary>
@@ -77,7 +75,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Complete
-        /// 
+        ///
         /// <summary>
         /// 何らかの保存操作が完了したかどうかを示す値を取得または設定します。
         /// </summary>
@@ -90,7 +88,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// FileName
-        /// 
+        ///
         /// <summary>
         /// ファイル名を取得または設定します。
         /// </summary>
@@ -113,7 +111,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// ImageSize
-        /// 
+        ///
         /// <summary>
         /// サムネイルのサイズを取得します。
         /// </summary>
@@ -128,7 +126,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// SelectedIndices
-        /// 
+        ///
         /// <summary>
         /// 選択されているサムネイルのインデックスを取得します。
         /// </summary>
@@ -141,14 +139,15 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// AnyItemsSelected
-        /// 
+        ///
         /// <summary>
         /// サムネイルが一つでも選択されているかどうかを示す値を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
-        public bool AnyItemsSelected => ImageListView.AnyItemsSelected;
+        public bool AnyItemsSelected =>
+            SelectedIndices != null && SelectedIndices.Count > 0;
 
         #endregion
 
@@ -157,7 +156,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Refresh
-        /// 
+        ///
         /// <summary>
         /// 再描画します。
         /// </summary>
@@ -167,11 +166,12 @@ namespace Cube.Pdf.App.Picker
         {
             SuspendLayout();
 
-            SaveButton.Enabled              =
-            MenuControl.PreviewMenu.Enabled =
-            MenuControl.SaveMenu.Enabled    =
-            MenuControl.RemoveMenu.Enabled  =
-            AnyItemsSelected;
+            var selected = AnyItemsSelected;
+
+            SaveButton.Enabled              = selected;
+            MenuControl.PreviewMenu.Enabled = selected;
+            MenuControl.SaveMenu.Enabled    = selected;
+            MenuControl.RemoveMenu.Enabled  = selected;
 
             ResumeLayout();
             base.Refresh();
@@ -180,7 +180,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Add
-        /// 
+        ///
         /// <summary>
         /// 新しいサムネイルを追加します。
         /// </summary>
@@ -198,7 +198,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// AddRange
-        /// 
+        ///
         /// <summary>
         /// 新しいサムネイルを追加します。
         /// </summary>
@@ -217,19 +217,21 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// Remove
-        /// 
+        ///
         /// <summary>
         /// 指定されたインデックスに対応するサムネイルを削除します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public void Remove(IEnumerable<int> indices)
-            => ImageListView.RemoveItems(indices);
+        {
+            foreach (var i in indices.OrderByDescending(e => e)) ImageListView.Items.RemoveAt(i);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// SelectAll
-        /// 
+        ///
         /// <summary>
         /// 全てのサムネイルを選択します。
         /// </summary>
@@ -247,11 +249,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// OnShown
-        /// 
+        ///
         /// <summary>
         /// フォームの表示直後に実行されます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected override void OnShown(EventArgs e)
         {
@@ -262,11 +264,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// OnFormClosed
-        /// 
+        ///
         /// <summary>
         /// フォームが閉じた時に実行されます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
@@ -281,11 +283,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// OnKeyDown
-        /// 
+        ///
         /// <summary>
         /// キーが押下された時に実行されます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -300,13 +302,13 @@ namespace Cube.Pdf.App.Picker
                         SelectAll();
                         break;
                     case Keys.D:
-                        EventAggregator.GetEvents()?.Remove.Publish();
+                        Aggregator.GetEvents()?.Remove.Publish();
                         break;
                     case Keys.R:
-                        EventAggregator.GetEvents()?.PreviewImage.Publish();
+                        Aggregator.GetEvents()?.PreviewImage.Publish();
                         break;
                     case Keys.S:
-                        if (e.Shift) EventAggregator.GetEvents()?.Save.Publish(null);
+                        if (e.Shift) Aggregator.GetEvents()?.Save.Publish(null);
                         else if (AnyItemsSelected) RaiseSave();
                         break;
                     default:
@@ -325,11 +327,11 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeLayout
-        /// 
+        ///
         /// <summary>
         /// レイアウトを初期化します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void InitializeLayout()
         {
@@ -351,39 +353,39 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         ///
         /// InitializeEvents
-        /// 
+        ///
         /// <summary>
         /// 各種イベントを初期化します。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
         private void InitializeEvents()
         {
             ExitButton.Click    += (s, e) => Close();
-            TitleButton.Click   += (s, e) => EventAggregator.GetEvents()?.Version.Publish();
-            SaveAllButton.Click += (s, e) => EventAggregator.GetEvents()?.Save.Publish(null);
+            TitleButton.Click   += (s, e) => Aggregator.GetEvents()?.Version.Publish();
+            SaveAllButton.Click += (s, e) => Aggregator.GetEvents()?.Save.Publish(null);
             SaveButton.Click    += (s, e) => RaiseSave();
 
-            MenuControl.PreviewMenu.Click   += (s, e) => EventAggregator.GetEvents()?.PreviewImage.Publish();
-            MenuControl.RemoveMenu.Click    += (s, e) => EventAggregator.GetEvents()?.Remove.Publish();
+            MenuControl.PreviewMenu.Click   += (s, e) => Aggregator.GetEvents()?.PreviewImage.Publish();
+            MenuControl.RemoveMenu.Click    += (s, e) => Aggregator.GetEvents()?.Remove.Publish();
             MenuControl.SaveMenu.Click      += (s, e) => RaiseSave();
             MenuControl.SelectAllMenu.Click += (s, e) => SelectAll();
 
-            ImageListView.DoubleClick += (s, e) => EventAggregator.GetEvents()?.PreviewImage.Publish();
+            ImageListView.DoubleClick += (s, e) => Aggregator.GetEvents()?.PreviewImage.Publish();
             ImageListView.SelectedIndexChanged += (s, e) => Refresh();
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RaiseSave
-        /// 
+        ///
         /// <summary>
         /// Save イベントを発生させます。
         /// </summary>
-        /// 
+        ///
         /* ----------------------------------------------------------------- */
-        private void RaiseSave()
-            => EventAggregator.GetEvents()?.Save.Publish(SelectedIndices.Ascend().ToArray());
+        private void RaiseSave() =>
+            Aggregator.GetEvents()?.Save.Publish(SelectedIndices.Ascend().ToArray());
 
         #endregion
 

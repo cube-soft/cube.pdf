@@ -1,24 +1,21 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// DropPresenter.cs
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
 using IoEx = System.IO;
 
 namespace Cube.Pdf.App.Picker
@@ -26,11 +23,11 @@ namespace Cube.Pdf.App.Picker
     /* --------------------------------------------------------------------- */
     ///
     /// DropPresenter
-    /// 
+    ///
     /// <summary>
     /// DropForm とモデルを関連付けるクラスです。
     /// </summary>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public class DropPresenter : Cube.Forms.PresenterBase<DropForm, object>
     {
@@ -83,21 +80,19 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void OpenProgress(string path)
-            => Sync(()
-            => this.LogException(() =>
+        private void OpenProgress(string path) => Sync(() =>
         {
-            var ext = IoEx.Path.GetExtension(path).ToLower();
+            var ext = IoEx.Path.GetExtension(path).ToLowerInvariant();
             if (!ContainsExtension(ext) || !IoEx.File.Exists(path)) return;
 
             var view = new ProgressForm();
             new ProgressPresenter(
                 view,
                 new ImageCollection(path),
-                new EventAggregator()
+                new Aggregator()
             );
             view.Show();
-        }));
+        });
 
         /* ----------------------------------------------------------------- */
         ///

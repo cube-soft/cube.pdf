@@ -1,21 +1,22 @@
 ﻿/* ------------------------------------------------------------------------- */
-///
-/// Copyright (c) 2010 CubeSoft, Inc.
-///
-/// This program is free software: you can redistribute it and/or modify
-/// it under the terms of the GNU Affero General Public License as published
-/// by the Free Software Foundation, either version 3 of the License, or
-/// (at your option) any later version.
-///
-/// This program is distributed in the hope that it will be useful,
-/// but WITHOUT ANY WARRANTY; without even the implied warranty of
-/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-/// GNU Affero General Public License for more details.
-///
-/// You should have received a copy of the GNU Affero General Public License
-/// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-///
+//
+// Copyright (c) 2010 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,20 +28,20 @@ namespace Cube.Pdf.App.Clip
     /* --------------------------------------------------------------------- */
     ///
     /// MainForm
-    /// 
+    ///
     /// <summary>
     /// メイン画面を表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.FormBase, IClipView
+    public partial class MainForm : Cube.Forms.StandardForm, IClipView
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
         /// MainForm
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
@@ -90,17 +91,17 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// MainForm
-        /// 
+        ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
-        /// 
+        ///
         /// <param name="args">プログラム引数</param>
         ///
         /* ----------------------------------------------------------------- */
         public MainForm(string[] args) : this()
         {
-            Load += (s, e) => EventAggregator?.GetEvents()?.Open.Publish(args);
+            Load += (s, e) => Aggregator?.GetEvents()?.Open.Publish(args);
         }
 
         #endregion
@@ -110,7 +111,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// Source
-        /// 
+        ///
         /// <summary>
         /// PDF ファイルのパスを取得または設定します。
         /// </summary>
@@ -125,7 +126,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// DataSource
-        /// 
+        ///
         /// <summary>
         /// View に関連付けられるデータを取得または設定します。
         /// </summary>
@@ -142,7 +143,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// SelectedIndices
-        /// 
+        ///
         /// <summary>
         /// 選択されているインデックスの一覧を取得します。
         /// </summary>
@@ -158,7 +159,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// IsBusy
-        /// 
+        ///
         /// <summary>
         /// 処理中かどうかを示す値を取得または設定します。
         /// </summary>
@@ -173,10 +174,10 @@ namespace Cube.Pdf.App.Clip
             {
                 _isBusy = value;
 
-                SourcePanel.Enabled =
+                SourcePanel.Enabled = !value;
                 ClipPanel.Enabled   = !value;
-                ToolsPanel.Enabled  =
-                SaveButton.Enabled  = !value && !string.IsNullOrEmpty(SourceTextBox.Text);
+                ToolsPanel.Enabled  = !value && SourceTextBox.Text.HasValue();
+                SaveButton.Enabled  = !value && SourceTextBox.Text.HasValue();
 
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
             }
@@ -189,7 +190,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// OnDragEnter
-        /// 
+        ///
         /// <summary>
         /// ドラッグ時に実行されます。
         /// </summary>
@@ -206,7 +207,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// OnDragDrop
-        /// 
+        ///
         /// <summary>
         /// ドラッグ&ドロップ時に実行されます。
         /// </summary>
@@ -218,14 +219,14 @@ namespace Cube.Pdf.App.Clip
 
             var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
             var open  = string.IsNullOrEmpty(SourceTextBox.Text);
-            if (open) EventAggregator?.GetEvents()?.Open.Publish(files);
-            else EventAggregator?.GetEvents()?.Attach.Publish(files);
+            if (open) Aggregator?.GetEvents()?.Open.Publish(files);
+            else Aggregator?.GetEvents()?.Attach.Publish(files);
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RaiseOpen
-        /// 
+        ///
         /// <summary>
         /// Open イベントを発生させます。
         /// </summary>
@@ -235,13 +236,13 @@ namespace Cube.Pdf.App.Clip
         {
             var view = Views.CreateOpenView();
             if (view.ShowDialog() == DialogResult.Cancel) return;
-            EventAggregator?.GetEvents()?.Open.Publish(view.FileNames);
+            Aggregator?.GetEvents()?.Open.Publish(view.FileNames);
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RaiseAttach
-        /// 
+        ///
         /// <summary>
         /// Attach イベントを発生させます。
         /// </summary>
@@ -252,13 +253,13 @@ namespace Cube.Pdf.App.Clip
             if (!ToolsPanel.Enabled || !AttachButton.Enabled) return;
             var view = Views.CreateAttachView();
             if (view.ShowDialog() == DialogResult.Cancel) return;
-            EventAggregator?.GetEvents()?.Attach.Publish(view.FileNames);
+            Aggregator?.GetEvents()?.Attach.Publish(view.FileNames);
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RaiseDetach
-        /// 
+        ///
         /// <summary>
         /// Detach イベントを発生させます。
         /// </summary>
@@ -267,13 +268,13 @@ namespace Cube.Pdf.App.Clip
         private void RaiseDetach()
         {
             if (!ToolsPanel.Enabled || !DetachButton.Enabled) return;
-            EventAggregator?.GetEvents()?.Detach.Publish();
+            Aggregator?.GetEvents()?.Detach.Publish();
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RaiseReset
-        /// 
+        ///
         /// <summary>
         /// Reset イベントを発生させます。
         /// </summary>
@@ -282,13 +283,13 @@ namespace Cube.Pdf.App.Clip
         private void RaiseReset()
         {
             if (!ToolsPanel.Enabled || !ResetButton.Enabled) return;
-            EventAggregator?.GetEvents()?.Reset.Publish();
+            Aggregator?.GetEvents()?.Reset.Publish();
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RaiseSave
-        /// 
+        ///
         /// <summary>
         /// Save イベントを発生させます。
         /// </summary>
@@ -297,13 +298,13 @@ namespace Cube.Pdf.App.Clip
         private void RaiseSave()
         {
             if (!SaveButton.Enabled) return;
-            EventAggregator?.GetEvents()?.Save.Publish();
+            Aggregator?.GetEvents()?.Save.Publish();
         }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RaiseVersion
-        /// 
+        ///
         /// <summary>
         /// バージョン画面を表示します。
         /// </summary>
@@ -319,7 +320,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenRowCountChanged
-        /// 
+        ///
         /// <summary>
         /// DataGridView の行数が変化した時に実行されるハンドラです。
         /// </summary>
@@ -331,7 +332,7 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         ///
         /// WhenSourceChanged
-        /// 
+        ///
         /// <summary>
         /// PDF ファイル欄の内容が変化した時に実行されるハンドラです。
         /// </summary>
@@ -339,8 +340,8 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         private void WhenSourceChanged(object sender, EventArgs e)
         {
-            ToolsPanel.Enabled =
-            SaveButton.Enabled = !string.IsNullOrEmpty(SourceTextBox.Text);
+            ToolsPanel.Enabled = SourceTextBox.Text.HasValue();
+            SaveButton.Enabled = SourceTextBox.Text.HasValue();
         }
 
         #region Fields

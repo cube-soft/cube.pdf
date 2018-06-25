@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DropForm));
-            this.DropPanel = new Cube.Forms.ControlBase();
+            this.DropPanel = new Cube.Forms.Panel();
             this.ExitButton = new Cube.Forms.Button();
             this.DropPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // DropPanel
-            // 
+            //
             this.DropPanel.BackgroundImage = global::Cube.Pdf.App.Picker.Properties.Resources.DragDrop;
             this.DropPanel.Controls.Add(this.ExitButton);
             this.DropPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -44,9 +44,9 @@
             this.DropPanel.Name = "DropPanel";
             this.DropPanel.Size = new System.Drawing.Size(98, 98);
             this.DropPanel.TabIndex = 0;
-            // 
+            //
             // ExitButton
-            // 
+            //
             this.ExitButton.BackColor = System.Drawing.Color.Transparent;
             this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.ExitButton.FlatAppearance.BorderSize = 0;
@@ -61,9 +61,9 @@
             this.ExitButton.Size = new System.Drawing.Size(16, 16);
             this.ExitButton.TabIndex = 1;
             this.ExitButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // DropForm
-            // 
+            //
             this.AllowDrop = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -86,7 +86,7 @@
 
         #endregion
 
-        private Cube.Forms.ControlBase DropPanel;
+        private Cube.Forms.Panel DropPanel;
         private Cube.Forms.Button ExitButton;
     }
 }

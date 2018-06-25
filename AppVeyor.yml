@@ -1,0 +1,56 @@
+version: 2.10.0.{build}
+branches:
+    only:
+        - master
+skip_tags: true
+clone_folder: C:\Cube\Cube.Pdf
+image: Visual Studio 2017
+nuget:
+    project_feed: true
+    disable_publish_on_pr: true
+platform: Any CPU
+configuration: Release
+before_build:
+    - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
+    - 7z x -o"Thirdparty\x64" gs-x64.7z
+    - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
+    - nuget sources add -name Cube.FileSystem -source https://ci.appveyor.com/nuget/cube.filesystem
+    - nuget sources add -name Cube.Images -source https://ci.appveyor.com/nuget/cube.images
+    - nuget sources add -name Cube.Forms -source https://ci.appveyor.com/nuget/cube.forms
+    - nuget restore Cube.Pdf.Converter.sln
+build:
+    parallel: true
+    project: Cube.Pdf.Converter.sln
+    publish_nuget: true
+    verbosity: minimal
+after_build:
+    - xcopy /Y /I Thirdparty\x64\bin\gsdll32.dll Tests\bin\Release
+    - xcopy /Y /I Thirdparty\x64\lib\*.* Tests\bin\Release\lib
+    - xcopy /Y /I Thirdparty\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
+    - xcopy /Y /I Thirdparty\x64\lib\*.* Applications\Converter\Tests\bin\Release\lib
+test_script:
+    - >
+      ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      -register:user
+      -target:nunit3-console.exe
+      -targetargs:Cube.Pdf.Tests.dll
+      -targetdir:Tests\bin\Release
+      -returntargetcode
+      -hideskipped:All
+      -output:CoverResult.xml
+      -filter:"+[*]* -[AlphaFS]* -[*]*NativeMethods -[*]*Properties.*"
+    - >
+      ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      -register:user
+      -target:nunit3-console.exe
+      -targetargs:Cube.Pdf.Tests.Converter.dll
+      -targetdir:Applications\Converter\Tests\bin\Release
+      -returntargetcode
+      -hideskipped:All
+      -mergeoutput
+      -output:CoverResult.xml
+      -filter:"+[*]* -[AlphaFS]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program"
+after_test:
+    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
+    - pip install codecov
+    - codecov -f "CoverResult.xml"

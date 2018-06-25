@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FilterAll" xml:space="preserve">
+    <value>すべてのファイル</value>
+  </data>
+  <data name="FilterBmp" xml:space="preserve">
+    <value>BMP ファイル</value>
+  </data>
+  <data name="FilterEps" xml:space="preserve">
+    <value>EPS ファイル</value>
+  </data>
+  <data name="FilterExecutable" xml:space="preserve">
+    <value>実行可能なファイル</value>
+  </data>
+  <data name="FilterJpeg" xml:space="preserve">
+    <value>JPEG ファイル</value>
+  </data>
+  <data name="FilterPdf" xml:space="preserve">
+    <value>PDF ファイル</value>
+  </data>
+  <data name="FilterPng" xml:space="preserve">
+    <value>PNG ファイル</value>
+  </data>
+  <data name="FilterPs" xml:space="preserve">
+    <value>PS ファイル</value>
+  </data>
+  <data name="FilterTiff" xml:space="preserve">
+    <value>TIFF ファイル</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Header" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuAuto" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="MenuEnglish" xml:space="preserve">
+    <value>英語</value>
+  </data>
+  <data name="MenuJapanese" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="MenuLandscape" xml:space="preserve">
+    <value>横</value>
+  </data>
+  <data name="MenuMergeHead" xml:space="preserve">
+    <value>先頭に結合</value>
+  </data>
+  <data name="MenuMergeTail" xml:space="preserve">
+    <value>末尾に結合</value>
+  </data>
+  <data name="MenuNone" xml:space="preserve">
+    <value>何もしない</value>
+  </data>
+  <data name="MenuOneColumn" xml:space="preserve">
+    <value>連続ページ</value>
+  </data>
+  <data name="MenuOpen" xml:space="preserve">
+    <value>開く</value>
+  </data>
+  <data name="MenuOpenDirectory" xml:space="preserve">
+    <value>フォルダを開く</value>
+  </data>
+  <data name="MenuOthers" xml:space="preserve">
+    <value>その他</value>
+  </data>
+  <data name="MenuOverwrite" xml:space="preserve">
+    <value>上書き</value>
+  </data>
+  <data name="MenuPortrait" xml:space="preserve">
+    <value>縦</value>
+  </data>
+  <data name="MenuRename" xml:space="preserve">
+    <value>リネーム</value>
+  </data>
+  <data name="MenuSinglePage" xml:space="preserve">
+    <value>単一ページ</value>
+  </data>
+  <data name="MenuTwoColumnLeft" xml:space="preserve">
+    <value>連続見開きページ（左綴じ）</value>
+  </data>
+  <data name="MenuTwoColumnRight" xml:space="preserve">
+    <value>連続見開きページ（右綴じ）</value>
+  </data>
+  <data name="MenuTwoPageLeft" xml:space="preserve">
+    <value>見開きページ（左綴じ）</value>
+  </data>
+  <data name="MenuTwoPageRight" xml:space="preserve">
+    <value>見開きページ（右綴じ）</value>
+  </data>
+  <data name="MessageExists" xml:space="preserve">
+    <value>{0} は既に存在します。</value>
+  </data>
+  <data name="MessageGhostscript" xml:space="preserve">
+    <value>Ghostscript API による変換中にエラーが発生しました。({0:D})</value>
+  </data>
+  <data name="MessageInvalidChars" xml:space="preserve">
+    <value>ファイル名に次の文字を使用する事はできません</value>
+  </data>
+  <data name="MessageLinearization" xml:space="preserve">
+    <value>セキュリティ機能が有効の場合、Web 表示用に最適化オプションは無視されます。</value>
+  </data>
+  <data name="MessageMergeHead" xml:space="preserve">
+    <value>先頭に結合しますか？</value>
+  </data>
+  <data name="MessageMergePassword" xml:space="preserve">
+    <value>結合対象として指定された PDF ファイルの管理用パスワードをセキュリティタブに入力して下さい。</value>
+  </data>
+  <data name="MessageSecurity" xml:space="preserve">
+    <value>閲覧用パスワードを管理用パスワードと共有した場合、パスワードを入力して PDF ファイルを開いた時点で全ての操作が許可されます。印刷等の操作を制限したい場合、管理用パスワードとは異なるパスワードを設定して下さい。</value>
+  </data>
+  <data name="MessageMergeTail" xml:space="preserve">
+    <value>末尾に結合しますか？</value>
+  </data>
+  <data name="MessageOverwrite" xml:space="preserve">
+    <value>上書きしますか？</value>
+  </data>
+  <data name="MessagePassword" xml:space="preserve">
+    <value>入力されたパスワードが一致しません。パスワード欄およびパスワード確認欄を再度ご確認下さい。</value>
+  </data>
+  <data name="TitleBroseDestination" xml:space="preserve">
+    <value>名前を付けて保存</value>
+  </data>
+  <data name="TitleBroseUserProgram" xml:space="preserve">
+    <value>変換完了時に実行するプログラムを選択</value>
+  </data>
+  <data name="TitleBrowseSource" xml:space="preserve">
+    <value>入力ファイルを選択</value>
+  </data>
+  <data name="TitleError" xml:space="preserve">
+    <value>CubePDF エラー</value>
+  </data>
+  <data name="TitleWarning" xml:space="preserve">
+    <value>CubePDF 確認</value>
+  </data>
+</root>

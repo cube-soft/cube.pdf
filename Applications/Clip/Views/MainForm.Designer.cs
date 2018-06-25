@@ -42,7 +42,7 @@
             this.AttachButton = new Cube.Forms.Button();
             this.DetachButton = new Cube.Forms.Button();
             this.ResetButton = new Cube.Forms.Button();
-            this.MyClipDataView = new Cube.Pdf.App.Clip.ClipDataControl();
+            this.MyClipDataView = new Cube.Pdf.App.Clip.ClipControl();
             this.VersionButton = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
@@ -52,9 +52,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.MyClipDataView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VersionButton)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // LayoutPanel
-            // 
+            //
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.Controls.Add(this.FooterPanel, 0, 3);
@@ -71,9 +71,9 @@
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.LayoutPanel.Size = new System.Drawing.Size(584, 281);
             this.LayoutPanel.TabIndex = 0;
-            // 
+            //
             // FooterPanel
-            // 
+            //
             this.FooterPanel.AllowDrop = true;
             this.FooterPanel.Controls.Add(this.ExitButton);
             this.FooterPanel.Controls.Add(this.SaveButton);
@@ -85,9 +85,9 @@
             this.FooterPanel.Padding = new System.Windows.Forms.Padding(0, 10, 10, 0);
             this.FooterPanel.Size = new System.Drawing.Size(584, 60);
             this.FooterPanel.TabIndex = 7;
-            // 
+            //
             // ExitButton
-            // 
+            //
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.ExitButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
@@ -99,9 +99,9 @@
             this.ExitButton.TabIndex = 2;
             this.ExitButton.Text = "終了";
             this.ExitButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // SaveButton
-            // 
+            //
             this.SaveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.SaveButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.SaveButton.FlatAppearance.BorderColor = System.Drawing.Color.Gainsboro;
@@ -113,9 +113,9 @@
             this.SaveButton.TabIndex = 3;
             this.SaveButton.Text = "保存 (&S)";
             this.SaveButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // SourcePanel
-            // 
+            //
             this.SourcePanel.ColumnCount = 3;
             this.SourcePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.SourcePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -131,9 +131,9 @@
             this.SourcePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.SourcePanel.Size = new System.Drawing.Size(584, 35);
             this.SourcePanel.TabIndex = 5;
-            // 
+            //
             // SourceLabel
-            // 
+            //
             this.SourceLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SourceLabel.AutoSize = true;
             this.SourceLabel.Location = new System.Drawing.Point(6, 10);
@@ -141,18 +141,18 @@
             this.SourceLabel.Size = new System.Drawing.Size(68, 15);
             this.SourceLabel.TabIndex = 0;
             this.SourceLabel.Text = "PDF ファイル";
-            // 
+            //
             // SourceTextBox
-            // 
+            //
             this.SourceTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SourceTextBox.Location = new System.Drawing.Point(86, 6);
             this.SourceTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.SourceTextBox.Name = "SourceTextBox";
             this.SourceTextBox.Size = new System.Drawing.Size(404, 23);
             this.SourceTextBox.TabIndex = 1;
-            // 
+            //
             // OpenButton
-            // 
+            //
             this.OpenButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.OpenButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.OpenButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
@@ -165,9 +165,9 @@
             this.OpenButton.TabIndex = 2;
             this.OpenButton.Text = "...";
             this.OpenButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // ClipPanel
-            // 
+            //
             this.ClipPanel.ColumnCount = 2;
             this.ClipPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ClipPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
@@ -181,9 +181,9 @@
             this.ClipPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ClipPanel.Size = new System.Drawing.Size(584, 151);
             this.ClipPanel.TabIndex = 6;
-            // 
+            //
             // ToolsPanel
-            // 
+            //
             this.ToolsPanel.AllowDrop = true;
             this.ToolsPanel.Controls.Add(this.AttachButton);
             this.ToolsPanel.Controls.Add(this.DetachButton);
@@ -196,9 +196,9 @@
             this.ToolsPanel.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.ToolsPanel.Size = new System.Drawing.Size(130, 151);
             this.ToolsPanel.TabIndex = 3;
-            // 
+            //
             // AttachButton
-            // 
+            //
             this.AttachButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.AttachButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.AttachButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -210,9 +210,9 @@
             this.AttachButton.TabIndex = 0;
             this.AttachButton.Text = "追加 (&N) ...";
             this.AttachButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // DetachButton
-            // 
+            //
             this.DetachButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.DetachButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.DetachButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -224,9 +224,9 @@
             this.DetachButton.TabIndex = 3;
             this.DetachButton.Text = "削除 (&D)";
             this.DetachButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // ResetButton
-            // 
+            //
             this.ResetButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.ResetButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.ResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -238,9 +238,9 @@
             this.ResetButton.TabIndex = 4;
             this.ResetButton.Text = "リセット (&R)";
             this.ResetButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // MyClipDataView
-            // 
+            //
             this.MyClipDataView.AllowUserToAddRows = false;
             this.MyClipDataView.AllowUserToDeleteRows = false;
             this.MyClipDataView.AllowUserToResizeRows = false;
@@ -259,9 +259,9 @@
             this.MyClipDataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.MyClipDataView.Size = new System.Drawing.Size(448, 145);
             this.MyClipDataView.TabIndex = 4;
-            // 
+            //
             // VersionButton
-            // 
+            //
             this.VersionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.VersionButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.VersionButton.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -272,9 +272,9 @@
             this.VersionButton.Size = new System.Drawing.Size(584, 35);
             this.VersionButton.TabIndex = 8;
             this.VersionButton.TabStop = false;
-            // 
+            //
             // MainForm
-            // 
+            //
             this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(584, 281);
@@ -304,7 +304,7 @@
         private System.Windows.Forms.Label SourceLabel;
         private System.Windows.Forms.TextBox SourceTextBox;
         private System.Windows.Forms.TableLayoutPanel ClipPanel;
-        private ClipDataControl MyClipDataView;
+        private ClipControl MyClipDataView;
         private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
         private Forms.Button AttachButton;
         private Forms.Button DetachButton;

@@ -34,9 +34,9 @@
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // LayoutPanel
-            // 
+            //
             this.LayoutPanel.AutoScroll = true;
             this.LayoutPanel.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.LayoutPanel.Controls.Add(this.PictureBox);
@@ -45,18 +45,18 @@
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.Size = new System.Drawing.Size(384, 411);
             this.LayoutPanel.TabIndex = 0;
-            // 
+            //
             // PictureBox
-            // 
+            //
             this.PictureBox.Location = new System.Drawing.Point(0, 0);
             this.PictureBox.Name = "PictureBox";
             this.PictureBox.Size = new System.Drawing.Size(100, 100);
             this.PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureBox.TabIndex = 0;
             this.PictureBox.TabStop = false;
-            // 
+            //
             // PreviewForm
-            // 
+            //
             this.ClientSize = new System.Drawing.Size(384, 411);
             this.Controls.Add(this.LayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

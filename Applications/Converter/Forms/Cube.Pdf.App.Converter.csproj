@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{467EEF80-0390-46E8-A403-CAB70FC2D8E1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Cube.Pdf.App.Converter</RootNamespace>
+    <AssemblyName>CubePdf</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\net35\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\net35\Debug\CubePdf.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\net35\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\net35\Release\CubePdf.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <ApplicationManifest>App.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AlphaFS">
+      <HintPath>..\..\..\..\packages\AlphaFS.2.2.1\lib\net35\AlphaFS.dll</HintPath>
+    </Reference>
+    <Reference Include="AsyncBridge">
+      <HintPath>..\..\..\..\packages\AsyncBridge.0.3.1\lib\net35-Client\AsyncBridge.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Backwards">
+      <HintPath>..\..\..\..\packages\Cube.Backwards.1.4.1\lib\net35\Cube.Backwards.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Core">
+      <HintPath>..\..\..\..\packages\Cube.Core.1.10.0\lib\net35\Cube.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.FileSystem">
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.10.0\lib\net35\Cube.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Images">
+      <HintPath>..\..\..\..\packages\Cube.Images.1.10.0\lib\net35\Cube.Images.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Forms">
+      <HintPath>..\..\..\..\packages\Cube.Forms.1.10.0\lib\net35\Cube.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>..\..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Settings\FormatOption.cs" />
+    <Compile Include="Models\Settings\Language.cs" />
+    <Compile Include="Models\Settings\Parameters.cs" />
+    <Compile Include="Models\Settings\Settings.cs" />
+    <Compile Include="Models\Settings\SettingsFolder.cs" />
+    <Compile Include="Models\DocumentName.cs" />
+    <Compile Include="Models\FileDecorator.cs" />
+    <Compile Include="Models\FileTransfer.cs" />
+    <Compile Include="Models\GhostscriptFactory.cs" />
+    <Compile Include="Models\MessageFactory.cs" />
+    <Compile Include="Models\Messenger.cs" />
+    <Compile Include="Models\ProcessLauncher.cs" />
+    <Compile Include="Models\StringExtension.cs" />
+    <Compile Include="ViewModels\EncryptionViewModel.cs" />
+    <Compile Include="ViewModels\MainFacade.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="ViewModels\MetadataViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\ViewResource.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.ico" />
+    <None Include="App.config" />
+    <None Include="App.manifest" />
+    <None Include="Packages.config" />
+    <None Include="Resources\Header.png" />
+    <None Include="Resources\Logo.png" />
+    <None Include="Properties\DataSources\EncryptionViewModel.datasource" />
+    <None Include="Properties\DataSources\GeneralViewModel.datasource" />
+    <None Include="Properties\DataSources\MainViewModel.datasource" />
+    <None Include="Properties\DataSources\MetadataViewModel.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Views\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainForm.ja.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.ja.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Cube.Pdf.Core.csproj">
+      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
+      <Name>Cube.Pdf.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj">
+      <Project>{781aa3bc-29d6-43ba-b76b-7ef1c5532ba5}</Project>
+      <Name>Cube.Pdf.Ghostscript</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj">
+      <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
+      <Name>Cube.Pdf.Itext</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -10,8 +10,8 @@
 
 namespace Cube.Pdf.App.Clip.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
     /// </summary>
@@ -23,15 +23,15 @@ namespace Cube.Pdf.App.Clip.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
@@ -45,7 +45,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
@@ -59,7 +59,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -68,7 +68,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("AttachFilter", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   添付するファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -77,7 +77,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("AttachTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   添付状況 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -86,7 +86,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("ColumnCondition", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   サイズ に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -95,7 +95,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("ColumnLength", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   ファイル名 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -104,7 +104,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("ColumnName", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   添付済 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -113,7 +113,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("ConditionEmbedded", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   新規 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -122,7 +122,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("ConditionNew", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -132,7 +132,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -142,7 +142,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   パスワードで保護された PDF ファイルの編集には未対応です。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -151,7 +151,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("MessageEncryption", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   {0} は他のプロセスによって開かれているため、操作を完了できません。ファイルを閉じてから再試行してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -160,7 +160,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("MessageLock", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   ファイルの添付が完了しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -169,7 +169,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("MessageSuccess", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -178,7 +178,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("SourceFilter", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   添付対象となる PDF ファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -187,7 +187,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("SourceTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   CubePDF Clip について に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -196,7 +196,7 @@ namespace Cube.Pdf.App.Clip.Properties {
                 return ResourceManager.GetString("VersionTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
         /// </summary>
