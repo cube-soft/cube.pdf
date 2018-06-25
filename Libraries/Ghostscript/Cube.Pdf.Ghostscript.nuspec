@@ -1,17 +1,34 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
-    <copyright>$copyright$</copyright>
+    <id>Cube.Pdf.Ghostscript</id>
+    <version>2.10.0</version>
+    <title>Cube.Pdf.Ghostscript</title>
+    <authors>CubeSoft</authors>
+    <owners>CubeSoft</owners>
+    <copyright>Copyright (c) 2010 CubeSoft, Inc.</copyright>
     <description>Ghostscript based PDF library for CubeSoft applications.</description>
     <tags>Cube PDF Ghostscript</tags>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/License.txt</licenseUrl>
     <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
     <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
+    <dependencies>
+      <group targetFramework="net45">
+        <dependency id="Cube.Core" version="1.10.0" />
+        <dependency id="Cube.FileSystem" version="1.10.0" />
+      </group>
+      <group targetFramework="net35">
+        <dependency id="Cube.Backwards" version="1.4.1" />
+        <dependency id="Cube.Core" version="1.10.0" />
+        <dependency id="Cube.FileSystem" version="1.10.0" />
+      </group>
+    </dependencies>
   </metadata>
+  <files>
+    <file src="bin\Release\Cube.Pdf.Ghostscript.dll" target="lib\net45" />
+    <file src="bin\Release\Cube.Pdf.Ghostscript.xml" target="lib\net45" />
+    <file src="bin\net35\Release\Cube.Pdf.Ghostscript.dll" target="lib\net35" />
+    <file src="bin\net35\Release\Cube.Pdf.Ghostscript.xml" target="lib\net35" />
+  </files>
 </package>
