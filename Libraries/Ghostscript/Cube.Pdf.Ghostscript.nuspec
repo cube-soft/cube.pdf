@@ -6,7 +6,7 @@
     <title>Cube.Pdf.Ghostscript</title>
     <authors>CubeSoft</authors>
     <owners>CubeSoft</owners>
-    <copyright>Copyright (c) 2010 CubeSoft, Inc.</copyright>
+    <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
     <description>Ghostscript based PDF library for CubeSoft applications.</description>
     <tags>Cube PDF Ghostscript</tags>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
