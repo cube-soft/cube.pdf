@@ -64,7 +64,8 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(dest.DocumentName.Name,  Is.EqualTo("CubePDF"));
             Assert.That(dest.Version.ToString(), Is.EqualTo("1.0.0RC12"));
             Assert.That(dest.Startup.Name,       Is.EqualTo("cubepdf-checker"));
-            Assert.That(dest.Startup.Command,    Does.EndWith("cubepdf-checker.exe\""));
+            Assert.That(dest.Startup.Command,    Does.Contain("cubepdf-checker.exe\""));
+            Assert.That(dest.Startup.Command,    Does.EndWith("CubePDF"));
             Assert.That(dest.Value,              Is.Not.Null);
         }
 
