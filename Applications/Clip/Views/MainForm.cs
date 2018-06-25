@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -173,10 +174,10 @@ namespace Cube.Pdf.App.Clip
             {
                 _isBusy = value;
 
-                SourcePanel.Enabled =
+                SourcePanel.Enabled = !value;
                 ClipPanel.Enabled   = !value;
-                ToolsPanel.Enabled  =
-                SaveButton.Enabled  = !value && !string.IsNullOrEmpty(SourceTextBox.Text);
+                ToolsPanel.Enabled  = !value && SourceTextBox.Text.HasValue();
+                SaveButton.Enabled  = !value && SourceTextBox.Text.HasValue();
 
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
             }
@@ -339,8 +340,8 @@ namespace Cube.Pdf.App.Clip
         /* ----------------------------------------------------------------- */
         private void WhenSourceChanged(object sender, EventArgs e)
         {
-            ToolsPanel.Enabled =
-            SaveButton.Enabled = !string.IsNullOrEmpty(SourceTextBox.Text);
+            ToolsPanel.Enabled = SourceTextBox.Text.HasValue();
+            SaveButton.Enabled = SourceTextBox.Text.HasValue();
         }
 
         #region Fields

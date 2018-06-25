@@ -96,13 +96,9 @@ namespace Cube.Pdf.App.Pages
         /* --------------------------------------------------------------------- */
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            switch (e.PropertyName)
+            if (e.PropertyName == nameof(Model.AllowOperation))
             {
-                case nameof(Model.AllowOperation):
-                    Sync(() => View.AllowOperation = Model.AllowOperation);
-                    break;
-                default:
-                    break;
+                Sync(() => View.AllowOperation = Model.AllowOperation);
             }
         }
 

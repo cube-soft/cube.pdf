@@ -82,7 +82,7 @@ namespace Cube.Pdf.App.Picker
         /* ----------------------------------------------------------------- */
         private void OpenProgress(string path) => Sync(() =>
         {
-            var ext = IoEx.Path.GetExtension(path).ToLower();
+            var ext = IoEx.Path.GetExtension(path).ToLowerInvariant();
             if (!ContainsExtension(ext) || !IoEx.File.Exists(path)) return;
 
             var view = new ProgressForm();

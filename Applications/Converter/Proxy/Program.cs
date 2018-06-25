@@ -95,7 +95,7 @@ namespace Cube.Pdf.App.Proxy
             }
             catch (Exception e)
             {
-                if (!parser.Options.TryGetValue("ThreadID", out var id)) throw e;
+                if (!parser.Options.TryGetValue("ThreadID", out var id)) throw;
                 else
                 {
                     Logger.Warn(typeof(Program), e.Message, e);

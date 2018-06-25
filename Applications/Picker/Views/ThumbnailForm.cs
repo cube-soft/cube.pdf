@@ -166,11 +166,12 @@ namespace Cube.Pdf.App.Picker
         {
             SuspendLayout();
 
-            SaveButton.Enabled              =
-            MenuControl.PreviewMenu.Enabled =
-            MenuControl.SaveMenu.Enabled    =
-            MenuControl.RemoveMenu.Enabled  =
-            AnyItemsSelected;
+            var selected = AnyItemsSelected;
+
+            SaveButton.Enabled              = selected;
+            MenuControl.PreviewMenu.Enabled = selected;
+            MenuControl.SaveMenu.Enabled    = selected;
+            MenuControl.RemoveMenu.Enabled  = selected;
 
             ResumeLayout();
             base.Refresh();

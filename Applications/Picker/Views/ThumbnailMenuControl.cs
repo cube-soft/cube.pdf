@@ -42,7 +42,7 @@ namespace Cube.Pdf.App.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ThumbnailMenuControl() : base()
+        public ThumbnailMenuControl()
         {
             PreviewMenu   = new ToolStripMenuItem(Properties.Resources.MenuPreviewImage);
             SelectAllMenu = new ToolStripMenuItem(Properties.Resources.MenuSelectAll);
