@@ -83,11 +83,6 @@ namespace Cube.Pdf.App.Converter
         /// <param name="src">MainViewModel</param>
         /// <param name="err">例外オブジェクト</param>
         ///
-        /// <remarks>
-        /// OperationCanceledException 以外の例外が発生した場合、
-        /// エラーメッセージ表示後に Close イベントを発行します。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         public static void Show(this MainViewModel src, Exception err)
         {
@@ -112,9 +107,10 @@ namespace Cube.Pdf.App.Converter
         /// <param name="get">メッセージ生成オブジェクト</param>
         ///
         /// <remarks>
-        /// UICulture の都合上、メッセージオブジェクトは UI スレッドで
-        /// 生成する必要があります。そのため、メッセージオブジェクトを
-        /// 直接指定せず関数オブジェクトを経由する形にしています。
+        /// メッセージのローカライズのためには UICulture の都合上、
+        /// オブジェクトを UI スレッドで生成する必要があります。そのため、
+        /// メッセージオブジェクトを直接指定せず関数オブジェクトを経由する
+        /// 形にしています。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

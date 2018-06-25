@@ -51,21 +51,6 @@ namespace Cube.Pdf.App.Converter
         public static string WordWrap(this string src, int n)
             => Regex.Replace(src, $@"(?<=\G.{{{n}}})(?!$)", Environment.NewLine);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Quote
-        ///
-        /// <summary>
-        /// 文字数を引用符で囲みます。
-        /// </summary>
-        ///
-        /// <param name="src">元の文字列</param>
-        ///
-        /// <returns>変換後の文字列</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static string Quote(this string src) => $"\"{src}\"";
-
         #endregion
     }
 }
