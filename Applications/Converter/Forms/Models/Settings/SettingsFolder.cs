@@ -85,7 +85,8 @@ namespace Cube.Pdf.App.Converter
             Version.Suffix = $"RC{asm.Version.Revision}";
 
             var dir = IO.Get(asm.Location).DirectoryName;
-            Startup.Command = IO.Combine(dir, "cubepdf-checker.exe").Quote();
+            UpdateProgram   = IO.Combine(dir, "cubepdf-checker.exe");
+            Startup.Command = $"{UpdateProgram.Quote()} {Product}";
             Startup.Name    = "cubepdf-checker";
         }
 
@@ -169,6 +170,17 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public string WorkDirectory { get; set; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateProgram
+        ///
+        /// <summary>
+        /// アップデート確認用プログラムのパスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string UpdateProgram { get; }
+
         #endregion
 
         #region Methods
@@ -218,7 +230,7 @@ namespace Cube.Pdf.App.Converter
                 if (!Value.CheckUpdate) return;
                 var time = GetLastCheckUpdate();
                 this.LogDebug($"LastCheckUpdate:{time}");
-                if (time.AddDays(1) < DateTime.Now) Process.Start(Startup.Command);
+                if (time.AddDays(1) < DateTime.Now) Process.Start(UpdateProgram, Product);
             }
             catch (Exception err) { this.LogWarn($"{nameof(CheckUpdate)}:{err}", err); }
         }
