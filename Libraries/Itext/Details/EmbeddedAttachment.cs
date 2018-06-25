@@ -94,7 +94,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         protected override byte[] GetChecksum() =>
-            new MD5CryptoServiceProvider().ComputeHash(Data);
+            new SHA256CryptoServiceProvider().ComputeHash(Data);
 
         #endregion
 

@@ -212,11 +212,9 @@ namespace Cube.Pdf
         protected virtual byte[] GetChecksum()
         {
             if (!IO.Exists(Source)) return null;
-
             using (var ss = IO.OpenRead(Source))
             {
-                var md5 = new MD5CryptoServiceProvider();
-                return md5.ComputeHash(ss);
+                return new SHA256CryptoServiceProvider().ComputeHash(ss);
             }
         }
 
