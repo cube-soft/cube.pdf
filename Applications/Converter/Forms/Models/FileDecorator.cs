@@ -132,7 +132,12 @@ namespace Cube.Pdf.App.Converter
 
             using (var writer = new DocumentWriter(IO))
             {
-                Value.Metadata.Version = Value.FormatOption.GetVersion();
+                var v = Value.FormatOption.GetVersion();
+                Value.Metadata.Version  = v;
+                Value.Encryption.Method = v.Minor >= 7 ? EncryptionMethod.Aes256 :
+                                          v.Minor >= 6 ? EncryptionMethod.Aes128 :
+                                          v.Minor >= 4 ? EncryptionMethod.Standard128 :
+                                                         EncryptionMethod.Standard40;
 
                 writer.Set(Value.Metadata);
                 writer.Set(Value.Encryption);
