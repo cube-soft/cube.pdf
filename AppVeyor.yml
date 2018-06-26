@@ -11,7 +11,9 @@ nuget:
 platform: Any CPU
 configuration: Release
 before_build:
+    - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x86.7z
     - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
+    - 7z x -o"Thirdparty\x86" gs-x86.7z
     - 7z x -o"Thirdparty\x64" gs-x64.7z
     - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
     - nuget sources add -name Cube.FileSystem -source https://ci.appveyor.com/nuget/cube.filesystem
@@ -24,10 +26,17 @@ build:
     publish_nuget: true
     verbosity: minimal
 after_build:
+    - xcopy /Y /I Applications\Converter\Forms\bin\Release CubePdf
+    - xcopy /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
     - xcopy /Y /I Thirdparty\x64\bin\gsdll32.dll Tests\bin\Release
     - xcopy /Y /I Thirdparty\x64\lib\*.* Tests\bin\Release\lib
     - xcopy /Y /I Thirdparty\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
     - xcopy /Y /I Thirdparty\x64\lib\*.* Applications\Converter\Tests\bin\Release\lib
+artifacts:
+    - path: CubePdf
+    - path: CubePdf.Proxy
+    - path: gs-x86.7z
+    - path: gs-x64.7z
 test_script:
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe

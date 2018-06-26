@@ -281,7 +281,7 @@ namespace Cube.Processes
             var id = GetActiveSessionId(username);
             var si = SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation;
 
-            if (!WtsApi32.NativeMethods.WTSQueryUserToken(id, out var token))
+            if (WtsApi32.NativeMethods.WTSQueryUserToken(id, out var token))
             {
                 try { return GetPrimaryToken(token, si); }
                 finally { CloseHandle(token); }

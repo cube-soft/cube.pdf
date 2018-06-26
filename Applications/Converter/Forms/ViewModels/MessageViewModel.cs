@@ -63,9 +63,9 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public static void Invoke(this MainViewModel src, Action action)
         {
-            if (!ValidateDestination(src)) return;
             if (!ValidateOwnerPassword(src)) return;
             if (!ValidateUserPassword(src)) return;
+            if (!ValidateDestination(src)) return;
 
             try { action(); }
             catch (Exception err) { src.Show(err); }
@@ -139,10 +139,9 @@ namespace Cube.Pdf.App.Converter
 
             if (!src.IO.Exists(dest) || so == SaveOption.Rename) return true;
 
-            var msg  = CreateMessage(dest, so);
-            var args = MessageFactory.CreateWarning(msg);
-
-            src.Show(() => args);
+            var args = default(MessageEventArgs);
+            src.Show(() => args = MessageFactory.CreateWarning(CreateMessage(dest, so)));
+            Debug.Assert(args != null);
             return args.Result != DialogResult.Cancel;
         }
 

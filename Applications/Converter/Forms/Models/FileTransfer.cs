@@ -48,16 +48,17 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <param name="format">変換形式</param>
         /// <param name="dest">最終的な保存パス</param>
+        /// <param name="work">作業ディレクトリ</param>
         /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileTransfer(Format format, string dest, IO io)
+        public FileTransfer(Format format, string dest, string work, IO io)
         {
             _dispose      = new OnceAction<bool>(Dispose);
             IO            = io;
             Format        = format;
             Information   = io.Get(dest);
-            WorkDirectory = IO.Combine(Information.DirectoryName, Guid.NewGuid().ToString("D"));
+            WorkDirectory = GetWorkDirectory(work);
             Value         = IO.Combine(WorkDirectory, GetName());
         }
 
@@ -216,6 +217,20 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetWorkDirectory
+        ///
+        /// <summary>
+        /// 作業ディレクトリのパスを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetWorkDirectory(string src) =>
+            Enumerable.Range(1, int.MaxValue)
+                      .Select(e => IO.Combine(src, e.ToString()))
+                      .First(e => !IO.Get(e).Exists);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetName
         ///
         /// <summary>
@@ -225,8 +240,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private string GetName() =>
             DocumentConverter.SupportedFormats.Any(e => e == Format) ?
-            Information.Name :
-            $"{Information.NameWithoutExtension}-%08d{Information.Extension}";
+            $"tmp{Information.Extension}" :
+            $"tmp-%08d{Information.Extension}";
 
         /* ----------------------------------------------------------------- */
         ///

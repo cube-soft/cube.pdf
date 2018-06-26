@@ -107,7 +107,25 @@ namespace Cube.Pdf.Tests.Converter
         ///
         /* ----------------------------------------------------------------- */
         protected static TestCaseData Create(Settings src, string[] args) =>
-            Create(src, args, "SampleMix.ps");
+            Create(src, args, false);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// テストケースを生成します。
+        /// </summary>
+        ///
+        /// <param name="src">設定情報</param>
+        /// <param name="args">プログラム引数</param>
+        /// <param name="precopy">事前にコピーするかどうか</param>
+        ///
+        /// <returns>テストケース</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected static TestCaseData Create(Settings src, string[] args, bool precopy) =>
+            Create(src, args, "SampleMix.ps", precopy);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -120,12 +138,14 @@ namespace Cube.Pdf.Tests.Converter
         /// <param name="src">設定情報</param>
         /// <param name="args">プログラム引数</param>
         /// <param name="filename">入力ファイル名</param>
+        /// <param name="precopy">事前にコピーするかどうか</param>
         ///
         /// <returns>テストケース</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData Create(Settings src, string[] args, string filename) =>
-            new TestCaseData(src, args, filename);
+        protected static TestCaseData Create(Settings src, string[] args,
+            string filename, bool precopy) =>
+            new TestCaseData(src, args, filename, precopy);
 
         /* ----------------------------------------------------------------- */
         ///

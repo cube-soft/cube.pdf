@@ -121,10 +121,15 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void Convert() => Invoke(() =>
         {
-            using (var fs = new FileTransfer(Value.Format, Value.Destination, IO))
+            var format = Value.Format;
+            var dest   = Value.Destination;
+            var work   = Settings.WorkDirectory;
+
+            this.LogDebug($"{nameof(Settings.WorkDirectory)}:{work}");
+
+            using (var fs = new FileTransfer(format, dest, work, IO))
             {
                 fs.AutoRename = Value.SaveOption == SaveOption.Rename;
-                this.LogDebug($"{nameof(Settings.WorkDirectory)}:{Settings.WorkDirectory}");
                 InvokeGhostscript(fs.Value);
                 InvokeDecorator(fs.Value);
                 InvokeTransfer(fs, out var paths);
