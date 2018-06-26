@@ -63,7 +63,7 @@ namespace Cube.Pdf.App.Converter
 
             dest.Quiet         = false;
             dest.WorkDirectory = src.WorkDirectory;
-            dest.Log           = src.IO.Combine(src.WorkDirectory, Guid.NewGuid().ToString("D"));
+            dest.Log           = src.IO.Combine(src.WorkDirectory, "console.log");
             dest.Resolution    = src.Value.Resolution;
             dest.Orientation   = src.Value.Orientation;
             dest.Resources.Add(src.IO.Combine(dir, "lib"));
