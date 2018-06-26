@@ -246,7 +246,7 @@ namespace Cube.Processes
                 for (var i = 0; i < count; ++i)
                 {
                     var info = (WTS_SESSION_INFO)Marshal.PtrToStructure(
-                        ptr + i * Marshal.SizeOf(typeof(WTS_SESSION_INFO)),
+                        new IntPtr(ptr.ToInt64() + i * Marshal.SizeOf(typeof(WTS_SESSION_INFO))),
                         typeof(WTS_SESSION_INFO)
                     );
 
@@ -281,7 +281,7 @@ namespace Cube.Processes
             var id = GetActiveSessionId(username);
             var si = SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation;
 
-            if (!WtsApi32.NativeMethods.WTSQueryUserToken(id, out var token))
+            if (WtsApi32.NativeMethods.WTSQueryUserToken(id, out var token))
             {
                 try { return GetPrimaryToken(token, si); }
                 finally { CloseHandle(token); }
