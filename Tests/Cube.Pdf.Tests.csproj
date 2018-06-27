@@ -109,6 +109,7 @@
     <Compile Include="Itext\DocumentWriterTest.cs" />
     <Compile Include="GlobalSetup.cs" />
     <Compile Include="PageTest.cs" />
+    <Compile Include="Pdfium\DocumentReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +182,10 @@
     <ProjectReference Include="..\Libraries\Itext\Cube.Pdf.Itext.csproj">
       <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
       <Name>Cube.Pdf.Itext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj">
+      <Project>{6924768e-f20a-4ea8-9d15-46f8a9890989}</Project>
+      <Name>Cube.Pdf.Pdfium</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

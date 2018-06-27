@@ -89,11 +89,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Details\PdfLibrary.cs" />
+    <Compile Include="Details\PdfReader.cs" />
+    <Compile Include="DocumentReader.cs" />
+    <Compile Include="LoadException.cs" />
+    <Compile Include="NativeMethods\PdfiumApi.cs" />
+    <Compile Include="NativeMethods\PdfiumApiStructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Cube.snk" />
     <None Include="Packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj">
+      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
+      <Name>Cube.Pdf.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
