@@ -54,6 +54,22 @@ namespace Cube.Pdf.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetLoadException
+        ///
+        /// <summary>
+        /// LoadException オブジェクトを取得します。
+        /// </summary>
+        ///
+        /// <returns>LoadException</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static LoadException GetLoadException() =>
+            new LoadException(NativeMethods.FPDF_GetLastError());
+
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// PdfLibrary
         ///
         /// <summary>
@@ -91,10 +107,10 @@ namespace Cube.Pdf.Pdfium
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
+        protected virtual void Dispose(bool disposing) =>
             NativeMethods.FPDF_Release();
-        }
+
+        #endregion
 
         #endregion
 

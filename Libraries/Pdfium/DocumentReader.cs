@@ -117,15 +117,6 @@ namespace Cube.Pdf.Pdfium
             _core    = PdfReader.Create(src, query, io, out var password);
 
             Debug.Assert(_core != null);
-
-            var f = new PdfFile(src, password, io.GetRefreshable())
-            {
-                FullAccess = true, // Temporarily
-                Count      = _core.PageCount,
-            };
-
-            IO   = io;
-            File = f;
         }
 
         #endregion
@@ -152,7 +143,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public File File { get; }
+        public File File => _core.File;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -185,7 +176,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page> Pages { get; }
+        public IEnumerable<Page> Pages => _core.Pages;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -197,17 +188,6 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public IEnumerable<Attachment> Attachments { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RawObject
-        ///
-        /// <summary>
-        /// 内部実装オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public object RawObject => _core;
 
         #endregion
 

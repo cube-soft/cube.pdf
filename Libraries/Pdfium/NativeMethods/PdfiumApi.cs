@@ -88,9 +88,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /* ----------------------------------------------------------------- */
         [DllImport(LibName, CharSet = CharSet.Ansi)]
         public static extern IntPtr FPDF_LoadCustomDocument(
-            [MarshalAs(UnmanagedType.LPStruct)] FileAccess access,
-            string password
-        );
+            [MarshalAs(UnmanagedType.LPStruct)] FileAccess access, string password);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -123,6 +121,74 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
         public static extern int FPDF_GetPageCount(IntPtr document);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_LoadPage
+        ///
+        /// <summary>
+        /// Load a page inside the document.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// page_index parameter inicates the first page as ZERO.
+        /// </remarks>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern IntPtr FPDF_LoadPage(IntPtr document, int page_index);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_GetPageWidth
+        ///
+        /// <summary>
+        /// Get page width.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern double FPDF_GetPageWidth(IntPtr page);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_GetPageHeight
+        ///
+        /// <summary>
+        /// Get page height.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern double FPDF_GetPageHeight(IntPtr page);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDFPage_GetRotation
+        ///
+        /// <summary>
+        /// Get the rotation of the page.
+        /// </summary>
+        ///
+        /// <returns>
+        /// Returns one of the following indicating the page rotation:
+        /// 0 - No rotation.
+        /// 1 - Rotated 90 degrees clockwise.
+        /// 2 - Rotated 180 degrees clockwise.
+        /// 3 - Rotated 270 degrees clockwise.
+        /// </returns>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_edit.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern int FPDFPage_GetRotation(IntPtr page);
 
         #endregion
 

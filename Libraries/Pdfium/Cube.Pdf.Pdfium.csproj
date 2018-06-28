@@ -85,12 +85,14 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Details\PdfLibrary.cs" />
     <Compile Include="Details\PdfReader.cs" />
+    <Compile Include="Details\ReadOnlyPageList.cs" />
     <Compile Include="DocumentReader.cs" />
     <Compile Include="LoadException.cs" />
     <Compile Include="NativeMethods\PdfiumApi.cs" />

@@ -18,6 +18,7 @@
 using Cube.FileSystem;
 using Cube.Pdf.Pdfium.PdfiumApi;
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.Pdfium
@@ -80,14 +81,25 @@ namespace Cube.Pdf.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCount
+        /// File
         ///
         /// <summary>
-        /// PDF のページ数を取得します。
+        /// ファイル情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int PageCount => NativeMethods.FPDF_GetPageCount(_document);
+        public PdfFile File { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Pages
+        ///
+        /// <summary>
+        /// ページ一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Page> Pages { get; private set; }
 
         #endregion
 
@@ -182,8 +194,27 @@ namespace Cube.Pdf.Pdfium
                 password
             );
 
-            if (_document == IntPtr.Zero) throw new LoadException(NativeMethods.FPDF_GetLastError());
+            if (_document == IntPtr.Zero) throw GetLoadException();
+
+            File  = CreateFile(password, NativeMethods.FPDF_GetPageCount(_document));
+            Pages = new ReadOnlyPageList(_document, File);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateFile
+        ///
+        /// <summary>
+        /// File オブジェクトを生成します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private PdfFile CreateFile(string password, int n) =>
+            new PdfFile(Source, password, IO.GetRefreshable())
+            {
+                FullAccess = true, // Temporarily
+                Count = n,
+            };
 
         /* ----------------------------------------------------------------- */
         ///

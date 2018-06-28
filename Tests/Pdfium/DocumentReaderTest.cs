@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.Tests;
+using Cube.Pdf.Mixin;
 using Cube.Pdf.Pdfium;
 using NUnit.Framework;
 
@@ -38,16 +39,31 @@ namespace Cube.Pdf.Tests.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCount
+        /// GetPage
         ///
         /// <summary>
-        /// ページ数を取得するテストを実行します。
+        /// 各ページの情報を確認します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf", ExpectedResult = 2)]
-        public int PageCount(string filename) =>
-            new DocumentReader(GetExamplesWith(filename)).File.Count;
+        [TestCase("SampleRotation.pdf", 1, 595.0f, 842.0f,   0)]
+        [TestCase("SampleRotation.pdf", 2, 595.0f, 842.0f,  90)]
+        [TestCase("SampleRotation.pdf", 3, 595.0f, 842.0f, 180)]
+        [TestCase("SampleRotation.pdf", 4, 595.0f, 842.0f, 270)]
+        [TestCase("SampleRotation.pdf", 5, 595.0f, 842.0f,   0)]
+        public void GetPage(string filename, int n, float w, float h, int degree)
+        {
+            using (var reader = new DocumentReader(GetExamplesWith(filename)))
+            {
+                var dest = reader.GetPage(n);
+
+                Assert.That(dest.Resolution.X, Is.EqualTo(72.0f));
+                Assert.That(dest.Resolution.Y, Is.EqualTo(72.0f));
+                Assert.That(dest.Size.Width,   Is.EqualTo(w));
+                Assert.That(dest.Size.Height,  Is.EqualTo(h));
+                Assert.That(dest.Rotation,     Is.EqualTo(degree));
+            }
+        }
 
         #endregion
     }
