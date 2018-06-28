@@ -30,7 +30,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
     ///
     /* --------------------------------------------------------------------- */
     [StructLayout(LayoutKind.Sequential)]
-    internal struct FileAccess
+    internal class FileAccess
     {
         public uint Length;
         public IntPtr GetBlock;
