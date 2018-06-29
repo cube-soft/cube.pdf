@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using iTextSharp.text.pdf;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -38,7 +37,7 @@ namespace Cube.Pdf.Itext
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentReader : IDocumentReader
+    public class DocumentReader : DocumentReaderBase
     {
         #region Constructors
 
@@ -152,11 +151,10 @@ namespace Cube.Pdf.Itext
         /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query, bool denyUserPassword, IO io)
+        public DocumentReader(string src, IQuery<string> query, bool denyUserPassword, IO io) : base(io)
         {
-            _dispose = new OnceAction<bool>(Dispose);
-            _core    = ReaderFactory.Create(src, query, denyUserPassword, out string password);
-
+            Debug.Assert(io != null);
+            _core = ReaderFactory.Create(src, query, denyUserPassword, out string password);
             Debug.Assert(_core != null);
 
             var f = new PdfFile(src, password, io.GetRefreshable())
@@ -165,7 +163,6 @@ namespace Cube.Pdf.Itext
                 Count      = _core.NumberOfPages
             };
 
-            IO          = io;
             File        = f;
             Metadata    = _core.GetMetadata();
             Encryption  = _core.GetEncryption(f);
@@ -176,72 +173,6 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// I/O オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// File
-        ///
-        /// <summary>
-        /// ファイル情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public File File { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Metadata
-        ///
-        /// <summary>
-        /// PDF ファイルに関するメタ情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Encryption
-        ///
-        /// <summary>
-        /// PDF ファイルに関する暗号化情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Encryption Encryption { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Pages
-        ///
-        /// <summary>
-        /// PDF ファイルのページ一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<Page> Pages { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attachments
-        ///
-        /// <summary>
-        /// 添付ファイルの一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<Attachment> Attachments { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -260,10 +191,10 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetImages
+        /// ExtractImages
         ///
         /// <summary>
-        /// 指定されたページ中に存在する画像を取得します。
+        /// 指定されたページ中に存在する画像を抽出します。
         /// </summary>
         ///
         /// <param name="pagenum">ページ番号</param>
@@ -271,7 +202,7 @@ namespace Cube.Pdf.Itext
         /// <returns>抽出された Image オブジェクトのリスト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Image> GetImages(int pagenum)
+        public IEnumerable<Image> ExtractImages(int pagenum)
         {
             var dest = new EmbeddedImageCollection();
             _core.GetContentParser().ProcessContent(pagenum, dest);
@@ -282,17 +213,6 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~DocumentReader
-        ///
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~DocumentReader() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Dispose
         ///
         /// <summary>
@@ -300,22 +220,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing) _core.Dispose();
         }
@@ -325,7 +230,6 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Fields
-        private readonly OnceAction<bool> _dispose;
         private readonly PdfReader _core;
         #endregion
     }

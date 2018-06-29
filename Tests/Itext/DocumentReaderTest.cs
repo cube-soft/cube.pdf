@@ -235,7 +235,7 @@ namespace Cube.Pdf.Tests.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetImages
+        /// ExtractImages
         ///
         /// <summary>
         /// ページ内に存在する画像の抽出テストを実行します。
@@ -244,9 +244,9 @@ namespace Cube.Pdf.Tests.Itext
         /* ----------------------------------------------------------------- */
         [TestCase("SampleImage.pdf", 1, ExpectedResult = 2)]
         [TestCase("SampleImage.pdf", 2, ExpectedResult = 0)]
-        public int GetImages(string filename, int n)
+        public int ExtractImages(string filename, int n)
         {
-            using (var reader = Create(filename)) return reader.GetImages(n).Count();
+            using (var reader = Create(filename)) return reader.ExtractImages(n).Count();
         }
 
         #endregion
