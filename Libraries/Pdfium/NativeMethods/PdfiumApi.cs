@@ -192,6 +192,34 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
 
         #endregion
 
+        #region Metadata
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_GetMetaText
+        ///
+        /// <summary>
+        /// Get meta-data tag content from document.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// The tag can be one of: Title, Author, Subject, Keywords,
+        /// Creator, Producer, CreationDate, or ModDate.
+        ///
+        /// For linearized files, FPDFAvail_IsFormAvail must be called
+        /// before this, and it must have returned PDF_FORM_AVAIL or
+        /// PDF_FORM_NOTEXIST. Before that, there is no guarantee the
+        /// metadata has been loaded.
+        /// </remarks>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_doc.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern uint FPDF_GetMetaText(IntPtr document, string tag, byte[] buffer, uint buflen);
+
+        #endregion
+
         #endregion
 
         #region Fields
