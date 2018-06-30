@@ -196,6 +196,24 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
 
         /* ----------------------------------------------------------------- */
         ///
+        /// FPDF_GetFileVersion
+        ///
+        /// <summary>
+        /// Get the file version of the given PDF document.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// File version: 14 for 1.4, 15 for 1.5, ...
+        /// </remarks>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern bool FPDF_GetFileVersion(IntPtr document, out int version);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// FPDF_GetMetaText
         ///
         /// <summary>

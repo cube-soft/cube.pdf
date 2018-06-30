@@ -109,6 +109,7 @@
     <Compile Include="Ghostscript\ImageConverterTest.cs" />
     <Compile Include="Itext\DocumentReaderTest.cs" />
     <Compile Include="Itext\DocumentWriterTest.cs" />
+    <Compile Include="MetadataTest.cs" />
     <Compile Include="PageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -92,6 +92,17 @@ namespace Cube.Pdf.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// メタ情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata Metadata { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Pages
         ///
         /// <summary>
@@ -196,8 +207,9 @@ namespace Cube.Pdf.Pdfium
 
             if (_document == IntPtr.Zero) throw GetLoadException();
 
-            File  = CreateFile(password, NativeMethods.FPDF_GetPageCount(_document));
-            Pages = new ReadOnlyPageList(_document, File);
+            File     = CreateFile(password, NativeMethods.FPDF_GetPageCount(_document));
+            Pages    = new ReadOnlyPageList(_document, File);
+            Metadata = MetadataFactory.Create(_document);
         }
 
         /* ----------------------------------------------------------------- */

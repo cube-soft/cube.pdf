@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Details\PdfLibrary.cs" />
+    <Compile Include="Details\MetadataFactory.cs" />
     <Compile Include="Details\PdfReader.cs" />
     <Compile Include="Details\ReadOnlyPageList.cs" />
     <Compile Include="DocumentReader.cs" />

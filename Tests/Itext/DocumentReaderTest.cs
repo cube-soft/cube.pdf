@@ -75,31 +75,6 @@ namespace Cube.Pdf.Tests.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open_Metadata
-        ///
-        /// <summary>
-        /// Metadata オブジェクトの内容を確認します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Open_Metadata()
-        {
-            using (var reader = Create("SampleRotation.pdf"))
-            {
-                var dest = reader.Metadata;
-
-                Assert.That(dest.Version,    Is.EqualTo(new Version(1, 7, 0, 0)));
-                Assert.That(dest.Title,      Is.EqualTo("テスト用文書"));
-                Assert.That(dest.Author,     Is.EqualTo("株式会社キューブ・ソフト"));
-                Assert.That(dest.Subject,    Is.EqualTo("Cube.Pdf.Tests"));
-                Assert.That(dest.Keywords,   Is.EqualTo("CubeSoft,PDF,Test"));
-                Assert.That(dest.ViewOption, Is.EqualTo(ViewOption.TwoPageLeft));
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Encryption
         ///
         /// <summary>
