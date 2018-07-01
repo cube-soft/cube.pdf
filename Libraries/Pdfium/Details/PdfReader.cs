@@ -103,6 +103,17 @@ namespace Cube.Pdf.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// 暗号化情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encryption Encryption { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Pages
         ///
         /// <summary>
@@ -207,9 +218,10 @@ namespace Cube.Pdf.Pdfium
 
             if (_document == IntPtr.Zero) throw GetLoadException();
 
-            File     = CreateFile(password, NativeMethods.FPDF_GetPageCount(_document));
-            Pages    = new ReadOnlyPageList(_document, File);
-            Metadata = MetadataFactory.Create(_document);
+            File       = CreateFile(password, NativeMethods.FPDF_GetPageCount(_document));
+            Pages      = new ReadOnlyPageList(_document, File);
+            Metadata   = MetadataFactory.Create(_document);
+            Encryption = EncryptionFactory.Create(_document, password);
         }
 
         /* ----------------------------------------------------------------- */

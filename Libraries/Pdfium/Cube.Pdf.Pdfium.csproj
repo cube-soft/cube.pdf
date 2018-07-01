@@ -90,6 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Details\EncryptionFactory.cs" />
     <Compile Include="Details\PdfLibrary.cs" />
     <Compile Include="Details\MetadataFactory.cs" />
     <Compile Include="Details\PdfReader.cs" />

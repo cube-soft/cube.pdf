@@ -238,6 +238,42 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
 
         #endregion
 
+        #region Encryption
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_GetDocPermissions
+        ///
+        /// <summary>
+        /// Get file permission flags of the document.
+        /// </summary>
+        ///
+        /// <returns>
+        /// If the document is not, protected, 0xffffffff will be returned.
+        /// </returns>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern ulong FPDF_GetDocPermissions(IntPtr document);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_GetSecurityHandlerRevision
+        ///
+        /// <summary>
+        /// Get the revision for the security handler.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern int FPDF_GetSecurityHandlerRevision(IntPtr document);
+
+        #endregion
+
         #endregion
 
         #region Fields
