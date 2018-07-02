@@ -99,6 +99,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Details\DocumentReaderFixture.cs" />
+    <Compile Include="Details\GlobalSetup.cs" />
+    <Compile Include="FileTest.cs" />
     <Compile Include="Ghostscript\ArgumentTest.cs" />
     <Compile Include="Ghostscript\ConverterFixture.cs" />
     <Compile Include="Ghostscript\ConverterTest.cs" />
@@ -107,7 +110,8 @@
     <Compile Include="Ghostscript\ImageConverterTest.cs" />
     <Compile Include="Itext\DocumentReaderTest.cs" />
     <Compile Include="Itext\DocumentWriterTest.cs" />
-    <Compile Include="GlobalSetup.cs" />
+    <Compile Include="EncryptionTest.cs" />
+    <Compile Include="MetadataTest.cs" />
     <Compile Include="PageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -147,10 +151,19 @@
     <None Include="Examples\SampleImage.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\SamplePassword.pdf">
+    <None Include="Examples\SampleRc40.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\SamplePasswordAes256.pdf">
+    <None Include="Examples\SampleRc128.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleAes128.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleAes256.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleAes256r6.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\SampleRotation.pdf">
@@ -181,6 +194,10 @@
     <ProjectReference Include="..\Libraries\Itext\Cube.Pdf.Itext.csproj">
       <Project>{77e24cb7-79b1-4797-8477-ead767685795}</Project>
       <Name>Cube.Pdf.Itext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj">
+      <Project>{6924768e-f20a-4ea8-9d15-46f8a9890989}</Project>
+      <Name>Cube.Pdf.Pdfium</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

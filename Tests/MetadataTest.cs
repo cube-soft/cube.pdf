@@ -15,23 +15,23 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Mixin;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PageTest
+    /// MetadataTest
     ///
     /// <summary>
-    /// Page のテスト用クラスです。
+    /// Metadata のテスト用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class PageTest : DocumentReaderFixture
+    class MetadataTest : DocumentReaderFixture
     {
         #region Tests
 
@@ -40,43 +40,30 @@ namespace Cube.Pdf.Tests
         /// Get
         ///
         /// <summary>
-        /// 各ページの情報を確認します。
+        /// PDF ファイルのメタ情報を確認します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Get(string klass, string filename, int n, float w, float h, int degree)
+        public void Get(string klass, string filename, Metadata expected)
         {
             var src = GetExamplesWith(filename);
 
             using (var reader = Create(klass, src, ""))
             {
-                var dest = reader.GetPage(n);
+                var dest = reader.Metadata;
 
-                Assert.That(dest.Resolution.X, Is.EqualTo(72.0f));
-                Assert.That(dest.Resolution.Y, Is.EqualTo(72.0f));
-                Assert.That(dest.Size.Width,   Is.EqualTo(w));
-                Assert.That(dest.Size.Height,  Is.EqualTo(h));
-                Assert.That(dest.Rotation,     Is.EqualTo(degree));
+                Assert.That(dest.Version.Major, Is.EqualTo(expected.Version.Major));
+                Assert.That(dest.Version.Minor, Is.EqualTo(expected.Version.Minor));
+                Assert.That(dest.Title,         Is.EqualTo(expected.Title));
+                Assert.That(dest.Author,        Is.EqualTo(expected.Author));
+                Assert.That(dest.Subject,       Is.EqualTo(expected.Subject));
+                Assert.That(dest.Keywords,      Is.EqualTo(expected.Keywords));
+                Assert.That(dest.Creator,       Is.EqualTo(expected.Creator));
+                Assert.That(dest.Producer,      Does.StartWith(expected.Producer));
+                // Assert.That(dest.ViewOption,    Is.EqualTo(expected.ViewOption));
             }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotation
-        ///
-        /// <summary>
-        /// 回転角度の正規化テストを実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase(   0, ExpectedResult =   0)]
-        [TestCase( 359, ExpectedResult = 359)]
-        [TestCase( 360, ExpectedResult =   0)]
-        [TestCase(1000, ExpectedResult = 280)]
-        [TestCase(  -1, ExpectedResult = 359)]
-        [TestCase(-900, ExpectedResult = 180)]
-        public int Rotation(int degree) => new Page { Rotation = degree }.Rotation;
 
         #endregion
 
@@ -97,11 +84,17 @@ namespace Cube.Pdf.Tests
             {
                 foreach (var klass in GetClassIds())
                 {
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 1, 595.0f, 842.0f,   0);
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 2, 595.0f, 842.0f,  90);
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 3, 595.0f, 842.0f, 180);
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 4, 595.0f, 842.0f, 270);
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 5, 595.0f, 842.0f,   0);
+                    yield return new TestCaseData(klass, "SampleRotation.pdf", new Metadata
+                    {
+                        Version    = new Version(1, 7, 0, 0),
+                        Title      = "テスト用文書",
+                        Author     = "株式会社キューブ・ソフト",
+                        Subject    = "Cube.Pdf.Tests",
+                        Keywords   = "CubeSoft,PDF,Test",
+                        Creator    = "CubePDF",
+                        Producer   = "iTextSharp",
+                        ViewOption = ViewOption.TwoPageLeft,
+                    });
                 }
             }
         }

@@ -145,7 +145,7 @@ namespace Cube.Pdf
         private bool _openWithPassword = false;
         private string _ownerPassword = string.Empty;
         private string _userPassword = string.Empty;
-        private EncryptionMethod _method = EncryptionMethod.Standard40;
+        private EncryptionMethod _method = EncryptionMethod.Unknown;
         private Permission _permission = new Permission();
         #endregion
     }

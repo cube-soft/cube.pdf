@@ -76,7 +76,7 @@ namespace Cube.Pdf.Itext
             if (data == null || !data.Enabled ||
                 string.IsNullOrEmpty(data.OwnerPassword)) return;
 
-            var m = (int)data.Method;
+            var m = GetMethod(data.Method);
             var p = (int)data.Permission.Value;
 
             var owner = data.OwnerPassword;
@@ -138,6 +138,27 @@ namespace Cube.Pdf.Itext
         {
             if (src.ContainsKey(key)) src[key] = value;
             else src.Add(key, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetMethod
+        ///
+        /// <summary>
+        /// 暗号化方式を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static int GetMethod(EncryptionMethod src)
+        {
+            switch (src)
+            {
+                case EncryptionMethod.Standard40:  return PdfWriter.STANDARD_ENCRYPTION_40;
+                case EncryptionMethod.Standard128: return PdfWriter.STANDARD_ENCRYPTION_128;
+                case EncryptionMethod.Aes128:      return PdfWriter.ENCRYPTION_AES_128;
+                case EncryptionMethod.Aes256:      return PdfWriter.ENCRYPTION_AES_256;
+                default: return PdfWriter.STANDARD_ENCRYPTION_40;
+            }
         }
 
         #endregion

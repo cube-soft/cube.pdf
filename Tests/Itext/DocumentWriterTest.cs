@@ -50,12 +50,12 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf",               "",           0, ExpectedResult = 2)]
-        [TestCase("SampleAnnotation.pdf",     "",          90, ExpectedResult = 2)]
-        [TestCase("SampleBookmark.pdf",       "",         180, ExpectedResult = 9)]
-        [TestCase("SampleAttachment.pdf",     "",         270, ExpectedResult = 9)]
-        [TestCase("SamplePassword.pdf",       "password", 180, ExpectedResult = 2)]
-        [TestCase("SamplePasswordAes256.pdf", "password",  90, ExpectedResult = 9)]
+        [TestCase("Sample.pdf",           "",           0, ExpectedResult = 2)]
+        [TestCase("SampleAnnotation.pdf", "",          90, ExpectedResult = 2)]
+        [TestCase("SampleBookmark.pdf",   "",         180, ExpectedResult = 9)]
+        [TestCase("SampleAttachment.pdf", "",         270, ExpectedResult = 9)]
+        [TestCase("SampleRc128.pdf",      "password", 180, ExpectedResult = 2)]
+        [TestCase("SampleAes256.pdf",     "password",  90, ExpectedResult = 9)]
         public int Save(string filename, string password, int degree)
         {
             var src  = GetExamplesWith(filename);
@@ -89,8 +89,8 @@ namespace Cube.Pdf.Tests.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf",         "",          0, ExpectedResult = 2)]
-        [TestCase("SamplePassword.pdf", "password", 90, ExpectedResult = 2)]
+        [TestCase("Sample.pdf",      "",          0, ExpectedResult = 2)]
+        [TestCase("SampleRc128.pdf", "password", 90, ExpectedResult = 2)]
         public int Overwrite(string filename, string password, int degree)
         {
             var name = $"{nameof(Overwrite)}_{filename}";
@@ -184,7 +184,7 @@ namespace Cube.Pdf.Tests.Itext
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("SampleBookmark.pdf", "",         ExpectedResult = 9)]
-        [TestCase("SamplePassword.pdf", "password", ExpectedResult = 2)]
+        [TestCase("SampleRc128.pdf",    "password", ExpectedResult = 2)]
         public int Split(string filename, string password)
         {
             var src  = GetExamplesWith(filename);

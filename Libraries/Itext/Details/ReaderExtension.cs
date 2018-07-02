@@ -141,7 +141,7 @@ namespace Cube.Pdf.Itext
                 case PdfWriter.STANDARD_ENCRYPTION_128: return EncryptionMethod.Standard128;
                 case PdfWriter.ENCRYPTION_AES_128:      return EncryptionMethod.Aes128;
                 case PdfWriter.ENCRYPTION_AES_256:      return EncryptionMethod.Aes256;
-                default:                                return EncryptionMethod.Standard40;
+                default:                                return EncryptionMethod.Unknown;
             }
         }
 
