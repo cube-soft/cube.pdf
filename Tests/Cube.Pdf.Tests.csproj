@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Details\DocumentReaderFixture.cs" />
     <Compile Include="Details\GlobalSetup.cs" />
+    <Compile Include="FileTest.cs" />
     <Compile Include="Ghostscript\ArgumentTest.cs" />
     <Compile Include="Ghostscript\ConverterFixture.cs" />
     <Compile Include="Ghostscript\ConverterTest.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Ghostscript\ImageConverterTest.cs" />
     <Compile Include="Itext\DocumentReaderTest.cs" />
     <Compile Include="Itext\DocumentWriterTest.cs" />
+    <Compile Include="EncryptionTest.cs" />
     <Compile Include="MetadataTest.cs" />
     <Compile Include="PageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,10 +151,19 @@
     <None Include="Examples\SampleImage.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\SamplePassword.pdf">
+    <None Include="Examples\SampleRc40.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\SamplePasswordAes256.pdf">
+    <None Include="Examples\SampleRc128.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleAes128.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleAes256.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleAes256r6.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\SampleRotation.pdf">
