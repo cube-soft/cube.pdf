@@ -5,13 +5,14 @@ Cube.Pdf
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
 [![Codacy](https://api.codacy.com/project/badge/Grade/f9fd6adc5a5f44d38c8088516ac9e936)](https://www.codacy.com/app/clown/Cube.Pdf)
 
-Cube.Pdf projects wrap [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party's PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more.
+Cube.Pdf projects wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party's PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more.
 Note that some projects are licensed under the GNU AGPLv3. See the License section for details.
 
 ## Dependencies
 
 * [Cube.Core](https://github.com/cube-soft/Cube.Core)
 * [Cube.FileSystem](https://github.com/cube-soft/Cube.FileSystem)
+* [PDFium](https://pdfium.googlesource.com/pdfium/)
 * [Ghostscript](https://www.ghostscript.com/)
 * [iTextSharp](https://www.nuget.org/packages/iTextSharp/)
 
