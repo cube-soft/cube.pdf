@@ -32,6 +32,7 @@ after_build:
     - xcopy /Y /I Thirdparty\x64\lib\*.* Tests\bin\Release\lib
     - xcopy /Y /I Thirdparty\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
     - xcopy /Y /I Thirdparty\x64\lib\*.* Applications\Converter\Tests\bin\Release\lib
+    - xcopy /Y /I ..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\x64\pdfium.dll Tests\bin\Release
 artifacts:
     - path: CubePdf
     - path: CubePdf.Proxy
