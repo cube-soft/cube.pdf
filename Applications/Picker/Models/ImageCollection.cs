@@ -341,7 +341,7 @@ namespace Cube.Pdf.App.Picker
                    string.Format(Properties.Resources.MessageProcess, name, pagenum, count)
                 ));
 
-                var images = src.GetImages(pagenum);
+                var images = src.ExtractImages(pagenum);
                 _source.Token.ThrowIfCancellationRequested();
 
                 lock (_lock)

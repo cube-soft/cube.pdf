@@ -120,7 +120,7 @@ namespace Cube.Pdf.Tests.Converter
 
             var ec = dest.Encryption;
             Assert.That(ec.Enabled,            Is.False);
-            Assert.That(ec.Method,             Is.EqualTo(EncryptionMethod.Standard40));
+            Assert.That(ec.Method,             Is.EqualTo(EncryptionMethod.Unknown));
             Assert.That(ec.OpenWithPassword,   Is.False);
             Assert.That(ec.OwnerPassword,      Is.Empty);
             Assert.That(ec.UserPassword,       Is.Empty);
