@@ -123,6 +123,17 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public IEnumerable<Page> Pages { get; private set; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RawObject
+        ///
+        /// <summary>
+        /// PDFium API へアクセスするためのオブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IntPtr RawObject { get; private set; }
+
         #endregion
 
         #region Methods
@@ -181,7 +192,7 @@ namespace Cube.Pdf.Pdfium
         {
             try
             {
-                if (_document != IntPtr.Zero) NativeMethods.FPDF_CloseDocument(_document);
+                if (RawObject != IntPtr.Zero) NativeMethods.FPDF_CloseDocument(RawObject);
                 if (disposing) _stream.Dispose();
             }
             finally { base.Dispose(disposing); }
@@ -206,7 +217,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private void Load(string password)
         {
-            _document = NativeMethods.FPDF_LoadCustomDocument(
+            RawObject = NativeMethods.FPDF_LoadCustomDocument(
                 new FileAccess
                 {
                     Length    = (uint)_stream.Length,
@@ -216,12 +227,14 @@ namespace Cube.Pdf.Pdfium
                 password
             );
 
-            if (_document == IntPtr.Zero) throw GetLoadException();
+            if (RawObject == IntPtr.Zero) throw GetLoadException();
 
-            Encryption = EncryptionFactory.Create(_document, password);
-            File       = CreateFile(password, NativeMethods.FPDF_GetPageCount(_document), !Encryption.OpenWithPassword);
-            Pages      = new ReadOnlyPageList(_document, File);
-            Metadata   = MetadataFactory.Create(_document);
+            var n = NativeMethods.FPDF_GetPageCount(RawObject);
+
+            Encryption = EncryptionFactory.Create(RawObject, password);
+            File       = CreateFile(password, n, !Encryption.OpenWithPassword);
+            Pages      = new ReadOnlyPageList(RawObject, File);
+            Metadata   = MetadataFactory.Create(RawObject);
         }
 
         /* ----------------------------------------------------------------- */
@@ -276,7 +289,6 @@ namespace Cube.Pdf.Pdfium
 
         #region Fields
         private readonly System.IO.Stream _stream;
-        private IntPtr _document;
         #endregion
     }
 }
