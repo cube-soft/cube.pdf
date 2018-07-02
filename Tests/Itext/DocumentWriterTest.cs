@@ -35,7 +35,6 @@ namespace Cube.Pdf.Tests.Itext
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Parallelizable]
     [TestFixture]
     class DocumentWriterTest : FileFixture
     {
