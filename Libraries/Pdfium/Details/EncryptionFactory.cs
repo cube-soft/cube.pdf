@@ -46,25 +46,50 @@ namespace Cube.Pdf.Pdfium
         ///
         /// <returns>Encryption</returns>
         ///
+        /// <remarks>
+        /// 現在 FPDF_GetDocPermissions の結果で諸々の判定を行っているが
+        /// 最終的には OwnerPassword で開いた状態でもオリジナルの
+        /// Permission を取得する事を目指す。それに伴って、各種操作も
+        /// 修正する必要がある。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         public static Encryption Create(IntPtr core, string password)
         {
-            var src = NativeMethods.FPDF_GetSecurityHandlerRevision(core);
-            return src == -1 ?
+            var method     = NativeMethods.FPDF_GetSecurityHandlerRevision(core);
+            var permission = NativeMethods.FPDF_GetDocPermissions(core);
+            var restrict   = permission != 0xfffffffc;
+
+            return method == -1 ?
                    new Encryption() :
                    new Encryption
                    {
                        Enabled          = true,
-                       OwnerPassword    = password,
-                       OpenWithPassword = false,
-                       Method           = (EncryptionMethod)src,
-                       Permission       = CreatePermission(core),
+                       OwnerPassword    = restrict ? string.Empty : password,
+                       OpenWithPassword = restrict,
+                       UserPassword     = restrict ? password : string.Empty,
+                       Method           = CreateMethod(method),
+                       Permission       = CreatePermission(permission),
                    };
         }
 
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMethod
+        ///
+        /// <summary>
+        /// 暗号化方式を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static EncryptionMethod CreateMethod(int src) =>
+            Enum.IsDefined(typeof(EncryptionMethod), src) ?
+            (EncryptionMethod)src :
+            EncryptionMethod.Unknown;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -75,13 +100,10 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Permission CreatePermission(IntPtr core)
-        {
-            var src = NativeMethods.FPDF_GetDocPermissions(core);
-            return src == ulong.MaxValue ?
-                   new Permission() :
-                   new Permission((long)src);
-        }
+        private static Permission CreatePermission(ulong src) =>
+            src == ulong.MaxValue ?
+            new Permission() :
+            new Permission((long)src);
 
         #endregion
     }

@@ -115,9 +115,10 @@ namespace Cube.Pdf.Pdfium
             _core = PdfReader.Create(src, query, io, out var password);
             Debug.Assert(_core != null);
 
-            File     = _core.File;
-            Pages    = _core.Pages;
-            Metadata = _core.Metadata;
+            File       = _core.File;
+            Pages      = _core.Pages;
+            Metadata   = _core.Metadata;
+            Encryption = _core.Encryption;
         }
 
         #endregion

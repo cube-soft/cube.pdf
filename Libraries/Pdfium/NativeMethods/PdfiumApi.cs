@@ -236,6 +236,32 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         [DllImport(LibName)]
         public static extern uint FPDF_GetMetaText(IntPtr document, string tag, byte[] buffer, uint buflen);
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDFDoc_GetPageMode
+        ///
+        /// <summary>
+        /// Get the document's PageMode.
+        /// </summary>
+        ///
+        /// <returns>
+        /// Returns one of the following flags:
+        /// -1 - Unknown page mode.
+        ///  0 - Document outline, and thumbnails hidden.
+        ///  1 - Document outline visible.
+        ///  2 - Thumbnail images visible.
+        ///  3 - Full-screen mode, no menu bar, window controls, or
+        ///      other decorations visible.
+        ///  4 - Optional content group panel visible.
+        ///  5 - Attachments panel visible.
+        /// </returns>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_ext.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern int FPDFDoc_GetPageMode(IntPtr document);
+
         #endregion
 
         #region Encryption

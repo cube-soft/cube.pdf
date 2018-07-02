@@ -218,10 +218,10 @@ namespace Cube.Pdf.Pdfium
 
             if (_document == IntPtr.Zero) throw GetLoadException();
 
-            File       = CreateFile(password, NativeMethods.FPDF_GetPageCount(_document));
+            Encryption = EncryptionFactory.Create(_document, password);
+            File       = CreateFile(password, NativeMethods.FPDF_GetPageCount(_document), !Encryption.OpenWithPassword);
             Pages      = new ReadOnlyPageList(_document, File);
             Metadata   = MetadataFactory.Create(_document);
-            Encryption = EncryptionFactory.Create(_document, password);
         }
 
         /* ----------------------------------------------------------------- */
@@ -233,11 +233,11 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfFile CreateFile(string password, int n) =>
+        private PdfFile CreateFile(string password, int n, bool fullaccess) =>
             new PdfFile(Source, password, IO.GetRefreshable())
             {
-                FullAccess = true, // Temporarily
-                Count = n,
+                FullAccess = fullaccess,
+                Count      = n,
             };
 
         /* ----------------------------------------------------------------- */

@@ -32,18 +32,23 @@ namespace Cube.Pdf
     /// - 128bit RC4 (PDF 1.4)
     /// - 128bit AES (PDF 1.5)
     /// - 256bit AES (PDF 1.7 ExtensionLevel 3)
+    /// - 256bit AES Revision 6 (Acrobat X)
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     public enum EncryptionMethod
     {
-        /// <summary>40bit RC4 (supported from PDF 1.1)</summary>
-        Standard40,
-        /// <summary>128bit RC4 (supported from PDF 1.4)</summary>
-        Standard128,
-        /// <summary>128bit AES (supported from PDF 1.5)</summary>
-        Aes128,
-        /// <summary>256bit AES (supported from PDF 1.7 ExtensionLevel 3)</summary>
-        Aes256,
+        /// <summary>Unknown</summary>
+        Unknown = 0,
+        /// <summary>Revision 2, 40bit RC4 (supported from PDF 1.1)</summary>
+        Standard40 = 2,
+        /// <summary>Revision 3, 128bit RC4 (supported from PDF 1.4)</summary>
+        Standard128 = 3,
+        /// <summary>Revision 4, 128bit AES (supported from PDF 1.5)</summary>
+        Aes128 = 4,
+        /// <summary>Revision 5, 256bit AES (supported from PDF 1.7 ExtensionLevel 3)</summary>
+        Aes256 = 5,
+        /// <summary>Revision 6, 256bit AES (supported from Acrobat X)</summary>
+        Aes256r6 = 6,
     }
 }
