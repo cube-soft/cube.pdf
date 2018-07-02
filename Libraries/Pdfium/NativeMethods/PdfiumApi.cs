@@ -300,6 +300,26 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
 
         #endregion
 
+        #region Render
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_RenderPage
+        ///
+        /// <summary>
+        /// Render contents of a page to a device (screen, bitmap, or
+        /// printer).
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern void FPDF_RenderPage(IntPtr dc, IntPtr page,
+            int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
+
+        #endregion
+
         #endregion
 
         #region Fields

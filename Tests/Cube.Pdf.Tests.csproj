@@ -113,6 +113,7 @@
     <Compile Include="EncryptionTest.cs" />
     <Compile Include="MetadataTest.cs" />
     <Compile Include="PageTest.cs" />
+    <Compile Include="Pdfium\DocumentRendererTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

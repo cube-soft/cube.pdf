@@ -94,6 +94,7 @@
     <Compile Include="Details\PdfLibrary.cs" />
     <Compile Include="Details\MetadataFactory.cs" />
     <Compile Include="Details\PdfReader.cs" />
+    <Compile Include="Details\PdfRenderer.cs" />
     <Compile Include="Details\ReadOnlyPageList.cs" />
     <Compile Include="DocumentReader.cs" />
     <Compile Include="LoadException.cs" />

@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace Cube.Pdf.Pdfium
 {
@@ -124,6 +125,24 @@ namespace Cube.Pdf.Pdfium
         #endregion
 
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Render
+        ///
+        /// <summary>
+        /// ページ内容を描画します。
+        /// </summary>
+        ///
+        /// <param name="dest">出力先オブジェクト</param>
+        /// <param name="pagenum">ページ番号</param>
+        /// <param name="point">描画開始座標</param>
+        /// <param name="size">描画サイズ</param>
+        /// <param name="degree">回転角度</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Render(Graphics dest, int pagenum, Point point, Size size, int degree) =>
+            _core.Render(dest, pagenum, point, size, degree, 0);
 
         /* ----------------------------------------------------------------- */
         ///
