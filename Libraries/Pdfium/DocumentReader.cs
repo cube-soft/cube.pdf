@@ -141,7 +141,7 @@ namespace Cube.Pdf.Pdfium
         /// <param name="angle">回転角度</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Render(Graphics dest, Page page, Point point, Size size, Angle angle) =>
+        public void Render(Graphics dest, Page page, PointF point, SizeF size, Angle angle) =>
             _core.Render(dest, page, point, size, angle, 0);
 
         /* ----------------------------------------------------------------- */

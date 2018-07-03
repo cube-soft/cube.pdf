@@ -52,25 +52,30 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public static void Render(this PdfiumReader src, Graphics dest, Page page,
-            Point point, Size size, Angle angle, int flags)
+            PointF point, SizeF size, Angle angle, int flags)
         {
             var retry = 5;
             var hp = Facade.FPDF_LoadPage(src.RawObject, page.Number - 1, retry);
             if (hp == IntPtr.Zero) throw new LoadException(Facade.FPDF_GetLastError());
-
-            var dc = dest.GetHdc();
+            var hdc = dest.GetHdc();
 
             try
             {
-                Facade.FPDF_RenderPage(dc, hp,
-                    point.X, point.Y, size.Width, size.Height,
-                    GetRotation(angle), flags,
+                Facade.FPDF_RenderPage(
+                    hdc,
+                    hp,
+                    (int)point.X,
+                    (int)point.Y,
+                    (int)size.Width,
+                    (int)size.Height,
+                    GetRotation(angle),
+                    flags,
                     retry
                 );
             }
             finally
             {
-                dest.ReleaseHdc(dc);
+                dest.ReleaseHdc(hdc);
                 Facade.FPDF_ClosePage(hp);
             }
         }

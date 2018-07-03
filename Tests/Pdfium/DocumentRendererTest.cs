@@ -18,7 +18,6 @@
 using Cube.Pdf.Mixin;
 using Cube.Pdf.Pdfium;
 using NUnit.Framework;
-using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace Cube.Pdf.Tests.Pdfium
@@ -44,11 +43,11 @@ namespace Cube.Pdf.Tests.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("SampleRotation.pdf", 1)]
-        [TestCase("SampleRotation.pdf", 2)]
-        [TestCase("SampleRotation.pdf", 3)]
-        [TestCase("SampleRotation.pdf", 4)]
-        public void Render(string filename, int pagenum)
+        [TestCase("SampleRotation.pdf", 1, 0.5, 297, 421)]
+        [TestCase("SampleRotation.pdf", 2, 0.5, 421, 297)]
+        [TestCase("SampleRotation.pdf", 3, 0.5, 297, 421)]
+        [TestCase("SampleRotation.pdf", 4, 0.5, 421, 297)]
+        public void Render(string filename, int pagenum, double ratio, int width, int height)
         {
             var src  = GetExamplesWith(filename);
             var dest = GetResultsWith($"{IO.Get(src).NameWithoutExtension}-{pagenum}.png");
@@ -56,14 +55,10 @@ namespace Cube.Pdf.Tests.Pdfium
             using (var reader = new DocumentReader(src))
             {
                 var page = reader.GetPage(pagenum);
-                var vs   = page.GetViewSize();
-                var w    = (int)(vs.Width * 1.0);
-                var h    = (int)(vs.Height * 1.0);
-
-                using (var image = new Bitmap(w, h))
-                using (var gs = Graphics.FromImage(image))
+                using (var image = reader.GetImage(page, ratio))
                 {
-                    reader.Render(gs, page, new Point(0, 0), new Size(w, h), new Angle());
+                    Assert.That(image.Width,  Is.EqualTo(width));
+                    Assert.That(image.Height, Is.EqualTo(height));
                     image.Save(dest, ImageFormat.Png);
                 }
             }

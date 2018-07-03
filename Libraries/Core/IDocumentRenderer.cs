@@ -42,9 +42,9 @@ namespace Cube.Pdf
         /// <param name="page">ページ情報</param>
         /// <param name="point">描画開始座標</param>
         /// <param name="size">描画サイズ</param>
-        /// <param name="angle">回転角度</param>
+        /// <param name="rotation">回転角度</param>
         ///
         /* ----------------------------------------------------------------- */
-        void Render(Graphics dest, Page page, Point point, Size size, Angle angle);
+        void Render(Graphics dest, Page page, PointF point, SizeF size, Angle rotation);
     }
 }
