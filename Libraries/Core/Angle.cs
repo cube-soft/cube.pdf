@@ -15,108 +15,123 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System.Drawing;
+using System;
 
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Page
+    /// Angle
     ///
     /// <summary>
-    /// ページを表すクラスです。
+    /// 角度を表すクラスです。
     /// </summary>
     ///
+    /// <remarks>
+    /// 入力値に対して [0, 360) の範囲で正規化します。
+    /// </remarks>
+    ///
     /* --------------------------------------------------------------------- */
-    public class Page : ObservableProperty
+    public class Angle
     {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Angle
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Angle() : this(0) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Angle
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="degree">度単位の値</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Angle(int degree)
+        {
+            Degree = Normalize(degree);
+        }
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// File
+        /// Degree
         ///
         /// <summary>
-        /// Page オブジェクトが属する File オブジェクトを取得または
-        /// 設定します。
+        /// 度単位の角度を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public File File
-        {
-            get => _file;
-            set => SetProperty(ref _file, value);
-        }
+        public int Degree { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Number
+        /// Ragian
         ///
         /// <summary>
-        /// ページ番号を取得または設定します。
+        /// ラジアン単位の角度を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Number
-        {
-            get => _number;
-            set => SetProperty(ref _number, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotation
-        ///
-        /// <summary>
-        /// ページオブジェクト表示時の回転角を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Angle Rotation
-        {
-            get => _rotation;
-            set => SetProperty(ref _rotation, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Resolution
-        ///
-        /// <summary>
-        /// 水平方法および垂直方向の解像度（1 インチあたりのピクセル数）を
-        /// 取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PointF Resolution
-        {
-            get => _resolution;
-            set => SetProperty(ref _resolution, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Size
-        ///
-        /// <summary>
-        /// ページオブジェクトのサイズ（ピクセル単位）を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SizeF Size
-        {
-            get => _size;
-            set => SetProperty(ref _size, value);
-        }
+        public double Radian => Math.PI * Degree / 180.0;
 
         #endregion
 
-        #region Fields
-        private File _file;
-        private int _number = -1;
-        private Angle _rotation;
-        private PointF _resolution;
-        private SizeF _size;
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// operator+
+        ///
+        /// <summary>
+        /// 角度の足し算を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Angle operator +(Angle x, Angle y) => new Angle(x.Degree + y.Degree);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// operator+
+        ///
+        /// <summary>
+        /// 角度の足し算を実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Angle operator +(Angle x, int y) => new Angle(x.Degree + y);
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Normalize
+        ///
+        /// <summary>
+        /// 角度を正規化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private int Normalize(int src)
+        {
+            var dest = src;
+            while (dest <    0) dest += 360;
+            while (dest >= 360) dest -= 360;
+            return dest;
+        }
+
         #endregion
     }
 }

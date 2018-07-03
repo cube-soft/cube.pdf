@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attachment.cs" />
+    <Compile Include="Angle.cs" />
     <Compile Include="DocumentReaderBase.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="EncryptionException.cs" />

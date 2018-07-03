@@ -53,11 +53,11 @@ namespace Cube.Pdf.Tests
             {
                 var dest = reader.GetPage(n);
 
-                Assert.That(dest.Resolution.X, Is.EqualTo(72.0f));
-                Assert.That(dest.Resolution.Y, Is.EqualTo(72.0f));
-                Assert.That(dest.Size.Width,   Is.EqualTo(w));
-                Assert.That(dest.Size.Height,  Is.EqualTo(h));
-                Assert.That(dest.Rotation,     Is.EqualTo(degree));
+                Assert.That(dest.Resolution.X,    Is.EqualTo(72.0f));
+                Assert.That(dest.Resolution.Y,    Is.EqualTo(72.0f));
+                Assert.That(dest.Size.Width,      Is.EqualTo(w));
+                Assert.That(dest.Size.Height,     Is.EqualTo(h));
+                Assert.That(dest.Rotation.Degree, Is.EqualTo(degree));
             }
         }
 
@@ -76,7 +76,8 @@ namespace Cube.Pdf.Tests
         [TestCase(1000, ExpectedResult = 280)]
         [TestCase(  -1, ExpectedResult = 359)]
         [TestCase(-900, ExpectedResult = 180)]
-        public int Rotation(int degree) => new Page { Rotation = degree }.Rotation;
+        public int Rotation(int degree) =>
+            new Page { Rotation = new Angle(degree) }.Rotation.Degree;
 
         #endregion
 

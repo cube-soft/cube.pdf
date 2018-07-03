@@ -160,7 +160,7 @@ namespace Cube.Pdf.Pdfium
                     File       = File,
                     Number     = index + 1,
                     Size       = size,
-                    Rotation   = degree,
+                    Rotation   = new Angle(degree),
                     Resolution = new PointF(72.0f, 72.0f),
                 };
             }

@@ -166,7 +166,7 @@ namespace Cube.Pdf.Mixin
                 Number     = index + 1,
                 Size       = image.Size,
                 Resolution = new PointF(x, y),
-                Rotation   = 0,
+                Rotation   = new Angle(),
             };
         }
 
@@ -240,9 +240,9 @@ namespace Cube.Pdf.Mixin
         /* ----------------------------------------------------------------- */
         public static SizeF GetViewSize(this Page src, PointF dpi, int rotation)
         {
-            var radian = Math.PI * Normalize(src.Rotation + rotation) / 180.0;
-            var sin    = Math.Abs(Math.Sin(radian));
-            var cos    = Math.Abs(Math.Cos(radian));
+            var angle  = src.Rotation + rotation;
+            var sin    = Math.Abs(Math.Sin(angle.Radian));
+            var cos    = Math.Abs(Math.Cos(angle.Radian));
             var width  = src.Size.Width * cos + src.Size.Height * sin;
             var height = src.Size.Width * sin + src.Size.Height * cos;
             var h      = dpi.X / src.Resolution.X;
@@ -252,27 +252,6 @@ namespace Cube.Pdf.Mixin
         }
 
         #endregion
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Normalize
-        ///
-        /// <summary>
-        /// 回転角度を正規化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static int Normalize(int degree)
-        {
-            var dest = degree;
-            while (dest < -360) dest += 360;
-            while (dest >  360) dest -= 360;
-            return dest;
-        }
 
         #endregion
     }

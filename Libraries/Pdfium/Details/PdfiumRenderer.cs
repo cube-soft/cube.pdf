@@ -90,10 +90,13 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static int GetRotation(int degree) =>
-            degree <  90 ? 0 :
-            degree < 180 ? 1 :
-            degree < 270 ? 2 : 3;
+        private static int GetRotation(int degree)
+        {
+            var dest = new Angle(degree).Degree;
+            return dest <  90 ? 0 :
+                   dest < 180 ? 1 :
+                   dest < 270 ? 2 : 3;
+        }
 
         #endregion
     }

@@ -61,7 +61,7 @@ namespace Cube.Pdf.Itext
             File       = file,
             Number     = pagenum,
             Size       = src.GetPageSize(pagenum).ToSize(),
-            Rotation   = src.GetPageRotation(pagenum),
+            Rotation   = new Angle(src.GetPageRotation(pagenum)),
             Resolution = new PointF(72.0f, 72.0f)
         };
 
@@ -250,9 +250,10 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static void Rotate(this PdfReader src, Page page)
         {
-            var rot = src.GetPageRotation(page.Number);
+            var rot = page.Rotation.Degree;
+            var cmp = src.GetPageRotation(page.Number);
             var dic = src.GetPageN(page.Number);
-            if (rot != page.Rotation) dic.Put(PdfName.ROTATE, new PdfNumber(page.Rotation));
+            if (rot != cmp) dic.Put(PdfName.ROTATE, new PdfNumber(rot));
         }
 
         #endregion
