@@ -15,8 +15,10 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Log;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Cube.Pdf.Pdfium.PdfiumApi
 {
@@ -136,14 +138,43 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// </summary>
         ///
         /// <remarks>
-        /// page_index parameter inicates the first page as ZERO.
+        /// テスト試行の結果から、FPDF_LoadPage は原因不明の
+        /// NullReferenceException が送出されるケースを多々観測しています。
+        /// 現在は暫定的に、一定回数試行し、それらの試行全てが失敗した
+        /// 場合に IntPtr.Zero を返す仕様としています。
         /// </remarks>
         ///
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        public static IntPtr FPDF_LoadPage(IntPtr document, int page_index) =>
-            Invoke(() => NativeMethods.FPDF_LoadPage(document, page_index));
+        public static IntPtr FPDF_LoadPage(IntPtr document, int page_index, int retry)
+        {
+            for (var i = 0; i < retry; ++i)
+            {
+                try { return Invoke(() => NativeMethods.FPDF_LoadPage(document, page_index)); }
+                catch (Exception err)
+                {
+                    Logger.Warn(typeof(Facade), $"FPDF_LoadPage error ({i + 1}/{retry})");
+                    Logger.Warn(typeof(Facade), err.ToString());
+                    Task.Delay(50).Wait();
+                }
+            }
+            return IntPtr.Zero;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_ClosePage
+        ///
+        /// <summary>
+        /// Close a loaded PDF page.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void FPDF_ClosePage(IntPtr page) =>
+            Invoke(() => NativeMethods.FPDF_ClosePage(page));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -362,7 +393,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         #endregion
 
         #region Fields
-        private static object _lock = new object();
+        private static readonly string _lock = string.Intern("9864BE23-E546-491D-BADC-4E567C779742");
         #endregion
     }
 }

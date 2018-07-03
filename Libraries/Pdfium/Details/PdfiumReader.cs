@@ -25,14 +25,14 @@ namespace Cube.Pdf.Pdfium
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PdfReader
+    /// PdfiumReader
     ///
     /// <summary>
     /// PDFium の API をラップした Reader クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class PdfReader : PdfLibrary
+    internal sealed class PdfiumReader : PdfiumLibrary
     {
         #region Constructors
 
@@ -45,7 +45,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfReader(string src, IO io)
+        private PdfiumReader(string src, IO io)
         {
             Source  = src;
             IO      = io;
@@ -154,9 +154,9 @@ namespace Cube.Pdf.Pdfium
         /// <returns>PdfReader</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader Create(string src, IQuery<string> query, IO io, out string password)
+        public static PdfiumReader Create(string src, IQuery<string> query, IO io, out string password)
         {
-            var dest = new PdfReader(src, io);
+            var dest = new PdfiumReader(src, io);
             password = string.Empty;
 
             while (true)

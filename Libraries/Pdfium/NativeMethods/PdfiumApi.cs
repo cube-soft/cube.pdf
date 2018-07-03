@@ -148,6 +148,20 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
 
         /* ----------------------------------------------------------------- */
         ///
+        /// FPDF_ClosePage
+        ///
+        /// <summary>
+        /// Close a loaded PDF page.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern void FPDF_ClosePage(IntPtr page);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// FPDF_GetPageWidth
         ///
         /// <summary>

@@ -29,7 +29,7 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class EncryptionFactory
+    internal static class EncryptionFactory
     {
         #region Methods
 

@@ -47,8 +47,8 @@ namespace Cube.Pdf.Mixin
         /// <returns>Page オブジェクト</returns>
         ///
         /// <remarks>
-        /// IDocumentReader.Pages オブジェクトが IReadOnlyList(Page) を
-        /// 実装している場合は O(1) で Page オブジェクトを取得します。
+        /// IDocumentReader.Pages が IList(Page) または IReadOnlyList(Page)
+        /// を実装している場合は O(1) で Page オブジェクトを取得します。
         /// それ以外の場合は O(n) の時間を要します。
         /// </remarks>
         ///
@@ -56,7 +56,8 @@ namespace Cube.Pdf.Mixin
         public static Page GetPage(this IDocumentReader src, int pagenum)
         {
             var index = pagenum - 1;
-            if (src.Pages is IReadOnlyList<Page> dest) return dest[index];
+            if (src.Pages is IReadOnlyList<Page> l0) return l0[index];
+            if (src.Pages is IList<Page> l1) return l1[index];
             return src.Pages.Skip(index).First();
         }
 

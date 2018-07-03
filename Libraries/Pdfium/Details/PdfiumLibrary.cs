@@ -22,14 +22,14 @@ namespace Cube.Pdf.Pdfium
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PdfLibrary
+    /// PdfiumLibrary
     ///
     /// <summary>
     /// PDFium API を利用するための基底クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal abstract class PdfLibrary : IDisposable
+    internal abstract class PdfiumLibrary : IDisposable
     {
         #region Constructors
 
@@ -42,7 +42,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PdfLibrary()
+        protected PdfiumLibrary()
         {
             _dispose = new OnceAction<bool>(Dispose);
             Facade.FPDF_AddRef();
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~PdfLibrary() { _dispose.Invoke(false); }
+        ~PdfiumLibrary() { _dispose.Invoke(false); }
 
         /* ----------------------------------------------------------------- */
         ///

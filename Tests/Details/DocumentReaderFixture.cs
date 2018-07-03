@@ -17,9 +17,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.FileSystem.Tests;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Cube.Pdf.Tests
 {
@@ -103,8 +103,7 @@ namespace Cube.Pdf.Tests
         /* ----------------------------------------------------------------- */
         protected IDocumentReader Create(string klass, string src, IQuery<string> query)
         {
-            var status = GetFactory().TryGetValue(klass, out var factory);
-            Debug.Assert(status);
+            Assert.That(GetFactory().TryGetValue(klass, out var factory), Is.True);
             return factory(src, query, IO);
         }
 

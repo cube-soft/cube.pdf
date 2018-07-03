@@ -16,20 +16,21 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Pdfium.PdfiumApi;
+using System;
 using System.Drawing;
 
 namespace Cube.Pdf.Pdfium
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PdfRenderer
+    /// PdfiumRenderer
     ///
     /// <summary>
     /// PDFium の API をラップした描画クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PdfRenderer
+    internal static class PdfiumRenderer
     {
         #region Methods
 
@@ -50,17 +51,23 @@ namespace Cube.Pdf.Pdfium
         /// <param name="flags">描画フラグ</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Render(this PdfReader src, Graphics dest, int pagenum,
+        public static void Render(this PdfiumReader src, Graphics dest, int pagenum,
             Point start, Size size, int degree, int flags)
         {
+            var page = Facade.FPDF_LoadPage(src.RawObject, pagenum - 1, 5);
+            if (page == IntPtr.Zero) return;
             var dc = dest.GetHdc();
+
             try
             {
-                var page = Facade.FPDF_LoadPage(src.RawObject, pagenum - 1);
                 Facade.FPDF_RenderPage(dc, page, start.X, start.Y,
                     size.Width, size.Height, GetRotation(degree), flags);
             }
-            finally { dest.ReleaseHdc(dc); }
+            finally
+            {
+                Facade.FPDF_ClosePage(page);
+                dest.ReleaseHdc(dc);
+            }
         }
 
         #endregion

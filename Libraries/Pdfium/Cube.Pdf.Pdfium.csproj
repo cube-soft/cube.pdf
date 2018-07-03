@@ -91,10 +91,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Details\EncryptionFactory.cs" />
-    <Compile Include="Details\PdfLibrary.cs" />
+    <Compile Include="Details\PdfiumLibrary.cs" />
     <Compile Include="Details\MetadataFactory.cs" />
-    <Compile Include="Details\PdfReader.cs" />
-    <Compile Include="Details\PdfRenderer.cs" />
+    <Compile Include="Details\PdfiumReader.cs" />
+    <Compile Include="Details\PdfiumRenderer.cs" />
     <Compile Include="Details\ReadOnlyPageList.cs" />
     <Compile Include="NativeMethods\PdfiumApi.cs" />
     <Compile Include="NativeMethods\PdfiumApiFacade.cs" />

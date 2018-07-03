@@ -113,7 +113,7 @@ namespace Cube.Pdf.Pdfium
         public DocumentReader(string src, IQuery<string> query, IO io) : base(io)
         {
             Debug.Assert(io != null);
-            _core = PdfReader.Create(src, query, io, out var password);
+            _core = PdfiumReader.Create(src, query, io, out var password);
             Debug.Assert(_core != null);
 
             File       = _core.File;
@@ -165,7 +165,7 @@ namespace Cube.Pdf.Pdfium
         #endregion
 
         #region Fields
-        private readonly PdfReader _core;
+        private readonly PdfiumReader _core;
         #endregion
     }
 }

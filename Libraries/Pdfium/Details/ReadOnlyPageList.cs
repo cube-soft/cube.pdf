@@ -19,6 +19,7 @@ using Cube.Pdf.Pdfium.PdfiumApi;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace Cube.Pdf.Pdfium
@@ -50,6 +51,9 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public ReadOnlyPageList(IntPtr core, PdfFile file)
         {
+            Debug.Assert(core != IntPtr.Zero);
+            Debug.Assert(file != null);
+
             File  = file;
             _core = core;
         }
@@ -143,20 +147,24 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private Page GetPage(int index)
         {
-            var handle = Facade.FPDF_LoadPage(_core, index);
-            if (handle == IntPtr.Zero) throw PdfLibrary.GetLoadException();
+            var page = Facade.FPDF_LoadPage(_core, index, 5);
+            if (page == IntPtr.Zero) throw PdfiumLibrary.GetLoadException();
 
-            var degree = GetPageRotation(handle);
-            var size   = GetPageSize(handle, degree);
-
-            return new Page
+            try
             {
-                File       = File,
-                Number     = index + 1,
-                Size       = size,
-                Rotation   = degree,
-                Resolution = new PointF(72.0f, 72.0f),
-            };
+                var degree = GetPageRotation(page);
+                var size   = GetPageSize(page, degree);
+
+                return new Page
+                {
+                    File       = File,
+                    Number     = index + 1,
+                    Size       = size,
+                    Rotation   = degree,
+                    Resolution = new PointF(72.0f, 72.0f),
+                };
+            }
+            finally { Facade.FPDF_ClosePage(page); }
         }
 
         /* ----------------------------------------------------------------- */
