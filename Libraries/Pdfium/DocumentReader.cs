@@ -34,7 +34,7 @@ namespace Cube.Pdf.Pdfium
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentReader : DocumentReaderBase
+    public class DocumentReader : DocumentReaderBase, IDocumentRenderer
     {
         #region Constructors
 
@@ -135,14 +135,14 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /// <param name="dest">出力先オブジェクト</param>
-        /// <param name="pagenum">ページ番号</param>
+        /// <param name="page">ページ情報</param>
         /// <param name="point">描画開始座標</param>
         /// <param name="size">描画サイズ</param>
-        /// <param name="degree">回転角度</param>
+        /// <param name="angle">回転角度</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Render(Graphics dest, int pagenum, Point point, Size size, int degree) =>
-            _core.Render(dest, pagenum, point, size, degree, 0);
+        public void Render(Graphics dest, Page page, Point point, Size size, Angle angle) =>
+            _core.Render(dest, page, point, size, angle, 0);
 
         /* ----------------------------------------------------------------- */
         ///

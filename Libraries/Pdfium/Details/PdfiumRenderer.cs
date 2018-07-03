@@ -44,36 +44,34 @@ namespace Cube.Pdf.Pdfium
         ///
         /// <param name="src">PDFium オブジェクト</param>
         /// <param name="dest">出力オブジェクト</param>
-        /// <param name="pagenum">ページ番号</param>
-        /// <param name="start">描画開始座標</param>
+        /// <param name="page">ページ情報</param>
+        /// <param name="point">描画開始座標</param>
         /// <param name="size">描画サイズ</param>
-        /// <param name="degree">回転角度</param>
+        /// <param name="angle">回転角度</param>
         /// <param name="flags">描画フラグ</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Render(this PdfiumReader src, Graphics dest, int pagenum,
-            Point start, Size size, int degree, int flags)
+        public static void Render(this PdfiumReader src, Graphics dest, Page page,
+            Point point, Size size, Angle angle, int flags)
         {
-            if (pagenum < 1 || pagenum > src.File.Count) throw new ArgumentException("pagenum");
-
             var retry = 5;
-            var page  = Facade.FPDF_LoadPage(src.RawObject, pagenum - 1, retry);
-            if (page == IntPtr.Zero) throw new LoadException(Facade.FPDF_GetLastError());
+            var hp = Facade.FPDF_LoadPage(src.RawObject, page.Number - 1, retry);
+            if (hp == IntPtr.Zero) throw new LoadException(Facade.FPDF_GetLastError());
 
             var dc = dest.GetHdc();
 
             try
             {
-                Facade.FPDF_RenderPage(dc, page,
-                    start.X, start.Y, size.Width, size.Height,
-                    GetRotation(degree), flags,
+                Facade.FPDF_RenderPage(dc, hp,
+                    point.X, point.Y, size.Width, size.Height,
+                    GetRotation(angle), flags,
                     retry
                 );
             }
             finally
             {
                 dest.ReleaseHdc(dc);
-                Facade.FPDF_ClosePage(page);
+                Facade.FPDF_ClosePage(hp);
             }
         }
 
@@ -90,13 +88,10 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static int GetRotation(int degree)
-        {
-            var dest = new Angle(degree).Degree;
-            return dest <  90 ? 0 :
-                   dest < 180 ? 1 :
-                   dest < 270 ? 2 : 3;
-        }
+        private static int GetRotation(Angle src) =>
+            src.Degree <  90 ? 0 :
+            src.Degree < 180 ? 1 :
+            src.Degree < 270 ? 2 : 3;
 
         #endregion
     }

@@ -105,6 +105,7 @@
     <Compile Include="FileExtension.cs" />
     <Compile Include="IDocumentReader.cs" />
     <Compile Include="IDocumentReaderExtension.cs" />
+    <Compile Include="IDocumentRenderer.cs" />
     <Compile Include="IDocumentWriter.cs" />
     <Compile Include="IDocumentWriterExtension.cs" />
     <Compile Include="Metadata.cs" />

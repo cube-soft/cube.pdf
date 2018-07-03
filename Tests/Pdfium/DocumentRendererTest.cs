@@ -50,29 +50,25 @@ namespace Cube.Pdf.Tests.Pdfium
         [TestCase("SampleRotation.pdf", 4)]
         public void Render(string filename, int pagenum)
         {
-            try
+            var src  = GetExamplesWith(filename);
+            var dest = GetResultsWith($"{IO.Get(src).NameWithoutExtension}-{pagenum}.png");
+
+            using (var reader = new DocumentReader(src))
             {
-                var src = GetExamplesWith(filename);
-                var dest = GetResultsWith($"{IO.Get(src).NameWithoutExtension}-{pagenum}.png");
+                var page = reader.GetPage(pagenum);
+                var vs   = page.GetViewSize();
+                var w    = (int)(vs.Width * 1.0);
+                var h    = (int)(vs.Height * 1.0);
 
-                using (var reader = new DocumentReader(src))
+                using (var image = new Bitmap(w, h))
+                using (var gs = Graphics.FromImage(image))
                 {
-                    var page = reader.GetPage(pagenum);
-                    var vs   = page.GetViewSize();
-                    var w    = (int)(vs.Width * 1.0);
-                    var h    = (int)(vs.Height * 1.0);
-
-                    using (var image = new Bitmap(w, h))
-                    using (var gs = Graphics.FromImage(image))
-                    {
-                        reader.Render(gs, pagenum, new Point(0, 0), new Size(w, h), 0);
-                        image.Save(dest, ImageFormat.Png);
-                    }
+                    reader.Render(gs, page, new Point(0, 0), new Size(w, h), new Angle());
+                    image.Save(dest, ImageFormat.Png);
                 }
-
-                Assert.That(IO.Exists(dest), Is.True);
             }
-            catch (System.Exception err) { Log.Logger.Warn(GetType(), err.ToString()); throw; }
+
+            Assert.That(IO.Exists(dest), Is.True);
         }
     }
 }
