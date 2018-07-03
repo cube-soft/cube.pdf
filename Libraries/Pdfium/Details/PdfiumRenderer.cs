@@ -55,14 +55,17 @@ namespace Cube.Pdf.Pdfium
             Point start, Size size, int degree, int flags)
         {
             if (pagenum < 1 || pagenum > src.File.Count) throw new ArgumentException("Page number");
-            var page = Facade.FPDF_LoadPage(src.RawObject, pagenum - 1, 5);
+
+            var retry = 5;
+            var page  = Facade.FPDF_LoadPage(src.RawObject, pagenum - 1, retry);
             if (page == IntPtr.Zero) throw new LoadException(Facade.FPDF_GetLastError());
+
             var dc = dest.GetHdc();
 
             try
             {
                 Facade.FPDF_RenderPage(dc, page, start.X, start.Y,
-                    size.Width, size.Height, GetRotation(degree), flags);
+                    size.Width, size.Height, GetRotation(degree), flags, retry);
             }
             finally
             {

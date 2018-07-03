@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Log;
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -147,20 +148,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        public static IntPtr FPDF_LoadPage(IntPtr document, int page_index, int retry)
-        {
-            for (var i = 0; i < retry; ++i)
-            {
-                try { return Invoke(() => NativeMethods.FPDF_LoadPage(document, page_index)); }
-                catch (Exception err)
-                {
-                    Logger.Warn(typeof(Facade), $"FPDF_LoadPage error ({i + 1}/{retry})");
-                    Logger.Warn(typeof(Facade), err.ToString());
-                    Task.Delay(50).Wait();
-                }
-            }
-            return IntPtr.Zero;
-        }
+        public static IntPtr FPDF_LoadPage(IntPtr document, int page_index, int retry) =>
+            Invoke(() => NativeMethods.FPDF_LoadPage(document, page_index), retry);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -353,8 +342,9 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         ///
         /* ----------------------------------------------------------------- */
         public static void FPDF_RenderPage(IntPtr dc, IntPtr page,
-            int start_x, int start_y, int size_x, int size_y, int rotate, int flags) =>
-            Invoke(() => NativeMethods.FPDF_RenderPage(dc, page, start_x, start_y, size_x, size_y, rotate, flags));
+            int start_x, int start_y, int size_x, int size_y,
+            int rotate, int flags, int retry) =>
+            Invoke(() => NativeMethods.FPDF_RenderPage(dc, page, start_x, start_y, size_x, size_y, rotate, flags), retry);
 
         #endregion
 
@@ -371,9 +361,30 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Invoke(Action action)
+        private static void Invoke(Action action, [CallerMemberName] string name = null) =>
+            Invoke(action, 1, name);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Action オブジェクトを実行します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 一部の PDFium API が不安定なため、一定回数試行できるように
+        /// 実装しています。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Invoke(Action action, int retry, [CallerMemberName] string name = null)
         {
-            lock (_lock) action();
+            for (var i = 0; i < retry; ++i)
+            {
+                try { lock (_lock) action(); }
+                catch (Exception err) { LogWait(err, name, i, retry); }
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -384,10 +395,48 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// Func(T) オブジェクトを実行します。
         /// </summary>
         ///
+        /// <remarks>
+        /// 一部の PDFium API が不安定なため、一定回数試行できるように
+        /// 実装しています。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        private static T Invoke<T>(Func<T> func)
+        private static T Invoke<T>(Func<T> func, [CallerMemberName] string name = null) =>
+            Invoke(func, 1, name);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Func(T) オブジェクトを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static T Invoke<T>(Func<T> func, int retry, [CallerMemberName] string name = null)
         {
-            lock (_lock) return func();
+            for (var i = 0; i < retry; ++i)
+            {
+                try { lock (_lock) return func(); }
+                catch (Exception err) { LogWait(err, name, i, retry); }
+            }
+            return default(T);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LogWait
+        ///
+        /// <summary>
+        /// エラー内容をログに記録し、一定時間スリープします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void LogWait(Exception err, string name, int i, int n)
+        {
+            Logger.Warn(typeof(Facade), $"{name} error ({i + 1}/{n})");
+            Logger.Warn(typeof(Facade), err.ToString());
+            if (i + 1 < n) Task.Delay(50).Wait();
         }
 
         #endregion
