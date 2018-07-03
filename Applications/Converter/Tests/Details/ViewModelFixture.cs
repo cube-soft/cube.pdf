@@ -21,6 +21,7 @@ using Cube.Forms;
 using Cube.Generics;
 using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
+using Cube.Pdf.Mixin;
 using NUnit.Framework;
 using System;
 using System.Globalization;

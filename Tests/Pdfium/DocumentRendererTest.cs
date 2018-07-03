@@ -58,13 +58,14 @@ namespace Cube.Pdf.Tests.Pdfium
                 using (var reader = new DocumentReader(src))
                 {
                     var page = reader.GetPage(pagenum);
-                    var w = (int)(page.Size.Width * 0.5);
-                    var h = (int)(page.Size.Height * 0.5);
+                    var vs   = page.GetViewSize();
+                    var w    = (int)(vs.Width * 1.0);
+                    var h    = (int)(vs.Height * 1.0);
 
                     using (var image = new Bitmap(w, h))
                     using (var gs = Graphics.FromImage(image))
                     {
-                        reader.Render(gs, pagenum, new Point(0, 0), new Size(w, h), page.Rotation);
+                        reader.Render(gs, pagenum, new Point(0, 0), new Size(w, h), 0);
                         image.Save(dest, ImageFormat.Png);
                     }
                 }

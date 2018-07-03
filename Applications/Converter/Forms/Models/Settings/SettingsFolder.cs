@@ -21,6 +21,7 @@ using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Log;
 using Cube.Pdf.Ghostscript;
+using Cube.Pdf.Mixin;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;

@@ -54,7 +54,7 @@ namespace Cube.Pdf.Pdfium
         public static void Render(this PdfiumReader src, Graphics dest, int pagenum,
             Point start, Size size, int degree, int flags)
         {
-            if (pagenum < 1 || pagenum > src.File.Count) throw new ArgumentException("Page number");
+            if (pagenum < 1 || pagenum > src.File.Count) throw new ArgumentException("pagenum");
 
             var retry = 5;
             var page  = Facade.FPDF_LoadPage(src.RawObject, pagenum - 1, retry);
@@ -64,8 +64,11 @@ namespace Cube.Pdf.Pdfium
 
             try
             {
-                Facade.FPDF_RenderPage(dc, page, start.X, start.Y,
-                    size.Width, size.Height, GetRotation(degree), flags, retry);
+                Facade.FPDF_RenderPage(dc, page,
+                    start.X, start.Y, size.Width, size.Height,
+                    GetRotation(degree), flags,
+                    retry
+                );
             }
             finally
             {

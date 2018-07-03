@@ -22,7 +22,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Cube.Pdf
+namespace Cube.Pdf.Mixin
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -182,9 +182,12 @@ namespace Cube.Pdf
         /// ページオブジェクトの表示サイズを取得します。
         /// </summary>
         ///
+        /// <param name="src">Page オブジェクト</param>
+        ///
+        /// <remarks>変換後のサイズ</remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public static SizeF GetViewSize(this Page src) =>
-            GetViewSize(src, src.Resolution);
+        public static SizeF GetViewSize(this Page src) => GetViewSize(src, 0);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -194,9 +197,14 @@ namespace Cube.Pdf
         /// ページオブジェクトの表示サイズを取得します。
         /// </summary>
         ///
+        /// <param name="src">Page オブジェクト</param>
+        /// <param name="rotation">回転角度</param>
+        ///
+        /// <remarks>変換後のサイズ</remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public static SizeF GetViewSize(this Page src, int dpi) =>
-            GetViewSize(src, new PointF(dpi, dpi));
+        public static SizeF GetViewSize(this Page src, int rotation) =>
+            GetViewSize(src, src.Resolution, rotation);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -206,10 +214,33 @@ namespace Cube.Pdf
         /// ページオブジェクトの表示サイズを取得します。
         /// </summary>
         ///
+        /// <param name="src">Page オブジェクト</param>
+        /// <param name="dpi">表示 DPI</param>
+        ///
+        /// <remarks>変換後のサイズ</remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public static SizeF GetViewSize(this Page src, PointF dpi)
+        public static SizeF GetViewSize(this Page src, PointF dpi) =>
+            GetViewSize(src, dpi, 0);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetViewSize
+        ///
+        /// <summary>
+        /// ページオブジェクトの表示サイズを取得します。
+        /// </summary>
+        ///
+        /// <param name="src">Page オブジェクト</param>
+        /// <param name="rotation">回転角度</param>
+        /// <param name="dpi">表示 DPI</param>
+        ///
+        /// <remarks>変換後のサイズ</remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static SizeF GetViewSize(this Page src, PointF dpi, int rotation)
         {
-            var radian = Math.PI * src.Rotation / 180.0;
+            var radian = Math.PI * Normalize(src.Rotation + rotation) / 180.0;
             var sin    = Math.Abs(Math.Sin(radian));
             var cos    = Math.Abs(Math.Cos(radian));
             var width  = src.Size.Width * cos + src.Size.Height * sin;
@@ -221,6 +252,27 @@ namespace Cube.Pdf
         }
 
         #endregion
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Normalize
+        ///
+        /// <summary>
+        /// 回転角度を正規化します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static int Normalize(int degree)
+        {
+            var dest = degree;
+            while (dest < -360) dest += 360;
+            while (dest >  360) dest -= 360;
+            return dest;
+        }
 
         #endregion
     }
