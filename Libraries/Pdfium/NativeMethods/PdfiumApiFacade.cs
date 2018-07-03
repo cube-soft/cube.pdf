@@ -22,20 +22,19 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PdfiumApi.NativeMethods
+    /// PdfiumApi.Facade
     ///
     /// <summary>
-    /// PDFium の API を定義したクラスです。
+    /// PDFium API のラッパクラスです。
     /// </summary>
     ///
     /// <remarks>
-    /// このクラスのメソッドを直接実行しないで下さい。また、新しいメソッドを
-    /// 定義した場合、同名のメソッドを PdfiumApi.Facade にも定義し、
-    /// Facade 経由で実行するようにして下さい。
+    /// PDFium がスレッドセーフではないため、lock オブジェクトを利用して
+    /// 実際の API を実行します。
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    internal class NativeMethods
+    internal static class Facade
     {
         #region Methods
 
@@ -50,8 +49,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern void FPDF_AddRef();
+        public static void FPDF_AddRef() =>
+            Invoke(() => NativeMethods.FPDF_AddRef());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -62,8 +61,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern void FPDF_Release();
+        public static void FPDF_Release() =>
+            Invoke(() => NativeMethods.FPDF_Release());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -74,8 +73,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern uint FPDF_GetLastError();
+        public static uint FPDF_GetLastError() =>
+            Invoke(() => NativeMethods.FPDF_GetLastError());
 
         #endregion
 
@@ -92,9 +91,9 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, CharSet = CharSet.Ansi)]
-        public static extern IntPtr FPDF_LoadCustomDocument(
-            [MarshalAs(UnmanagedType.LPStruct)] FileAccess access, string password);
+        public static IntPtr FPDF_LoadCustomDocument([MarshalAs(UnmanagedType.LPStruct)]
+            FileAccess access, string password) =>
+            Invoke(() => NativeMethods.FPDF_LoadCustomDocument(access, password));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -107,8 +106,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern void FPDF_CloseDocument(IntPtr document);
+        public static void FPDF_CloseDocument(IntPtr document) =>
+            Invoke(() => NativeMethods.FPDF_CloseDocument(document));
 
         #endregion
 
@@ -125,8 +124,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern int FPDF_GetPageCount(IntPtr document);
+        public static int FPDF_GetPageCount(IntPtr document) =>
+            Invoke(() => NativeMethods.FPDF_GetPageCount(document));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -143,8 +142,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern IntPtr FPDF_LoadPage(IntPtr document, int page_index);
+        public static IntPtr FPDF_LoadPage(IntPtr document, int page_index) =>
+            Invoke(() => NativeMethods.FPDF_LoadPage(document, page_index));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -157,8 +156,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern double FPDF_GetPageWidth(IntPtr page);
+        public static double FPDF_GetPageWidth(IntPtr page) =>
+            Invoke(() => NativeMethods.FPDF_GetPageWidth(page));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -171,8 +170,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern double FPDF_GetPageHeight(IntPtr page);
+        public static double FPDF_GetPageHeight(IntPtr page) =>
+            Invoke(() => NativeMethods.FPDF_GetPageHeight(page));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -193,8 +192,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_edit.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern int FPDFPage_GetRotation(IntPtr page);
+        public static int FPDFPage_GetRotation(IntPtr page) =>
+            Invoke(() => NativeMethods.FPDFPage_GetRotation(page));
 
         #endregion
 
@@ -215,8 +214,10 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern bool FPDF_GetFileVersion(IntPtr document, out int version);
+        public static bool FPDF_GetFileVersion(IntPtr document, out int version)
+        {
+            lock (_lock) return NativeMethods.FPDF_GetFileVersion(document, out version);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -239,8 +240,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_doc.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern uint FPDF_GetMetaText(IntPtr document, string tag, byte[] buffer, uint buflen);
+        public static uint FPDF_GetMetaText(IntPtr document, string tag, byte[] buffer, uint buflen) =>
+            Invoke(() => NativeMethods.FPDF_GetMetaText(document, tag, buffer, buflen));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -265,8 +266,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_ext.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern int FPDFDoc_GetPageMode(IntPtr document);
+        public static int FPDFDoc_GetPageMode(IntPtr document) =>
+            Invoke(() => NativeMethods.FPDFDoc_GetPageMode(document));
 
         #endregion
 
@@ -287,8 +288,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern ulong FPDF_GetDocPermissions(IntPtr document);
+        public static ulong FPDF_GetDocPermissions(IntPtr document) =>
+            Invoke(() => NativeMethods.FPDF_GetDocPermissions(document));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -301,8 +302,8 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern int FPDF_GetSecurityHandlerRevision(IntPtr document);
+        public static int FPDF_GetSecurityHandlerRevision(IntPtr document) =>
+            Invoke(() => NativeMethods.FPDF_GetSecurityHandlerRevision(document));
 
         #endregion
 
@@ -320,16 +321,48 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName)]
-        public static extern void FPDF_RenderPage(IntPtr dc, IntPtr page,
-            int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
+        public static void FPDF_RenderPage(IntPtr dc, IntPtr page,
+            int start_x, int start_y, int size_x, int size_y, int rotate, int flags) =>
+            Invoke(() => NativeMethods.FPDF_RenderPage(dc, page, start_x, start_y, size_x, size_y, rotate, flags));
 
         #endregion
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Action オブジェクトを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Invoke(Action action)
+        {
+            lock (_lock) action();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Func(T) オブジェクトを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static T Invoke<T>(Func<T> func)
+        {
+            lock (_lock) return func();
+        }
 
         #endregion
 
         #region Fields
-        private const string LibName = "pdfium.dll";
+        private static object _lock = new object();
         #endregion
     }
 }

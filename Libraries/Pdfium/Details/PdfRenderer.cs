@@ -56,8 +56,8 @@ namespace Cube.Pdf.Pdfium
             var dc = dest.GetHdc();
             try
             {
-                var page = NativeMethods.FPDF_LoadPage(src.RawObject, pagenum - 1);
-                NativeMethods.FPDF_RenderPage(dc, page, start.X, start.Y,
+                var page = Facade.FPDF_LoadPage(src.RawObject, pagenum - 1);
+                Facade.FPDF_RenderPage(dc, page, start.X, start.Y,
                     size.Width, size.Height, GetRotation(degree), flags);
             }
             finally { dest.ReleaseHdc(dc); }

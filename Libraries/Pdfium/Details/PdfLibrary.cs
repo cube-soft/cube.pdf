@@ -45,7 +45,7 @@ namespace Cube.Pdf.Pdfium
         protected PdfLibrary()
         {
             _dispose = new OnceAction<bool>(Dispose);
-            NativeMethods.FPDF_AddRef();
+            Facade.FPDF_AddRef();
         }
 
         #endregion
@@ -64,7 +64,7 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public static LoadException GetLoadException() =>
-            new LoadException(NativeMethods.FPDF_GetLastError());
+            new LoadException(Facade.FPDF_GetLastError());
 
         #region IDisposable
 
@@ -107,8 +107,7 @@ namespace Cube.Pdf.Pdfium
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing) =>
-            NativeMethods.FPDF_Release();
+        protected virtual void Dispose(bool disposing) => Facade.FPDF_Release();
 
         #endregion
 

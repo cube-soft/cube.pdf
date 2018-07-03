@@ -143,7 +143,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private Page GetPage(int index)
         {
-            var handle = NativeMethods.FPDF_LoadPage(_core, index);
+            var handle = Facade.FPDF_LoadPage(_core, index);
             if (handle == IntPtr.Zero) throw PdfLibrary.GetLoadException();
 
             var degree = GetPageRotation(handle);
@@ -176,8 +176,8 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private SizeF GetPageSize(IntPtr handle, int degree)
         {
-            var w = (float)NativeMethods.FPDF_GetPageWidth(handle);
-            var h = (float)NativeMethods.FPDF_GetPageHeight(handle);
+            var w = (float)Facade.FPDF_GetPageWidth(handle);
+            var h = (float)Facade.FPDF_GetPageHeight(handle);
 
             return (degree != 90 && degree != 270) ? new SizeF(w, h) : new SizeF(h, w);
         }
@@ -193,7 +193,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private int GetPageRotation(IntPtr handle)
         {
-            var dest = NativeMethods.FPDFPage_GetRotation(handle);
+            var dest = Facade.FPDFPage_GetRotation(handle);
             return dest == 1 ?  90 :
                    dest == 2 ? 180 :
                    dest == 3 ? 270 : 0;

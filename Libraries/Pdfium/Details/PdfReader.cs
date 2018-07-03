@@ -192,7 +192,7 @@ namespace Cube.Pdf.Pdfium
         {
             try
             {
-                if (RawObject != IntPtr.Zero) NativeMethods.FPDF_CloseDocument(RawObject);
+                if (RawObject != IntPtr.Zero) Facade.FPDF_CloseDocument(RawObject);
                 if (disposing) _stream.Dispose();
             }
             finally { base.Dispose(disposing); }
@@ -217,7 +217,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private void Load(string password)
         {
-            RawObject = NativeMethods.FPDF_LoadCustomDocument(
+            RawObject = Facade.FPDF_LoadCustomDocument(
                 new FileAccess
                 {
                     Length    = (uint)_stream.Length,
@@ -229,7 +229,7 @@ namespace Cube.Pdf.Pdfium
 
             if (RawObject == IntPtr.Zero) throw GetLoadException();
 
-            var n = NativeMethods.FPDF_GetPageCount(RawObject);
+            var n = Facade.FPDF_GetPageCount(RawObject);
 
             Encryption = EncryptionFactory.Create(RawObject, password);
             File       = CreateFile(password, n, !Encryption.OpenWithPassword);

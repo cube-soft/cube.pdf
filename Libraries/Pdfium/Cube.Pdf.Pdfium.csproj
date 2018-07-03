@@ -96,10 +96,11 @@
     <Compile Include="Details\PdfReader.cs" />
     <Compile Include="Details\PdfRenderer.cs" />
     <Compile Include="Details\ReadOnlyPageList.cs" />
+    <Compile Include="NativeMethods\PdfiumApi.cs" />
+    <Compile Include="NativeMethods\PdfiumApiFacade.cs" />
+    <Compile Include="NativeMethods\PdfiumApiStructure.cs" />
     <Compile Include="DocumentReader.cs" />
     <Compile Include="LoadException.cs" />
-    <Compile Include="NativeMethods\PdfiumApi.cs" />
-    <Compile Include="NativeMethods\PdfiumApiStructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -74,11 +74,11 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private static string GetText(IntPtr core, string name)
         {
-            var size = NativeMethods.FPDF_GetMetaText(core, name, null, 0);
+            var size = Facade.FPDF_GetMetaText(core, name, null, 0);
             if (size <= 2) return string.Empty;
 
             var buffer = new byte[size];
-            NativeMethods.FPDF_GetMetaText(core, name, buffer, size);
+            Facade.FPDF_GetMetaText(core, name, buffer, size);
             return Encoding.Unicode.GetString(buffer, 0, (int)(size - 2));
         }
 
@@ -92,7 +92,7 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         private static Version GetVersion(IntPtr core) =>
-            NativeMethods.FPDF_GetFileVersion(core, out var version) ?
+            Facade.FPDF_GetFileVersion(core, out var version) ?
             new Version(version / 10, version % 10) :
             new Version(1, 7);
 
