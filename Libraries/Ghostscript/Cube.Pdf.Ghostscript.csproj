@@ -77,29 +77,29 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.FileSystem.1.11.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NativeMethods\GsApi.cs" />
-    <Compile Include="NativeMethods\GsApiStatus.cs" />
-    <Compile Include="NativeMethods\GsApiException.cs" />
-    <Compile Include="Parameters\ColorMode.cs" />
-    <Compile Include="Parameters\Downsampling.cs" />
-    <Compile Include="Parameters\Encoding.cs" />
-    <Compile Include="Parameters\Format.cs" />
-    <Compile Include="Parameters\Orientation.cs" />
-    <Compile Include="Parameters\Paper.cs" />
-    <Compile Include="Argument.cs" />
-    <Compile Include="Converter.cs" />
-    <Compile Include="DocumentConverter.cs" />
-    <Compile Include="ImageConverter.cs" />
+    <Compile Include="Sources\NativeMethods\GsApi.cs" />
+    <Compile Include="Sources\NativeMethods\GsApiStatus.cs" />
+    <Compile Include="Sources\NativeMethods\GsApiException.cs" />
+    <Compile Include="Sources\Parameters\ColorMode.cs" />
+    <Compile Include="Sources\Parameters\Downsampling.cs" />
+    <Compile Include="Sources\Parameters\Encoding.cs" />
+    <Compile Include="Sources\Parameters\Format.cs" />
+    <Compile Include="Sources\Parameters\Orientation.cs" />
+    <Compile Include="Sources\Parameters\Paper.cs" />
+    <Compile Include="Sources\Argument.cs" />
+    <Compile Include="Sources\Converter.cs" />
+    <Compile Include="Sources\DocumentConverter.cs" />
+    <Compile Include="Sources\ImageConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

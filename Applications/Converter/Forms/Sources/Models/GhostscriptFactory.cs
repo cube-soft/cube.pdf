@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace Cube.Pdf.App.Converter
 {
@@ -56,7 +57,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public static Ghostscript.Converter Create(SettingsFolder src)
         {
-            var dir  = src.IO.Get(AssemblyReader.Default.Location).DirectoryName;
+            var asm  = Assembly.GetExecutingAssembly();
+            var dir  = src.IO.Get(asm.Location).DirectoryName;
             var dest = DocumentConverter.SupportedFormats.Contains(src.Value.Format) ?
                        CreateDocumentConverter(src) :
                        CreateImageConverter(src);

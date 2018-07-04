@@ -83,16 +83,16 @@
       <HintPath>..\..\..\..\packages\AlphaFS.2.2.1\lib\net45\AlphaFS.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.11.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\..\packages\Cube.Images.1.10.0\lib\net45\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Images.1.11.0\lib\net45\Cube.Images.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Forms">
-      <HintPath>..\..\..\..\packages\Cube.Forms.1.10.0\lib\net45\Cube.Forms.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Forms.1.11.0\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -106,27 +106,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Settings\FormatOption.cs" />
-    <Compile Include="Models\Settings\Language.cs" />
-    <Compile Include="Models\Settings\Parameters.cs" />
-    <Compile Include="Models\Settings\Settings.cs" />
-    <Compile Include="Models\Settings\SettingsFolder.cs" />
-    <Compile Include="Models\DocumentName.cs" />
-    <Compile Include="Models\FileDecorator.cs" />
-    <Compile Include="Models\FileTransfer.cs" />
-    <Compile Include="Models\GhostscriptFactory.cs" />
-    <Compile Include="Models\MessageFactory.cs" />
-    <Compile Include="Models\Messenger.cs" />
-    <Compile Include="Models\ProcessLauncher.cs" />
-    <Compile Include="Models\StringExtension.cs" />
-    <Compile Include="ViewModels\EncryptionViewModel.cs" />
-    <Compile Include="ViewModels\MainFacade.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MessageViewModel.cs" />
-    <Compile Include="ViewModels\MetadataViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Views\ViewResource.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Sources\Models\Settings\FormatOption.cs" />
+    <Compile Include="Sources\Models\Settings\Language.cs" />
+    <Compile Include="Sources\Models\Settings\Parameters.cs" />
+    <Compile Include="Sources\Models\Settings\Settings.cs" />
+    <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />
+    <Compile Include="Sources\Models\DocumentName.cs" />
+    <Compile Include="Sources\Models\FileDecorator.cs" />
+    <Compile Include="Sources\Models\FileTransfer.cs" />
+    <Compile Include="Sources\Models\GhostscriptFactory.cs" />
+    <Compile Include="Sources\Models\MessageFactory.cs" />
+    <Compile Include="Sources\Models\Messenger.cs" />
+    <Compile Include="Sources\Models\ProcessLauncher.cs" />
+    <Compile Include="Sources\Models\StringExtension.cs" />
+    <Compile Include="Sources\ViewModels\EncryptionViewModel.cs" />
+    <Compile Include="Sources\ViewModels\MainFacade.cs" />
+    <Compile Include="Sources\ViewModels\MainViewModel.cs" />
+    <Compile Include="Sources\ViewModels\MessageViewModel.cs" />
+    <Compile Include="Sources\ViewModels\MetadataViewModel.cs" />
+    <Compile Include="Sources\ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Sources\Views\ViewResource.cs" />
+    <Compile Include="Sources\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -134,25 +134,25 @@
     <None Include="App.config" />
     <None Include="App.manifest" />
     <None Include="Packages.config" />
-    <None Include="Resources\Header.png" />
-    <None Include="Resources\Logo.png" />
+    <None Include="Assets\Header.png" />
+    <None Include="Assets\Logo.png" />
     <None Include="Properties\DataSources\EncryptionViewModel.datasource" />
     <None Include="Properties\DataSources\GeneralViewModel.datasource" />
     <None Include="Properties\DataSources\MainViewModel.datasource" />
     <None Include="Properties\DataSources\MetadataViewModel.datasource" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\MainForm.cs">
+    <Compile Include="Sources\Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\MainForm.Designer.cs">
+    <Compile Include="Sources\Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Views\MainForm.resx">
+    <EmbeddedResource Include="Sources\Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\MainForm.ja.resx">
+    <EmbeddedResource Include="Sources\Views\MainForm.ja.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -160,7 +160,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.ja.resx" />
+    <EmbeddedResource Include="Properties\Resources.ja.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

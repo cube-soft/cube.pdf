@@ -19,6 +19,7 @@
 using Cube.FileSystem.Tests;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
+using System.Reflection;
 
 namespace Cube.Pdf.Tests.Ghostscript
 {
@@ -71,9 +72,10 @@ namespace Cube.Pdf.Tests.Ghostscript
         /* ----------------------------------------------------------------- */
         protected string Run(Converter cv, string src, string dest, string log)
         {
+            var asm = Assembly.GetExecutingAssembly().GetReader();
             var sp  = GetExamplesWith(src);
             var dp  = GetResultsWith($"{dest}{cv.Format.GetExtension()}");
-            var dir = IO.Get(AssemblyReader.Default.Location).DirectoryName;
+            var dir = IO.Get(asm.Location).DirectoryName;
 
             cv.Log           = GetResultsWith($"{log}.log");
             cv.Quiet         = false;

@@ -77,10 +77,10 @@
       <HintPath>..\..\packages\AlphaFS.2.2.1\lib\net45\AlphaFS.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\packages\Cube.FileSystem.1.11.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
@@ -99,21 +99,21 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Details\DocumentReaderFixture.cs" />
-    <Compile Include="Details\GlobalSetup.cs" />
-    <Compile Include="FileTest.cs" />
-    <Compile Include="Ghostscript\ArgumentTest.cs" />
-    <Compile Include="Ghostscript\ConverterFixture.cs" />
-    <Compile Include="Ghostscript\ConverterTest.cs" />
-    <Compile Include="Ghostscript\DocumentConverterTest.cs" />
-    <Compile Include="Ghostscript\FormatTest.cs" />
-    <Compile Include="Ghostscript\ImageConverterTest.cs" />
-    <Compile Include="Itext\DocumentReaderTest.cs" />
-    <Compile Include="Itext\DocumentWriterTest.cs" />
-    <Compile Include="EncryptionTest.cs" />
-    <Compile Include="MetadataTest.cs" />
-    <Compile Include="PageTest.cs" />
-    <Compile Include="Pdfium\DocumentRendererTest.cs" />
+    <Compile Include="Sources\Details\DocumentReaderFixture.cs" />
+    <Compile Include="Sources\Details\GlobalSetup.cs" />
+    <Compile Include="Sources\FileTest.cs" />
+    <Compile Include="Sources\Ghostscript\ArgumentTest.cs" />
+    <Compile Include="Sources\Ghostscript\ConverterFixture.cs" />
+    <Compile Include="Sources\Ghostscript\ConverterTest.cs" />
+    <Compile Include="Sources\Ghostscript\DocumentConverterTest.cs" />
+    <Compile Include="Sources\Ghostscript\FormatTest.cs" />
+    <Compile Include="Sources\Ghostscript\ImageConverterTest.cs" />
+    <Compile Include="Sources\Itext\DocumentReaderTest.cs" />
+    <Compile Include="Sources\Itext\DocumentWriterTest.cs" />
+    <Compile Include="Sources\EncryptionTest.cs" />
+    <Compile Include="Sources\MetadataTest.cs" />
+    <Compile Include="Sources\PageTest.cs" />
+    <Compile Include="Sources\Pdfium\DocumentRendererTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

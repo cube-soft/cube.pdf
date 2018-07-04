@@ -77,10 +77,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.FileSystem.1.11.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -90,17 +90,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Details\EncryptionFactory.cs" />
-    <Compile Include="Details\PdfiumLibrary.cs" />
-    <Compile Include="Details\MetadataFactory.cs" />
-    <Compile Include="Details\PdfiumReader.cs" />
-    <Compile Include="Details\PdfiumRenderer.cs" />
-    <Compile Include="Details\ReadOnlyPageList.cs" />
-    <Compile Include="NativeMethods\PdfiumApi.cs" />
-    <Compile Include="NativeMethods\PdfiumApiFacade.cs" />
-    <Compile Include="NativeMethods\PdfiumApiStructure.cs" />
-    <Compile Include="DocumentReader.cs" />
-    <Compile Include="LoadException.cs" />
+    <Compile Include="Sources\Details\EncryptionFactory.cs" />
+    <Compile Include="Sources\Details\PdfiumLibrary.cs" />
+    <Compile Include="Sources\Details\MetadataFactory.cs" />
+    <Compile Include="Sources\Details\PdfiumReader.cs" />
+    <Compile Include="Sources\Details\PdfiumRenderer.cs" />
+    <Compile Include="Sources\Details\ReadOnlyPageList.cs" />
+    <Compile Include="Sources\NativeMethods\PdfiumApi.cs" />
+    <Compile Include="Sources\NativeMethods\PdfiumApiFacade.cs" />
+    <Compile Include="Sources\NativeMethods\PdfiumApiStructure.cs" />
+    <Compile Include="Sources\DocumentReader.cs" />
+    <Compile Include="Sources\LoadException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -72,9 +72,8 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder(Cube.DataContract.Format format, string path, IO io) :
-            base(format, path, Assembly.GetExecutingAssembly())
+            base(Assembly.GetExecutingAssembly(), format, path, io)
         {
-            IO            = io;
             AutoSave      = false;
             MachineName   = Environment.MachineName;
             UserName      = Environment.UserName;
@@ -105,17 +104,6 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdf/");
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// I/O オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
