@@ -48,7 +48,7 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         public static void Render(this IDocumentRenderer src, Graphics dest, Page page) =>
-            src.Render(dest, page, page.GetViewSize());
+            src.Render(dest, page, new Angle());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -61,68 +61,11 @@ namespace Cube.Pdf.Mixin
         /// <param name="src">Renderer オブジェクト</param>
         /// <param name="dest">描画先オブジェクト</param>
         /// <param name="page">ページ情報</param>
-        /// <param name="ratio">描画倍率</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Render(this IDocumentRenderer src, Graphics dest,
-            Page page, double ratio) =>
-            src.Render(dest, page, page.GetViewSize(ratio));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// PDF の内容を描画します。
-        /// </summary>
-        ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="dest">描画先オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="ratio">描画倍率</param>
         /// <param name="rotation">回転角度</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Render(this IDocumentRenderer src, Graphics dest,
-            Page page, double ratio, Angle rotation) =>
-            src.Render(dest, page, page.GetViewSize(ratio, rotation), rotation);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// PDF の内容を描画します。
-        /// </summary>
-        ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="dest">描画先オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="size">描画サイズ</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Render(this IDocumentRenderer src, Graphics dest,
-            Page page, SizeF size) =>
-            src.Render(dest, page, size, new Angle());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// PDF の内容を描画します。
-        /// </summary>
-        ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="dest">描画先オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="size">描画サイズ</param>
-        /// <param name="rotation">回転角度</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Render(this IDocumentRenderer src, Graphics dest,
-            Page page, SizeF size, Angle rotation) =>
-            src.Render(dest, page, new PointF(0, 0), size, rotation);
+        public static void Render(this IDocumentRenderer src, Graphics dest, Page page, Angle rotation) =>
+            src.Render(dest, page, new PointF(0, 0), dest.VisibleClipBounds.Size, rotation);
 
         #endregion
 
@@ -143,7 +86,7 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         public static Image GetImage(this IDocumentRenderer src, Page page) =>
-            src.GetImage(page, page.GetViewSize());
+            src.GetImage(page, 1.0);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -160,9 +103,8 @@ namespace Cube.Pdf.Mixin
         /// <returns>Image オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src,
-            Page page, double ratio) =>
-            src.GetImage(page, page.GetViewSize(ratio));
+        public static Image GetImage(this IDocumentRenderer src, Page page, double ratio) =>
+            src.GetImage(page, ratio, new Angle());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -180,8 +122,7 @@ namespace Cube.Pdf.Mixin
         /// <returns>Image オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src,
-            Page page, double ratio, Angle rotation) =>
+        public static Image GetImage(this IDocumentRenderer src, Page page, double ratio, Angle rotation) =>
             src.GetImage(page, page.GetViewSize(ratio, rotation), rotation);
 
         /* ----------------------------------------------------------------- */
@@ -218,11 +159,10 @@ namespace Cube.Pdf.Mixin
         /// <returns>Image オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src,
-            Page page, SizeF size, Angle rotation)
+        public static Image GetImage(this IDocumentRenderer src, Page page, SizeF size, Angle rotation)
         {
             var dest = new Bitmap((int)size.Width, (int)size.Height);
-            using (var gs = Graphics.FromImage(dest)) src.Render(gs, page, size, rotation);
+            using (var gs = Graphics.FromImage(dest)) src.Render(gs, page, rotation);
             return dest;
         }
 

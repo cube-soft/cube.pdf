@@ -204,7 +204,7 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         public static SizeF GetViewSize(this Page src, double ratio) =>
-            src.GetViewSize(ratio, ratio, new Angle());
+            src.GetViewSize(ratio, new Angle());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -221,7 +221,7 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         public static SizeF GetViewSize(this Page src, Angle rotation) =>
-            GetViewSize(src, 1.0, rotation);
+            src.GetViewSize(1.0, rotation);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -238,25 +238,7 @@ namespace Cube.Pdf.Mixin
         /// <remarks>変換後のサイズ</remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static SizeF GetViewSize(this Page src, double ratio, Angle rotation) =>
-            src.GetViewSize(ratio, ratio, rotation);
-
-        #endregion
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetViewSize
-        ///
-        /// <summary>
-        /// ページオブジェクトの表示サイズを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static SizeF GetViewSize(this Page src, double h, double v, Angle rotation)
+        public static SizeF GetViewSize(this Page src, double ratio, Angle rotation)
         {
             var angle  = src.Rotation + rotation;
             var sin    = Math.Abs(Math.Sin(angle.Radian));
@@ -264,8 +246,10 @@ namespace Cube.Pdf.Mixin
             var width  = src.Size.Width * cos + src.Size.Height * sin;
             var height = src.Size.Width * sin + src.Size.Height * cos;
 
-            return new SizeF((float)(width * h), (float)(height * v));
+            return new SizeF((float)(width * ratio), (float)(height * ratio));
         }
+
+        #endregion
 
         #endregion
     }
