@@ -15,6 +15,9 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
+using System;
+
 namespace Cube.Pdf.Mixin
 {
     /* --------------------------------------------------------------------- */
@@ -85,6 +88,40 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         public static bool IsDenid(this PermissionMethod src) => src == PermissionMethod.Deny;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RequestPassword
+        ///
+        /// <summary>
+        /// パスワードの問い合わせを実行します。
+        /// </summary>
+        ///
+        /// <param name="query">問い合わせ用オブジェクト</param>
+        /// <param name="src">入力ファイル</param>
+        ///
+        /// <returns>問い合わせ結果</returns>
+        ///
+        /// <remarks>
+        /// 問い合わせ失敗時の挙動を EncryptionException を送出する形に
+        /// 統一します。また、実行後に Result が空文字だった場合も失敗と
+        /// 見なします。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static QueryEventArgs<string> RequestPassword(this IQuery<string> query, string src)
+        {
+            var dest = QueryEventArgs.Create(src);
+
+            try
+            {
+                query.Request(dest);
+                if (dest.Cancel || dest.Result.HasValue()) return dest;
+            }
+            catch (Exception) { /* throw EncryptionException */ }
+
+            throw new EncryptionException(Properties.Resources.ErrorPassword);
+        }
 
         #endregion
 

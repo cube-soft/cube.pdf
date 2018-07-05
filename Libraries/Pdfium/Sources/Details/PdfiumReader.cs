@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Pdf.Mixin;
 using Cube.Pdf.Pdfium.PdfiumApi;
 using System;
 using System.Collections.Generic;
@@ -169,8 +170,7 @@ namespace Cube.Pdf.Pdfium
                 catch (LoadException err)
                 {
                     if (err.Status != LoadStatus.PasswordError) throw;
-                    var e = QueryEventArgs.Create(src);
-                    query.Request(e);
+                    var e = query.RequestPassword(src);
                     if (!e.Cancel) password = e.Result;
                     else throw new OperationCanceledException();
                 }

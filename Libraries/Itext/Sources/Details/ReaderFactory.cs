@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Pdf.Mixin;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 using System;
@@ -83,8 +84,7 @@ namespace Cube.Pdf.Itext
                 try { return CreateCore(src, password, denyUserPassword); }
                 catch (BadPasswordException)
                 {
-                    var e = QueryEventArgs.Create(src);
-                    query.Request(e);
+                    var e = query.RequestPassword(src);
                     if (!e.Cancel) password = e.Result;
                     else throw new OperationCanceledException();
                 }

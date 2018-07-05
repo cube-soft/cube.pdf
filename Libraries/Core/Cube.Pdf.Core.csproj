@@ -110,7 +110,6 @@
     <Compile Include="Sources\IDocumentWriter.cs" />
     <Compile Include="Sources\IDocumentWriterExtension.cs" />
     <Compile Include="Sources\Metadata.cs" />
-    <Compile Include="Sources\OnceQuery.cs" />
     <Compile Include="Sources\Page.cs" />
     <Compile Include="Sources\PageExtension.cs" />
     <Compile Include="Sources\Permission.cs" />
