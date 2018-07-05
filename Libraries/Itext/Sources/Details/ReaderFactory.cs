@@ -125,7 +125,7 @@ namespace Cube.Pdf.Itext
                 {
                     image.SelectActiveFrame(dim, i);
 
-                    var scale = 72.0 / image.HorizontalResolution;
+                    var scale = PdfFile.Point / image.HorizontalResolution;
                     var w = (float)(image.Width * scale);
                     var h = (float)(image.Height * scale);
 

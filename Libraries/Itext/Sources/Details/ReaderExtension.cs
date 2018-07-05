@@ -62,7 +62,7 @@ namespace Cube.Pdf.Itext
             Number     = pagenum,
             Size       = src.GetPageSize(pagenum).ToSize(),
             Rotation   = new Angle(src.GetPageRotation(pagenum)),
-            Resolution = new PointF(72.0f, 72.0f)
+            Resolution = file.Resolution
         };
 
         /* ----------------------------------------------------------------- */

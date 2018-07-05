@@ -150,15 +150,14 @@ namespace Cube.Pdf.Pdfium
         /// <param name="src">PDF ファイルのパス</param>
         /// <param name="query">パスワード用オブジェクト</param>
         /// <param name="io">I/O オブジェクト</param>
-        /// <param name="password">入力されたパスワード</param>
         ///
         /// <returns>PdfReader</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfiumReader Create(string src, IQuery<string> query, IO io, out string password)
+        public static PdfiumReader Create(string src, IQuery<string> query, IO io)
         {
-            var dest = new PdfiumReader(src, io);
-            password = string.Empty;
+            var dest     = new PdfiumReader(src, io);
+            var password = string.Empty;
 
             while (true)
             {

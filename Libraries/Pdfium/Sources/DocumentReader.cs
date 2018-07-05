@@ -113,7 +113,7 @@ namespace Cube.Pdf.Pdfium
         public DocumentReader(string src, IQuery<string> query, IO io) : base(io)
         {
             Debug.Assert(io != null);
-            _core = PdfiumReader.Create(src, query, io, out var password);
+            _core = PdfiumReader.Create(src, query, io);
             Debug.Assert(_core != null);
 
             File        = _core.File;
@@ -139,11 +139,11 @@ namespace Cube.Pdf.Pdfium
         /// <param name="page">ページ情報</param>
         /// <param name="point">描画開始座標</param>
         /// <param name="size">描画サイズ</param>
-        /// <param name="angle">回転角度</param>
+        /// <param name="rotation">回転角度</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Render(Graphics dest, Page page, PointF point, SizeF size, Angle angle) =>
-            _core.Render(dest, page, point, size, angle, 0);
+        public void Render(Graphics dest, Page page, PointF point, SizeF size, Angle rotation) =>
+            _core.Render(dest, page, point, size, rotation, 0);
 
         /* ----------------------------------------------------------------- */
         ///

@@ -163,6 +163,18 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Point
+        ///
+        /// <summary>
+        /// PDF ファイル中に記載される各種サイズの単位である Point の
+        /// dpi 換算値を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static int Point => 72;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Password
         ///
         /// <summary>
@@ -205,7 +217,7 @@ namespace Cube.Pdf
         private void Initialize(string password)
         {
             Password   = password;
-            Resolution = new PointF(72.0f, 72.0f);
+            Resolution = new PointF(Point, Point);
         }
 
         #endregion

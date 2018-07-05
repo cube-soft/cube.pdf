@@ -69,7 +69,7 @@ namespace Cube.Pdf.Pdfium
                        OpenWithPassword = restrict,
                        UserPassword     = restrict ? password : string.Empty,
                        Method           = CreateMethod(method),
-                       Permission       = CreatePermission(permission),
+                       Permission       = new Permission((long)permission),
                    };
         }
 
@@ -90,20 +90,6 @@ namespace Cube.Pdf.Pdfium
             Enum.IsDefined(typeof(EncryptionMethod), src) ?
             (EncryptionMethod)src :
             EncryptionMethod.Unknown;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreatePermission
-        ///
-        /// <summary>
-        /// 各種操作に対する許可情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static Permission CreatePermission(ulong src) =>
-            src == ulong.MaxValue ?
-            new Permission() :
-            new Permission((long)src);
 
         #endregion
     }

@@ -52,7 +52,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static iTextSharp.text.Image GetItextImage(this Image image)
         {
-            var scale  = 72.0f / image.HorizontalResolution;
+            var scale  = PdfFile.Point / image.HorizontalResolution;
             var format = image.GetImageFormat();
             if (!GetSupportFormats().Contains(format)) format = ImageFormat.Png;
 

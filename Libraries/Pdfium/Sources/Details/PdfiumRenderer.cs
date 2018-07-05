@@ -56,7 +56,7 @@ namespace Cube.Pdf.Pdfium
         {
             var retry = 5;
             var hp = Facade.FPDF_LoadPage(src.RawObject, page.Number - 1, retry);
-            if (hp == IntPtr.Zero) throw new LoadException(Facade.FPDF_GetLastError());
+            if (hp == IntPtr.Zero) throw PdfiumLibrary.GetLoadException();
             var hdc = dest.GetHdc();
 
             try
@@ -92,11 +92,13 @@ namespace Cube.Pdf.Pdfium
         /// 回転角度を表す値を取得します。
         /// </summary>
         ///
+        /// <remarks>
+        /// PDFium は 90 度単位でしか対応していないため、45 度単位で
+        /// 補正しています。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        private static int GetRotation(Angle src) =>
-            src.Degree <  90 ? 0 :
-            src.Degree < 180 ? 1 :
-            src.Degree < 270 ? 2 : 3;
+        private static int GetRotation(Angle src) => (src + 45).Degree / 90;
 
         #endregion
     }
