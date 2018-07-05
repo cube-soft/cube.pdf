@@ -17,7 +17,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.FileSystem.Mixin;
 using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
@@ -120,7 +122,7 @@ namespace Cube.Pdf.Itext
 
         #endregion
 
-        #region Others
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -172,19 +174,11 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private string Unique(string dir, File src, int pagenum)
         {
-            var name  = src.NameWithoutExtension;
-            var digit = string.Format("D{0}", src.Count.ToString("D").Length);
+            var digit = string.Format("D{0}", Math.Max(src.Count.ToString("D").Length, 2));
+            var name  = string.Format("{0}-{1}", src.NameWithoutExtension, pagenum.ToString(digit));
+            var dest  = IO.Combine(dir, $"{name}.pdf");
 
-            for (var i = 1; i < int.MaxValue; ++i)
-            {
-                var filename = (i == 1) ?
-                               string.Format("{0}-{1}.pdf", name, pagenum.ToString(digit)) :
-                               string.Format("{0}-{1} ({2}).pdf", name, pagenum.ToString(digit), i);
-                var dest = IO.Combine(dir, filename);
-                if (!IO.Exists(dest)) return dest;
-            }
-
-            return IO.Combine(dir, System.IO.Path.GetRandomFileName());
+            return IO.GetUniqueName(dest);
         }
 
         #endregion

@@ -187,7 +187,13 @@ namespace Cube.Pdf.Tests.Itext
         public int Split(string filename, string password)
         {
             var src  = GetExamplesWith(filename);
-            var dest = GetResultsWith($"{nameof(Split)}_{IO.Get(src).NameWithoutExtension}");
+            var info = IO.Get(src);
+            var name = info.NameWithoutExtension;
+            var ext  = info.Extension;
+            var dest = GetResultsWith($"{nameof(Split)}_{name}");
+            var copy = IO.Combine(dest, $"{name}-01{ext}");
+
+            IO.Copy(src, copy, true);
 
             using (var writer = new DocumentSplitter(IO))
             using (var reader = new DocumentReader(src, password, IO))
@@ -199,8 +205,9 @@ namespace Cube.Pdf.Tests.Itext
                 writer.Save(dest);
 
                 var n = IO.GetFiles(dest).Length;
-                Assert.That(n, Is.EqualTo(writer.Results.Count));
-                return n;
+                Assert.That(n, Is.EqualTo(writer.Results.Count + 1));
+                Assert.That(IO.Exists(IO.Combine(dest, $"{name}-01 (1){ext}")));
+                return writer.Results.Count;
             }
         }
 
