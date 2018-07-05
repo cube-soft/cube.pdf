@@ -91,15 +91,15 @@ namespace Cube.Pdf
         /// Assemble
         ///
         /// <summary>
-        /// 文書アセンブリ（ページの挿入、削除、回転、しおりとサムネイルの
-        /// 作成）操作の許可設定を取得または設定します。
+        /// ページの挿入、削除、回転、しおりとサムネイルの作成に関する
+        /// 許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public PermissionMethod Assemble
         {
-            get => Get(PermissionFlags.Assemble);
-            set => Set(PermissionFlags.Assemble, value);
+            get => Get(PermissionFlags.ModifyPagesAndBookmarks);
+            set => Set(PermissionFlags.ModifyPagesAndBookmarks, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -128,8 +128,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionMethod CopyContents
         {
-            get => Get(PermissionFlags.CopyContents);
-            set => Set(PermissionFlags.CopyContents, value);
+            get => Get(PermissionFlags.CopyOrExtractContents);
+            set => Set(PermissionFlags.CopyOrExtractContents, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -144,8 +144,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionMethod Accessibility
         {
-            get => Get(PermissionFlags.Accessibility);
-            set => Set(PermissionFlags.Accessibility, value);
+            get => Get(PermissionFlags.ExtractContentsForAccessibility);
+            set => Set(PermissionFlags.ExtractContentsForAccessibility, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -153,7 +153,8 @@ namespace Cube.Pdf
         /// ModifyAnnotations
         ///
         /// <summary>
-        /// 注釈の追加、編集操作の許可設定を取得または設定します。
+        /// 注釈の追加・編集、フォームの追加・編集・入力操作の許可設定を
+        /// 取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -165,17 +166,17 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InputForms
+        /// InputForm
         ///
         /// <summary>
-        /// フォームフィールドへの入力操作の許可設定を取得または設定します。
+        /// フォームの入力操作の許可設定を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionMethod InputForms
+        public PermissionMethod InputForm
         {
-            get => Get(PermissionFlags.InputForms);
-            set => Set(PermissionFlags.InputForms, value);
+            get => Get(PermissionFlags.InputForm);
+            set => Set(PermissionFlags.InputForm, value);
         }
 
         /* ----------------------------------------------------------------- */

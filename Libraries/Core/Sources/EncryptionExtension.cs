@@ -141,7 +141,7 @@ namespace Cube.Pdf.Mixin
             src.Permission.Accessibility     = method;
             src.Permission.Assemble          = method;
             src.Permission.CopyContents      = method;
-            src.Permission.InputForms        = method;
+            src.Permission.InputForm         = method;
             src.Permission.ModifyAnnotations = method;
             src.Permission.ModifyContents    = method;
             src.Permission.Print             = method;

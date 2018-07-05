@@ -300,7 +300,7 @@ namespace Cube.Pdf.Tests.Converter
                                 Accessibility     = PermissionMethod.Allow,
                                 Assemble          = PermissionMethod.Deny,
                                 CopyContents      = PermissionMethod.Deny,
-                                InputForms        = PermissionMethod.Allow,
+                                InputForm         = PermissionMethod.Allow,
                                 ModifyAnnotations = PermissionMethod.Deny,
                                 ModifyContents    = PermissionMethod.Deny,
                                 Print             = PermissionMethod.Deny,

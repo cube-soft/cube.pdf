@@ -377,7 +377,7 @@ namespace Cube.Pdf.Tests.Converter
 
             vm.AllowPrint       = src.Permission.Print.IsAllowed();
             vm.AllowCopy        = src.Permission.CopyContents.IsAllowed();
-            vm.AllowInputForms  = src.Permission.InputForms.IsAllowed();
+            vm.AllowInputForm   = src.Permission.InputForm.IsAllowed();
             vm.AllowModify      = src.Permission.ModifyContents.IsAllowed();
         }
 

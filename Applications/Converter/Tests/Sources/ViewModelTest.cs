@@ -152,7 +152,7 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(vme.UserPassword,       Is.Empty, nameof(vme.UserPassword));
             Assert.That(vme.UserConfirm,        Is.Empty, nameof(vme.UserConfirm));
             Assert.That(vme.AllowCopy,          Is.False, nameof(vme.AllowCopy));
-            Assert.That(vme.AllowInputForms,    Is.False, nameof(vme.AllowInputForms));
+            Assert.That(vme.AllowInputForm,     Is.False, nameof(vme.AllowInputForm));
             Assert.That(vme.AllowModify,        Is.False, nameof(vme.AllowModify));
             Assert.That(vme.AllowPrint,         Is.False, nameof(vme.AllowPrint));
             Assert.That(vme.EnablePermission,   Is.True,  nameof(vme.EnablePermission));

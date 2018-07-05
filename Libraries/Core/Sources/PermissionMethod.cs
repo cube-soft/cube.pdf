@@ -83,7 +83,7 @@ namespace Cube.Pdf
         /// Copy or otherwise extract text and graphics from the document
         /// by operations other than that controlled by bit 10.
         /// </summary>
-        CopyContents = 0x00000010,
+        CopyOrExtractContents = 0x00000010,
 
         /// <summary>
         /// Add or modify text annotations, fill in interactive form fields,
@@ -96,18 +96,18 @@ namespace Cube.Pdf
         /// Fill in existing interactive form fields (including signature
         /// fields), even if bit 6 is clear.
         /// </summary>
-        InputForms = 0x00000100,
+        InputForm = 0x00000100,
 
         /// <summary>
         /// Extract text and graphics (in support of accessibility to users
         /// with disabilities or for other purposes).
         /// </summary>
-        Accessibility = 0x00000200,
+        ExtractContentsForAccessibility = 0x00000200,
 
         /// <summary>
         /// Assemble the document (insert, rotate, or delete pages and
         /// create bookmarks or thumbnail images), even if bit 4 is clear.
         /// </summary>
-        Assemble = 0x00000400,
+        ModifyPagesAndBookmarks = 0x00000400,
     }
 }

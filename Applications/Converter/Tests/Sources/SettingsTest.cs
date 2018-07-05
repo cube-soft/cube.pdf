@@ -129,7 +129,7 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(pm.Accessibility,      Is.EqualTo(PermissionMethod.Allow), nameof(pm.Accessibility));
             Assert.That(pm.Assemble,           Is.EqualTo(PermissionMethod.Deny),  nameof(pm.Assemble));
             Assert.That(pm.CopyContents,       Is.EqualTo(PermissionMethod.Deny),  nameof(pm.CopyContents));
-            Assert.That(pm.InputForms,         Is.EqualTo(PermissionMethod.Deny),  nameof(pm.InputForms));
+            Assert.That(pm.InputForm,          Is.EqualTo(PermissionMethod.Deny),  nameof(pm.InputForm));
             Assert.That(pm.ModifyAnnotations,  Is.EqualTo(PermissionMethod.Deny),  nameof(pm.ModifyAnnotations));
             Assert.That(pm.ModifyContents,     Is.EqualTo(PermissionMethod.Deny),  nameof(pm.ModifyContents));
             Assert.That(pm.Print,              Is.EqualTo(PermissionMethod.Deny),  nameof(pm.Print));

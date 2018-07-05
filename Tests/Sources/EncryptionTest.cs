@@ -66,7 +66,7 @@ namespace Cube.Pdf.Tests
                 Assert.That(pm.Accessibility,      Is.EqualTo(epm.Accessibility), nameof(pm.Accessibility));
                 Assert.That(pm.Assemble,           Is.EqualTo(epm.Assemble), nameof(pm.Assemble));
                 Assert.That(pm.CopyContents,       Is.EqualTo(epm.CopyContents), nameof(pm.CopyContents));
-                Assert.That(pm.InputForms,         Is.EqualTo(epm.InputForms), nameof(pm.InputForms));
+                Assert.That(pm.InputForm,          Is.EqualTo(epm.InputForm), nameof(pm.InputForm));
                 Assert.That(pm.ModifyAnnotations,  Is.EqualTo(epm.ModifyAnnotations), nameof(pm.ModifyAnnotations));
                 Assert.That(pm.ModifyContents,     Is.EqualTo(epm.ModifyContents), nameof(pm.ModifyContents));
                 Assert.That(pm.Print,              Is.EqualTo(epm.Print), nameof(pm.Print));
@@ -105,7 +105,7 @@ namespace Cube.Pdf.Tests
                             Accessibility     = PermissionMethod.Allow,
                             Assemble          = PermissionMethod.Allow,
                             CopyContents      = PermissionMethod.Allow,
-                            InputForms        = PermissionMethod.Allow,
+                            InputForm         = PermissionMethod.Allow,
                             ModifyAnnotations = PermissionMethod.Allow,
                             ModifyContents    = PermissionMethod.Allow,
                             Print             = PermissionMethod.Allow,
@@ -124,7 +124,7 @@ namespace Cube.Pdf.Tests
                             Accessibility     = PermissionMethod.Allow,
                             Assemble          = PermissionMethod.Allow,
                             CopyContents      = PermissionMethod.Allow,
-                            InputForms        = PermissionMethod.Allow,
+                            InputForm         = PermissionMethod.Allow,
                             ModifyAnnotations = PermissionMethod.Allow,
                             ModifyContents    = PermissionMethod.Allow,
                             Print             = PermissionMethod.Allow,
@@ -143,7 +143,7 @@ namespace Cube.Pdf.Tests
                             Accessibility     = PermissionMethod.Allow,
                             Assemble          = PermissionMethod.Allow,
                             CopyContents      = PermissionMethod.Allow,
-                            InputForms        = PermissionMethod.Allow,
+                            InputForm         = PermissionMethod.Allow,
                             ModifyAnnotations = PermissionMethod.Allow,
                             ModifyContents    = PermissionMethod.Allow,
                             Print             = PermissionMethod.Allow,
@@ -162,7 +162,7 @@ namespace Cube.Pdf.Tests
                             Accessibility     = PermissionMethod.Deny,
                             Assemble          = PermissionMethod.Deny,
                             CopyContents      = PermissionMethod.Deny,
-                            InputForms        = PermissionMethod.Deny,
+                            InputForm         = PermissionMethod.Deny,
                             ModifyAnnotations = PermissionMethod.Deny,
                             ModifyContents    = PermissionMethod.Deny,
                             Print             = PermissionMethod.Deny,
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Tests
                             Accessibility     = PermissionMethod.Allow,
                             Assemble          = PermissionMethod.Allow,
                             CopyContents      = PermissionMethod.Allow,
-                            InputForms        = PermissionMethod.Allow,
+                            InputForm         = PermissionMethod.Allow,
                             ModifyAnnotations = PermissionMethod.Allow,
                             ModifyContents    = PermissionMethod.Allow,
                             Print             = PermissionMethod.Allow,
@@ -203,7 +203,7 @@ namespace Cube.Pdf.Tests
                             Accessibility     = PermissionMethod.Allow,
                             Assemble          = PermissionMethod.Allow,
                             CopyContents      = PermissionMethod.Allow,
-                            InputForms        = PermissionMethod.Allow,
+                            InputForm         = PermissionMethod.Allow,
                             ModifyAnnotations = PermissionMethod.Allow,
                             ModifyContents    = PermissionMethod.Allow,
                             Print             = PermissionMethod.Allow,
