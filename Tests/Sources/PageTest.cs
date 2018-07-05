@@ -18,6 +18,7 @@
 using Cube.Pdf.Mixin;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Cube.Pdf.Tests
 {
@@ -63,21 +64,33 @@ namespace Cube.Pdf.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Rotation
+        /// GetViewSize
         ///
         /// <summary>
-        /// 回転角度の正規化テストを実行します。
+        /// ViewSize の計算結果を確認します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(   0, ExpectedResult =   0)]
-        [TestCase( 359, ExpectedResult = 359)]
-        [TestCase( 360, ExpectedResult =   0)]
-        [TestCase(1000, ExpectedResult = 280)]
-        [TestCase(  -1, ExpectedResult = 359)]
-        [TestCase(-900, ExpectedResult = 180)]
-        public int Rotation(int degree) =>
-            new Page { Rotation = new Angle(degree) }.Rotation.Degree;
+        [TestCase(  0,  595.0f,  842.0f)]
+        [TestCase( 45, 1016.1f, 1016.1f)]
+        [TestCase( 90,  842.0f,  595.0f)]
+        [TestCase(135, 1016.1f, 1016.1f)]
+        [TestCase(180,  595.0f,  842.0f)]
+        [TestCase(225, 1016.1f, 1016.1f)]
+        [TestCase(270,  842.0f,  595.0f)]
+        [TestCase(315, 1016.1f, 1016.1f)]
+        public void GetViewSize(int degree, float w, float h)
+        {
+            var dest = new Page
+            {
+                Rotation   = new Angle(),
+                Resolution = new PointF(72, 72),
+                Size       = new SizeF(595.0f, 842.0f),
+            }.GetViewSize(new Angle(degree));
+
+            Assert.That(dest.Width,  Is.EqualTo(w).Within(1.0));
+            Assert.That(dest.Height, Is.EqualTo(h).Within(1.0));
+        }
 
         #endregion
 

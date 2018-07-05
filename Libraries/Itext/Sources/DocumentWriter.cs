@@ -102,7 +102,7 @@ namespace Cube.Pdf.Itext
                 Release();
                 Finalize(tmp, path);
             }
-            catch (BadPasswordException err) { throw new EncryptionException(err); }
+            catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
             finally
             {
                 IO.TryDelete(tmp);

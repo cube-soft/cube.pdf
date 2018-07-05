@@ -15,51 +15,55 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+using NUnit.Framework;
 
-namespace Cube.Pdf
+namespace Cube.Pdf.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// EncryptionException
+    /// AngleTest
     ///
     /// <summary>
-    /// 暗号化に関する例外を送出するためのクラスです。
+    /// Angle のテスト用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class EncryptionException : Exception
+    [TestFixture]
+    class AngleTest
     {
-        #region Constructors
-
         /* ----------------------------------------------------------------- */
         ///
-        /// EncryptionException
+        /// Create
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Angle オブジェクト生成時に [0, 360) で正規化される事を
+        /// 確認します。
         /// </summary>
         ///
-        /// <param name="message">メッセージ</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public EncryptionException(string message) : base(message) { }
+        [TestCase(   0, ExpectedResult =   0)]
+        [TestCase( 359, ExpectedResult = 359)]
+        [TestCase( 360, ExpectedResult =   0)]
+        [TestCase(1000, ExpectedResult = 280)]
+        [TestCase(  -1, ExpectedResult = 359)]
+        [TestCase(-900, ExpectedResult = 180)]
+        public int Create(int degree) => new Angle(degree).Degree;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EncryptionException
+        /// Create
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// 角度の加算時に [0, 360) で正規化される事を確認します。
         /// </summary>
         ///
-        /// <param name="message">メッセージ</param>
-        /// <param name="inner">内部例外オブジェクト</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public EncryptionException(string message, Exception inner) : base(message, inner) { }
-
-        #endregion
+        [TestCase(   0,   90, ExpectedResult =  90)]
+        [TestCase( 200,  159, ExpectedResult = 359)]
+        [TestCase( 180,  180, ExpectedResult =   0)]
+        [TestCase(1000, 1000, ExpectedResult = 200)]
+        [TestCase(  -1,    2, ExpectedResult =   1)]
+        [TestCase(-900, -700, ExpectedResult = 200)]
+        public int Plus(int x, int y) => (new Angle(x) + y).Degree;
     }
 }
