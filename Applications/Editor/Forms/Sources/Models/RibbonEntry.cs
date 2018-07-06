@@ -20,45 +20,45 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RibbonItem
+    /// RibbonEntry
     ///
     /// <summary>
     /// Ribbon の項目を表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RibbonItem : ObservableProperty
+    public class RibbonEntry : ObservableProperty
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RibbonItem
+        /// RibbonEntry
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="name">名前</param>
+        /// <param name="icon">アイコン名</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem(string name) : this(name, name) { }
+        public RibbonEntry(string icon) : this(icon, icon) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RibbonItem
+        /// RibbonEntry
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="name">名前</param>
+        /// <param name="icon">アイコン名</param>
         /// <param name="text">表示テキスト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem(string name, string text)
+        public RibbonEntry(string icon, string text)
         {
-            Name = name;
+            Name = icon;
             Text = text;
         }
 

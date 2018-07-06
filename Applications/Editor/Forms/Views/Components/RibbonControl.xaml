@@ -28,17 +28,6 @@
     d:DesignWidth="800">
 
     <!-- **********************************************************************
-      Resources
-    *********************************************************************** -->
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
-    <!-- **********************************************************************
       Main
     *********************************************************************** -->
     <r:Ribbon>
@@ -47,6 +36,9 @@
         </r:Ribbon.Menu>
 
         <r:RibbonTabItem Header="Edit">
+            <!-- **************************************************************
+              Open/Save/Close
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:Button
                     Header="{Binding Ribbon.Open.Text}"
@@ -55,13 +47,17 @@
                 <r:SplitButton
                     Header="{Binding Ribbon.Save.Text}"
                     Icon="{Binding Ribbon.Save.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Save.LargeIcon}" />
+                    LargeIcon="{Binding Ribbon.Save.LargeIcon}">
+                </r:SplitButton>
                 <r:Button
                     Header="{Binding Ribbon.Close.Text}"
                     Icon="{Binding Ribbon.Close.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Close.LargeIcon}" />
             </r:RibbonGroupBox>
 
+            <!-- **************************************************************
+              Undo/Redo
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:Button
                     Header="{Binding Ribbon.Undo.Text}"
@@ -73,28 +69,41 @@
                     LargeIcon="{Binding Ribbon.Redo.LargeIcon}" />
             </r:RibbonGroupBox>
 
+            <!-- **************************************************************
+              Select
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:SplitButton
                     Header="{Binding Ribbon.Select.Text}"
                     Icon="{Binding Ribbon.Select.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Select.LargeIcon}" />
+                    LargeIcon="{Binding Ribbon.Select.LargeIcon}">
+                </r:SplitButton>
             </r:RibbonGroupBox>
 
+            <!-- **************************************************************
+              Insert/Extract/Remove
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:SplitButton
                     Header="{Binding Ribbon.Insert.Text}"
                     Icon="{Binding Ribbon.Insert.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Insert.LargeIcon}" />
+                    LargeIcon="{Binding Ribbon.Insert.LargeIcon}">
+                </r:SplitButton>
                 <r:SplitButton
                     Header="{Binding Ribbon.Extract.Text}"
                     Icon="{Binding Ribbon.Extract.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Extract.LargeIcon}" />
+                    LargeIcon="{Binding Ribbon.Extract.LargeIcon}">
+                </r:SplitButton>
                 <r:SplitButton
                     Header="{Binding Ribbon.Remove.Text}"
                     Icon="{Binding Ribbon.Remove.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Remove.LargeIcon}" />
+                    LargeIcon="{Binding Ribbon.Remove.LargeIcon}">
+                </r:SplitButton>
             </r:RibbonGroupBox>
 
+            <!-- **************************************************************
+              Move
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:Button
                     Header="{Binding Ribbon.MovePrevious.Text}"
@@ -106,6 +115,9 @@
                     LargeIcon="{Binding Ribbon.MoveNext.LargeIcon}" />
             </r:RibbonGroupBox>
 
+            <!-- **************************************************************
+              Rotate
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:Button
                     Header="{Binding Ribbon.RotateLeft.Text}"
@@ -117,6 +129,9 @@
                     LargeIcon="{Binding Ribbon.RotateRight.LargeIcon}" />
             </r:RibbonGroupBox>
 
+            <!-- **************************************************************
+              Metadata/Encryption
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:Button
                     Header="{Binding Ribbon.Metadata.Text}"
@@ -130,6 +145,9 @@
         </r:RibbonTabItem>
 
         <r:RibbonTabItem Header="View">
+            <!-- **************************************************************
+              Refresh
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:Button
                     Header="{Binding Ribbon.Refresh.Text}"
@@ -137,6 +155,9 @@
                     LargeIcon="{Binding Ribbon.Refresh.LargeIcon}" />
             </r:RibbonGroupBox>
 
+            <!-- **************************************************************
+              Zoom
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:Button
                     Header="{Binding Ribbon.ZoomIn.Text}"
@@ -150,6 +171,9 @@
         </r:RibbonTabItem>
 
         <r:RibbonTabItem Header="Help">
+            <!-- **************************************************************
+              Version/Web
+            *************************************************************** -->
             <r:RibbonGroupBox>
                 <r:Button
                     Header="{Binding Ribbon.Version.Text}"

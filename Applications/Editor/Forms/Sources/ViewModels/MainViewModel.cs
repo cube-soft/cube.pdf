@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui;
 using GalaSoft.MvvmLight;
 
 namespace Cube.Pdf.App.Editor
@@ -43,6 +44,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public RibbonViewModel Ribbon { get; } = new RibbonViewModel();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Message
+        ///
+        /// <summary>
+        /// メッセージを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<string> Message { get; } = new Bindable<string>("Ready");
 
         #endregion
     }

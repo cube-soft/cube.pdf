@@ -35,6 +35,14 @@
     <!-- **********************************************************************
       Resources
     *********************************************************************** -->
+    <r:RibbonWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </r:RibbonWindow.Resources>
+
     <r:RibbonWindow.DataContext>
         <my:MainViewModel />
     </r:RibbonWindow.DataContext>
@@ -51,10 +59,10 @@
 
         <my:RibbonControl Grid.Row="0" />
 
-        <ListView Grid.Row="1" Grid.ColumnSpan="3" />
+        <ListView Grid.Row="1" />
 
-        <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
-            <StatusBarItem Content="Ready" />
+        <StatusBar Grid.Row="2">
+            <StatusBarItem Content="{Binding Message.Value}" />
         </StatusBar>
     </Grid>
 </r:RibbonWindow>

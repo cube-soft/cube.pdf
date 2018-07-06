@@ -42,7 +42,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Open { get; } = new RibbonItem(nameof(Open));
+        public RibbonEntry Open { get; } = new RibbonEntry(nameof(Open));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -53,7 +53,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Save { get; } = new RibbonItem(nameof(Save));
+        public RibbonEntry Save { get; } = new RibbonEntry(nameof(Save));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,7 +64,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Close { get; } = new RibbonItem(nameof(Close));
+        public RibbonEntry Close { get; } = new RibbonEntry(nameof(Close));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -75,7 +75,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Undo { get; } = new RibbonItem(nameof(Undo));
+        public RibbonEntry Undo { get; } = new RibbonEntry(nameof(Undo));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -86,7 +86,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Redo { get; } = new RibbonItem(nameof(Redo));
+        public RibbonEntry Redo { get; } = new RibbonEntry(nameof(Redo));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -97,7 +97,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Select { get; } = new RibbonItem(nameof(Select));
+        public RibbonEntry Select { get; } = new RibbonEntry(nameof(Select));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,7 +108,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Insert { get; } = new RibbonItem(nameof(Insert));
+        public RibbonEntry Insert { get; } = new RibbonEntry(nameof(Insert));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -119,7 +119,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Extract { get; } = new RibbonItem(nameof(Extract), "Pick");
+        public RibbonEntry Extract { get; } = new RibbonEntry(nameof(Extract), "Pick");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -130,7 +130,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Remove { get; } = new RibbonItem(nameof(Remove));
+        public RibbonEntry Remove { get; } = new RibbonEntry(nameof(Remove));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,7 +141,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem MoveNext { get; } = new RibbonItem(nameof(MoveNext), "Next");
+        public RibbonEntry MoveNext { get; } = new RibbonEntry(nameof(MoveNext), "Next");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -152,7 +152,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem MovePrevious { get; } = new RibbonItem(nameof(MovePrevious), "Prev");
+        public RibbonEntry MovePrevious { get; } = new RibbonEntry(nameof(MovePrevious), "Prev");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -163,7 +163,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem RotateLeft { get; } = new RibbonItem(nameof(RotateLeft), "Left");
+        public RibbonEntry RotateLeft { get; } = new RibbonEntry(nameof(RotateLeft), "Left");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -174,7 +174,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem RotateRight { get; } = new RibbonItem(nameof(RotateRight), "Right");
+        public RibbonEntry RotateRight { get; } = new RibbonEntry(nameof(RotateRight), "Right");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -185,7 +185,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Metadata { get; } = new RibbonItem(nameof(Metadata));
+        public RibbonEntry Metadata { get; } = new RibbonEntry(nameof(Metadata));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -196,7 +196,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Encryption { get; } = new RibbonItem(nameof(Encryption), "Security");
+        public RibbonEntry Encryption { get; } = new RibbonEntry(nameof(Encryption), "Security");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -207,7 +207,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Refresh { get; } = new RibbonItem(nameof(Refresh));
+        public RibbonEntry Refresh { get; } = new RibbonEntry(nameof(Refresh));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -218,7 +218,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem ZoomIn { get; } = new RibbonItem(nameof(ZoomIn));
+        public RibbonEntry ZoomIn { get; } = new RibbonEntry(nameof(ZoomIn));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -229,7 +229,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem ZoomOut { get; } = new RibbonItem(nameof(ZoomOut));
+        public RibbonEntry ZoomOut { get; } = new RibbonEntry(nameof(ZoomOut));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -240,7 +240,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Version { get; } = new RibbonItem(nameof(Version));
+        public RibbonEntry Version { get; } = new RibbonEntry(nameof(Version));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -251,7 +251,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Web { get; } = new RibbonItem(nameof(Web));
+        public RibbonEntry Web { get; } = new RibbonEntry(nameof(Web));
 
         #endregion
     }
