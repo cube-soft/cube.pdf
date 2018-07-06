@@ -51,18 +51,13 @@
       Main
     *********************************************************************** -->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="327*"/>
-            <ColumnDefinition Width="121*"/>
-            <ColumnDefinition Width="344*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <r:Ribbon Grid.ColumnSpan="3">
+        <r:Ribbon>
             <r:Ribbon.Menu>
                 <r:ApplicationMenu />
             </r:Ribbon.Menu>
