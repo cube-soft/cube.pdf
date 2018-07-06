@@ -1,12 +1,133 @@
-﻿<Window x:Class="Cube.Pdf.App.Editor.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Cube.Pdf.App.Editor"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+﻿<!-- **************************************************************************
+
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<r:RibbonWindow
+    x:Class="Cube.Pdf.App.Editor.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:r="urn:fluent-ribbon"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+
+    Title="CubePDF Utility"
+    TitleBarHeight="30"
+    FontFamily="Meiryo UI"
+    Height="600"
+    Width="800">
+
+    <!-- **********************************************************************
+      Resources
+    *********************************************************************** -->
+    <r:RibbonWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </r:RibbonWindow.Resources>
+
+    <r:RibbonWindow.DataContext>
+        <my:MainViewModel />
+    </r:RibbonWindow.DataContext>
+
+    <!-- **********************************************************************
+      Main
+    *********************************************************************** -->
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="327*"/>
+            <ColumnDefinition Width="121*"/>
+            <ColumnDefinition Width="344*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <r:Ribbon Grid.ColumnSpan="3">
+            <r:Ribbon.Menu>
+                <r:ApplicationMenu />
+            </r:Ribbon.Menu>
+
+            <r:RibbonTabItem Header="Edit">
+                <r:RibbonGroupBox>
+                    <r:Button Header="Open" />
+                    <r:SplitButton Header="Save" />
+                    <r:Button Header="Close" />
+                </r:RibbonGroupBox>
+
+                <r:RibbonGroupBox>
+                    <r:Button Header="Undo" />
+                    <r:Button Header="Redo" />
+                </r:RibbonGroupBox>
+
+                <r:RibbonGroupBox>
+                    <r:SplitButton Header="Select" />
+                </r:RibbonGroupBox>
+
+                <r:RibbonGroupBox>
+                    <r:SplitButton Header="Insert" />
+                    <r:SplitButton Header="Extract" />
+                    <r:SplitButton Header="Remove" />
+                </r:RibbonGroupBox>
+
+                <r:RibbonGroupBox>
+                    <r:Button Header="Forward" />
+                    <r:Button Header="Back" />
+                </r:RibbonGroupBox>
+
+                <r:RibbonGroupBox>
+                    <r:Button Header="Left" />
+                    <r:Button Header="Right" />
+                </r:RibbonGroupBox>
+
+                <r:RibbonGroupBox>
+                    <r:Button Header="Metadata" />
+                    <r:Button Header="Security" />
+                </r:RibbonGroupBox>
+            </r:RibbonTabItem>
+
+            <r:RibbonTabItem Header="View">
+                <r:RibbonGroupBox>
+                    <r:Button Header="Refresh" />
+                </r:RibbonGroupBox>
+
+                <r:RibbonGroupBox>
+                    <r:Button Header="ZoomIn" />
+                    <r:Button Header="ZoomOut" />
+                </r:RibbonGroupBox>
+            </r:RibbonTabItem>
+
+            <r:RibbonTabItem Header="Help">
+                <r:RibbonGroupBox>
+                    <r:Button Header="Version" />
+                    <r:Button Header="Web" />
+                </r:RibbonGroupBox>
+            </r:RibbonTabItem>
+        </r:Ribbon>
+
+        <ListView Grid.Row="1" Grid.ColumnSpan="3" />
+
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
+            <StatusBarItem Content="Ready" />
+        </StatusBar>
     </Grid>
-</Window>
+</r:RibbonWindow>

@@ -16,33 +16,57 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Fluent;
+using Cube.Xui;
+using GalaSoft.MvvmLight;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainWindow
+    /// RibbonViewModel
     ///
     /// <summary>
-    /// メイン画面を表すクラスです。
+    /// Ribbon の ViewModel クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainWindow : RibbonWindow
+    public class RibbonViewModel : ViewModelBase
     {
+        #region Properties
+
         /* ----------------------------------------------------------------- */
         ///
-        /// MainWindow
+        /// Open
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// 開くアイコンを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        public Bindable<RibbonIcon> Open { get; } = new RibbonIcon(nameof(Open)).ToBindable();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// 保存アイコンを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<RibbonIcon> Save { get; } = new RibbonIcon(nameof(Save)).ToBindable();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Close
+        ///
+        /// <summary>
+        /// 閉じるアイコンを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<RibbonIcon> Close { get; } = new RibbonIcon(nameof(Close)).ToBindable();
+
+        #endregion
     }
 }

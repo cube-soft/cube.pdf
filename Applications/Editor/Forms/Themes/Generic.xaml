@@ -1,5 +1,77 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Cube.Pdf.App.Editor">
+﻿<!-- **************************************************************************
 
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- **********************************************************************
+      Main colors
+    *********************************************************************** -->
+    <SolidColorBrush x:Key="MainBackgroundBrush" Color="#FF555555" />
+    <SolidColorBrush x:Key="MainBorderBrush" Color="#FF000000" />
+    <SolidColorBrush x:Key="MainForegroundBrush" Color="#FFB3B3B3" />
+
+    <!-- **********************************************************************
+      Tab colors
+    *********************************************************************** -->
+    <ImageBrush
+        x:Key="TabBackgroundBrush"
+        ImageSource="pack://application:,,,/Assets/Background.png"
+        TileMode="Tile"
+        ViewportUnits="Absolute"
+        Viewport="0,0,4,4" />
+    <SolidColorBrush x:Key="TabBorderBrush" Color="#FF000000" />
+    <SolidColorBrush x:Key="TabForegroundBrush" Color="#FFF0F0F0" />
+    <SolidColorBrush x:Key="TabMouseOverBackgroundBrush" Color="#FFB700" Opacity="0.1" />
+
+    <!-- **********************************************************************
+      Tab colors
+    *********************************************************************** -->
+    <SolidColorBrush x:Key="MenuButtonBrush" Color="#FF000000" />
+
+    <!-- **********************************************************************
+      ListView
+    *********************************************************************** -->
+    <Style TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{StaticResource MainBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <!-- **********************************************************************
+      StatusBar
+    *********************************************************************** -->
+    <Style TargetType="{x:Type StatusBar}">
+        <Setter Property="Height" Value="23" />
+        <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type StatusBar}">
+                    <Border BorderThickness="0">
+                        <Border
+                            Height="Auto"
+                            Background="{StaticResource TabBackgroundBrush}"
+                            BorderThickness="0">
+                            <ItemsPresenter Height="Auto" />
+                        </Border>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

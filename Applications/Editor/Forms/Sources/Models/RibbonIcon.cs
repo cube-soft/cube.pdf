@@ -16,122 +16,85 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
-using Cube.Xui;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Windows;
-
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// App
+    /// RibbonIcon
     ///
     /// <summary>
-    /// メインプログラムを表すクラスです。
+    /// Ribbon のアイコンを表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class App : Application, IDisposable
+    public class RibbonIcon : ObservableProperty
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// App
+        /// RibbonIcon
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="name">アイコンの名前</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public App()
+        public RibbonIcon(string name)
         {
-            _dispose = new OnceAction<bool>(Dispose);
+            Name = name;
         }
 
         #endregion
 
-        #region Methods
+        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnStartup
+        /// Assets
         ///
         /// <summary>
-        /// 起動時に実行されます。
+        /// リソースの保存されているディレクトリを表す文字列を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            Logger.Configure();
-            Logger.Info(GetType(), Assembly.GetExecutingAssembly());
-
-            _resources.Add(Logger.ObserveTaskException());
-            _resources.Add(this.ObserveUiException());
-
-            base.OnStartup(e);
-        }
-
-        #region IDisposable
+        public static string Assets { get; } = "pack://application:,,,/Assets";
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~App
+        /// Name
         ///
         /// <summary>
-        /// オブジェクトを破棄します。
+        /// アイコンを示す名前を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~App() { _dispose.Invoke(false); }
+        public string Name { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Dispose
+        /// LargeIcon
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// 大きいサイズのアイコンを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
+        public string LargeIcon => $"{Assets}/Large/{Name}.png";
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Dispose
+        /// SmallIcon
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// 小さいサイズのアイコンを取得します。
         /// </summary>
         ///
-        /// <param name="disposing">
-        /// マネージオブジェクトを開放するかどうか
-        /// </param>
-        ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                foreach (var obj in _resources) obj.Dispose();
-            }
-        }
+        public string SmallIcon => $"{Assets}/SmallIcon/{Name}.png";
 
-        #endregion
-
-        #endregion
-
-        #region Fields
-        private readonly OnceAction<bool> _dispose;
-        private readonly IList<IDisposable> _resources = new List<IDisposable>();
         #endregion
     }
 }

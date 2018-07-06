@@ -1,0 +1,90 @@
+﻿<!-- **************************************************************************
+
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:r="urn:fluent-ribbon">
+
+    <!-- **********************************************************************
+      Ribbon Brushes
+    *********************************************************************** -->
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.HighlightBrush" Color="#FFF0F0F0" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabItem.Foreground" Color="#FF909090" />
+    <ImageBrush
+        x:Key="Fluent.Ribbon.Brushes.RibbonTabControl.Content.Background"
+        ImageSource="pack://application:,,,/Assets/Background.png"
+        TileMode="Tile"
+        ViewportUnits="Absolute"
+        Viewport="0,0,4,4" />
+
+    <!-- **********************************************************************
+      Ribbon
+    *********************************************************************** -->
+    <Style TargetType="{x:Type r:Ribbon}">
+        <Setter Property="IsAutomaticCollapseEnabled" Value="False" />
+        <Setter Property="IsQuickAccessToolBarVisible" Value="False" />
+        <Setter Property="IsQuickAccessToolBarMenuDropDownVisible" Value="False" />
+        <Setter Property="ShowQuickAccessToolBarAboveRibbon" Value="False" />
+    </Style>
+
+    <!-- **********************************************************************
+      RibbonTabControl
+    *********************************************************************** -->
+    <Style TargetType="{x:Type r:RibbonTabControl}">
+        <Setter Property="Background" Value="{StaticResource MainBackgroundBrush}" />
+    </Style>
+
+    <!-- **********************************************************************
+      RibbonTabItem
+    *********************************************************************** -->
+    <Style TargetType="{x:Type r:RibbonTabItem}">
+        <Setter Property="BorderBrush" Value="{StaticResource TabBorderBrush}" />
+        <Setter Property="ActiveTabBorderBrush" Value="{StaticResource TabBorderBrush}" />
+        <Setter Property="ActiveTabBackground" Value="{StaticResource TabBackgroundBrush}" />
+    </Style>
+
+    <Style TargetType="{x:Type r:RibbonGroupBox}">
+        <Setter Property="IsLauncherEnabled" Value="False" />
+        <Setter Property="IsLauncherVisible" Value="False" />
+        <Setter Property="IsManipulationEnabled" Value="False" />
+        <Setter Property="IsSeparatorVisible" Value="False" />
+    </Style>
+
+    <!-- **********************************************************************
+      Button
+    *********************************************************************** -->
+    <Style TargetType="{x:Type r:Button}">
+        <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
+    </Style>
+
+    <!-- **********************************************************************
+      SplitButton
+    *********************************************************************** -->
+    <Style TargetType="{x:Type r:SplitButton}">
+        <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
+    </Style>
+
+    <!-- **********************************************************************
+      ApplicationMenu
+    *********************************************************************** -->
+    <Style TargetType="{x:Type r:ApplicationMenu}">
+        <Setter Property="Background" Value="{StaticResource MenuButtonBrush}" />
+        <Setter Property="Margin" Value="0,0,0,2" />
+    </Style>
+</ResourceDictionary>

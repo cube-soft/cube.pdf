@@ -16,33 +16,34 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Fluent;
+using GalaSoft.MvvmLight;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainWindow
+    /// MainViewModel
     ///
     /// <summary>
-    /// メイン画面を表すクラスです。
+    /// メイン画面の ViewModel クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainWindow : RibbonWindow
+    public class MainViewModel : ViewModelBase
     {
+        #region Properties
+
         /* ----------------------------------------------------------------- */
         ///
-        /// MainWindow
+        /// Ribbon
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Ribbon の ViewModel を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        public RibbonViewModel Ribbon { get; } = new RibbonViewModel();
+
+        #endregion
     }
 }
