@@ -187,29 +187,26 @@ namespace Cube.Pdf.Tests
                             Print             = PermissionMethod.Allow,
                         }
                     });
-
-                    // Tests only for PDFium
-                    if (klass == nameof(Cube.Pdf.Itext)) continue;
-
-                    yield return new TestCaseData(klass, "SampleAes256r6.pdf", "password", new Encryption
-                    {
-                        Method           = EncryptionMethod.Aes256r6,
-                        Enabled          = true,
-                        OwnerPassword    = "password",
-                        OpenWithPassword = true,
-                        UserPassword     = "view",
-                        Permission       = new Permission
-                        {
-                            Accessibility     = PermissionMethod.Allow,
-                            Assemble          = PermissionMethod.Allow,
-                            CopyContents      = PermissionMethod.Allow,
-                            InputForm         = PermissionMethod.Allow,
-                            ModifyAnnotations = PermissionMethod.Allow,
-                            ModifyContents    = PermissionMethod.Allow,
-                            Print             = PermissionMethod.Allow,
-                        }
-                    });
                 }
+
+                yield return new TestCaseData(nameof(Cube.Pdf.Pdfium), "SampleAes256r6.pdf", "password", new Encryption
+                {
+                    Method           = EncryptionMethod.Aes256r6,
+                    Enabled          = true,
+                    OwnerPassword    = "password",
+                    OpenWithPassword = true,
+                    UserPassword     = "view",
+                    Permission       = new Permission
+                    {
+                        Accessibility     = PermissionMethod.Allow,
+                        Assemble          = PermissionMethod.Allow,
+                        CopyContents      = PermissionMethod.Allow,
+                        InputForm         = PermissionMethod.Allow,
+                        ModifyAnnotations = PermissionMethod.Allow,
+                        ModifyContents    = PermissionMethod.Allow,
+                        Print             = PermissionMethod.Allow,
+                    }
+                });
             }
         }
 
