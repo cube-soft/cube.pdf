@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
 using GalaSoft.MvvmLight;
 
 namespace Cube.Pdf.App.Editor
@@ -39,33 +38,220 @@ namespace Cube.Pdf.App.Editor
         /// Open
         ///
         /// <summary>
-        /// 開くアイコンを取得します。
+        /// 開くメニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<RibbonIcon> Open { get; } = new RibbonIcon(nameof(Open)).ToBindable();
+        public RibbonItem Open { get; } = new RibbonItem(nameof(Open));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Save
         ///
         /// <summary>
-        /// 保存アイコンを取得します。
+        /// 保存メニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<RibbonIcon> Save { get; } = new RibbonIcon(nameof(Save)).ToBindable();
+        public RibbonItem Save { get; } = new RibbonItem(nameof(Save));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Close
         ///
         /// <summary>
-        /// 閉じるアイコンを取得します。
+        /// 閉じるメニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<RibbonIcon> Close { get; } = new RibbonIcon(nameof(Close)).ToBindable();
+        public RibbonItem Close { get; } = new RibbonItem(nameof(Close));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Undo
+        ///
+        /// <summary>
+        /// 元に戻すメニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Undo { get; } = new RibbonItem(nameof(Undo));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Redo
+        ///
+        /// <summary>
+        /// やり直しメニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Redo { get; } = new RibbonItem(nameof(Redo));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// 選択メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Select { get; } = new RibbonItem(nameof(Select));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        ///
+        /// <summary>
+        /// 挿入メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Insert { get; } = new RibbonItem(nameof(Insert));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Extract
+        ///
+        /// <summary>
+        /// 抽出メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Extract { get; } = new RibbonItem(nameof(Extract));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// 削除メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Remove { get; } = new RibbonItem(nameof(Remove));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Forward
+        ///
+        /// <summary>
+        /// 前へメニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Forward { get; } = new RibbonItem(nameof(Forward));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// 削除メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Back { get; } = new RibbonItem(nameof(Back));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RotateLeft
+        ///
+        /// <summary>
+        /// 左 90 度回転メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem RotateLeft { get; } = new RibbonItem(nameof(RotateLeft), "Left");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RotateRight
+        ///
+        /// <summary>
+        /// 右 90 度回転メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem RotateRight { get; } = new RibbonItem(nameof(RotateRight), "Right");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// メタ情報メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Metadata { get; } = new RibbonItem(nameof(Metadata));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// セキュリティメニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Encryption { get; } = new RibbonItem(nameof(Encryption), "Security");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Refresh
+        ///
+        /// <summary>
+        /// 更新メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Refresh { get; } = new RibbonItem(nameof(Refresh));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ZoomIn
+        ///
+        /// <summary>
+        /// 拡大メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem ZoomIn { get; } = new RibbonItem(nameof(ZoomIn));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ZoomOut
+        ///
+        /// <summary>
+        /// 縮小メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem ZoomOut { get; } = new RibbonItem(nameof(ZoomOut));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version
+        ///
+        /// <summary>
+        /// バージョンメニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Version { get; } = new RibbonItem(nameof(Version));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Web
+        ///
+        /// <summary>
+        /// Web メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem Web { get; } = new RibbonItem(nameof(Web));
 
         #endregion
     }

@@ -41,7 +41,6 @@
         <Setter Property="IsQuickAccessToolBarVisible" Value="False" />
         <Setter Property="IsQuickAccessToolBarMenuDropDownVisible" Value="False" />
         <Setter Property="ShowQuickAccessToolBarAboveRibbon" Value="False" />
-        <Setter Property="Height" Value="96" /> <!-- Experimental -->
     </Style>
 
     <!-- **********************************************************************
@@ -68,6 +67,7 @@
         <Setter Property="IsLauncherVisible" Value="False" />
         <Setter Property="IsManipulationEnabled" Value="False" />
         <Setter Property="IsSeparatorVisible" Value="False" />
+        <Setter Property="Margin" Value="0,0,8,0" />
     </Style>
 
     <!-- **********************************************************************

@@ -1,0 +1,165 @@
+﻿<!-- **************************************************************************
+
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<UserControl
+    x:Class="Cube.Pdf.App.Editor.RibbonControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:r="urn:fluent-ribbon"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="150"
+    d:DesignWidth="800">
+
+    <!-- **********************************************************************
+      Resources
+    *********************************************************************** -->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- **********************************************************************
+      Main
+    *********************************************************************** -->
+    <r:Ribbon>
+        <r:Ribbon.Menu>
+            <r:ApplicationMenu />
+        </r:Ribbon.Menu>
+
+        <r:RibbonTabItem Header="Edit">
+            <r:RibbonGroupBox>
+                <r:Button
+                    Header="{Binding Ribbon.Open.Text}"
+                    Icon="{Binding Ribbon.Open.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Open.LargeIcon}" />
+                <r:SplitButton
+                    Header="{Binding Ribbon.Save.Text}"
+                    Icon="{Binding Ribbon.Save.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Save.LargeIcon}" />
+                <r:Button
+                    Header="{Binding Ribbon.Close.Text}"
+                    Icon="{Binding Ribbon.Close.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Close.LargeIcon}" />
+            </r:RibbonGroupBox>
+
+            <r:RibbonGroupBox>
+                <r:Button
+                    Header="{Binding Ribbon.Undo.Text}"
+                    Icon="{Binding Ribbon.Undo.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Undo.LargeIcon}" />
+                <r:Button
+                    Header="{Binding Ribbon.Redo.Text}"
+                    Icon="{Binding Ribbon.Redo.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Redo.LargeIcon}" />
+            </r:RibbonGroupBox>
+
+            <r:RibbonGroupBox>
+                <r:SplitButton
+                    Header="{Binding Ribbon.Select.Text}"
+                    Icon="{Binding Ribbon.Select.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Select.LargeIcon}" />
+            </r:RibbonGroupBox>
+
+            <r:RibbonGroupBox>
+                <r:SplitButton
+                    Header="{Binding Ribbon.Insert.Text}"
+                    Icon="{Binding Ribbon.Insert.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Insert.LargeIcon}" />
+                <r:SplitButton
+                    Header="{Binding Ribbon.Extract.Text}"
+                    Icon="{Binding Ribbon.Extract.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Extract.LargeIcon}" />
+                <r:SplitButton
+                    Header="{Binding Ribbon.Remove.Text}"
+                    Icon="{Binding Ribbon.Remove.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Remove.LargeIcon}" />
+            </r:RibbonGroupBox>
+
+            <r:RibbonGroupBox>
+                <r:Button
+                    Header="{Binding Ribbon.Forward.Text}"
+                    Icon="{Binding Ribbon.Forward.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Forward.LargeIcon}" />
+                <r:Button
+                    Header="{Binding Ribbon.Back.Text}"
+                    Icon="{Binding Ribbon.Back.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Back.LargeIcon}" />
+            </r:RibbonGroupBox>
+
+            <r:RibbonGroupBox>
+                <r:Button
+                    Header="{Binding Ribbon.RotateLeft.Text}"
+                    Icon="{Binding Ribbon.RotateLeft.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.RotateLeft.LargeIcon}" />
+                <r:Button
+                    Header="{Binding Ribbon.RotateRight.Text}"
+                    Icon="{Binding Ribbon.RotateRight.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.RotateRight.LargeIcon}" />
+            </r:RibbonGroupBox>
+
+            <r:RibbonGroupBox>
+                <r:Button
+                    Header="{Binding Ribbon.Metadata.Text}"
+                    Icon="{Binding Ribbon.Metadata.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Metadata.LargeIcon}" />
+                <r:Button
+                    Header="{Binding Ribbon.Encryption.Text}"
+                    Icon="{Binding Ribbon.Encryption.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Encryption.LargeIcon}" />
+            </r:RibbonGroupBox>
+        </r:RibbonTabItem>
+
+        <r:RibbonTabItem Header="View">
+            <r:RibbonGroupBox>
+                <r:Button
+                    Header="{Binding Ribbon.Refresh.Text}"
+                    Icon="{Binding Ribbon.Refresh.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Refresh.LargeIcon}" />
+            </r:RibbonGroupBox>
+
+            <r:RibbonGroupBox>
+                <r:Button
+                    Header="{Binding Ribbon.ZoomIn.Text}"
+                    Icon="{Binding Ribbon.ZoomIn.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.ZoomIn.LargeIcon}" />
+                <r:Button
+                    Header="{Binding Ribbon.ZoomOut.Text}"
+                    Icon="{Binding Ribbon.ZoomOut.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.ZoomOut.LargeIcon}" />
+            </r:RibbonGroupBox>
+        </r:RibbonTabItem>
+
+        <r:RibbonTabItem Header="Help">
+            <r:RibbonGroupBox>
+                <r:Button
+                    Header="{Binding Ribbon.Version.Text}"
+                    Icon="{Binding Ribbon.Version.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Version.LargeIcon}" />
+                <r:Button
+                    Header="{Binding Ribbon.Web.Text}"
+                    Icon="{Binding Ribbon.Web.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Web.LargeIcon}" />
+            </r:RibbonGroupBox>
+        </r:RibbonTabItem>
+    </r:Ribbon>
+</UserControl>

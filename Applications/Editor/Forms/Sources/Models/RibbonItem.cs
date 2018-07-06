@@ -20,31 +20,46 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RibbonIcon
+    /// RibbonItem
     ///
     /// <summary>
-    /// Ribbon のアイコンを表すクラスです。
+    /// Ribbon の項目を表すクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RibbonIcon : ObservableProperty
+    public class RibbonItem : ObservableProperty
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RibbonIcon
+        /// RibbonItem
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="name">アイコンの名前</param>
+        /// <param name="name">名前</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonIcon(string name)
+        public RibbonItem(string name) : this(name, name) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RibbonItem
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="name">名前</param>
+        /// <param name="text">表示テキスト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonItem(string name, string text)
         {
             Name = name;
+            Text = text;
         }
 
         #endregion
@@ -75,6 +90,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Text
+        ///
+        /// <summary>
+        /// 表示テキストを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Text { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// LargeIcon
         ///
         /// <summary>
@@ -93,7 +119,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string SmallIcon => $"{Assets}/SmallIcon/{Name}.png";
+        public string SmallIcon => $"{Assets}/Small/{Name}.png";
 
         #endregion
     }

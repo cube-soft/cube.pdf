@@ -35,14 +35,6 @@
     <!-- **********************************************************************
       Resources
     *********************************************************************** -->
-    <r:RibbonWindow.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </r:RibbonWindow.Resources>
-
     <r:RibbonWindow.DataContext>
         <my:MainViewModel />
     </r:RibbonWindow.DataContext>
@@ -57,67 +49,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <r:Ribbon>
-            <r:Ribbon.Menu>
-                <r:ApplicationMenu />
-            </r:Ribbon.Menu>
-
-            <r:RibbonTabItem Header="Edit">
-                <r:RibbonGroupBox>
-                    <r:Button Header="Open" />
-                    <r:SplitButton Header="Save" />
-                    <r:Button Header="Close" />
-                </r:RibbonGroupBox>
-
-                <r:RibbonGroupBox>
-                    <r:Button Header="Undo" />
-                    <r:Button Header="Redo" />
-                </r:RibbonGroupBox>
-
-                <r:RibbonGroupBox>
-                    <r:SplitButton Header="Select" />
-                </r:RibbonGroupBox>
-
-                <r:RibbonGroupBox>
-                    <r:SplitButton Header="Insert" />
-                    <r:SplitButton Header="Extract" />
-                    <r:SplitButton Header="Remove" />
-                </r:RibbonGroupBox>
-
-                <r:RibbonGroupBox>
-                    <r:Button Header="Forward" />
-                    <r:Button Header="Back" />
-                </r:RibbonGroupBox>
-
-                <r:RibbonGroupBox>
-                    <r:Button Header="Left" />
-                    <r:Button Header="Right" />
-                </r:RibbonGroupBox>
-
-                <r:RibbonGroupBox>
-                    <r:Button Header="Metadata" />
-                    <r:Button Header="Security" />
-                </r:RibbonGroupBox>
-            </r:RibbonTabItem>
-
-            <r:RibbonTabItem Header="View">
-                <r:RibbonGroupBox>
-                    <r:Button Header="Refresh" />
-                </r:RibbonGroupBox>
-
-                <r:RibbonGroupBox>
-                    <r:Button Header="ZoomIn" />
-                    <r:Button Header="ZoomOut" />
-                </r:RibbonGroupBox>
-            </r:RibbonTabItem>
-
-            <r:RibbonTabItem Header="Help">
-                <r:RibbonGroupBox>
-                    <r:Button Header="Version" />
-                    <r:Button Header="Web" />
-                </r:RibbonGroupBox>
-            </r:RibbonTabItem>
-        </r:Ribbon>
+        <my:RibbonControl Grid.Row="0" />
 
         <ListView Grid.Row="1" Grid.ColumnSpan="3" />
 
