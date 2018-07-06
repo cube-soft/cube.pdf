@@ -39,11 +39,14 @@ namespace Cube.Pdf.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Source
+        /// PdfiumReader
         ///
         /// <summary>
-        /// 対象となる PDF ファイルのパスを取得します。
+        /// オブジェクトを初期化します。
         /// </summary>
+        ///
+        /// <param name="src">入力ファイルのパス</param>
+        /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
         private PdfiumReader(string src, IO io)
@@ -144,14 +147,14 @@ namespace Cube.Pdf.Pdfium
         /// Create
         ///
         /// <summary>
-        /// PdfReader オブジェクトを生成します。
+        /// PdfiumReader オブジェクトを生成します。
         /// </summary>
         ///
         /// <param name="src">PDF ファイルのパス</param>
         /// <param name="query">パスワード用オブジェクト</param>
         /// <param name="io">I/O オブジェクト</param>
         ///
-        /// <returns>PdfReader</returns>
+        /// <returns>PdfiumReader</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static PdfiumReader Create(string src, IQuery<string> query, IO io)

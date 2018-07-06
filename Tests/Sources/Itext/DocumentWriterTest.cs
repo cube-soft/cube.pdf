@@ -204,10 +204,15 @@ namespace Cube.Pdf.Tests.Itext
                 writer.Add(reader.Pages);
                 writer.Save(dest);
 
-                var n = IO.GetFiles(dest).Length;
-                Assert.That(n, Is.EqualTo(writer.Results.Count + 1));
+                var n   = writer.Results.Count;
+                var cmp = IO.GetFiles(dest).Length;
+                Assert.That(cmp, Is.EqualTo(n + 1));
                 Assert.That(IO.Exists(IO.Combine(dest, $"{name}-01 (1){ext}")));
-                return writer.Results.Count;
+
+                writer.Reset();
+                Assert.That(writer.Results.Count, Is.EqualTo(0));
+
+                return n;
             }
         }
 

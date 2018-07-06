@@ -209,14 +209,12 @@ namespace Cube.Pdf.Itext
             return dest;
         }
 
-        #region IDisposable
-
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
         ///
         /// <summary>
-        /// オブジェクトを破棄する際に必要な終了処理を実行します。
+        /// リソースを開放します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -224,8 +222,6 @@ namespace Cube.Pdf.Itext
         {
             if (disposing) _core.Dispose();
         }
-
-        #endregion
 
         #endregion
 
