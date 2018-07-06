@@ -41,6 +41,7 @@
         <Setter Property="IsQuickAccessToolBarVisible" Value="False" />
         <Setter Property="IsQuickAccessToolBarMenuDropDownVisible" Value="False" />
         <Setter Property="ShowQuickAccessToolBarAboveRibbon" Value="False" />
+        <Setter Property="Height" Value="96" /> <!-- Experimental -->
     </Style>
 
     <!-- **********************************************************************
@@ -59,6 +60,9 @@
         <Setter Property="ActiveTabBackground" Value="{StaticResource TabBackgroundBrush}" />
     </Style>
 
+    <!-- **********************************************************************
+      RibbonGroupBox
+    *********************************************************************** -->
     <Style TargetType="{x:Type r:RibbonGroupBox}">
         <Setter Property="IsLauncherEnabled" Value="False" />
         <Setter Property="IsLauncherVisible" Value="False" />
