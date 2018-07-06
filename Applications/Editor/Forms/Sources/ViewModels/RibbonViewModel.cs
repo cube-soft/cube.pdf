@@ -119,7 +119,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Extract { get; } = new RibbonItem(nameof(Extract));
+        public RibbonItem Extract { get; } = new RibbonItem(nameof(Extract), "Pick");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -134,25 +134,25 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Forward
+        /// MoveNext
         ///
         /// <summary>
-        /// 前へメニューを取得します。
+        /// 後ろのページへ移動するメニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Forward { get; } = new RibbonItem(nameof(Forward));
+        public RibbonItem MoveNext { get; } = new RibbonItem(nameof(MoveNext), "Next");
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Remove
+        /// MovePrevious
         ///
         /// <summary>
-        /// 削除メニューを取得します。
+        /// 前のページへ移動するメニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonItem Back { get; } = new RibbonItem(nameof(Back));
+        public RibbonItem MovePrevious { get; } = new RibbonItem(nameof(MovePrevious), "Prev");
 
         /* ----------------------------------------------------------------- */
         ///

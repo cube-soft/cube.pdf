@@ -143,8 +143,8 @@
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Large\Back.png" />
-    <Resource Include="Assets\Large\BackDisable.png" />
+    <Resource Include="Assets\Large\MoveNext.png" />
+    <Resource Include="Assets\Large\MoveNextDisable.png" />
     <Resource Include="Assets\Large\Close.png" />
     <Resource Include="Assets\Large\CloseDisable.png" />
     <Resource Include="Assets\Large\Encryption.png" />
@@ -155,8 +155,8 @@
     <Resource Include="Assets\Large\ExtractDisable.png" />
     <Resource Include="Assets\Large\Font.png" />
     <Resource Include="Assets\Large\FontDisable.png" />
-    <Resource Include="Assets\Large\Forward.png" />
-    <Resource Include="Assets\Large\ForwardDisable.png" />
+    <Resource Include="Assets\Large\MovePrevious.png" />
+    <Resource Include="Assets\Large\MovePreviousDisable.png" />
     <Resource Include="Assets\Large\Help.png" />
     <Resource Include="Assets\Large\HelpDisable.png" />
     <Resource Include="Assets\Large\Insert.png" />
@@ -190,8 +190,8 @@
     <Resource Include="Assets\Large\ZoomInDisable.png" />
     <Resource Include="Assets\Large\ZoomOut.png" />
     <Resource Include="Assets\Large\ZoomOutDisable.png" />
-    <Resource Include="Assets\Small\Back.png" />
-    <Resource Include="Assets\Small\BackDisable.png" />
+    <Resource Include="Assets\Small\MoveNext.png" />
+    <Resource Include="Assets\Small\MoveNextDisable.png" />
     <Resource Include="Assets\Small\Close.png" />
     <Resource Include="Assets\Small\CloseDisable.png" />
     <Resource Include="Assets\Small\Encryption.png" />
@@ -204,8 +204,8 @@
     <Resource Include="Assets\Small\ExtractImageDisable.png" />
     <Resource Include="Assets\Small\Font.png" />
     <Resource Include="Assets\Small\FontDisable.png" />
-    <Resource Include="Assets\Small\Forward.png" />
-    <Resource Include="Assets\Small\ForwardDisable.png" />
+    <Resource Include="Assets\Small\MovePrevious.png" />
+    <Resource Include="Assets\Small\MovePreviousDisable.png" />
     <Resource Include="Assets\Small\Help.png" />
     <Resource Include="Assets\Small\HelpDisable.png" />
     <Resource Include="Assets\Small\Insert.png" />

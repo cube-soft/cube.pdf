@@ -97,13 +97,13 @@
 
             <r:RibbonGroupBox>
                 <r:Button
-                    Header="{Binding Ribbon.Forward.Text}"
-                    Icon="{Binding Ribbon.Forward.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Forward.LargeIcon}" />
+                    Header="{Binding Ribbon.MovePrevious.Text}"
+                    Icon="{Binding Ribbon.MovePrevious.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.MovePrevious.LargeIcon}" />
                 <r:Button
-                    Header="{Binding Ribbon.Back.Text}"
-                    Icon="{Binding Ribbon.Back.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Back.LargeIcon}" />
+                    Header="{Binding Ribbon.MoveNext.Text}"
+                    Icon="{Binding Ribbon.MoveNext.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.MoveNext.LargeIcon}" />
             </r:RibbonGroupBox>
 
             <r:RibbonGroupBox>
