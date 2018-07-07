@@ -23,11 +23,27 @@
 
     <!-- **********************************************************************
       Ribbon Brushes
+
+      Image brushes are same as TabBackgroundBrush.
     *********************************************************************** -->
-    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.HighlightBrush" Color="#FFF0F0F0" />
-    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabItem.Foreground" Color="#FF909090" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.HighlightBrush"
+                     Color="{StaticResource TabForegroundColor}" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabItem.Selected.Foreground"
+                     Color="{StaticResource TabForegroundColor}" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabItem.Foreground"
+                     Color="{StaticResource TabForegroundInactivateColor}" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.DropDown.BorderBrush"
+                     Color="{StaticResource TabBorderColor}" />
+
     <ImageBrush
         x:Key="Fluent.Ribbon.Brushes.RibbonTabControl.Content.Background"
+        ImageSource="pack://application:,,,/Assets/Background.png"
+        TileMode="Tile"
+        ViewportUnits="Absolute"
+        Viewport="0,0,4,4" />
+
+    <ImageBrush
+        x:Key="Fluent.Ribbon.Brushes.DropDown.BackgroundBrush"
         ImageSource="pack://application:,,,/Assets/Background.png"
         TileMode="Tile"
         ViewportUnits="Absolute"
@@ -92,5 +108,13 @@
     <Style TargetType="{x:Type r:ApplicationMenu}">
         <Setter Property="Background" Value="{StaticResource MenuButtonBrush}" />
         <Setter Property="Margin" Value="0,0,0,2" />
+    </Style>
+
+    <!-- **********************************************************************
+      MenuItem
+    *********************************************************************** -->
+    <Style TargetType="{x:Type r:MenuItem}">
+        <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
+        <Setter Property="Padding" Value="2" />
     </Style>
 </ResourceDictionary>

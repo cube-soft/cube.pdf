@@ -21,29 +21,37 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- **********************************************************************
-      Main colors
+      Colors
     *********************************************************************** -->
-    <SolidColorBrush x:Key="MainBackgroundBrush" Color="#FF555555" />
-    <SolidColorBrush x:Key="MainBorderBrush" Color="#FF000000" />
-    <SolidColorBrush x:Key="MainForegroundBrush" Color="#FFB3B3B3" />
+    <Color x:Key="MainBackgroundColor">#FF555555</Color>
+    <Color x:Key="MainForegroundColor">#FFB3B3B3</Color>
+    <Color x:Key="MainBorderColor">#FF000000</Color>
+
+    <Color x:Key="TabBackgroundColor">#FF2F2F2F</Color>
+    <Color x:Key="TabForegroundColor">#FFF0F0F0</Color>
+    <Color x:Key="TabForegroundInactivateColor">#FF909090</Color>
+    <Color x:Key="TabBorderColor">#FF202020</Color>
+
+    <Color x:Key="MenuButtonColor">#FF202020</Color>
 
     <!-- **********************************************************************
-      Tab colors
+      Brushes
     *********************************************************************** -->
+    <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource MainBackgroundColor}" />
+    <SolidColorBrush x:Key="MainForegroundBrush" Color="{StaticResource MainForegroundColor}" />
+    <SolidColorBrush x:Key="MainBorderBrush" Color="{StaticResource MainBorderColor}" />
+
     <ImageBrush
         x:Key="TabBackgroundBrush"
         ImageSource="pack://application:,,,/Assets/Background.png"
         TileMode="Tile"
         ViewportUnits="Absolute"
         Viewport="0,0,4,4" />
-    <SolidColorBrush x:Key="TabBorderBrush" Color="#FF000000" />
-    <SolidColorBrush x:Key="TabForegroundBrush" Color="#FFF0F0F0" />
-    <SolidColorBrush x:Key="TabMouseOverBackgroundBrush" Color="#FFB700" Opacity="0.1" />
+    <SolidColorBrush x:Key="TabForegroundBrush" Color="{StaticResource TabForegroundColor}" />
+    <SolidColorBrush x:Key="TabForegroundInactivateBrush" Color="{StaticResource TabForegroundInactivateColor}" />
+    <SolidColorBrush x:Key="TabBorderBrush" Color="{StaticResource TabBorderColor}" />
 
-    <!-- **********************************************************************
-      Tab colors
-    *********************************************************************** -->
-    <SolidColorBrush x:Key="MenuButtonBrush" Color="#FF000000" />
+    <SolidColorBrush x:Key="MenuButtonBrush" Color="{StaticResource MenuButtonColor}" />
 
     <!-- **********************************************************************
       ListView
