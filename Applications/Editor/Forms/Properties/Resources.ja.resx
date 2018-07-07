@@ -120,6 +120,9 @@
   <data name="MenuClose" xml:space="preserve">
     <value>閉じる</value>
   </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>編集</value>
+  </data>
   <data name="MenuEncryption" xml:space="preserve">
     <value>セキュリティ</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>開く</value>
+  </data>
+  <data name="MenuOthers" xml:space="preserve">
+    <value>その他</value>
   </data>
   <data name="MenuRedo" xml:space="preserve">
     <value>やり直し</value>
@@ -167,6 +173,9 @@
   </data>
   <data name="MenuVersion" xml:space="preserve">
     <value>バージョン</value>
+  </data>
+  <data name="MenuView" xml:space="preserve">
+    <value>表示</value>
   </data>
   <data name="MenuWeb" xml:space="preserve">
     <value>Web</value>

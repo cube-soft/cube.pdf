@@ -35,7 +35,7 @@
             <r:ApplicationMenu />
         </r:Ribbon.Menu>
 
-        <r:RibbonTabItem Header="Edit">
+        <r:RibbonTabItem Header="{Binding Ribbon.Edit.Text}">
             <!-- **************************************************************
               Open/Save/Close
             *************************************************************** -->
@@ -144,7 +144,7 @@
             </r:RibbonGroupBox>
         </r:RibbonTabItem>
 
-        <r:RibbonTabItem Header="View">
+        <r:RibbonTabItem Header="{Binding Ribbon.View.Text}">
             <!-- **************************************************************
               Refresh
             *************************************************************** -->
@@ -170,7 +170,7 @@
             </r:RibbonGroupBox>
         </r:RibbonTabItem>
 
-        <r:RibbonTabItem Header="Help">
+        <r:RibbonTabItem Header="{Binding Ribbon.Others.Text}">
             <!-- **************************************************************
               Version/Web
             *************************************************************** -->

@@ -120,6 +120,9 @@
   <data name="MenuClose" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="MenuEncryption" xml:space="preserve">
     <value>Security</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
+  </data>
+  <data name="MenuOthers" xml:space="preserve">
+    <value>Others</value>
   </data>
   <data name="MenuRedo" xml:space="preserve">
     <value>Redo</value>
@@ -167,6 +173,9 @@
   </data>
   <data name="MenuVersion" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="MenuView" xml:space="preserve">
+    <value>View</value>
   </data>
   <data name="MenuWeb" xml:space="preserve">
     <value>Web</value>

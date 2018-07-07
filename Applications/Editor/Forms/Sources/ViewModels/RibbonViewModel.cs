@@ -33,6 +33,48 @@ namespace Cube.Pdf.App.Editor
     {
         #region Properties
 
+        #region Tabs
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Edit
+        ///
+        /// <summary>
+        /// 編集メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry Edit { get; } =
+            new RibbonEntry(nameof(Edit), () => Properties.Resources.MenuEdit);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// View
+        ///
+        /// <summary>
+        /// 表示メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry View { get; } =
+            new RibbonEntry(nameof(View), () => Properties.Resources.MenuView);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Others
+        ///
+        /// <summary>
+        /// その他メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry Others { get; } =
+            new RibbonEntry(nameof(Others), () => Properties.Resources.MenuOthers);
+
+        #endregion
+
+        #region Buttons
+
         /* ----------------------------------------------------------------- */
         ///
         /// Open
@@ -272,6 +314,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public RibbonEntry Web { get; } =
             new RibbonEntry(nameof(Web), () => Properties.Resources.MenuWeb);
+
+        #endregion
 
         #endregion
     }
