@@ -50,15 +50,23 @@ namespace Cube.Pdf.App.Editor
             _dispose     = new OnceAction<bool>(Dispose);
             _get         = getter;
             _unsubscribe = ResourceCulture.Subscribe(() => RaisePropertyChanged(nameof(Text)));
-
-            var assets = "pack://application:,,,/Assets";
-            LargeIcon = $"{assets}/Large/{name}.png";
-            SmallIcon = $"{assets}/Small/{name}.png";
+            Name         = name;
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Assets
+        ///
+        /// <summary>
+        /// アイコンが格納されている場所を示す文字列を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected static string Assets { get; } = "pack://application:,,,/Assets";
 
         /* ----------------------------------------------------------------- */
         ///
@@ -73,6 +81,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Name
+        ///
+        /// <summary>
+        /// アイコン名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Name { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// LargeIcon
         ///
         /// <summary>
@@ -80,7 +99,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string LargeIcon { get; }
+        public string LargeIcon => $"{Assets}/Large/{Name}.png";
 
         /* ----------------------------------------------------------------- */
         ///
@@ -91,7 +110,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string SmallIcon { get; }
+        public string SmallIcon => $"{Assets}/Small/{Name}.png";
 
         #endregion
 

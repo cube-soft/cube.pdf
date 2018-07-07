@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\GlobalSetup.cs" />
+    <Compile Include="Sources\RibbonEntryTest.cs" />
+    <Compile Include="Sources\RibbonViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">

@@ -16,8 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -30,7 +32,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class ResourceCulture
+    public static class ResourceCulture
     {
         #region Methods
 
@@ -45,8 +47,12 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static void Set(string name)
         {
-            var cmp = Properties.Resources.Culture.Name;
-            if (name.Equals(cmp, StringComparison.InvariantCultureIgnoreCase)) return;
+            var src = name ?? string.Empty;
+            var cmp = Properties.Resources.Culture?.Name;
+            var opt = StringComparison.InvariantCultureIgnoreCase;
+            if (cmp.HasValue() && cmp.Equals(src, opt)) return;
+
+            Properties.Resources.Culture = new CultureInfo(src);
             lock (_lock)
             {
                 foreach (var action in _subscriptions) action();
