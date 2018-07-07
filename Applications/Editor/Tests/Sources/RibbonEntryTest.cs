@@ -47,18 +47,20 @@ namespace CubePdf.Tests.Editor
         [Test]
         public void Properties()
         {
-            var name = "Name";
+            var name = nameof(Properties);
             var text = "GetText";
 
-            using (var dest = new RibbonEntry(name,() => text))
+            using (var dest = new RibbonEntry(() => text))
             {
                 Assert.That(dest.Name,      Is.EqualTo(name));
                 Assert.That(dest.Text,      Is.EqualTo(text));
-                Assert.That(dest.LargeIcon, Is.EqualTo("pack://application:,,,/Assets/Large/Name.png"));
-                Assert.That(dest.SmallIcon, Is.EqualTo("pack://application:,,,/Assets/Small/Name.png"));
+                Assert.That(dest.Tooltip,   Is.EqualTo(text));
+                Assert.That(dest.LargeIcon, Is.EqualTo($"pack://application:,,,/Assets/Large/{name}.png"));
+                Assert.That(dest.SmallIcon, Is.EqualTo($"pack://application:,,,/Assets/Small/{name}.png"));
 
                 ResourceCulture.Set("fr");
                 Assert.That(dest.Text,      Is.EqualTo(text));
+                Assert.That(dest.Tooltip,   Is.EqualTo(text));
             }
 
             ResourceCulture.Set("ja");

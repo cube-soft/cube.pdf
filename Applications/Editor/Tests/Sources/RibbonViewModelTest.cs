@@ -56,8 +56,8 @@ namespace CubePdf.Tests.Editor
             Assert.That(dest.Undo.Text,         Is.EqualTo("Undo"));
             Assert.That(dest.Redo.Text,         Is.EqualTo("Redo"));
             Assert.That(dest.Select.Text,       Is.EqualTo("Select"));
-            Assert.That(dest.Insert.Text,       Is.EqualTo("Add"));
-            Assert.That(dest.Extract.Text,      Is.EqualTo("Pick"));
+            Assert.That(dest.Insert.Text,       Is.EqualTo("Insert"));
+            Assert.That(dest.Extract.Text,      Is.EqualTo("Extract"));
             Assert.That(dest.Remove.Text,       Is.EqualTo("Remove"));
             Assert.That(dest.MovePrevious.Text, Is.EqualTo("Prev"));
             Assert.That(dest.MoveNext.Text,     Is.EqualTo("Next"));

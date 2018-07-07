@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -41,14 +42,31 @@ namespace Cube.Pdf.App.Editor
         /// オブジェクトを初期化します。
         /// </summary>
         ///
+        /// <param name="text">表示テキスト取得用オブジェクト</param>
         /// <param name="name">アイコン名</param>
-        /// <param name="getter">表示テキスト取得用オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry(string name, Func<string> getter)
+        public RibbonEntry(Func<string> text, [CallerMemberName] string name = null) :
+            this(text, text, name) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RibbonEntry
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="text">表示テキスト取得用オブジェクト</param>
+        /// <param name="tooltip">ツールチップ</param>
+        /// <param name="name">アイコン名</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry(Func<string> text, Func<string> tooltip, [CallerMemberName] string name = null)
         {
             _dispose     = new OnceAction<bool>(Dispose);
-            _get         = getter;
+            _getText     = text;
+            _getTooltip  = tooltip;
             _unsubscribe = ResourceCulture.Subscribe(() => RaisePropertyChanged(nameof(Text)));
             Name         = name;
         }
@@ -77,7 +95,18 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Text => _get();
+        public string Text => _getText();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Tooltip
+        ///
+        /// <summary>
+        /// ツールチップ用テキストを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Tooltip => _getTooltip();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -164,7 +193,8 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly OnceAction<bool> _dispose;
-        private readonly Func<string> _get;
+        private readonly Func<string> _getText;
+        private readonly Func<string> _getTooltip;
         private readonly IDisposable _unsubscribe;
         #endregion
     }

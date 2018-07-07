@@ -48,6 +48,12 @@
                     Header="{Binding Ribbon.Save.Text}"
                     Icon="{Binding Ribbon.Save.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Save.LargeIcon}">
+                    <r:MenuItem
+                        Header="{Binding Ribbon.Save.Tooltip}"
+                        Icon="{Binding Ribbon.Save.SmallIcon}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.SaveAs.Tooltip}"
+                        Icon="{Binding Ribbon.SaveAs.SmallIcon}" />
                 </r:SplitButton>
                 <r:Button
                     Header="{Binding Ribbon.Close.Text}"
