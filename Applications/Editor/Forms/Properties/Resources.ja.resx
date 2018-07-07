@@ -129,8 +129,23 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>抽出</value>
   </data>
+  <data name="MenuExtractDetails" xml:space="preserve">
+    <value>詳細を設定して抽出</value>
+  </data>
+  <data name="MenuExtractImages" xml:space="preserve">
+    <value>選択したページに含まれる画像を抽出</value>
+  </data>
   <data name="MenuInsert" xml:space="preserve">
     <value>挿入</value>
+  </data>
+  <data name="MenuInsertBack" xml:space="preserve">
+    <value>末尾に挿入</value>
+  </data>
+  <data name="MenuInsertDetails" xml:space="preserve">
+    <value>詳細を設定して挿入</value>
+  </data>
+  <data name="MenuInsertFront" xml:space="preserve">
+    <value>先頭に挿入</value>
   </data>
   <data name="MenuMetadata" xml:space="preserve">
     <value>文書プロパティ</value>
@@ -156,6 +171,9 @@
   <data name="MenuRemove" xml:space="preserve">
     <value>削除</value>
   </data>
+  <data name="MenuRemoveDetails" xml:space="preserve">
+    <value>範囲を指定して削除</value>
+  </data>
   <data name="MenuRotateLeft" xml:space="preserve">
     <value>左90度</value>
   </data>
@@ -165,8 +183,20 @@
   <data name="MenuSave" xml:space="preserve">
     <value>保存</value>
   </data>
+  <data name="MenuSaveAs" xml:space="preserve">
+    <value>名前を付けて保存</value>
+  </data>
   <data name="MenuSelect" xml:space="preserve">
     <value>選択</value>
+  </data>
+  <data name="MenuSelectAll" xml:space="preserve">
+    <value>全て選択</value>
+  </data>
+  <data name="MenuSelectCancel" xml:space="preserve">
+    <value>選択を解除</value>
+  </data>
+  <data name="MenuSelectFlip" xml:space="preserve">
+    <value>選択の切り替え</value>
   </data>
   <data name="MenuUndo" xml:space="preserve">
     <value>元に戻す</value>
@@ -185,5 +215,17 @@
   </data>
   <data name="MenuZoomOut" xml:space="preserve">
     <value>縮小</value>
+  </data>
+  <data name="TooltipExtract" xml:space="preserve">
+    <value>選択したページを抽出</value>
+  </data>
+  <data name="TooltipInsert" xml:space="preserve">
+    <value>選択位置の後に挿入</value>
+  </data>
+  <data name="TooltipRemove" xml:space="preserve">
+    <value>選択したページを削除</value>
+  </data>
+  <data name="TooltipSave" xml:space="preserve">
+    <value>上書き保存</value>
   </data>
 </root>
