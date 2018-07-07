@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
@@ -27,7 +29,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RibbonEntry : ObservableProperty
+    public class RibbonEntry : ObservableProperty, IDisposable
     {
         #region Constructors
 
@@ -39,54 +41,24 @@ namespace Cube.Pdf.App.Editor
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="icon">アイコン名</param>
+        /// <param name="name">アイコン名</param>
+        /// <param name="getter">表示テキスト取得用オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry(string icon) : this(icon, icon) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RibbonEntry
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /// <param name="icon">アイコン名</param>
-        /// <param name="text">表示テキスト</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RibbonEntry(string icon, string text)
+        public RibbonEntry(string name, Func<string> getter)
         {
-            Name = icon;
-            Text = text;
+            _dispose     = new OnceAction<bool>(Dispose);
+            _get         = getter;
+            _unsubscribe = ResourceCulture.Subscribe(() => RaisePropertyChanged(nameof(Text)));
+
+            var assets = "pack://application:,,,/Assets";
+            LargeIcon = $"{assets}/Large/{name}.png";
+            SmallIcon = $"{assets}/Small/{name}.png";
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Assets
-        ///
-        /// <summary>
-        /// リソースの保存されているディレクトリを表す文字列を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static string Assets { get; } = "pack://application:,,,/Assets";
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Name
-        ///
-        /// <summary>
-        /// アイコンを示す名前を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Name { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -97,7 +69,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Text { get; }
+        public string Text => _get();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,7 +80,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string LargeIcon => $"{Assets}/Large/{Name}.png";
+        public string LargeIcon { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -119,8 +91,62 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string SmallIcon => $"{Assets}/Small/{Name}.png";
+        public string SmallIcon { get; }
 
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~RibbonEntry
+        ///
+        /// <summary>
+        /// オブジェクトを破棄します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~RibbonEntry() { _dispose.Invoke(false); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// リソースを解放します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// リソースを解放します。
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// マネージリソースを解放するかどうか
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing) _unsubscribe.Dispose();
+        }
+
+        #endregion
+
+        #region Fields
+        private readonly OnceAction<bool> _dispose;
+        private readonly Func<string> _get;
+        private readonly IDisposable _unsubscribe;
         #endregion
     }
 }

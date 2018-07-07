@@ -132,6 +132,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\Models\ResourceCulture.cs" />
     <Compile Include="Sources\Models\RibbonEntry.cs" />
     <Compile Include="Sources\ViewModels\MainViewModel.cs" />
     <Compile Include="Sources\ViewModels\RibbonViewModel.cs" />
