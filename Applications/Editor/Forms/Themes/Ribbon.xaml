@@ -34,6 +34,18 @@
                      Color="{StaticResource TabForegroundInactivateColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.DropDown.BorderBrush"
                      Color="{StaticResource TabBorderColor}" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.MouseOver.BorderBrush"
+                     Color="{StaticResource TabAccentColor}" Opacity="0.4" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.MouseOver.Background"
+                     Color="{StaticResource TabAccentColor}" Opacity="0.2" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.BorderBrush"
+                     Color="{StaticResource TabAccentColor}" Opacity="0.5" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.Background"
+                     Color="{StaticResource TabAccentColor}" Opacity="0.25" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.ScrollViewer.Button.Background"
+                     Color="{StaticResource MenuButtonColor}" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.ScrollViewer.Button.BorderBrush"
+                     Color="{StaticResource MenuButtonColor}" />
 
     <ImageBrush
         x:Key="Fluent.Ribbon.Brushes.RibbonTabControl.Content.Background"
@@ -53,6 +65,7 @@
       Ribbon
     *********************************************************************** -->
     <Style TargetType="{x:Type r:Ribbon}">
+        <Setter Property="CanMinimize" Value="False" />
         <Setter Property="IsAutomaticCollapseEnabled" Value="False" />
         <Setter Property="IsQuickAccessToolBarVisible" Value="False" />
         <Setter Property="IsQuickAccessToolBarMenuDropDownVisible" Value="False" />

@@ -31,6 +31,7 @@
     <Color x:Key="TabForegroundColor">#FFF0F0F0</Color>
     <Color x:Key="TabForegroundInactivateColor">#FF909090</Color>
     <Color x:Key="TabBorderColor">#FF222222</Color>
+    <Color x:Key="TabAccentColor">#FFFFB700</Color>
 
     <Color x:Key="MenuButtonColor">#FF202020</Color>
 
