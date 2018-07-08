@@ -172,6 +172,48 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SelectAll
+        ///
+        /// <summary>
+        /// すべて選択メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry SelectAll { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuSelectAll,
+            nameof(Select)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectFlip
+        ///
+        /// <summary>
+        /// 選択の切り替えメニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry SelectFlip { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuSelectFlip,
+            nameof(Select)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectCancel
+        ///
+        /// <summary>
+        /// 選択を解除メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry SelectCancel { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuSelectCancel,
+            nameof(Select)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Insert
         ///
         /// <summary>
@@ -182,6 +224,48 @@ namespace Cube.Pdf.App.Editor
         public RibbonEntry Insert { get; } = new RibbonEntry(
             () => Properties.Resources.MenuInsert,
             () => Properties.Resources.TooltipInsert
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertFront
+        ///
+        /// <summary>
+        /// 先頭に挿入メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry InsertFront { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuInsertFront,
+            nameof(Insert)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertBack
+        ///
+        /// <summary>
+        /// 末尾に挿入メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry InsertBack { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuInsertBack,
+            nameof(Insert)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertOthers
+        ///
+        /// <summary>
+        /// 詳細を設定して挿入メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry InsertOthers { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuInsertOthers,
+            nameof(Insert)
         );
 
         /* ----------------------------------------------------------------- */
@@ -200,6 +284,34 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ExtractImages
+        ///
+        /// <summary>
+        /// 画像を抽出メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry ExtractImages { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuExtractImages,
+            nameof(Extract)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ExtractOthers
+        ///
+        /// <summary>
+        /// 詳細を設定して抽出メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry ExtractOthers { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuExtractOthers,
+            nameof(Extract)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Remove
         ///
         /// <summary>
@@ -210,6 +322,20 @@ namespace Cube.Pdf.App.Editor
         public RibbonEntry Remove { get; } = new RibbonEntry(
             () => Properties.Resources.MenuRemove,
             () => Properties.Resources.TooltipRemove
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveRange
+        ///
+        /// <summary>
+        /// 範囲を指定して削除メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry RemoveRange { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuRemoveRange,
+            nameof(Remove)
         );
 
         /* ----------------------------------------------------------------- */

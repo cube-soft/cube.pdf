@@ -50,26 +50,87 @@ namespace CubePdf.Tests.Editor
             var dest = new RibbonViewModel();
             ResourceCulture.Set("en");
 
-            Assert.That(dest.Open.Text,         Is.EqualTo("Open"));
-            Assert.That(dest.Save.Text,         Is.EqualTo("Save"));
-            Assert.That(dest.Close.Text,        Is.EqualTo("Close"));
-            Assert.That(dest.Undo.Text,         Is.EqualTo("Undo"));
-            Assert.That(dest.Redo.Text,         Is.EqualTo("Redo"));
-            Assert.That(dest.Select.Text,       Is.EqualTo("Select"));
-            Assert.That(dest.Insert.Text,       Is.EqualTo("Insert"));
-            Assert.That(dest.Extract.Text,      Is.EqualTo("Extract"));
-            Assert.That(dest.Remove.Text,       Is.EqualTo("Remove"));
-            Assert.That(dest.MovePrevious.Text, Is.EqualTo("Prev"));
-            Assert.That(dest.MoveNext.Text,     Is.EqualTo("Next"));
-            Assert.That(dest.RotateLeft.Text,   Is.EqualTo("Left"));
-            Assert.That(dest.RotateRight.Text,  Is.EqualTo("Right"));
-            Assert.That(dest.Metadata.Text,     Is.EqualTo("Metadata"));
-            Assert.That(dest.Encryption.Text,   Is.EqualTo("Security"));
-            Assert.That(dest.Refresh.Text,      Is.EqualTo("Refresh"));
-            Assert.That(dest.ZoomIn.Text,       Is.EqualTo("ZoomIn"));
-            Assert.That(dest.ZoomOut.Text,      Is.EqualTo("ZoomOut"));
-            Assert.That(dest.Version.Text,      Is.EqualTo("Version"));
-            Assert.That(dest.Web.Text,          Is.EqualTo("Web"));
+            Assert.That(dest.Edit.Text,          Is.EqualTo("Edit"));
+            Assert.That(dest.View.Text,          Is.EqualTo("View"));
+            Assert.That(dest.Others.Text,        Is.EqualTo("Others"));
+            Assert.That(dest.Open.Text,          Is.EqualTo("Open"));
+            Assert.That(dest.Save.Text,          Is.EqualTo("Save"));
+            Assert.That(dest.Close.Text,         Is.EqualTo("Close"));
+            Assert.That(dest.Undo.Text,          Is.EqualTo("Undo"));
+            Assert.That(dest.Redo.Text,          Is.EqualTo("Redo"));
+            Assert.That(dest.Select.Text,        Is.EqualTo("Select"));
+            Assert.That(dest.SelectAll.Text,     Is.EqualTo("Select all"));
+            Assert.That(dest.SelectFlip.Text,    Is.EqualTo("Flip selection"));
+            Assert.That(dest.SelectCancel.Text,  Is.EqualTo("Cancel selection"));
+            Assert.That(dest.Insert.Text,        Is.EqualTo("Insert"));
+            Assert.That(dest.InsertFront.Text,   Is.EqualTo("Insert at the beginning"));
+            Assert.That(dest.InsertBack.Text,    Is.EqualTo("Insert at the end"));
+            Assert.That(dest.InsertOthers.Text,  Is.EqualTo("Insertion details"));
+            Assert.That(dest.Extract.Text,       Is.EqualTo("Extract"));
+            Assert.That(dest.ExtractImages.Text, Is.EqualTo("Extract the embedded images in the selected pages"));
+            Assert.That(dest.ExtractOthers.Text, Is.EqualTo("Extraction details"));
+            Assert.That(dest.Remove.Text,        Is.EqualTo("Remove"));
+            Assert.That(dest.RemoveRange.Text,   Is.EqualTo("Removal details"));
+            Assert.That(dest.MovePrevious.Text,  Is.EqualTo("Prev"));
+            Assert.That(dest.MoveNext.Text,      Is.EqualTo("Next"));
+            Assert.That(dest.RotateLeft.Text,    Is.EqualTo("Left"));
+            Assert.That(dest.RotateRight.Text,   Is.EqualTo("Right"));
+            Assert.That(dest.Metadata.Text,      Is.EqualTo("Metadata"));
+            Assert.That(dest.Encryption.Text,    Is.EqualTo("Security"));
+            Assert.That(dest.Refresh.Text,       Is.EqualTo("Refresh"));
+            Assert.That(dest.ZoomIn.Text,        Is.EqualTo("ZoomIn"));
+            Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
+            Assert.That(dest.Version.Text,       Is.EqualTo("Version"));
+            Assert.That(dest.Web.Text,           Is.EqualTo("Web"));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTooltip_English
+        ///
+        /// <summary>
+        /// 英語のツールチップを確認します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void GetTooltip_English()
+        {
+            var dest = new RibbonViewModel();
+            ResourceCulture.Set("en");
+
+            Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
+            Assert.That(dest.View.Tooltip,          Is.EqualTo(dest.View.Text));
+            Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
+            Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
+            Assert.That(dest.Save.Tooltip,          Is.EqualTo("Overwrite"));
+            Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
+            Assert.That(dest.Undo.Tooltip,          Is.EqualTo(dest.Undo.Text));
+            Assert.That(dest.Redo.Tooltip,          Is.EqualTo(dest.Redo.Text));
+            Assert.That(dest.Select.Tooltip,        Is.EqualTo(dest.Select.Text));
+            Assert.That(dest.SelectAll.Tooltip,     Is.EqualTo(dest.SelectAll.Text));
+            Assert.That(dest.SelectFlip.Tooltip,    Is.EqualTo(dest.SelectFlip.Text));
+            Assert.That(dest.SelectCancel.Tooltip,  Is.EqualTo(dest.SelectCancel.Text));
+            Assert.That(dest.Insert.Tooltip,        Is.EqualTo("Insert behind selected position"));
+            Assert.That(dest.InsertFront.Tooltip,   Is.EqualTo(dest.InsertFront.Text));
+            Assert.That(dest.InsertBack.Tooltip,    Is.EqualTo(dest.InsertBack.Text));
+            Assert.That(dest.InsertOthers.Tooltip,  Is.EqualTo(dest.InsertOthers.Text));
+            Assert.That(dest.Extract.Tooltip,       Is.EqualTo("Extract the selected pages"));
+            Assert.That(dest.ExtractImages.Tooltip, Is.EqualTo(dest.ExtractImages.Text));
+            Assert.That(dest.ExtractOthers.Tooltip, Is.EqualTo(dest.ExtractOthers.Text));
+            Assert.That(dest.Remove.Tooltip,        Is.EqualTo("Remove the selected pages"));
+            Assert.That(dest.RemoveRange.Tooltip,   Is.EqualTo(dest.RemoveRange.Text));
+            Assert.That(dest.MovePrevious.Tooltip,  Is.EqualTo(dest.MovePrevious.Text));
+            Assert.That(dest.MoveNext.Tooltip,      Is.EqualTo(dest.MoveNext.Text));
+            Assert.That(dest.RotateLeft.Tooltip,    Is.EqualTo(dest.RotateLeft.Text));
+            Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
+            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo(dest.Metadata.Text));
+            Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
+            Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
+            Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
+            Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
+            Assert.That(dest.Version.Tooltip,       Is.EqualTo(dest.Version.Text));
+            Assert.That(dest.Web.Tooltip,           Is.EqualTo(dest.Web.Text));
         }
 
         /* ----------------------------------------------------------------- */
@@ -87,29 +148,90 @@ namespace CubePdf.Tests.Editor
             var dest = new RibbonViewModel();
             ResourceCulture.Set("ja");
 
-            Assert.That(dest.Open.Text,         Is.EqualTo("開く"));
-            Assert.That(dest.Save.Text,         Is.EqualTo("保存"));
-            Assert.That(dest.Close.Text,        Is.EqualTo("閉じる"));
-            Assert.That(dest.Undo.Text,         Is.EqualTo("元に戻す"));
-            Assert.That(dest.Redo.Text,         Is.EqualTo("やり直し"));
-            Assert.That(dest.Select.Text,       Is.EqualTo("選択"));
-            Assert.That(dest.Insert.Text,       Is.EqualTo("挿入"));
-            Assert.That(dest.Extract.Text,      Is.EqualTo("抽出"));
-            Assert.That(dest.Remove.Text,       Is.EqualTo("削除"));
-            Assert.That(dest.MovePrevious.Text, Is.EqualTo("前へ"));
-            Assert.That(dest.MoveNext.Text,     Is.EqualTo("後へ"));
-            Assert.That(dest.RotateLeft.Text,   Is.EqualTo("左90度"));
-            Assert.That(dest.RotateRight.Text,  Is.EqualTo("右90度"));
-            Assert.That(dest.Metadata.Text,     Is.EqualTo("文書プロパティ"));
-            Assert.That(dest.Encryption.Text,   Is.EqualTo("セキュリティ"));
-            Assert.That(dest.Refresh.Text,      Is.EqualTo("更新"));
-            Assert.That(dest.ZoomIn.Text,       Is.EqualTo("拡大"));
-            Assert.That(dest.ZoomOut.Text,      Is.EqualTo("縮小"));
-            Assert.That(dest.Version.Text,      Is.EqualTo("バージョン"));
-            Assert.That(dest.Web.Text,          Is.EqualTo("Web"));
+            Assert.That(dest.Edit.Text,          Is.EqualTo("編集"));
+            Assert.That(dest.View.Text,          Is.EqualTo("表示"));
+            Assert.That(dest.Others.Text,        Is.EqualTo("その他"));
+            Assert.That(dest.Open.Text,          Is.EqualTo("開く"));
+            Assert.That(dest.Save.Text,          Is.EqualTo("保存"));
+            Assert.That(dest.Close.Text,         Is.EqualTo("閉じる"));
+            Assert.That(dest.Undo.Text,          Is.EqualTo("元に戻す"));
+            Assert.That(dest.Redo.Text,          Is.EqualTo("やり直し"));
+            Assert.That(dest.Select.Text,        Is.EqualTo("選択"));
+            Assert.That(dest.SelectAll.Text,     Is.EqualTo("すべて選択"));
+            Assert.That(dest.SelectFlip.Text,    Is.EqualTo("選択を切り替え"));
+            Assert.That(dest.SelectCancel.Text,  Is.EqualTo("選択を解除"));
+            Assert.That(dest.Insert.Text,        Is.EqualTo("挿入"));
+            Assert.That(dest.InsertFront.Text,   Is.EqualTo("先頭に挿入"));
+            Assert.That(dest.InsertBack.Text,    Is.EqualTo("末尾に挿入"));
+            Assert.That(dest.InsertOthers.Text,  Is.EqualTo("詳細を設定して挿入"));
+            Assert.That(dest.Extract.Text,       Is.EqualTo("抽出"));
+            Assert.That(dest.ExtractImages.Text, Is.EqualTo("選択ページに含まれる画像を抽出"));
+            Assert.That(dest.ExtractOthers.Text, Is.EqualTo("詳細を設定して抽出"));
+            Assert.That(dest.Remove.Text,        Is.EqualTo("削除"));
+            Assert.That(dest.RemoveRange.Text,   Is.EqualTo("範囲を指定して削除"));
+            Assert.That(dest.MovePrevious.Text,  Is.EqualTo("前へ"));
+            Assert.That(dest.MoveNext.Text,      Is.EqualTo("後へ"));
+            Assert.That(dest.RotateLeft.Text,    Is.EqualTo("左90度"));
+            Assert.That(dest.RotateRight.Text,   Is.EqualTo("右90度"));
+            Assert.That(dest.Metadata.Text,      Is.EqualTo("文書プロパティ"));
+            Assert.That(dest.Encryption.Text,    Is.EqualTo("セキュリティ"));
+            Assert.That(dest.Refresh.Text,       Is.EqualTo("更新"));
+            Assert.That(dest.ZoomIn.Text,        Is.EqualTo("拡大"));
+            Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
+            Assert.That(dest.Version.Text,       Is.EqualTo("バージョン"));
+            Assert.That(dest.Web.Text,           Is.EqualTo("Web"));
         }
 
+         /* ----------------------------------------------------------------- */
+        ///
+        /// GetTooltip_English
+        ///
+        /// <summary>
+        /// 日本語のツールチップを確認します。
+        /// </summary>
+        ///
         /* ----------------------------------------------------------------- */
+        [Test]
+        public void GetTooltip_Japanese()
+        {
+            var dest = new RibbonViewModel();
+            ResourceCulture.Set("ja");
+
+            Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
+            Assert.That(dest.View.Tooltip,          Is.EqualTo(dest.View.Text));
+            Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
+            Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
+            Assert.That(dest.Save.Tooltip,          Is.EqualTo("上書き保存"));
+            Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
+            Assert.That(dest.Undo.Tooltip,          Is.EqualTo(dest.Undo.Text));
+            Assert.That(dest.Redo.Tooltip,          Is.EqualTo(dest.Redo.Text));
+            Assert.That(dest.Select.Tooltip,        Is.EqualTo(dest.Select.Text));
+            Assert.That(dest.SelectAll.Tooltip,     Is.EqualTo(dest.SelectAll.Text));
+            Assert.That(dest.SelectFlip.Tooltip,    Is.EqualTo(dest.SelectFlip.Text));
+            Assert.That(dest.SelectCancel.Tooltip,  Is.EqualTo(dest.SelectCancel.Text));
+            Assert.That(dest.Insert.Tooltip,        Is.EqualTo("選択位置の後に挿入"));
+            Assert.That(dest.InsertFront.Tooltip,   Is.EqualTo(dest.InsertFront.Text));
+            Assert.That(dest.InsertBack.Tooltip,    Is.EqualTo(dest.InsertBack.Text));
+            Assert.That(dest.InsertOthers.Tooltip,  Is.EqualTo(dest.InsertOthers.Text));
+            Assert.That(dest.Extract.Tooltip,       Is.EqualTo("選択ページを抽出"));
+            Assert.That(dest.ExtractImages.Tooltip, Is.EqualTo(dest.ExtractImages.Text));
+            Assert.That(dest.ExtractOthers.Tooltip, Is.EqualTo(dest.ExtractOthers.Text));
+            Assert.That(dest.Remove.Tooltip,        Is.EqualTo("選択ページを削除"));
+            Assert.That(dest.RemoveRange.Tooltip,   Is.EqualTo(dest.RemoveRange.Text));
+            Assert.That(dest.MovePrevious.Tooltip,  Is.EqualTo(dest.MovePrevious.Text));
+            Assert.That(dest.MoveNext.Tooltip,      Is.EqualTo(dest.MoveNext.Text));
+            Assert.That(dest.RotateLeft.Tooltip,    Is.EqualTo(dest.RotateLeft.Text));
+            Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
+            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo(dest.Metadata.Text));
+            Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
+            Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
+            Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
+            Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
+            Assert.That(dest.Version.Tooltip,       Is.EqualTo(dest.Version.Text));
+            Assert.That(dest.Web.Tooltip,           Is.EqualTo(dest.Web.Text));
+        }
+
+       /* ----------------------------------------------------------------- */
         ///
         /// GetText_Dynamically
         ///
@@ -124,22 +246,28 @@ namespace CubePdf.Tests.Editor
             var dest = new RibbonViewModel();
 
             ResourceCulture.Set("en");
-            Assert.That(dest.Open.Text, Is.EqualTo("Open"), "en");
+            Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");
+            Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "en");
 
             ResourceCulture.Set("ja");
-            Assert.That(dest.Open.Text, Is.EqualTo("開く"), "ja");
+            Assert.That(dest.Open.Text,    Is.EqualTo("開く"), "ja");
+            Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "ja");
 
             ResourceCulture.Set("fr");
-            Assert.That(dest.Open.Text, Is.EqualTo("Open"), "fr");
+            Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "fr");
+            Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "fr");
 
             ResourceCulture.Set("ja-jp");
-            Assert.That(dest.Open.Text, Is.EqualTo("開く"), "ja");
+            Assert.That(dest.Open.Text,    Is.EqualTo("開く"), "ja-jp");
+            Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "ja-jp");
 
             ResourceCulture.Set(string.Empty);
-            Assert.That(dest.Open.Text, Is.Not.Null.And.Not.Empty, "empty");
+            Assert.That(dest.Open.Text,    Is.Not.Null.And.Not.Empty, "empty");
+            Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "empty");
 
             ResourceCulture.Set(null);
-            Assert.That(dest.Open.Text, Is.Not.Null.And.Not.Empty, "null");
+            Assert.That(dest.Open.Text,    Is.Not.Null.And.Not.Empty, "null");
+            Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "null");
         }
 
         #endregion

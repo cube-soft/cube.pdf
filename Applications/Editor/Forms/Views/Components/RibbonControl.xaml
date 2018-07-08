@@ -83,6 +83,13 @@
                     Header="{Binding Ribbon.Select.Text}"
                     Icon="{Binding Ribbon.Select.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Select.LargeIcon}">
+                    <r:MenuItem
+                        Header="{Binding Ribbon.SelectAll.Tooltip}"
+                        Icon="{Binding Ribbon.SelectAll.SmallIcon}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.SelectFlip.Tooltip}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.SelectCancel.Tooltip}" />
                 </r:SplitButton>
             </r:RibbonGroupBox>
 
@@ -94,16 +101,37 @@
                     Header="{Binding Ribbon.Insert.Text}"
                     Icon="{Binding Ribbon.Insert.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Insert.LargeIcon}">
+                    <r:MenuItem
+                        Header="{Binding Ribbon.Insert.Tooltip}"
+                        Icon="{Binding Ribbon.Insert.SmallIcon}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.InsertFront.Tooltip}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.InsertBack.Tooltip}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.InsertOthers.Tooltip}" />
                 </r:SplitButton>
                 <r:SplitButton
                     Header="{Binding Ribbon.Extract.Text}"
                     Icon="{Binding Ribbon.Extract.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Extract.LargeIcon}">
+                    <r:MenuItem
+                        Header="{Binding Ribbon.Extract.Tooltip}"
+                        Icon="{Binding Ribbon.Extract.SmallIcon}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.ExtractImages.Tooltip}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.ExtractOthers.Tooltip}" />
                 </r:SplitButton>
                 <r:SplitButton
                     Header="{Binding Ribbon.Remove.Text}"
                     Icon="{Binding Ribbon.Remove.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Remove.LargeIcon}">
+                    <r:MenuItem
+                        Header="{Binding Ribbon.Remove.Tooltip}"
+                        Icon="{Binding Ribbon.Remove.SmallIcon}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.RemoveRange.Tooltip}" />
                 </r:SplitButton>
             </r:RibbonGroupBox>
 

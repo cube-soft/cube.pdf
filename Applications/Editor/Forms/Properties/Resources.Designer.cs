@@ -97,20 +97,20 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Extraction details に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuExtractDetails {
-            get {
-                return ResourceManager.GetString("MenuExtractDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Extract the embedded images in the selected pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuExtractImages {
             get {
                 return ResourceManager.GetString("MenuExtractImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Extraction details に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuExtractOthers {
+            get {
+                return ResourceManager.GetString("MenuExtractOthers", resourceCulture);
             }
         }
         
@@ -133,20 +133,20 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Insertion details に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuInsertDetails {
-            get {
-                return ResourceManager.GetString("MenuInsertDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Insert at the beginning に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuInsertFront {
             get {
                 return ResourceManager.GetString("MenuInsertFront", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Insertion details に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuInsertOthers {
+            get {
+                return ResourceManager.GetString("MenuInsertOthers", resourceCulture);
             }
         }
         
@@ -225,9 +225,9 @@ namespace Cube.Pdf.App.Editor.Properties {
         /// <summary>
         ///   Removal details に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuRemoveDetails {
+        internal static string MenuRemoveRange {
             get {
-                return ResourceManager.GetString("MenuRemoveDetails", resourceCulture);
+                return ResourceManager.GetString("MenuRemoveRange", resourceCulture);
             }
         }
         

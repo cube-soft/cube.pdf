@@ -129,11 +129,11 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>Extract</value>
   </data>
-  <data name="MenuExtractDetails" xml:space="preserve">
-    <value>Extraction details</value>
-  </data>
   <data name="MenuExtractImages" xml:space="preserve">
     <value>Extract the embedded images in the selected pages</value>
+  </data>
+  <data name="MenuExtractOthers" xml:space="preserve">
+    <value>Extraction details</value>
   </data>
   <data name="MenuInsert" xml:space="preserve">
     <value>Insert</value>
@@ -141,11 +141,11 @@
   <data name="MenuInsertBack" xml:space="preserve">
     <value>Insert at the end</value>
   </data>
-  <data name="MenuInsertDetails" xml:space="preserve">
-    <value>Insertion details</value>
-  </data>
   <data name="MenuInsertFront" xml:space="preserve">
     <value>Insert at the beginning</value>
+  </data>
+  <data name="MenuInsertOthers" xml:space="preserve">
+    <value>Insertion details</value>
   </data>
   <data name="MenuMetadata" xml:space="preserve">
     <value>Metadata</value>
@@ -171,7 +171,7 @@
   <data name="MenuRemove" xml:space="preserve">
     <value>Remove</value>
   </data>
-  <data name="MenuRemoveDetails" xml:space="preserve">
+  <data name="MenuRemoveRange" xml:space="preserve">
     <value>Removal details</value>
   </data>
   <data name="MenuRotateLeft" xml:space="preserve">
