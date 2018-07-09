@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Editor;
+using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 
 namespace CubePdf.Tests.Editor
@@ -47,7 +48,7 @@ namespace CubePdf.Tests.Editor
         [Test]
         public void GetText_English()
         {
-            var dest = new RibbonViewModel();
+            var dest = new RibbonViewModel(new Messenger());
             ResourceCulture.Set("en");
 
             Assert.That(dest.File.Text,          Is.EqualTo("File"));
@@ -98,7 +99,7 @@ namespace CubePdf.Tests.Editor
         [Test]
         public void GetTooltip_English()
         {
-            var dest = new RibbonViewModel();
+            var dest = new RibbonViewModel(new Messenger());
             ResourceCulture.Set("en");
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo("File"));
@@ -149,7 +150,7 @@ namespace CubePdf.Tests.Editor
         [Test]
         public void GetText_Japanese()
         {
-            var dest = new RibbonViewModel();
+            var dest = new RibbonViewModel(new Messenger());
             ResourceCulture.Set("ja");
 
             Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
@@ -200,7 +201,7 @@ namespace CubePdf.Tests.Editor
         [Test]
         public void GetTooltip_Japanese()
         {
-            var dest = new RibbonViewModel();
+            var dest = new RibbonViewModel(new Messenger());
             ResourceCulture.Set("ja");
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo(dest.File.Text));
@@ -252,7 +253,7 @@ namespace CubePdf.Tests.Editor
         [Test]
         public void GetText_Dynamically()
         {
-            var dest = new RibbonViewModel();
+            var dest = new RibbonViewModel(new Messenger());
 
             ResourceCulture.Set("en");
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");

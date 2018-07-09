@@ -16,8 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui;
 using System;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -69,6 +71,7 @@ namespace Cube.Pdf.App.Editor
             _getTooltip  = tooltip;
             _unsubscribe = ResourceCulture.Subscribe(() => RaisePropertyChanged(nameof(Text)));
             Name         = name;
+            Enabled      = new BindableFunc<bool>(() => Command?.CanExecute(null) ?? true);
         }
 
         #endregion
@@ -77,14 +80,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Assets
+        /// Name
         ///
         /// <summary>
-        /// アイコンが格納されている場所を示す文字列を取得します。
+        /// アイコン名を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected static string Assets { get; } = "pack://application:,,,/Assets";
+        public string Name { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -110,14 +113,41 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Name
+        /// Enabled
         ///
         /// <summary>
-        /// アイコン名を取得します。
+        /// このオブジェクトが有効かどうかを判別するオブジェクトを取得
+        /// します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Name { get; }
+        public BindableFunc<bool> Enabled
+        {
+            get => _enabled;
+            set => SetProperty(ref _enabled, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Command
+        ///
+        /// <summary>
+        /// コマンドを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand Command
+        {
+            get { return _command; }
+            set
+            {
+                if (_command == value) return;
+                if (_command != null) _command.CanExecuteChanged -= WhenChanged;
+                _command = value;
+                if (_command != null) _command.CanExecuteChanged += WhenChanged;
+                RaisePropertyChanged(nameof(Command));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -128,7 +158,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string LargeIcon => $"{Assets}/Large/{Name}.png";
+        public string LargeIcon => $"{Assets}/Large/{GetName()}.png";
 
         /* ----------------------------------------------------------------- */
         ///
@@ -139,7 +169,18 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string SmallIcon => $"{Assets}/Small/{Name}.png";
+        public string SmallIcon => $"{Assets}/Small/{GetName()}.png";
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Assets
+        ///
+        /// <summary>
+        /// アイコンが格納されている場所を示す文字列を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected static string Assets { get; } = "pack://application:,,,/Assets";
 
         #endregion
 
@@ -186,8 +227,53 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing) _unsubscribe.Dispose();
+            if (disposing)
+            {
+                _unsubscribe.Dispose();
+                if (_command != null) _command.CanExecuteChanged -= WhenChanged;
+            }
         }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetName
+        ///
+        /// <summary>
+        /// アイコン名を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetName() => IsEnabled() ? Name : $"{Name}Disable";
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsEnabled
+        ///
+        /// <summary>
+        /// 有効状態かどうかを判別します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsEnabled()
+        {
+            if (!Enabled.Value) return false;
+            return Command?.CanExecute(null) ?? true;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenChanged
+        ///
+        /// <summary>
+        /// ICommand.CanExecute の状態変化時に実行されるハンドラです。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenChanged(object s, EventArgs e) => Enabled.RaiseValueChanged();
 
         #endregion
 
@@ -196,6 +282,8 @@ namespace Cube.Pdf.App.Editor
         private readonly Func<string> _getText;
         private readonly Func<string> _getTooltip;
         private readonly IDisposable _unsubscribe;
+        private ICommand _command;
+        private BindableFunc<bool> _enabled;
         #endregion
     }
 }

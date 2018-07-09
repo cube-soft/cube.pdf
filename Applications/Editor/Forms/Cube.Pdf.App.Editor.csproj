@@ -184,6 +184,7 @@
     <Resource Include="Assets\Large\Select.png" />
     <Resource Include="Assets\Large\SelectDisable.png" />
     <Resource Include="Assets\Large\Undo.png" />
+    <Resource Include="Assets\Large\UndoDisable.png" />
     <Resource Include="Assets\Large\Version.png" />
     <Resource Include="Assets\Large\VersionDisable.png" />
     <Resource Include="Assets\Large\Web.png" />

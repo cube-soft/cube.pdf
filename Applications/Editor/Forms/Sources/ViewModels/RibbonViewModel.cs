@@ -16,7 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using GalaSoft.MvvmLight;
+using Cube.Xui;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -29,8 +30,25 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RibbonViewModel : ViewModelBase
+    public class RibbonViewModel : MessengerViewModel
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RibbonViewModel
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="messenger">メッセージ伝搬用オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonViewModel(IMessenger messenger) : base(messenger) { }
+
+        #endregion
+
         #region Properties
 
         #region Tabs
