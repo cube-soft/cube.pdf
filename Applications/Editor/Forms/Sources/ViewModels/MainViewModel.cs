@@ -20,6 +20,7 @@ using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.Threading;
 using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
@@ -48,6 +49,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public MainViewModel() : base(new Messenger())
         {
+            Model  = new MainFacade(SynchronizationContext.Current);
             Ribbon = new RibbonViewModel(Messenger);
             SetRibbonCommands();
         }
@@ -88,6 +90,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Uri Web => new Uri("https://www.cube-soft.jp/cubepdfutility/");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model
+        ///
+        /// <summary>
+        /// Model オブジェクトを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected MainFacade Model { get; }
 
         /* ----------------------------------------------------------------- */
         ///

@@ -132,8 +132,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\Models\ImageCacheList.cs" />
     <Compile Include="Sources\Models\ResourceCulture.cs" />
     <Compile Include="Sources\Models\RibbonEntry.cs" />
+    <Compile Include="Sources\ViewModels\MainFacade.cs" />
     <Compile Include="Sources\ViewModels\MainViewModel.cs" />
     <Compile Include="Sources\ViewModels\RibbonViewModel.cs" />
   </ItemGroup>
@@ -163,6 +165,7 @@
     <Resource Include="Assets\Large\HelpDisable.png" />
     <Resource Include="Assets\Large\Insert.png" />
     <Resource Include="Assets\Large\InsertDisable.png" />
+    <Resource Include="Assets\Large\Loading.png" />
     <Resource Include="Assets\Large\Metadata.png" />
     <Resource Include="Assets\Large\MetadataDisable.png" />
     <Resource Include="Assets\Large\Open.png" />
@@ -193,6 +196,7 @@
     <Resource Include="Assets\Large\ZoomInDisable.png" />
     <Resource Include="Assets\Large\ZoomOut.png" />
     <Resource Include="Assets\Large\ZoomOutDisable.png" />
+    <Resource Include="Assets\Medium\Loading.png" />
     <Resource Include="Assets\Small\MoveNext.png" />
     <Resource Include="Assets\Small\MoveNextDisable.png" />
     <Resource Include="Assets\Small\Close.png" />
@@ -214,6 +218,7 @@
     <Resource Include="Assets\Small\HelpDisable.png" />
     <Resource Include="Assets\Small\Insert.png" />
     <Resource Include="Assets\Small\InsertDisable.png" />
+    <Resource Include="Assets\Small\Loading.png" />
     <Resource Include="Assets\Small\Metadata.png" />
     <Resource Include="Assets\Small\MetadataDisable.png" />
     <Resource Include="Assets\Small\Open.png" />
@@ -305,6 +310,16 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Cube.Pdf.Core.csproj">
+      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
+      <Name>Cube.Pdf.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj">
+      <Project>{6924768e-f20a-4ea8-9d15-46f8a9890989}</Project>
+      <Name>Cube.Pdf.Pdfium</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
