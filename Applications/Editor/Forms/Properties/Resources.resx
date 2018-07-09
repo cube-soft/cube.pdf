@@ -126,6 +126,9 @@
   <data name="MenuEncryption" xml:space="preserve">
     <value>Security</value>
   </data>
+  <data name="MenuExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
   <data name="MenuExtract" xml:space="preserve">
     <value>Extract</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="MenuExtractOthers" xml:space="preserve">
     <value>Extraction details</value>
+  </data>
+  <data name="MenuFile" xml:space="preserve">
+    <value>File</value>
   </data>
   <data name="MenuInsert" xml:space="preserve">
     <value>Insert</value>
@@ -161,6 +167,9 @@
   </data>
   <data name="MenuOthers" xml:space="preserve">
     <value>Others</value>
+  </data>
+  <data name="MenuRecent" xml:space="preserve">
+    <value>Recent files</value>
   </data>
   <data name="MenuRedo" xml:space="preserve">
     <value>Redo</value>

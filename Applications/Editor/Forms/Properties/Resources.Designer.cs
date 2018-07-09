@@ -88,6 +88,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Exit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuExit {
+            get {
+                return ResourceManager.GetString("MenuExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Extract に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuExtract {
@@ -111,6 +120,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuExtractOthers {
             get {
                 return ResourceManager.GetString("MenuExtractOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   File に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuFile {
+            get {
+                return ResourceManager.GetString("MenuFile", resourceCulture);
             }
         }
         
@@ -192,6 +210,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuOthers {
             get {
                 return ResourceManager.GetString("MenuOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recent files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuRecent {
+            get {
+                return ResourceManager.GetString("MenuRecent", resourceCulture);
             }
         }
         

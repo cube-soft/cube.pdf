@@ -37,6 +37,19 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// File
+        ///
+        /// <summary>
+        /// ファイルメニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry File { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuFile
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Edit
         ///
         /// <summary>
@@ -129,6 +142,19 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public RibbonEntry Close { get; } = new RibbonEntry(
             () => Properties.Resources.MenuClose
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Exit
+        ///
+        /// <summary>
+        /// 終了メニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry Exit { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuExit
         );
 
         /* ----------------------------------------------------------------- */
@@ -479,6 +505,23 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public RibbonEntry Web { get; } = new RibbonEntry(
             () => Properties.Resources.MenuWeb
+        );
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Recent
+        ///
+        /// <summary>
+        /// 最近開いたファイルメニューを取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonEntry Recent { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuRecent
         );
 
         #endregion

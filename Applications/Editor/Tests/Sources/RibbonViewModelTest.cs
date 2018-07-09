@@ -50,6 +50,7 @@ namespace CubePdf.Tests.Editor
             var dest = new RibbonViewModel();
             ResourceCulture.Set("en");
 
+            Assert.That(dest.File.Text,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("Edit"));
             Assert.That(dest.View.Text,          Is.EqualTo("View"));
             Assert.That(dest.Others.Text,        Is.EqualTo("Others"));
@@ -82,6 +83,7 @@ namespace CubePdf.Tests.Editor
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
             Assert.That(dest.Version.Text,       Is.EqualTo("Version"));
             Assert.That(dest.Web.Text,           Is.EqualTo("Web"));
+            Assert.That(dest.Recent.Text,        Is.EqualTo("Recent files"));
         }
 
         /* ----------------------------------------------------------------- */
@@ -99,6 +101,7 @@ namespace CubePdf.Tests.Editor
             var dest = new RibbonViewModel();
             ResourceCulture.Set("en");
 
+            Assert.That(dest.File.Tooltip,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
             Assert.That(dest.View.Tooltip,          Is.EqualTo(dest.View.Text));
             Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
@@ -131,6 +134,7 @@ namespace CubePdf.Tests.Editor
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Version.Tooltip,       Is.EqualTo(dest.Version.Text));
             Assert.That(dest.Web.Tooltip,           Is.EqualTo(dest.Web.Text));
+            Assert.That(dest.Recent.Tooltip,        Is.EqualTo(dest.Recent.Text));
         }
 
         /* ----------------------------------------------------------------- */
@@ -148,6 +152,7 @@ namespace CubePdf.Tests.Editor
             var dest = new RibbonViewModel();
             ResourceCulture.Set("ja");
 
+            Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("編集"));
             Assert.That(dest.View.Text,          Is.EqualTo("表示"));
             Assert.That(dest.Others.Text,        Is.EqualTo("その他"));
@@ -180,6 +185,7 @@ namespace CubePdf.Tests.Editor
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
             Assert.That(dest.Version.Text,       Is.EqualTo("バージョン"));
             Assert.That(dest.Web.Text,           Is.EqualTo("Web"));
+            Assert.That(dest.Recent.Text,        Is.EqualTo("最近開いたファイル"));
         }
 
          /* ----------------------------------------------------------------- */
@@ -197,6 +203,8 @@ namespace CubePdf.Tests.Editor
             var dest = new RibbonViewModel();
             ResourceCulture.Set("ja");
 
+            Assert.That(dest.File.Tooltip,          Is.EqualTo(dest.File.Text));
+            Assert.That(dest.Recent.Tooltip,        Is.EqualTo(dest.Recent.Text));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
             Assert.That(dest.View.Tooltip,          Is.EqualTo(dest.View.Text));
             Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
@@ -229,6 +237,7 @@ namespace CubePdf.Tests.Editor
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Version.Tooltip,       Is.EqualTo(dest.Version.Text));
             Assert.That(dest.Web.Tooltip,           Is.EqualTo(dest.Web.Text));
+            Assert.That(dest.Recent.Tooltip,        Is.EqualTo(dest.Recent.Text));
         }
 
        /* ----------------------------------------------------------------- */

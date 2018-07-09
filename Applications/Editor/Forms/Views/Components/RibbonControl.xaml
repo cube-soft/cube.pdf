@@ -28,11 +28,60 @@
     d:DesignWidth="800">
 
     <!-- **********************************************************************
+      Resources
+    *********************************************************************** -->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- **********************************************************************
       Main
     *********************************************************************** -->
     <r:Ribbon>
         <r:Ribbon.Menu>
-            <r:ApplicationMenu />
+            <r:ApplicationMenu Header="{Binding Ribbon.File.Text}">
+                <!-- **********************************************************
+                  ApplicatioinMenu
+                *********************************************************** -->
+                <r:MenuItem
+                    Header="{Binding Ribbon.Open.Tooltip}"
+                    Icon="{Binding Ribbon.Open.LargeIcon}" />
+                <r:MenuItem
+                    Header="{Binding Ribbon.Save.Tooltip}"
+                    Icon="{Binding Ribbon.Save.LargeIcon}" />
+                <r:MenuItem
+                    Header="{Binding Ribbon.SaveAs.Tooltip}"
+                    Icon="{Binding Ribbon.SaveAs.LargeIcon}" />
+                <Separator />
+                <r:MenuItem
+                    Header="{Binding Ribbon.Version.Tooltip}"
+                    Icon="{Binding Ribbon.Version.LargeIcon}" />
+                <Separator />
+                <r:MenuItem
+                    Header="{Binding Ribbon.Close.Tooltip}"
+                    Icon="{Binding Ribbon.Close.LargeIcon}" />
+                <r:MenuItem
+                    Header="{Binding Ribbon.Exit.Tooltip}"
+                    Icon="{Binding Ribbon.Exit.LargeIcon}" />
+
+                <!-- **********************************************************
+                  Recent files
+                *********************************************************** -->
+                <r:ApplicationMenu.RightPaneContent>
+                    <DockPanel>
+                        <Label
+                            Content="{Binding Ribbon.Recent.Tooltip}"
+                            Style="{StaticResource RecentLabelStyle}"
+                            DockPanel.Dock="Top" />
+                        <ListView
+                            Style="{StaticResource RecentListViewStyle}" />
+                    </DockPanel>
+                </r:ApplicationMenu.RightPaneContent>
+            </r:ApplicationMenu>
         </r:Ribbon.Menu>
 
         <r:RibbonTabItem Header="{Binding Ribbon.Edit.Text}">

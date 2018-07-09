@@ -154,6 +154,7 @@
     <Resource Include="Assets\Large\ExitDisable.png" />
     <Resource Include="Assets\Large\Extract.png" />
     <Resource Include="Assets\Large\ExtractDisable.png" />
+    <Resource Include="Assets\Large\File.png" />
     <Resource Include="Assets\Large\Font.png" />
     <Resource Include="Assets\Large\FontDisable.png" />
     <Resource Include="Assets\Large\MovePrevious.png" />
@@ -203,6 +204,7 @@
     <Resource Include="Assets\Small\ExtractDisable.png" />
     <Resource Include="Assets\Small\ExtractImage.png" />
     <Resource Include="Assets\Small\ExtractImageDisable.png" />
+    <Resource Include="Assets\Small\File.png" />
     <Resource Include="Assets\Small\Font.png" />
     <Resource Include="Assets\Small\FontDisable.png" />
     <Resource Include="Assets\Small\MovePrevious.png" />
@@ -245,7 +247,6 @@
     <Resource Include="Assets\Lock.png" />
     <Resource Include="Assets\Logo.png" />
     <Resource Include="Assets\LogoDark.png" />
-    <Resource Include="Assets\Menu.png" />
     <Resource Include="Assets\Navigation.png" />
     <Resource Include="Assets\Pdf.png" />
   </ItemGroup>

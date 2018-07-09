@@ -27,10 +27,14 @@
     <Color x:Key="MainForegroundColor">#FFB3B3B3</Color>
     <Color x:Key="MainBorderColor">#FF000000</Color>
 
+    <Color x:Key="LightBackgroundColor">#FFFFFFFF</Color>
+    <Color x:Key="LightForegroundColor">#FF000000</Color>
+    <Color x:Key="LightBorderColor">#FFB3B3B3</Color>
+
     <Color x:Key="TabBackgroundColor">#FF2F2F2F</Color>
     <Color x:Key="TabForegroundColor">#FFF0F0F0</Color>
     <Color x:Key="TabForegroundInactivateColor">#FF909090</Color>
-    <Color x:Key="TabBorderColor">#FF222222</Color>
+    <Color x:Key="TabBorderColor">#FF202020</Color>
     <Color x:Key="TabAccentColor">#FFFFB700</Color>
 
     <Color x:Key="MenuButtonColor">#FF202020</Color>
@@ -41,6 +45,10 @@
     <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource MainBackgroundColor}" />
     <SolidColorBrush x:Key="MainForegroundBrush" Color="{StaticResource MainForegroundColor}" />
     <SolidColorBrush x:Key="MainBorderBrush" Color="{StaticResource MainBorderColor}" />
+
+    <SolidColorBrush x:Key="LightBackgroundBrush" Color="{StaticResource LightBackgroundColor}" />
+    <SolidColorBrush x:Key="LightForegroundBrush" Color="{StaticResource LightForegroundColor}" />
+    <SolidColorBrush x:Key="LightBorderBrush" Color="{StaticResource LightBorderColor}" />
 
     <ImageBrush
         x:Key="TabBackgroundBrush"

@@ -22,10 +22,10 @@
     xmlns:r="urn:fluent-ribbon">
 
     <!-- **********************************************************************
-      Ribbon Brushes
-
-      Image brushes are same as TabBackgroundBrush.
+      Ribbon SolidColorBrushes
     *********************************************************************** -->
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.LabelTextBrush"
+                     Color="{StaticResource TabForegroundColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.HighlightBrush"
                      Color="{StaticResource TabForegroundColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabItem.Selected.Foreground"
@@ -42,10 +42,26 @@
                      Color="{StaticResource TabAccentColor}" Opacity="0.5" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.Background"
                      Color="{StaticResource TabAccentColor}" Opacity="0.25" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Separator.Background"
+                     Color="{StaticResource TabBorderColor}" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Separator.BorderBrush"
+                     Color="{StaticResource TabBorderColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.ScrollViewer.Button.Background"
                      Color="{StaticResource MenuButtonColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.ScrollViewer.Button.BorderBrush"
                      Color="{StaticResource MenuButtonColor}" />
+
+    <!-- **********************************************************************
+      Ribbon ImageBrushes
+
+      Image brushes are same as TabBackgroundBrush.
+    *********************************************************************** -->
+    <ImageBrush
+        x:Key="Fluent.Ribbon.Brushes.Ribbon.Background"
+        ImageSource="pack://application:,,,/Assets/Background.png"
+        TileMode="Tile"
+        ViewportUnits="Absolute"
+        Viewport="0,0,4,4" />
 
     <ImageBrush
         x:Key="Fluent.Ribbon.Brushes.RibbonTabControl.Content.Background"
@@ -120,6 +136,8 @@
     *********************************************************************** -->
     <Style TargetType="{x:Type r:ApplicationMenu}">
         <Setter Property="Background" Value="{StaticResource MenuButtonBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource TabBorderBrush}" />
         <Setter Property="Margin" Value="0,0,0,2" />
     </Style>
 
@@ -129,5 +147,22 @@
     <Style TargetType="{x:Type r:MenuItem}">
         <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
         <Setter Property="Padding" Value="2" />
+    </Style>
+
+    <!-- **********************************************************************
+      RightPane for ApplicationMenu
+    *********************************************************************** -->
+    <Style x:Key="RecentLabelStyle" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
+        <Setter Property="Padding" Value="8,4,4,8" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+
+    <Style x:Key="RecentListViewStyle" TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightForegroundBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="0" />
     </Style>
 </ResourceDictionary>
