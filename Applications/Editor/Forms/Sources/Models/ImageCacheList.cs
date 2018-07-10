@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCacheList : IReadOnlyList<ImageSource>, INotifyCollectionChanged
+    public class ImageCacheList : IReadOnlyList<ImageEntry>, INotifyCollectionChanged
     {
         #region Constructors
 
@@ -74,7 +74,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSource this[int index] => Loading;
+        public ImageEntry this[int index] => new ImageEntry
+        {
+            Image = Loading,
+            Text  = "TEST",
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -165,7 +169,7 @@ namespace Cube.Pdf.App.Editor
         /// <returns>反復用オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<ImageSource> GetEnumerator()
+        public IEnumerator<ImageEntry> GetEnumerator()
         {
             for (var i = 0; i < Count; ++i) yield return this[i];
         }
