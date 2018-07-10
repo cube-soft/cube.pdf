@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CA46007A-4F0F-4304-BB57-D0E22D7C936E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Cube.Pdf.App.Editor</RootNamespace>
+    <AssemblyName>CubePdfUtility</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\CubePdfUtility.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\CubePdfUtility.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\x86\Debug\CubePdfUtility.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\x86\Release\CubePdfUtility.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\x64\Debug\CubePdfUtility.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\x64\Release\CubePdfUtility.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <ApplicationManifest>App.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ControlzEx">
+      <HintPath>..\..\..\..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Core">
+      <HintPath>..\..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.FileSystem">
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.11.0\lib\net45\Cube.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Images">
+      <HintPath>..\..\..\..\packages\Cube.Images.1.11.0\lib\net45\Cube.Images.dll</HintPath>
+    </Reference>
+    <Reference Include="Cube.Xui">
+      <HintPath>..\..\..\..\packages\Cube.Xui.1.11.0\lib\net45\Cube.Xui.dll</HintPath>
+    </Reference>
+    <Reference Include="Fluent">
+      <HintPath>..\..\..\..\packages\Fluent.Ribbon.6.1.0.233\lib\net45\Fluent.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight">
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform">
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sources\Models\Settings\Settings.cs" />
+    <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />
+    <Compile Include="Sources\Models\ImageEntry.cs" />
+    <Compile Include="Sources\Models\ImageList.cs" />
+    <Compile Include="Sources\Models\ImagePreferences.cs" />
+    <Compile Include="Sources\Models\ResourceCulture.cs" />
+    <Compile Include="Sources\Models\RibbonEntry.cs" />
+    <Compile Include="Sources\ViewModels\MainFacade.cs" />
+    <Compile Include="Sources\ViewModels\MainViewModel.cs" />
+    <Compile Include="Sources\ViewModels\RibbonViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App.ico" />
+    <None Include="App.config" />
+    <None Include="App.manifest" />
+    <None Include="Packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Large\MoveNext.png" />
+    <Resource Include="Assets\Large\MoveNextDisable.png" />
+    <Resource Include="Assets\Large\Close.png" />
+    <Resource Include="Assets\Large\CloseDisable.png" />
+    <Resource Include="Assets\Large\Encryption.png" />
+    <Resource Include="Assets\Large\EncryptionDisable.png" />
+    <Resource Include="Assets\Large\Exit.png" />
+    <Resource Include="Assets\Large\ExitDisable.png" />
+    <Resource Include="Assets\Large\Extract.png" />
+    <Resource Include="Assets\Large\ExtractDisable.png" />
+    <Resource Include="Assets\Large\File.png" />
+    <Resource Include="Assets\Large\Font.png" />
+    <Resource Include="Assets\Large\FontDisable.png" />
+    <Resource Include="Assets\Large\MovePrevious.png" />
+    <Resource Include="Assets\Large\MovePreviousDisable.png" />
+    <Resource Include="Assets\Large\Help.png" />
+    <Resource Include="Assets\Large\HelpDisable.png" />
+    <Resource Include="Assets\Large\Insert.png" />
+    <Resource Include="Assets\Large\InsertDisable.png" />
+    <Resource Include="Assets\Large\Loading.png" />
+    <Resource Include="Assets\Large\Metadata.png" />
+    <Resource Include="Assets\Large\MetadataDisable.png" />
+    <Resource Include="Assets\Large\Open.png" />
+    <Resource Include="Assets\Large\OpenDisable.png" />
+    <Resource Include="Assets\Large\Redo.png" />
+    <Resource Include="Assets\Large\RedoDisable.png" />
+    <Resource Include="Assets\Large\Refresh.png" />
+    <Resource Include="Assets\Large\RefreshDisable.png" />
+    <Resource Include="Assets\Large\Remove.png" />
+    <Resource Include="Assets\Large\RemoveDisable.png" />
+    <Resource Include="Assets\Large\RotateLeft.png" />
+    <Resource Include="Assets\Large\RotateLeftDisable.png" />
+    <Resource Include="Assets\Large\RotateRight.png" />
+    <Resource Include="Assets\Large\RotateRightDisable.png" />
+    <Resource Include="Assets\Large\Save.png" />
+    <Resource Include="Assets\Large\SaveDisable.png" />
+    <Resource Include="Assets\Large\SaveAs.png" />
+    <Resource Include="Assets\Large\SaveAsDisable.png" />
+    <Resource Include="Assets\Large\Select.png" />
+    <Resource Include="Assets\Large\SelectDisable.png" />
+    <Resource Include="Assets\Large\Undo.png" />
+    <Resource Include="Assets\Large\UndoDisable.png" />
+    <Resource Include="Assets\Large\Version.png" />
+    <Resource Include="Assets\Large\VersionDisable.png" />
+    <Resource Include="Assets\Large\Web.png" />
+    <Resource Include="Assets\Large\WebDisable.png" />
+    <Resource Include="Assets\Large\ZoomIn.png" />
+    <Resource Include="Assets\Large\ZoomInDisable.png" />
+    <Resource Include="Assets\Large\ZoomOut.png" />
+    <Resource Include="Assets\Large\ZoomOutDisable.png" />
+    <Resource Include="Assets\Medium\Loading.png" />
+    <Resource Include="Assets\Small\MoveNext.png" />
+    <Resource Include="Assets\Small\MoveNextDisable.png" />
+    <Resource Include="Assets\Small\Close.png" />
+    <Resource Include="Assets\Small\CloseDisable.png" />
+    <Resource Include="Assets\Small\Encryption.png" />
+    <Resource Include="Assets\Small\EncryptionDisable.png" />
+    <Resource Include="Assets\Small\Exit.png" />
+    <Resource Include="Assets\Small\ExitDisable.png" />
+    <Resource Include="Assets\Small\Extract.png" />
+    <Resource Include="Assets\Small\ExtractDisable.png" />
+    <Resource Include="Assets\Small\ExtractImage.png" />
+    <Resource Include="Assets\Small\ExtractImageDisable.png" />
+    <Resource Include="Assets\Small\File.png" />
+    <Resource Include="Assets\Small\Font.png" />
+    <Resource Include="Assets\Small\FontDisable.png" />
+    <Resource Include="Assets\Small\MovePrevious.png" />
+    <Resource Include="Assets\Small\MovePreviousDisable.png" />
+    <Resource Include="Assets\Small\Help.png" />
+    <Resource Include="Assets\Small\HelpDisable.png" />
+    <Resource Include="Assets\Small\Insert.png" />
+    <Resource Include="Assets\Small\InsertDisable.png" />
+    <Resource Include="Assets\Small\Loading.png" />
+    <Resource Include="Assets\Small\Metadata.png" />
+    <Resource Include="Assets\Small\MetadataDisable.png" />
+    <Resource Include="Assets\Small\Open.png" />
+    <Resource Include="Assets\Small\OpenDisable.png" />
+    <Resource Include="Assets\Small\Redo.png" />
+    <Resource Include="Assets\Small\RedoDisable.png" />
+    <Resource Include="Assets\Small\Refresh.png" />
+    <Resource Include="Assets\Small\RefreshDisable.png" />
+    <Resource Include="Assets\Small\Remove.png" />
+    <Resource Include="Assets\Small\RemoveDisable.png" />
+    <Resource Include="Assets\Small\RotateLeft.png" />
+    <Resource Include="Assets\Small\RotateLeftDisable.png" />
+    <Resource Include="Assets\Small\RotateRight.png" />
+    <Resource Include="Assets\Small\RotateRightDisable.png" />
+    <Resource Include="Assets\Small\Save.png" />
+    <Resource Include="Assets\Small\SaveDisable.png" />
+    <Resource Include="Assets\Small\SaveAs.png" />
+    <Resource Include="Assets\Small\SaveAsDisable.png" />
+    <Resource Include="Assets\Small\Select.png" />
+    <Resource Include="Assets\Small\SelectDisable.png" />
+    <Resource Include="Assets\Small\Undo.png" />
+    <Resource Include="Assets\Small\UndoDisable.png" />
+    <Resource Include="Assets\Small\Version.png" />
+    <Resource Include="Assets\Small\VersionDisable.png" />
+    <Resource Include="Assets\Small\Web.png" />
+    <Resource Include="Assets\Small\WebDisable.png" />
+    <Resource Include="Assets\Small\ZoomIn.png" />
+    <Resource Include="Assets\Small\ZoomInDisable.png" />
+    <Resource Include="Assets\Small\ZoomOut.png" />
+    <Resource Include="Assets\Small\ZoomOutDisable.png" />
+    <Resource Include="Assets\Background.png" />
+    <Resource Include="Assets\Lock.png" />
+    <Resource Include="Assets\Logo.png" />
+    <Resource Include="Assets\LogoDark.png" />
+    <Resource Include="Assets\Navigation.png" />
+    <Resource Include="Assets\Pdf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Pages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Ribbon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Components\PagesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\Components\PagesControl.xaml.cs">
+      <DependentUpon>PagesControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\Components\RibbonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\Components\RibbonControl.xaml.cs">
+      <DependentUpon>RibbonControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.ja.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Cube.Pdf.Core.csproj">
+      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
+      <Name>Cube.Pdf.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj">
+      <Project>{6924768e-f20a-4ea8-9d15-46f8a9890989}</Project>
+      <Name>Cube.Pdf.Pdfium</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
