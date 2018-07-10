@@ -17,11 +17,13 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Tasks;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
@@ -70,6 +72,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public RibbonViewModel Ribbon { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Images
+        ///
+        /// <summary>
+        /// PDF のサムネイル一覧を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageList Images => Model.Images;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -134,7 +147,14 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetRibbonCommands()
         {
-            Ribbon.Open.Command = Default;
+            Ribbon.Open.Command = new RelayCommand(() =>
+            {
+                Send(new OpenFileDialogMessage(e =>
+                {
+                    Task.Run(() => Model.Open(e.FileName)).Forget();
+                }));
+            });
+
             Ribbon.Save.Command = Default;
             Ribbon.SaveAs.Command = Default;
             Ribbon.Close.Command = Default;

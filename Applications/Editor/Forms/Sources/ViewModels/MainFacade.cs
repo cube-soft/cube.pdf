@@ -49,7 +49,11 @@ namespace Cube.Pdf.App.Editor
         public MainFacade(SettingsFolder settings, SynchronizationContext context)
         {
             Settings = settings;
-            Images   = new ImageCacheList(context);
+
+            Images = new ImageList(context);
+            Images.Preferences.BaseSize = settings.Value.ViewSize;
+            Images.Preferences.Margin = 3;
+            Images.Preferences.TextHeight = 25;
         }
 
         #endregion
@@ -76,7 +80,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageCacheList Images { get; }
+        public ImageList Images { get; }
 
         #endregion
 
@@ -94,9 +98,8 @@ namespace Cube.Pdf.App.Editor
         public void Open(string src)
         {
             _core = new DocumentReader(src);
-            Images.Pages.Clear();
             Images.Renderer = _core;
-            foreach (var page in _core.Pages) Images.Pages.Add(page);
+            foreach (var page in _core.Pages) Images.Add(page);
         }
 
         #endregion

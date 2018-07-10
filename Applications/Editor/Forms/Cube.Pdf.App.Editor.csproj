@@ -133,13 +133,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\Components\PagesControl.xaml.cs">
-      <DependentUpon>PagesControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Sources\Models\Settings\Settings.cs" />
     <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />
-    <Compile Include="Sources\Models\ImageCacheList.cs" />
     <Compile Include="Sources\Models\ImageEntry.cs" />
+    <Compile Include="Sources\Models\ImageList.cs" />
+    <Compile Include="Sources\Models\ImagePreferences.cs" />
     <Compile Include="Sources\Models\ResourceCulture.cs" />
     <Compile Include="Sources\Models\RibbonEntry.cs" />
     <Compile Include="Sources\ViewModels\MainFacade.cs" />
@@ -147,10 +145,6 @@
     <Compile Include="Sources\ViewModels\RibbonViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Pages.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Resource Include="App.ico" />
     <None Include="App.config" />
     <None Include="App.manifest" />
@@ -269,18 +263,18 @@
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+      <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\Components\PagesControl.xaml">
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Generic.xaml">
+    <Page Include="Themes\Pages.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -288,6 +282,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Components\PagesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\Components\PagesControl.xaml.cs">
+      <DependentUpon>PagesControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\Components\RibbonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -296,12 +297,12 @@
       <DependentUpon>RibbonControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -313,8 +314,8 @@
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.ja.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -17,141 +17,98 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Threading;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using System.Drawing;
+using System.Linq;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageCacheList
+    /// ImagePreferences
     ///
     /// <summary>
-    /// PDF ページのサムネイル一覧を管理するクラスです。
+    /// 画像表示に関する情報を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCacheList : IReadOnlyList<ImageEntry>, INotifyCollectionChanged
+    public class ImagePreferences : ObservableProperty
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageCacheList
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /// <param name="context">同期用コンテキスト</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageCacheList(SynchronizationContext context)
-        {
-            _context = context;
-
-            var pages = new ObservableCollection<Page>();
-            pages.CollectionChanged += (s, e) => OnCollectionChanged(e);
-            Pages   = pages;
-            Loading = new BitmapImage(new Uri("pack://application:,,,/Assets/Medium/Loading.png"));
-        }
-
-        #endregion
-
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Items[int]
+        /// BaseSize
         ///
         /// <summary>
-        /// インデックスに対応するオブジェクトを取得します。
+        /// Width および Height の基準となる値を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageEntry this[int index] => new ImageEntry
+        public int BaseSize
         {
-            Image = Loading,
-            Text  = "TEST",
-        };
+            get => _baseSize;
+            set { if (SetProperty(ref _baseSize, value)) Resize(); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Renderer
+        /// Margin
         ///
         /// <summary>
-        /// 描画用オブジェクトを取得または設定します。
+        /// 上下左右の余白を取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IDocumentRenderer Renderer { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Pages
-        ///
-        /// <summary>
-        /// Page オブジェクトを一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IList<Page> Pages { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Count
-        ///
-        /// <summary>
-        /// 要素数を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Count => Pages.Count;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Loading
-        ///
-        /// <summary>
-        /// ロード中を表すオブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected ImageSource Loading { get; private set; }
-
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CollectionChanged
-        ///
-        /// <summary>
-        /// コレクションの内容変更時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCollectionChanged
-        ///
-        /// <summary>
-        /// CollectionChanged イベントを発生させます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        public int Margin
         {
-            if (_context != null) _context.Send(_ => CollectionChanged?.Invoke(this, e), null);
-            else CollectionChanged?.Invoke(this, e);
+            get => _margin;
+            set => SetProperty(ref _margin, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Width
+        ///
+        /// <summary>
+        /// 幅を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Width
+        {
+            get => _width;
+            private set => SetProperty(ref _width, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Height
+        ///
+        /// <summary>
+        /// 高さを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Height
+        {
+            get => _height;
+            private set => SetProperty(ref _height, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TextHeight
+        ///
+        /// <summary>
+        /// テキスト領域の高さを取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int TextHeight
+        {
+            get => _textHeight;
+            set => SetProperty(ref _textHeight, value);
         }
 
         #endregion
@@ -160,37 +117,83 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetEnumerator
+        /// Register
         ///
         /// <summary>
-        /// 反復用オブジェクトを取得します。
+        /// 新しいサイズ情報を登録します。
         /// </summary>
         ///
-        /// <returns>反復用オブジェクト</returns>
+        /// <param name="src">サイズ情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<ImageEntry> GetEnumerator()
+        public void Register(SizeF src) => Resize(() =>
         {
-            for (var i = 0; i < Count; ++i) yield return this[i];
+            SetOrIncrement(_ws, (int)src.Width);
+            SetOrIncrement(_hs, (int)src.Height);
+        });
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetOrIncrement
+        ///
+        /// <summary>
+        /// IDictionary(int, int) の内容を更新します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetOrIncrement(IDictionary<int, int> src, int key)
+        {
+            if (src.ContainsKey(key)) ++src[key];
+            else src.Add(key, 1);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IEnumerable.GetEnumerator
+        /// Resize
         ///
         /// <summary>
-        /// 反復用オブジェクトを取得します。
+        /// 任意の処理を実行後、Width および Height を更新します。
         /// </summary>
         ///
-        /// <returns>反復用オブジェクト</returns>
+        /* ----------------------------------------------------------------- */
+        private void Resize(Action action)
+        {
+            action();
+            Resize();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Resize
+        ///
+        /// <summary>
+        /// Width および Height を更新します。
+        /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        private void Resize()
+        {
+            var w = _ws.Keys.LastOrDefault();
+            var h = _hs.Keys.LastOrDefault();
+
+            Width  = (w >= h || h == 0) ? BaseSize : (int)(BaseSize * (w / (double)h));
+            Height = (h >= w || w == 0) ? BaseSize : (int)(BaseSize * (h / (double)w));
+        }
 
         #endregion
 
         #region Fields
-        private readonly SynchronizationContext _context;
+        private int _width;
+        private int _height;
+        private int _baseSize;
+        private int _margin;
+        private int _textHeight;
+        private readonly SortedDictionary<int, int> _ws = new SortedDictionary<int, int>();
+        private readonly SortedDictionary<int, int> _hs = new SortedDictionary<int, int>();
         #endregion
     }
 }
