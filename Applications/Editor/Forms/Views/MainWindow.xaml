@@ -37,14 +37,6 @@
     <!-- **********************************************************************
       Resources
     *********************************************************************** -->
-    <r:RibbonWindow.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </r:RibbonWindow.Resources>
-
     <r:RibbonWindow.DataContext>
         <my:MainViewModel />
     </r:RibbonWindow.DataContext>
