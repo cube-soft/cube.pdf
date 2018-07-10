@@ -19,7 +19,7 @@
 using Cube.Pdf.App.Editor;
 using NUnit.Framework;
 
-namespace CubePdf.Tests.Editor
+namespace Cube.Pdf.Tests.Editor
 {
     /* --------------------------------------------------------------------- */
     ///

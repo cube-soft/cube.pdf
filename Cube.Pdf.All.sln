@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests", "Tests\Cub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests.Converter", "Applications\Converter\Tests\Cube.Pdf.Tests.Converter.csproj", "{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubePdf.Tests.Editor", "Applications\Editor\Tests\CubePdf.Tests.Editor.csproj", "{741CADAB-88E7-41B3-8250-D75A85580667}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests.Editor", "Applications\Editor\Tests\Cube.Pdf.Tests.Editor.csproj", "{741CADAB-88E7-41B3-8250-D75A85580667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

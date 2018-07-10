@@ -20,7 +20,7 @@ using Cube.Pdf.App.Editor;
 using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 
-namespace CubePdf.Tests.Editor
+namespace Cube.Pdf.Tests.Editor
 {
     /* --------------------------------------------------------------------- */
     ///

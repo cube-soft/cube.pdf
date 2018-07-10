@@ -27,14 +27,14 @@ build:
     publish_nuget: true
     verbosity: minimal
 after_build:
-    - xcopy /Y /I Applications\Converter\Forms\bin\Release CubePdf
-    - xcopy /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
-    - xcopy /Y /I Thirdparty\x64\bin\gsdll32.dll Tests\bin\Release
-    - xcopy /Y /I Thirdparty\x64\lib\*.* Tests\bin\Release\lib
-    - xcopy /Y /I Thirdparty\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
-    - xcopy /Y /I Thirdparty\x64\lib\*.* Applications\Converter\Tests\bin\Release\lib
-    - xcopy /Y /I ..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\x64\pdfium.dll Tests\bin\Release
-    - xcopy /Y /I ..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\x64\pdfium.dll Applications\Editor\Tests\bin\Release
+    - xcopy /q /Y /I Applications\Converter\Forms\bin\Release CubePdf
+    - xcopy /q /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
+    - xcopy /q /Y /I Thirdparty\x64\bin\gsdll32.dll Tests\bin\Release
+    - xcopy /q /Y /I Thirdparty\x64\lib\*.* Tests\bin\Release\lib
+    - xcopy /q /Y /I Thirdparty\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
+    - xcopy /q /Y /I Thirdparty\x64\lib\*.* Applications\Converter\Tests\bin\Release\lib
+    - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\x64\pdfium.dll Tests\bin\Release
+    - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\x64\pdfium.dll Applications\Editor\Tests\bin\Release
 artifacts:
     - path: CubePdf
     - path: CubePdf.Proxy
