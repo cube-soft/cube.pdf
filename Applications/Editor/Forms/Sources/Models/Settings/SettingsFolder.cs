@@ -16,93 +16,66 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Pdfium;
-using System.Threading;
+using Cube.FileSystem;
+using Cube.Generics;
+using System.Reflection;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainFacade
+    /// SettingsFolder
     ///
     /// <summary>
-    /// MainViewModel と各種 Model の窓口となるクラスです。
+    /// 各種設定を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainFacade
+    public class SettingsFolder : SettingsFolder<Settings>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainFacade
+        /// SettingsFolder
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="settings">設定情報</param>
-        /// <param name="context">同期用コンテキスト</param>
+        /// <param name="assembly">アセンブリ情報</param>
+        /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingsFolder settings, SynchronizationContext context)
+        public SettingsFolder(Assembly assembly, IO io) :
+            this(assembly, Cube.DataContract.Format.Registry, @"CubeSoft\CubePDF Utility2", io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsFolder
+        ///
+        /// <summary>
+        /// オブジェクトを初期化します。
+        /// </summary>
+        ///
+        /// <param name="assembly">アセンブリ情報</param>
+        /// <param name="format">設定情報の保存方法</param>
+        /// <param name="location">設定情報の保存パス</param>
+        /// <param name="io">I/O オブジェクト</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
+            base(assembly, format, location, io)
         {
-            Settings = settings;
-            Images   = new ImageCacheList(context);
+            AutoSave       = false;
+            Version.Digit  = 3;
+            Version.Suffix = Properties.Resources.VersionSuffix;
+
+            var dir = IO.Get(assembly.GetReader().Location).DirectoryName;
+            Startup.Name    = "CubePDF Utility UpdateChecker";
+            Startup.Command = IO.Combine(dir, $"UpdateChecker.exe").Quote();
         }
 
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Settings
-        ///
-        /// <summary>
-        /// 設定情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Images
-        ///
-        /// <summary>
-        /// PDF のサムネイル一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageCacheList Images { get; }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// PDF ファイルを開きます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(string src)
-        {
-            _core = new DocumentReader(src);
-            Images.Pages.Clear();
-            Images.Renderer = _core;
-            foreach (var page in _core.Pages) Images.Pages.Add(page);
-        }
-
-        #endregion
-
-        #region Fields
-        private DocumentReader _core;
         #endregion
     }
 }

@@ -16,10 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using System;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Input;
 
@@ -49,7 +50,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public MainViewModel() : base(new Messenger())
         {
-            Model  = new MainFacade(SynchronizationContext.Current);
+            var settings = new SettingsFolder(Assembly.GetExecutingAssembly(), new IO());
+            Model  = new MainFacade(settings, SynchronizationContext.Current);
             Ribbon = new RibbonViewModel(Messenger);
             SetRibbonCommands();
         }
@@ -71,6 +73,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Settings
+        ///
+        /// <summary>
+        /// 設定情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Settings Settings => Model.Settings.Value;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Message
         ///
         /// <summary>
@@ -79,17 +92,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Bindable<string> Message { get; } = new Bindable<string>("Ready");
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Web
-        ///
-        /// <summary>
-        /// Web ページの URL を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Uri Web => new Uri("https://www.cube-soft.jp/cubepdfutility/");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -162,7 +164,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.ZoomOut.Command = Default;
             Ribbon.Version.Command = Default;
             Ribbon.Exit.Command = new RelayCommand(() => Send<CloseMessage>());
-            Ribbon.Web.Command = new RelayCommand(() => Send(Web));
+            Ribbon.Web.Command = new RelayCommand(() => Send(Settings.Uri));
         }
 
         #endregion

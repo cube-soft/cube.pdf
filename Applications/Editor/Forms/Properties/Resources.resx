@@ -237,4 +237,7 @@
   <data name="TooltipSave" xml:space="preserve">
     <value>Overwrite</value>
   </data>
+  <data name="VersionSuffix" xml:space="preserve">
+    <value>β</value>
+  </data>
 </root>

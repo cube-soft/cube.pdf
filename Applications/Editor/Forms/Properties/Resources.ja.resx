@@ -234,4 +234,7 @@
   <data name="TooltipSave" xml:space="preserve">
     <value>上書き保存</value>
   </data>
+  <data name="VersionSuffix" xml:space="preserve">
+    <value>β</value>
+  </data>
 </root>

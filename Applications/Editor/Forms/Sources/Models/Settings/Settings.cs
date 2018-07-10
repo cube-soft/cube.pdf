@@ -16,93 +16,104 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Pdfium;
-using System.Threading;
+using System;
+using System.Runtime.Serialization;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainFacade
+    /// Settings
     ///
     /// <summary>
-    /// MainViewModel と各種 Model の窓口となるクラスです。
+    /// ユーザ設定を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainFacade
+    [DataContract]
+    public class Settings : ObservableProperty
     {
         #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MainFacade
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /// <param name="settings">設定情報</param>
-        /// <param name="context">同期用コンテキスト</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public MainFacade(SettingsFolder settings, SynchronizationContext context)
-        {
-            Settings = settings;
-            Images   = new ImageCacheList(context);
-        }
-
-        #endregion
-
-        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
         /// Settings
         ///
         /// <summary>
-        /// 設定情報を取得します。
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Images
-        ///
-        /// <summary>
-        /// PDF のサムネイル一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageCacheList Images { get; }
+        public Settings() { Reset(); }
 
         #endregion
 
-        #region Methods
+        #region Properties
+
+        #region DataMember
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// ViewSize
         ///
         /// <summary>
-        /// PDF ファイルを開きます。
+        /// サムネイルの表示サイズを取得または設定します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open(string src)
+        public int ViewSize
         {
-            _core = new DocumentReader(src);
-            Images.Pages.Clear();
-            Images.Renderer = _core;
-            foreach (var page in _core.Pages) Images.Pages.Add(page);
+            get => _viewSize;
+            set => SetProperty(ref _viewSize, value);
+        }
+
+        #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uri
+        ///
+        /// <summary>
+        /// Web ページの URL を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdfutility");
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDeserializing
+        ///
+        /// <summary>
+        /// デシリアライズ直前に実行されます。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext context) => Reset();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// 値をリセットします。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Reset()
+        {
+            _viewSize = 250;
         }
 
         #endregion
 
         #region Fields
-        private DocumentReader _core;
+        private int _viewSize;
         #endregion
     }
 }
