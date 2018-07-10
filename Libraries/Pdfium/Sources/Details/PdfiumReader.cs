@@ -51,10 +51,11 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private PdfiumReader(string src, IO io)
         {
-            Source  = src;
-            IO      = io;
+            Source = src;
+            IO     = io;
 
-            _stream = IO.OpenRead(src);
+            _stream   = IO.OpenRead(src);
+            _delegate = new ReadDelegate(Read);
         }
 
         #endregion
@@ -223,7 +224,7 @@ namespace Cube.Pdf.Pdfium
                 new FileAccess
                 {
                     Length    = (uint)_stream.Length,
-                    GetBlock  = Marshal.GetFunctionPointerForDelegate(new ReadDelegate(Read)),
+                    GetBlock  = Marshal.GetFunctionPointerForDelegate(_delegate),
                     Parameter = IntPtr.Zero,
                 },
                 password
@@ -291,6 +292,7 @@ namespace Cube.Pdf.Pdfium
 
         #region Fields
         private readonly System.IO.Stream _stream;
+        private readonly ReadDelegate _delegate;
         #endregion
     }
 }
