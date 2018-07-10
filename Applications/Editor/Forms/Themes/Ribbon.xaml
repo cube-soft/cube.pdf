@@ -92,7 +92,7 @@
       RibbonTabControl
     *********************************************************************** -->
     <Style TargetType="{x:Type r:RibbonTabControl}">
-        <Setter Property="Background" Value="{StaticResource MainBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
     </Style>
 
     <!-- **********************************************************************

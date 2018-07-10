@@ -133,9 +133,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\Components\PagesControl.xaml.cs">
+      <DependentUpon>PagesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sources\Models\Settings\Settings.cs" />
     <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />
     <Compile Include="Sources\Models\ImageCacheList.cs" />
+    <Compile Include="Sources\Models\ImageEntry.cs" />
     <Compile Include="Sources\Models\ResourceCulture.cs" />
     <Compile Include="Sources\Models\RibbonEntry.cs" />
     <Compile Include="Sources\ViewModels\MainFacade.cs" />
@@ -143,6 +147,10 @@
     <Compile Include="Sources\ViewModels\RibbonViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\Pages.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Resource Include="App.ico" />
     <None Include="App.config" />
     <None Include="App.manifest" />
@@ -268,6 +276,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\Components\PagesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

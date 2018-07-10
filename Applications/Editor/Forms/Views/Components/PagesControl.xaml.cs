@@ -22,24 +22,24 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RibbonControl
+    /// PagesControl
     ///
     /// <summary>
-    /// Ribbon メニューを表すクラスです。
+    /// PDF のページ一覧を表示するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class RibbonControl : UserControl
+    public partial class PagesControl : UserControl
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// RibbonControl
+        /// PagesControl
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonControl() { InitializeComponent(); }
+        public PagesControl() { InitializeComponent(); }
     }
 }

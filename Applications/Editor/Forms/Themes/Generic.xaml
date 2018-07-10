@@ -23,13 +23,13 @@
     <!-- **********************************************************************
       Colors
     *********************************************************************** -->
-    <Color x:Key="MainBackgroundColor">#FF555555</Color>
-    <Color x:Key="MainForegroundColor">#FFB3B3B3</Color>
-    <Color x:Key="MainBorderColor">#FF000000</Color>
+    <Color x:Key="DarkBackgroundColor">#FF555555</Color>
+    <Color x:Key="DarkForegroundColor">#FFB3B3B3</Color>
+    <Color x:Key="DarkBorderColor">#FFB3B3B3</Color>
 
     <Color x:Key="LightBackgroundColor">#FFFFFFFF</Color>
     <Color x:Key="LightForegroundColor">#FF000000</Color>
-    <Color x:Key="LightBorderColor">#FFB3B3B3</Color>
+    <Color x:Key="LightBorderColor">#FF000000</Color>
 
     <Color x:Key="TabBackgroundColor">#FF2F2F2F</Color>
     <Color x:Key="TabForegroundColor">#FFE0E0E0</Color>
@@ -42,9 +42,9 @@
     <!-- **********************************************************************
       Brushes
     *********************************************************************** -->
-    <SolidColorBrush x:Key="MainBackgroundBrush" Color="{StaticResource MainBackgroundColor}" />
-    <SolidColorBrush x:Key="MainForegroundBrush" Color="{StaticResource MainForegroundColor}" />
-    <SolidColorBrush x:Key="MainBorderBrush" Color="{StaticResource MainBorderColor}" />
+    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}" />
+    <SolidColorBrush x:Key="DarkForegroundBrush" Color="{StaticResource DarkForegroundColor}" />
+    <SolidColorBrush x:Key="DarkBorderBrush" Color="{StaticResource DarkBorderColor}" />
 
     <SolidColorBrush x:Key="LightBackgroundBrush" Color="{StaticResource LightBackgroundColor}" />
     <SolidColorBrush x:Key="LightForegroundBrush" Color="{StaticResource LightForegroundColor}" />
@@ -61,14 +61,6 @@
     <SolidColorBrush x:Key="TabBorderBrush" Color="{StaticResource TabBorderColor}" />
 
     <SolidColorBrush x:Key="MenuButtonBrush" Color="{StaticResource MenuButtonColor}" />
-
-    <!-- **********************************************************************
-      ListView
-    *********************************************************************** -->
-    <Style TargetType="{x:Type ListView}">
-        <Setter Property="Background" Value="{StaticResource MainBackgroundBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
-    </Style>
 
     <!-- **********************************************************************
       StatusBar

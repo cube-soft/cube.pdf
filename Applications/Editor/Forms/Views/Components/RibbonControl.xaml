@@ -31,11 +31,7 @@
       Resources
     *********************************************************************** -->
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml" />
     </UserControl.Resources>
 
     <!-- **********************************************************************

@@ -40,7 +40,7 @@
     <r:RibbonWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </r:RibbonWindow.Resources>
@@ -68,9 +68,7 @@
         </Grid.RowDefinitions>
 
         <my:RibbonControl Grid.Row="0" />
-
-        <ListView Grid.Row="1" />
-
+        <my:PagesControl Grid.Row="1" />
         <StatusBar Grid.Row="2">
             <StatusBarItem Content="{Binding Message.Value}" />
         </StatusBar>
