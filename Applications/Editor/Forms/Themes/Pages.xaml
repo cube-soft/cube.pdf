@@ -27,6 +27,8 @@
     <Style x:Key="PagesStyle" TargetType="{x:Type ListView}">
         <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SelectionMode" Value="Extended" />
     </Style>
 
@@ -49,17 +51,38 @@
     <!-- **********************************************************************
       Item
     *********************************************************************** -->
+    <Style x:Key="PageStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Margin" Value="3" />
+    </Style>
+
+    <!-- **********************************************************************
+      Item (DataTemplate)
+    *********************************************************************** -->
     <DataTemplate x:Key="PageTemplate" DataType="{x:Type my:ImageEntry}">
-        <StackPanel>
+        <Grid Height="{Binding Preferences.Height}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="{Binding Preferences.TextHeight}" />
+            </Grid.RowDefinitions>
+
             <Border
                 Width="{Binding Width}"
                 Height="{Binding Height}"
                 BorderThickness="1"
                 BorderBrush="{StaticResource DarkBorderBrush}"
                 HorizontalAlignment="Center">
-                <Image Source="{Binding Image}" Stretch="None" />
+                <Image
+                    Source="{Binding Image}"
+                    Stretch="None"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
             </Border>
-            <TextBlock Text="{Binding Text}" />
-        </StackPanel>
+
+            <TextBlock
+                Grid.Row="1"
+                Text="{Binding Text}"
+                TextAlignment="Right"
+                Foreground="{StaticResource DarkForegroundBrush}" />
+        </Grid>
     </DataTemplate>
 </ResourceDictionary>
