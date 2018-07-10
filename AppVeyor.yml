@@ -19,10 +19,11 @@ before_build:
     - nuget sources add -name Cube.FileSystem -source https://ci.appveyor.com/nuget/cube.filesystem
     - nuget sources add -name Cube.Images -source https://ci.appveyor.com/nuget/cube.images
     - nuget sources add -name Cube.Forms -source https://ci.appveyor.com/nuget/cube.forms
-    - nuget restore Cube.Pdf.Converter.sln
+    - nuget sources add -name Cube.Xui -source https://ci.appveyor.com/nuget/cube.xui
+    - nuget restore Cube.Pdf.All.sln
 build:
     parallel: true
-    project: Cube.Pdf.Converter.sln
+    project: Cube.Pdf.All.sln
     publish_nuget: true
     verbosity: minimal
 after_build:
@@ -33,6 +34,7 @@ after_build:
     - xcopy /Y /I Thirdparty\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
     - xcopy /Y /I Thirdparty\x64\lib\*.* Applications\Converter\Tests\bin\Release\lib
     - xcopy /Y /I ..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\x64\pdfium.dll Tests\bin\Release
+    - xcopy /Y /I ..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\x64\pdfium.dll Applications\Editor\Tests\bin\Release
 artifacts:
     - path: CubePdf
     - path: CubePdf.Proxy
@@ -60,6 +62,17 @@ test_script:
       -mergeoutput
       -output:CoverResult.xml
       -filter:"+[*]* -[AlphaFS]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program"
+    - >
+      ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      -register:user
+      -target:nunit3-console.exe
+      -targetargs:Cube.Pdf.Tests.Editor.dll
+      -targetdir:Applications\Editor\Tests\bin\Release
+      -returntargetcode
+      -hideskipped:All
+      -mergeoutput
+      -output:CoverResult.xml
+      -filter:"+[*]* -[GalaSoft]* -[*]*NativeMethods -[*]*Properties.* -[*]*Window -[*]*Control -[*]*.App"
 after_test:
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
