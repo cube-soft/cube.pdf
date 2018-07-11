@@ -251,8 +251,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ImageSource GetImage(ImageEntry src)
         {
-            var key = src.RawObject.Number;
-            lock (_cache) { if (_cache.TryGetValue(key, out var dest)) return dest; }
+            var pagenum = src.RawObject.Number;
+            if (_cache.TryGetValue(pagenum, out var dest)) return dest;
             Task.Run(() => SetImage(src)).Forget();
             return Loading;
         }
@@ -268,7 +268,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetImage(ImageEntry src)
         {
-            lock (_cache)
+            lock (_lock)
             {
                 var pagenum = src.RawObject.Number;
                 if (_cache.ContainsKey(pagenum)) return;
@@ -292,6 +292,7 @@ namespace Cube.Pdf.App.Editor
         private readonly SynchronizationContext _context;
         private readonly ObservableCollection<ImageEntry> _inner;
         private readonly IDictionary<int, ImageSource> _cache;
+        private readonly object _lock = new object();
         private ImageSource _loading;
         #endregion
     }
