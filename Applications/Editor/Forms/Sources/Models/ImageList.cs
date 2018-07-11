@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Mixin;
+using Cube.Tasks;
 using Cube.Xui.Converters;
 using System;
 using System.Collections;
@@ -25,6 +26,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -58,8 +60,8 @@ namespace Cube.Pdf.App.Editor
         public ImageList(SynchronizationContext context)
         {
             _context = context;
-
-            _inner = new ObservableCollection<ImageEntry>();
+            _cache   = new SortedDictionary<int, ImageSource>();
+            _inner   = new ObservableCollection<ImageEntry>();
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
         }
 
@@ -228,26 +230,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetImage
-        ///
-        /// <summary>
-        /// Gets an ImageSource from the specified object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ImageSource GetImage(ImageEntry src)
-        {
-            var dest = new Bitmap(src.Width, src.Height);
-            using (var gs = Graphics.FromImage(dest))
-            {
-                gs.Clear(System.Drawing.Color.White);
-                Renderer.Render(gs, src.RawObject);
-            }
-            return dest.ToBitmapImage();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// GetLoadingImage
         ///
         /// <summary>
@@ -258,11 +240,58 @@ namespace Cube.Pdf.App.Editor
         private ImageSource GetLoadingImage() =>
             new BitmapImage(new Uri("pack://application:,,,/Assets/Medium/Loading.png"));
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImage
+        ///
+        /// <summary>
+        /// Gets an ImageSource from the specified object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ImageSource GetImage(ImageEntry src)
+        {
+            var key = src.RawObject.Number;
+            lock (_cache) { if (_cache.TryGetValue(key, out var dest)) return dest; }
+            Task.Run(() => SetImage(src)).Forget();
+            return Loading;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetImage
+        ///
+        /// <summary>
+        /// Sets an ImageSource to ImageEntry.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetImage(ImageEntry src)
+        {
+            lock (_cache)
+            {
+                var pagenum = src.RawObject.Number;
+                if (_cache.ContainsKey(pagenum)) return;
+
+                using (var bmp = new Bitmap(src.Width, src.Height))
+                {
+                    using (var gs = Graphics.FromImage(bmp))
+                    {
+                        gs.Clear(System.Drawing.Color.White);
+                        Renderer.Render(gs, src.RawObject);
+                    }
+                    _cache.Add(pagenum, bmp.ToBitmapImage());
+                }
+            }
+            src.Update();
+        }
+
         #endregion
 
         #region Fields
         private readonly SynchronizationContext _context;
         private readonly ObservableCollection<ImageEntry> _inner;
+        private readonly IDictionary<int, ImageSource> _cache;
         private ImageSource _loading;
         #endregion
     }

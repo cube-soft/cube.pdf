@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using NUnit.Framework;
+using System.Windows.Media;
 
 namespace Cube.Pdf.Tests.Editor
 {
@@ -48,8 +49,7 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase("Sample.pdf")]
         public void Open(string filename)
         {
-            var vm   = Create();
-            var dest = vm.Images;
+            var vm = Create();
 
             vm.Messenger.Register<OpenFileDialogMessage>(this, e =>
             {
@@ -59,8 +59,16 @@ namespace Cube.Pdf.Tests.Editor
             });
 
             vm.Ribbon.Open.Command.Execute(null);
-            Assert.That(Wait(() => dest.Count > 0), "Timeout");
-            Assert.That(dest[0].Image, Is.Not.Null);
+            Assert.That(Wait(() => vm.Images.Count > 0), "Timeout");
+
+            var src  = vm.Images[0];
+            var dest = default(ImageSource);
+            vm.Images[0].PropertyChanged += (s, e) => dest = src.Image;
+
+            var dummy = src.Image;
+            Assert.That(dummy, Is.Not.Null);
+            Assert.That(Wait(() => dest != null));
+            Assert.That(dest, Is.Not.EqualTo(dummy));
         }
 
         #endregion

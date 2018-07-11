@@ -28,7 +28,7 @@ namespace Cube.Pdf.App.Editor
     /// ImageEntry
     ///
     /// <summary>
-    /// 画像情報を保持するためのクラスです。
+    /// Stores an image and related information.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,11 +41,11 @@ namespace Cube.Pdf.App.Editor
         /// ImageEntry
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance with the specified arguments.
         /// </summary>
         ///
-        /// <param name="image">画像生成用オブジェクト</param>
-        /// <param name="preferences">表示設定</param>
+        /// <param name="image">Delegation to get an image.</param>
+        /// <param name="preferences">Image preferences.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ImageEntry(Func<ImageEntry, ImageSource> image, ImagePreferences preferences)
@@ -63,7 +63,7 @@ namespace Cube.Pdf.App.Editor
         /// Image
         ///
         /// <summary>
-        /// 画像オブジェクトを取得または設定します。
+        /// Gets the image of this entry.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -74,7 +74,7 @@ namespace Cube.Pdf.App.Editor
         /// Width
         ///
         /// <summary>
-        /// 画像を表示する幅を取得します。
+        /// Gets the width of the image.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -83,7 +83,7 @@ namespace Cube.Pdf.App.Editor
             get
             {
                 var src = RawObject.GetDisplaySize();
-                return (int)(src.Width * GetRatio(src));
+                return (int)(src.Width * GetScale(src));
             }
         }
 
@@ -92,7 +92,7 @@ namespace Cube.Pdf.App.Editor
         /// Height
         ///
         /// <summary>
-        /// 画像を表示する高さを取得します。
+        /// Gets the height of the image.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -101,7 +101,7 @@ namespace Cube.Pdf.App.Editor
             get
             {
                 var src = RawObject.GetDisplaySize();
-                return (int)(src.Height * GetRatio(src));
+                return (int)(src.Height * GetScale(src));
             }
         }
 
@@ -110,7 +110,7 @@ namespace Cube.Pdf.App.Editor
         /// Text
         ///
         /// <summary>
-        /// 表示テキストを取得または設定します。
+        /// Gets the text to be displayed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -125,7 +125,7 @@ namespace Cube.Pdf.App.Editor
         /// Preferences
         ///
         /// <summary>
-        /// 表示設定に関する情報を取得します。
+        /// Gets the preferences about the image.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -136,7 +136,7 @@ namespace Cube.Pdf.App.Editor
         /// RawObject
         ///
         /// <summary>
-        /// 画像生成元の情報を取得または設定します。
+        /// Gets the raw object to create the image.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -155,7 +155,7 @@ namespace Cube.Pdf.App.Editor
         /// Update
         ///
         /// <summary>
-        /// 表示内容を更新します。
+        /// Updates the content of the Image property.
         /// </summary>
         ///
         /// <remarks>
@@ -173,14 +173,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetRatio
+        /// GetScale
         ///
         /// <summary>
-        /// 表示倍率を取得します。
+        /// Gets the scale factor to show the image.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private double GetRatio(SizeF src)
+        private double GetScale(SizeF src)
         {
             var m = 10; // TODO: how to calc?
             var h = (Preferences.Width -　Preferences.Margin * 2 - m) / src.Width;
