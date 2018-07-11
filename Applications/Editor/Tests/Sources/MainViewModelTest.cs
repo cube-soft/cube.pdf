@@ -51,7 +51,7 @@ namespace Cube.Pdf.Tests.Editor
         {
             var vm = Create();
 
-            vm.Messenger.Register<OpenFileDialogMessage>(this, e =>
+            vm.Messenger.Register<OpenFileMessage>(this, e =>
             {
                 e.FileName = GetExamplesWith(filename);
                 e.Result   = true;
