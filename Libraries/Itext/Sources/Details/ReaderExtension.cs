@@ -249,7 +249,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static void Rotate(this PdfReader src, Page page)
         {
-            var rot = page.Rotation.Degree;
+            var rot = (page.Rotation + page.Delta).Degree;
             var cmp = src.GetPageRotation(page.Number);
             var dic = src.GetPageN(page.Number);
             if (rot != cmp) dic.Put(PdfName.ROTATE, new PdfNumber(rot));
