@@ -24,7 +24,7 @@ namespace Cube.Pdf
     /// PermissionMethod
     ///
     /// <summary>
-    /// PDF への各種操作に対して設定されている許可状態を示す列挙型です。
+    /// Specifies the permission method for operations.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -43,11 +43,11 @@ namespace Cube.Pdf
     /// PermissionFlags
     ///
     /// <summary>
-    /// PDF への各操作に対する許可状態を表す列挙型です。
+    /// Specifies the permission flags for operations.
     /// </summary>
     ///
     /// <remarks>
-    /// この列挙型は Permission オブジェクトの内部処理にのみ使用します。
+    /// The flags are used only in the Permission object.
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */

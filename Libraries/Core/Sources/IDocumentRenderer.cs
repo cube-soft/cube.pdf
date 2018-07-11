@@ -36,7 +36,7 @@ namespace Cube.Pdf
         ///
         /// <summary>
         /// Render the Page content to the Graphics object with the
-        /// specified condition.
+        /// specified parameters
         /// </summary>
         ///
         /// <param name="dest">Graphics object.</param>

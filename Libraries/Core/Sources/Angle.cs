@@ -24,12 +24,9 @@ namespace Cube.Pdf
     /// Angle
     ///
     /// <summary>
-    /// 角度を表すクラスです。
+    /// Represents an angle in degree and radian units.
+    /// The class normalizes the degree within the range of [0, 360).
     /// </summary>
-    ///
-    /// <remarks>
-    /// 入力値に対して [0, 360) の範囲で正規化します。
-    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     public class Angle
@@ -39,7 +36,7 @@ namespace Cube.Pdf
         /// Angle
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Angle class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -50,10 +47,11 @@ namespace Cube.Pdf
         /// Angle
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Angle class with the
+        /// specified value in degree unit.
         /// </summary>
         ///
-        /// <param name="degree">度単位の値</param>
+        /// <param name="degree">Angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Angle(int degree)
@@ -68,7 +66,7 @@ namespace Cube.Pdf
         /// Degree
         ///
         /// <summary>
-        /// 度単位の角度を取得します。
+        /// Gets the agnle in degree unit.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -79,7 +77,7 @@ namespace Cube.Pdf
         /// Ragian
         ///
         /// <summary>
-        /// ラジアン単位の角度を取得します。
+        /// Gets the agnle in ragian unit.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -94,8 +92,11 @@ namespace Cube.Pdf
         /// operator+
         ///
         /// <summary>
-        /// 角度の足し算を実行します。
+        /// Gets the result of summing the two values.
         /// </summary>
+        ///
+        /// <param name="x">Angle object.</param>
+        /// <param name="y">Angle object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static Angle operator +(Angle x, Angle y) => new Angle(x.Degree + y.Degree);
@@ -105,8 +106,11 @@ namespace Cube.Pdf
         /// operator+
         ///
         /// <summary>
-        /// 角度の足し算を実行します。
+        /// Gets the result of summing the two values.
         /// </summary>
+        ///
+        /// <param name="x">Angle object.</param>
+        /// <param name="y">Angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static Angle operator +(Angle x, int y) => new Angle(x.Degree + y);
@@ -120,7 +124,7 @@ namespace Cube.Pdf
         /// Normalize
         ///
         /// <summary>
-        /// 角度を正規化します。
+        /// Normalizes the degree within the range of [0, 360).
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

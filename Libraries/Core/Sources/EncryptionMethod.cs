@@ -22,12 +22,12 @@ namespace Cube.Pdf
     /// EncryptionMethod
     ///
     /// <summary>
-    /// PDF で使用可能な暗号化方式を定義した列挙型です。
+    /// Specifies the encryption method that is available in the PDF
+    /// document.
     /// </summary>
     ///
     /// <remarks>
-    /// 現在のところ、以下の暗号化方式を使用する事ができます。
-    /// 括弧内の値は、最初にサポートされた PDF バージョンを表します。
+    /// The available methods are as follows:
     /// -  40bit RC4 (PDF 1.1)
     /// - 128bit RC4 (PDF 1.4)
     /// - 128bit AES (PDF 1.5)

@@ -24,7 +24,7 @@ namespace Cube.Pdf
     /// Metadata
     ///
     /// <summary>
-    /// PDF ファイルのメタ情報を保持するためのクラスです。
+    /// Represents a metadata in the PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -37,7 +37,7 @@ namespace Cube.Pdf
         /// Version
         ///
         /// <summary>
-        /// PDF ファイルのバージョンを取得または設定します。
+        /// Gets or sets a version of the PDF document.
         /// </summary>
         ///
         /// <remarks>
@@ -59,7 +59,7 @@ namespace Cube.Pdf
         /// Author
         ///
         /// <summary>
-        /// 著者を取得または設定します。
+        /// Gets or sets an author.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -74,7 +74,7 @@ namespace Cube.Pdf
         /// Title
         ///
         /// <summary>
-        /// タイトルを取得または設定します。
+        /// Gets or sets a title.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -89,7 +89,7 @@ namespace Cube.Pdf
         /// Subject
         ///
         /// <summary>
-        /// サブタイトルを取得または設定します。
+        /// Gets or sets a subject.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -104,7 +104,7 @@ namespace Cube.Pdf
         /// Keywords
         ///
         /// <summary>
-        /// キーワードを取得または設定します。
+        /// Gets or sets a keywords.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -119,7 +119,7 @@ namespace Cube.Pdf
         /// Creator
         ///
         /// <summary>
-        /// PDF の作成、編集を行うアプリケーション名を取得または設定します。
+        /// Gets or sets a name of program that creates the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -134,8 +134,7 @@ namespace Cube.Pdf
         /// Producer
         ///
         /// <summary>
-        /// PDF の作成・編集を行う際に使用したプリンタドライバ、ライブラリ等
-        /// の名前を取得または設定します。
+        /// Gets or sets a name of program that creates the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -150,7 +149,7 @@ namespace Cube.Pdf
         /// ViewOption
         ///
         /// <summary>
-        /// PDF ファイルの表示方法を取得または設定します。
+        /// Gets or sets a value of display options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

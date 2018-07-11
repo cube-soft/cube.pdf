@@ -24,7 +24,7 @@ namespace Cube.Pdf
     /// EncryptionException
     ///
     /// <summary>
-    /// 暗号化に関する例外を送出するためのクラスです。
+    /// Represents an exception about the encrypted operations.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,10 +38,11 @@ namespace Cube.Pdf
         /// EncryptionException
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the EncryptionException class
+        /// with the specified message.
         /// </summary>
         ///
-        /// <param name="message">メッセージ</param>
+        /// <param name="message">Message.</param>
         ///
         /* ----------------------------------------------------------------- */
         public EncryptionException(string message) : base(message) { }
@@ -51,11 +52,12 @@ namespace Cube.Pdf
         /// EncryptionException
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the EncryptionException class
+        /// with the specified parameters.
         /// </summary>
         ///
-        /// <param name="message">メッセージ</param>
-        /// <param name="inner">内部例外オブジェクト</param>
+        /// <param name="message">Message.</param>
+        /// <param name="inner">Inner exception object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public EncryptionException(string message, Exception inner) : base(message, inner) { }

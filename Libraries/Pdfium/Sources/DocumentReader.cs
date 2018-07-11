@@ -139,7 +139,6 @@ namespace Cube.Pdf.Pdfium
         /// <param name="page">ページ情報</param>
         /// <param name="point">描画開始座標</param>
         /// <param name="size">描画サイズ</param>
-        /// <param name="rotation">回転角度</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Render(Graphics dest, Page page, PointF point, SizeF size) =>

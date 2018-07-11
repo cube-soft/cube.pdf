@@ -22,7 +22,7 @@ namespace Cube.Pdf
     /// Encryption
     ///
     /// <summary>
-    /// PDF の暗号化に関する情報を保持するためのクラスです。
+    /// Represents an encryption information of the PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -35,7 +35,8 @@ namespace Cube.Pdf
         /// Enabled
         ///
         /// <summary>
-        /// 暗号化を有効化するかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether the PDF document is
+        /// encrypted with password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -50,8 +51,8 @@ namespace Cube.Pdf
         /// OpenWithPassword
         ///
         /// <summary>
-        /// PDF ファイルを開く際にパスワードを要求するかどうかを示す値を
-        /// 取得または設定します。
+        /// Gets or sets a value indicating whether the password is
+        /// requested when opening the PDF document.
         /// </summary>
         ///
         /// <remarks>
@@ -71,7 +72,7 @@ namespace Cube.Pdf
         /// OwnerPassword
         ///
         /// <summary>
-        /// 所有者パスワードを取得または設定します。
+        /// Gets or sets an owner password.
         /// </summary>
         ///
         /// <remarks>
@@ -92,7 +93,7 @@ namespace Cube.Pdf
         /// UserPassword
         ///
         /// <summary>
-        /// ユーザパスワードを取得または設定します。
+        /// Gets or sets a user password.
         /// </summary>
         ///
         /// <remarks>
@@ -112,7 +113,7 @@ namespace Cube.Pdf
         /// Method
         ///
         /// <summary>
-        /// 適用する暗号化方式を取得または設定します。
+        /// Gets or sets an encryption method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -127,8 +128,8 @@ namespace Cube.Pdf
         /// Permission
         ///
         /// <summary>
-        /// 暗号化された PDF に設定されている各種権限の状態を取得
-        /// または設定します。
+        /// Gets or sets permissions of various operations with the
+        /// encrypted PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

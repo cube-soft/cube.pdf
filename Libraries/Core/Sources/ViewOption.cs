@@ -24,38 +24,38 @@ namespace Cube.Pdf
     /// ViewOption
     ///
     /// <summary>
-    /// PDF ファイルの表示方法を定義した列挙型です。
+    /// Specifies the display options of the PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [Flags]
     public enum ViewOption
     {
-        /// <summary>オプション無し</summary>
+        /// <summary>No options.</summary>
         None = 0x0000,
-        /// <summary>単一ページ</summary>
+        /// <summary>Single page.</summary>
         SinglePage = 0x0001,
-        /// <summary>連続ページ</summary>
+        /// <summary>One column.</summary>
         OneColumn = 0x0002,
-        /// <summary>連続見開きページ（左綴じ）</summary>
+        /// <summary>Two column (left)</summary>
         TwoColumnLeft = 0x0004,
-        /// <summary>連続見開きページ（右綴じ）</summary>
+        /// <summary>Two column (right)</summary>
         TwoColumnRight = 0x0008,
-        /// <summary>見開きページ（左綴じ）</summary>
+        /// <summary>Two page (left)</summary>
         TwoPageLeft = 0x0010,
-        /// <summary>見開きページ（右綴じ）</summary>
+        /// <summary>Two page (right)</summary>
         TwoPageRight = 0x0020,
-        /// <summary>ページのみ表示（サムネイル等は非表示）</summary>
+        /// <summary>Shows only pages.</summary>
         PageOnly = 0x0040,
-        /// <summary>アウトライン</summary>
+        /// <summary>Shows outline.</summary>
         Outline = 0x0080,
-        /// <summary>サムネイル</summary>
+        /// <summary>Shows thumbnail of the pages.</summary>
         Thumbnail = 0x0100,
-        /// <summary>全画面表示</summary>
+        /// <summary>Full screen mode.</summary>
         FullScreen = 0x0200,
-        /// <summary>付加的なコンテンツ</summary>
+        /// <summary>Shows optional contents.</summary>
         OptionalContent = 0x0400,
-        /// <summary>添付オブジェクト</summary>
+        /// <summary>Shows attached objects.</summary>
         Attachment = 0x0800,
     }
 
@@ -64,7 +64,7 @@ namespace Cube.Pdf
     /// ViewOptionFactory
     ///
     /// <summary>
-    /// PDF ファイルの表示方法を定義した列挙型です。
+    /// Provides extended methods for the ViewOption.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -77,15 +77,15 @@ namespace Cube.Pdf
         /// Create
         ///
         /// <summary>
-        /// 整数値から ViewOption 列挙型に変換します。
+        /// Creates a ViewOption object from the specified value.
         /// </summary>
         ///
-        /// <param name="src">変換元の値</param>
+        /// <param name="src">Value for options.</param>
         ///
-        /// <returns>ViewOption オブジェクト</returns>
+        /// <returns>ViewOption objects.</returns>
         ///
         /// <remarks>
-        /// ViewOption 列挙型に定義されていない値は無視されます。
+        /// Ignores flags that do not define in the ViewOption.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -96,12 +96,12 @@ namespace Cube.Pdf
         /// GetLayout
         ///
         /// <summary>
-        /// ViewOption からページオプションに関わる値を抽出します。
+        /// Gets the settings for layout with specified value.
         /// </summary>
         ///
-        /// <param name="src">変換元の値</param>
+        /// <param name="src">Value for options.</param>
         ///
-        /// <returns>ViewOption オブジェクト</returns>
+        /// <returns>Converted ViewOption object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static ViewOption GetLayout(this ViewOption src) => (ViewOption)((int)src & 0x003f);

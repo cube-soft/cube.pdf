@@ -25,7 +25,8 @@ namespace Cube.Pdf
     /// Permission
     ///
     /// <summary>
-    /// 暗号化されている PDF ファイルで許可されている操作を表すクラスです。
+    /// Represents permissions of various operations with the encrypted
+    /// PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,7 +39,7 @@ namespace Cube.Pdf
         /// Permission
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Permission class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -49,10 +50,11 @@ namespace Cube.Pdf
         /// Permission
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Permission class with the
+        /// specified value.
         /// </summary>
         ///
-        /// <param name="src">許可状態を表す値</param>
+        /// <param name="src">Value for permissions.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Permission(long src)
@@ -71,12 +73,12 @@ namespace Cube.Pdf
         /// Print
         ///
         /// <summary>
-        /// 印刷操作の許可設定を取得または設定します。
+        /// Gets or sets a permission for printing.
         /// </summary>
         ///
         /// <remarks>
-        /// Print のみ Restrict と言う許可状態（低品質での印刷を許可）が
-        /// 存在します。
+        /// The PermissionMethod.Restrict value may be used only in
+        /// the Print property.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -91,8 +93,9 @@ namespace Cube.Pdf
         /// Assemble
         ///
         /// <summary>
-        /// ページの挿入、削除、回転、しおりとサムネイルの作成に関する
-        /// 許可設定を取得または設定します。
+        /// Get or sets a permission for assembling the PDF document
+        /// (insert, rotate, or delete pages and create bookmarks or
+        /// thumbnail images).
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -107,7 +110,8 @@ namespace Cube.Pdf
         /// ModifyContents
         ///
         /// <summary>
-        /// 内容の編集操作の許可設定を取得または設定します。
+        /// Gets or sets a permission for modifing the contents of the PDF
+        /// document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -122,7 +126,8 @@ namespace Cube.Pdf
         /// CopyContents
         ///
         /// <summary>
-        /// 内容の選択/コピー操作の許可設定を取得または設定します。
+        /// Gets or sets a permission for coping or otherwise extracting
+        /// text and graphics from the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -137,8 +142,9 @@ namespace Cube.Pdf
         /// Accessibility
         ///
         /// <summary>
-        /// アクセシビリティ（視覚に障害を持つユーザに対して、読み上げ機能
-        /// を提供する）のための内容抽出操作の許可設定を取得または設定します。
+        /// Gets or sets a permission for extracting text and graphics
+        /// in support of accessibility to users with disabilities or
+        /// for other purposes.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -153,8 +159,8 @@ namespace Cube.Pdf
         /// ModifyAnnotations
         ///
         /// <summary>
-        /// 注釈の追加・編集、フォームの追加・編集・入力操作の許可設定を
-        /// 取得または設定します。
+        /// Gets or sets a permission for adding or modifing text
+        /// annotations, fill in interactive form fields.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -169,7 +175,8 @@ namespace Cube.Pdf
         /// InputForm
         ///
         /// <summary>
-        /// フォームの入力操作の許可設定を取得または設定します。
+        /// Gets or sets a permission for filling in existing interactive
+        /// form fields (including signature fields).
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -184,7 +191,7 @@ namespace Cube.Pdf
         /// Value
         ///
         /// <summary>
-        /// 各種許可状態を表す値を取得します。
+        /// Gets or sets a value for all permissions.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -199,7 +206,7 @@ namespace Cube.Pdf
         /// Get
         ///
         /// <summary>
-        /// 指定されたフラグの許可状態を取得します。
+        /// Gets the permission for the specified operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -211,7 +218,7 @@ namespace Cube.Pdf
         /// GetPrintPermission
         ///
         /// <summary>
-        /// 印刷に関する許可状態を取得します。
+        /// Gets the permission for printing.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -225,7 +232,7 @@ namespace Cube.Pdf
         /// Set
         ///
         /// <summary>
-        /// プロパティに値を設定します。
+        /// Sets the value of the specfied permission.
         /// </summary>
         ///
         /// <remarks>
@@ -246,7 +253,7 @@ namespace Cube.Pdf
         /// Set
         ///
         /// <summary>
-        /// 指定されたフラグの許可状態を設定します。
+        /// Sets the value of the specfied permission.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -261,7 +268,7 @@ namespace Cube.Pdf
         /// SetPrintPermission
         ///
         /// <summary>
-        /// 印刷に関する許可状態を設定します。
+        /// Sets the value for printing permission.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

@@ -25,7 +25,7 @@ namespace Cube.Pdf
     /// Attachment
     ///
     /// <summary>
-    /// 添付ファイルを表すクラスです。
+    /// Represents an attachment file in the PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,10 +38,11 @@ namespace Cube.Pdf
         /// Attachment
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Attachment class with the
+        /// specified file path.
         /// </summary>
         ///
-        /// <param name="path">添付ファイルのパス</param>
+        /// <param name="path">Path of the attached file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Attachment(string path) : this(path, new IO()) { }
@@ -51,11 +52,12 @@ namespace Cube.Pdf
         /// Attachment
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Attachment class with the
+        /// specified parameters.
         /// </summary>
         ///
-        /// <param name="name">表示名</param>
-        /// <param name="path">添付ファイルのパス</param>
+        /// <param name="name">Display name.</param>
+        /// <param name="path">Path of the attached file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Attachment(string name, string path) : this(name, path, new IO()) { }
@@ -65,11 +67,12 @@ namespace Cube.Pdf
         /// Attachment
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Attachment class with the
+        /// specified parameters.
         /// </summary>
         ///
-        /// <param name="path">添付ファイルのパス</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="path">Path of the attached file.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Attachment(string path, IO io) : this(io.Get(path).Name, path, io) { }
@@ -79,12 +82,13 @@ namespace Cube.Pdf
         /// Attachment
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Attachment class with the
+        /// specified parameters.
         /// </summary>
         ///
-        /// <param name="name">表示名</param>
-        /// <param name="path">添付ファイルのパス</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="name">Display name.</param>
+        /// <param name="path">Path of the attached file.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Attachment(string name, string path, IO io)
@@ -103,7 +107,7 @@ namespace Cube.Pdf
         /// IO
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します。
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -114,7 +118,7 @@ namespace Cube.Pdf
         /// Name
         ///
         /// <summary>
-        /// 添付ファイルの表示名を取得します。
+        /// Gets the displayed name of the attached file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -125,7 +129,7 @@ namespace Cube.Pdf
         /// Source
         ///
         /// <summary>
-        /// 添付ファイルのパスを取得します。
+        /// Gets the path of the attached file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -136,7 +140,7 @@ namespace Cube.Pdf
         /// Length
         ///
         /// <summary>
-        /// 添付ファイルのサイズを取得します。
+        /// Gets the data length of the attached file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -147,7 +151,7 @@ namespace Cube.Pdf
         /// Data
         ///
         /// <summary>
-        /// 添付ファイルの内容を取得します。
+        /// Gets the data of the attached file in byte unit.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -158,7 +162,7 @@ namespace Cube.Pdf
         /// Checksum
         ///
         /// <summary>
-        /// 添付ファイルのチェックサムを取得します。
+        /// Gets the checksum of attached file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -173,7 +177,7 @@ namespace Cube.Pdf
         /// GetLength
         ///
         /// <summary>
-        /// 添付ファイルのサイズを取得します。
+        /// Gets the data length of the attached file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -184,7 +188,7 @@ namespace Cube.Pdf
         /// GetBytes
         ///
         /// <summary>
-        /// 添付ファイルの内容をバイト配列で取得します。
+        /// Gets the data of the attached file in byte unit.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -205,7 +209,7 @@ namespace Cube.Pdf
         /// GetChecksum
         ///
         /// <summary>
-        /// 添付ファイルのチェックサムを取得します。
+        /// Gets the checksum of attached file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
