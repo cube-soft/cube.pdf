@@ -35,7 +35,8 @@ namespace Cube.Pdf.App.Editor
     /// ImageList
     ///
     /// <summary>
-    /// PDF ページのサムネイル一覧を管理するクラスです。
+    /// Provides a collection of images in which contents of Page
+    /// objects are rendered.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -48,10 +49,10 @@ namespace Cube.Pdf.App.Editor
         /// ImageCacheList
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance.
         /// </summary>
         ///
-        /// <param name="context">同期用コンテキスト</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ImageList(SynchronizationContext context)
@@ -60,8 +61,6 @@ namespace Cube.Pdf.App.Editor
 
             _inner = new ObservableCollection<ImageEntry>();
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
-
-            Loading = new BitmapImage(new Uri("pack://application:,,,/Assets/Medium/Loading.png"));
         }
 
         #endregion
@@ -73,7 +72,7 @@ namespace Cube.Pdf.App.Editor
         /// Items[int]
         ///
         /// <summary>
-        /// インデックスに対応するオブジェクトを取得します。
+        /// Gets the element at the specified index.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -84,7 +83,7 @@ namespace Cube.Pdf.App.Editor
         /// Renderer
         ///
         /// <summary>
-        /// 描画用オブジェクトを取得または設定します。
+        /// Gets or sets the object to render Page contents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -95,7 +94,7 @@ namespace Cube.Pdf.App.Editor
         /// Preferences
         ///
         /// <summary>
-        /// 表示設定を取得します。
+        /// Gets the preferences for images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -106,7 +105,7 @@ namespace Cube.Pdf.App.Editor
         /// Count
         ///
         /// <summary>
-        /// 要素数を取得します。
+        /// Gets the number of elements contained in this collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -117,11 +116,15 @@ namespace Cube.Pdf.App.Editor
         /// Loading
         ///
         /// <summary>
-        /// ロード中を表すオブジェクトを取得します。
+        /// Gets the image object representing loading.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected ImageSource Loading { get; private set; }
+        public ImageSource Loading
+        {
+            get => _loading ?? (_loading = GetLoadingImage());
+            set => _loading = value;
+        }
 
         #endregion
 
@@ -134,7 +137,8 @@ namespace Cube.Pdf.App.Editor
         /// CollectionChanged
         ///
         /// <summary>
-        /// コレクションの内容変更時に発生するイベントです。
+        /// Occurs when an item is added, removed, changed, moved,
+        /// or the entire list is refreshed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -145,10 +149,10 @@ namespace Cube.Pdf.App.Editor
         /// OnCollectionChanged
         ///
         /// <summary>
-        /// CollectionChanged イベントを発生させます。
+        /// Raises the CollectionChanged event with the provided arguments.
         /// </summary>
         ///
-        /// <param name="e">イベント引数</param>
+        /// <param name="e">Arguments of the event being raised.</param>
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
@@ -169,10 +173,12 @@ namespace Cube.Pdf.App.Editor
         /// GetEnumerator
         ///
         /// <summary>
-        /// 反復用オブジェクトを取得します。
+        /// Returns an enumerator that iterates through this collection.
         /// </summary>
         ///
-        /// <returns>反復用オブジェクト</returns>
+        /// <returns>
+        /// An IEnumerator(ImageEntry) object for this collection.
+        /// </returns>
         ///
         /* ----------------------------------------------------------------- */
         public IEnumerator<ImageEntry> GetEnumerator()
@@ -185,10 +191,12 @@ namespace Cube.Pdf.App.Editor
         /// IEnumerable.GetEnumerator
         ///
         /// <summary>
-        /// 反復用オブジェクトを取得します。
+        /// Returns an enumerator that iterates through this collection.
         /// </summary>
         ///
-        /// <returns>反復用オブジェクト</returns>
+        /// <returns>
+        /// An IEnumerator object for this collection.
+        /// </returns>
         ///
         /* ----------------------------------------------------------------- */
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -198,8 +206,10 @@ namespace Cube.Pdf.App.Editor
         /// Add
         ///
         /// <summary>
-        /// ページ情報を追加します。
+        /// Adds the Page object to be rendered.
         /// </summary>
+        ///
+        /// <param name="item">Page object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Add(Page item)
@@ -221,7 +231,7 @@ namespace Cube.Pdf.App.Editor
         /// GetImage
         ///
         /// <summary>
-        /// 画像オブジェクトを取得します。
+        /// Gets an ImageSource from the specified object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -236,11 +246,24 @@ namespace Cube.Pdf.App.Editor
             return dest.ToBitmapImage();
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetLoadingImage
+        ///
+        /// <summary>
+        /// Gets a default ImageSource that notifies loading.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ImageSource GetLoadingImage() =>
+            new BitmapImage(new Uri("pack://application:,,,/Assets/Medium/Loading.png"));
+
         #endregion
 
         #region Fields
         private readonly SynchronizationContext _context;
         private readonly ObservableCollection<ImageEntry> _inner;
+        private ImageSource _loading;
         #endregion
     }
 }

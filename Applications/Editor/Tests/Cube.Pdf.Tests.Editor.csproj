@@ -72,16 +72,6 @@
     <DocumentationFile>bin\x64\Release\Cube.Pdf.Tests.Editor.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sources\GlobalSetup.cs" />
-    <Compile Include="Sources\RibbonEntryTest.cs" />
-    <Compile Include="Sources\RibbonViewModelTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
@@ -111,8 +101,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sources\Details\GlobalSetup.cs" />
+    <Compile Include="Sources\Details\ViewModelFixture.cs" />
+    <Compile Include="Sources\MainViewModelTest.cs" />
+    <Compile Include="Sources\RibbonEntryTest.cs" />
+    <Compile Include="Sources\RibbonViewModelTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="App.config" />
     <None Include="Packages.config" />
+    <None Include="Examples\Loading.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\Sample.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Forms\Cube.Pdf.App.Editor.csproj">
