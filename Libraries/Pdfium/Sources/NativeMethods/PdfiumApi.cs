@@ -137,7 +137,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// </summary>
         ///
         /// <remarks>
-        /// page_index parameter inicates the first page as ZERO.
+        /// page_index parameter indicates the first page as ZERO.
         /// </remarks>
         ///
         /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />

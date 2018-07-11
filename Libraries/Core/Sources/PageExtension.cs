@@ -29,7 +29,7 @@ namespace Cube.Pdf.Mixin
     /// PageExtension
     ///
     /// <summary>
-    /// Page の拡張用クラスです。
+    /// Describes extended methods for the Page class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,16 +41,16 @@ namespace Cube.Pdf.Mixin
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetImagePages
+        /// GetImagePage
         ///
         /// <summary>
-        /// 画像ファイルに含まれる Page オブジェクト一覧を取得します。
+        /// Get a Page collection from the specified file.
         /// </summary>
         ///
-        /// <param name="io">入出力用オブジェクト</param>
-        /// <param name="src">画像ファイルのパス</param>
+        /// <param name="io">I/O object.</param>
+        /// <param name="src">File path of the Image.</param>
         ///
-        /// <returns>Page オブジェクト一覧</returns>
+        /// <returns>Page collection.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static IEnumerable<Page> GetImagePages(this IO io, string src)
@@ -64,17 +64,17 @@ namespace Cube.Pdf.Mixin
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetImagePages
+        /// GetImagePage
         ///
         /// <summary>
-        /// ページオブジェクト一覧を生成します。
+        /// Get a Page collection from the specified Image.
         /// </summary>
         ///
-        /// <param name="io">入出力用オブジェクト</param>
-        /// <param name="src">画像ファイルのパス</param>
-        /// <param name="image">画像オブジェクト</param>
+        /// <param name="io">I/O object.</param>
+        /// <param name="src">File path of the Image.</param>
+        /// <param name="image">Image object.</param>
         ///
-        /// <returns>Page オブジェクト一覧</returns>
+        /// <returns>Page collection.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static IEnumerable<Page> GetImagePages(this IO io, string src, Image image)
@@ -99,14 +99,14 @@ namespace Cube.Pdf.Mixin
         /// GetImagePage
         ///
         /// <summary>
-        /// 画像ファイルに含まれる Page オブジェクトを取得します。
+        /// Get a Page object from the specified file.
         /// </summary>
         ///
-        /// <param name="io">入出力用オブジェクト</param>
-        /// <param name="src">画像ファイルのパス</param>
-        /// <param name="index">ページを表すインデックス</param>
+        /// <param name="io">I/O object.</param>
+        /// <param name="src">File path of the Image.</param>
+        /// <param name="index">Index of the Image.</param>
         ///
-        /// <returns>Page オブジェクト</returns>
+        /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Page GetImagePage(this IO io, string src, int index)
@@ -123,15 +123,15 @@ namespace Cube.Pdf.Mixin
         /// GetImagePage
         ///
         /// <summary>
-        /// 画像ファイルに含まれる Page オブジェクトを取得します。
+        /// Get a Page object from the specified image.
         /// </summary>
         ///
-        /// <param name="io">入出力用オブジェクト</param>
-        /// <param name="src">画像ファイルのパス</param>
-        /// <param name="image">画像オブジェクト</param>
-        /// <param name="index">ページを表すインデックス</param>
+        /// <param name="io">I/O object.</param>
+        /// <param name="src">File path of the Image.</param>
+        /// <param name="image">Image object.</param>
+        /// <param name="index">Index of the Image.</param>
         ///
-        /// <returns>Page オブジェクト</returns>
+        /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Page GetImagePage(this IO io, string src, Image image, int index)
@@ -149,7 +149,7 @@ namespace Cube.Pdf.Mixin
         /// GetImagePage
         ///
         /// <summary>
-        /// Page オブジェクトを取得します。
+        /// Get a Page object from the specified values.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -160,14 +160,13 @@ namespace Cube.Pdf.Mixin
             var x = image.HorizontalResolution;
             var y = image.VerticalResolution;
 
-            return new Page
-            {
-                File       = io.GetImageFile(src, image),
-                Number     = index + 1,
-                Size       = image.Size,
-                Resolution = new PointF(x, y),
-                Rotation   = new Angle(),
-            };
+            return new Page(
+                io.GetImageFile(src, image), // File
+                index + 1,                   // Number
+                image.Size,                  // Size
+                new Angle(),                 // Rotation
+                new PointF(x, y)             // Resolution
+            );
         }
 
         #endregion
@@ -176,77 +175,42 @@ namespace Cube.Pdf.Mixin
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetViewSize
+        /// GetDisplaySize
         ///
         /// <summary>
-        /// ページオブジェクトの表示サイズを取得します。
+        /// Get the display size of this Page.
         /// </summary>
         ///
-        /// <param name="src">Page オブジェクト</param>
+        /// <param name="src">Page object.</param>
         ///
-        /// <remarks>変換後のサイズ</remarks>
+        /// <remarks>Display size.</remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static SizeF GetViewSize(this Page src) => src.GetViewSize(1.0);
+        public static SizeF GetDisplaySize(this Page src) => src.GetDisplaySize(1.0);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetViewSize
+        /// GetDisplaySize
         ///
         /// <summary>
-        /// ページオブジェクトの表示サイズを取得します。
+        /// Get the display size of this Page from the specified values.
         /// </summary>
         ///
-        /// <param name="src">Page オブジェクト</param>
-        /// <param name="ratio">拡大倍率</param>
+        /// <param name="src">Page object.</param>
+        /// <param name="scale">Scale factor.</param>
         ///
-        /// <remarks>変換後のサイズ</remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static SizeF GetViewSize(this Page src, double ratio) =>
-            src.GetViewSize(ratio, new Angle());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetViewSize
-        ///
-        /// <summary>
-        /// ページオブジェクトの表示サイズを取得します。
-        /// </summary>
-        ///
-        /// <param name="src">Page オブジェクト</param>
-        /// <param name="rotation">回転角度</param>
-        ///
-        /// <remarks>変換後のサイズ</remarks>
+        /// <remarks>Display size.</remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static SizeF GetViewSize(this Page src, Angle rotation) =>
-            src.GetViewSize(1.0, rotation);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetViewSize
-        ///
-        /// <summary>
-        /// ページオブジェクトの表示サイズを取得します。
-        /// </summary>
-        ///
-        /// <param name="src">Page オブジェクト</param>
-        /// <param name="ratio">拡大倍率</param>
-        /// <param name="rotation">回転角度</param>
-        ///
-        /// <remarks>変換後のサイズ</remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static SizeF GetViewSize(this Page src, double ratio, Angle rotation)
+        public static SizeF GetDisplaySize(this Page src, double scale)
         {
-            var angle  = src.Rotation + rotation;
+            var angle  = src.Rotation + src.Delta;
             var sin    = Math.Abs(Math.Sin(angle.Radian));
             var cos    = Math.Abs(Math.Cos(angle.Radian));
             var width  = src.Size.Width * cos + src.Size.Height * sin;
             var height = src.Size.Width * sin + src.Size.Height * cos;
 
-            return new SizeF((float)(width * ratio), (float)(height * ratio));
+            return new SizeF((float)(width * scale), (float)(height * scale));
         }
 
         #endregion

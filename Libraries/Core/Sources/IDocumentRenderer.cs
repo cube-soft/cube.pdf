@@ -24,7 +24,7 @@ namespace Cube.Pdf
     /// IDocumentRenderer
     ///
     /// <summary>
-    /// PDF の内容を描画するためのインターフェースです。
+    /// Provides functionality to render the document contents.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -35,16 +35,16 @@ namespace Cube.Pdf
         /// Render
         ///
         /// <summary>
-        /// PDF の内容を描画します。
+        /// Render the Page content to the Graphics object with the
+        /// specified condition.
         /// </summary>
         ///
-        /// <param name="dest">描画先オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="point">描画開始座標</param>
-        /// <param name="size">描画サイズ</param>
-        /// <param name="rotation">回転角度</param>
+        /// <param name="dest">Graphics object.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="point">Start point to render.</param>
+        /// <param name="size">Rendering size.</param>
         ///
         /* ----------------------------------------------------------------- */
-        void Render(Graphics dest, Page page, PointF point, SizeF size, Angle rotation);
+        void Render(Graphics dest, Page page, PointF point, SizeF size);
     }
 }

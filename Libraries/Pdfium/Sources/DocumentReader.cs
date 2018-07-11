@@ -142,8 +142,8 @@ namespace Cube.Pdf.Pdfium
         /// <param name="rotation">回転角度</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Render(Graphics dest, Page page, PointF point, SizeF size, Angle rotation) =>
-            _core.Render(dest, page, point, size, rotation, 0);
+        public void Render(Graphics dest, Page page, PointF point, SizeF size) =>
+            _core.Render(dest, page, point, size, 0);
 
         /* ----------------------------------------------------------------- */
         ///

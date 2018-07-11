@@ -24,12 +24,43 @@ namespace Cube.Pdf
     /// Page
     ///
     /// <summary>
-    /// ページを表すクラスです。
+    /// Stores a page information of the document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     public class Page : ObservableProperty
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Page
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Page class.
+        /// </summary>
+        ///
+        /// <param name="file">
+        /// File information that owns the Page object.
+        /// </param>
+        ///
+        /// <param name="number">Page number.</param>
+        /// <param name="size">Page size.</param>
+        /// <param name="angle">Rotation of the page.</param>
+        /// <param name="dpi">Resolution of the page.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Page(File file, int number, SizeF size, Angle angle, PointF dpi)
+        {
+            File       = file;
+            Number     = number;
+            Size       = size;
+            Rotation   = angle;
+            Resolution = dpi;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -37,86 +68,117 @@ namespace Cube.Pdf
         /// File
         ///
         /// <summary>
-        /// Page オブジェクトが属する File オブジェクトを取得または
-        /// 設定します。
+        /// Get the file information that owns this Page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public File File
-        {
-            get => _file;
-            set => SetProperty(ref _file, value);
-        }
+        public File File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Number
         ///
         /// <summary>
-        /// ページ番号を取得または設定します。
+        /// Get the page number.
         /// </summary>
         ///
+        /// <remarks>
+        /// 1 for first page.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public int Number
-        {
-            get => _number;
-            set => SetProperty(ref _number, value);
-        }
+        public int Number { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Rotation
         ///
         /// <summary>
-        /// ページオブジェクト表示時の回転角を取得または設定します。
+        /// Get the rotation of this Page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Angle Rotation
-        {
-            get => _rotation;
-            set => SetProperty(ref _rotation, value);
-        }
+        public Angle Rotation { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Resolution
         ///
         /// <summary>
-        /// 水平方法および垂直方向の解像度（1 インチあたりのピクセル数）を
-        /// 取得または設定します。
+        /// Get the horizontal and vertical resolution (dpi) of this Page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PointF Resolution
-        {
-            get => _resolution;
-            set => SetProperty(ref _resolution, value);
-        }
+        public PointF Resolution { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Size
         ///
         /// <summary>
-        /// ページオブジェクトのサイズ（ピクセル単位）を取得または設定します。
+        /// Get the page size.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SizeF Size
+        public SizeF Size { get; }
+
+        #region Editable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Delta
+        ///
+        /// <summary>
+        /// Get or set the angle you rotate this Page.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// The rotation result of this Page is calculated by
+        /// Rotation + Delta.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Angle Delta
         {
-            get => _size;
-            set => SetProperty(ref _size, value);
+            get => _delta;
+            set => SetProperty(ref _delta, value);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// Reset the values of editable properties.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Reset() => OnReset();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnReset
+        ///
+        /// <summary>
+        /// Reset the values of editable properties.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnReset()
+        {
+            Delta = new Angle();
         }
 
         #endregion
 
         #region Fields
-        private File _file;
-        private int _number = -1;
-        private Angle _rotation;
-        private PointF _resolution;
-        private SizeF _size;
+        private Angle _delta = new Angle();
         #endregion
     }
 }

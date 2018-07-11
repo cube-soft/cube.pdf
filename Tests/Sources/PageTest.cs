@@ -81,13 +81,15 @@ namespace Cube.Pdf.Tests
         [TestCase(315, 1016.1f, 1016.1f)]
         public void GetViewSize(int degree, float w, float h)
         {
-            var dest = new Page
-            {
-                Rotation   = new Angle(),
-                Resolution = new PointF(72, 72),
-                Size       = new SizeF(595.0f, 842.0f),
-            }.GetViewSize(new Angle(degree));
+            var src = new Page(
+                null,                      // File
+                1,                         // Number
+                new SizeF(595.0f, 842.0f), // Size
+                new Angle(),               // Rotation
+                new PointF(72, 72)         // Resolution
+            ) { Delta = new Angle(degree) };
 
+            var dest = src.GetDisplaySize();
             Assert.That(dest.Width,  Is.EqualTo(w).Within(1.0));
             Assert.That(dest.Height, Is.EqualTo(h).Within(1.0));
         }

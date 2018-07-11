@@ -56,14 +56,13 @@ namespace Cube.Pdf.Itext
         /// <returns>Page オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetPage(this PdfReader src, PdfFile file, int pagenum) => new Page
-        {
-            File       = file,
-            Number     = pagenum,
-            Size       = src.GetPageSize(pagenum).ToSize(),
-            Rotation   = new Angle(src.GetPageRotation(pagenum)),
-            Resolution = file.Resolution
-        };
+        public static Page GetPage(this PdfReader src, PdfFile file, int pagenum) => new Page(
+            file,                                    // File
+            pagenum,                                 // Number
+            src.GetPageSize(pagenum).ToSize(),       // Size
+            new Angle(src.GetPageRotation(pagenum)), // Rotation
+            file.Resolution                          // Resolution
+        );
 
         /* ----------------------------------------------------------------- */
         ///

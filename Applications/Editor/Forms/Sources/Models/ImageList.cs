@@ -204,7 +204,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Add(Page item)
         {
-            Preferences.Register(item.GetViewSize());
+            Preferences.Register(item.GetDisplaySize());
             _inner.Add(new ImageEntry(e => GetImage(e), Preferences)
             {
                 Text      = (_inner.Count + 1).ToString(),

@@ -82,7 +82,7 @@ namespace Cube.Pdf.App.Editor
         {
             get
             {
-                var src = RawObject.GetViewSize();
+                var src = RawObject.GetDisplaySize();
                 return (int)(src.Width * GetRatio(src));
             }
         }
@@ -100,7 +100,7 @@ namespace Cube.Pdf.App.Editor
         {
             get
             {
-                var src = RawObject.GetViewSize();
+                var src = RawObject.GetDisplaySize();
                 return (int)(src.Height * GetRatio(src));
             }
         }

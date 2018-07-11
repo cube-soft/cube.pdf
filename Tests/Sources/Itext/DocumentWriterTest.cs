@@ -284,7 +284,7 @@ namespace Cube.Pdf.Tests.Itext
         /* ----------------------------------------------------------------- */
         private Page Rotate(Page src, int degree)
         {
-            src.Rotation += degree;
+            src.Delta += degree;
             return src;
         }
 

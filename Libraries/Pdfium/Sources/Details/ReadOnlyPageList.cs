@@ -155,14 +155,13 @@ namespace Cube.Pdf.Pdfium
                 var degree = GetPageRotation(page);
                 var size   = GetPageSize(page, degree);
 
-                return new Page
-                {
-                    File       = File,
-                    Number     = index + 1,
-                    Size       = size,
-                    Rotation   = new Angle(degree),
-                    Resolution = new PointF(72.0f, 72.0f),
-                };
+                return new Page(
+                    File,                    // File
+                    index + 1,               // Number
+                    size,                    // Size
+                    new Angle(degree),       // Rotation
+                    new PointF(72.0f, 72.0f) // Resolution
+                );
             }
             finally { Facade.FPDF_ClosePage(page); }
         }

@@ -24,7 +24,7 @@ namespace Cube.Pdf.Mixin
     /// IDocumentRendererExtension
     ///
     /// <summary>
-    /// IDocumentRenderer の拡張用クラスです。
+    /// Describes extended methods for the IDocumentRenderer interface.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -39,33 +39,16 @@ namespace Cube.Pdf.Mixin
         /// Render
         ///
         /// <summary>
-        /// PDF の内容を描画します。
+        /// Render the Page content to the Graphics object.
         /// </summary>
         ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="dest">描画先オブジェクト</param>
-        /// <param name="page">ページ情報</param>
+        /// <param name="src">Renderer object.</param>
+        /// <param name="dest">Graphics object.</param>
+        /// <param name="page">Page object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Render(this IDocumentRenderer src, Graphics dest, Page page) =>
-            src.Render(dest, page, new Angle());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// PDF の内容を描画します。
-        /// </summary>
-        ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="dest">描画先オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="rotation">回転角度</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Render(this IDocumentRenderer src, Graphics dest, Page page, Angle rotation) =>
-            src.Render(dest, page, new PointF(0, 0), dest.VisibleClipBounds.Size, rotation);
+            src.Render(dest, page, new PointF(0, 0), dest.VisibleClipBounds.Size);
 
         #endregion
 
@@ -76,13 +59,13 @@ namespace Cube.Pdf.Mixin
         /// GetImage
         ///
         /// <summary>
-        /// PDF の内容を描画した Image オブジェクトを取得します。
+        /// Get an Image object in which the Page content is rendered.
         /// </summary>
         ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="page">ページ情報</param>
+        /// <param name="src">Renderer object.</param>
+        /// <param name="page">Page object.</param>
         ///
-        /// <returns>Image オブジェクト</returns>
+        /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Image GetImage(this IDocumentRenderer src, Page page) =>
@@ -93,76 +76,38 @@ namespace Cube.Pdf.Mixin
         /// GetImage
         ///
         /// <summary>
-        /// PDF の内容を描画した Image オブジェクトを取得します。
+        /// Get an Image object in which the Page content is rendered.
         /// </summary>
         ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="ratio">描画倍率</param>
+        /// <param name="src">Renderer object.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="scale">Scale factor.</param>
         ///
-        /// <returns>Image オブジェクト</returns>
+        /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src, Page page, double ratio) =>
-            src.GetImage(page, ratio, new Angle());
+        public static Image GetImage(this IDocumentRenderer src, Page page, double scale) =>
+            src.GetImage(page, page.GetDisplaySize(scale));
 
         /* ----------------------------------------------------------------- */
         ///
         /// GetImage
         ///
         /// <summary>
-        /// PDF の内容を描画した Image オブジェクトを取得します。
+        /// Get an Image object in which the Page content is rendered.
         /// </summary>
         ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="ratio">描画倍率</param>
-        /// <param name="rotation">回転角度</param>
+        /// <param name="src">Renderer object.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="size">Rendering size.</param>
         ///
-        /// <returns>Image オブジェクト</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src, Page page, double ratio, Angle rotation) =>
-            src.GetImage(page, page.GetViewSize(ratio, rotation), rotation);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImage
-        ///
-        /// <summary>
-        /// PDF の内容を描画した Image オブジェクトを取得します。
-        /// </summary>
-        ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="size">描画サイズ</param>
-        ///
-        /// <returns>Image オブジェクト</returns>
+        /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src, Page page, SizeF size) =>
-            src.GetImage(page, size, new Angle());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImage
-        ///
-        /// <summary>
-        /// PDF の内容を描画した Image オブジェクトを取得します。
-        /// </summary>
-        ///
-        /// <param name="src">Renderer オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="size">描画サイズ</param>
-        /// <param name="rotation">回転角度</param>
-        ///
-        /// <returns>Image オブジェクト</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src, Page page, SizeF size, Angle rotation)
+        public static Image GetImage(this IDocumentRenderer src, Page page, SizeF size)
         {
             var dest = new Bitmap((int)size.Width, (int)size.Height);
-            using (var gs = Graphics.FromImage(dest)) src.Render(gs, page, rotation);
+            using (var gs = Graphics.FromImage(dest)) src.Render(gs, page);
             return dest;
         }
 

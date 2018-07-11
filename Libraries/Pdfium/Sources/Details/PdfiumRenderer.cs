@@ -47,12 +47,11 @@ namespace Cube.Pdf.Pdfium
         /// <param name="page">ページ情報</param>
         /// <param name="point">描画開始座標</param>
         /// <param name="size">描画サイズ</param>
-        /// <param name="angle">回転角度</param>
         /// <param name="flags">描画フラグ</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Render(this PdfiumReader src, Graphics dest, Page page,
-            PointF point, SizeF size, Angle angle, int flags)
+            PointF point, SizeF size, int flags)
         {
             var retry = 5;
             var hp = Facade.FPDF_LoadPage(src.RawObject, page.Number - 1, retry);
@@ -68,7 +67,7 @@ namespace Cube.Pdf.Pdfium
                     (int)point.Y,
                     (int)size.Width,
                     (int)size.Height,
-                    GetRotation(angle),
+                    GetRotation(page.Delta),
                     flags,
                     retry
                 );
