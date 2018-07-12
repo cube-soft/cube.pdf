@@ -1002,67 +1002,67 @@
   <metadata name="MetadataBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>407, 17</value>
   </metadata>
-  <data name="ViewOptionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="DisplayOptionsComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="ViewOptionComboBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="DisplayOptionsComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 153</value>
   </data>
-  <data name="ViewOptionComboBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="DisplayOptionsComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 23</value>
   </data>
-  <data name="ViewOptionComboBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="DisplayOptionsComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;ViewOptionComboBox.Name" xml:space="preserve">
-    <value>ViewOptionComboBox</value>
+  <data name="&gt;&gt;DisplayOptionsComboBox.Name" xml:space="preserve">
+    <value>DisplayOptionsComboBox</value>
   </data>
-  <data name="&gt;&gt;ViewOptionComboBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;DisplayOptionsComboBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ViewOptionComboBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;DisplayOptionsComboBox.Parent" xml:space="preserve">
     <value>DocumentPanel</value>
   </data>
-  <data name="&gt;&gt;ViewOptionComboBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;DisplayOptionsComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="ViewOptionLabel.AutoSize" type="System.Boolean, mscorlib">
+  <data name="DisplayOptionsLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="ViewOptionLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="DisplayOptionsLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="ViewOptionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="DisplayOptionsLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="ViewOptionLabel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="DisplayOptionsLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 153</value>
   </data>
-  <data name="ViewOptionLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="DisplayOptionsLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="ViewOptionLabel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="DisplayOptionsLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>94, 24</value>
   </data>
-  <data name="ViewOptionLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="DisplayOptionsLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="ViewOptionLabel.Text" xml:space="preserve">
+  <data name="DisplayOptionsLabel.Text" xml:space="preserve">
     <value>View option</value>
   </data>
-  <data name="ViewOptionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="DisplayOptionsLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <data name="&gt;&gt;ViewOptionLabel.Name" xml:space="preserve">
-    <value>ViewOptionLabel</value>
+  <data name="&gt;&gt;DisplayOptionsLabel.Name" xml:space="preserve">
+    <value>DisplayOptionsLabel</value>
   </data>
-  <data name="&gt;&gt;ViewOptionLabel.Type" xml:space="preserve">
+  <data name="&gt;&gt;DisplayOptionsLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ViewOptionLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;DisplayOptionsLabel.Parent" xml:space="preserve">
     <value>DocumentPanel</value>
   </data>
-  <data name="&gt;&gt;ViewOptionLabel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;DisplayOptionsLabel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="CreatorTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1408,7 +1408,7 @@
     <value>0</value>
   </data>
   <data name="DocumentPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ViewOptionComboBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ViewOptionLabel" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsTextBox" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="DisplayOptionsComboBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DisplayOptionsLabel" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsTextBox" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="DocumentPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>

@@ -97,21 +97,21 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewOptions
+        /// DisplayOptions
         ///
         /// <summary>
-        /// 表示文字列と ViewOption の対応関係を取得します。
+        /// 表示文字列と DisplayOptions の対応関係を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, ViewOption>> ViewOptions => new []
+        public static IList<KeyValuePair<string, DisplayOptions>> DisplayOptions => new []
         {
-            Pair(Properties.Resources.MenuSinglePage,     ViewOption.SinglePage),
-            Pair(Properties.Resources.MenuOneColumn,      ViewOption.OneColumn),
-            Pair(Properties.Resources.MenuTwoPageLeft,    ViewOption.TwoPageLeft),
-            Pair(Properties.Resources.MenuTwoPageRight,   ViewOption.TwoPageRight),
-            Pair(Properties.Resources.MenuTwoColumnLeft,  ViewOption.TwoColumnLeft),
-            Pair(Properties.Resources.MenuTwoColumnRight, ViewOption.TwoColumnRight),
+            Pair(Properties.Resources.MenuSinglePage,     Pdf.DisplayOptions.SinglePage),
+            Pair(Properties.Resources.MenuOneColumn,      Pdf.DisplayOptions.OneColumn),
+            Pair(Properties.Resources.MenuTwoPageLeft,    Pdf.DisplayOptions.TwoPageLeft),
+            Pair(Properties.Resources.MenuTwoPageRight,   Pdf.DisplayOptions.TwoPageRight),
+            Pair(Properties.Resources.MenuTwoColumnLeft,  Pdf.DisplayOptions.TwoColumnLeft),
+            Pair(Properties.Resources.MenuTwoColumnRight, Pdf.DisplayOptions.TwoColumnRight),
         };
 
         /* ----------------------------------------------------------------- */

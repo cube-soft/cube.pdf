@@ -127,7 +127,7 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(vmm.Subject,    Is.Empty, nameof(vmm.Subject));
             Assert.That(vmm.Keywords,   Is.Empty, nameof(vmm.Keywords));
             Assert.That(vmm.Creator,    Is.EqualTo("CubePDF"));
-            Assert.That(vmm.ViewOption, Is.EqualTo(ViewOption.OneColumn));
+            Assert.That(vmm.DisplayOptions, Is.EqualTo(DisplayOptions.OneColumn));
         });
 
         /* ----------------------------------------------------------------- */

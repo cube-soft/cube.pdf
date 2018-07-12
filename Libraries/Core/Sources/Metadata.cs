@@ -146,30 +146,30 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewOption
+        /// DisplayOptions
         ///
         /// <summary>
         /// Gets or sets a value of display options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ViewOption ViewOption
+        public DisplayOptions DisplayOptions
         {
-            get => _option;
-            set => SetProperty(ref _option, value);
+            get => _options;
+            set => SetProperty(ref _options, value);
         }
 
         #endregion
 
         #region Fields
-        private Version _version = new Version(1, 2);
+        private Version _version = new Version(1, 7);
         private string _author = string.Empty;
         private string _title = string.Empty;
         private string _subject = string.Empty;
         private string _keywords = string.Empty;
         private string _creator = string.Empty;
         private string _producer = string.Empty;
-        private ViewOption _option = ViewOption.PageOnly;
+        private DisplayOptions _options = DisplayOptions.OneColumn;
         #endregion
     }
 }

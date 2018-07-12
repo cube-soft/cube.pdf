@@ -63,9 +63,9 @@
             this.FormatComboBox = new System.Windows.Forms.ComboBox();
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
+            this.DisplayOptionsComboBox = new System.Windows.Forms.ComboBox();
             this.MetadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.ViewOptionLabel = new System.Windows.Forms.Label();
+            this.DisplayOptionsLabel = new System.Windows.Forms.Label();
             this.CreatorTextBox = new System.Windows.Forms.TextBox();
             this.CreatorLabel = new System.Windows.Forms.Label();
             this.KeywordsTextBox = new System.Windows.Forms.TextBox();
@@ -402,8 +402,8 @@
             // DocumentPanel
             //
             resources.ApplyResources(this.DocumentPanel, "DocumentPanel");
-            this.DocumentPanel.Controls.Add(this.ViewOptionComboBox, 1, 5);
-            this.DocumentPanel.Controls.Add(this.ViewOptionLabel, 0, 5);
+            this.DocumentPanel.Controls.Add(this.DisplayOptionsComboBox, 1, 5);
+            this.DocumentPanel.Controls.Add(this.DisplayOptionsLabel, 0, 5);
             this.DocumentPanel.Controls.Add(this.CreatorTextBox, 1, 4);
             this.DocumentPanel.Controls.Add(this.CreatorLabel, 0, 4);
             this.DocumentPanel.Controls.Add(this.KeywordsTextBox, 1, 3);
@@ -416,22 +416,22 @@
             this.DocumentPanel.Controls.Add(this.TitleLabel, 0, 0);
             this.DocumentPanel.Name = "DocumentPanel";
             //
-            // ViewOptionComboBox
+            // DisplayOptionsComboBox
             //
-            this.ViewOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "ViewOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            resources.ApplyResources(this.ViewOptionComboBox, "ViewOptionComboBox");
-            this.ViewOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ViewOptionComboBox.FormattingEnabled = true;
-            this.ViewOptionComboBox.Name = "ViewOptionComboBox";
+            this.DisplayOptionsComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "DisplayOptions", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            resources.ApplyResources(this.DisplayOptionsComboBox, "DisplayOptionsComboBox");
+            this.DisplayOptionsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DisplayOptionsComboBox.FormattingEnabled = true;
+            this.DisplayOptionsComboBox.Name = "DisplayOptionsComboBox";
             //
             // MetadataBindingSource
             //
             this.MetadataBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MetadataViewModel);
             //
-            // ViewOptionLabel
+            // DisplayOptionsLabel
             //
-            resources.ApplyResources(this.ViewOptionLabel, "ViewOptionLabel");
-            this.ViewOptionLabel.Name = "ViewOptionLabel";
+            resources.ApplyResources(this.DisplayOptionsLabel, "DisplayOptionsLabel");
+            this.DisplayOptionsLabel.Name = "DisplayOptionsLabel";
             //
             // CreatorTextBox
             //
@@ -895,8 +895,8 @@
         private System.Windows.Forms.Label CreatorLabel;
         private System.Windows.Forms.TextBox KeywordsTextBox;
         private System.Windows.Forms.TextBox CreatorTextBox;
-        private System.Windows.Forms.Label ViewOptionLabel;
-        private System.Windows.Forms.ComboBox ViewOptionComboBox;
+        private System.Windows.Forms.Label DisplayOptionsLabel;
+        private System.Windows.Forms.ComboBox DisplayOptionsComboBox;
         private System.Windows.Forms.TableLayoutPanel EncryptionOuterPanel;
         private System.Windows.Forms.CheckBox EnableEncryptionCheckBox;
         private System.Windows.Forms.TableLayoutPanel EncryptionPanel;

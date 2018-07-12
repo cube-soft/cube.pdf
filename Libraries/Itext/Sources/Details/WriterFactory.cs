@@ -61,7 +61,7 @@ namespace Cube.Pdf.Itext
                        new PdfCopy(doc, io.Create(path));
 
             dest.PdfVersion        = data.Version.Minor.ToString()[0];
-            dest.ViewerPreferences = (int)data.ViewOption;
+            dest.ViewerPreferences = (int)data.DisplayOptions;
 
             return KeyValuePair.Create(doc, dest);
         }

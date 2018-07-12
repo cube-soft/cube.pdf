@@ -61,7 +61,7 @@ namespace Cube.Pdf.Tests
                 Assert.That(dest.Keywords,      Is.EqualTo(expected.Keywords));
                 Assert.That(dest.Creator,       Is.EqualTo(expected.Creator));
                 Assert.That(dest.Producer,      Does.StartWith(expected.Producer));
-                // Assert.That(dest.ViewOption,    Is.EqualTo(expected.ViewOption));
+                // Assert.That(dest.DisplayOptions, Is.EqualTo(expected.DisplayOptions));
             }
         }
 
@@ -86,14 +86,14 @@ namespace Cube.Pdf.Tests
                 {
                     yield return new TestCaseData(klass, "SampleRotation.pdf", new Metadata
                     {
-                        Version    = new Version(1, 7, 0, 0),
-                        Title      = "テスト用文書",
-                        Author     = "株式会社キューブ・ソフト",
-                        Subject    = "Cube.Pdf.Tests",
-                        Keywords   = "CubeSoft,PDF,Test",
-                        Creator    = "CubePDF",
-                        Producer   = "iTextSharp",
-                        ViewOption = ViewOption.TwoPageLeft,
+                        Version        = new Version(1, 7, 0, 0),
+                        Title          = "テスト用文書",
+                        Author         = "株式会社キューブ・ソフト",
+                        Subject        = "Cube.Pdf.Tests",
+                        Keywords       = "CubeSoft,PDF,Test",
+                        Creator        = "CubePDF",
+                        Producer       = "iTextSharp",
+                        DisplayOptions = DisplayOptions.TwoPageLeft,
                     });
                 }
             }
