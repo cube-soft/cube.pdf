@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Pdfium;
+using Cube.Xui;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -82,6 +83,37 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ImageList Images { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsOpen
+        ///
+        /// <summary>
+        /// Gets a value indicating whether a PDF document is open.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<bool> IsOpen { get; private set; } = new Bindable<bool>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Core
+        ///
+        /// <summary>
+        /// Gets a core value.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected DocumentReader Core
+        {
+            get => _core;
+            set
+            {
+                if (_core == value) return;
+                _core = value;
+                IsOpen.Value = _core != null;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -91,15 +123,33 @@ namespace Cube.Pdf.App.Editor
         /// Open
         ///
         /// <summary>
-        /// PDF ファイルを開きます。
+        /// Open a PDF document with the specified file path.
         /// </summary>
+        ///
+        /// <param name="src">File path.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Open(string src)
         {
-            _core = new DocumentReader(src);
-            Images.Renderer = _core;
-            foreach (var page in _core.Pages) Images.Add(page);
+            Core = new DocumentReader(src);
+            Images.Renderer = Core;
+            foreach (var page in Core.Pages) Images.Add(page);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Close
+        ///
+        /// <summary>
+        /// Closes the current PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Close()
+        {
+            Images.Reset();
+            Core?.Dispose();
+            Core = null;
         }
 
         #endregion

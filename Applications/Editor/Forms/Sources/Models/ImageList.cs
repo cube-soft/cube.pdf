@@ -224,6 +224,22 @@ namespace Cube.Pdf.App.Editor
             });
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// Resets all of images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Reset()
+        {
+            Renderer = null;
+            _inner.Clear();
+            lock (_lock) _cache.Clear();
+        }
+
         #endregion
 
         #region Implementations

@@ -147,16 +147,21 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetRibbonCommands()
         {
-            Ribbon.Open.Command = new RelayCommand(() =>
-                Send(MessageFactory.CreateSource(e =>
+            Ribbon.Open.Command = new RelayCommand(
+                () => Send(MessageFactory.CreateSource(e =>
                 {
                     if (e.Result) Task.Run(() => Model.Open(e.FileName)).Forget();
                 })
             ));
 
+            Ribbon.Close.Command = new BindableCommand(
+                () => Model.Close(),
+                () => Model.IsOpen.Value,
+                Model.IsOpen
+            );
+
             Ribbon.Save.Command = Default;
             Ribbon.SaveAs.Command = Default;
-            Ribbon.Close.Command = Default;
             Ribbon.Undo.Command = Default;
             Ribbon.Redo.Command = Default;
             Ribbon.Select.Command = Default;
