@@ -215,6 +215,7 @@
                         Command="{Binding Ribbon.InsertBack.Command}" />
                     <r:MenuItem
                         Header="{Binding Ribbon.InsertOthers.Tooltip}"
+                        Icon="{Binding Ribbon.InsertOthers.SmallIcon}"
                         Command="{Binding Ribbon.InsertOthers.Command}" />
                 </r:SplitButton>
 
@@ -232,10 +233,8 @@
                         Icon="{Binding Ribbon.Extract.SmallIcon}"
                         Command="{Binding Ribbon.Extract.Command}" />
                     <r:MenuItem
-                        Header="{Binding Ribbon.ExtractImages.Tooltip}"
-                        Command="{Binding Ribbon.ExtractImages.Command}" />
-                    <r:MenuItem
                         Header="{Binding Ribbon.ExtractOthers.Tooltip}"
+                        Icon="{Binding Ribbon.ExtractOthers.SmallIcon}"
                         Command="{Binding Ribbon.ExtractOthers.Command}" />
                 </r:SplitButton>
 
@@ -253,8 +252,9 @@
                         Icon="{Binding Ribbon.Remove.SmallIcon}"
                         Command="{Binding Ribbon.Remove.Command}" />
                     <r:MenuItem
-                        Header="{Binding Ribbon.RemoveRange.Tooltip}"
-                        Command="{Binding Ribbon.RemoveRange.Command}" />
+                        Header="{Binding Ribbon.RemoveOthers.Tooltip}"
+                        Icon="{Binding Ribbon.RemoveOthers.SmallIcon}"
+                        Command="{Binding Ribbon.RemoveOthers.Command}" />
                 </r:SplitButton>
             </r:RibbonGroupBox>
 

@@ -72,7 +72,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.ExtractImages.Text, Is.EqualTo("Extract the embedded images in the selected pages"));
             Assert.That(dest.ExtractOthers.Text, Is.EqualTo("Extraction details"));
             Assert.That(dest.Remove.Text,        Is.EqualTo("Remove"));
-            Assert.That(dest.RemoveRange.Text,   Is.EqualTo("Removal details"));
+            Assert.That(dest.RemoveOthers.Text,   Is.EqualTo("Removal details"));
             Assert.That(dest.MovePrevious.Text,  Is.EqualTo("Prev"));
             Assert.That(dest.MoveNext.Text,      Is.EqualTo("Next"));
             Assert.That(dest.RotateLeft.Text,    Is.EqualTo("Left"));
@@ -123,7 +123,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.ExtractImages.Tooltip, Is.EqualTo(dest.ExtractImages.Text));
             Assert.That(dest.ExtractOthers.Tooltip, Is.EqualTo(dest.ExtractOthers.Text));
             Assert.That(dest.Remove.Tooltip,        Is.EqualTo("Remove the selected pages"));
-            Assert.That(dest.RemoveRange.Tooltip,   Is.EqualTo(dest.RemoveRange.Text));
+            Assert.That(dest.RemoveOthers.Tooltip,   Is.EqualTo(dest.RemoveOthers.Text));
             Assert.That(dest.MovePrevious.Tooltip,  Is.EqualTo(dest.MovePrevious.Text));
             Assert.That(dest.MoveNext.Tooltip,      Is.EqualTo(dest.MoveNext.Text));
             Assert.That(dest.RotateLeft.Tooltip,    Is.EqualTo(dest.RotateLeft.Text));
@@ -174,7 +174,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.ExtractImages.Text, Is.EqualTo("選択ページに含まれる画像を抽出"));
             Assert.That(dest.ExtractOthers.Text, Is.EqualTo("詳細を設定して抽出"));
             Assert.That(dest.Remove.Text,        Is.EqualTo("削除"));
-            Assert.That(dest.RemoveRange.Text,   Is.EqualTo("範囲を指定して削除"));
+            Assert.That(dest.RemoveOthers.Text,   Is.EqualTo("範囲を指定して削除"));
             Assert.That(dest.MovePrevious.Text,  Is.EqualTo("前へ"));
             Assert.That(dest.MoveNext.Text,      Is.EqualTo("後へ"));
             Assert.That(dest.RotateLeft.Text,    Is.EqualTo("左90度"));
@@ -226,7 +226,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.ExtractImages.Tooltip, Is.EqualTo(dest.ExtractImages.Text));
             Assert.That(dest.ExtractOthers.Tooltip, Is.EqualTo(dest.ExtractOthers.Text));
             Assert.That(dest.Remove.Tooltip,        Is.EqualTo("選択ページを削除"));
-            Assert.That(dest.RemoveRange.Tooltip,   Is.EqualTo(dest.RemoveRange.Text));
+            Assert.That(dest.RemoveOthers.Tooltip,   Is.EqualTo(dest.RemoveOthers.Text));
             Assert.That(dest.MovePrevious.Tooltip,  Is.EqualTo(dest.MovePrevious.Text));
             Assert.That(dest.MoveNext.Tooltip,      Is.EqualTo(dest.MoveNext.Text));
             Assert.That(dest.RotateLeft.Tooltip,    Is.EqualTo(dest.RotateLeft.Text));

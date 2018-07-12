@@ -168,7 +168,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.ExtractImages.Command = Default;
             Ribbon.ExtractOthers.Command = Default;
             Ribbon.Remove.Command = Default;
-            Ribbon.RemoveRange.Command = Default;
+            Ribbon.RemoveOthers.Command = Default;
             Ribbon.MovePrevious.Command = Default;
             Ribbon.MoveNext.Command = Default;
             Ribbon.RotateLeft.Command = Default;
