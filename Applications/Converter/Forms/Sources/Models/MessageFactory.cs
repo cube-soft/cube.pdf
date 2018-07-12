@@ -19,9 +19,6 @@
 using Cube.FileSystem;
 using Cube.Forms;
 using Cube.Generics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Cube.Pdf.App.Converter
 {
@@ -30,7 +27,7 @@ namespace Cube.Pdf.App.Converter
     /// MessageFactory
     ///
     /// <summary>
-    /// 各種メッセージを生成するためのクラスです。
+    /// Provides functionality to create messsage objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -43,13 +40,13 @@ namespace Cube.Pdf.App.Converter
         /// CreateSource
         ///
         /// <summary>
-        /// 入力ファイルを選択するためのメッセージを生成します。
+        /// Creates a message to show the OpenFileDialog.
         /// </summary>
         ///
-        /// <param name="src">入力ファイルの初期値</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="src">Initial value for the FileName.</param>
+        /// <param name="io">I/O handler.</param>
         ///
-        /// <returns>OpenFileEventArgs</returns>
+        /// <returns>OpenFileEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static OpenFileEventArgs CreateSource(string src, IO io) => new OpenFileEventArgs
@@ -58,8 +55,8 @@ namespace Cube.Pdf.App.Converter
             FileName         = GetFileName(src, io),
             InitialDirectory = GetDirectoryName(src, io),
             Multiselect      = false,
-            Filter           = GetFilter(ViewResource.SourceFilters),
-            FilterIndex      = GetFilterIndex(src, io, ViewResource.SourceFilters),
+            Filter           = ViewResource.SourceFilters.GetFilter(),
+            FilterIndex      = ViewResource.SourceFilters.GetFilterIndex(src, io),
         };
 
         /* ----------------------------------------------------------------- */
@@ -67,13 +64,13 @@ namespace Cube.Pdf.App.Converter
         /// CreateDestination
         ///
         /// <summary>
-        /// 出力ファイルを選択するためのメッセージを生成します。
+        /// Creates a message to show the SaveFileDialog.
         /// </summary>
         ///
-        /// <param name="src">保存パスの初期値</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="src">Initial value for the FileName.</param>
+        /// <param name="io">I/O handler.</param>
         ///
-        /// <returns>SaveFileEventArgs</returns>
+        /// <returns>SaveFileEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static SaveFileEventArgs CreateDestination(string src, IO io) => new SaveFileEventArgs
@@ -82,8 +79,8 @@ namespace Cube.Pdf.App.Converter
             FileName         = GetFileName(src, io),
             InitialDirectory = GetDirectoryName(src, io),
             OverwritePrompt  = false,
-            Filter           = GetFilter(ViewResource.DestinationFilters),
-            FilterIndex      = GetFilterIndex(src, io, ViewResource.DestinationFilters),
+            Filter           = ViewResource.DestinationFilters.GetFilter(),
+            FilterIndex      = ViewResource.DestinationFilters.GetFilterIndex(src, io),
         };
 
         /* ----------------------------------------------------------------- */
@@ -91,13 +88,13 @@ namespace Cube.Pdf.App.Converter
         /// CreateUserProgram
         ///
         /// <summary>
-        /// ユーザプログラムを選択するためのメッセージを生成します。
+        /// Creates a message to show the OpenFileDialog.
         /// </summary>
         ///
-        /// <param name="src">ユーザプログラムの初期値</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="src">Initial value for the FileName.</param>
+        /// <param name="io">I/O handler.</param>
         ///
-        /// <returns>OpenFileEventArgs</returns>
+        /// <returns>OpenFileEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static OpenFileEventArgs CreateUserProgram(string src, IO io) => new OpenFileEventArgs
@@ -106,7 +103,7 @@ namespace Cube.Pdf.App.Converter
             FileName         = GetFileName(src, io),
             InitialDirectory = GetDirectoryName(src, io),
             Multiselect      = false,
-            Filter           = GetFilter(ViewResource.UserProgramFilters),
+            Filter           = ViewResource.UserProgramFilters.GetFilter(),
         };
 
         /* ----------------------------------------------------------------- */
@@ -114,12 +111,13 @@ namespace Cube.Pdf.App.Converter
         /// CreateWarning
         ///
         /// <summary>
-        /// 警告メッセージを生成します。
+        /// Create a message to show the DialogBox with a warning icon
+        /// and OK/Cancel buttons.
         /// </summary>
         ///
-        /// <param name="src">メッセージ内容</param>
+        /// <param name="src">Description to be shown.</param>
         ///
-        /// <returns>MessageEventArgs</returns>
+        /// <returns>MessageEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static MessageEventArgs CreateWarning(string src) => new MessageEventArgs(
@@ -134,12 +132,13 @@ namespace Cube.Pdf.App.Converter
         /// CreateError
         ///
         /// <summary>
-        /// エラーメッセージを生成します。
+        /// Create a message to show the DialogBox with an error icon
+        /// and OK button.
         /// </summary>
         ///
-        /// <param name="src">メッセージ内容</param>
+        /// <param name="src">Description to be shown.</param>
         ///
-        /// <returns>MessageEventArgs</returns>
+        /// <returns>MessageEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static MessageEventArgs CreateError(string src) => new MessageEventArgs(
@@ -158,7 +157,7 @@ namespace Cube.Pdf.App.Converter
         /// GetFileName
         ///
         /// <summary>
-        /// ファイル名を取得します。
+        /// Gets a filename without extension.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -170,48 +169,12 @@ namespace Cube.Pdf.App.Converter
         /// GetDirectoryName
         ///
         /// <summary>
-        /// ディレクトリ名を取得します。
+        /// Gets a directory name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private static string GetDirectoryName(string src, IO io) =>
             src.HasValue() ? io.Get(src).DirectoryName : string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetFilter
-        ///
-        /// <summary>
-        /// フィルタを表す文字列を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static string GetFilter(IList<DisplayFilter> src) =>
-            src.Select(e => e.ToString()).Aggregate((x, y) => $"{x}|{y}");
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetFilterIndex
-        ///
-        /// <summary>
-        /// 現在のフィルタを示す値を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static int GetFilterIndex(string src, IO io, IList<DisplayFilter> filters)
-        {
-            if (src.HasValue())
-            {
-                var ext = io.Get(src).Extension;
-                for (var i = 0; i < filters.Count; ++i)
-                {
-                    var cmp = filters[i];
-                    var opt = StringComparison.InvariantCultureIgnoreCase;
-                    if (cmp.Extensions.Any(e => e.Equals(ext, opt))) return i + 1;
-                }
-            }
-            return 0;
-        }
 
         #endregion
     }
