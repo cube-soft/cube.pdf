@@ -61,6 +61,24 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   All files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterAll {
+            get {
+                return ResourceManager.GetString("FilterAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PDF files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterPdf {
+            get {
+                return ResourceManager.GetString("FilterPdf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Close に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuClose {
@@ -381,6 +399,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuZoomOut {
             get {
                 return ResourceManager.GetString("MenuZoomOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Open file に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleOpen {
+            get {
+                return ResourceManager.GetString("TitleOpen", resourceCulture);
             }
         }
         

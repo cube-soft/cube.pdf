@@ -147,8 +147,11 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetRibbonCommands()
         {
-            Ribbon.Open.Command = new RelayCommand(() => Send(new OpenFileMessage(e =>
-                Task.Run(() => Model.Open(e.FileName)).Forget())
+            Ribbon.Open.Command = new RelayCommand(() =>
+                Send(MessageFactory.CreateSource(e =>
+                {
+                    if (e.Result) Task.Run(() => Model.Open(e.FileName)).Forget();
+                })
             ));
 
             Ribbon.Save.Command = Default;

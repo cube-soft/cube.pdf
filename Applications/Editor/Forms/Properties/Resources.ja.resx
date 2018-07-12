@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FilterAll" xml:space="preserve">
+    <value>すべてのファイル</value>
+  </data>
+  <data name="FilterPdf" xml:space="preserve">
+    <value>PDF ファイル</value>
+  </data>
   <data name="MenuClose" xml:space="preserve">
     <value>閉じる</value>
   </data>
@@ -126,14 +132,17 @@
   <data name="MenuEncryption" xml:space="preserve">
     <value>セキュリティ</value>
   </data>
+  <data name="MenuExit" xml:space="preserve">
+    <value>終了</value>
+  </data>
   <data name="MenuExtract" xml:space="preserve">
     <value>抽出</value>
   </data>
-  <data name="MenuExtractOthers" xml:space="preserve">
-    <value>詳細を設定して抽出</value>
-  </data>
   <data name="MenuExtractImages" xml:space="preserve">
     <value>選択ページに含まれる画像を抽出</value>
+  </data>
+  <data name="MenuExtractOthers" xml:space="preserve">
+    <value>詳細を設定して抽出</value>
   </data>
   <data name="MenuFile" xml:space="preserve">
     <value>ファイル</value>
@@ -221,6 +230,9 @@
   </data>
   <data name="MenuZoomOut" xml:space="preserve">
     <value>縮小</value>
+  </data>
+  <data name="TitleOpen" xml:space="preserve">
+    <value>ファイルを開く</value>
   </data>
   <data name="TooltipExtract" xml:space="preserve">
     <value>選択ページを抽出</value>
