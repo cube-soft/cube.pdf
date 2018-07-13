@@ -20,7 +20,9 @@
     x:Class="Cube.Pdf.App.Editor.PagesControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="600"
@@ -53,6 +55,14 @@
                         MinWidth="{Binding Images.Preferences.Width}"
                         Width="{Binding FrameworkElement.ActualWidth,
                         RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
+                        <i:Interaction.Behaviors>
+                            <my:VisibleRange
+                                First="{Binding Images.Preferences.VisibleFirst}"
+                                Last="{Binding Images.Preferences.VisibleLast}"
+                                ItemWidth="{Binding Images.Preferences.Width}"
+                                ItemHeight="{Binding Images.Preferences.Height}"
+                                ItemMargin="{Binding Images.Preferences.Margin}" />
+                        </i:Interaction.Behaviors>
                 </ScrollViewer>
             </ControlTemplate>
         </ListView.Template>

@@ -111,6 +111,36 @@ namespace Cube.Pdf.App.Editor
             set => SetProperty(ref _textHeight, value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// VisibleFirst
+        ///
+        /// <summary>
+        /// Gets or sets the first index of currently visible items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int VisibleFirst
+        {
+            get => _first;
+            set => SetProperty(ref _first, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// VisibleLast
+        ///
+        /// <summary>
+        /// Gets or sets the last index of currently visible items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int VisibleLast
+        {
+            get => _last;
+            set => SetProperty(ref _last, value);
+        }
+
         #endregion
 
         #region Methods
@@ -187,6 +217,8 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
+        private int _first;
+        private int _last;
         private int _width;
         private int _height;
         private int _baseSize;
