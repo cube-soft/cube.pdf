@@ -57,8 +57,8 @@
                         RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
                         <i:Interaction.Behaviors>
                             <my:VisibleRange
-                                First="{Binding Images.Preferences.VisibleFirst}"
-                                Last="{Binding Images.Preferences.VisibleLast}"
+                                First="{Binding Images.Preferences.VisibleFirst, Mode=TwoWay}"
+                                Last="{Binding Images.Preferences.VisibleLast, Mode=TwoWay}"
                                 ItemWidth="{Binding Images.Preferences.Width}"
                                 ItemHeight="{Binding Images.Preferences.Height}"
                                 ItemMargin="{Binding Images.Preferences.Margin}" />

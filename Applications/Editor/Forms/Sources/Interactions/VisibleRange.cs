@@ -50,7 +50,7 @@ namespace Cube.Pdf.App.Editor
         public int First
         {
             get => _first;
-            set => SetProperty(ref _first, value);
+            set => SetProperty(ref _first, value, () => SetValue(FirstProperty, value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -65,7 +65,7 @@ namespace Cube.Pdf.App.Editor
         public int Last
         {
             get => _last;
-            set => SetProperty(ref _last, value);
+            set => SetProperty(ref _last, value, () => SetValue(LastProperty, value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -234,11 +234,15 @@ namespace Cube.Pdf.App.Editor
             var width  = Math.Max(ItemWidth, 1.0);
             var height = Math.Max(ItemHeight, 1.0);
             var margin = Math.Max(ItemMargin * 2, 0.0);
+
             var column = (int)(AssociatedObject.ActualWidth / (width + margin));
             var row    = (int)(AssociatedObject.ActualHeight / (height + margin));
-            var index  = (int)(AssociatedObject.VerticalOffset / height) * column;
 
-            SetRange(index, index + column * (row + 2));
+            var index  = (int)(AssociatedObject.VerticalOffset / height) * column;
+            var first  = Math.Max(index - column, 0);
+            var last   = index + column * (row + 1);
+
+            SetRange(first, last);
         }
 
         /* ----------------------------------------------------------------- */
