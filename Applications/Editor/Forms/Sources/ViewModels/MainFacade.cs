@@ -92,14 +92,14 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> IsOpen { get; private set; } = new Bindable<bool>();
+        public Bindable<bool> IsOpen { get; private set; } = new Bindable<bool>(false);
 
         /* ----------------------------------------------------------------- */
         ///
         /// Core
         ///
         /// <summary>
-        /// Gets a core value.
+        /// Gets or sets a core object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
