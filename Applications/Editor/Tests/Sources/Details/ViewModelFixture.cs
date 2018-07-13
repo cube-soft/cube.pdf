@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.Tests;
 using Cube.Pdf.App.Editor;
+using Cube.Xui;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -39,20 +40,40 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// CreateViewModel
         ///
         /// <summary>
-        /// Gets a new MainViewModel instance.
+        /// Gets a new instance of the MainViewModel class.
         /// </summary>
         ///
         /// <returns>MainViewModel object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected MainViewModel Create()
+        protected MainViewModel CreateViewModel()
         {
             var dest = new MainViewModel();
             dest.Images.Loading = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ExecuteOpenCommand
+        ///
+        /// <summary>
+        /// Execute the command to open the specified file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void ExecuteOpenCommand(MainViewModel vm, string src)
+        {
+            vm.Messenger.Register<OpenFileMessage>(this, e =>
+            {
+                e.FileName = src;
+                e.Result   = true;
+                e.Callback.Invoke(e);
+            });
+            vm.Ribbon.Open.Command.Execute(null);
         }
 
         /* ----------------------------------------------------------------- */

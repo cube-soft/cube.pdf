@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
 using NUnit.Framework;
 using System.Windows.Media;
 
@@ -41,24 +40,16 @@ namespace Cube.Pdf.Tests.Editor
         /// Open
         ///
         /// <summary>
-        /// Tests to open a PDF file and create images as an asynchronous
-        /// operation.
+        /// Tests to open a PDF document and create images as an
+        /// asynchronous operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf")]
         public void Open(string filename)
         {
-            var vm = Create();
-
-            vm.Messenger.Register<OpenFileMessage>(this, e =>
-            {
-                e.FileName = GetExamplesWith(filename);
-                e.Result   = true;
-                e.Callback.Invoke(e);
-            });
-
-            vm.Ribbon.Open.Command.Execute(null);
+            var vm = CreateViewModel();
+            ExecuteOpenCommand(vm, GetExamplesWith(filename));
             Assert.That(Wait(() => vm.Images.Count > 0), "Timeout");
 
             var src  = vm.Images[0];
@@ -69,6 +60,32 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dummy, Is.Not.Null);
             Assert.That(Wait(() => dest != null));
             Assert.That(dest, Is.Not.EqualTo(dummy));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// Tests to close a PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Close()
+        {
+            var src = GetResultsWith($"{nameof(Close)}Sample.pdf");
+            IO.Copy(GetExamplesWith("Sample.pdf"), src, true);
+
+            var vm = CreateViewModel();
+            ExecuteOpenCommand(vm, src);
+            Assert.That(Wait(() => vm.Images.Count > 0), "Timeout");
+            Assert.That(IO.TryDelete(src), Is.False);
+
+            foreach (var image in vm.Images) Assert.That(image, Is.Not.Null);
+            Assert.That(vm.Ribbon.Close.Command.CanExecute(null), Is.True);
+            vm.Ribbon.Close.Command.Execute(null);
+            Assert.That(IO.TryDelete(src), Is.True);
         }
 
         #endregion
