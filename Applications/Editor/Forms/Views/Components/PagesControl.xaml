@@ -51,7 +51,7 @@
                         ItemWidth="{Binding Images.Preferences.Width}"
                         ItemHeight="{Binding Images.Preferences.Height}"
                         MinWidth="{Binding Images.Preferences.Width}"
-                        Width="{Binding (FrameworkElement.ActualWidth),
+                        Width="{Binding FrameworkElement.ActualWidth,
                         RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
                 </ScrollViewer>
             </ControlTemplate>
