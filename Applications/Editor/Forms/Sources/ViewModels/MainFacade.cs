@@ -134,6 +134,7 @@ namespace Cube.Pdf.App.Editor
             Core = new DocumentReader(src);
             Images.Renderer = Core;
             foreach (var page in Core.Pages) Images.Add(page);
+            Images.Update();
         }
 
         /* ----------------------------------------------------------------- */

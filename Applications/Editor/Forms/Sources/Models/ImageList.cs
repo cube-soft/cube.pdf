@@ -24,7 +24,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -63,6 +65,8 @@ namespace Cube.Pdf.App.Editor
             _cache   = new SortedDictionary<int, ImageSource>();
             _inner   = new ObservableCollection<ImageEntry>();
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
+
+            Preferences.PropertyChanged += WhenPreferenceChanged;
         }
 
         #endregion
@@ -240,6 +244,34 @@ namespace Cube.Pdf.App.Editor
             lock (_lock) _cache.Clear();
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        ///
+        /// <summary>
+        /// Removes unused items and and regenerates new items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Update()
+        {
+            _cts?.Cancel();
+            _cts = new CancellationTokenSource();
+
+            var first = Preferences.VisibleFirst;
+            var last  = Math.Min(Preferences.VisibleLast, _inner.Count);
+
+            lock (_lock)
+            {
+                foreach (var key in _cache.Keys.Reverse().ToArray())
+                {
+                    if (key < first || key > last) _cache.Remove(key);
+                }
+            }
+
+            Task.Run(() =>SetImages(first, last, _cts.Token)).Forget();
+        }
+
         #endregion
 
         #region Implementations
@@ -267,10 +299,12 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ImageSource GetImage(ImageEntry src)
         {
-            var pagenum = src.RawObject.Number;
-            if (_cache.TryGetValue(pagenum, out var dest)) return dest;
-            Task.Run(() => SetImage(src)).Forget();
-            return Loading;
+            lock (_lock)
+            {
+                return _cache.TryGetValue(src.RawObject.Number, out var dest) ?
+                       dest :
+                       Loading;
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -278,16 +312,17 @@ namespace Cube.Pdf.App.Editor
         /// SetImage
         ///
         /// <summary>
-        /// Sets an ImageSource to ImageEntry.
+        /// Stores an ImageSource to the Cache collection and raises
+        /// the PropertyChanged event of the specified ImageEntry object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private void SetImage(ImageEntry src)
         {
-            lock (_lock)
+            lock (_create)
             {
                 var pagenum = src.RawObject.Number;
-                if (_cache.ContainsKey(pagenum)) return;
+                lock (_lock) if (_cache.ContainsKey(pagenum)) return;
 
                 using (var bmp = new Bitmap(src.Width, src.Height))
                 {
@@ -296,10 +331,47 @@ namespace Cube.Pdf.App.Editor
                         gs.Clear(System.Drawing.Color.White);
                         Renderer.Render(gs, src.RawObject);
                     }
-                    _cache.Add(pagenum, bmp.ToBitmapImage());
+
+                    lock (_lock) _cache.Add(pagenum, bmp.ToBitmapImage());
                 }
             }
             src.Update();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetImages
+        ///
+        /// <summary>
+        /// Stores ImageSource items to the Cache collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetImages(int first, int last, CancellationToken token)
+        {
+            try
+            {
+                for (var i = first; i < last; ++i)
+                {
+                    token.ThrowIfCancellationRequested();
+                    SetImage(_inner[i]);
+                }
+            }
+            catch (OperationCanceledException) { /* Ignore */ }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenPropertyChanged
+        ///
+        /// <summary>
+        /// Called when a property of the Preferences is changed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenPreferenceChanged(object s, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Preferences.VisibleFirst)) Update();
         }
 
         #endregion
@@ -309,7 +381,9 @@ namespace Cube.Pdf.App.Editor
         private readonly ObservableCollection<ImageEntry> _inner;
         private readonly IDictionary<int, ImageSource> _cache;
         private readonly object _lock = new object();
+        private readonly object _create = new object();
         private ImageSource _loading;
+        private CancellationTokenSource _cts;
         #endregion
     }
 }
