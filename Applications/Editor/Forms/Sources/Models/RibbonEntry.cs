@@ -28,7 +28,7 @@ namespace Cube.Pdf.App.Editor
     /// RibbonEntry
     ///
     /// <summary>
-    /// Ribbon の項目を表すクラスです。
+    /// Represents the components of a button included in a Ribbon.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,11 +41,12 @@ namespace Cube.Pdf.App.Editor
         /// RibbonEntry
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the RibbonEntry class with the
+        /// specified parameters.
         /// </summary>
         ///
-        /// <param name="text">表示テキスト取得用オブジェクト</param>
-        /// <param name="name">アイコン名</param>
+        /// <param name="text">Delegation for getting text.</param>
+        /// <param name="name">Name for icons.</param>
         ///
         /* ----------------------------------------------------------------- */
         public RibbonEntry(Func<string> text, [CallerMemberName] string name = null) :
@@ -56,12 +57,13 @@ namespace Cube.Pdf.App.Editor
         /// RibbonEntry
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the RibbonEntry class with the
+        /// specified parameters.
         /// </summary>
         ///
-        /// <param name="text">表示テキスト取得用オブジェクト</param>
-        /// <param name="tooltip">ツールチップ</param>
-        /// <param name="name">アイコン名</param>
+        /// <param name="text">Delegation for getting text.</param>
+        /// <param name="tooltip">Delegation for getting tooltip.</param>
+        /// <param name="name">Name for icons.</param>
         ///
         /* ----------------------------------------------------------------- */
         public RibbonEntry(Func<string> text, Func<string> tooltip, [CallerMemberName] string name = null)
@@ -83,7 +85,7 @@ namespace Cube.Pdf.App.Editor
         /// Name
         ///
         /// <summary>
-        /// アイコン名を取得します。
+        /// Gets the name for icons.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -94,7 +96,7 @@ namespace Cube.Pdf.App.Editor
         /// Text
         ///
         /// <summary>
-        /// 表示テキストを取得します。
+        /// Gets the display text.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -105,7 +107,7 @@ namespace Cube.Pdf.App.Editor
         /// Tooltip
         ///
         /// <summary>
-        /// ツールチップ用テキストを取得します。
+        /// Gets the tooltip.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -116,8 +118,7 @@ namespace Cube.Pdf.App.Editor
         /// Enabled
         ///
         /// <summary>
-        /// このオブジェクトが有効かどうかを判別するオブジェクトを取得
-        /// します。
+        /// Gets the object indicating whether the Ribbon entry is enabled.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -132,7 +133,7 @@ namespace Cube.Pdf.App.Editor
         /// Command
         ///
         /// <summary>
-        /// コマンドを取得または設定します。
+        /// Gets the command to be executed when clicking the Ribbon entry.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -142,9 +143,9 @@ namespace Cube.Pdf.App.Editor
             set
             {
                 if (_command == value) return;
-                if (_command != null) _command.CanExecuteChanged -= WhenChanged;
+                if (_command != null) _command.CanExecuteChanged -= WhenCanExecuteChanged;
                 _command = value;
-                if (_command != null) _command.CanExecuteChanged += WhenChanged;
+                if (_command != null) _command.CanExecuteChanged += WhenCanExecuteChanged;
                 RaisePropertyChanged(nameof(Command));
             }
         }
@@ -154,7 +155,7 @@ namespace Cube.Pdf.App.Editor
         /// LargeIcon
         ///
         /// <summary>
-        /// 大きいサイズのアイコンを取得します。
+        /// Gets the file path of large size icon with the WPF URI format.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -165,7 +166,7 @@ namespace Cube.Pdf.App.Editor
         /// SmallIcon
         ///
         /// <summary>
-        /// 小さいサイズのアイコンを取得します。
+        /// Gets the file path of small size icon with the WPF URI format.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -176,7 +177,7 @@ namespace Cube.Pdf.App.Editor
         /// Assets
         ///
         /// <summary>
-        /// アイコンが格納されている場所を示す文字列を取得します。
+        /// Gets the root path of icon files with the WPF URI format.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -191,7 +192,7 @@ namespace Cube.Pdf.App.Editor
         /// ~RibbonEntry
         ///
         /// <summary>
-        /// オブジェクトを破棄します。
+        /// Finalizes the RibbonEntry.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -202,7 +203,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// リソースを解放します。
+        /// Releases all resources used by the RibbonEntry.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -217,11 +218,13 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// リソースを解放します。
+        /// Releases the unmanaged resources used by the RibbonEntry
+        /// and optionally releases the managed resources.
         /// </summary>
         ///
         /// <param name="disposing">
-        /// マネージリソースを解放するかどうか
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
@@ -230,7 +233,7 @@ namespace Cube.Pdf.App.Editor
             if (disposing)
             {
                 _unsubscribe.Dispose();
-                if (_command != null) _command.CanExecuteChanged -= WhenChanged;
+                if (_command != null) _command.CanExecuteChanged -= WhenCanExecuteChanged;
             }
         }
 
@@ -243,7 +246,7 @@ namespace Cube.Pdf.App.Editor
         /// GetName
         ///
         /// <summary>
-        /// アイコン名を取得します。
+        /// Gets a name of icons.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -254,7 +257,7 @@ namespace Cube.Pdf.App.Editor
         /// IsEnabled
         ///
         /// <summary>
-        /// 有効状態かどうかを判別します。
+        /// Returns whether the RibbonEntry is enabled.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -266,14 +269,19 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenChanged
+        /// WhenCanExecuteChanged
         ///
         /// <summary>
-        /// ICommand.CanExecute の状態変化時に実行されるハンドラです。
+        /// Executes when the CanExecuteChanged event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenChanged(object s, EventArgs e) => Enabled.RaiseValueChanged();
+        private void WhenCanExecuteChanged(object s, EventArgs e)
+        {
+            Enabled.RaiseValueChanged();
+            RaisePropertyChanged(nameof(SmallIcon));
+            RaisePropertyChanged(nameof(LargeIcon));
+        }
 
         #endregion
 
