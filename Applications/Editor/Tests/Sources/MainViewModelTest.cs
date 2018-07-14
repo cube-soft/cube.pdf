@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using NUnit.Framework;
-using System.Windows.Media;
 
 namespace Cube.Pdf.Tests.Editor
 {
@@ -51,15 +50,7 @@ namespace Cube.Pdf.Tests.Editor
             var vm = CreateViewModel();
             ExecuteOpenCommand(vm, GetExamplesWith(filename));
             Assert.That(Wait(() => vm.Images.Count > 0), "Timeout");
-
-            var src  = vm.Images[0];
-            var dest = default(ImageSource);
-            vm.Images[0].PropertyChanged += (s, e) => dest = src.Image;
-
-            var dummy = src.Image;
-            Assert.That(dummy, Is.Not.Null);
-            Assert.That(Wait(() => dest != null));
-            Assert.That(dest, Is.Not.EqualTo(dummy));
+            Assert.That(vm.Images[0].Image, Is.Not.Null);
         }
 
         /* ----------------------------------------------------------------- */
