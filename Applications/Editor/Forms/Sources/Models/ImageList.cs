@@ -320,18 +320,17 @@ namespace Cube.Pdf.App.Editor
                 _creating.Add(n);
             }
 
-            using (var bmp = new Bitmap(src.Width, src.Height))
+            var bmp = new Bitmap(src.Width, src.Height);
+            using (var gs = Graphics.FromImage(bmp))
             {
-                using (var gs = Graphics.FromImage(bmp))
-                {
-                    gs.Clear(System.Drawing.Color.White);
-                    Renderer.Render(gs, src.RawObject);
-                }
-
-                var dest = bmp.ToBitmapImage();
-                lock (_created) if (!_created.ContainsKey(n)) _created.Add(n, dest);
-                lock (_creating) _creating.Remove(n);
+                gs.Clear(System.Drawing.Color.White);
+                Renderer.Render(gs, src.RawObject);
             }
+
+            var dest = bmp.ToBitmapImage(true);
+            lock (_created) if (!_created.ContainsKey(n)) _created.Add(n, dest);
+            lock (_creating) _creating.Remove(n);
+
             src.Update();
         });
 
@@ -350,7 +349,7 @@ namespace Cube.Pdf.App.Editor
             {
                 for (var i = first; i < last; ++i)
                 {
-                    token.ThrowIfCancellationRequested();
+                    if (token.IsCancellationRequested) return;
                     await SetImage(_inner[i]).ConfigureAwait(false);
                 }
             }
