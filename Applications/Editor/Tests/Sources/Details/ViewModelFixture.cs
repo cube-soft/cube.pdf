@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.Tests;
+using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using System;
