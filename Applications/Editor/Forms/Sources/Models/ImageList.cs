@@ -16,11 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using Cube.Pdf.Mixin;
 using Cube.Tasks;
 using Cube.Xui.Converters;
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -60,12 +62,12 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ImageList(SynchronizationContext context)
         {
-            _context  = context;
-            _created  = new SortedDictionary<int, ImageSource>();
-            _creating = new HashSet<int>();
-            _inner    = new ObservableCollection<ImageEntry>();
-            _inner.CollectionChanged += WhenCollectionChanged;
+            _context = context;
+            _cache   = new ConcurrentDictionary<int, ImageSource>();
+            _doing   = new ConcurrentDictionary<int, byte>();
+            _inner   = new ObservableCollection<ImageEntry>();
 
+            _inner.CollectionChanged += WhenCollectionChanged;
             Preferences.PropertyChanged += WhenPreferenceChanged;
         }
 
@@ -83,6 +85,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ImageEntry this[int index] => _inner[index];
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Count
+        ///
+        /// <summary>
+        /// Gets the number of elements contained in this collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Count => _inner.Count;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,35 +121,22 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Count
-        ///
-        /// <summary>
-        /// Gets the number of elements contained in this collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Count => _inner.Count;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Loading
+        /// LoadingImage
         ///
         /// <summary>
         /// Gets the image object representing loading.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSource Loading
+        public ImageSource LoadingImage
         {
-            get => _loading ?? (_loading = GetLoadingImage());
-            set => _loading = value;
+            get => _dummy ?? (_dummy = GetLoadingImage());
+            set => _dummy = value;
         }
 
         #endregion
 
         #region Events
-
-        #region CollectionChanged
 
         /* ----------------------------------------------------------------- */
         ///
@@ -167,8 +167,6 @@ namespace Cube.Pdf.App.Editor
             if (_context != null) _context.Send(_ => CollectionChanged(this, e), null);
             else CollectionChanged(this, e);
         }
-
-        #endregion
 
         #endregion
 
@@ -230,19 +228,23 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Reset
+        /// Clear
         ///
         /// <summary>
-        /// Resets all of images.
+        /// Clears all of images and related objects.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Reset()
+        public void Clear()
         {
+            _task?.Cancel();
+            _task = null;
+
             Renderer = null;
+
             _inner.Clear();
-            lock (_created) _created.Clear();
-            lock (_creating) _creating.Clear();
+            _cache.Clear();
+            _doing.Clear();
         }
 
         /* ----------------------------------------------------------------- */
@@ -250,24 +252,33 @@ namespace Cube.Pdf.App.Editor
         /// Update
         ///
         /// <summary>
-        /// Removes unused items and and regenerates new items.
+        /// Generates new items to show.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public void Update()
         {
-            _cts?.Cancel();
-            _cts = new CancellationTokenSource();
-
-            var first = Preferences.VisibleFirst;
-            var last  = Math.Min(Preferences.VisibleLast, _inner.Count);
-
-            SetImages(first, last, _cts.Token).Forget();
+            _task?.Cancel();
+            _task = RunTask();
         }
 
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetVisibleRange
+        ///
+        /// <summary>
+        /// Gets the current visible range of the image collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private KeyValuePair<int, int> GetVisibleRange() => KeyValuePair.Create(
+            Math.Max(Preferences.VisibleFirst, 0),
+            Math.Min(Preferences.VisibleLast, _inner.Count)
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -292,12 +303,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ImageSource GetImage(ImageEntry src)
         {
-            lock (_created)
-            {
-                return _created.TryGetValue(src.RawObject.Number, out var dest) ?
-                       dest :
-                       Loading;
-            }
+            var n = src.RawObject.Number;
+            return _cache.TryGetValue(n, out var dest) ? dest : LoadingImage;
         }
 
         /* ----------------------------------------------------------------- */
@@ -310,15 +317,12 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Task SetImage(ImageEntry src) => Task.Run(() =>
+        private void SetImage(ImageEntry src)
         {
             var n = src.RawObject.Number;
-            lock (_created) if (_created.ContainsKey(n)) return;
-            lock (_creating)
-            {
-                if (_creating.Contains(n)) return;
-                _creating.Add(n);
-            }
+
+            if (_cache.ContainsKey(n)) return;
+            if (!_doing.TryAdd(n, 0)) return;
 
             var bmp = new Bitmap(src.Width, src.Height);
             using (var gs = Graphics.FromImage(bmp))
@@ -327,33 +331,36 @@ namespace Cube.Pdf.App.Editor
                 Renderer.Render(gs, src.RawObject);
             }
 
-            var dest = bmp.ToBitmapImage(true);
-            lock (_created) if (!_created.ContainsKey(n)) _created.Add(n, dest);
-            lock (_creating) _creating.Remove(n);
+            _cache.TryAdd(n, bmp.ToBitmapImage(true));
+            _doing.TryRemove(n, out var dummy);
 
             src.Update();
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetImages
+        /// RunTask
         ///
         /// <summary>
-        /// Stores ImageSource items to the Cache collection.
+        /// Runs a task that creates ImageSource items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private async Task SetImages(int first, int last, CancellationToken token)
+        private CancellationTokenSource RunTask()
         {
-            try
+            var dest  = new CancellationTokenSource();
+            var range = GetVisibleRange();
+
+            Task.Run(() =>
             {
-                for (var i = first; i < last; ++i)
+                for (var i = range.Key; i < range.Value; ++i)
                 {
-                    if (token.IsCancellationRequested) return;
-                    await SetImage(_inner[i]).ConfigureAwait(false);
+                    if (dest.Token.IsCancellationRequested) return;
+                    SetImage(_inner[i]);
                 }
-            }
-            catch (OperationCanceledException) { /* Ignore */ }
+            }).Forget();
+
+            return dest;
         }
 
         /* ----------------------------------------------------------------- */
@@ -390,10 +397,10 @@ namespace Cube.Pdf.App.Editor
         #region Fields
         private readonly SynchronizationContext _context;
         private readonly ObservableCollection<ImageEntry> _inner;
-        private readonly IDictionary<int, ImageSource> _created;
-        private readonly HashSet<int> _creating;
-        private ImageSource _loading;
-        private CancellationTokenSource _cts;
+        private readonly ConcurrentDictionary<int, ImageSource> _cache;
+        private readonly ConcurrentDictionary<int, byte> _doing;
+        private CancellationTokenSource _task;
+        private ImageSource _dummy;
         #endregion
     }
 }

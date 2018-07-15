@@ -147,7 +147,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Close()
         {
-            Images.Reset();
+            Images.Clear();
             Core?.Dispose();
             Core = null;
         }
