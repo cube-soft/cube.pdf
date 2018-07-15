@@ -51,7 +51,7 @@ namespace Cube.Pdf.Tests.Editor
         protected MainViewModel CreateViewModel()
         {
             var dest = new MainViewModel();
-            dest.Images.LoadingImage = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
+            dest.Data.Images.LoadingImage = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
             return dest;
         }
 

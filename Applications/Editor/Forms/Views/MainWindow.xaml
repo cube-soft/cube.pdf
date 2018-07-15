@@ -63,7 +63,7 @@
         <my:RibbonControl Grid.Row="0" />
         <my:PagesControl Grid.Row="1" />
         <StatusBar Grid.Row="2">
-            <StatusBarItem Content="{Binding Message.Value}" />
+            <StatusBarItem Content="{Binding Data.Message.Value}" />
         </StatusBar>
     </Grid>
 </r:RibbonWindow>

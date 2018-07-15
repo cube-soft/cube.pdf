@@ -107,18 +107,32 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Text
+        /// Index
         ///
         /// <summary>
-        /// Gets the text to be displayed.
+        /// Gets the index of the this object in the collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Text
+        public int Index
         {
-            get => _text;
-            set => SetProperty(ref _text, value);
+            get => _index;
+            set
+            {
+                if (SetProperty(ref _index, value)) RaisePropertyChanged(nameof(Text));
+            }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Text
+        ///
+        /// <summary>
+        /// Gets the display text.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Text => (Index + 1).ToString();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -193,7 +207,7 @@ namespace Cube.Pdf.App.Editor
         #region Fields
         private readonly Func<ImageEntry, ImageSource> _image;
         private Page _rawObject;
-        private string _text;
+        private int _index;
         #endregion
     }
 }

@@ -63,9 +63,9 @@ namespace Cube.Pdf.App.Editor
         public ImageList(SynchronizationContext context)
         {
             _context = context;
-            _cache   = new ConcurrentDictionary<int, ImageSource>();
-            _doing   = new ConcurrentDictionary<int, byte>();
             _inner   = new ObservableCollection<ImageEntry>();
+            _cache   = new ConcurrentDictionary<ImageEntry, ImageSource>();
+            _doing   = new ConcurrentDictionary<ImageEntry, byte>();
 
             _inner.CollectionChanged += WhenCollectionChanged;
             Preferences.PropertyChanged += WhenPreferenceChanged;
@@ -221,7 +221,7 @@ namespace Cube.Pdf.App.Editor
             Preferences.Register(item.GetDisplaySize());
             _inner.Add(new ImageEntry(e => GetImage(e), Preferences)
             {
-                Text      = (_inner.Count + 1).ToString(),
+                Index     = _inner.Count,
                 RawObject = item,
             });
         }
@@ -301,11 +301,8 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ImageSource GetImage(ImageEntry src)
-        {
-            var n = src.RawObject.Number;
-            return _cache.TryGetValue(n, out var dest) ? dest : LoadingImage;
-        }
+        private ImageSource GetImage(ImageEntry src) =>
+            _cache.TryGetValue(src, out var dest) ? dest : LoadingImage;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -319,22 +316,21 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetImage(ImageEntry src)
         {
-            var n = src.RawObject.Number;
+            if (_cache.ContainsKey(src)) return;
+            if (!_doing.TryAdd(src, 0)) return;
 
-            if (_cache.ContainsKey(n)) return;
-            if (!_doing.TryAdd(n, 0)) return;
-
-            var bmp = new Bitmap(src.Width, src.Height);
-            using (var gs = Graphics.FromImage(bmp))
+            try
             {
-                gs.Clear(System.Drawing.Color.White);
-                Renderer.Render(gs, src.RawObject);
+                var image = new Bitmap(src.Width, src.Height);
+                using (var gs = Graphics.FromImage(image))
+                {
+                    gs.Clear(System.Drawing.Color.White);
+                    Renderer.Render(gs, src.RawObject);
+                }
+                _cache.TryAdd(src, image.ToBitmapImage(true));
+                src.Update();
             }
-
-            _cache.TryAdd(n, bmp.ToBitmapImage(true));
-            _doing.TryRemove(n, out var dummy);
-
-            src.Update();
+            finally { _doing.TryRemove(src, out var _); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -397,8 +393,8 @@ namespace Cube.Pdf.App.Editor
         #region Fields
         private readonly SynchronizationContext _context;
         private readonly ObservableCollection<ImageEntry> _inner;
-        private readonly ConcurrentDictionary<int, ImageSource> _cache;
-        private readonly ConcurrentDictionary<int, byte> _doing;
+        private readonly ConcurrentDictionary<ImageEntry, ImageSource> _cache;
+        private readonly ConcurrentDictionary<ImageEntry, byte> _doing;
         private CancellationTokenSource _task;
         private ImageSource _dummy;
         #endregion

@@ -39,7 +39,7 @@
       Main
     *********************************************************************** -->
     <ListView
-        ItemsSource="{Binding Images}"
+        ItemsSource="{Binding Data.Images}"
         ItemContainerStyle="{StaticResource PageStyle}"
         ItemTemplate="{StaticResource PageTemplate}"
         Style="{StaticResource PagesStyle}"
@@ -50,18 +50,18 @@
                 <ScrollViewer Style="{StaticResource PagesOuterStyle}">
                     <WrapPanel
                         Style="{StaticResource PagesInnerStyle}"
-                        ItemWidth="{Binding Images.Preferences.Width}"
-                        ItemHeight="{Binding Images.Preferences.Height}"
-                        MinWidth="{Binding Images.Preferences.Width}"
+                        ItemWidth="{Binding Data.Images.Preferences.Width}"
+                        ItemHeight="{Binding Data.Images.Preferences.Height}"
+                        MinWidth="{Binding Data.Images.Preferences.Width}"
                         Width="{Binding FrameworkElement.ActualWidth,
                         RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
                         <i:Interaction.Behaviors>
                             <my:VisibleRange
-                                First="{Binding Images.Preferences.VisibleFirst, Mode=TwoWay}"
-                                Last="{Binding Images.Preferences.VisibleLast, Mode=TwoWay}"
-                                ItemWidth="{Binding Images.Preferences.Width}"
-                                ItemHeight="{Binding Images.Preferences.Height}"
-                                ItemMargin="{Binding Images.Preferences.Margin}" />
+                                First="{Binding Data.Images.Preferences.VisibleFirst, Mode=TwoWay}"
+                                Last="{Binding Data.Images.Preferences.VisibleLast, Mode=TwoWay}"
+                                ItemWidth="{Binding Data.Images.Preferences.Width}"
+                                ItemHeight="{Binding Data.Images.Preferences.Height}"
+                                ItemMargin="{Binding Data.Images.Preferences.Margin}" />
                         </i:Interaction.Behaviors>
                 </ScrollViewer>
             </ControlTemplate>

@@ -50,8 +50,8 @@ namespace Cube.Pdf.Tests.Editor
         {
             var vm = CreateViewModel();
             ExecuteOpenCommand(vm, GetExamplesWith(filename));
-            Assert.That(Wait.For(() => vm.Images.Count > 0), "Timeout");
-            Assert.That(vm.Images[0].Image, Is.Not.Null);
+            Assert.That(Wait.For(() => vm.Data.Images.Count > 0), "Timeout");
+            Assert.That(vm.Data.Images[0].Image, Is.Not.Null);
         }
 
         /* ----------------------------------------------------------------- */
@@ -71,10 +71,10 @@ namespace Cube.Pdf.Tests.Editor
 
             var vm = CreateViewModel();
             ExecuteOpenCommand(vm, src);
-            Assert.That(Wait.For(() => vm.Images.Count > 0), "Timeout");
+            Assert.That(Wait.For(() => vm.Data.Images.Count > 0), "Timeout");
             Assert.That(IO.TryDelete(src), Is.False);
 
-            foreach (var image in vm.Images) Assert.That(image, Is.Not.Null);
+            foreach (var image in vm.Data.Images) Assert.That(image, Is.Not.Null);
             Assert.That(vm.Ribbon.Close.Command.CanExecute(null), Is.True);
             vm.Ribbon.Close.Command.Execute(null);
             Assert.That(IO.TryDelete(src), Is.True);

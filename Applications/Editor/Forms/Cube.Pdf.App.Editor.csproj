@@ -142,6 +142,7 @@
     <Compile Include="Sources\Models\MessageFactory.cs" />
     <Compile Include="Sources\Models\ResourceCulture.cs" />
     <Compile Include="Sources\Models\RibbonEntry.cs" />
+    <Compile Include="Sources\ViewModels\MainBindableData.cs" />
     <Compile Include="Sources\ViewModels\MainFacade.cs" />
     <Compile Include="Sources\ViewModels\MainViewModel.cs" />
     <Compile Include="Sources\ViewModels\RibbonViewModel.cs" />

@@ -64,6 +64,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Data
+        ///
+        /// <summary>
+        /// Gets data for binding to the MainWindow.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainBindableData Data => Model.Data;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Ribbon
         ///
         /// <summary>
@@ -72,39 +83,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public RibbonViewModel Ribbon { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Images
-        ///
-        /// <summary>
-        /// PDF のサムネイル一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageList Images => Model.Images;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Settings
-        ///
-        /// <summary>
-        /// 設定情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Settings Settings => Model.Settings.Value;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Message
-        ///
-        /// <summary>
-        /// メッセージを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bindable<string> Message { get; } = new Bindable<string>("Ready");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -152,14 +130,16 @@ namespace Cube.Pdf.App.Editor
                 {
                     if (e.Result) Task.Run(() => Model.Open(e.FileName)).Forget();
                 })),
-                () => !Model.IsOpen.Value,
-                Model.IsOpen
+                () => !Data.IsOpen.Value && !Data.IsBusy.Value,
+                Data.IsOpen,
+                Data.IsBusy
             );
 
             Ribbon.Close.Command = new BindableCommand(
                 () => Model.Close(),
-                () => Model.IsOpen.Value,
-                Model.IsOpen
+                () => Data.IsOpen.Value && !Data.IsBusy.Value,
+                Data.IsOpen,
+                Data.IsBusy
             );
 
             Ribbon.Save.Command = Default;
@@ -190,7 +170,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.ZoomOut.Command = Default;
             Ribbon.Version.Command = Default;
             Ribbon.Exit.Command = new RelayCommand(() => Send<CloseMessage>());
-            Ribbon.Web.Command = new RelayCommand(() => Send(Settings.Uri));
+            Ribbon.Web.Command = new RelayCommand(() => Send(Data.Settings.Uri));
         }
 
         #endregion

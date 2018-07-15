@@ -16,43 +16,39 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Pdfium;
-using System.Threading;
+using Cube.Xui;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainFacade
+    /// MainBindableData
     ///
     /// <summary>
-    /// MainViewModel と各種 Model の窓口となるクラスです。
+    /// Provides values for binding to the MainWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainFacade
+    public class MainBindableData
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainFacade
+        /// MainBindableData
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance with the specified parameters.
         /// </summary>
         ///
-        /// <param name="settings">設定情報</param>
-        /// <param name="context">同期用コンテキスト</param>
+        /// <param name="images">Image collection.</param>
+        /// <param name="settings">Settings object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingsFolder settings, SynchronizationContext context)
+        public MainBindableData(ImageList images, SettingsFolder settings)
         {
-            Settings = settings;
-            Data = new MainBindableData(new ImageList(context), settings);
-            Data.Images.Preferences.BaseSize = settings.Value.ViewSize;
-            Data.Images.Preferences.Margin = 3;
-            Data.Images.Preferences.TextHeight = 25;
+            Images    = images;
+            _settings = settings;
         }
 
         #endregion
@@ -61,88 +57,63 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Images
+        ///
+        /// <summary>
+        /// Gets the images of the PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageList Images { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Settings
         ///
         /// <summary>
-        /// 設定情報を取得します。
+        /// Gets the settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
+        public Settings Settings => _settings.Value;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
+        /// IsOpen
         ///
         /// <summary>
-        /// Gets data related with the docuemnt.
+        /// Gets a value that determines whether a PDF document is open.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindableData Data { get; }
+        public Bindable<bool> IsOpen { get; } = new Bindable<bool>(false);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Core
+        /// IsBusy
         ///
         /// <summary>
-        /// Gets or sets a core object.
+        /// Gets a value that determines whether models are busy.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected DocumentReader Core
-        {
-            get => _core;
-            set
-            {
-                if (_core == value) return;
-                _core = value;
-                Data.IsOpen.Value = _core != null;
-            }
-        }
-
-        #endregion
-
-        #region Methods
+        public Bindable<bool> IsBusy { get; } = new Bindable<bool>(false);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// Message
         ///
         /// <summary>
-        /// Open a PDF document with the specified file path.
-        /// </summary>
-        ///
-        /// <param name="src">File path.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(string src)
-        {
-            Core = new DocumentReader(src);
-            Data.Images.Renderer = Core;
-            foreach (var page in Core.Pages) Data.Images.Add(page);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Close
-        ///
-        /// <summary>
-        /// Closes the current PDF document.
+        /// Gets or sets the message.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Close()
-        {
-            Data.Images.Clear();
-            Core?.Dispose();
-            Core = null;
-        }
+        public Bindable<string> Message { get; } = new Bindable<string>("Ready");
 
         #endregion
 
         #region Fields
-        private DocumentReader _core;
+        private SettingsFolder _settings;
         #endregion
     }
 }
