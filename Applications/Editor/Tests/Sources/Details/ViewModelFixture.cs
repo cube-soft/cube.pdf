@@ -20,7 +20,6 @@ using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using System;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Tests.Editor
@@ -74,45 +73,6 @@ namespace Cube.Pdf.Tests.Editor
                 e.Callback.Invoke(e);
             });
             vm.Ribbon.Open.Command.Execute(null);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Wait
-        ///
-        /// <summary>
-        /// Waits for the result of the specified predicate to be true.
-        /// </summary>
-        ///
-        /// <param name="predicate">Predicate.</param>
-        ///
-        /// <returns>false for the timeout.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected bool Wait(Func<bool> predicate) => WaitAsync(predicate).Result;
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WaitAsync
-        ///
-        /// <summary>
-        /// Waits for the result of the specified predicate to be true
-        /// as an asynchronous operation.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private async Task<bool> WaitAsync(Func<bool> predicate)
-        {
-            for (var i = 0; i < 100; ++i)
-            {
-                if (predicate()) return true;
-                await Task.Delay(100).ConfigureAwait(false);
-            }
-            return false;
         }
 
         #endregion

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem.TestService;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Tests.Editor
@@ -49,7 +50,7 @@ namespace Cube.Pdf.Tests.Editor
         {
             var vm = CreateViewModel();
             ExecuteOpenCommand(vm, GetExamplesWith(filename));
-            Assert.That(Wait(() => vm.Images.Count > 0), "Timeout");
+            Assert.That(Wait.For(() => vm.Images.Count > 0), "Timeout");
             Assert.That(vm.Images[0].Image, Is.Not.Null);
         }
 
@@ -70,7 +71,7 @@ namespace Cube.Pdf.Tests.Editor
 
             var vm = CreateViewModel();
             ExecuteOpenCommand(vm, src);
-            Assert.That(Wait(() => vm.Images.Count > 0), "Timeout");
+            Assert.That(Wait.For(() => vm.Images.Count > 0), "Timeout");
             Assert.That(IO.TryDelete(src), Is.False);
 
             foreach (var image in vm.Images) Assert.That(image, Is.Not.Null);

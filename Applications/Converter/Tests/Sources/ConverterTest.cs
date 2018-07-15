@@ -75,7 +75,7 @@ namespace Cube.Pdf.Tests.Converter
 
                 Assert.That(vm.IsBusy, Is.False);
                 vm.Messenger.MessageBox.Subscribe(SetMessage);
-                Assert.That(Wait(vm), Is.True, "Timeout");
+                Assert.That(WaitConv(vm), Is.True, "Timeout");
             }
 
             Assert.That(IO.Exists(dest.Value.Source),      Is.False, dest.Value.Source);

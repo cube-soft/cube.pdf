@@ -28,7 +28,6 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cube.Pdf.Tests.Converter
 {
@@ -258,20 +257,20 @@ namespace Cube.Pdf.Tests.Converter
         /// Wait
         ///
         /// <summary>
-        /// 変換処理を待機します。
+        /// Waits for converting the document.
         /// </summary>
         ///
         /// <param name="vm">ViewModel</param>
         ///
-        /// <returns>処理が正常に完了したかどうか</returns>
+        /// <returns>true for success.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected bool Wait(MainViewModel vm)
+        protected bool WaitConv(MainViewModel vm)
         {
             Message = string.Empty;
             vm.Convert();
-            if (!WaitAsync(vm, () => vm.IsBusy == true).Result) return false;
-            return WaitAsync(vm, () => vm.IsBusy == false).Result;
+            if (!Wait.For(() => vm.IsBusy == true)) return false;
+            return Wait.For(() => vm.IsBusy == false);
         }
 
         /* ----------------------------------------------------------------- */
@@ -279,19 +278,19 @@ namespace Cube.Pdf.Tests.Converter
         /// WaitMessage
         ///
         /// <summary>
-        /// メッセージを受信するまで待機します。
+        /// Waits for receiving a message.
         /// </summary>
         ///
         /// <param name="vm">ViewModel</param>
         ///
-        /// <returns>メッセージを受信したかどうか</returns>
+        /// <returns>true for receiving a message.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected bool WaitMessage(MainViewModel vm)
         {
             Message = string.Empty;
             vm.Convert();
-            return WaitAsync(vm, () => Message.HasValue()).Result;
+            return Wait.For(() => Message.HasValue());
         }
 
         #endregion
@@ -379,25 +378,6 @@ namespace Cube.Pdf.Tests.Converter
             vm.AllowCopy        = src.Permission.CopyContents.IsAllowed();
             vm.AllowInputForm   = src.Permission.InputForm.IsAllowed();
             vm.AllowModify      = src.Permission.ModifyContents.IsAllowed();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WaitAsync
-        ///
-        /// <summary>
-        /// 変換処理を非同期で待機します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private async Task<bool> WaitAsync(MainViewModel vm, Func<bool> cond)
-        {
-            for (var i = 0; i < 100; ++i)
-            {
-                if (cond()) return true;
-                await Task.Delay(100).ConfigureAwait(false);
-            }
-            return false;
         }
 
         #endregion
