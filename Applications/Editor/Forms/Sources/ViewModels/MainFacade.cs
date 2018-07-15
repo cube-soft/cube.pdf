@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Pdfium;
+using System;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -116,12 +117,12 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">File path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open(string src)
+        public void Open(string src) => Invoke(() =>
         {
             Core = new DocumentReader(src);
             Data.Images.Renderer = Core;
             foreach (var page in Core.Pages) Data.Images.Add(page);
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -132,11 +133,31 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Close()
+        public void Close() => Invoke(() =>
         {
             Data.Images.Clear();
             Core?.Dispose();
             Core = null;
+        });
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the user action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Action action)
+        {
+            Data.IsBusy.Value = true;
+            try { action(); }
+            finally { Data.IsBusy.Value = false; }
         }
 
         #endregion
