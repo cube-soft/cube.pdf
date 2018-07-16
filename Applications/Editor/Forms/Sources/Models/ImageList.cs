@@ -99,14 +99,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Renderer
+        /// Selection
         ///
         /// <summary>
-        /// Gets or sets the object to render Page contents.
+        /// Gets the selection of elements.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IDocumentRenderer Renderer { get; set; }
+        public ImageSelection Selection { get; } = new ImageSelection();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -118,6 +118,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ImagePreferences Preferences { get; } = new ImagePreferences();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Renderer
+        ///
+        /// <summary>
+        /// Gets or sets the object to render Page contents.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IDocumentRenderer Renderer { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -219,7 +230,7 @@ namespace Cube.Pdf.App.Editor
         public void Add(Page item)
         {
             Preferences.Register(item.GetDisplaySize());
-            _inner.Add(new ImageEntry(e => GetImage(e), Preferences)
+            _inner.Add(new ImageEntry(e => GetImage(e), Selection, Preferences)
             {
                 Index     = _inner.Count,
                 RawObject = item,
@@ -249,17 +260,19 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Update
+        /// Refresh
         ///
         /// <summary>
-        /// Generates new items to show.
+        /// Clears all of images and regenerates them.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update()
+        public void Refresh()
         {
-            _task?.Cancel();
-            _task = RunTask();
+            _cache.Clear();
+            _doing.Clear();
+
+            ResetTask();
         }
 
         #endregion
@@ -361,6 +374,21 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ResetTask
+        ///
+        /// <summary>
+        /// Cancels the current task and reruns.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResetTask()
+        {
+            _task?.Cancel();
+            _task = RunTask();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// WhenCollectionChanged
         ///
         /// <summary>
@@ -370,7 +398,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenCollectionChanged(object s, NotifyCollectionChangedEventArgs e)
         {
-            Update();
+            ResetTask();
             OnCollectionChanged(e);
         }
 
@@ -385,7 +413,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPreferenceChanged(object s, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Preferences.VisibleFirst)) Update();
+            if (e.PropertyName == nameof(Preferences.VisibleFirst)) ResetTask();
         }
 
         #endregion

@@ -46,12 +46,15 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="image">Delegation to get an image.</param>
+        /// <param name="selection">Shared object for selection.</param>
         /// <param name="preferences">Image preferences.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageEntry(Func<ImageEntry, ImageSource> image, ImagePreferences preferences)
+        public ImageEntry(Func<ImageEntry, ImageSource> image,
+            ImageSelection selection, ImagePreferences preferences)
         {
-            _image = image;
+            _image      = image;
+            _selection  = selection;
             Preferences = preferences;
         }
 
@@ -133,19 +136,15 @@ namespace Cube.Pdf.App.Editor
         public bool IsSelected
         {
             get => _selected;
-            set => SetProperty(ref _selected, value);
+            set
+            {
+                if (SetProperty(ref _selected, value))
+                {
+                    if (value) _selection.Add(this);
+                    else _selection.Remove(this);
+                }
+            }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Preferences
-        ///
-        /// <summary>
-        /// Gets the preferences about the image.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImagePreferences Preferences { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -161,6 +160,17 @@ namespace Cube.Pdf.App.Editor
             get => _rawObject;
             set => SetProperty(ref _rawObject, value);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Preferences
+        ///
+        /// <summary>
+        /// Gets the preferences for images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImagePreferences Preferences { get; }
 
         #endregion
 
@@ -208,9 +218,10 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly Func<ImageEntry, ImageSource> _image;
-        private Page _rawObject;
+        private readonly ImageSelection _selection;
         private int _index;
         private bool _selected;
+        private Page _rawObject;
         #endregion
     }
 }

@@ -16,126 +16,105 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainBindableData
+    /// ImageSelection
     ///
     /// <summary>
-    /// Provides values for binding to the MainWindow.
+    /// Represents the selection of images.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainBindableData
+    public class ImageSelection : ObservableProperty
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MainBindableData
-        ///
-        /// <summary>
-        /// Initializes a new instance with the specified parameters.
-        /// </summary>
-        ///
-        /// <param name="images">Image collection.</param>
-        /// <param name="settings">Settings object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public MainBindableData(ImageList images, SettingsFolder settings)
-        {
-            Images    = images;
-            _settings = settings;
-        }
-
-        #endregion
-
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Images
+        /// AnySelected
         ///
         /// <summary>
-        /// Gets an image collection of PDF documents.
+        /// Gets a value indicating whether any of images are selected.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageList Images { get; }
+        public bool AnySelected => _selection.Count > 0;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Selection
+        /// Value
         ///
         /// <summary>
-        /// Gets the selection of thumbnails.
+        /// Gets the selection of images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSelection Selection => Images.Selection;
+        public IEnumerable<ImageEntry> Value => _selection.Keys;
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Preferences
+        /// Add
         ///
         /// <summary>
-        /// Gets the preferences for thumbnails.
+        /// Adds the specified image to the selection list.
         /// </summary>
         ///
+        /// <param name="src">Image entry.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public ImagePreferences Preferences => Images.Preferences;
+        public void Add(ImageEntry src)
+        {
+            if (_selection.TryAdd(src, 0)) RaiseEvents();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// Remove
         ///
         /// <summary>
-        /// Gets an application settings.
+        /// Removes the specified image from the selection list.
         /// </summary>
         ///
+        /// <param name="src">Image entry.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public Settings Settings => _settings.Value;
+        public void Remove(ImageEntry src)
+        {
+            if (_selection.TryRemove(src, out var _)) RaiseEvents();
+        }
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsOpen
+        /// RaiseEvents
         ///
         /// <summary>
-        /// Gets a value that determines whether a PDF document is open.
+        /// Raises some events.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> IsOpen { get; } = new Bindable<bool>(false);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsBusy
-        ///
-        /// <summary>
-        /// Gets a value that determines whether models are busy.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bindable<bool> IsBusy { get; } = new Bindable<bool>(false);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Message
-        ///
-        /// <summary>
-        /// Gets or sets the message.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bindable<string> Message { get; } = new Bindable<string>("Ready");
+        private void RaiseEvents()
+        {
+            RaisePropertyChanged(nameof(AnySelected));
+            RaisePropertyChanged(nameof(Value));
+        }
 
         #endregion
 
         #region Fields
-        private SettingsFolder _settings;
+        private readonly ConcurrentDictionary<ImageEntry, byte> _selection = new ConcurrentDictionary<ImageEntry, byte>();
         #endregion
     }
 }

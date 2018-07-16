@@ -140,6 +140,7 @@
     <Compile Include="Sources\Models\ImageEntry.cs" />
     <Compile Include="Sources\Models\ImageList.cs" />
     <Compile Include="Sources\Models\ImagePreferences.cs" />
+    <Compile Include="Sources\Models\ImageSelection.cs" />
     <Compile Include="Sources\Models\MessageFactory.cs" />
     <Compile Include="Sources\Models\ResourceCulture.cs" />
     <Compile Include="Sources\Models\RibbonEntry.cs" />
