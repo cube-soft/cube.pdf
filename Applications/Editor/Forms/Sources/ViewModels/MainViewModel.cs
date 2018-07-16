@@ -21,6 +21,7 @@ using Cube.Tasks;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,6 +56,7 @@ namespace Cube.Pdf.App.Editor
             var settings = new SettingsFolder(Assembly.GetExecutingAssembly(), new IO());
             Model  = new MainFacade(settings, SynchronizationContext.Current);
             Ribbon = new RibbonViewModel(Messenger);
+            SetRibbonEnabled();
             SetRibbonCommands();
         }
 
@@ -71,7 +73,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindableData Data => Model.Data;
+        public MainBindableData Data => Model.Bindable;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -97,7 +99,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Default
+        /// None
         ///
         /// <summary>
         /// 既定動作を表すコマンドを取得します。
@@ -108,18 +110,37 @@ namespace Cube.Pdf.App.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected ICommand Default { get; } = new RelayCommand(() => { }, () => false);
+        private ICommand None { get; } = new RelayCommand(() => { }, () => false);
 
         #endregion
 
-        #region Commands
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetRibbonEnabled
+        ///
+        /// <summary>
+        /// Sets a function object that determines the Ribbon button is
+        /// enabled.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetRibbonEnabled()
+        {
+            var open = IsOpenFunc();
+
+            Ribbon.Insert.Enabled  = open;
+            Ribbon.Extract.Enabled = open;
+            Ribbon.Remove.Enabled  = open;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// SetRibbonCommands
         ///
         /// <summary>
-        /// Ribbon メニューのコマンドを設定します。
+        /// Sets commands of Ribbon items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -135,43 +156,108 @@ namespace Cube.Pdf.App.Editor
                 Data.IsBusy
             );
 
-            Ribbon.Close.Command = new BindableCommand(
-                () => Model.Close(),
-                () => Data.IsOpen.Value && !Data.IsBusy.Value,
-                Data.IsOpen,
-                Data.IsBusy
-            );
-
-            Ribbon.Save.Command = Default;
-            Ribbon.SaveAs.Command = Default;
-            Ribbon.Undo.Command = Default;
-            Ribbon.Redo.Command = Default;
-            Ribbon.Select.Command = Default;
-            Ribbon.SelectAll.Command = Default;
-            Ribbon.SelectFlip.Command = Default;
-            Ribbon.SelectCancel.Command = Default;
-            Ribbon.Insert.Command = Default;
-            Ribbon.InsertFront.Command = Default;
-            Ribbon.InsertBack.Command = Default;
-            Ribbon.InsertOthers.Command = Default;
-            Ribbon.Extract.Command = Default;
-            Ribbon.ExtractImages.Command = Default;
-            Ribbon.ExtractOthers.Command = Default;
-            Ribbon.Remove.Command = Default;
-            Ribbon.RemoveOthers.Command = Default;
-            Ribbon.MovePrevious.Command = Default;
-            Ribbon.MoveNext.Command = Default;
-            Ribbon.RotateLeft.Command = Default;
-            Ribbon.RotateRight.Command = Default;
-            Ribbon.Metadata.Command = Default;
-            Ribbon.Encryption.Command = Default;
-            Ribbon.Refresh.Command = Default;
-            Ribbon.ZoomIn.Command = Default;
-            Ribbon.ZoomOut.Command = Default;
-            Ribbon.Version.Command = Default;
-            Ribbon.Exit.Command = new RelayCommand(() => Send<CloseMessage>());
-            Ribbon.Web.Command = new RelayCommand(() => Send(Data.Settings.Uri));
+            Ribbon.Close.Command         = WhenOpen(() => Model.Close());
+            Ribbon.Save.Command          = WhenOpen(() => { });
+            Ribbon.SaveAs.Command        = WhenOpen(() => { });
+            Ribbon.Undo.Command          = None;
+            Ribbon.Redo.Command          = None;
+            Ribbon.Select.Command        = WhenOpen(() => { });
+            Ribbon.SelectAll.Command     = WhenOpen(() => { });
+            Ribbon.SelectFlip.Command    = WhenOpen(() => { });
+            Ribbon.SelectCancel.Command  = WhenOpen(() => { });
+            Ribbon.Insert.Command        = WhenSelected(() => { });
+            Ribbon.InsertFront.Command   = WhenOpen(() => { });
+            Ribbon.InsertBack.Command    = WhenOpen(() => { });
+            Ribbon.InsertOthers.Command  = WhenOpen(() => { });
+            Ribbon.Extract.Command       = WhenSelected(() => { });
+            Ribbon.ExtractImages.Command = WhenOpen(() => { });
+            Ribbon.ExtractOthers.Command = WhenOpen(() => { });
+            Ribbon.Remove.Command        = WhenSelected(() => { });
+            Ribbon.RemoveOthers.Command  = WhenOpen(() => { });
+            Ribbon.MovePrevious.Command  = WhenSelected(() => { });
+            Ribbon.MoveNext.Command      = WhenSelected(() => { });
+            Ribbon.RotateLeft.Command    = WhenSelected(() => { });
+            Ribbon.RotateRight.Command   = WhenSelected(() => { });
+            Ribbon.Metadata.Command      = None;
+            Ribbon.Encryption.Command    = None;
+            Ribbon.Refresh.Command       = WhenOpen(() => Model.Refresh());
+            Ribbon.ZoomIn.Command        = WhenAny(() => { });
+            Ribbon.ZoomOut.Command       = WhenAny(() => { });
+            Ribbon.Version.Command       = WhenAny(() => Send(Data.Settings.Uri));
+            Ribbon.Exit.Command          = WhenAny(() => Send<CloseMessage>());
+            Ribbon.Web.Command           = WhenAny(() => Send(Data.Settings.Uri));
         }
+
+        #region Factory
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenAny
+        ///
+        /// <summary>
+        /// Creates a command that can be executed at any time.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand WhenAny(Action action) => new BindableCommand(
+            action,
+            () => !Data.IsBusy.Value,
+            Data.IsBusy
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenOpen
+        ///
+        /// <summary>
+        /// Creates a command that can be executed when a document is open.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand WhenOpen(Action action) => new BindableCommand(
+            action,
+            () => Data.IsOpen.Value && !Data.IsBusy.Value,
+            Data.IsOpen,
+            Data.IsBusy
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenSelected
+        ///
+        /// <summary>
+        /// Creates a command that can be executed when any items are
+        /// selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand WhenSelected(Action action) => new BindableCommand(
+            action,
+            () => Data.IsOpen.Value && Data.Selection.AnySelected && !Data.IsBusy.Value,
+            Data.IsOpen,
+            Data.IsBusy,
+            Data.Selection
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsOpenFunc
+        ///
+        /// <summary>
+        /// Creates a BindableFunc(T) for the IsEnabled property of the
+        /// RibbonEntry class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private BindableFunc<bool> IsOpenFunc()
+        {
+            var dest = new BindableFunc<bool>(() => Data.IsOpen.Value && !Data.IsBusy.Value);
+            Data.IsOpen.PropertyChanged += (s, e) => dest.RaiseValueChanged();
+            Data.IsBusy.PropertyChanged += (s, e) => dest.RaiseValueChanged();
+            return dest;
+        }
+
+        #endregion
 
         #endregion
     }
