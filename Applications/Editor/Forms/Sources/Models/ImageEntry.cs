@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Mixin;
+using Cube.Xui;
 using System;
 using System.Drawing;
 using System.Windows.Media;
@@ -32,7 +33,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageEntry : ObservableProperty
+    public class ImageEntry : ObservableProperty, IListItem
     {
         #region Constructors
 
@@ -122,6 +123,21 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IsSelected
+        ///
+        /// <summary>
+        /// Gets a value indicating whether this entry is selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsSelected
+        {
+            get => _selected;
+            set => SetProperty(ref _selected, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Preferences
         ///
         /// <summary>
@@ -194,6 +210,7 @@ namespace Cube.Pdf.App.Editor
         private readonly Func<ImageEntry, ImageSource> _image;
         private Page _rawObject;
         private int _index;
+        private bool _selected;
         #endregion
     }
 }

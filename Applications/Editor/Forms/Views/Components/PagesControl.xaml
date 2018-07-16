@@ -22,6 +22,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
     xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -66,5 +67,8 @@
                 </ScrollViewer>
             </ControlTemplate>
         </ListView.Template>
+        <i:Interaction.Behaviors>
+            <xb:SelectionBehavior />
+        </i:Interaction.Behaviors>
     </ListView>
 </UserControl>
