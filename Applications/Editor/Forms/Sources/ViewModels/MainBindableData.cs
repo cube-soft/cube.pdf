@@ -60,7 +60,7 @@ namespace Cube.Pdf.App.Editor
         /// Images
         ///
         /// <summary>
-        /// Gets the images of the PDF document.
+        /// Gets an image collection of PDF documents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -71,7 +71,7 @@ namespace Cube.Pdf.App.Editor
         /// Settings
         ///
         /// <summary>
-        /// Gets the settings.
+        /// Gets an application settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
