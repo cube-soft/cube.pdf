@@ -80,7 +80,7 @@
 
             <TextBlock
                 Grid.Row="1"
-                Text="{Binding Text}"
+                Text="{Binding Index, Converter={my:IndexToText}}"
                 TextAlignment="Right"
                 Foreground="{StaticResource DarkForegroundBrush}" />
         </Grid>

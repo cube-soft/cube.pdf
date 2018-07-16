@@ -117,22 +117,8 @@ namespace Cube.Pdf.App.Editor
         public int Index
         {
             get => _index;
-            set
-            {
-                if (SetProperty(ref _index, value)) RaisePropertyChanged(nameof(Text));
-            }
+            set => SetProperty(ref _index, value);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Text
-        ///
-        /// <summary>
-        /// Gets the display text.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Text => (Index + 1).ToString();
 
         /* ----------------------------------------------------------------- */
         ///

@@ -16,11 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using Cube.Xui.Converters;
 using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
 {
+    #region BooleanToCursor
+
     /* --------------------------------------------------------------------- */
     ///
     /// BooleanToCursor
@@ -34,13 +37,42 @@ namespace Cube.Pdf.App.Editor
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// CursorConverter
+        /// BooleanToCursor
         ///
         /// <summary>
-        /// Initializes a new instance of the CursorConverter class.
+        /// Initializes a new instance of the BooleanToCursor class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public BooleanToCursor() : base(Cursors.Wait, Cursors.Arrow) { }
     }
+
+    #endregion
+
+    #region IndexToText
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// IndexToText
+    ///
+    /// <summary>
+    /// Provides functionality to convert an index to the display text.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class IndexToText : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IndexToText
+        ///
+        /// <summary>
+        /// Initializes a new instance of the IndexToText class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IndexToText() : base(e => (e.TryCast<int>() + 1).ToString()) { }
+    }
+
+    #endregion
 }
