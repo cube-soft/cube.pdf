@@ -229,7 +229,6 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Add(Page item)
         {
-            Preferences.Register(item.GetDisplaySize());
             _inner.Add(new ImageEntry(e => GetImage(e), Selection, Preferences)
             {
                 Index     = _inner.Count,
@@ -272,6 +271,26 @@ namespace Cube.Pdf.App.Editor
             _cache.Clear();
             _doing.Clear();
 
+            ResetTask();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        ///
+        /// <summary>
+        /// Rotates selected images and regenerates them.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Rotate(int degree)
+        {
+            foreach (var item in Selection.Value)
+            {
+                _cache.TryRemove(item, out var _);
+                _doing.TryRemove(item, out var _);
+                item.Rotate(degree);
+            }
             ResetTask();
         }
 

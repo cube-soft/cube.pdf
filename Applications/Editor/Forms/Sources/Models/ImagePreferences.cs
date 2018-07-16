@@ -147,20 +147,74 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Register
+        /// Add
         ///
         /// <summary>
-        /// 新しいサイズ情報を登録します。
+        /// Adds the size information to the preferences.
         /// </summary>
         ///
         /// <param name="src">サイズ情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Register(SizeF src) => Resize(() =>
+        public void Add(SizeF? src)
         {
-            SetOrIncrement(_ws, (int)src.Width);
-            SetOrIncrement(_hs, (int)src.Height);
-        });
+            if (src.HasValue) Resize(() =>
+            {
+                SetOrIncrement(_ws, (int)src.Value.Width);
+                SetOrIncrement(_hs, (int)src.Value.Height);
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Removes the size information from the preferences.
+        /// </summary>
+        ///
+        /// <param name="src">Size object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove(SizeF? src)
+        {
+            if (src.HasValue) Resize(() =>
+            {
+                RemoveOrDecrement(_ws, (int)src.Value.Width);
+                RemoveOrDecrement(_hs, (int)src.Value.Height);
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        ///
+        /// <summary>
+        /// Updates the size information.
+        /// </summary>
+        ///
+        /// <param name="previous">Previous size object.</param>
+        /// <param name="current">New size object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Update(SizeF? previous, SizeF? current)
+        {
+            if (!previous.HasValue && !current.HasValue) return;
+            Resize(() =>
+            {
+                if (previous.HasValue)
+                {
+                    RemoveOrDecrement(_ws, (int)previous.Value.Width);
+                    RemoveOrDecrement(_hs, (int)previous.Value.Height);
+                }
+
+                if (current.HasValue)
+                {
+                    SetOrIncrement(_ws, (int)current.Value.Width);
+                    SetOrIncrement(_hs, (int)current.Value.Height);
+                }
+            });
+        }
 
         #endregion
 
@@ -171,7 +225,7 @@ namespace Cube.Pdf.App.Editor
         /// SetOrIncrement
         ///
         /// <summary>
-        /// IDictionary(int, int) の内容を更新します。
+        /// Sets or increments a value to the IDictionary(int, int).
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -179,6 +233,24 @@ namespace Cube.Pdf.App.Editor
         {
             if (src.ContainsKey(key)) ++src[key];
             else src.Add(key, 1);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveOrDecrement
+        ///
+        /// <summary>
+        /// Removes or decrements a value from the IDictionary(int, int).
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void RemoveOrDecrement(IDictionary<int, int> src, int key)
+        {
+            if (src.ContainsKey(key))
+            {
+                --src[key];
+                if (src[key] <= 0) src.Remove(key);
+            }
         }
 
         /* ----------------------------------------------------------------- */

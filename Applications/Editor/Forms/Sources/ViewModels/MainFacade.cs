@@ -50,10 +50,12 @@ namespace Cube.Pdf.App.Editor
         public MainFacade(SettingsFolder settings, SynchronizationContext context)
         {
             Settings = settings;
-            Bindable = new MainBindableData(new ImageList(context), settings);
-            Bindable.Images.Preferences.BaseSize = settings.Value.ViewSize;
-            Bindable.Images.Preferences.Margin = 3;
-            Bindable.Images.Preferences.TextHeight = 25;
+            Images   = new ImageList(context);
+            Bindable = new MainBindableData(Images, settings);
+
+            Images.Preferences.BaseSize = settings.Value.ViewSize;
+            Images.Preferences.Margin = 3;
+            Images.Preferences.TextHeight = 25;
         }
 
         #endregion
@@ -81,6 +83,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public MainBindableData Bindable { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Images
+        ///
+        /// <summary>
+        /// Gets the image collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected ImageList Images { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -120,8 +133,8 @@ namespace Cube.Pdf.App.Editor
         public void Open(string src) => Invoke(() =>
         {
             Core = new DocumentReader(src);
-            Bindable.Images.Renderer = Core;
-            foreach (var page in Core.Pages) Bindable.Images.Add(page);
+            Images.Renderer = Core;
+            foreach (var page in Core.Pages) Images.Add(page);
         });
 
         /* ----------------------------------------------------------------- */
@@ -135,10 +148,23 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Close() => Invoke(() =>
         {
-            Bindable.Images.Clear();
+            Images.Clear();
             Core?.Dispose();
             Core = null;
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        ///
+        /// <summary>
+        /// Rotates the selected items with the specified value.
+        /// </summary>
+        ///
+        /// <param name="degree">Angle in degree unit.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Rotate(int degree) => Invoke(() => Images.Rotate(degree));
 
         /* ----------------------------------------------------------------- */
         ///

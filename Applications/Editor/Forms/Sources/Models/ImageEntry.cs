@@ -86,7 +86,7 @@ namespace Cube.Pdf.App.Editor
         {
             get
             {
-                var src = RawObject.GetDisplaySize();
+                var src = RawObject.GetDisplaySize().Value;
                 return (int)(src.Width * GetScale(src));
             }
         }
@@ -104,7 +104,7 @@ namespace Cube.Pdf.App.Editor
         {
             get
             {
-                var src = RawObject.GetDisplaySize();
+                var src = RawObject.GetDisplaySize().Value;
                 return (int)(src.Height * GetScale(src));
             }
         }
@@ -151,14 +151,19 @@ namespace Cube.Pdf.App.Editor
         /// RawObject
         ///
         /// <summary>
-        /// Gets the raw object to create the image.
+        /// Gets or sets the raw object to create the image.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public Page RawObject
         {
             get => _rawObject;
-            set => SetProperty(ref _rawObject, value);
+            set
+            {
+                var prev = _rawObject;
+                if (!SetProperty(ref _rawObject, value)) return;
+                UpdateSize(prev.GetDisplaySize(), value.GetDisplaySize());
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -193,6 +198,25 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Update() => RaisePropertyChanged(nameof(Image));
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        ///
+        /// <summary>
+        /// Rotate the image with the specified degree.
+        /// </summary>
+        ///
+        /// <param name="degree">Angle in degree unit.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Rotate(int degree)
+        {
+            var previous = RawObject.GetDisplaySize();
+            RawObject.Delta += degree;
+            var current = RawObject.GetDisplaySize();
+            UpdateSize(previous, current);
+        }
+
         #endregion
 
         #region Implementations
@@ -212,6 +236,22 @@ namespace Cube.Pdf.App.Editor
             var h = (Preferences.Width -　Preferences.Margin * 2 - m) / src.Width;
             var v = (Preferences.Height - Preferences.Margin * 2 - Preferences.TextHeight) / src.Height;
             return Math.Min(h, v);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpdateSize
+        ///
+        /// <summary>
+        /// Updates the size information of the inner collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void UpdateSize(SizeF? previous, SizeF? current)
+        {
+            Preferences.Update(previous, current);
+            RaisePropertyChanged(nameof(Width));
+            RaisePropertyChanged(nameof(Height));
         }
 
         #endregion
