@@ -50,10 +50,10 @@ namespace Cube.Pdf.App.Editor
         public MainFacade(SettingsFolder settings, SynchronizationContext context)
         {
             Settings = settings;
-            Data = new MainBindableData(new ImageList(context), settings);
-            Data.Images.Preferences.BaseSize = settings.Value.ViewSize;
-            Data.Images.Preferences.Margin = 3;
-            Data.Images.Preferences.TextHeight = 25;
+            Bindable = new MainBindableData(new ImageList(context), settings);
+            Bindable.Images.Preferences.BaseSize = settings.Value.ViewSize;
+            Bindable.Images.Preferences.Margin = 3;
+            Bindable.Images.Preferences.TextHeight = 25;
         }
 
         #endregion
@@ -73,14 +73,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
+        /// Bindable
         ///
         /// <summary>
-        /// Gets data related with the docuemnt.
+        /// Gets bindable data related with PDF docuemnts.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindableData Data { get; }
+        public MainBindableData Bindable { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -98,7 +98,7 @@ namespace Cube.Pdf.App.Editor
             {
                 if (_core == value) return;
                 _core = value;
-                Data.IsOpen.Value = _core != null;
+                Bindable.IsOpen.Value = _core != null;
             }
         }
 
@@ -120,8 +120,8 @@ namespace Cube.Pdf.App.Editor
         public void Open(string src) => Invoke(() =>
         {
             Core = new DocumentReader(src);
-            Data.Images.Renderer = Core;
-            foreach (var page in Core.Pages) Data.Images.Add(page);
+            Bindable.Images.Renderer = Core;
+            foreach (var page in Core.Pages) Bindable.Images.Add(page);
         });
 
         /* ----------------------------------------------------------------- */
@@ -135,10 +135,21 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Close() => Invoke(() =>
         {
-            Data.Images.Clear();
+            Bindable.Images.Clear();
             Core?.Dispose();
             Core = null;
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Refresh
+        ///
+        /// <summary>
+        /// Clears all of images and regenerates them.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Refresh() => Invoke(() => Bindable.Images.Refresh());
 
         #endregion
 
@@ -155,9 +166,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action)
         {
-            Data.IsBusy.Value = true;
+            Bindable.IsBusy.Value = true;
             try { action(); }
-            finally { Data.IsBusy.Value = false; }
+            finally { Bindable.IsBusy.Value = false; }
         }
 
         #endregion
