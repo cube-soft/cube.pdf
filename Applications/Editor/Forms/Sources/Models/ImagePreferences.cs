@@ -147,46 +147,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds the size information to the preferences.
-        /// </summary>
-        ///
-        /// <param name="src">サイズ情報</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Add(SizeF? src)
-        {
-            if (src.HasValue) Resize(() =>
-            {
-                SetOrIncrement(_ws, (int)src.Value.Width);
-                SetOrIncrement(_hs, (int)src.Value.Height);
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Remove
-        ///
-        /// <summary>
-        /// Removes the size information from the preferences.
-        /// </summary>
-        ///
-        /// <param name="src">Size object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Remove(SizeF? src)
-        {
-            if (src.HasValue) Resize(() =>
-            {
-                RemoveOrDecrement(_ws, (int)src.Value.Width);
-                RemoveOrDecrement(_hs, (int)src.Value.Height);
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Update
         ///
         /// <summary>
