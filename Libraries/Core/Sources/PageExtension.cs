@@ -186,7 +186,7 @@ namespace Cube.Pdf.Mixin
         /// <remarks>Display size.</remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static SizeF GetDisplaySize(this Page src) => src.GetDisplaySize(1.0);
+        public static SizeF? GetDisplaySize(this Page src) => src.GetDisplaySize(1.0);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -202,8 +202,10 @@ namespace Cube.Pdf.Mixin
         /// <remarks>Display size.</remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static SizeF GetDisplaySize(this Page src, double scale)
+        public static SizeF? GetDisplaySize(this Page src, double scale)
         {
+            if (src == null) return null;
+
             var angle  = src.Rotation + src.Delta;
             var sin    = Math.Abs(Math.Sin(angle.Radian));
             var cos    = Math.Abs(Math.Cos(angle.Radian));

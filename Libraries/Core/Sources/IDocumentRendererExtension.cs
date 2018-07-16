@@ -87,7 +87,7 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         public static Image GetImage(this IDocumentRenderer src, Page page, double scale) =>
-            src.GetImage(page, page.GetDisplaySize(scale));
+            src.GetImage(page, page.GetDisplaySize(scale).Value);
 
         /* ----------------------------------------------------------------- */
         ///

@@ -90,8 +90,8 @@ namespace Cube.Pdf.Tests
             ) { Delta = new Angle(degree) };
 
             var dest = src.GetDisplaySize();
-            Assert.That(dest.Width,  Is.EqualTo(w).Within(1.0));
-            Assert.That(dest.Height, Is.EqualTo(h).Within(1.0));
+            Assert.That(dest.Value.Width,  Is.EqualTo(w).Within(1.0));
+            Assert.That(dest.Value.Height, Is.EqualTo(h).Within(1.0));
         }
 
         #endregion
