@@ -60,7 +60,7 @@
       Item (DataTemplate)
     *********************************************************************** -->
     <DataTemplate x:Key="PageTemplate" DataType="{x:Type my:ImageEntry}">
-        <Grid Height="{Binding Preferences.Height}">
+        <Grid Height="{Binding Preferences.ItemSize}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="{Binding Preferences.TextHeight}" />

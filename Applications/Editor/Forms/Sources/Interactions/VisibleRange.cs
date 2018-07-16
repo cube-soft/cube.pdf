@@ -70,32 +70,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemWidth
+        /// ItemSize
         ///
         /// <summary>
-        /// Gets or sets the width of each item.
+        /// Gets or sets the size of each item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int ItemWidth
+        public int ItemSize
         {
-            get => _itemWidth;
-            set => SetProperty(ref _itemWidth, value, () => SetRange());
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ItemHeight
-        ///
-        /// <summary>
-        /// Gets or sets the height of each item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int ItemHeight
-        {
-            get => _itemHeight;
-            set => SetProperty(ref _itemHeight, value, () => SetRange());
+            get => _itemSize;
+            set => SetProperty(ref _itemSize, value, () => SetRange());
         }
 
         /* ----------------------------------------------------------------- */
@@ -143,27 +128,15 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemWidthProperty
+        /// ItemSizeProperty
         ///
         /// <summary>
         /// DependencyProperty object for the ItemWidth property.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty ItemWidthProperty =
-            CreateProperty<int>(nameof(ItemWidth), (s, e) => s.ItemWidth = e);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ItemHeightProperty
-        ///
-        /// <summary>
-        /// DependencyProperty object for the ItemHeight property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty ItemHeightProperty =
-            CreateProperty<int>(nameof(ItemHeight), (s, e) => s.ItemHeight = e);
+        public static readonly DependencyProperty ItemSizeProperty =
+            CreateProperty<int>(nameof(ItemSize), (s, e) => s.ItemSize = e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -231,32 +204,16 @@ namespace Cube.Pdf.App.Editor
         {
             if (AssociatedObject == null) return;
 
-            var width  = Math.Max(ItemWidth, 1.0);
-            var height = Math.Max(ItemHeight, 1.0);
+            var size   = Math.Max(ItemSize, 1.0);
             var margin = Math.Max(ItemMargin * 2, 0.0);
 
-            var column = (int)(AssociatedObject.ActualWidth / (width + margin));
-            var row    = (int)(AssociatedObject.ActualHeight / (height + margin));
+            var column = (int)(AssociatedObject.ActualWidth / (size + margin));
+            var row    = (int)(AssociatedObject.ActualHeight / (size + margin));
 
-            var index  = (int)(AssociatedObject.VerticalOffset / height) * column;
+            var index  = (int)(AssociatedObject.VerticalOffset / size) * column;
             var first  = Math.Max(index - column, 0);
             var last   = index + column * (row + 2);
 
-            SetRange(first, last);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetRange
-        ///
-        /// <summary>
-        /// Sets the visible range of the ScrollViewer control with the
-        /// specified parameters.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetRange(int first, int last)
-        {
             First = first;
             Last  = last;
         }
@@ -288,22 +245,6 @@ namespace Cube.Pdf.App.Editor
         /// SetProperty
         ///
         /// <summary>
-        /// Sets a new value to the specified property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool SetProperty<T>(ref T field, T value)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-            field = value;
-            return true;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetProperty
-        ///
-        /// <summary>
         /// Sets a new value to the specified property and executes the
         /// action when setting complete.
         /// </summary>
@@ -311,7 +252,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetProperty<T>(ref T field, T value, Action action)
         {
-            if (SetProperty(ref field, value)) action();
+            if (EqualityComparer<T>.Default.Equals(field, value)) return;
+            field = value;
+            action();
         }
 
         /* ----------------------------------------------------------------- */
@@ -342,8 +285,7 @@ namespace Cube.Pdf.App.Editor
         #region Fields
         private int _first;
         private int _last;
-        private int _itemWidth;
-        private int _itemHeight;
+        private int _itemSize;
         private int _itemMargin;
         #endregion
     }

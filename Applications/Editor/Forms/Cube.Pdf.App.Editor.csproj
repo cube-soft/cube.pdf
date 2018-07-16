@@ -137,8 +137,8 @@
     <Compile Include="Sources\Interactions\VisibleRange.cs" />
     <Compile Include="Sources\Models\Settings\Settings.cs" />
     <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />
+    <Compile Include="Sources\Models\ImageCollection.cs" />
     <Compile Include="Sources\Models\ImageEntry.cs" />
-    <Compile Include="Sources\Models\ImageList.cs" />
     <Compile Include="Sources\Models\ImagePreferences.cs" />
     <Compile Include="Sources\Models\ImageSelection.cs" />
     <Compile Include="Sources\Models\MessageFactory.cs" />

@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageList
+    /// ImageCollection
     ///
     /// <summary>
     /// Provides a collection of images in which contents of Page
@@ -45,7 +45,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageList : IReadOnlyList<ImageEntry>, INotifyCollectionChanged
+    public class ImageCollection : IReadOnlyCollection<ImageEntry>, INotifyCollectionChanged
     {
         #region Constructors
 
@@ -60,7 +60,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageList(SynchronizationContext context)
+        public ImageCollection(SynchronizationContext context)
         {
             _context = context;
             _inner   = new ObservableCollection<ImageEntry>();
@@ -74,17 +74,6 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Items[int]
-        ///
-        /// <summary>
-        /// Gets the element at the specified index.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageEntry this[int index] => _inner[index];
 
         /* ----------------------------------------------------------------- */
         ///
@@ -196,10 +185,7 @@ namespace Cube.Pdf.App.Editor
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<ImageEntry> GetEnumerator()
-        {
-            for (var i = 0; i < Count; ++i) yield return this[i];
-        }
+        public IEnumerator<ImageEntry> GetEnumerator() => _inner.GetEnumerator();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -360,7 +346,7 @@ namespace Cube.Pdf.App.Editor
                     Renderer.Render(gs, src.RawObject);
                 }
                 _cache.TryAdd(src, image.ToBitmapImage(true));
-                src.Update();
+                src.Refresh();
             }
             finally { _doing.TryRemove(src, out var _); }
         }

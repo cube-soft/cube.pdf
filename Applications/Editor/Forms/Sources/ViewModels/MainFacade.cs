@@ -50,11 +50,11 @@ namespace Cube.Pdf.App.Editor
         public MainFacade(SettingsFolder settings, SynchronizationContext context)
         {
             Settings = settings;
-            Images   = new ImageList(context);
+            Images   = new ImageCollection(context);
             Bindable = new MainBindableData(Images, settings);
 
-            Images.Preferences.BaseSize = settings.Value.ViewSize;
-            Images.Preferences.Margin = 3;
+            Images.Preferences.ItemSize = settings.Value.ViewSize;
+            Images.Preferences.ItemMargin = 3;
             Images.Preferences.TextHeight = 25;
         }
 
@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected ImageList Images { get; }
+        protected ImageCollection Images { get; }
 
         /* ----------------------------------------------------------------- */
         ///

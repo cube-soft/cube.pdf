@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
 using NUnit.Framework;
+using System.Linq;
 
 namespace Cube.Pdf.Tests.Editor
 {
@@ -51,7 +52,7 @@ namespace Cube.Pdf.Tests.Editor
             var vm = CreateViewModel();
             ExecuteOpenCommand(vm, GetExamplesWith(filename));
             Assert.That(Wait.For(() => vm.Data.Images.Count > 0), "Timeout");
-            Assert.That(vm.Data.Images[0].Image, Is.Not.Null);
+            Assert.That(vm.Data.Images.First().Image, Is.Not.Null);
         }
 
         /* ----------------------------------------------------------------- */

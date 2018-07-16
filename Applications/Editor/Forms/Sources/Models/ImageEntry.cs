@@ -160,9 +160,7 @@ namespace Cube.Pdf.App.Editor
             get => _rawObject;
             set
             {
-                var prev = _rawObject;
-                if (!SetProperty(ref _rawObject, value)) return;
-                UpdateSize(prev.GetDisplaySize(), value.GetDisplaySize());
+                if (SetProperty(ref _rawObject, value)) RaiseSizeChanged();
             }
         }
 
@@ -183,10 +181,10 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Update
+        /// Refresh
         ///
         /// <summary>
-        /// Updates the content of the Image property.
+        /// Refresh the display image.
         /// </summary>
         ///
         /// <remarks>
@@ -196,7 +194,7 @@ namespace Cube.Pdf.App.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update() => RaisePropertyChanged(nameof(Image));
+        public void Refresh() => RaisePropertyChanged(nameof(Image));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -211,10 +209,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Rotate(int degree)
         {
-            var previous = RawObject.GetDisplaySize();
             RawObject.Delta += degree;
-            var current = RawObject.GetDisplaySize();
-            UpdateSize(previous, current);
+            RaiseSizeChanged();
         }
 
         #endregion
@@ -233,23 +229,22 @@ namespace Cube.Pdf.App.Editor
         private double GetScale(SizeF src)
         {
             var m = 10; // TODO: how to calc?
-            var h = (Preferences.Width -　Preferences.Margin * 2 - m) / src.Width;
-            var v = (Preferences.Height - Preferences.Margin * 2 - Preferences.TextHeight) / src.Height;
+            var h = (Preferences.ItemSize - Preferences.ItemMargin * 2 - m) / src.Width;
+            var v = (Preferences.ItemSize - Preferences.ItemMargin * 2 - Preferences.TextHeight) / src.Height;
             return Math.Min(h, v);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateSize
+        /// RaiseSizeChanged
         ///
         /// <summary>
-        /// Updates the size information of the inner collection.
+        /// Raises PropertyChanged events of Width and Height.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void UpdateSize(SizeF? previous, SizeF? current)
+        private void RaiseSizeChanged()
         {
-            Preferences.Update(previous, current);
             RaisePropertyChanged(nameof(Width));
             RaisePropertyChanged(nameof(Height));
         }

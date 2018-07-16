@@ -45,7 +45,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="settings">Settings object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindableData(ImageList images, SettingsFolder settings)
+        public MainBindableData(ImageCollection images, SettingsFolder settings)
         {
             Images    = images;
             _settings = settings;
@@ -64,7 +64,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageList Images { get; }
+        public ImageCollection Images { get; }
 
         /* ----------------------------------------------------------------- */
         ///
