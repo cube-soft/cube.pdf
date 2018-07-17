@@ -212,7 +212,7 @@ namespace Cube.Pdf.App.Editor
 
             var index  = (int)(AssociatedObject.VerticalOffset / size) * column;
             var first  = Math.Max(index - column, 0);
-            var last   = index + column * (row + 2);
+            var last   = index + column * (row + 3);
 
             First = first;
             Last  = last;

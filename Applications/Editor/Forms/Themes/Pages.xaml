@@ -19,10 +19,11 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:my="clr-namespace:Cube.Pdf.App.Editor">
 
     <!-- **********************************************************************
-      Root
+      ListView
     *********************************************************************** -->
     <Style x:Key="PagesStyle" TargetType="{x:Type ListView}">
         <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
@@ -33,23 +34,33 @@
     </Style>
 
     <!-- **********************************************************************
-      Outer
+      ListView (Template)
     *********************************************************************** -->
-    <Style x:Key="PagesOuterStyle" TargetType="{x:Type ScrollViewer}">
-        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
-        <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
-    </Style>
+    <ControlTemplate x:Key="PagesTemplate" TargetType="{x:Type ListView}">
+        <ScrollViewer
+            DataContext="{Binding Preferences}"
+            Background="{StaticResource DarkBackgroundBrush}"
+            HorizontalScrollBarVisibility="Disabled">
+            <WrapPanel
+                ItemWidth="{Binding ItemSize}"
+                ItemHeight="{Binding ItemSize}"
+                MinWidth="{Binding ItemSize}"
+                Width="{Binding FrameworkElement.ActualWidth,
+                RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                IsItemsHost="True"
+                Margin="3" />
+            <i:Interaction.Behaviors>
+                <my:VisibleRange
+                    First="{Binding VisibleFirst, Mode=TwoWay}"
+                    Last="{Binding VisibleLast, Mode=TwoWay}"
+                    ItemSize="{Binding ItemSize}"
+                    ItemMargin="{Binding ItemMargin}" />
+            </i:Interaction.Behaviors>
+        </ScrollViewer>
+    </ControlTemplate>
 
     <!-- **********************************************************************
-      Inner
-    *********************************************************************** -->
-    <Style x:Key="PagesInnerStyle" TargetType="{x:Type WrapPanel}">
-        <Setter Property="IsItemsHost" Value="True" />
-        <Setter Property="Margin" Value="3" />
-    </Style>
-
-    <!-- **********************************************************************
-      Item
+      ListViewItem
     *********************************************************************** -->
     <Style x:Key="PageStyle" TargetType="{x:Type ListViewItem}">
         <Setter Property="Margin" Value="3" />
@@ -57,7 +68,7 @@
     </Style>
 
     <!-- **********************************************************************
-      Item (DataTemplate)
+      ListViewItem (DataTemplate)
     *********************************************************************** -->
     <DataTemplate x:Key="PageTemplate" DataType="{x:Type my:ImageEntry}">
         <Grid Height="{Binding Preferences.ItemSize}">

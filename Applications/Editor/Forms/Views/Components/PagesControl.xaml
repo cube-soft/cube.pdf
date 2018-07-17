@@ -23,7 +23,6 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
-    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="600"
@@ -45,28 +44,9 @@
         ItemContainerStyle="{StaticResource PageStyle}"
         ItemTemplate="{StaticResource PageTemplate}"
         Style="{StaticResource PagesStyle}"
+        Template="{StaticResource PagesTemplate}"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.VirtualizationMode="Recycling">
-        <ListView.Template>
-            <ControlTemplate>
-                <ScrollViewer Style="{StaticResource PagesOuterStyle}">
-                    <WrapPanel
-                        Style="{StaticResource PagesInnerStyle}"
-                        ItemWidth="{Binding Preferences.ItemSize}"
-                        ItemHeight="{Binding Preferences.ItemSize}"
-                        MinWidth="{Binding Preferences.ItemSize}"
-                        Width="{Binding FrameworkElement.ActualWidth,
-                        RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}" />
-                        <i:Interaction.Behaviors>
-                            <my:VisibleRange
-                                First="{Binding Preferences.VisibleFirst, Mode=TwoWay}"
-                                Last="{Binding Preferences.VisibleLast, Mode=TwoWay}"
-                                ItemSize="{Binding Preferences.ItemSize}"
-                                ItemMargin="{Binding Preferences.ItemMargin}" />
-                        </i:Interaction.Behaviors>
-                </ScrollViewer>
-            </ControlTemplate>
-        </ListView.Template>
         <i:Interaction.Behaviors>
             <xb:SelectionBehavior />
         </i:Interaction.Behaviors>
