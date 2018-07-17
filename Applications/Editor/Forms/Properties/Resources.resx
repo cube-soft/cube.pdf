@@ -231,6 +231,12 @@
   <data name="MenuZoomOut" xml:space="preserve">
     <value>ZoomOut</value>
   </data>
+  <data name="MessageLoading" xml:space="preserve">
+    <value>Loading {0} ...</value>
+  </data>
+  <data name="MessagePage" xml:space="preserve">
+    <value>{0} pages</value>
+  </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>Open file</value>
   </data>

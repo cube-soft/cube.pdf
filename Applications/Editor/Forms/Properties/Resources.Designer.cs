@@ -403,6 +403,24 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Loading {0} ... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageLoading {
+            get {
+                return ResourceManager.GetString("MessageLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} pages に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessagePage {
+            get {
+                return ResourceManager.GetString("MessagePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Open file に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleOpen {

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Pdf.Pdfium;
 using System;
 using System.Threading;
@@ -115,6 +116,17 @@ namespace Cube.Pdf.App.Editor
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IO IO => Settings.IO;
+
         #endregion
 
         #region Methods
@@ -132,9 +144,11 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Open(string src) => Invoke(() =>
         {
+            SetMessage(Properties.Resources.MessageLoading, IO.Get(src).Name);
             Core = new DocumentReader(src);
             Images.Renderer = Core;
             foreach (var page in Core.Pages) Images.Add(page);
+            SetMessage(Properties.Resources.MessagePage, Images.Count);
         });
 
         /* ----------------------------------------------------------------- */
@@ -194,8 +208,21 @@ namespace Cube.Pdf.App.Editor
         {
             Bindable.IsBusy.Value = true;
             try { action(); }
+            catch (Exception err) { SetMessage(err.Message); throw; }
             finally { Bindable.IsBusy.Value = false; }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetMessage
+        ///
+        /// <summary>
+        /// Sets the specified message.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetMessage(string format, params object[] args) =>
+            Bindable.Message.Value = string.Format(format, args);
 
         #endregion
 
