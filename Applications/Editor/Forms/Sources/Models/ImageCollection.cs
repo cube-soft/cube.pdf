@@ -28,6 +28,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -195,22 +196,98 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Select
+        ///
+        /// <summary>
+        /// Sets the IsSelected property of all items to be the specified
+        /// value.
+        /// </summary>
+        ///
+        /// <param name="selected">true for selected.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Select(bool selected)
+        {
+            foreach (var item in _inner) item.IsSelected = selected;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Flip
+        ///
+        /// <summary>
+        /// Flips the IsSelected property of all items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Flip()
+        {
+            foreach (var item in _inner) item.IsSelected = !item.IsSelected;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Add
         ///
         /// <summary>
         /// Adds the Page object to be rendered.
         /// </summary>
         ///
-        /// <param name="item">Page object.</param>
+        /// <param name="items">Page collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(Page item)
+        public void Add(IEnumerable<Page> items)
         {
-            _inner.Add(new ImageEntry(e => GetImage(e), Selection, Preferences)
+            foreach (var item in items) _inner.Add(Create(_inner.Count, item));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        ///
+        /// <summary>
+        /// Insert the Page objects at the specified index.
+        /// </summary>
+        ///
+        /// <param name="index">Insertion index.</param>
+        /// <param name="items">Page collection.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Insert(int index, IEnumerable<Page> items)
+        {
+            var pos = index;
+            foreach (var item in items)
             {
-                Index     = _inner.Count,
-                RawObject = item,
-            });
+                _inner.Insert(pos, Create(pos, item));
+                ++pos;
+            }
+            for (var i = pos; i < _inner.Count; ++i) _inner[i].Index = i;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Removes the Page objects.
+        /// </summary>
+        ///
+        /// <param name="indecies">Indices for removal items.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove(IEnumerable<int> indecies)
+        {
+            var min = int.MaxValue;
+            foreach (var index in indecies.OrderByDescending(e => e))
+            {
+                if (index < 0 || index >= _inner.Count) continue;
+                min = index;
+                var item = _inner[index];
+                _inner.RemoveAt(index);
+                _cache.TryRemove(item, out var _);
+                _doing.TryRemove(item, out var _);
+            }
+            for (var i = min; i < _inner.Count; ++i) _inner[i].Index = i;
         }
 
         /* ----------------------------------------------------------------- */
@@ -258,7 +335,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Rotate(int degree) => RestartTask(() =>
         {
-            foreach (var item in Selection.Value)
+            foreach (var item in Selection.Items)
             {
                 _cache.TryRemove(item, out var _);
                 _doing.TryRemove(item, out var _);
@@ -269,6 +346,22 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creats a new ImageEntry object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ImageEntry Create(int index, Page item) =>
+            new ImageEntry(e => GetImage(e), Selection, Preferences)
+            {
+                Index = index,
+                RawObject = item,
+            };
 
         /* ----------------------------------------------------------------- */
         ///

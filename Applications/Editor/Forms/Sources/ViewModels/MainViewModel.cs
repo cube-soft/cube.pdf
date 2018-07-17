@@ -17,14 +17,12 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Tasks;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
@@ -147,46 +145,58 @@ namespace Cube.Pdf.App.Editor
         private void SetRibbonCommands()
         {
             Ribbon.Open.Command = new BindableCommand(
-                () => Send(MessageFactory.CreateSource(e => Task.Run(() =>
-                {
-                    if (e.Result) Model.Open(e.FileName);
-                }).Forget())),
+                () => SendOpen(e => Model.Open(e)),
                 () => !Data.IsOpen.Value && !Data.IsBusy.Value,
                 Data.IsOpen,
                 Data.IsBusy
             );
 
             Ribbon.Close.Command         = WhenOpen(() => Model.Close());
-            Ribbon.Save.Command          = WhenOpen(() => { });
-            Ribbon.SaveAs.Command        = WhenOpen(() => { });
+            Ribbon.Save.Command          = None;
+            Ribbon.SaveAs.Command        = None;
             Ribbon.Undo.Command          = None;
             Ribbon.Redo.Command          = None;
-            Ribbon.Select.Command        = WhenOpen(() => { });
-            Ribbon.SelectAll.Command     = WhenOpen(() => { });
-            Ribbon.SelectFlip.Command    = WhenOpen(() => { });
-            Ribbon.SelectCancel.Command  = WhenOpen(() => { });
-            Ribbon.Insert.Command        = WhenSelected(() => { });
-            Ribbon.InsertFront.Command   = WhenOpen(() => { });
-            Ribbon.InsertBack.Command    = WhenOpen(() => { });
-            Ribbon.InsertOthers.Command  = WhenOpen(() => { });
-            Ribbon.Extract.Command       = WhenSelected(() => { });
-            Ribbon.ExtractImages.Command = WhenOpen(() => { });
-            Ribbon.ExtractOthers.Command = WhenOpen(() => { });
-            Ribbon.Remove.Command        = WhenSelected(() => { });
-            Ribbon.RemoveOthers.Command  = WhenOpen(() => { });
-            Ribbon.MovePrevious.Command  = WhenSelected(() => { });
-            Ribbon.MoveNext.Command      = WhenSelected(() => { });
+            Ribbon.Select.Command        = WhenOpen(() => Model.Select());
+            Ribbon.SelectAll.Command     = WhenOpen(() => Model.Select(true));
+            Ribbon.SelectFlip.Command    = WhenOpen(() => Model.Flip());
+            Ribbon.SelectCancel.Command  = WhenOpen(() => Model.Select(false));
+            Ribbon.Insert.Command        = WhenSelected(() => SendOpen(e => Model.Insert(e)));
+            Ribbon.InsertFront.Command   = WhenOpen(() => SendOpen(e => Model.Insert(0, e)));
+            Ribbon.InsertBack.Command    = WhenOpen(() => SendOpen(e => Model.Insert(int.MaxValue, e)));
+            Ribbon.InsertOthers.Command  = None;
+            Ribbon.Extract.Command       = None;
+            Ribbon.ExtractImages.Command = None;
+            Ribbon.ExtractOthers.Command = None;
+            Ribbon.Remove.Command        = WhenSelected(() => Model.Remove());
+            Ribbon.RemoveOthers.Command  = None;
+            Ribbon.MovePrevious.Command  = None;
+            Ribbon.MoveNext.Command      = None;
             Ribbon.RotateLeft.Command    = WhenSelected(() => Model.Rotate(-90));
             Ribbon.RotateRight.Command   = WhenSelected(() => Model.Rotate(90));
             Ribbon.Metadata.Command      = None;
             Ribbon.Encryption.Command    = None;
             Ribbon.Refresh.Command       = WhenOpen(() => Model.Refresh());
-            Ribbon.ZoomIn.Command        = WhenAny(() => { });
-            Ribbon.ZoomOut.Command       = WhenAny(() => { });
+            Ribbon.ZoomIn.Command        = None;
+            Ribbon.ZoomOut.Command       = None;
             Ribbon.Version.Command       = WhenAny(() => Send(Data.Settings.Uri));
             Ribbon.Exit.Command          = WhenAny(() => Send<CloseMessage>());
             Ribbon.Web.Command           = WhenAny(() => Send(Data.Settings.Uri));
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SendOpen
+        ///
+        /// <summary>
+        /// Sends the message that shows OpenFileDialog and executes the
+        /// specified action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SendOpen(Action<string> action) =>
+            Send(MessageFactory.CreateSource(e =>
+                Async(() => { if (e.Result) action(e.FileName); })
+            ));
 
         #region Factory
 
@@ -233,7 +243,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ICommand WhenSelected(Action action) => new BindableCommand(
             action,
-            () => Data.IsOpen.Value && Data.Selection.AnySelected && !Data.IsBusy.Value,
+            () => Data.IsOpen.Value && Data.Selection.Count > 0 && !Data.IsBusy.Value,
             Data.IsOpen,
             Data.IsBusy,
             Data.Selection

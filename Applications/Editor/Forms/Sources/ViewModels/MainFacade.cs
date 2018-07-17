@@ -116,7 +116,7 @@ namespace Cube.Pdf.App.Editor
         /// Open
         ///
         /// <summary>
-        /// Open a PDF document with the specified file path.
+        /// Opens a PDF document with the specified file path.
         /// </summary>
         ///
         /// <param name="src">File path.</param>
@@ -125,7 +125,7 @@ namespace Cube.Pdf.App.Editor
         public void Open(string src) => Invoke(() =>
         {
             Set(Properties.Resources.MessageLoading, IO.Get(src).Name);
-            foreach (var page in _core.GetOrAdd(src).Pages) Images.Add(page);
+            Images.Add(_core.GetOrAdd(src).Pages);
             Set(Properties.Resources.MessagePage, Images.Count);
         });
 
@@ -143,6 +143,91 @@ namespace Cube.Pdf.App.Editor
             Images.Clear();
             _core.Clear();
             Set(string.Empty);
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// Sets or resets the IsSelected property of all items according
+        /// to the current condition.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Select() => Select(Bindable.Selection.Count < Images.Count);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// Sets the IsSelected property of all items to be the specified
+        /// value.
+        /// </summary>
+        ///
+        /// <param name="selected">true for selected.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Select(bool selected) => Invoke(() => Images.Select(selected));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Flip
+        ///
+        /// <summary>
+        /// Flips the IsSelected property of all items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Flip() => Invoke(() => Images.Flip());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        ///
+        /// <summary>
+        /// Inserts the page objects of the specified file path.
+        /// </summary>
+        ///
+        /// <param name="src">File path.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Insert(string src) => Insert(Bindable.Selection.LastIndex + 1, src);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        ///
+        /// <summary>
+        /// Inserts the page objects at the specified index.
+        /// </summary>
+        ///
+        /// <param name="index">Insertion index.</param>
+        /// <param name="src">File path.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Insert(int index, string src) => Invoke(() =>
+        {
+            Set(Properties.Resources.MessageLoading, IO.Get(src).Name);
+            var cvt = Math.Min(Math.Max(index, 0), Images.Count);
+            Images.Insert(cvt, _core.GetOrAdd(src).Pages);
+            Set(Properties.Resources.MessagePage, Images.Count);
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Removes the selected objects.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove() => Invoke(() =>
+        {
+            Images.Remove(Bindable.Selection.Indices);
+            Set(Properties.Resources.MessagePage, Images.Count);
         });
 
         /* ----------------------------------------------------------------- */
