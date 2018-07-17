@@ -22,7 +22,6 @@ using Cube.Tasks;
 using Cube.Xui.Converters;
 using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -69,7 +68,9 @@ namespace Cube.Pdf.App.Editor
         {
             _engine  = getter;
             _context = context;
+            _cache   = new CacheCollection<ImageEntry, ImageSource>(e => CreateImage(e));
 
+            _cache.Created += (s, e) => e.Key.Refresh();
             _inner.CollectionChanged += WhenCollectionChanged;
             Preferences.PropertyChanged += WhenPreferenceChanged;
         }
@@ -284,8 +285,7 @@ namespace Cube.Pdf.App.Editor
                 min = index;
                 var item = _inner[index];
                 _inner.RemoveAt(index);
-                _cache.TryRemove(item, out var _);
-                _doing.TryRemove(item, out var _);
+                _cache.Remove(item);
             }
             for (var i = min; i < _inner.Count; ++i) _inner[i].Index = i;
         }
@@ -306,7 +306,6 @@ namespace Cube.Pdf.App.Editor
 
             _inner.Clear();
             _cache.Clear();
-            _doing.Clear();
         }
 
         /* ----------------------------------------------------------------- */
@@ -318,11 +317,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Refresh() => RestartTask(() =>
-        {
-            _cache.Clear();
-            _doing.Clear();
-        });
+        public void Refresh() => RestartTask(() => _cache.Clear());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -337,8 +332,7 @@ namespace Cube.Pdf.App.Editor
         {
             foreach (var item in Selection.Items)
             {
-                _cache.TryRemove(item, out var _);
-                _doing.TryRemove(item, out var _);
+                _cache.Remove(item);
                 item.Rotate(degree);
             }
         });
@@ -403,7 +397,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetImage
+        /// CreateImage
         ///
         /// <summary>
         /// Stores an ImageSource to the Cache collection and raises
@@ -411,26 +405,18 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetImage(ImageEntry src)
+        private ImageSource CreateImage(ImageEntry src)
         {
             var obj = _engine(src.RawObject.File.FullName);
-            if (obj == null) return;
+            if (obj == null) return null;
 
-            if (_cache.ContainsKey(src)) return;
-            if (!_doing.TryAdd(src, 0)) return;
-
-            try
+            var dest = new Bitmap(src.Width, src.Height);
+            using (var gs = Graphics.FromImage(dest))
             {
-                var image = new Bitmap(src.Width, src.Height);
-                using (var gs = Graphics.FromImage(image))
-                {
-                    gs.Clear(System.Drawing.Color.White);
-                    obj.Render(gs, src.RawObject);
-                }
-                _cache.TryAdd(src, image.ToBitmapImage(true));
-                src.Refresh();
+                gs.Clear(System.Drawing.Color.White);
+                obj.Render(gs, src.RawObject);
             }
-            finally { _doing.TryRemove(src, out var _); }
+            return dest.ToBitmapImage(true);
         }
 
         /* ----------------------------------------------------------------- */
@@ -455,7 +441,7 @@ namespace Cube.Pdf.App.Editor
                 for (var i = range.Key; i < range.Value; ++i)
                 {
                     if (current.Token.IsCancellationRequested) return;
-                    SetImage(_inner[i]);
+                    _cache.GetOrCreate(_inner[i]);
                 }
             }).Forget();
         }
@@ -509,9 +495,8 @@ namespace Cube.Pdf.App.Editor
         #region Fields
         private readonly Func<string, IDocumentRenderer> _engine;
         private readonly SynchronizationContext _context;
+        private readonly CacheCollection<ImageEntry, ImageSource> _cache;
         private readonly ObservableCollection<ImageEntry> _inner = new ObservableCollection<ImageEntry>();
-        private readonly ConcurrentDictionary<ImageEntry, ImageSource> _cache = new ConcurrentDictionary<ImageEntry, ImageSource>();
-        private readonly ConcurrentDictionary<ImageEntry, byte> _doing = new ConcurrentDictionary<ImageEntry, byte>();
         private CancellationTokenSource _task;
         private ImageSource _dummy;
         #endregion
