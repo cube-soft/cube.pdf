@@ -57,15 +57,17 @@ namespace Cube.Pdf.App.Editor
         /// Initializes a new instance.
         /// </summary>
         ///
+        /// <param name="getter">
+        /// Function for getting IDocumentRenderer objects.
+        /// </param>
+        ///
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageCollection(SynchronizationContext context)
+        public ImageCollection(Func<string, IDocumentRenderer> getter, SynchronizationContext context)
         {
+            _engine  = getter;
             _context = context;
-            _inner   = new ObservableCollection<ImageEntry>();
-            _cache   = new ConcurrentDictionary<ImageEntry, ImageSource>();
-            _doing   = new ConcurrentDictionary<ImageEntry, byte>();
 
             _inner.CollectionChanged += WhenCollectionChanged;
             Preferences.PropertyChanged += WhenPreferenceChanged;
@@ -107,17 +109,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ImagePreferences Preferences { get; } = new ImagePreferences();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Renderer
-        ///
-        /// <summary>
-        /// Gets or sets the object to render Page contents.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IDocumentRenderer Renderer { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -236,8 +227,6 @@ namespace Cube.Pdf.App.Editor
             _task?.Cancel();
             _task = null;
 
-            Renderer = null;
-
             _inner.Clear();
             _cache.Clear();
             _doing.Clear();
@@ -252,13 +241,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Refresh()
+        public void Refresh() => RestartTask(() =>
         {
             _cache.Clear();
             _doing.Clear();
-
-            ResetTask();
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -269,7 +256,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Rotate(int degree)
+        public void Rotate(int degree) => RestartTask(() =>
         {
             foreach (var item in Selection.Value)
             {
@@ -277,8 +264,7 @@ namespace Cube.Pdf.App.Editor
                 _doing.TryRemove(item, out var _);
                 item.Rotate(degree);
             }
-            ResetTask();
-        }
+        });
 
         #endregion
 
@@ -334,6 +320,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetImage(ImageEntry src)
         {
+            var obj = _engine(src.RawObject.File.FullName);
+            if (obj == null) return;
+
             if (_cache.ContainsKey(src)) return;
             if (!_doing.TryAdd(src, 0)) return;
 
@@ -343,7 +332,7 @@ namespace Cube.Pdf.App.Editor
                 using (var gs = Graphics.FromImage(image))
                 {
                     gs.Clear(System.Drawing.Color.White);
-                    Renderer.Render(gs, src.RawObject);
+                    obj.Render(gs, src.RawObject);
                 }
                 _cache.TryAdd(src, image.ToBitmapImage(true));
                 src.Refresh();
@@ -353,43 +342,44 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RunTask
+        /// RestartTask
         ///
         /// <summary>
         /// Runs a task that creates ImageSource items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private CancellationTokenSource RunTask()
+        private void RestartTask()
         {
-            var dest  = new CancellationTokenSource();
-            var range = GetVisibleRange();
+            var range   = GetVisibleRange();
+            var current = new CancellationTokenSource();
+
+            _task?.Cancel();
+            _task = current;
 
             Task.Run(() =>
             {
                 for (var i = range.Key; i < range.Value; ++i)
                 {
-                    if (dest.Token.IsCancellationRequested) return;
+                    if (current.Token.IsCancellationRequested) return;
                     SetImage(_inner[i]);
                 }
             }).Forget();
-
-            return dest;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ResetTask
+        /// RestartTask
         ///
         /// <summary>
-        /// Cancels the current task and reruns.
+        /// Runs a task after executing the specified action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ResetTask()
+        private void RestartTask(Action before)
         {
-            _task?.Cancel();
-            _task = RunTask();
+            before();
+            RestartTask();
         }
 
         /* ----------------------------------------------------------------- */
@@ -403,7 +393,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenCollectionChanged(object s, NotifyCollectionChangedEventArgs e)
         {
-            ResetTask();
+            RestartTask();
             OnCollectionChanged(e);
         }
 
@@ -418,16 +408,17 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPreferenceChanged(object s, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Preferences.VisibleFirst)) ResetTask();
+            if (e.PropertyName == nameof(Preferences.VisibleFirst)) RestartTask();
         }
 
         #endregion
 
         #region Fields
+        private readonly Func<string, IDocumentRenderer> _engine;
         private readonly SynchronizationContext _context;
-        private readonly ObservableCollection<ImageEntry> _inner;
-        private readonly ConcurrentDictionary<ImageEntry, ImageSource> _cache;
-        private readonly ConcurrentDictionary<ImageEntry, byte> _doing;
+        private readonly ObservableCollection<ImageEntry> _inner = new ObservableCollection<ImageEntry>();
+        private readonly ConcurrentDictionary<ImageEntry, ImageSource> _cache = new ConcurrentDictionary<ImageEntry, ImageSource>();
+        private readonly ConcurrentDictionary<ImageEntry, byte> _doing = new ConcurrentDictionary<ImageEntry, byte>();
         private CancellationTokenSource _task;
         private ImageSource _dummy;
         #endregion

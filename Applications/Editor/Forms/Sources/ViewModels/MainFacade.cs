@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Pdf.Pdfium;
 using System;
 using System.Threading;
 
@@ -51,7 +50,8 @@ namespace Cube.Pdf.App.Editor
         public MainFacade(SettingsFolder settings, SynchronizationContext context)
         {
             Settings = settings;
-            Images   = new ImageCollection(context);
+            _core    = new DocumentCollection(e => Bindable.IsOpen.Value = e.Count > 0);
+            Images   = new ImageCollection(e => _core.Get(e), context);
             Bindable = new MainBindableData(Images, settings);
 
             Images.Preferences.ItemSize = settings.Value.ViewSize;
@@ -98,26 +98,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Core
-        ///
-        /// <summary>
-        /// Gets or sets a core object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected DocumentReader Core
-        {
-            get => _core;
-            set
-            {
-                if (_core == value) return;
-                _core = value;
-                Bindable.IsOpen.Value = _core != null;
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// IO
         ///
         /// <summary>
@@ -144,11 +124,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Open(string src) => Invoke(() =>
         {
-            SetMessage(Properties.Resources.MessageLoading, IO.Get(src).Name);
-            Core = new DocumentReader(src);
-            Images.Renderer = Core;
-            foreach (var page in Core.Pages) Images.Add(page);
-            SetMessage(Properties.Resources.MessagePage, Images.Count);
+            Set(Properties.Resources.MessageLoading, IO.Get(src).Name);
+            foreach (var page in _core.GetOrAdd(src).Pages) Images.Add(page);
+            Set(Properties.Resources.MessagePage, Images.Count);
         });
 
         /* ----------------------------------------------------------------- */
@@ -163,8 +141,8 @@ namespace Cube.Pdf.App.Editor
         public void Close() => Invoke(() =>
         {
             Images.Clear();
-            Core?.Dispose();
-            Core = null;
+            _core.Clear();
+            Set(string.Empty);
         });
 
         /* ----------------------------------------------------------------- */
@@ -208,26 +186,26 @@ namespace Cube.Pdf.App.Editor
         {
             Bindable.IsBusy.Value = true;
             try { action(); }
-            catch (Exception err) { SetMessage(err.Message); throw; }
+            catch (Exception err) { Set(err.Message); throw; }
             finally { Bindable.IsBusy.Value = false; }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetMessage
+        /// Set
         ///
         /// <summary>
         /// Sets the specified message.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetMessage(string format, params object[] args) =>
+        private void Set(string format, params object[] args) =>
             Bindable.Message.Value = string.Format(format, args);
 
         #endregion
 
         #region Fields
-        private DocumentReader _core;
+        private readonly DocumentCollection _core;
         #endregion
     }
 }

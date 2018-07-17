@@ -16,39 +16,42 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
+using Cube.Pdf.Pdfium;
+using System;
+using System.Collections.Concurrent;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainBindableData
+    /// DocumentCollection
     ///
     /// <summary>
-    /// Provides values for binding to the MainWindow.
+    /// Represents a colletion of PDF documents.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainBindableData
+    public class DocumentCollection
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainBindableData
+        /// DocumentCollection
         ///
         /// <summary>
-        /// Initializes a new instance with the specified parameters.
+        /// Initializes a new instance of the DocumentCollection class
+        /// with the specified parameters.
         /// </summary>
         ///
-        /// <param name="images">Image collection.</param>
-        /// <param name="settings">Settings object.</param>
+        /// <param name="updated">
+        /// Called after PDF documents is added or removed.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindableData(ImageCollection images, SettingsFolder settings)
+        public DocumentCollection(Action<DocumentCollection> updated)
         {
-            Images    = images;
-            _settings = settings;
+            _callback = updated;
         }
 
         #endregion
@@ -57,85 +60,109 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Images
+        /// Count
         ///
         /// <summary>
-        /// Gets an image collection of PDF documents.
+        /// Gets the number of DocumentReader objects contained in this
+        /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageCollection Images { get; }
+        public int Count => _core.Count;
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Selection
+        /// Get
         ///
         /// <summary>
-        /// Gets the selection of thumbnails.
+        /// Gets the DocumentReader object of the specified file path.
         /// </summary>
         ///
+        /// <param name="src">File path.</param>
+        ///
+        /// <returns>DocumentReader object.</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public ImageSelection Selection => Images.Selection;
+        public DocumentReader Get(string src) =>
+            _core.TryGetValue(src, out var dest) ? dest : null;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Preferences
+        /// GetOrAdd
         ///
         /// <summary>
-        /// Gets the preferences for thumbnails.
+        /// Adds a DocumentReader if the specified path does not already
+        /// exist.
         /// </summary>
         ///
+        /// <param name="src">File path.</param>
+        ///
+        /// <returns>DocumentReader object.</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public ImagePreferences Preferences => Images.Preferences;
+        public DocumentReader GetOrAdd(string src)
+        {
+            var created = false;
+            var dest  = _core.GetOrAdd(src, e =>
+            {
+                created = true;
+                return new DocumentReader(e);
+            });
+            if (created) _callback(this);
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// Remove
         ///
         /// <summary>
-        /// Gets an application settings.
+        /// Attempts to remove the DocumentReader of the specified file path.
         /// </summary>
         ///
+        /// <param name="src">File path.</param>
+        ///
+        /// <returns>
+        /// true if the object was removed successfully; otherwise, false.
+        /// </returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public Settings Settings => _settings.Value;
+        public bool Remove(string src)
+        {
+            var dest = _core.TryRemove(src, out var removed);
+            if (dest)
+            {
+                removed.Dispose();
+                _callback(this);
+            }
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsOpen
+        /// Clear
         ///
         /// <summary>
-        /// Gets a value that determines whether a PDF document is open.
+        /// Removes all of the DocumentReader objects.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> IsOpen { get; } = new Bindable<bool>(false);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsBusy
-        ///
-        /// <summary>
-        /// Gets a value that determines whether models are busy.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bindable<bool> IsBusy { get; } = new Bindable<bool>(false);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Message
-        ///
-        /// <summary>
-        /// Gets or sets the message.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bindable<string> Message { get; } = new Bindable<string>(string.Empty);
+        public void Clear()
+        {
+            foreach (var kv in _core) kv.Value.Dispose();
+            _core.Clear();
+            _callback(this);
+        }
 
         #endregion
 
         #region Fields
-        private SettingsFolder _settings;
+        private readonly ConcurrentDictionary<string, DocumentReader> _core = new ConcurrentDictionary<string, DocumentReader>();
+        private readonly Action<DocumentCollection> _callback;
         #endregion
     }
 }
