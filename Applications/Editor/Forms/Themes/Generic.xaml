@@ -24,7 +24,7 @@
       Colors
     *********************************************************************** -->
     <Color x:Key="DarkBackgroundColor">#FF555555</Color>
-    <Color x:Key="DarkForegroundColor">#FFB3B3B3</Color>
+    <Color x:Key="DarkForegroundColor">#FFE0E0E0</Color>
     <Color x:Key="DarkBorderColor">#FFB3B3B3</Color>
 
     <Color x:Key="LightBackgroundColor">#FFFFFFFF</Color>

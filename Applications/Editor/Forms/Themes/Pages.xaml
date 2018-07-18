@@ -71,10 +71,10 @@
       ListViewItem (DataTemplate)
     *********************************************************************** -->
     <DataTemplate x:Key="PageTemplate" DataType="{x:Type my:ImageEntry}">
-        <Grid Height="{Binding Preferences.ItemSize}">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="{Binding Preferences.TextHeight}" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Border
@@ -82,7 +82,8 @@
                 Height="{Binding Height}"
                 BorderThickness="1"
                 BorderBrush="{StaticResource DarkBorderBrush}"
-                HorizontalAlignment="Center">
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
                 <Image
                     Source="{Binding Image}"
                     Stretch="None"
@@ -93,7 +94,7 @@
             <TextBlock
                 Grid.Row="1"
                 Text="{Binding Index, Converter={my:IndexToText}}"
-                TextAlignment="Right"
+                TextAlignment="Center"
                 Foreground="{StaticResource DarkForegroundBrush}" />
         </Grid>
     </DataTemplate>
