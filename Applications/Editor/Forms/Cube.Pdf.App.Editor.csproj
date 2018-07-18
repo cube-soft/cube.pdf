@@ -140,6 +140,7 @@
     <Compile Include="Sources\Models\DocumentCollection.cs" />
     <Compile Include="Sources\Models\ImageCollection.cs" />
     <Compile Include="Sources\Models\ImageEntry.cs" />
+    <Compile Include="Sources\Models\ImageFactory.cs" />
     <Compile Include="Sources\Models\ImagePreferences.cs" />
     <Compile Include="Sources\Models\ImageSelection.cs" />
     <Compile Include="Sources\Models\MessageFactory.cs" />
@@ -157,8 +158,6 @@
     <None Include="Packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Large\MoveNext.png" />
-    <Resource Include="Assets\Large\MoveNextDisable.png" />
     <Resource Include="Assets\Large\Close.png" />
     <Resource Include="Assets\Large\CloseDisable.png" />
     <Resource Include="Assets\Large\Encryption.png" />
@@ -169,14 +168,16 @@
     <Resource Include="Assets\Large\ExtractDisable.png" />
     <Resource Include="Assets\Large\ExtractOthers.png" />
     <Resource Include="Assets\Large\ExtractOthersDisable.png" />
-    <Resource Include="Assets\Large\MovePrevious.png" />
-    <Resource Include="Assets\Large\MovePreviousDisable.png" />
     <Resource Include="Assets\Large\Insert.png" />
     <Resource Include="Assets\Large\InsertDisable.png" />
     <Resource Include="Assets\Large\InsertOthers.png" />
     <Resource Include="Assets\Large\InsertOthersDisable.png" />
     <Resource Include="Assets\Large\Metadata.png" />
     <Resource Include="Assets\Large\MetadataDisable.png" />
+    <Resource Include="Assets\Large\MoveNext.png" />
+    <Resource Include="Assets\Large\MoveNextDisable.png" />
+    <Resource Include="Assets\Large\MovePrevious.png" />
+    <Resource Include="Assets\Large\MovePreviousDisable.png" />
     <Resource Include="Assets\Large\Open.png" />
     <Resource Include="Assets\Large\OpenDisable.png" />
     <Resource Include="Assets\Large\Redo.png" />
@@ -197,10 +198,10 @@
     <Resource Include="Assets\Large\SaveAsDisable.png" />
     <Resource Include="Assets\Large\Select.png" />
     <Resource Include="Assets\Large\SelectDisable.png" />
+    <Resource Include="Assets\Large\Settings.png" />
+    <Resource Include="Assets\Large\SettingsDisable.png" />
     <Resource Include="Assets\Large\Undo.png" />
     <Resource Include="Assets\Large\UndoDisable.png" />
-    <Resource Include="Assets\Large\Version.png" />
-    <Resource Include="Assets\Large\VersionDisable.png" />
     <Resource Include="Assets\Large\Web.png" />
     <Resource Include="Assets\Large\WebDisable.png" />
     <Resource Include="Assets\Large\ZoomIn.png" />
@@ -219,16 +220,16 @@
     <Resource Include="Assets\Small\ExtractDisable.png" />
     <Resource Include="Assets\Small\ExtractOthers.png" />
     <Resource Include="Assets\Small\ExtractOthersDisable.png" />
-    <Resource Include="Assets\Small\MoveNext.png" />
-    <Resource Include="Assets\Small\MoveNextDisable.png" />
-    <Resource Include="Assets\Small\MovePrevious.png" />
-    <Resource Include="Assets\Small\MovePreviousDisable.png" />
     <Resource Include="Assets\Small\Insert.png" />
     <Resource Include="Assets\Small\InsertDisable.png" />
     <Resource Include="Assets\Small\InsertOthers.png" />
     <Resource Include="Assets\Small\InsertOthersDisable.png" />
     <Resource Include="Assets\Small\Metadata.png" />
     <Resource Include="Assets\Small\MetadataDisable.png" />
+    <Resource Include="Assets\Small\MoveNext.png" />
+    <Resource Include="Assets\Small\MoveNextDisable.png" />
+    <Resource Include="Assets\Small\MovePrevious.png" />
+    <Resource Include="Assets\Small\MovePreviousDisable.png" />
     <Resource Include="Assets\Small\Open.png" />
     <Resource Include="Assets\Small\OpenDisable.png" />
     <Resource Include="Assets\Small\Redo.png" />
@@ -249,10 +250,10 @@
     <Resource Include="Assets\Small\SaveAsDisable.png" />
     <Resource Include="Assets\Small\Select.png" />
     <Resource Include="Assets\Small\SelectDisable.png" />
+    <Resource Include="Assets\Small\Settings.png" />
+    <Resource Include="Assets\Small\SettingsDisable.png" />
     <Resource Include="Assets\Small\Undo.png" />
     <Resource Include="Assets\Small\UndoDisable.png" />
-    <Resource Include="Assets\Small\Version.png" />
-    <Resource Include="Assets\Small\VersionDisable.png" />
     <Resource Include="Assets\Small\Web.png" />
     <Resource Include="Assets\Small\WebDisable.png" />
     <Resource Include="Assets\Small\ZoomIn.png" />
@@ -263,8 +264,6 @@
     <Resource Include="Assets\Small\Lock.png" />
     <Resource Include="Assets\Small\Pdf.png" />
     <Resource Include="Assets\Background.png" />
-    <Resource Include="Assets\Logo.png" />
-    <Resource Include="Assets\LogoDark.png" />
     <Resource Include="Assets\Navigation.png" />
   </ItemGroup>
   <ItemGroup>

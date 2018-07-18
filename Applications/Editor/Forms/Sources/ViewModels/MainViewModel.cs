@@ -165,7 +165,6 @@ namespace Cube.Pdf.App.Editor
             Ribbon.InsertBack.Command    = WhenOpen(() => SendOpen(e => Model.Insert(int.MaxValue, e)));
             Ribbon.InsertOthers.Command  = None;
             Ribbon.Extract.Command       = None;
-            Ribbon.ExtractImages.Command = None;
             Ribbon.ExtractOthers.Command = None;
             Ribbon.Remove.Command        = WhenSelected(() => Model.Remove());
             Ribbon.RemoveOthers.Command  = None;
@@ -178,9 +177,9 @@ namespace Cube.Pdf.App.Editor
             Ribbon.Refresh.Command       = WhenOpen(() => Model.Refresh());
             Ribbon.ZoomIn.Command        = None;
             Ribbon.ZoomOut.Command       = None;
-            Ribbon.Version.Command       = WhenAny(() => Send(Data.Settings.Uri));
-            Ribbon.Exit.Command          = WhenAny(() => Send<CloseMessage>());
+            Ribbon.Settings.Command      = WhenAny(() => Send(Data.Settings.Uri));
             Ribbon.Web.Command           = WhenAny(() => Send(Data.Settings.Uri));
+            Ribbon.Exit.Command          = WhenAny(() => Send<CloseMessage>());
         }
 
         /* ----------------------------------------------------------------- */

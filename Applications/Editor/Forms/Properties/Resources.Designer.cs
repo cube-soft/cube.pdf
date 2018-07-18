@@ -124,15 +124,6 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Extract the embedded images in the selected pages に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuExtractImages {
-            get {
-                return ResourceManager.GetString("MenuExtractImages", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Extraction details に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuExtractOthers {
@@ -349,20 +340,20 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Settings に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSettings {
+            get {
+                return ResourceManager.GetString("MenuSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Undo に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuUndo {
             get {
                 return ResourceManager.GetString("MenuUndo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Version に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuVersion {
-            get {
-                return ResourceManager.GetString("MenuVersion", resourceCulture);
             }
         }
         

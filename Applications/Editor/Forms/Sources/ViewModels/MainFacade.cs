@@ -221,7 +221,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove() => Invoke(() => Images.Remove(Bindable.Selection.Indices));
+        public void Remove() => Invoke(() => Images.Remove());
 
         /* ----------------------------------------------------------------- */
         ///

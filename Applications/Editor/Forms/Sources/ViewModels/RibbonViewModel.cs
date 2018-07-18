@@ -327,24 +327,11 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ExtractImages
-        ///
-        /// <summary>
-        /// 画像を抽出メニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RibbonEntry ExtractImages { get; } = new RibbonEntry(
-            () => Properties.Resources.MenuExtractImages,
-            nameof(Extract)
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// ExtractOthers
         ///
         /// <summary>
-        /// 詳細を設定して抽出メニューを取得します。
+        /// Gets the ribbon menu that provides functionality to show
+        /// the settings dialog and extract items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -498,15 +485,15 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Version
+        /// Settings
         ///
         /// <summary>
-        /// バージョンメニューを取得します。
+        /// Gets the settings ribbon menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Version { get; } = new RibbonEntry(
-            () => Properties.Resources.MenuVersion
+        public RibbonEntry Settings { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuSettings
         );
 
         /* ----------------------------------------------------------------- */

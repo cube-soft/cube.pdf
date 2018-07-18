@@ -66,12 +66,12 @@
                 <Separator />
 
                 <!-- **********************************************************
-                  Version (ApplicationMenu)
+                  Settings (ApplicationMenu)
                 *********************************************************** -->
                 <r:MenuItem
-                    Header="{Binding Ribbon.Version.Tooltip}"
-                    Icon="{Binding Ribbon.Version.LargeIcon}"
-                    Command="{Binding Ribbon.Version.Command}" />
+                    Header="{Binding Ribbon.Settings.Tooltip}"
+                    Icon="{Binding Ribbon.Settings.LargeIcon}"
+                    Command="{Binding Ribbon.Settings.Command}" />
                 <Separator />
 
                 <!-- **********************************************************
@@ -364,14 +364,14 @@
         <r:RibbonTabItem Header="{Binding Ribbon.Others.Text}">
             <r:RibbonGroupBox>
                 <!-- **********************************************************
-                  Version
+                  Settings
                 *********************************************************** -->
                 <r:Button
-                    Header="{Binding Ribbon.Version.Text}"
-                    Icon="{Binding Ribbon.Version.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Version.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Version.Enabled.Value}"
-                    Command="{Binding Ribbon.Version.Command}" />
+                    Header="{Binding Ribbon.Settings.Text}"
+                    Icon="{Binding Ribbon.Settings.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Settings.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Settings.Enabled.Value}"
+                    Command="{Binding Ribbon.Settings.Command}" />
 
                 <!-- **********************************************************
                   Web

@@ -138,9 +138,6 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>抽出</value>
   </data>
-  <data name="MenuExtractImages" xml:space="preserve">
-    <value>選択ページに含まれる画像を抽出</value>
-  </data>
   <data name="MenuExtractOthers" xml:space="preserve">
     <value>詳細を設定して抽出</value>
   </data>
@@ -211,13 +208,13 @@
     <value>選択を解除</value>
   </data>
   <data name="MenuSelectFlip" xml:space="preserve">
-    <value>選択を切り替え</value>
+    <value>選択の切り替え</value>
+  </data>
+  <data name="MenuSettings" xml:space="preserve">
+    <value>設定</value>
   </data>
   <data name="MenuUndo" xml:space="preserve">
     <value>元に戻す</value>
-  </data>
-  <data name="MenuVersion" xml:space="preserve">
-    <value>バージョン</value>
   </data>
   <data name="MenuView" xml:space="preserve">
     <value>表示</value>

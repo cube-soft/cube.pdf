@@ -17,16 +17,13 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.Pdf.Mixin;
 using Cube.Tasks;
-using Cube.Xui.Converters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -165,6 +162,8 @@ namespace Cube.Pdf.App.Editor
 
         #region Methods
 
+        #region IEnumerable
+
         /* ----------------------------------------------------------------- */
         ///
         /// GetEnumerator
@@ -195,36 +194,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Select
-        ///
-        /// <summary>
-        /// Sets the IsSelected property of all items to be the specified
-        /// value.
-        /// </summary>
-        ///
-        /// <param name="selected">true for selected.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Select(bool selected)
-        {
-            foreach (var item in _inner) item.IsSelected = selected;
-        }
+        #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Flip
-        ///
-        /// <summary>
-        /// Flips the section of items.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Flip()
-        {
-            foreach (var item in _inner) item.IsSelected = !item.IsSelected;
-        }
+        #region Editing
 
         /* ----------------------------------------------------------------- */
         ///
@@ -270,7 +242,18 @@ namespace Cube.Pdf.App.Editor
         /// Remove
         ///
         /// <summary>
-        /// Removes the objects.
+        /// Removes the selected images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove() => Remove(Selection.Indices);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Removes the specified images.
         /// </summary>
         ///
         /// <param name="indecies">Indices for removal items.</param>
@@ -311,21 +294,10 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Refresh
-        ///
-        /// <summary>
-        /// Clears all of images and regenerates them.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Refresh() => RestartTask(() => _cache.Clear());
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Rotate
         ///
         /// <summary>
-        /// Rotates selected images and regenerates them.
+        /// Rotates the selected images and regenerates them.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -337,6 +309,54 @@ namespace Cube.Pdf.App.Editor
                 item.Rotate(degree);
             }
         });
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// Sets the IsSelected property of all items to be the specified
+        /// value.
+        /// </summary>
+        ///
+        /// <param name="selected">true for selected.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Select(bool selected)
+        {
+            foreach (var item in _inner) item.IsSelected = selected;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Flip
+        ///
+        /// <summary>
+        /// Flips the section of items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Flip()
+        {
+            foreach (var item in _inner) item.IsSelected = !item.IsSelected;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Refresh
+        ///
+        /// <summary>
+        /// Clears all of images and regenerates them.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Refresh() => RestartTask(() => _cache.Clear());
+
+        #endregion
 
         #endregion
 
@@ -401,24 +421,13 @@ namespace Cube.Pdf.App.Editor
         /// CreateImage
         ///
         /// <summary>
-        /// Stores an ImageSource to the Cache collection and raises
-        /// the PropertyChanged event of the specified ImageEntry object.
+        /// Creates a new instance of the ImageSource class from the
+        /// specified entry.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ImageSource CreateImage(ImageEntry src)
-        {
-            var obj = _engine(src.RawObject.File.FullName);
-            if (obj == null) return null;
-
-            var dest = new Bitmap(src.Width, src.Height);
-            using (var gs = Graphics.FromImage(dest))
-            {
-                gs.Clear(System.Drawing.Color.White);
-                obj.Render(gs, src.RawObject);
-            }
-            return dest.ToBitmapImage(true);
-        }
+        private ImageSource CreateImage(ImageEntry src) =>
+            _engine(src.RawObject.File.FullName).Create(src);
 
         /* ----------------------------------------------------------------- */
         ///

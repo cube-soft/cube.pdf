@@ -138,9 +138,6 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>Extract</value>
   </data>
-  <data name="MenuExtractImages" xml:space="preserve">
-    <value>Extract the embedded images in the selected pages</value>
-  </data>
   <data name="MenuExtractOthers" xml:space="preserve">
     <value>Extraction details</value>
   </data>
@@ -213,11 +210,11 @@
   <data name="MenuSelectFlip" xml:space="preserve">
     <value>Flip selection</value>
   </data>
+  <data name="MenuSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="MenuUndo" xml:space="preserve">
     <value>Undo</value>
-  </data>
-  <data name="MenuVersion" xml:space="preserve">
-    <value>Version</value>
   </data>
   <data name="MenuView" xml:space="preserve">
     <value>View</value>
