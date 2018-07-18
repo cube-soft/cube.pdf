@@ -28,7 +28,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 
-    Title="CubePDF Utility"
+    Title="{Binding Data.Title.Value}"
     TitleBarHeight="30"
     FontFamily="Meiryo UI"
     Height="600"

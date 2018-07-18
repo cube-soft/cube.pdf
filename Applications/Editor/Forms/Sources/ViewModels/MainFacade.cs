@@ -124,8 +124,10 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Open(string src) => Invoke(() =>
         {
-            SetStatus(Properties.Resources.MessageLoading, IO.Get(src).Name);
+            var name = IO.Get(src).Name;
+            SetStatus(Properties.Resources.MessageLoading, name);
             Images.Add(_core.GetOrAdd(src).Pages);
+            Bindable.Title.Value = $"{name} - {Settings.Title}";
         });
 
         /* ----------------------------------------------------------------- */
@@ -139,6 +141,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Close() => Invoke(() =>
         {
+            Bindable.Title.Value = Settings.Title;
             Images.Clear();
             _core.Clear();
         });

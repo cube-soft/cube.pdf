@@ -27,7 +27,7 @@ namespace Cube.Pdf.App.Editor
     /// SettingsFolder
     ///
     /// <summary>
-    /// 各種設定を保持するためのクラスです。
+    /// Represents the application and/or user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,11 +40,12 @@ namespace Cube.Pdf.App.Editor
         /// SettingsFolder
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the SettingsFolder with the
+        /// specified parameters.
         /// </summary>
         ///
-        /// <param name="assembly">アセンブリ情報</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="assembly">Assembly information.</param>
+        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder(Assembly assembly, IO io) :
@@ -55,26 +56,44 @@ namespace Cube.Pdf.App.Editor
         /// SettingsFolder
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the SettingsFolder with the
+        /// specified parameters.
         /// </summary>
         ///
-        /// <param name="assembly">アセンブリ情報</param>
-        /// <param name="format">設定情報の保存方法</param>
-        /// <param name="location">設定情報の保存パス</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="assembly">Assembly information.</param>
+        /// <param name="format">Serialized format.</param>
+        /// <param name="location">Location for the settings.</param>
+        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
             base(assembly, format, location, io)
         {
-            AutoSave       = false;
-            Version.Digit  = 3;
-            Version.Suffix = Properties.Resources.VersionSuffix;
+            var asm = assembly.GetReader();
+            Title           = asm.Title;
+            AutoSave        = false;
+            Version.Digit   = 3;
+            Version.Suffix  = Properties.Resources.VersionSuffix;
 
-            var dir = IO.Get(assembly.GetReader().Location).DirectoryName;
-            Startup.Name    = "CubePDF Utility UpdateChecker";
+            var dir = IO.Get(asm.Location).DirectoryName;
+            Startup.Name    = $"{Title} UpdateChecker";
             Startup.Command = IO.Combine(dir, $"UpdateChecker.exe").Quote();
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Title
+        ///
+        /// <summary>
+        /// Gets the title of the application.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Title { get; }
 
         #endregion
     }
