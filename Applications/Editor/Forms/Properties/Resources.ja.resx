@@ -234,6 +234,9 @@
   <data name="MessagePage" xml:space="preserve">
     <value>全 {0} ページ</value>
   </data>
+  <data name="MessageSelection" xml:space="preserve">
+    <value>{0} 個の項目を選択</value>
+  </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>ファイルを開く</value>
   </data>

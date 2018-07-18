@@ -49,15 +49,24 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
         </Grid>
     </ItemsPanelTemplate>
 
     <!-- **********************************************************************
-      PageCount
+      StatusBarItem
     *********************************************************************** -->
-    <Style x:Key="FooterCountStyle" TargetType="{x:Type StatusBarItem}">
+    <Style x:Key="FooterItemStyle" TargetType="{x:Type StatusBarItem}">
         <Setter Property="Margin" Value="20,0,30,0" />
         <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <!-- **********************************************************************
+      Separator
+    *********************************************************************** -->
+    <Style x:Key="FooterSeparatorStyle" TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{StaticResource TabBorderBrush}" />
     </Style>
 </ResourceDictionary>

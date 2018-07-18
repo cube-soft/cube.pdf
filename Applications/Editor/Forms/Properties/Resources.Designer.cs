@@ -412,6 +412,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   {0} pages selected に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageSelection {
+            get {
+                return ResourceManager.GetString("MessageSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Open file に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleOpen {

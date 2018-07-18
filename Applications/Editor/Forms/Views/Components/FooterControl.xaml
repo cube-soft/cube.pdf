@@ -44,14 +44,36 @@
         Template="{StaticResource FooterTemplate}"
         ItemsPanel="{StaticResource FooterItemsPanelTemplate}"
         Grid.Row="2">
+
+        <!-- ******************************************************************
+          Message
+        ******************************************************************* -->
         <StatusBarItem Content="{Binding Message.Value}" />
+
+        <!-- ******************************************************************
+          SelectionCount
+        ******************************************************************* -->
+        <Separator
+            Visibility="{Binding Selection.Count, Converter={my:SelectionToVisibility}}"
+            Style="{StaticResource FooterSeparatorStyle}"
+            Grid.Column="1" />
+        <StatusBarItem
+            Content="{Binding Selection.Count, Converter={my:SelectionToText}}"
+            Visibility="{Binding Selection.Count, Converter={my:SelectionToVisibility}}"
+            Style="{StaticResource FooterItemStyle}"
+            Grid.Column="2" />
+
+        <!-- ******************************************************************
+          Count
+        ******************************************************************* -->
         <Separator
             Visibility="{Binding IsOpen.Value, Converter={xc:BooleanToVisibility}}"
-            Grid.Column="1" />
+            Style="{StaticResource FooterSeparatorStyle}"
+            Grid.Column="3" />
         <StatusBarItem
             Content="{Binding Count.Value, Converter={my:CountToText}}"
             Visibility="{Binding IsOpen.Value, Converter={xc:BooleanToVisibility}}"
-            Style="{StaticResource FooterCountStyle}"
-            Grid.Column="2" />
+            Style="{StaticResource FooterItemStyle}"
+            Grid.Column="4" />
     </StatusBar>
 </UserControl>

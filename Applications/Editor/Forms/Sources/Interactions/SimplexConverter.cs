@@ -105,4 +105,62 @@ namespace Cube.Pdf.App.Editor
     }
 
     #endregion
+
+    #region SelectionToText
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SelectionToText
+    ///
+    /// <summary>
+    /// Provides functionality to convert from the specified value to the
+    /// display text.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class SelectionToText : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectionToText
+        ///
+        /// <summary>
+        /// Initializes a new instance of the SelectionToText class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SelectionToText() : base(e => string.Format(
+            Properties.Resources.MessageSelection, e.TryCast<int>()
+        )) { }
+    }
+
+    #endregion
+
+    #region SelectionToVisibility
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SelectionToVisibility
+    ///
+    /// <summary>
+    /// Provides functionality to convert from the specified value to the
+    /// visibility.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class SelectionToVisibility : BooleanToVisibility
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectionToVisibility
+        ///
+        /// <summary>
+        /// Initializes a new instance of the SelectionToVisibility class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SelectionToVisibility() : base(e => e.TryCast<int>() > 0) { }
+    }
+
+    #endregion
 }

@@ -234,6 +234,9 @@
   <data name="MessagePage" xml:space="preserve">
     <value>{0} pages</value>
   </data>
+  <data name="MessageSelection" xml:space="preserve">
+    <value>{0} pages selected</value>
+  </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>Open file</value>
   </data>
