@@ -19,7 +19,6 @@
 using Cube.Pdf.Mixin;
 using Cube.Xui;
 using System;
-using System.Drawing;
 using System.Windows.Media;
 
 namespace Cube.Pdf.App.Editor
@@ -53,9 +52,9 @@ namespace Cube.Pdf.App.Editor
         public ImageEntry(Func<ImageEntry, ImageSource> image,
             ImageSelection selection, ImagePreferences preferences)
         {
-            _image      = image;
-            _selection  = selection;
-            Preferences = preferences;
+            _image       = image;
+            _selection   = selection;
+            _preferences = preferences;
         }
 
         #endregion
@@ -84,11 +83,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public int Width
         {
-            get
-            {
-                var src = RawObject.GetDisplaySize().Value;
-                return (int)(src.Width * GetScale(src));
-            }
+            get => _width;
+            private set => SetProperty(ref _width, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -102,11 +98,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public int Height
         {
-            get
-            {
-                var src = RawObject.GetDisplaySize().Value;
-                return (int)(src.Height * GetScale(src));
-            }
+            get => _height;
+            private set => SetProperty(ref _height, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -158,22 +151,8 @@ namespace Cube.Pdf.App.Editor
         public Page RawObject
         {
             get => _rawObject;
-            set
-            {
-                if (SetProperty(ref _rawObject, value)) RaiseSizeChanged();
-            }
+            set { if (SetProperty(ref _rawObject, value)) UpdateSize(); }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Preferences
-        ///
-        /// <summary>
-        /// Gets the preferences for images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImagePreferences Preferences { get; }
 
         #endregion
 
@@ -210,7 +189,7 @@ namespace Cube.Pdf.App.Editor
         public void Rotate(int degree)
         {
             RawObject.Delta += degree;
-            RaiseSizeChanged();
+            UpdateSize();
         }
 
         #endregion
@@ -219,42 +198,39 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetScale
+        /// UpdateSize
         ///
         /// <summary>
-        /// Gets the scale factor to show the image.
+        /// Updates the Width and Height properties.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private double GetScale(SizeF src)
+        private void UpdateSize()
         {
-            var m = 10; // TODO: how to calc?
-            var h = (Preferences.ItemSize - Preferences.ItemMargin * 2 - m) / src.Width;
-            var v = (Preferences.ItemSize - Preferences.ItemMargin * 2 - Preferences.TextHeight) / src.Height;
-            return Math.Min(h, v);
-        }
+            var magic = 10; // TODO: how to calc?
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RaiseSizeChanged
-        ///
-        /// <summary>
-        /// Raises PropertyChanged events of Width and Height.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void RaiseSizeChanged()
-        {
-            RaisePropertyChanged(nameof(Width));
-            RaisePropertyChanged(nameof(Height));
+            var src   = RawObject.GetDisplaySize().Value;
+            var size  = _preferences.ItemSize;
+            var space = _preferences.ItemMargin * 2;
+
+            var h = (size - space * 2 - magic) / src.Width;
+            var v = (size - space * 2 - _preferences.TextHeight) / src.Height;
+
+            var scale = Math.Min(h, v);
+
+            Width  = (int)(src.Width * scale);
+            Height = (int)(src.Height * scale);
         }
 
         #endregion
 
         #region Fields
         private readonly Func<ImageEntry, ImageSource> _image;
+        private readonly ImagePreferences _preferences;
         private readonly ImageSelection _selection;
         private int _index;
+        private int _width;
+        private int _height;
         private bool _selected;
         private Page _rawObject;
         #endregion
