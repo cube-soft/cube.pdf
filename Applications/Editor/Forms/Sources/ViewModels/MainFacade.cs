@@ -225,6 +225,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Move
+        ///
+        /// <summary>
+        /// Moves the selected objects at the specified distance.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Move(int delta) => Invoke(() => Images.Move(delta));
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Rotate
         ///
         /// <summary>

@@ -220,6 +220,8 @@ namespace Cube.Pdf.App.Editor
 
             Width  = (int)(src.Width * scale);
             Height = (int)(src.Height * scale);
+
+            Refresh();
         }
 
         #endregion

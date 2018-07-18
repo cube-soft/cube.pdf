@@ -168,8 +168,8 @@ namespace Cube.Pdf.App.Editor
             Ribbon.ExtractOthers.Command = None;
             Ribbon.Remove.Command        = WhenSelected(() => Model.Remove());
             Ribbon.RemoveOthers.Command  = None;
-            Ribbon.MovePrevious.Command  = None;
-            Ribbon.MoveNext.Command      = None;
+            Ribbon.MovePrevious.Command  = WhenSelected(() => Model.Move(-1));
+            Ribbon.MoveNext.Command      = WhenSelected(() => Model.Move(1));
             Ribbon.RotateLeft.Command    = WhenSelected(() => Model.Rotate(-90));
             Ribbon.RotateRight.Command   = WhenSelected(() => Model.Rotate(90));
             Ribbon.Metadata.Command      = None;

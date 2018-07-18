@@ -234,7 +234,7 @@ namespace Cube.Pdf.App.Editor
                 _inner.Insert(pos, CreateEntry(pos, item));
                 ++pos;
             }
-            return pos;
+            return KeyValuePair.Create(pos, _inner.Count);
         });
 
         /* ----------------------------------------------------------------- */
@@ -261,17 +261,17 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Remove(IEnumerable<int> indecies) => RestructIndex(() =>
         {
+            var n   = _inner.Count;
             var pos = int.MaxValue;
-            foreach (var index in indecies.OrderByDescending(e => e))
+            var src = indecies.Where(i => i >= 0 && i < n).OrderByDescending(i => i);
+
+            foreach (var index in src)
             {
-                if (index >= 0 || index < _inner.Count)
-                {
-                    _cache.Remove(_inner[index]);
-                    _inner.RemoveAt(index);
-                    pos = index;
-                }
+                _cache.Remove(_inner[index]);
+                _inner.RemoveAt(index);
+                pos = index;
             }
-            return pos;
+            return KeyValuePair.Create(pos, n);
         });
 
         /* ----------------------------------------------------------------- */
@@ -291,6 +291,37 @@ namespace Cube.Pdf.App.Editor
             _inner.Clear();
             _cache.Clear();
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// Moves the selected images at the specfied distance.
+        /// </summary>
+        ///
+        /// <param name="delta">Moving distance.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Move(int delta) => RestructIndex(() =>
+        {
+            var n   = _inner.Count;
+            var min = int.MaxValue;
+            var max = 0;
+            var tmp = Selection.Indices.Where(i => i >= 0 && i < n);
+            var src = delta < 0 ? tmp.OrderBy(i => i) : tmp.OrderByDescending(i => i);
+
+            foreach (var index in src)
+            {
+                var inew = Math.Min(Math.Max(index + delta, 0), n - 1);
+                if (inew == index) continue;
+
+                _inner.Move(index, inew);
+                min = Math.Min(Math.Min(min, index), inew);
+                max = Math.Max(Math.Max(max, index), inew);
+            }
+            return KeyValuePair.Create(min, max + 1);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -467,10 +498,12 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RestructIndex(Func<int> func)
+        private void RestructIndex(Func<KeyValuePair<int, int>> func)
         {
-            var pos = Math.Max(func(), 0);
-            for (var i = pos; i < _inner.Count; ++i) _inner[i].Index = i;
+            var pos   = func();
+            var begin = Math.Max(pos.Key, 0);
+            var end   = Math.Min(pos.Value, _inner.Count);
+            for (var i = begin; i < end; ++i) _inner[i].Index = i;
         }
 
         /* ----------------------------------------------------------------- */
