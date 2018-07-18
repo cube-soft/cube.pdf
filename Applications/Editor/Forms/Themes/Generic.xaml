@@ -61,26 +61,4 @@
     <SolidColorBrush x:Key="TabBorderBrush" Color="{StaticResource TabBorderColor}" />
 
     <SolidColorBrush x:Key="MenuButtonBrush" Color="{StaticResource MenuButtonColor}" />
-
-    <!-- **********************************************************************
-      StatusBar
-    *********************************************************************** -->
-    <Style TargetType="{x:Type StatusBar}">
-        <Setter Property="Height" Value="23" />
-        <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type StatusBar}">
-                    <Border BorderThickness="0">
-                        <Border
-                            Height="Auto"
-                            Background="{StaticResource TabBackgroundBrush}"
-                            BorderThickness="0">
-                            <ItemsPresenter Height="Auto" />
-                        </Border>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 </ResourceDictionary>

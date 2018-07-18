@@ -48,36 +48,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FirstIndex
+        /// Index
         ///
         /// <summary>
-        /// Gets the first index of selected images.
+        /// Gets the index that is found at first in the selected images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int FirstIndex => _selection.Keys.FirstOrDefault()?.Index ?? -1;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LastIndex
-        ///
-        /// <summary>
-        /// Gets the last index of selected images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int LastIndex => _selection.Keys.LastOrDefault()?.Index ?? -1;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Items
-        ///
-        /// <summary>
-        /// Gets the selection of images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<ImageEntry> Items => _selection.Keys;
+        public int Index => _selection.Keys.LastOrDefault()?.Index ?? -1;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,6 +67,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IEnumerable<int> Indices => _selection.Keys.Select(e => e.Index);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Items
+        ///
+        /// <summary>
+        /// Gets the selection of images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<ImageEntry> Items => _selection.Keys;
 
         #endregion
 
@@ -142,8 +131,9 @@ namespace Cube.Pdf.App.Editor
         private void RaiseEvents()
         {
             RaisePropertyChanged(nameof(Count));
-            RaisePropertyChanged(nameof(Items));
+            RaisePropertyChanged(nameof(Index));
             RaisePropertyChanged(nameof(Indices));
+            RaisePropertyChanged(nameof(Items));
         }
 
         #endregion

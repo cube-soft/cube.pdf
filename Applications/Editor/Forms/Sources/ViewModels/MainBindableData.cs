@@ -101,6 +101,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Count
+        ///
+        /// <summary>
+        /// Gets the number of pages in the PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<int> Count { get; } = new Bindable<int>(0);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// IsOpen
         ///
         /// <summary>

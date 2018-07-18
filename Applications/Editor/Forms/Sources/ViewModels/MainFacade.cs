@@ -124,9 +124,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Open(string src) => Invoke(() =>
         {
-            Set(Properties.Resources.MessageLoading, IO.Get(src).Name);
+            SetStatus(Properties.Resources.MessageLoading, IO.Get(src).Name);
             Images.Add(_core.GetOrAdd(src).Pages);
-            Set(Properties.Resources.MessagePage, Images.Count);
         });
 
         /* ----------------------------------------------------------------- */
@@ -142,7 +141,6 @@ namespace Cube.Pdf.App.Editor
         {
             Images.Clear();
             _core.Clear();
-            Set(string.Empty);
         });
 
         /* ----------------------------------------------------------------- */
@@ -193,7 +191,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">File path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(string src) => Insert(Bindable.Selection.LastIndex + 1, src);
+        public void Insert(string src) => Insert(Bindable.Selection.Index + 1, src);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -209,10 +207,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Insert(int index, string src) => Invoke(() =>
         {
-            Set(Properties.Resources.MessageLoading, IO.Get(src).Name);
-            var cvt = Math.Min(Math.Max(index, 0), Images.Count);
-            Images.Insert(cvt, _core.GetOrAdd(src).Pages);
-            Set(Properties.Resources.MessagePage, Images.Count);
+            SetStatus(Properties.Resources.MessageLoading, IO.Get(src).Name);
+            var n = Math.Min(Math.Max(index, 0), Images.Count);
+            Images.Insert(n, _core.GetOrAdd(src).Pages);
         });
 
         /* ----------------------------------------------------------------- */
@@ -224,11 +221,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove() => Invoke(() =>
-        {
-            Images.Remove(Bindable.Selection.Indices);
-            Set(Properties.Resources.MessagePage, Images.Count);
-        });
+        public void Remove() => Invoke(() => Images.Remove(Bindable.Selection.Indices));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -263,28 +256,47 @@ namespace Cube.Pdf.App.Editor
         /// Invoke
         ///
         /// <summary>
-        /// Invokes the user action.
+        /// Invokes the user action and clears the message.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Invoke(Action action)
+        private void Invoke(Action action) => Invoke(action, string.Empty);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the user action and sets the result message.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Action action, string format, params object[] args)
         {
-            Bindable.IsBusy.Value = true;
-            try { action(); }
-            catch (Exception err) { Set(err.Message); throw; }
-            finally { Bindable.IsBusy.Value = false; }
+            try
+            {
+                Bindable.IsBusy.Value = true;
+                action();
+                SetStatus(format, args);
+            }
+            catch (Exception err) { SetStatus(err.Message); throw; }
+            finally
+            {
+                Bindable.Count.Value = Images.Count;
+                Bindable.IsBusy.Value = false;
+            }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Set
+        /// SetStatus
         ///
         /// <summary>
         /// Sets the specified message.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Set(string format, params object[] args) =>
+        private void SetStatus(string format, params object[] args) =>
             Bindable.Message.Value = string.Format(format, args);
 
         #endregion

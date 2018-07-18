@@ -235,7 +235,7 @@
     <value>{0} を開いています ...</value>
   </data>
   <data name="MessagePage" xml:space="preserve">
-    <value>{0} ページ</value>
+    <value>全 {0} ページ</value>
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>ファイルを開く</value>

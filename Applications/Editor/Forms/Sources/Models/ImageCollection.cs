@@ -51,7 +51,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ImageCacheList
+        /// ImageCollection
         ///
         /// <summary>
         /// Initializes a new instance.
@@ -217,7 +217,7 @@ namespace Cube.Pdf.App.Editor
         /// Flip
         ///
         /// <summary>
-        /// Flips the IsSelected property of all items.
+        /// Flips the section of items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -239,7 +239,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Add(IEnumerable<Page> items)
         {
-            foreach (var item in items) _inner.Add(Create(_inner.Count, item));
+            foreach (var item in items) _inner.Add(CreateEntry(_inner.Count, item));
         }
 
         /* ----------------------------------------------------------------- */
@@ -247,48 +247,49 @@ namespace Cube.Pdf.App.Editor
         /// Insert
         ///
         /// <summary>
-        /// Insert the Page objects at the specified index.
+        /// Insert the objects at the specified index.
         /// </summary>
         ///
         /// <param name="index">Insertion index.</param>
         /// <param name="items">Page collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, IEnumerable<Page> items)
+        public void Insert(int index, IEnumerable<Page> items) => RestructIndex(() =>
         {
             var pos = index;
             foreach (var item in items)
             {
-                _inner.Insert(pos, Create(pos, item));
+                _inner.Insert(pos, CreateEntry(pos, item));
                 ++pos;
             }
-            for (var i = pos; i < _inner.Count; ++i) _inner[i].Index = i;
-        }
+            return pos;
+        });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Remove
         ///
         /// <summary>
-        /// Removes the Page objects.
+        /// Removes the objects.
         /// </summary>
         ///
         /// <param name="indecies">Indices for removal items.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indecies)
+        public void Remove(IEnumerable<int> indecies) => RestructIndex(() =>
         {
-            var min = int.MaxValue;
+            var pos = int.MaxValue;
             foreach (var index in indecies.OrderByDescending(e => e))
             {
-                if (index < 0 || index >= _inner.Count) continue;
-                min = index;
-                var item = _inner[index];
-                _inner.RemoveAt(index);
-                _cache.Remove(item);
+                if (index >= 0 || index < _inner.Count)
+                {
+                    _cache.Remove(_inner[index]);
+                    _inner.RemoveAt(index);
+                    pos = index;
+                }
             }
-            for (var i = min; i < _inner.Count; ++i) _inner[i].Index = i;
-        }
+            return pos;
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -343,22 +344,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creats a new ImageEntry object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ImageEntry Create(int index, Page item) =>
-            new ImageEntry(e => GetImage(e), Selection, Preferences)
-            {
-                Index = index,
-                RawObject = item,
-            };
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// GetVisibleRange
         ///
         /// <summary>
@@ -397,6 +382,22 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CreateEntry
+        ///
+        /// <summary>
+        /// Creats a new ImageEntry object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ImageEntry CreateEntry(int index, Page item) =>
+            new ImageEntry(e => GetImage(e), Selection, Preferences)
+            {
+                Index     = index,
+                RawObject = item,
+            };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// CreateImage
         ///
         /// <summary>
@@ -428,19 +429,21 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RestartTask()
+        private void RestartTask(Action before)
         {
-            var range   = GetVisibleRange();
-            var current = new CancellationTokenSource();
+            before?.Invoke();
+
+            var range = GetVisibleRange();
+            var cts   = new CancellationTokenSource();
 
             _task?.Cancel();
-            _task = current;
+            _task = cts;
 
             Task.Run(() =>
             {
                 for (var i = range.Key; i < range.Value; ++i)
                 {
-                    if (current.Token.IsCancellationRequested) return;
+                    if (cts.Token.IsCancellationRequested) return;
                     _cache.GetOrCreate(_inner[i]);
                 }
             }).Forget();
@@ -448,17 +451,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RestartTask
+        /// RestructIndex
         ///
         /// <summary>
-        /// Runs a task after executing the specified action.
+        /// Updtes the Index property of the specified items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RestartTask(Action before)
+        private void RestructIndex(Func<int> func)
         {
-            before();
-            RestartTask();
+            var pos = Math.Max(func(), 0);
+            for (var i = pos; i < _inner.Count; ++i) _inner[i].Index = i;
         }
 
         /* ----------------------------------------------------------------- */
@@ -472,13 +475,13 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenCollectionChanged(object s, NotifyCollectionChangedEventArgs e)
         {
-            RestartTask();
+            RestartTask(null);
             OnCollectionChanged(e);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenPropertyChanged
+        /// WhenPreferenceChanged
         ///
         /// <summary>
         /// Called when a property of the Preferences is changed.
@@ -487,7 +490,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPreferenceChanged(object s, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Preferences.VisibleFirst)) RestartTask();
+            if (e.PropertyName == nameof(Preferences.VisibleFirst)) RestartTask(null);
         }
 
         #endregion

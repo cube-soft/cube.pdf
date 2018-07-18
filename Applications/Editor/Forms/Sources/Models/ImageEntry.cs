@@ -114,7 +114,7 @@ namespace Cube.Pdf.App.Editor
         /// Index
         ///
         /// <summary>
-        /// Gets the index of the this object in the collection.
+        /// Gets the index of the image in the collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

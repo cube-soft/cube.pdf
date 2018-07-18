@@ -49,6 +49,36 @@ namespace Cube.Pdf.App.Editor
 
     #endregion
 
+    #region CountToText
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// CountToText
+    ///
+    /// <summary>
+    /// Provides functionality to convert from the specified value to the
+    /// display text.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class CountToText : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CountToText
+        ///
+        /// <summary>
+        /// Initializes a new instance of the CountToText class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public CountToText() : base(e => string.Format(
+            Properties.Resources.MessagePage, e.TryCast<int>()
+        )) { }
+    }
+
+    #endregion
+
     #region IndexToText
 
     /* --------------------------------------------------------------------- */
