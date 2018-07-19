@@ -118,16 +118,16 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Index,   Is.EqualTo(-1));
 
             images.First().IsSelected = true;
-            Assert.That(dest.Count,   Is.EqualTo(1));
-            Assert.That(dest.Index,   Is.EqualTo(0));
+            Assert.That(dest.Count,   Is.EqualTo(1), nameof(dest.Count));
+            Assert.That(dest.Index,   Is.EqualTo(0), nameof(dest.Index));
 
             images.Flip();
-            Assert.That(dest.Count,   Is.EqualTo(8));
-            Assert.That(dest.Index,   Is.EqualTo(8));
+            Assert.That(dest.Count,   Is.EqualTo(8), nameof(dest.Count));
+            Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
             images.Select(true);
-            Assert.That(dest.Count,   Is.EqualTo(9));
-            Assert.That(dest.Index,   Is.EqualTo(8));
+            Assert.That(dest.Count,   Is.EqualTo(9), nameof(dest.Count));
+            Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
             images.Select(false);
             Assert.That(dest.Count,   Is.EqualTo(0));
