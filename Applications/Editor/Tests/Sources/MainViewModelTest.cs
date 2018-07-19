@@ -110,26 +110,25 @@ namespace Cube.Pdf.Tests.Editor
             var vm  = CreateViewModel();
             Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
 
-            var images = vm.Data.Images;
-            var dest   = vm.Data.Selection;
+            var dest = vm.Data.Selection;
             Assert.That(dest.Count,   Is.EqualTo(0));
             Assert.That(dest.Items,   Is.Not.Null);
             Assert.That(dest.Indices, Is.Not.Null);
             Assert.That(dest.Index,   Is.EqualTo(-1));
 
-            images.First().IsSelected = true;
+            vm.Data.Images.First().IsSelected = true;
             Assert.That(dest.Count,   Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Index,   Is.EqualTo(0), nameof(dest.Index));
 
-            images.Flip();
+            vm.Ribbon.SelectFlip.Command.Execute(null);
             Assert.That(dest.Count,   Is.EqualTo(8), nameof(dest.Count));
             Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
-            images.Select(true);
+            vm.Ribbon.SelectAll.Command.Execute(null);
             Assert.That(dest.Count,   Is.EqualTo(9), nameof(dest.Count));
             Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
-            images.Select(false);
+            vm.Ribbon.SelectCancel.Command.Execute(null);
             Assert.That(dest.Count,   Is.EqualTo(0));
         }
 
