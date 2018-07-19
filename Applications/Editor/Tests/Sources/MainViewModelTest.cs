@@ -19,6 +19,7 @@
 using Cube.FileSystem.TestService;
 using NUnit.Framework;
 using System.Linq;
+using System.Threading;
 
 namespace Cube.Pdf.Tests.Editor
 {
@@ -49,15 +50,29 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase("Sample.pdf")]
         public void Open(string filename)
         {
-            var vm = CreateViewModel();
-            ExecuteOpenCommand(vm, GetExamplesWith(filename));
-            Assert.That(Wait.For(() => vm.Data.Images.Count > 0), "Timeout");
-            Assert.That(vm.Data.Images.First().Image, Is.Not.Null);
+            var src = GetExamplesWith(filename);
+            var vm  = CreateViewModel();
+            Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
+
+            var pref = vm.Data.Preferences;
+            Assert.That(pref.ItemSize,   Is.EqualTo(250));
+            Assert.That(pref.ItemMargin, Is.EqualTo(3));
+            Assert.That(pref.TextHeight, Is.EqualTo(25));
+
+            var images = vm.Data.Images;
+            foreach (var item in images) Assert.That(item.Image, Is.Not.Null);
+
+            var dest = images.First();
+            var cts  = new CancellationTokenSource();
+            dest.PropertyChanged += (s, e) => cts.Cancel();
+            images.Refresh();
+            Assert.That(Wait.For(cts.Token), "Timeout");
+            Assert.That(dest.Image, Is.Not.EqualTo(images.LoadingImage));
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// Close
         ///
         /// <summary>
         /// Tests to close a PDF document.
@@ -71,14 +86,86 @@ namespace Cube.Pdf.Tests.Editor
             IO.Copy(GetExamplesWith("Sample.pdf"), src, true);
 
             var vm = CreateViewModel();
-            ExecuteOpenCommand(vm, src);
-            Assert.That(Wait.For(() => vm.Data.Images.Count > 0), "Timeout");
+            Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
             Assert.That(IO.TryDelete(src), Is.False);
 
-            foreach (var image in vm.Data.Images) Assert.That(image, Is.Not.Null);
             Assert.That(vm.Ribbon.Close.Command.CanExecute(null), Is.True);
             vm.Ribbon.Close.Command.Execute(null);
             Assert.That(IO.TryDelete(src), Is.True);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// Tests to select items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Select()
+        {
+            var src = GetExamplesWith("SampleRotation.pdf");
+            var vm  = CreateViewModel();
+            Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
+
+            var images = vm.Data.Images;
+            var dest   = vm.Data.Selection;
+            Assert.That(dest.Count,   Is.EqualTo(0));
+            Assert.That(dest.Items,   Is.Not.Null);
+            Assert.That(dest.Indices, Is.Not.Null);
+            Assert.That(dest.Index,   Is.EqualTo(-1));
+
+            images.First().IsSelected = true;
+            Assert.That(dest.Count,   Is.EqualTo(1));
+            Assert.That(dest.Index,   Is.EqualTo(0));
+
+            images.Flip();
+            Assert.That(dest.Count,   Is.EqualTo(8));
+            Assert.That(dest.Index,   Is.EqualTo(8));
+
+            images.Select(true);
+            Assert.That(dest.Count,   Is.EqualTo(9));
+            Assert.That(dest.Index,   Is.EqualTo(8));
+
+            images.Select(false);
+            Assert.That(dest.Count,   Is.EqualTo(0));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        ///
+        /// <summary>
+        /// Tests to rotate the selected item.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Rotate()
+        {
+            var src = GetExamplesWith("Sample.pdf");
+            var vm  = CreateViewModel();
+            Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
+
+            var images = vm.Data.Images;
+            var dest   = images.First();
+            var dummy  = vm.Data.Images.LoadingImage;
+            Assert.That(Wait.For(() => dest.Image != dummy), "Timeout");
+
+            var image  = images.First().Image;
+            var width  = images.First().Width;
+            var height = images.First().Height;
+            var count  = 0;
+            dest.IsSelected = true;
+            dest.PropertyChanged += (s, e) => ++count;
+
+            images.Rotate(90);
+            Assert.That(Wait.For(() => count >= 4), "Timeout");
+            Assert.That(dest.Image,  Is.Not.EqualTo(image).And.Not.EqualTo(dummy));
+            Assert.That(dest.Width,  Is.Not.EqualTo(width), nameof(width));
+            Assert.That(dest.Height, Is.Not.EqualTo(height), nameof(height));
         }
 
         #endregion

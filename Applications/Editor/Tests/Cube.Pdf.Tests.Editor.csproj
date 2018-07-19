@@ -123,8 +123,15 @@
     <None Include="Examples\Sample.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\SampleRotation.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Core\Cube.Pdf.Core.csproj">
+      <Project>{5d742956-06a5-40f9-939d-5eff66b78d8d}</Project>
+      <Name>Cube.Pdf.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Forms\Cube.Pdf.App.Editor.csproj">
       <Project>{ca46007a-4f0f-4304-bb57-d0e22d7c936e}</Project>
       <Name>Cube.Pdf.App.Editor</Name>

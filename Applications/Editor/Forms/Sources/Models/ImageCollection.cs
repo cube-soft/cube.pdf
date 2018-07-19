@@ -532,7 +532,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPreferenceChanged(object s, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Preferences.VisibleFirst)) RestartTask(null);
+            if (e.PropertyName == nameof(Preferences.VisibleLast)) RestartTask(null);
         }
 
         #endregion

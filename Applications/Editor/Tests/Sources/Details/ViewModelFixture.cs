@@ -51,7 +51,11 @@ namespace Cube.Pdf.Tests.Editor
         protected MainViewModel CreateViewModel()
         {
             var dest = new MainViewModel();
+
             dest.Data.Images.LoadingImage = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
+            dest.Data.Preferences.VisibleFirst = 0;
+            dest.Data.Preferences.VisibleLast  = 10;
+
             return dest;
         }
 
@@ -64,7 +68,7 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void ExecuteOpenCommand(MainViewModel vm, string src)
+        protected bool ExecuteOpenCommand(MainViewModel vm, string src)
         {
             vm.Messenger.Register<OpenFileMessage>(this, e =>
             {
@@ -73,6 +77,8 @@ namespace Cube.Pdf.Tests.Editor
                 e.Callback.Invoke(e);
             });
             vm.Ribbon.Open.Command.Execute(null);
+
+            return Wait.For(() => vm.Data.Images.Count > 0);
         }
 
         #endregion

@@ -51,11 +51,11 @@ namespace Cube.Pdf.App.Editor
         /// Index
         ///
         /// <summary>
-        /// Gets the index that is found at first in the selected images.
+        /// Gets the index that is maximum value in the selected images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Index => _selection.Keys.LastOrDefault()?.Index ?? -1;
+        public int Index => _selection.Keys.OrderByDescending(i => i.Index).FirstOrDefault()?.Index ?? -1;
 
         /* ----------------------------------------------------------------- */
         ///
