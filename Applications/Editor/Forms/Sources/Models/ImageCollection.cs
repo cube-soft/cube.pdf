@@ -212,7 +212,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="items">Page collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, IEnumerable<Page> items) => RestructIndex(() =>
+        public void Insert(int index, IEnumerable<Page> items) => SetIndex(() =>
         {
             var pos = index;
             foreach (var item in items)
@@ -235,7 +235,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="degree">Rotation angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Rotate(IEnumerable<int> indices, int degree) => RestartTask(() =>
+        public void Rotate(IEnumerable<int> indices, int degree) => Reschedule(() =>
         {
             foreach (var index in indices.Where(e => e >= 0 && e < _inner.Count))
             {
@@ -257,7 +257,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="delta">Moving distance.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IEnumerable<int> indices, int delta) => RestructIndex(() =>
+        public void Move(IEnumerable<int> indices, int delta) => SetIndex(() =>
         {
             var n   = _inner.Count;
             var min = int.MaxValue;
@@ -288,7 +288,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="indecies">Indices for removal items.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indecies) => RestructIndex(() =>
+        public void Remove(IEnumerable<int> indecies) => SetIndex(() =>
         {
             var n   = _inner.Count;
             var pos = int.MaxValue;
@@ -373,7 +373,7 @@ namespace Cube.Pdf.App.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Zoom(int offset) => RestartTask(() =>
+        public void Zoom(int offset) => Reschedule(() =>
         {
             _cache.Clear();
             Preferences.ItemSizeIndex += offset;
@@ -388,7 +388,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Refresh() => RestartTask(() => _cache.Clear());
+        public void Refresh() => Reschedule(() => _cache.Clear());
 
         #endregion
 
@@ -416,14 +416,32 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RestartTask
+        /// SetIndex
         ///
         /// <summary>
-        /// Runs a task that creates ImageSource items.
+        /// Updates the index in the specified items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RestartTask(Action before)
+        private void SetIndex(Func<KeyValuePair<int, int>> before)
+        {
+            var pos   = before();
+            var begin = Math.Max(pos.Key, 0);
+            var end   = Math.Min(pos.Value, _inner.Count);
+            for (var i = begin; i < end; ++i) _inner[i].Index = i;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reschedule
+        ///
+        /// <summary>
+        /// Cancels the current task and runs a new task that creates
+        /// images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Reschedule(Action before)
         {
             _task?.Cancel();
             var cts = new CancellationTokenSource();
@@ -445,23 +463,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RestructIndex
-        ///
-        /// <summary>
-        /// Updtes the Index property of the specified items.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void RestructIndex(Func<KeyValuePair<int, int>> before)
-        {
-            var pos   = before();
-            var begin = Math.Max(pos.Key, 0);
-            var end   = Math.Min(pos.Value, _inner.Count);
-            for (var i = begin; i < end; ++i) _inner[i].Index = i;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// WhenCollectionChanged
         ///
         /// <summary>
@@ -471,7 +472,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenCollectionChanged(object s, NotifyCollectionChangedEventArgs e)
         {
-            RestartTask(null);
+            Reschedule(null);
             OnCollectionChanged(e);
         }
 
@@ -486,7 +487,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPreferenceChanged(object s, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Preferences.VisibleLast)) RestartTask(null);
+            if (e.PropertyName == nameof(Preferences.VisibleLast)) Reschedule(null);
         }
 
         #endregion
