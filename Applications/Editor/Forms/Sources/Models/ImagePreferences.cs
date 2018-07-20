@@ -16,6 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections.Mixin;
+using System;
+using System.Collections.Generic;
+
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
@@ -33,17 +37,56 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ItemSizeOptions
+        ///
+        /// <summary>
+        /// Gets the selectable size list.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IReadOnlyList<int> ItemSizeOptions { get; } = new List<int>
+        {
+            100, 150, 200, 250, 300, 400, 500, 600, 900,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ItemSizeIndex
+        ///
+        /// <summary>
+        /// Gets or sets the selected index of the ItemSizeOptions.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int ItemSizeIndex
+        {
+            get => _itemSizeIndex;
+            set
+            {
+                var index = Math.Min(Math.Max(value, 0), ItemSizeOptions.Count - 1);
+                if (!SetProperty(ref _itemSizeIndex, index)) return;
+                RaisePropertyChanged(nameof(ItemSize));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ItemSize
         ///
         /// <summary>
-        /// Gets or sets the size of each item.
+        /// Gets the size of each item.
         /// </summary>
+        ///
+        /// <remarks>
+        /// 設定時には ItemsSizeOptions の中で指定値を超えない最大の値が
+        /// 選択されます。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         public int ItemSize
         {
-            get => _itemSize;
-            set => SetProperty(ref _itemSize, value);
+            get => ItemSizeOptions[ItemSizeIndex];
+            set => ItemSizeIndex = Math.Max(ItemSizeOptions.LastIndexOf(e => e <= value), 0);
         }
 
         /* ----------------------------------------------------------------- */
@@ -111,7 +154,7 @@ namespace Cube.Pdf.App.Editor
         #region Fields
         private int _first;
         private int _last;
-        private int _itemSize;
+        private int _itemSizeIndex;
         private int _itemMargin;
         private int _textHeight;
         #endregion
