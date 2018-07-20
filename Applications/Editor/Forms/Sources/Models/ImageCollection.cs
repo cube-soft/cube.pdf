@@ -267,8 +267,10 @@ namespace Cube.Pdf.App.Editor
 
             foreach (var index in src)
             {
-                _cache.Remove(_inner[index]);
-                _inner.RemoveAt(index);
+                var item = _inner[index];
+                _cache.Remove(item);
+                _inner.Remove(item);
+                item.Dispose();
                 pos = index;
             }
             return KeyValuePair.Create(pos, n);
@@ -287,6 +289,8 @@ namespace Cube.Pdf.App.Editor
         {
             _task?.Cancel();
             _task = null;
+
+            foreach (var item in _inner) item.Dispose();
 
             _inner.Clear();
             _cache.Clear();

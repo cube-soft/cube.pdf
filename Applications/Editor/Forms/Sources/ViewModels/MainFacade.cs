@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections.Mixin;
 using Cube.FileSystem;
 using System;
 using System.Threading;
@@ -54,9 +55,11 @@ namespace Cube.Pdf.App.Editor
             Images   = new ImageCollection(e => _core.Get(e), context);
             Bindable = new MainBindableData(Images, settings);
 
-            Images.Preferences.ItemSize = settings.Value.ViewSize;
-            Images.Preferences.ItemMargin = 3;
-            Images.Preferences.TextHeight = 25;
+            var sizes = Images.Preferences.ItemSizeOptions;
+            var index = sizes.LastIndexOf(e => e <= settings.Value.ViewSize);
+            Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
+            Images.Preferences.ItemMargin    = 3;
+            Images.Preferences.TextHeight    = 25;
         }
 
         #endregion

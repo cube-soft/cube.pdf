@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections.Mixin;
 using System;
 using System.Collections.Generic;
 
@@ -83,11 +82,7 @@ namespace Cube.Pdf.App.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public int ItemSize
-        {
-            get => ItemSizeOptions[ItemSizeIndex];
-            set => ItemSizeIndex = Math.Max(ItemSizeOptions.LastIndexOf(e => e <= value), 0);
-        }
+        public int ItemSize => ItemSizeOptions[ItemSizeIndex];
 
         /* ----------------------------------------------------------------- */
         ///
