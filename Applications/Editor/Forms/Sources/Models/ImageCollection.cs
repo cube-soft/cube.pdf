@@ -378,10 +378,29 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Zoom
+        ///
+        /// <summary>
+        /// Updates the scale ratio at the specified offset.
+        /// </summary>
+        ///
+        /// <param name="offset">
+        /// Offset for the index in the item size collection.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Zoom(int offset) => RestartTask(() =>
+        {
+            _cache.Clear();
+            Preferences.ItemSizeIndex += offset;
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Refresh
         ///
         /// <summary>
-        /// Clears all of images and regenerates them.
+        /// Removes all of images and regenerates them.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

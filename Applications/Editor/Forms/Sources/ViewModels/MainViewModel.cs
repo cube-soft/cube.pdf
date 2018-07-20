@@ -175,8 +175,8 @@ namespace Cube.Pdf.App.Editor
             Ribbon.Metadata.Command      = None;
             Ribbon.Encryption.Command    = None;
             Ribbon.Refresh.Command       = WhenOpen(() => Model.Refresh());
-            Ribbon.ZoomIn.Command        = None;
-            Ribbon.ZoomOut.Command       = None;
+            Ribbon.ZoomIn.Command        = WhenAny(() => Model.Zoom(1));
+            Ribbon.ZoomOut.Command       = WhenAny(() => Model.Zoom(-1));
             Ribbon.Settings.Command      = WhenAny(() => Send(Data.Settings.Uri));
             Ribbon.Web.Command           = WhenAny(() => Send(Data.Settings.Uri));
             Ribbon.Exit.Command          = WhenAny(() => Send<CloseMessage>());
