@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
+using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading;
@@ -89,8 +90,8 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
             Assert.That(IO.TryDelete(src), Is.False);
 
-            Assert.That(vm.Ribbon.Close.Command.CanExecute(null), Is.True);
-            vm.Ribbon.Close.Command.Execute(null);
+            Assert.That(vm.Ribbon.Close.Command.CanExecute(), Is.True);
+            vm.Ribbon.Close.Command.Execute();
             Assert.That(IO.TryDelete(src), Is.True);
         }
 
@@ -120,15 +121,15 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Count,   Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Index,   Is.EqualTo(0), nameof(dest.Index));
 
-            vm.Ribbon.SelectFlip.Command.Execute(null);
+            vm.Ribbon.SelectFlip.Command.Execute();
             // Assert.That(dest.Count,   Is.EqualTo(8), nameof(dest.Count));
             // Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
-            vm.Ribbon.SelectAll.Command.Execute(null);
+            vm.Ribbon.SelectAll.Command.Execute();
             // Assert.That(dest.Count,   Is.EqualTo(9), nameof(dest.Count));
             // Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
-            vm.Ribbon.SelectCancel.Command.Execute(null);
+            vm.Ribbon.SelectCancel.Command.Execute();
             // Assert.That(dest.Count,   Is.EqualTo(0));
         }
 

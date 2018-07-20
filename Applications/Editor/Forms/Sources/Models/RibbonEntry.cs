@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
+using Cube.Xui.Mixin;
 using System;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -73,7 +74,7 @@ namespace Cube.Pdf.App.Editor
             _getTooltip  = tooltip;
             _unsubscribe = ResourceCulture.Subscribe(() => RaisePropertyChanged(nameof(Text)));
             Name         = name;
-            Enabled      = new BindableFunc<bool>(() => Command?.CanExecute(null) ?? true);
+            Enabled      = new BindableFunc<bool>(() => Command?.CanExecute() ?? true);
         }
 
         #endregion
@@ -264,7 +265,7 @@ namespace Cube.Pdf.App.Editor
         private bool IsEnabled()
         {
             if (!Enabled.Value) return false;
-            return Command?.CanExecute(null) ?? true;
+            return Command?.CanExecute() ?? true;
         }
 
         /* ----------------------------------------------------------------- */

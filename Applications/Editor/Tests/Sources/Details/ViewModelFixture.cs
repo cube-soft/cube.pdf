@@ -19,6 +19,7 @@
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using Cube.Xui;
+using Cube.Xui.Mixin;
 using System;
 using System.Windows.Media.Imaging;
 
@@ -76,7 +77,7 @@ namespace Cube.Pdf.Tests.Editor
                 e.Result   = true;
                 e.Callback.Invoke(e);
             });
-            vm.Ribbon.Open.Command.Execute(null);
+            vm.Ribbon.Open.Command.Execute();
 
             return Wait.For(() => vm.Data.Images.Count > 0);
         }
