@@ -19,6 +19,7 @@
 using Cube.Pdf.Mixin;
 using Cube.Xui;
 using System;
+using System.ComponentModel;
 using System.Windows.Media;
 
 namespace Cube.Pdf.App.Editor
@@ -32,7 +33,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageEntry : ObservableProperty, IListItem
+    public class ImageEntry : ObservableProperty, IListItem, IDisposable
     {
         #region Constructors
 
@@ -52,9 +53,11 @@ namespace Cube.Pdf.App.Editor
         public ImageEntry(Func<ImageEntry, ImageSource> image,
             ImageSelection selection, ImagePreferences preferences)
         {
+            _dispose     = new OnceAction<bool>(Dispose);
             _image       = image;
             _selection   = selection;
             _preferences = preferences;
+            _preferences.PropertyChanged += WhenPreferencesChanged;
         }
 
         #endregion
@@ -131,11 +134,9 @@ namespace Cube.Pdf.App.Editor
             get => _selected;
             set
             {
-                if (SetProperty(ref _selected, value))
-                {
-                    if (value) _selection.Add(this);
-                    else _selection.Remove(this);
-                }
+                if (!SetProperty(ref _selected, value)) return;
+                if (value) _selection.Add(this);
+                else _selection.Remove(this);
             }
         }
 
@@ -192,6 +193,62 @@ namespace Cube.Pdf.App.Editor
             UpdateSize();
         }
 
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~ImageEntry
+        ///
+        /// <summary>
+        /// Finalizes the ImageEntry.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~ImageEntry() { _dispose.Invoke(false); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases all resources used by the RibbonEntry.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the RibbonEntry
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                IsSelected = false;
+                _selection = null;
+                _preferences.PropertyChanged -= WhenPreferencesChanged;
+                _preferences = null;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Implementations
@@ -224,12 +281,31 @@ namespace Cube.Pdf.App.Editor
             Refresh();
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenPreferencesChanged
+        ///
+        /// <summary>
+        /// Called when some properties in the ImagePreferences class
+        /// are changed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenPreferencesChanged(object s, PropertyChangedEventArgs e)
+        {
+            var fire = e.PropertyName == nameof(_preferences.ItemMargin)    ||
+                       e.PropertyName == nameof(_preferences.ItemSizeIndex) ||
+                       e.PropertyName == nameof(_preferences.TextHeight);
+            if (fire) UpdateSize();
+        }
+
         #endregion
 
         #region Fields
+        private readonly OnceAction<bool> _dispose;
         private readonly Func<ImageEntry, ImageSource> _image;
-        private readonly ImagePreferences _preferences;
-        private readonly ImageSelection _selection;
+        private ImagePreferences _preferences;
+        private ImageSelection _selection;
         private int _index;
         private int _width;
         private int _height;
