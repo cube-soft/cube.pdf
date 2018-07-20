@@ -178,7 +178,6 @@ namespace Cube.Pdf.App.Editor
             Ribbon.ZoomIn.Command        = WhenAny(() => Model.Zoom(1));
             Ribbon.ZoomOut.Command       = WhenAny(() => Model.Zoom(-1));
             Ribbon.Settings.Command      = WhenAny(() => Send(Data.Settings.Uri));
-            Ribbon.Web.Command           = WhenAny(() => Send(Data.Settings.Uri));
             Ribbon.Exit.Command          = WhenAny(() => Send<CloseMessage>());
         }
 

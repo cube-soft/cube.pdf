@@ -168,9 +168,6 @@
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
   </data>
-  <data name="MenuOthers" xml:space="preserve">
-    <value>Others</value>
-  </data>
   <data name="MenuRecent" xml:space="preserve">
     <value>Recent files</value>
   </data>
@@ -219,9 +216,6 @@
   <data name="MenuView" xml:space="preserve">
     <value>View</value>
   </data>
-  <data name="MenuWeb" xml:space="preserve">
-    <value>Web</value>
-  </data>
   <data name="MenuZoomIn" xml:space="preserve">
     <value>ZoomIn</value>
   </data>
@@ -245,6 +239,9 @@
   </data>
   <data name="TooltipInsert" xml:space="preserve">
     <value>Insert behind selected position</value>
+  </data>
+  <data name="TooltipMetadata" xml:space="preserve">
+    <value>PDF document metadata</value>
   </data>
   <data name="TooltipRemove" xml:space="preserve">
     <value>Remove the selected pages</value>

@@ -359,9 +359,7 @@
                     IsEnabled="{Binding Ribbon.ZoomOut.Enabled.Value}"
                     Command="{Binding Ribbon.ZoomOut.Command}" />
             </r:RibbonGroupBox>
-        </r:RibbonTabItem>
 
-        <r:RibbonTabItem Header="{Binding Ribbon.Others.Text}">
             <r:RibbonGroupBox>
                 <!-- **********************************************************
                   Settings
@@ -372,16 +370,6 @@
                     LargeIcon="{Binding Ribbon.Settings.LargeIcon}"
                     IsEnabled="{Binding Ribbon.Settings.Enabled.Value}"
                     Command="{Binding Ribbon.Settings.Command}" />
-
-                <!-- **********************************************************
-                  Web
-                *********************************************************** -->
-                <r:Button
-                    Header="{Binding Ribbon.Web.Text}"
-                    Icon="{Binding Ribbon.Web.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Web.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Web.Enabled.Value}"
-                    Command="{Binding Ribbon.Web.Command}" />
             </r:RibbonGroupBox>
         </r:RibbonTabItem>
     </r:Ribbon>

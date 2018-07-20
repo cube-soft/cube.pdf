@@ -214,15 +214,6 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Others に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuOthers {
-            get {
-                return ResourceManager.GetString("MenuOthers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recent files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRecent {
@@ -367,15 +358,6 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Web に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuWeb {
-            get {
-                return ResourceManager.GetString("MenuWeb", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   ZoomIn に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuZoomIn {
@@ -444,6 +426,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string TooltipInsert {
             get {
                 return ResourceManager.GetString("TooltipInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PDF document metadata に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TooltipMetadata {
+            get {
+                return ResourceManager.GetString("TooltipMetadata", resourceCulture);
             }
         }
         

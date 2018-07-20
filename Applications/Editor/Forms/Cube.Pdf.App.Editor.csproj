@@ -202,8 +202,6 @@
     <Resource Include="Assets\Large\SettingsDisable.png" />
     <Resource Include="Assets\Large\Undo.png" />
     <Resource Include="Assets\Large\UndoDisable.png" />
-    <Resource Include="Assets\Large\Web.png" />
-    <Resource Include="Assets\Large\WebDisable.png" />
     <Resource Include="Assets\Large\ZoomIn.png" />
     <Resource Include="Assets\Large\ZoomInDisable.png" />
     <Resource Include="Assets\Large\ZoomOut.png" />
@@ -254,8 +252,6 @@
     <Resource Include="Assets\Small\SettingsDisable.png" />
     <Resource Include="Assets\Small\Undo.png" />
     <Resource Include="Assets\Small\UndoDisable.png" />
-    <Resource Include="Assets\Small\Web.png" />
-    <Resource Include="Assets\Small\WebDisable.png" />
     <Resource Include="Assets\Small\ZoomIn.png" />
     <Resource Include="Assets\Small\ZoomInDisable.png" />
     <Resource Include="Assets\Small\ZoomOut.png" />

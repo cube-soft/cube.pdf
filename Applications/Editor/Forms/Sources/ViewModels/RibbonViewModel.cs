@@ -92,19 +92,6 @@ namespace Cube.Pdf.App.Editor
             () => Properties.Resources.MenuView
         );
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Others
-        ///
-        /// <summary>
-        /// その他メニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RibbonEntry Others { get; } = new RibbonEntry(
-            () => Properties.Resources.MenuOthers
-        );
-
         #endregion
 
         #region Buttons
@@ -428,7 +415,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public RibbonEntry Metadata { get; } = new RibbonEntry(
-            () => Properties.Resources.MenuMetadata
+            () => Properties.Resources.MenuMetadata,
+            () => Properties.Resources.TooltipMetadata
         );
 
         /* ----------------------------------------------------------------- */
@@ -494,19 +482,6 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public RibbonEntry Settings { get; } = new RibbonEntry(
             () => Properties.Resources.MenuSettings
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Web
-        ///
-        /// <summary>
-        /// Web メニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RibbonEntry Web { get; } = new RibbonEntry(
-            () => Properties.Resources.MenuWeb
         );
 
         #endregion

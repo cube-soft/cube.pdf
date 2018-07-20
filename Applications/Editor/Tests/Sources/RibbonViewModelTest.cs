@@ -54,7 +54,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.File.Text,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("Edit"));
             Assert.That(dest.View.Text,          Is.EqualTo("View"));
-            Assert.That(dest.Others.Text,        Is.EqualTo("Others"));
             Assert.That(dest.Open.Text,          Is.EqualTo("Open"));
             Assert.That(dest.Save.Text,          Is.EqualTo("Save"));
             Assert.That(dest.Close.Text,         Is.EqualTo("Close"));
@@ -82,7 +81,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("ZoomIn"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
             Assert.That(dest.Settings.Text,      Is.EqualTo("Settings"));
-            Assert.That(dest.Web.Text,           Is.EqualTo("Web"));
             Assert.That(dest.Recent.Text,        Is.EqualTo("Recent files"));
         }
 
@@ -104,7 +102,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.File.Tooltip,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
             Assert.That(dest.View.Tooltip,          Is.EqualTo(dest.View.Text));
-            Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
             Assert.That(dest.Save.Tooltip,          Is.EqualTo("Overwrite"));
             Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
@@ -126,13 +123,12 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.MoveNext.Tooltip,      Is.EqualTo(dest.MoveNext.Text));
             Assert.That(dest.RotateLeft.Tooltip,    Is.EqualTo(dest.RotateLeft.Text));
             Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
-            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo(dest.Metadata.Text));
+            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("PDF document metadata"));
             Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
             Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Settings.Tooltip,      Is.EqualTo(dest.Settings.Text));
-            Assert.That(dest.Web.Tooltip,           Is.EqualTo(dest.Web.Text));
             Assert.That(dest.Recent.Tooltip,        Is.EqualTo(dest.Recent.Text));
         }
 
@@ -154,7 +150,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("編集"));
             Assert.That(dest.View.Text,          Is.EqualTo("表示"));
-            Assert.That(dest.Others.Text,        Is.EqualTo("その他"));
             Assert.That(dest.Open.Text,          Is.EqualTo("開く"));
             Assert.That(dest.Save.Text,          Is.EqualTo("保存"));
             Assert.That(dest.Close.Text,         Is.EqualTo("閉じる"));
@@ -176,13 +171,12 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.MoveNext.Text,      Is.EqualTo("後へ"));
             Assert.That(dest.RotateLeft.Text,    Is.EqualTo("左90度"));
             Assert.That(dest.RotateRight.Text,   Is.EqualTo("右90度"));
-            Assert.That(dest.Metadata.Text,      Is.EqualTo("文書プロパティ"));
+            Assert.That(dest.Metadata.Text,      Is.EqualTo("プロパティ"));
             Assert.That(dest.Encryption.Text,    Is.EqualTo("セキュリティ"));
             Assert.That(dest.Refresh.Text,       Is.EqualTo("更新"));
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("拡大"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
             Assert.That(dest.Settings.Text,      Is.EqualTo("設定"));
-            Assert.That(dest.Web.Text,           Is.EqualTo("Web"));
             Assert.That(dest.Recent.Text,        Is.EqualTo("最近開いたファイル"));
         }
 
@@ -205,7 +199,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Recent.Tooltip,        Is.EqualTo(dest.Recent.Text));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
             Assert.That(dest.View.Tooltip,          Is.EqualTo(dest.View.Text));
-            Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
             Assert.That(dest.Save.Tooltip,          Is.EqualTo("上書き保存"));
             Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
@@ -227,13 +220,12 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.MoveNext.Tooltip,      Is.EqualTo(dest.MoveNext.Text));
             Assert.That(dest.RotateLeft.Tooltip,    Is.EqualTo(dest.RotateLeft.Text));
             Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
-            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo(dest.Metadata.Text));
+            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("PDF 文書プロパティ"));
             Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
             Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Settings.Tooltip,      Is.EqualTo(dest.Settings.Text));
-            Assert.That(dest.Web.Tooltip,           Is.EqualTo(dest.Web.Text));
             Assert.That(dest.Recent.Tooltip,        Is.EqualTo(dest.Recent.Text));
         }
 
