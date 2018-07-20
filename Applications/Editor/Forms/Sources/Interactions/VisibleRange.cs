@@ -207,10 +207,10 @@ namespace Cube.Pdf.App.Editor
             var size   = Math.Max(ItemSize, 1.0);
             var margin = Math.Max(ItemMargin * 2, 0.0);
 
-            var column = (int)(AssociatedObject.ActualWidth / (size + margin));
-            var row    = (int)(AssociatedObject.ActualHeight / (size + margin));
+            var column = Math.Max((int)(AssociatedObject.ActualWidth / (size + margin)), 1);
+            var row    = Math.Max((int)(AssociatedObject.ActualHeight / (size + margin)), 1);
 
-            var index  = (int)(AssociatedObject.VerticalOffset / size) * column;
+            var index  = (int)(AssociatedObject.VerticalOffset / size + 0.5) * column;
             var first  = Math.Max(index - column, 0);
             var last   = index + column * (row + 3);
 
