@@ -63,7 +63,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Select.Text,        Is.EqualTo("Select"));
             Assert.That(dest.SelectAll.Text,     Is.EqualTo("Select all"));
             Assert.That(dest.SelectFlip.Text,    Is.EqualTo("Flip selection"));
-            Assert.That(dest.SelectCancel.Text,  Is.EqualTo("Cancel selection"));
+            Assert.That(dest.SelectClear.Text,   Is.EqualTo("Cancel selection"));
             Assert.That(dest.Insert.Text,        Is.EqualTo("Insert"));
             Assert.That(dest.InsertFront.Text,   Is.EqualTo("Insert at the beginning"));
             Assert.That(dest.InsertBack.Text,    Is.EqualTo("Insert at the end"));
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Select.Tooltip,        Is.EqualTo(dest.Select.Text));
             Assert.That(dest.SelectAll.Tooltip,     Is.EqualTo(dest.SelectAll.Text));
             Assert.That(dest.SelectFlip.Tooltip,    Is.EqualTo(dest.SelectFlip.Text));
-            Assert.That(dest.SelectCancel.Tooltip,  Is.EqualTo(dest.SelectCancel.Text));
+            Assert.That(dest.SelectClear.Tooltip,   Is.EqualTo(dest.SelectClear.Text));
             Assert.That(dest.Insert.Tooltip,        Is.EqualTo("Insert behind selected position"));
             Assert.That(dest.InsertFront.Tooltip,   Is.EqualTo(dest.InsertFront.Text));
             Assert.That(dest.InsertBack.Tooltip,    Is.EqualTo(dest.InsertBack.Text));
@@ -163,7 +163,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Select.Text,        Is.EqualTo("選択"));
             Assert.That(dest.SelectAll.Text,     Is.EqualTo("すべて選択"));
             Assert.That(dest.SelectFlip.Text,    Is.EqualTo("選択の切り替え"));
-            Assert.That(dest.SelectCancel.Text,  Is.EqualTo("選択を解除"));
+            Assert.That(dest.SelectClear.Text,   Is.EqualTo("選択を解除"));
             Assert.That(dest.Insert.Text,        Is.EqualTo("挿入"));
             Assert.That(dest.InsertFront.Text,   Is.EqualTo("先頭に挿入"));
             Assert.That(dest.InsertBack.Text,    Is.EqualTo("末尾に挿入"));
@@ -214,7 +214,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Select.Tooltip,        Is.EqualTo(dest.Select.Text));
             Assert.That(dest.SelectAll.Tooltip,     Is.EqualTo(dest.SelectAll.Text));
             Assert.That(dest.SelectFlip.Tooltip,    Is.EqualTo(dest.SelectFlip.Text));
-            Assert.That(dest.SelectCancel.Tooltip,  Is.EqualTo(dest.SelectCancel.Text));
+            Assert.That(dest.SelectClear.Tooltip,   Is.EqualTo(dest.SelectClear.Text));
             Assert.That(dest.Insert.Tooltip,        Is.EqualTo("選択位置の後に挿入"));
             Assert.That(dest.InsertFront.Tooltip,   Is.EqualTo(dest.InsertFront.Text));
             Assert.That(dest.InsertBack.Tooltip,    Is.EqualTo(dest.InsertBack.Text));

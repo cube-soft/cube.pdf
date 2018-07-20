@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
+using Cube.Pdf.App.Editor;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System.Linq;
@@ -68,7 +69,7 @@ namespace Cube.Pdf.Tests.Editor
             dest.PropertyChanged += (s, e) => cts.Cancel();
             images.Refresh();
             Assert.That(Wait.For(cts.Token), "Timeout");
-            Assert.That(dest.Image, Is.Not.EqualTo(images.LoadingImage));
+            Assert.That(dest.Image, Is.Not.EqualTo(pref.Dummy));
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,7 +130,7 @@ namespace Cube.Pdf.Tests.Editor
             // Assert.That(dest.Count,   Is.EqualTo(9), nameof(dest.Count));
             // Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
-            vm.Ribbon.SelectCancel.Command.Execute();
+            vm.Ribbon.SelectClear.Command.Execute();
             // Assert.That(dest.Count,   Is.EqualTo(0));
         }
 
@@ -151,7 +152,7 @@ namespace Cube.Pdf.Tests.Editor
 
             var images = vm.Data.Images;
             var dest   = images.First();
-            var dummy  = vm.Data.Images.LoadingImage;
+            var dummy  = vm.Data.Preferences.Dummy;
             Assert.That(Wait.For(() => dest.Image != dummy), "Timeout");
 
             var image  = images.First().Image;

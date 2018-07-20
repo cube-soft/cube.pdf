@@ -204,7 +204,7 @@
   <data name="MenuSelectAll" xml:space="preserve">
     <value>Select all</value>
   </data>
-  <data name="MenuSelectCancel" xml:space="preserve">
+  <data name="MenuSelectClear" xml:space="preserve">
     <value>Cancel selection</value>
   </data>
   <data name="MenuSelectFlip" xml:space="preserve">

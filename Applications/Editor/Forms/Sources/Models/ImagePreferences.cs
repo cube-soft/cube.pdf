@@ -18,6 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -144,6 +146,37 @@ namespace Cube.Pdf.App.Editor
             set => SetProperty(ref _last, value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dummy
+        ///
+        /// <summary>
+        /// Gets the image that represents loading.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageSource Dummy
+        {
+            get => _dummy ?? (_dummy = GetDummyImage());
+            set => _dummy = value;
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetDummyImage
+        ///
+        /// <summary>
+        /// Gets a default ImageSource that represents loading.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ImageSource GetDummyImage() =>
+            new BitmapImage(new Uri("pack://application:,,,/Assets/Medium/Loading.png"));
+
         #endregion
 
         #region Fields
@@ -152,6 +185,7 @@ namespace Cube.Pdf.App.Editor
         private int _itemSizeIndex;
         private int _itemMargin;
         private int _textHeight;
+        private ImageSource _dummy;
         #endregion
     }
 }

@@ -188,8 +188,8 @@
                         Header="{Binding Ribbon.SelectFlip.Tooltip}"
                         Command="{Binding Ribbon.SelectFlip.Command}" />
                     <r:MenuItem
-                        Header="{Binding Ribbon.SelectCancel.Tooltip}"
-                        Command="{Binding Ribbon.SelectCancel.Command}" />
+                        Header="{Binding Ribbon.SelectClear.Tooltip}"
+                        Command="{Binding Ribbon.SelectClear.Command}" />
                 </r:SplitButton>
             </r:RibbonGroupBox>
 

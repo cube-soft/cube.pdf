@@ -204,7 +204,7 @@
   <data name="MenuSelectAll" xml:space="preserve">
     <value>すべて選択</value>
   </data>
-  <data name="MenuSelectCancel" xml:space="preserve">
+  <data name="MenuSelectClear" xml:space="preserve">
     <value>選択を解除</value>
   </data>
   <data name="MenuSelectFlip" xml:space="preserve">

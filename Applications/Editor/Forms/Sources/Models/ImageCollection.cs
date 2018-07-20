@@ -28,7 +28,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -63,9 +62,11 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ImageCollection(Func<string, IDocumentRenderer> getter, SynchronizationContext context)
         {
+            ImageSource create(ImageEntry e) => _engine(e.RawObject.File.FullName).Create(e);
+
             _engine  = getter;
             _context = context;
-            _cache   = new CacheCollection<ImageEntry, ImageSource>(e => CreateImage(e));
+            _cache   = new CacheCollection<ImageEntry, ImageSource>(e => create(e));
 
             _cache.Created += (s, e) => e.Key.Refresh();
             _inner.CollectionChanged += WhenCollectionChanged;
@@ -108,21 +109,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ImagePreferences Preferences { get; } = new ImagePreferences();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LoadingImage
-        ///
-        /// <summary>
-        /// Gets the image object representing loading.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageSource LoadingImage
-        {
-            get => _dummy ?? (_dummy = GetLoadingImage());
-            set => _dummy = value;
-        }
 
         #endregion
 
@@ -239,14 +225,57 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Remove
+        /// Rotate
         ///
         /// <summary>
-        /// Removes the selected images.
+        /// Rotates the specified images and regenerates them.
         /// </summary>
         ///
+        /// <param name="indices">Target items.</param>
+        /// <param name="degree">Rotation angle in degree unit.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Remove() => Remove(Selection.Indices);
+        public void Rotate(IEnumerable<int> indices, int degree) => RestartTask(() =>
+        {
+            foreach (var index in indices.Where(e => e >= 0 && e < _inner.Count))
+            {
+                var item = _inner[index];
+                _cache.Remove(item);
+                item.Rotate(degree);
+            }
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// Moves the specified items at the specfied distance.
+        /// </summary>
+        ///
+        /// <param name="indices">Target items.</param>
+        /// <param name="delta">Moving distance.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Move(IEnumerable<int> indices, int delta) => RestructIndex(() =>
+        {
+            var n   = _inner.Count;
+            var min = int.MaxValue;
+            var max = 0;
+            var tmp = indices.Where(i => i >= 0 && i < n);
+            var src = delta < 0 ? tmp.OrderBy(i => i) : tmp.OrderByDescending(i => i);
+
+            foreach (var index in src)
+            {
+                var inew = Math.Min(Math.Max(index + delta, 0), n - 1);
+                if (inew == index) continue;
+
+                _inner.Move(index, inew);
+                min = Math.Min(Math.Min(min, index), inew);
+                max = Math.Max(Math.Max(max, index), inew);
+            }
+            return KeyValuePair.Create(min, max + 1);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -295,55 +324,6 @@ namespace Cube.Pdf.App.Editor
             _inner.Clear();
             _cache.Clear();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Move
-        ///
-        /// <summary>
-        /// Moves the selected images at the specfied distance.
-        /// </summary>
-        ///
-        /// <param name="delta">Moving distance.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Move(int delta) => RestructIndex(() =>
-        {
-            var n   = _inner.Count;
-            var min = int.MaxValue;
-            var max = 0;
-            var tmp = Selection.Indices.Where(i => i >= 0 && i < n);
-            var src = delta < 0 ? tmp.OrderBy(i => i) : tmp.OrderByDescending(i => i);
-
-            foreach (var index in src)
-            {
-                var inew = Math.Min(Math.Max(index + delta, 0), n - 1);
-                if (inew == index) continue;
-
-                _inner.Move(index, inew);
-                min = Math.Min(Math.Min(min, index), inew);
-                max = Math.Max(Math.Max(max, index), inew);
-            }
-            return KeyValuePair.Create(min, max + 1);
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotate
-        ///
-        /// <summary>
-        /// Rotates the selected images and regenerates them.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Rotate(int degree) => RestartTask(() =>
-        {
-            foreach (var item in Selection.Items)
-            {
-                _cache.Remove(item);
-                item.Rotate(degree);
-            }
-        });
 
         #endregion
 
@@ -418,44 +398,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetVisibleRange
-        ///
-        /// <summary>
-        /// Gets the current visible range of the image collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private KeyValuePair<int, int> GetVisibleRange() => KeyValuePair.Create(
-            Math.Max(Preferences.VisibleFirst, 0),
-            Math.Min(Preferences.VisibleLast, _inner.Count)
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetLoadingImage
-        ///
-        /// <summary>
-        /// Gets a default ImageSource that notifies loading.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ImageSource GetLoadingImage() =>
-            new BitmapImage(new Uri("pack://application:,,,/Assets/Medium/Loading.png"));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImage
-        ///
-        /// <summary>
-        /// Gets an ImageSource from the specified object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ImageSource GetImage(ImageEntry src) =>
-            _cache.TryGetValue(src, out var dest) ? dest : LoadingImage;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// CreateEntry
         ///
         /// <summary>
@@ -463,25 +405,14 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ImageEntry CreateEntry(int index, Page item) =>
-            new ImageEntry(e => GetImage(e), Selection, Preferences)
-            {
-                Index     = index,
-                RawObject = item,
-            };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateImage
-        ///
-        /// <summary>
-        /// Creates a new instance of the ImageSource class from the
-        /// specified entry.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ImageSource CreateImage(ImageEntry src) =>
-            _engine(src.RawObject.File.FullName).Create(src);
+        private ImageEntry CreateEntry(int index, Page item) => new ImageEntry(
+            e => _cache.TryGetValue(e, out var dest) ? dest : Preferences.Dummy,
+            Selection,
+            Preferences)
+        {
+            Index     = index,
+            RawObject = item,
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -494,17 +425,17 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void RestartTask(Action before)
         {
+            _task?.Cancel();
+            var cts = new CancellationTokenSource();
+            _task = cts;
             before?.Invoke();
 
-            var range = GetVisibleRange();
-            var cts   = new CancellationTokenSource();
-
-            _task?.Cancel();
-            _task = cts;
+            var begin = Math.Max(Preferences.VisibleFirst, 0);
+            var end   = Math.Min(Preferences.VisibleLast, _inner.Count);
 
             Task.Run(() =>
             {
-                for (var i = range.Key; i < range.Value; ++i)
+                for (var i = begin; i < end; ++i)
                 {
                     if (cts.Token.IsCancellationRequested) return;
                     _cache.GetOrCreate(_inner[i]);
@@ -521,9 +452,9 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RestructIndex(Func<KeyValuePair<int, int>> func)
+        private void RestructIndex(Func<KeyValuePair<int, int>> before)
         {
-            var pos   = func();
+            var pos   = before();
             var begin = Math.Max(pos.Key, 0);
             var end   = Math.Min(pos.Value, _inner.Count);
             for (var i = begin; i < end; ++i) _inner[i].Index = i;
@@ -566,7 +497,6 @@ namespace Cube.Pdf.App.Editor
         private readonly CacheCollection<ImageEntry, ImageSource> _cache;
         private readonly ObservableCollection<ImageEntry> _inner = new ObservableCollection<ImageEntry>();
         private CancellationTokenSource _task;
-        private ImageSource _dummy;
         #endregion
     }
 }

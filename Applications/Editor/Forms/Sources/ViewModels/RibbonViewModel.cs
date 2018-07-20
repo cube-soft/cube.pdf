@@ -244,15 +244,15 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SelectCancel
+        /// SelectClear
         ///
         /// <summary>
         /// 選択を解除メニューを取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry SelectCancel { get; } = new RibbonEntry(
-            () => Properties.Resources.MenuSelectCancel,
+        public RibbonEntry SelectClear { get; } = new RibbonEntry(
+            () => Properties.Resources.MenuSelectClear,
             nameof(Select)
         );
 

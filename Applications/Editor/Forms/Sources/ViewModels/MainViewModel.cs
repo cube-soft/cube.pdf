@@ -159,7 +159,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.Select.Command        = WhenOpen(() => Model.Select());
             Ribbon.SelectAll.Command     = WhenOpen(() => Model.Select(true));
             Ribbon.SelectFlip.Command    = WhenOpen(() => Model.Flip());
-            Ribbon.SelectCancel.Command  = WhenOpen(() => Model.Select(false));
+            Ribbon.SelectClear.Command   = WhenOpen(() => Model.Select(false));
             Ribbon.Insert.Command        = WhenSelected(() => SendOpen(e => Model.Insert(e)));
             Ribbon.InsertFront.Command   = WhenOpen(() => SendOpen(e => Model.Insert(0, e)));
             Ribbon.InsertBack.Command    = WhenOpen(() => SendOpen(e => Model.Insert(int.MaxValue, e)));

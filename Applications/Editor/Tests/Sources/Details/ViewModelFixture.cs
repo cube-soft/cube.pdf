@@ -51,9 +51,10 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected MainViewModel CreateViewModel()
         {
-            var dest = new MainViewModel();
+            var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
+            var dest  = new MainViewModel();
 
-            dest.Data.Images.LoadingImage = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
+            dest.Data.Preferences.Dummy        = dummy;
             dest.Data.Preferences.VisibleFirst = 0;
             dest.Data.Preferences.VisibleLast  = 10;
 

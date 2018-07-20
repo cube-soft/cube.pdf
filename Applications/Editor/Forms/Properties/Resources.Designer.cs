@@ -324,9 +324,9 @@ namespace Cube.Pdf.App.Editor.Properties {
         /// <summary>
         ///   Cancel selection に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuSelectCancel {
+        internal static string MenuSelectClear {
             get {
-                return ResourceManager.GetString("MenuSelectCancel", resourceCulture);
+                return ResourceManager.GetString("MenuSelectClear", resourceCulture);
             }
         }
         
