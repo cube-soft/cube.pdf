@@ -53,7 +53,8 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected void Create(Action<MainViewModel> action)
         {
-            using (var src = new MainViewModel())
+            //using (var src = new MainViewModel())
+            var src = new MainViewModel();
             {
                 var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
 
