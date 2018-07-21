@@ -43,6 +43,7 @@ artifacts:
 test_script:
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      -log:Error
       -register:user
       -target:nunit3-console.exe
       -targetargs:Cube.Pdf.Tests.dll
@@ -53,6 +54,7 @@ test_script:
       -filter:"+[*]* -[AlphaFS]* -[*]*NativeMethods -[*]*Properties.*"
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      -log:Error
       -register:user
       -target:nunit3-console.exe
       -targetargs:Cube.Pdf.Tests.Converter.dll
@@ -64,6 +66,7 @@ test_script:
       -filter:"+[*]* -[AlphaFS]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program"
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      -log:Error
       -register:user
       -target:nunit3-console.exe
       -targetargs:Cube.Pdf.Tests.Editor.dll
