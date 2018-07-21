@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
-using Cube.Pdf.App.Editor;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System.Linq;
@@ -50,15 +49,13 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf")]
-        public void Open(string filename) => Create(vm =>
+        public void Open(string filename) => Create(GetExamplesWith(filename), vm =>
         {
-            var src = GetExamplesWith(filename);
-            Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
-
             var pref = vm.Data.Preferences;
-            Assert.That(pref.ItemSize,   Is.EqualTo(250));
-            Assert.That(pref.ItemMargin, Is.EqualTo(3));
-            Assert.That(pref.TextHeight, Is.EqualTo(25));
+            Assert.That(pref.ItemSize,      Is.EqualTo(250));
+            Assert.That(pref.ItemSizeIndex, Is.EqualTo(3));
+            Assert.That(pref.ItemMargin,    Is.EqualTo(3));
+            Assert.That(pref.TextHeight,    Is.EqualTo(25));
 
             var images = vm.Data.Images;
             Wait.For(() => images.Count > 0);
@@ -67,7 +64,7 @@ namespace Cube.Pdf.Tests.Editor
             var dest = images.First();
             var cts  = new CancellationTokenSource();
             dest.PropertyChanged += (s, e) => cts.Cancel();
-            images.Refresh();
+            Execute(vm, vm.Ribbon.Refresh);
             Assert.That(Wait.For(cts.Token), "Timeout");
             Assert.That(dest.Image, Is.Not.EqualTo(pref.Dummy));
         });
@@ -86,12 +83,8 @@ namespace Cube.Pdf.Tests.Editor
         {
             var src = GetResultsWith($"{nameof(Close)}Sample.pdf");
             IO.Copy(GetExamplesWith("Sample.pdf"), src, true);
-
-            Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
-            Assert.That(IO.TryDelete(src), Is.False);
-
-            Assert.That(vm.Ribbon.Close.Command.CanExecute(), Is.True);
-            vm.Ribbon.Close.Command.Execute();
+            ExecuteOpen(vm, src);
+            Execute(vm, vm.Ribbon.Close);
             Assert.That(IO.TryDelete(src), Is.True);
         });
 
@@ -107,8 +100,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void Select() => Create(vm =>
         {
-            var src = GetExamplesWith("SampleRotation.pdf");
-            Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
+            ExecuteOpen(vm, GetExamplesWith("SampleRotation.pdf"));
 
             var dest = vm.Data.Selection;
             Assert.That(dest.Count,   Is.EqualTo(0));
@@ -120,15 +112,15 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Count,   Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Index,   Is.EqualTo(0), nameof(dest.Index));
 
-            vm.Ribbon.SelectFlip.Command.Execute();
+            Execute(vm, vm.Ribbon.SelectFlip);
             // Assert.That(dest.Count,   Is.EqualTo(8), nameof(dest.Count));
             // Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
-            vm.Ribbon.SelectAll.Command.Execute();
+            Execute(vm, vm.Ribbon.SelectAll);
             // Assert.That(dest.Count,   Is.EqualTo(9), nameof(dest.Count));
             // Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
-            vm.Ribbon.SelectClear.Command.Execute();
+            Execute(vm, vm.Ribbon.SelectClear);
             // Assert.That(dest.Count,   Is.EqualTo(0));
         });
 
@@ -142,15 +134,15 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Rotate() => Create(vm =>
+        public void Rotate() => Create(GetExamplesWith("Sample.pdf"), vm =>
         {
-            var src = GetExamplesWith("Sample.pdf");
-            Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
-
             var images = vm.Data.Images;
             var dest   = images.First();
             var dummy  = vm.Data.Preferences.Dummy;
             Assert.That(Wait.For(() => dest.Image != dummy), "Timeout");
+
+            Assert.That(vm.Ribbon.RotateLeft.Command.CanExecute(),  Is.False);
+            Assert.That(vm.Ribbon.RotateRight.Command.CanExecute(), Is.False);
 
             var image  = images.First().Image;
             var width  = images.First().Width;
@@ -159,11 +151,17 @@ namespace Cube.Pdf.Tests.Editor
             dest.IsSelected = true;
             dest.PropertyChanged += (s, e) => ++count;
 
-            images.Rotate(90);
-            Assert.That(Wait.For(() => count >= 4), "Timeout");
-            Assert.That(dest.Image,  Is.Not.EqualTo(image).And.Not.EqualTo(dummy));
+            Execute(vm, vm.Ribbon.RotateLeft);
+            Assert.That(Wait.For(() => count >= 4), "Timeout (Left)");
+            Assert.That(dest.Image,  Is.Not.EqualTo(image).And.Not.EqualTo(dummy), "Left");
             Assert.That(dest.Width,  Is.Not.EqualTo(width), nameof(width));
             Assert.That(dest.Height, Is.Not.EqualTo(height), nameof(height));
+
+            Execute(vm, vm.Ribbon.RotateRight);
+            Assert.That(Wait.For(() => count >= 8), "Timeout (Right)");
+            Assert.That(dest.Image,  Is.Not.EqualTo(image).And.Not.EqualTo(dummy), "Right");
+            Assert.That(dest.Width,  Is.EqualTo(width), nameof(width));
+            Assert.That(dest.Height, Is.EqualTo(height), nameof(height));
         });
 
         #endregion

@@ -20,6 +20,7 @@ using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using Cube.Xui.Mixin;
+using NUnit.Framework;
 using System;
 using System.Windows.Media.Imaging;
 
@@ -47,31 +48,78 @@ namespace Cube.Pdf.Tests.Editor
         /// the specified action.
         /// </summary>
         ///
-        /// <returns>MainViewModel.</returns>
+        /// <param name="action">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
         protected void Create(Action<MainViewModel> action)
         {
-            var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
-            var src   = new MainViewModel();
+            using (var src = new MainViewModel())
+            {
+                var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
 
-            src.Data.Preferences.Dummy        = dummy;
-            src.Data.Preferences.VisibleFirst = 0;
-            src.Data.Preferences.VisibleLast  = 10;
+                src.Data.Preferences.Dummy = dummy;
+                src.Data.Preferences.VisibleFirst = 0;
+                src.Data.Preferences.VisibleLast = 10;
 
-            action(src);
+                action(src);
+            }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ExecuteOpenCommand
+        /// Create
         ///
         /// <summary>
-        /// Execute the command to open the specified file.
+        /// Gets a new instance of the MainViewModel class, executes
+        /// the Open command, and runs the specified action.
         /// </summary>
         ///
+        /// <param name="action">User action.</param>
+        /// <param name="src">File path to open.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        protected bool ExecuteOpenCommand(MainViewModel vm, string src)
+        protected void Create(string src, Action<MainViewModel> action) => Create(vm =>
+        {
+            ExecuteOpen(vm, src);
+            action(vm);
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Execute
+        ///
+        /// <summary>
+        /// Execute the specified command.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel instance.</param>
+        /// <param name="src">RibbonEntry that has the command.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Execute(MainViewModel vm, RibbonEntry src)
+        {
+            vm.Data.Message.Value = string.Empty;
+            Assert.That(vm.Data.IsBusy.Value, Is.False, nameof(vm.Data.IsBusy));
+            Assert.That(src.Command.CanExecute(), Is.True, nameof(src.Command.CanExecute));
+
+            src.Command.Execute();
+            Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), "Timeout");
+            Assert.That(vm.Data.Message.Value, Is.Empty);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ExecuteOpen
+        ///
+        /// <summary>
+        /// Execute the Open command with the specified file.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel instance.</param>
+        /// <param name="src">File path to open.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void ExecuteOpen(MainViewModel vm, string src)
         {
             vm.Messenger.Register<OpenFileMessage>(this, e =>
             {
@@ -79,9 +127,9 @@ namespace Cube.Pdf.Tests.Editor
                 e.Result   = true;
                 e.Callback.Invoke(e);
             });
-            vm.Ribbon.Open.Command.Execute();
 
-            return Wait.For(() => vm.Data.IsOpen.HasValue && vm.Data.IsOpen.Value);
+            Execute(vm, vm.Ribbon.Open);
+            Assert.That(Wait.For(() => vm.Data.IsOpen.Value), nameof(vm.Ribbon.Open));
         }
 
         #endregion
