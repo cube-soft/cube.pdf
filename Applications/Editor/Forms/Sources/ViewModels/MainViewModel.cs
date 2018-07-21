@@ -32,7 +32,7 @@ namespace Cube.Pdf.App.Editor
     /// MainViewModel
     ///
     /// <summary>
-    /// メイン画面の ViewModel クラスです。
+    /// Provides binding properties and commands for the MainWindow class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -113,6 +113,30 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the MainViewModel
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Model.Dispose();
+                Ribbon.Dispose();
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///

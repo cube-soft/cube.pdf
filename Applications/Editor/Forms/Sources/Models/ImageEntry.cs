@@ -211,7 +211,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases all resources used by the RibbonEntry.
+        /// Releases all resources used by the ImageEntry.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -226,7 +226,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the RibbonEntry
+        /// Releases the unmanaged resources used by the ImageEntry
         /// and optionally releases the managed resources.
         /// </summary>
         ///

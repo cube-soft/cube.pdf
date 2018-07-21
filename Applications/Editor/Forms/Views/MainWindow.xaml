@@ -43,13 +43,19 @@
     </r:RibbonWindow.DataContext>
 
     <!-- **********************************************************************
-      Behaviors
+      Interaction
     *********************************************************************** -->
     <i:Interaction.Behaviors>
         <xb:OpenFileDialogBehavior Messenger="{Binding Messenger}" />
         <xb:CloseBehavior Messenger="{Binding Messenger}" />
         <xb:UriBehavior Messenger="{Binding Messenger}" />
     </i:Interaction.Behaviors>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <xb:DisposeAction/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <!-- **********************************************************************
       Main

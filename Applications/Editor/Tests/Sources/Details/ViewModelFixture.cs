@@ -40,25 +40,26 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateViewModel
+        /// Create
         ///
         /// <summary>
-        /// Gets a new instance of the MainViewModel class.
+        /// Gets a new instance of the MainViewModel class and execute
+        /// the specified action.
         /// </summary>
         ///
-        /// <returns>MainViewModel object.</returns>
+        /// <returns>MainViewModel.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected MainViewModel CreateViewModel()
+        protected void Create(Action<MainViewModel> action)
         {
             var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
-            var dest  = new MainViewModel();
+            var src   = new MainViewModel();
 
-            dest.Data.Preferences.Dummy        = dummy;
-            dest.Data.Preferences.VisibleFirst = 0;
-            dest.Data.Preferences.VisibleLast  = 10;
+            src.Data.Preferences.Dummy        = dummy;
+            src.Data.Preferences.VisibleFirst = 0;
+            src.Data.Preferences.VisibleLast  = 10;
 
-            return dest;
+            action(src);
         }
 
         /* ----------------------------------------------------------------- */
@@ -80,7 +81,7 @@ namespace Cube.Pdf.Tests.Editor
             });
             vm.Ribbon.Open.Command.Execute();
 
-            return Wait.For(() => vm.Data.Images.Count > 0);
+            return Wait.For(() => vm.Data.IsOpen.HasValue && vm.Data.IsOpen.Value);
         }
 
         #endregion

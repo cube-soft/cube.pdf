@@ -50,10 +50,9 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf")]
-        public void Open(string filename)
+        public void Open(string filename) => Create(vm =>
         {
             var src = GetExamplesWith(filename);
-            var vm  = CreateViewModel();
             Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
 
             var pref = vm.Data.Preferences;
@@ -62,6 +61,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(pref.TextHeight, Is.EqualTo(25));
 
             var images = vm.Data.Images;
+            Wait.For(() => images.Count > 0);
             foreach (var item in images) Assert.That(item.Image, Is.Not.Null);
 
             var dest = images.First();
@@ -70,7 +70,7 @@ namespace Cube.Pdf.Tests.Editor
             images.Refresh();
             Assert.That(Wait.For(cts.Token), "Timeout");
             Assert.That(dest.Image, Is.Not.EqualTo(pref.Dummy));
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,19 +82,18 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Close()
+        public void Close() => Create(vm =>
         {
             var src = GetResultsWith($"{nameof(Close)}Sample.pdf");
             IO.Copy(GetExamplesWith("Sample.pdf"), src, true);
 
-            var vm = CreateViewModel();
             Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
             Assert.That(IO.TryDelete(src), Is.False);
 
             Assert.That(vm.Ribbon.Close.Command.CanExecute(), Is.True);
             vm.Ribbon.Close.Command.Execute();
             Assert.That(IO.TryDelete(src), Is.True);
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -106,10 +105,9 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Select()
+        public void Select() => Create(vm =>
         {
             var src = GetExamplesWith("SampleRotation.pdf");
-            var vm  = CreateViewModel();
             Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
 
             var dest = vm.Data.Selection;
@@ -132,7 +130,7 @@ namespace Cube.Pdf.Tests.Editor
 
             vm.Ribbon.SelectClear.Command.Execute();
             // Assert.That(dest.Count,   Is.EqualTo(0));
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -144,10 +142,9 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Rotate()
+        public void Rotate() => Create(vm =>
         {
             var src = GetExamplesWith("Sample.pdf");
-            var vm  = CreateViewModel();
             Assert.That(ExecuteOpenCommand(vm, src), "Timeout");
 
             var images = vm.Data.Images;
@@ -167,7 +164,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Image,  Is.Not.EqualTo(image).And.Not.EqualTo(dummy));
             Assert.That(dest.Width,  Is.Not.EqualTo(width), nameof(width));
             Assert.That(dest.Height, Is.Not.EqualTo(height), nameof(height));
-        }
+        });
 
         #endregion
     }

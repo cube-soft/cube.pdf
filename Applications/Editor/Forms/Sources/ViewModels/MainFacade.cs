@@ -32,7 +32,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainFacade
+    public class MainFacade : IDisposable
     {
         #region Constructors
 
@@ -50,10 +50,11 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public MainFacade(SettingsFolder settings, SynchronizationContext context)
         {
-            Settings = settings;
+            _dispose = new OnceAction<bool>(Dispose);
             _core    = new DocumentCollection(e => Bindable.IsOpen.Value = e.Count > 0);
             Images   = new ImageCollection(e => _core.Get(e), context);
             Bindable = new MainBindableData(Images, settings);
+            Settings = settings;
 
             var sizes = Images.Preferences.ItemSizeOptions;
             var index = sizes.LastIndexOf(e => e <= settings.Value.ViewSize);
@@ -279,6 +280,53 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Refresh() => Invoke(() => Bindable.Images.Refresh());
 
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~MainFacade
+        ///
+        /// <summary>
+        /// Finalizes the MainFacade.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~MainFacade() { _dispose.Invoke(false); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases all resources used by the MainFacade.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the MainFacade
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing) => Close();
+
+        #endregion
+
         #endregion
 
         #region Implementations
@@ -334,6 +382,7 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
+        private readonly OnceAction<bool> _dispose;
         private readonly DocumentCollection _core;
         #endregion
     }
