@@ -114,15 +114,15 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Index,   Is.EqualTo(0), nameof(dest.Index));
 
             Execute(vm, vm.Ribbon.SelectFlip);
-            // Assert.That(dest.Count,   Is.EqualTo(8), nameof(dest.Count));
-            // Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
+            Assert.That(dest.Count,   Is.EqualTo(8), nameof(dest.Count));
+            Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
-            Execute(vm, vm.Ribbon.SelectAll);
-            // Assert.That(dest.Count,   Is.EqualTo(9), nameof(dest.Count));
-            // Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
+            Execute(vm, vm.Ribbon.Select); // SelectAll
+            Assert.That(dest.Count,   Is.EqualTo(9), nameof(dest.Count));
+            Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
 
-            Execute(vm, vm.Ribbon.SelectClear);
-            // Assert.That(dest.Count,   Is.EqualTo(0));
+            Execute(vm, vm.Ribbon.Select); // SelectClear
+            Assert.That(dest.Count,   Is.EqualTo(0));
         });
 
         /* ----------------------------------------------------------------- */
