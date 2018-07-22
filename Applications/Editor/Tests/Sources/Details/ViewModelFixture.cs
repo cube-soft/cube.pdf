@@ -122,15 +122,17 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected void ExecuteOpen(MainViewModel vm, string src)
         {
-            vm.Messenger.Register<OpenFileMessage>(this, e =>
+            void open(OpenFileMessage e)
             {
                 e.FileName = src;
                 e.Result   = true;
                 e.Callback.Invoke(e);
-            });
+            };
 
+            vm.Messenger.Register<OpenFileMessage>(this, open);
             Execute(vm, vm.Ribbon.Open);
             Assert.That(Wait.For(() => vm.Data.IsOpen.Value), nameof(vm.Ribbon.Open));
+            vm.Messenger.Unregister<OpenFileMessage>(this, open);
         }
 
         #endregion

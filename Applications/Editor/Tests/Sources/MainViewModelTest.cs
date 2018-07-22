@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
+using Cube.Xui;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System.Linq;
@@ -123,6 +124,32 @@ namespace Cube.Pdf.Tests.Editor
 
             Execute(vm, vm.Ribbon.Select); // SelectClear
             Assert.That(dest.Count,   Is.EqualTo(0));
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        ///
+        /// <summary>
+        /// Tests to insert a new PDF behind the selected index.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Insert() => Create(GetExamplesWith("SampleRotation.pdf"), vm =>
+        {
+            void open(OpenFileMessage e)
+            {
+                e.FileName = GetExamplesWith("Sample.pdf");
+                e.Result   = true;
+                e.Callback.Invoke(e);
+            };
+
+            var src = vm.Data.Images.ToList();
+            src[3].IsSelected = true;
+            vm.Messenger.Register<OpenFileMessage>(this, open);
+            Execute(vm, vm.Ribbon.Insert);
+            for (var i = 0; i < src.Count; ++i) Assert.That(src[i].Index, Is.EqualTo(i));
         });
 
         /* ----------------------------------------------------------------- */
