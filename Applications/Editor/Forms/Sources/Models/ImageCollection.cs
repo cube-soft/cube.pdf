@@ -66,7 +66,7 @@ namespace Cube.Pdf.App.Editor
 
             _engine  = getter;
             _context = context;
-            _cache   = new CacheCollection<ImageEntry, ImageSource>(e => create(e));
+            _cache   = new CacheCollection<ImageEntry, ImageSource>(create);
 
             _cache.Created += (s, e) => e.Key.Refresh();
             _inner.CollectionChanged += WhenCollectionChanged;

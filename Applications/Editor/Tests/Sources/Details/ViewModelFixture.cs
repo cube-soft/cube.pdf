@@ -99,10 +99,9 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected void Execute(MainViewModel vm, RibbonEntry src)
         {
+            Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), "Timeout");
             vm.Data.Message.Value = string.Empty;
-            Assert.That(vm.Data.IsBusy.Value, Is.False, nameof(vm.Data.IsBusy));
             Assert.That(src.Command.CanExecute(), Is.True, nameof(src.Command.CanExecute));
-
             src.Command.Execute();
             Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), "Timeout");
             Assert.That(vm.Data.Message.Value, Is.Empty);
@@ -132,7 +131,6 @@ namespace Cube.Pdf.Tests.Editor
             vm.Messenger.Register<OpenFileMessage>(this, open);
             Execute(vm, vm.Ribbon.Open);
             Assert.That(Wait.For(() => vm.Data.IsOpen.Value), nameof(vm.Ribbon.Open));
-            vm.Messenger.Unregister<OpenFileMessage>(this, open);
         }
 
         #endregion
