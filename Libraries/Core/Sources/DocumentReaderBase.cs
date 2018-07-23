@@ -26,12 +26,8 @@ namespace Cube.Pdf
     /// DocumentReaderBase
     ///
     /// <summary>
-    /// 各種 DocumentReader の基底クラスです。
+    /// Base class for PDF document reader classes.
     /// </summary>
-    ///
-    /// <remarks>
-    /// このクラスは直接オブジェクト化する事はできません。
-    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     public abstract class DocumentReaderBase : IDocumentReader
@@ -43,7 +39,7 @@ namespace Cube.Pdf
         /// DocumentReaderBase
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentReaderBase class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -54,10 +50,11 @@ namespace Cube.Pdf
         /// DocumentReaderBase
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentReaderBase class
+        /// with the specified I/O handler.
         /// </summary>
         ///
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         protected DocumentReaderBase(IO io)
@@ -75,7 +72,7 @@ namespace Cube.Pdf
         /// IO
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します。
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -86,7 +83,7 @@ namespace Cube.Pdf
         /// File
         ///
         /// <summary>
-        /// ファイル情報を取得します。
+        /// Gets the information of the target file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -97,7 +94,7 @@ namespace Cube.Pdf
         /// Metadata
         ///
         /// <summary>
-        /// PDF ファイルに関するメタ情報を取得します。
+        /// Gets the PDF metadata.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -108,7 +105,7 @@ namespace Cube.Pdf
         /// Encryption
         ///
         /// <summary>
-        /// PDF ファイルに関する暗号化情報を取得します。
+        /// Gets the encryption information of the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -119,7 +116,7 @@ namespace Cube.Pdf
         /// Pages
         ///
         /// <summary>
-        /// PDF ファイルのページ一覧を取得します。
+        /// Gets the page collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -130,7 +127,7 @@ namespace Cube.Pdf
         /// Attachments
         ///
         /// <summary>
-        /// 添付ファイルの一覧を取得します。
+        /// Gets the attachment collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -145,7 +142,7 @@ namespace Cube.Pdf
         /// ~DocumentReaderBase
         ///
         /// <summary>
-        /// オブジェクトを破棄します。
+        /// Finalizes the DocumentReaderBase.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -156,7 +153,7 @@ namespace Cube.Pdf
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases all resources used by the ImageEntry.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -171,11 +168,13 @@ namespace Cube.Pdf
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases the unmanaged resources used by the DocumentReaderBase
+        /// and optionally releases the managed resources.
         /// </summary>
         ///
         /// <param name="disposing">
-        /// マネージオブジェクトを開放するかどうか
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
