@@ -58,7 +58,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(pref.ItemMargin,    Is.EqualTo(3));
             Assert.That(pref.TextHeight,    Is.EqualTo(25));
 
-            var images = vm.Data.Images;
+            var images = vm.Data.Images.ToList();
             Wait.For(() => images.Count > 0);
             foreach (var item in images) Assert.That(item.Image, Is.Not.Null);
 
