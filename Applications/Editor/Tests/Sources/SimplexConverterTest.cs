@@ -38,6 +38,8 @@ namespace Cube.Pdf.Tests.Editor
     {
         #region Tests
 
+        #region BooleanToCursor
+
         /* ----------------------------------------------------------------- */
         ///
         /// Convert_WaitCursor
@@ -67,6 +69,29 @@ namespace Cube.Pdf.Tests.Editor
             Convert<Cursor>(new BooleanToCursor(), false),
             Is.EqualTo(Cursors.Arrow)
         );
+
+        #endregion
+
+        #region CountToText
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_CountToText
+        ///
+        /// <summary>
+        /// Tests to convert a number of pages to text.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(10, "en", ExpectedResult = "10 pages")]
+        [TestCase(20, "ja", ExpectedResult = "全 20 ページ")]
+        public string Convert_CountToText(int n, string culture)
+        {
+            ResourceCulture.Set(culture);
+            return Convert<string>(new CountToText(), n);
+        }
+
+        #endregion
 
         #endregion
 
