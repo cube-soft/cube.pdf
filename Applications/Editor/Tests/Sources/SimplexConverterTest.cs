@@ -114,6 +114,27 @@ namespace Cube.Pdf.Tests.Editor
 
         #endregion
 
+        #region SelectionToText
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_SelectionToText
+        ///
+        /// <summary>
+        /// Tests to convert selection to text.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(5, "en", ExpectedResult = "5 pages selected")]
+        [TestCase(8, "ja", ExpectedResult = "8 個の項目を選択")]
+        public string Convert_SelectionToText(int n, string culture)
+        {
+            ResourceCulture.Set(culture);
+            return Convert<string>(new SelectionToText(), n);
+        }
+
+        #endregion
+
         #endregion
 
         #region Helper methods
