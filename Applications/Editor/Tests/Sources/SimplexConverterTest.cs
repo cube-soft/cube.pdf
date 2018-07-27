@@ -93,6 +93,27 @@ namespace Cube.Pdf.Tests.Editor
 
         #endregion
 
+        #region IndexToText
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_IndexToText
+        ///
+        /// <summary>
+        /// Tests to convert an index to text.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(0, "en", ExpectedResult = "1")]
+        [TestCase(9, "ja", ExpectedResult = "10")]
+        public string Convert_IndexToText(int index, string culture)
+        {
+            ResourceCulture.Set(culture);
+            return Convert<string>(new IndexToText(), index);
+        }
+
+        #endregion
+
         #endregion
 
         #region Helper methods
