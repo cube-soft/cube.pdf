@@ -20,6 +20,7 @@ using Cube.Pdf.App.Editor;
 using Cube.Xui.Converters;
 using NUnit.Framework;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Cube.Pdf.Tests.Editor
@@ -132,6 +133,25 @@ namespace Cube.Pdf.Tests.Editor
             ResourceCulture.Set(culture);
             return Convert<string>(new SelectionToText(), n);
         }
+
+        #endregion
+
+        #region SelectionToVisibility
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_SelectionToVisibility
+        ///
+        /// <summary>
+        /// Tests to convert selection to visibility.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Convert_SelectionToVisibility() => Assert.That(
+            Convert<Visibility>(new SelectionToVisibility(), 10),
+            Is.EqualTo(Visibility.Visible)
+        );
 
         #endregion
 
