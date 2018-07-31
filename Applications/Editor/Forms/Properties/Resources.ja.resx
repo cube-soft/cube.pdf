@@ -225,6 +225,9 @@
   <data name="MessageLoading" xml:space="preserve">
     <value>{0} を開いています ...</value>
   </data>
+  <data name="MessageSaving" xml:space="preserve">
+    <value>{0} に保存しています ...</value>
+  </data>
   <data name="MessagePage" xml:space="preserve">
     <value>全 {0} ページ</value>
   </data>
@@ -233,6 +236,9 @@
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>ファイルを開く</value>
+  </data>
+  <data name="TitleSaveAs" xml:space="preserve">
+    <value>名前を付けて保存</value>
   </data>
   <data name="TooltipExtract" xml:space="preserve">
     <value>選択ページを抽出</value>

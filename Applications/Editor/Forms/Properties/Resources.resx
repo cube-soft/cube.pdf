@@ -228,11 +228,17 @@
   <data name="MessagePage" xml:space="preserve">
     <value>{0} pages</value>
   </data>
+  <data name="MessageSaving" xml:space="preserve">
+    <value>Saving to {0} ...</value>
+  </data>
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} pages selected</value>
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>Open file</value>
+  </data>
+  <data name="TitleSaveAs" xml:space="preserve">
+    <value>Save as</value>
   </data>
   <data name="TooltipExtract" xml:space="preserve">
     <value>Extract the selected pages</value>

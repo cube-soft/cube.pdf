@@ -62,6 +62,34 @@ namespace Cube.Pdf.App.Editor
                 }.GetFilter(),
             };
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateDestination
+        ///
+        /// <summary>
+        /// Creates a message to show the SaveFileDialog.
+        /// </summary>
+        ///
+        /// <param name="callback">
+        /// Callback action when terminating the user operation.
+        /// </param>
+        ///
+        /// <returns>SaveFileMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static SaveFileMessage CreateDestination(SaveFileCallback callback) =>
+            new SaveFileMessage(callback)
+            {
+                Title           = Properties.Resources.TitleSaveAs,
+                OverwritePrompt = true,
+                CheckPathExists = false,
+                Filter          = new[]
+                {
+                    new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
+                    new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
+                }.GetFilter(),
+            };
+
         #endregion
     }
 }

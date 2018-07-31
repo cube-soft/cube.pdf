@@ -176,7 +176,7 @@ namespace Cube.Pdf.App.Editor
             );
 
             Ribbon.Close.Command         = WhenOpen(() => Model.Close());
-            Ribbon.Save.Command          = None;
+            Ribbon.Save.Command          = WhenOpen(() => SendSave(e => Model.Save(e)));
             Ribbon.SaveAs.Command        = None;
             Ribbon.Undo.Command          = None;
             Ribbon.Redo.Command          = None;
@@ -217,6 +217,21 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SendOpen(Action<string> action) =>
             Send(MessageFactory.CreateSource(e =>
+                Async(() => { if (e.Result) action(e.FileName); })
+            ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SendSave
+        ///
+        /// <summary>
+        /// Sends the message that shows SaveFileDialog and executes the
+        /// specified action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SendSave(Action<string> action) =>
+            Send(MessageFactory.CreateDestination(e =>
                 Async(() => { if (e.Result) action(e.FileName); })
             ));
 

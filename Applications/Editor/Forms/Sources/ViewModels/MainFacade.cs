@@ -18,7 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections.Mixin;
 using Cube.FileSystem;
+using Cube.Pdf.Itext;
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -132,6 +134,28 @@ namespace Cube.Pdf.App.Editor
             SetStatus(Properties.Resources.MessageLoading, name);
             Images.Add(_core.GetOrAdd(src).Pages);
             Bindable.Title.Value = $"{name} - {Settings.Title}";
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// Saves the PDF document to the specified file path.
+        /// </summary>
+        ///
+        /// <param name="dest">File path.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Save(string dest) => Invoke(() =>
+        {
+            var name = IO.Get(dest).Name;
+            SetStatus(Properties.Resources.MessageSaving, name);
+            using (var writer = new DocumentWriter())
+            {
+                writer.Add(Images.Select(e => e.RawObject));
+                writer.Save(dest);
+            }
         });
 
         /* ----------------------------------------------------------------- */

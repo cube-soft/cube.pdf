@@ -394,6 +394,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Saving to {0} ... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageSaving {
+            get {
+                return ResourceManager.GetString("MessageSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0} pages selected に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageSelection {
@@ -408,6 +417,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string TitleOpen {
             get {
                 return ResourceManager.GetString("TitleOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save as に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleSaveAs {
+            get {
+                return ResourceManager.GetString("TitleSaveAs", resourceCulture);
             }
         }
         
