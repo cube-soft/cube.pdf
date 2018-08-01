@@ -20,6 +20,7 @@ using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using Cube.Xui.Mixin;
+using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 using System;
 using System.Windows.Media.Imaging;
@@ -37,6 +38,32 @@ namespace Cube.Pdf.Tests.Editor
     /* --------------------------------------------------------------------- */
     public class ViewModelFixture : FileFixture
     {
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Source
+        ///
+        /// <summary>
+        /// Gets or sets a file path that uses in the OpenFileDialog.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Source { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Destination
+        ///
+        /// <summary>
+        /// Gets or sets a file path that uses in the SaveFileDialog.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Destination { get; set; }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -62,6 +89,7 @@ namespace Cube.Pdf.Tests.Editor
                 src.Data.Preferences.VisibleFirst = 0;
                 src.Data.Preferences.VisibleLast = 10;
 
+                Register(src.Messenger);
                 action(src);
             }
         }
@@ -81,7 +109,9 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected void Create(string src, Action<MainViewModel> action) => Create(vm =>
         {
-            ExecuteOpen(vm, src);
+            Source = src;
+            Execute(vm, vm.Ribbon.Open);
+            Assert.That(Wait.For(() => vm.Data.IsOpen.Value), nameof(vm.Ribbon.Open));
             action(vm);
         });
 
@@ -107,30 +137,53 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(vm.Data.Message.Value, Is.Empty);
         }
 
+        #endregion
+
+        #region Implementations
+
         /* ----------------------------------------------------------------- */
         ///
-        /// ExecuteOpen
+        /// Setup
         ///
         /// <summary>
-        /// Execute the Open command with the specified file.
+        /// Executes before each test.
         /// </summary>
         ///
-        /// <param name="vm">MainViewModel instance.</param>
-        /// <param name="src">File path to open.</param>
+        /* ----------------------------------------------------------------- */
+        [SetUp]
+        private void Setup()
+        {
+            Source      = string.Empty;
+            Destination = string.Empty;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Register
+        ///
+        /// <summary>
+        /// Register some dummy callbacks to the specified Messenger.
+        /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void ExecuteOpen(MainViewModel vm, string src)
+        private void Register(IMessenger src)
         {
             void open(OpenFileMessage e)
             {
-                e.FileName = src;
+                e.FileName = Source;
                 e.Result   = true;
                 e.Callback.Invoke(e);
-            };
+            }
 
-            vm.Messenger.Register<OpenFileMessage>(this, open);
-            Execute(vm, vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.IsOpen.Value), nameof(vm.Ribbon.Open));
+            void save(SaveFileMessage e)
+            {
+                e.FileName = Destination;
+                e.Result   = true;
+                e.Callback.Invoke(e);
+            }
+
+            src.Register<OpenFileMessage>(this, open);
+            src.Register<SaveFileMessage>(this, save);
         }
 
         #endregion

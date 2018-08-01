@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
-using Cube.Xui;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System.Linq;
@@ -82,11 +81,12 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void Close() => Create(vm =>
         {
-            var src = GetResultsWith($"{nameof(Close)}Sample.pdf");
-            IO.Copy(GetExamplesWith("Sample.pdf"), src, true);
-            ExecuteOpen(vm, src);
+            Source = GetResultsWith($"{nameof(Close)}Sample.pdf");
+            IO.Copy(GetExamplesWith("Sample.pdf"), Source, true);
+            Execute(vm, vm.Ribbon.Open);
+            Assert.That(Wait.For(() => vm.Data.IsOpen.Value), nameof(vm.Ribbon.Open));
             Execute(vm, vm.Ribbon.Close);
-            Assert.That(IO.TryDelete(src), Is.True);
+            Assert.That(IO.TryDelete(Source), Is.True);
         });
 
         /* ----------------------------------------------------------------- */
@@ -99,10 +99,8 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Select() => Create(vm =>
+        public void Select() => Create(GetExamplesWith("SampleRotation.pdf"), vm =>
         {
-            ExecuteOpen(vm, GetExamplesWith("SampleRotation.pdf"));
-
             var dest = vm.Data.Selection;
             Assert.That(dest.Count,   Is.EqualTo(0));
             Assert.That(dest.Items,   Is.Not.Null);
@@ -138,18 +136,13 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void Insert() => Create(GetExamplesWith("SampleRotation.pdf"), vm =>
         {
-            void open(OpenFileMessage e)
-            {
-                e.FileName = GetExamplesWith("Sample.pdf");
-                e.Result   = true;
-                e.Callback.Invoke(e);
-            };
-
-            var src = vm.Data.Images.ToList();
-            src[3].IsSelected = true;
-            vm.Messenger.Register<OpenFileMessage>(this, open);
+            vm.Data.Images.Skip(2).First().IsSelected = true;
+            Source = GetExamplesWith("Sample.pdf");
             Execute(vm, vm.Ribbon.Insert);
-            for (var i = 0; i < src.Count; ++i) Assert.That(src[i].Index, Is.EqualTo(i));
+
+            var dest = vm.Data.Images.ToList();
+            Assert.That(dest.Count, Is.EqualTo(9));
+            for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
         });
 
         /* ----------------------------------------------------------------- */
