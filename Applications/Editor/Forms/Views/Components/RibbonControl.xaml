@@ -31,7 +31,12 @@
       Resources
     *********************************************************************** -->
     <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/RibbonTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <!-- **********************************************************************
@@ -107,7 +112,7 @@
         </r:Ribbon.Menu>
 
         <r:RibbonTabItem Header="{Binding Ribbon.Edit.Text}">
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   Open
                 *********************************************************** -->
@@ -148,7 +153,7 @@
                     Command="{Binding Ribbon.Close.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   Undo
                 *********************************************************** -->
@@ -170,7 +175,7 @@
                     Command="{Binding Ribbon.Redo.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   Select
                 *********************************************************** -->
@@ -193,7 +198,7 @@
                 </r:SplitButton>
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   Insesrt
                 *********************************************************** -->
@@ -258,7 +263,7 @@
                 </r:SplitButton>
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   MovePrevious
                 *********************************************************** -->
@@ -280,7 +285,7 @@
                     Command="{Binding Ribbon.MoveNext.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   RotateLeft
                 *********************************************************** -->
@@ -302,7 +307,7 @@
                     Command="{Binding Ribbon.RotateRight.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   Metadata
                 *********************************************************** -->
@@ -326,7 +331,7 @@
         </r:RibbonTabItem>
 
         <r:RibbonTabItem Header="{Binding Ribbon.View.Text}">
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   Refresh
                 *********************************************************** -->
@@ -338,7 +343,7 @@
                     Command="{Binding Ribbon.Refresh.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   ZoomIn
                 *********************************************************** -->
@@ -360,7 +365,7 @@
                     Command="{Binding Ribbon.ZoomOut.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
+            <r:RibbonGroupBox>
                 <!-- **********************************************************
                   Settings
                 *********************************************************** -->

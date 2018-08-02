@@ -34,7 +34,7 @@
     <Color x:Key="TabBackgroundColor">#FF2F2F2F</Color>
     <Color x:Key="TabForegroundColor">#FFE0E0E0</Color>
     <Color x:Key="TabForegroundInactivateColor">#FF909090</Color>
-    <Color x:Key="TabBorderColor">#FF202020</Color>
+    <Color x:Key="TabBorderColor">#FF303030</Color>
     <Color x:Key="TabAccentColor">#FFFFB700</Color>
 
     <Color x:Key="MenuButtonColor">#FF202020</Color>
