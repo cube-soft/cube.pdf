@@ -107,7 +107,7 @@
         </r:Ribbon.Menu>
 
         <r:RibbonTabItem Header="{Binding Ribbon.Edit.Text}">
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   Open
                 *********************************************************** -->
@@ -148,7 +148,7 @@
                     Command="{Binding Ribbon.Close.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   Undo
                 *********************************************************** -->
@@ -170,7 +170,7 @@
                     Command="{Binding Ribbon.Redo.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   Select
                 *********************************************************** -->
@@ -193,7 +193,7 @@
                 </r:SplitButton>
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   Insesrt
                 *********************************************************** -->
@@ -258,7 +258,7 @@
                 </r:SplitButton>
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   MovePrevious
                 *********************************************************** -->
@@ -280,7 +280,7 @@
                     Command="{Binding Ribbon.MoveNext.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   RotateLeft
                 *********************************************************** -->
@@ -302,7 +302,7 @@
                     Command="{Binding Ribbon.RotateRight.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   Metadata
                 *********************************************************** -->
@@ -326,7 +326,7 @@
         </r:RibbonTabItem>
 
         <r:RibbonTabItem Header="{Binding Ribbon.View.Text}">
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   Refresh
                 *********************************************************** -->
@@ -338,7 +338,7 @@
                     Command="{Binding Ribbon.Refresh.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   ZoomIn
                 *********************************************************** -->
@@ -360,7 +360,7 @@
                     Command="{Binding Ribbon.ZoomOut.Command}" />
             </r:RibbonGroupBox>
 
-            <r:RibbonGroupBox>
+            <r:RibbonGroupBox Template="{StaticResource RibbonGroupBoxTemplate}">
                 <!-- **********************************************************
                   Settings
                 *********************************************************** -->

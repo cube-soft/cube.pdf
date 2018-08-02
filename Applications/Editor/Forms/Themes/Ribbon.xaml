@@ -105,15 +105,28 @@
     </Style>
 
     <!-- **********************************************************************
-      RibbonGroupBox
+      RibbonGroupBox (Style)
     *********************************************************************** -->
     <Style TargetType="{x:Type r:RibbonGroupBox}">
         <Setter Property="IsLauncherEnabled" Value="False" />
         <Setter Property="IsLauncherVisible" Value="False" />
         <Setter Property="IsManipulationEnabled" Value="False" />
         <Setter Property="IsSeparatorVisible" Value="False" />
-        <Setter Property="Margin" Value="0,0,6,0" />
+        <Setter Property="Margin" Value="6,2" />
     </Style>
+
+    <!-- **********************************************************************
+      RibbonGroupBox (Template)
+    *********************************************************************** -->
+    <ControlTemplate x:Key="RibbonGroupBoxTemplate" TargetType="{x:Type r:RibbonGroupBox}">
+        <r:RibbonGroupBoxWrapPanel
+            IsItemsHost="True"
+            Width="Auto"
+            Height="Auto"
+            Margin="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Stretch" />
+    </ControlTemplate>
 
     <!-- **********************************************************************
       Button
