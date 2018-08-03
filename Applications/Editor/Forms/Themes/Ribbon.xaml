@@ -102,6 +102,7 @@
         <Setter Property="BorderBrush" Value="{StaticResource TabBorderBrush}" />
         <Setter Property="ActiveTabBorderBrush" Value="{StaticResource TabBorderBrush}" />
         <Setter Property="ActiveTabBackground" Value="{StaticResource TabBackgroundBrush}" />
+        <Setter Property="ToolTipService.IsEnabled" Value="False" />
     </Style>
 
     <!-- **********************************************************************
