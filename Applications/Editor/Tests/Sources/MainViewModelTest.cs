@@ -71,6 +71,25 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Save
+        ///
+        /// <summary>
+        /// Tests to save a PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Save() => Create(GetExamplesWith("Sample.pdf"), vm =>
+        {
+            Destination = GetResultsWith($"Sample{nameof(Save)}.pdf");
+            Assert.That(IO.Exists(Destination), Is.False);
+
+            Execute(vm, vm.Ribbon.SaveAs);
+            Assert.That(Wait.For(() => IO.Exists(Destination)));
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Close
         ///
         /// <summary>
