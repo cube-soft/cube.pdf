@@ -25,7 +25,7 @@ namespace Cube.Pdf.Mixin
     /// EncryptionExtension
     ///
     /// <summary>
-    /// Encryption の拡張用クラスです。
+    /// Describes extended methods for the Encryption class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,10 +38,10 @@ namespace Cube.Pdf.Mixin
         /// DenyAll
         ///
         /// <summary>
-        /// 全て操作を禁止します。
+        /// Denies all of the permissions.
         /// </summary>
         ///
-        /// <param name="src">Encryption オブジェクト</param>
+        /// <param name="src">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void DenyAll(this Encryption src) => src.SetAll(PermissionMethod.Deny);
@@ -51,10 +51,10 @@ namespace Cube.Pdf.Mixin
         /// AllowAll
         ///
         /// <summary>
-        /// 全て操作を許可します。
+        /// Allows all of the permissions.
         /// </summary>
         ///
-        /// <param name="src">Encryption オブジェクト</param>
+        /// <param name="src">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void AllowAll(this Encryption src) => src.SetAll(PermissionMethod.Allow);
@@ -64,12 +64,12 @@ namespace Cube.Pdf.Mixin
         /// IsAllowed
         ///
         /// <summary>
-        /// 操作が許可されているかどうかを判別します。
+        /// Determines whether the specified object is allowed.
         /// </summary>
         ///
-        /// <param name="src">判別対象の操作</param>
+        /// <param name="src">PermissionMethod object.</param>
         ///
-        /// <returns>許可されているかどうか</returns>
+        /// <returns>true for allowed.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static bool IsAllowed(this PermissionMethod src) => src == PermissionMethod.Allow;
@@ -79,12 +79,12 @@ namespace Cube.Pdf.Mixin
         /// IsDenid
         ///
         /// <summary>
-        /// 操作が禁止されているかどうかを判別します。
+        /// Determines whether the specified object is denied.
         /// </summary>
         ///
-        /// <param name="src">判別対象の操作</param>
+        /// <param name="src">PermissionMethod object.</param>
         ///
-        /// <returns>禁止されているかどうか</returns>
+        /// <returns>true for denied.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static bool IsDenid(this PermissionMethod src) => src == PermissionMethod.Deny;
@@ -94,13 +94,13 @@ namespace Cube.Pdf.Mixin
         /// RequestPassword
         ///
         /// <summary>
-        /// パスワードの問い合わせを実行します。
+        /// Requests the password for the specified PDF file.
         /// </summary>
         ///
-        /// <param name="query">問い合わせ用オブジェクト</param>
-        /// <param name="src">入力ファイル</param>
+        /// <param name="query">Query object.</param>
+        /// <param name="src">PDF file path.</param>
         ///
-        /// <returns>問い合わせ結果</returns>
+        /// <returns>Query result.</returns>
         ///
         /// <remarks>
         /// 問い合わせ失敗時の挙動を EncryptionException を送出する形に
@@ -132,7 +132,7 @@ namespace Cube.Pdf.Mixin
         /// SetAll
         ///
         /// <summary>
-        /// 全て操作に同じ内容を設定します。
+        /// Sets all of the methods to the same permission.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
