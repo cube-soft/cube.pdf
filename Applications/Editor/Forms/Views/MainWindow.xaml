@@ -70,6 +70,7 @@
 
         <my:RibbonControl Grid.Row="0" />
         <my:PagesControl Grid.Row="1" />
+        <!-- <my:HeroControl Grid.Row="1" /> -->
         <my:FooterControl Grid.Row="2" />
     </Grid>
 </r:RibbonWindow>

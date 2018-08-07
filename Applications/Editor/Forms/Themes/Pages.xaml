@@ -30,17 +30,6 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- **********************************************************************
-      ListView
-    *********************************************************************** -->
-    <Style x:Key="PagesStyle" TargetType="{x:Type ListView}">
-        <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="SelectionMode" Value="Extended" />
-    </Style>
-
-    <!-- **********************************************************************
       ListView (Template)
     *********************************************************************** -->
     <ControlTemplate x:Key="PagesTemplate" TargetType="{x:Type ListView}">
@@ -65,6 +54,18 @@
             </i:Interaction.Behaviors>
         </ScrollViewer>
     </ControlTemplate>
+
+    <!-- **********************************************************************
+      ListView
+    *********************************************************************** -->
+    <Style x:Key="PagesStyle" TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SelectionMode" Value="Extended" />
+        <Setter Property="Template" Value="{StaticResource PagesTemplate}" />
+    </Style>
 
     <!-- **********************************************************************
       ListViewItem

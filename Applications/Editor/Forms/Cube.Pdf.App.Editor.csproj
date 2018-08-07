@@ -133,6 +133,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\Components\HeroControl.xaml.cs">
+      <DependentUpon>HeroControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sources\Interactions\SimplexConverter.cs" />
     <Compile Include="Sources\Interactions\VisibleRange.cs" />
     <Compile Include="Sources\Models\Settings\Settings.cs" />
@@ -260,7 +263,7 @@
     <Resource Include="Assets\Small\Lock.png" />
     <Resource Include="Assets\Small\Pdf.png" />
     <Resource Include="Assets\Background.png" />
-    <Resource Include="Assets\Navigation.png" />
+    <Resource Include="Assets\Hero.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -271,6 +274,14 @@
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Page Include="Themes\Hero.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Components\HeroControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\ScrollBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

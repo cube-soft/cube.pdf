@@ -17,13 +17,12 @@
 
 *************************************************************************** -->
 <UserControl
-    x:Class="Cube.Pdf.App.Editor.PagesControl"
+    x:Class="Cube.Pdf.App.Editor.HeroControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{StaticResource DarkBackgroundBrush}"
     mc:Ignorable="d"
     d:DesignHeight="600"
     d:DesignWidth="800">
@@ -32,22 +31,30 @@
       Resources
     *********************************************************************** -->
     <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Pages.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/Hero.xaml" />
     </UserControl.Resources>
 
     <!-- **********************************************************************
       Main
     *********************************************************************** -->
-    <ListView
-        DataContext="{Binding Data}"
-        ItemsSource="{Binding Images}"
-        ItemContainerStyle="{StaticResource PageStyle}"
-        ItemTemplate="{StaticResource PageTemplate}"
-        Style="{StaticResource PagesStyle}"
-        VirtualizingStackPanel.IsVirtualizing="True"
-        VirtualizingStackPanel.VirtualizationMode="Recycling">
-        <i:Interaction.Behaviors>
-            <xb:SelectionBehavior />
-        </i:Interaction.Behaviors>
-    </ListView>
+    <Grid Style="{StaticResource HeroStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Image
+            Source="pack://application:,,,/Assets/Hero.png"
+            Style="{StaticResource HeroImageStyle}" />
+
+        <TextBlock
+            Text="Recent files"
+            Style="{StaticResource HeroTitleStyle}"
+            Grid.Row="1" />
+
+        <ListView
+            Style="{StaticResource HeroListViewStyle}"
+            Grid.Row="2" />
+    </Grid>
 </UserControl>
