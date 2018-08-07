@@ -23,6 +23,13 @@
     xmlns:my="clr-namespace:Cube.Pdf.App.Editor">
 
     <!-- **********************************************************************
+      Import
+    *********************************************************************** -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Themes/ScrollBar.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- **********************************************************************
       ListView
     *********************************************************************** -->
     <Style x:Key="PagesStyle" TargetType="{x:Type ListView}">
@@ -40,6 +47,7 @@
         <ScrollViewer
             DataContext="{Binding Preferences}"
             Background="{StaticResource DarkBackgroundBrush}"
+            Template="{StaticResource ScrollViewerTemplate}"
             HorizontalScrollBarVisibility="Disabled">
             <WrapPanel
                 ItemWidth="{Binding ItemSize}"
@@ -47,8 +55,7 @@
                 MinWidth="{Binding ItemSize}"
                 Width="{Binding FrameworkElement.ActualWidth,
                 RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
-                IsItemsHost="True"
-                Margin="3" />
+                IsItemsHost="True" />
             <i:Interaction.Behaviors>
                 <my:VisibleRange
                     First="{Binding VisibleFirst, Mode=TwoWay}"

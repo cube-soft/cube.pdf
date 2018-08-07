@@ -36,8 +36,11 @@
     <Color x:Key="TabForegroundInactivateColor">#FF909090</Color>
     <Color x:Key="TabBorderColor">#FF303030</Color>
     <Color x:Key="TabAccentColor">#FFFFB700</Color>
+    <Color x:Key="TabMenuButtonColor">#FF202020</Color>
 
-    <Color x:Key="MenuButtonColor">#FF202020</Color>
+    <Color x:Key="ScrollBarColor">#FF303030</Color>
+    <Color x:Key="ScrollBarHoverColor">#FF272727</Color>
+    <Color x:Key="ScrollBarDragColor">#FF202020</Color>
 
     <!-- **********************************************************************
       Brushes
@@ -59,6 +62,9 @@
     <SolidColorBrush x:Key="TabForegroundBrush" Color="{StaticResource TabForegroundColor}" />
     <SolidColorBrush x:Key="TabForegroundInactivateBrush" Color="{StaticResource TabForegroundInactivateColor}" />
     <SolidColorBrush x:Key="TabBorderBrush" Color="{StaticResource TabBorderColor}" />
+    <SolidColorBrush x:Key="TabMenuButtonBrush" Color="{StaticResource TabMenuButtonColor}" />
 
-    <SolidColorBrush x:Key="MenuButtonBrush" Color="{StaticResource MenuButtonColor}" />
+    <SolidColorBrush x:Key="ScrollBarBrush" Color="{StaticResource ScrollBarColor}" />
+    <SolidColorBrush x:Key="ScrollBarHoverBrush" Color="{StaticResource ScrollBarHoverColor}" />
+    <SolidColorBrush x:Key="ScrollBarDragBrush" Color="{StaticResource ScrollBarDragColor}" />
 </ResourceDictionary>

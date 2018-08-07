@@ -47,9 +47,9 @@
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Separator.BorderBrush"
                      Color="{StaticResource TabBorderColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.ScrollViewer.Button.Background"
-                     Color="{StaticResource MenuButtonColor}" />
+                     Color="{StaticResource TabMenuButtonColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.ScrollViewer.Button.BorderBrush"
-                     Color="{StaticResource MenuButtonColor}" />
+                     Color="{StaticResource TabMenuButtonColor}" />
 
     <!-- **********************************************************************
       Ribbon ImageBrushes
@@ -147,7 +147,7 @@
       ApplicationMenu
     *********************************************************************** -->
     <Style TargetType="{x:Type r:ApplicationMenu}">
-        <Setter Property="Background" Value="{StaticResource MenuButtonBrush}" />
+        <Setter Property="Background" Value="{StaticResource TabMenuButtonBrush}" />
         <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource TabBorderBrush}" />
         <Setter Property="Margin" Value="0,0,0,2" />
