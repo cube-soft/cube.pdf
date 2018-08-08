@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
 using Cube.Xui.Converters;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
@@ -160,6 +161,36 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SelectionToVisibility() : base(e => e.TryCast<int>() > 0) { }
+    }
+
+    #endregion
+
+    #region InverseToVisibility
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// InverseToVisibility
+    ///
+    /// <summary>
+    /// Provides functionality to convert from the specified value to the
+    /// visibility. Note that the class returns Collapsed when the
+    /// specified value is true.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class InverseToVisibility : BooleanToVisibility
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InverseToVisibility
+        ///
+        /// <summary>
+        /// Initializes a new instance of the InverseToVisibility class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public InverseToVisibility() :
+            base(Visibility.Collapsed, Visibility.Visible, e => e.TryCast<bool>()) { }
     }
 
     #endregion

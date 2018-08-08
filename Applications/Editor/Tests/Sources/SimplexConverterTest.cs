@@ -155,6 +155,25 @@ namespace Cube.Pdf.Tests.Editor
 
         #endregion
 
+        #region InverseToVisibility
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_InverseToVisibility
+        ///
+        /// <summary>
+        /// Tests to convert a boolean value to visibility.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Convert_InverseToVisibility() => Assert.That(
+            Convert<Visibility>(new InverseToVisibility(), true),
+            Is.EqualTo(Visibility.Collapsed)
+        );
+
+        #endregion
+
         #endregion
 
         #region Helper methods
