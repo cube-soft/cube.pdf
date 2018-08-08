@@ -58,10 +58,9 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(pref.TextHeight,    Is.EqualTo(25));
 
             var images = vm.Data.Images.ToList();
-            Wait.For(() => images.Count > 0);
             foreach (var item in images) Assert.That(item.Image, Is.Not.Null);
 
-            var dest = images.First();
+            var dest = images[0];
             var cts  = new CancellationTokenSource();
             dest.PropertyChanged += (s, e) => cts.Cancel();
             Execute(vm, vm.Ribbon.Refresh);
@@ -176,8 +175,9 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void Remove() => Create(GetExamplesWith("SampleRotation.pdf"), vm =>
         {
-            vm.Data.Images.Skip(3).First().IsSelected = true;
-            vm.Data.Images.Skip(5).First().IsSelected = true;
+            var src = vm.Data.Images.ToList();
+            src[3].IsSelected = true;
+            src[5].IsSelected = true;
             Execute(vm, vm.Ribbon.Remove);
 
             var dest = vm.Data.Images.ToList();
@@ -197,17 +197,17 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void Rotate() => Create(GetExamplesWith("Sample.pdf"), vm =>
         {
-            var images = vm.Data.Images;
-            var dest   = images.First();
+            var images = vm.Data.Images.ToList();
+            var dest   = images[0];
             var dummy  = vm.Data.Preferences.Dummy;
             Assert.That(Wait.For(() => dest.Image != dummy), "Timeout");
 
             Assert.That(vm.Ribbon.RotateLeft.Command.CanExecute(),  Is.False);
             Assert.That(vm.Ribbon.RotateRight.Command.CanExecute(), Is.False);
 
-            var image  = images.First().Image;
-            var width  = images.First().Width;
-            var height = images.First().Height;
+            var image  = dest.Image;
+            var width  = dest.Width;
+            var height = dest.Height;
             var count  = 0;
             dest.IsSelected = true;
             dest.PropertyChanged += (s, e) => ++count;

@@ -111,7 +111,7 @@ namespace Cube.Pdf.Tests.Editor
         {
             Source = src;
             Execute(vm, vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.IsOpen.Value), nameof(vm.Ribbon.Open));
+            Assert.That(Wait.For(() => vm.Data.Images.Count > 0), nameof(vm.Ribbon.Open));
             action(vm);
         });
 
