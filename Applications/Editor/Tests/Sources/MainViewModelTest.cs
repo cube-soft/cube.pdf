@@ -175,6 +175,8 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void Remove() => Create(GetExamplesWith("SampleRotation.pdf"), vm =>
         {
+            Assert.That(Wait.For(() => vm.Data.Images.Count == 9), nameof(vm.Ribbon.Open));
+
             var src = vm.Data.Images.ToList();
             src[3].IsSelected = true;
             src[5].IsSelected = true;
