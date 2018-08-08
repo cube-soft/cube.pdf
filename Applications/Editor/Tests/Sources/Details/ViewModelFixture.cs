@@ -104,14 +104,15 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /// <param name="action">User action.</param>
-        /// <param name="src">File path to open.</param>
+        /// <param name="n">Number of pages.</param>
+        /// <param name="filename">Filename of the source.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Create(string src, Action<MainViewModel> action) => Create(vm =>
+        protected void Create(string filename, int n, Action<MainViewModel> action) => Create(vm =>
         {
-            Source = src;
+            Source = GetExamplesWith(filename);
             Execute(vm, vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.Images.Count > 0), nameof(vm.Ribbon.Open));
+            Assert.That(Wait.For(() => vm.Data.Images.Count == n), nameof(vm.Ribbon.Open));
             action(vm);
         });
 

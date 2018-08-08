@@ -48,8 +48,8 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf")]
-        public void Open(string filename) => Create(GetExamplesWith(filename), vm =>
+        [TestCase("Sample.pdf", 2)]
+        public void Open(string filename, int n) => Create(filename, n, vm =>
         {
             var pref = vm.Data.Preferences;
             Assert.That(pref.ItemSize,      Is.EqualTo(250));
@@ -78,7 +78,7 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Save() => Create(GetExamplesWith("Sample.pdf"), vm =>
+        public void Save() => Create("Sample.pdf", 2, vm =>
         {
             Destination = GetResultsWith($"Sample{nameof(Save)}.pdf");
             Assert.That(IO.Exists(Destination), Is.False);
@@ -102,7 +102,7 @@ namespace Cube.Pdf.Tests.Editor
             Source = GetResultsWith($"{nameof(Close)}Sample.pdf");
             IO.Copy(GetExamplesWith("Sample.pdf"), Source, true);
             Execute(vm, vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.IsOpen.Value), nameof(vm.Ribbon.Open));
+            Assert.That(Wait.For(() => vm.Data.Images.Count == 2), nameof(vm.Ribbon.Open));
             Execute(vm, vm.Ribbon.Close);
             Assert.That(IO.TryDelete(Source), Is.True);
         });
@@ -117,7 +117,7 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Select() => Create(GetExamplesWith("SampleRotation.pdf"), vm =>
+        public void Select() => Create("SampleRotation.pdf", 9, vm =>
         {
             var dest = vm.Data.Selection;
             Assert.That(dest.Count,   Is.EqualTo(0));
@@ -152,7 +152,7 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Insert() => Create(GetExamplesWith("SampleRotation.pdf"), vm =>
+        public void Insert() => Create("SampleRotation.pdf", 9, vm =>
         {
             vm.Data.Images.Skip(2).First().IsSelected = true;
             Source = GetExamplesWith("Sample.pdf");
@@ -173,10 +173,8 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Remove() => Create(GetExamplesWith("SampleRotation.pdf"), vm =>
+        public void Remove() => Create("SampleRotation.pdf", 9, vm =>
         {
-            Assert.That(Wait.For(() => vm.Data.Images.Count == 9), nameof(vm.Ribbon.Open));
-
             var src = vm.Data.Images.ToList();
             src[3].IsSelected = true;
             src[5].IsSelected = true;
@@ -197,7 +195,7 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Rotate() => Create(GetExamplesWith("Sample.pdf"), vm =>
+        public void Rotate() => Create("Sample.pdf", 2, vm =>
         {
             var images = vm.Data.Images.ToList();
             var dest   = images[0];
