@@ -1,6 +1,25 @@
-﻿<ResourceDictionary
+﻿<!-- **************************************************************************
+
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor">
 
     <!-- **********************************************************************
       Hero
@@ -21,18 +40,49 @@
     </Style>
 
     <!-- **********************************************************************
-      HeroTitle
+            HeroRecentCollection (Template)
     *********************************************************************** -->
-    <Style x:Key="HeroTitleStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Margin" Value="6,0" />
+    <ControlTemplate x:Key="HeroRecentCollectionTemplate" TargetType="{x:Type ListBox}">
+        <WrapPanel
+            Margin="6,12,6,0"
+            Orientation="Vertical"
+            ItemWidth="269"
+            ItemHeight="27"
+            IsItemsHost="True" />
+    </ControlTemplate>
+
+    <!-- **********************************************************************
+      HeroRecentCollection
+    *********************************************************************** -->
+    <Style x:Key="HeroRecentCollectionStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Template" Value="{StaticResource HeroRecentCollectionTemplate}" />
     </Style>
 
     <!-- **********************************************************************
-      HeroListView
+      HeroRecentItem
     *********************************************************************** -->
-    <Style x:Key="HeroListViewStyle" TargetType="{x:Type ListView}">
-        <Setter Property="Margin" Value="6,0" />
+    <Style x:Key="HeroRecentItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Margin" Value="0,0,3,3" />
     </Style>
+
+    <!-- **********************************************************************
+      HeroRecentItem (Template)
+    *********************************************************************** -->
+    <DataTemplate x:Key="HeroRecentItemTemplate" DataType="{x:Type my:RecentItem}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="6"  />
+                <ColumnDefinition Width="*"  />
+            </Grid.ColumnDefinitions>
+
+            <Image
+                Source="pack://application:,,,/Assets/Small/Pdf.png"
+                Stretch="Uniform" />
+
+            <TextBlock
+                Text="{Binding Name}"
+                Grid.Column="2" />
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>
