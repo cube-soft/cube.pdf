@@ -51,9 +51,16 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public MainViewModel() : base(new Messenger())
         {
-            var settings = new SettingsFolder(Assembly.GetExecutingAssembly(), new IO());
-            Model  = new MainFacade(settings, SynchronizationContext.Current);
+            var io       = new IO();
+            var settings = new SettingsFolder(Assembly.GetExecutingAssembly(), io);
+            var ctx      = SynchronizationContext.Current;
+            var recent   = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
+            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", io, ctx);
+
+            Model  = new MainFacade(settings, ctx);
             Ribbon = new RibbonViewModel(Messenger);
+            Recent = new RecentViewModel(mon, Messenger);
+
             SetRibbonEnabled();
             SetRibbonCommands();
         }
@@ -83,6 +90,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public RibbonViewModel Ribbon { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Recent
+        ///
+        /// <summary>
+        /// Gets the ViewModel of the RecentCollection object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RecentViewModel Recent { get; }
 
         /* ----------------------------------------------------------------- */
         ///

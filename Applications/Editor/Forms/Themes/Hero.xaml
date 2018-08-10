@@ -19,7 +19,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:my="clr-namespace:Cube.Pdf.App.Editor">
+    xmlns:fs="clr-namespace:Cube.FileSystem;assembly=Cube.FileSystem">
 
     <!-- **********************************************************************
       Hero
@@ -68,7 +68,7 @@
     <!-- **********************************************************************
       HeroRecentItem (Template)
     *********************************************************************** -->
-    <DataTemplate x:Key="HeroRecentItemTemplate" DataType="{x:Type my:RecentItem}">
+    <DataTemplate x:Key="HeroRecentItemTemplate" DataType="{x:Type fs:Information}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="16" />
@@ -81,7 +81,7 @@
                 Stretch="Uniform" />
 
             <TextBlock
-                Text="{Binding Name}"
+                Text="{Binding NameWithoutExtension}"
                 Grid.Column="2" />
         </Grid>
     </DataTemplate>

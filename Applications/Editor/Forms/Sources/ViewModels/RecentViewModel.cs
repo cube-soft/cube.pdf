@@ -16,28 +16,58 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui;
+using GalaSoft.MvvmLight.Messaging;
+
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RecentItem
+    /// RecentViewModel
     ///
     /// <summary>
-    /// Provides properties of the resent used PDF file.
+    /// Provides binding properties and commands for the recently used
+    /// PDF files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RecentItem
+    public class RecentViewModel : MessengerViewModel
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Name
+        /// HeroViewModel
         ///
         /// <summary>
-        /// Gets filename of the recent item.
+        /// Initializes a new instance of the RecentViewModel with the
+        /// specified argumetns.
+        /// </summary>
+        ///
+        /// <param name="items">Recently used PDF files.</param>
+        /// <param name="messenger">Messenger object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RecentViewModel(DirectoryMonitor items, IMessenger messenger) : base(messenger)
+        {
+            Items = items;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Items
+        ///
+        /// <summary>
+        /// Gets the collection of the recently used PDF files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Name { get; set; }
+        public DirectoryMonitor Items { get; }
+
+        #endregion
     }
 }

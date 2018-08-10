@@ -48,7 +48,7 @@
             Style="{StaticResource HeroImageStyle}" />
 
         <ListBox
-            ItemsSource="{Binding Recents}"
+            ItemsSource="{Binding Recent.Items}"
             ItemTemplate="{StaticResource HeroRecentItemTemplate}"
             ItemContainerStyle="{StaticResource HeroRecentItemStyle}"
             Style="{StaticResource HeroRecentCollectionStyle}"
