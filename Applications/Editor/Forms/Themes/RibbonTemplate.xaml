@@ -20,7 +20,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:r="urn:fluent-ribbon"
+    xmlns:fs="clr-namespace:Cube.FileSystem;assembly=Cube.FileSystem"
     xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Themes/ScrollBar.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
     <!-- **********************************************************************
       ScrollViewer for RibbonTabControl
@@ -207,4 +212,41 @@
             </Grid>
         </Grid>
     </ControlTemplate>
+
+    <!-- **********************************************************************
+      ListView (Template)
+    *********************************************************************** -->
+    <ControlTemplate x:Key="RibbonRecentCollectionTemplate" TargetType="{x:Type ListBox}">
+        <ScrollViewer
+            Background="{StaticResource LightBackgroundBrush}"
+            Foreground="{StaticResource LightForegroundBrush}"
+            Template="{StaticResource ScrollViewerTemplate}"
+            BorderThickness="0"
+            HorizontalScrollBarVisibility="Disabled">
+            <WrapPanel
+                Orientation="Vertical"
+                IsItemsHost="True" />
+        </ScrollViewer>
+    </ControlTemplate>
+
+    <!-- **********************************************************************
+      RibbonRecentItem
+    *********************************************************************** -->
+    <DataTemplate x:Key="RibbonRecentItemTemplate" DataType="{x:Type fs:Information}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="6"  />
+                <ColumnDefinition Width="*"  />
+            </Grid.ColumnDefinitions>
+
+            <Image
+                Source="pack://application:,,,/Assets/Small/Pdf.png"
+                Stretch="Uniform" />
+
+            <TextBlock
+                Text="{Binding NameWithoutExtension}"
+                Grid.Column="2" />
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>

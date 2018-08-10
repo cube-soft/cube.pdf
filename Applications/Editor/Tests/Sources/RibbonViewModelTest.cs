@@ -81,7 +81,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("ZoomIn"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
             Assert.That(dest.Settings.Text,      Is.EqualTo("Settings"));
-            Assert.That(dest.Recent.Text,        Is.EqualTo("Recent files"));
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,7 +128,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Settings.Tooltip,      Is.EqualTo(dest.Settings.Text));
-            Assert.That(dest.Recent.Tooltip,        Is.EqualTo(dest.Recent.Text));
         }
 
         /* ----------------------------------------------------------------- */
@@ -177,7 +175,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("拡大"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
             Assert.That(dest.Settings.Text,      Is.EqualTo("設定"));
-            Assert.That(dest.Recent.Text,        Is.EqualTo("最近開いたファイル"));
         }
 
          /* ----------------------------------------------------------------- */
@@ -196,7 +193,6 @@ namespace Cube.Pdf.Tests.Editor
             ResourceCulture.Set("ja");
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo(dest.File.Text));
-            Assert.That(dest.Recent.Tooltip,        Is.EqualTo(dest.Recent.Text));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
             Assert.That(dest.View.Tooltip,          Is.EqualTo(dest.View.Text));
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
@@ -226,7 +222,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Settings.Tooltip,      Is.EqualTo(dest.Settings.Text));
-            Assert.That(dest.Recent.Tooltip,        Is.EqualTo(dest.Recent.Text));
         }
 
        /* ----------------------------------------------------------------- */

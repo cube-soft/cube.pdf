@@ -34,7 +34,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Themes/RibbonTab.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/RibbonTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -43,74 +43,6 @@
       Main
     *********************************************************************** -->
     <r:Ribbon>
-        <r:Ribbon.Menu>
-            <r:ApplicationMenu Header="{Binding Ribbon.File.Text}">
-                <!-- **********************************************************
-                  Open (ApplicationMenu)
-                *********************************************************** -->
-                <r:MenuItem
-                    Header="{Binding Ribbon.Open.Tooltip}"
-                    Icon="{Binding Ribbon.Open.LargeIcon}"
-                    Command="{Binding Ribbon.Open.Command}" />
-
-                <!-- **********************************************************
-                  Save (ApplicationMenu)
-                *********************************************************** -->
-                <r:MenuItem
-                    Header="{Binding Ribbon.Save.Tooltip}"
-                    Icon="{Binding Ribbon.Save.LargeIcon}"
-                    Command="{Binding Ribbon.Save.Command}" />
-
-                <!-- **********************************************************
-                  SaveAs (ApplicationMenu)
-                *********************************************************** -->
-                <r:MenuItem
-                    Header="{Binding Ribbon.SaveAs.Tooltip}"
-                    Icon="{Binding Ribbon.SaveAs.LargeIcon}"
-                    Command="{Binding Ribbon.SaveAs.Command}" />
-                <Separator />
-
-                <!-- **********************************************************
-                  Settings (ApplicationMenu)
-                *********************************************************** -->
-                <r:MenuItem
-                    Header="{Binding Ribbon.Settings.Tooltip}"
-                    Icon="{Binding Ribbon.Settings.LargeIcon}"
-                    Command="{Binding Ribbon.Settings.Command}" />
-                <Separator />
-
-                <!-- **********************************************************
-                  Close (ApplicationMenu)
-                *********************************************************** -->
-                <r:MenuItem
-                    Header="{Binding Ribbon.Close.Tooltip}"
-                    Icon="{Binding Ribbon.Close.LargeIcon}"
-                    Command="{Binding Ribbon.Close.Command}" />
-
-                <!-- **********************************************************
-                  Exit (ApplicationMenu)
-                *********************************************************** -->
-                <r:MenuItem
-                    Header="{Binding Ribbon.Exit.Tooltip}"
-                    Icon="{Binding Ribbon.Exit.LargeIcon}"
-                    Command="{Binding Ribbon.Exit.Command}" />
-
-                <!-- **********************************************************
-                  Recent files
-                *********************************************************** -->
-                <r:ApplicationMenu.RightPaneContent>
-                    <DockPanel>
-                        <Label
-                            Content="{Binding Recent.Menu.Tooltip}"
-                            Style="{StaticResource RecentLabelStyle}"
-                            DockPanel.Dock="Top" />
-                        <ListView
-                            Style="{StaticResource RecentListViewStyle}" />
-                    </DockPanel>
-                </r:ApplicationMenu.RightPaneContent>
-            </r:ApplicationMenu>
-        </r:Ribbon.Menu>
-
         <r:RibbonTabItem Header="{Binding Ribbon.Edit.Text}">
             <r:RibbonGroupBox>
                 <!-- **********************************************************
@@ -377,5 +309,76 @@
                     Command="{Binding Ribbon.Settings.Command}" />
             </r:RibbonGroupBox>
         </r:RibbonTabItem>
+
+        <r:Ribbon.Menu>
+            <r:ApplicationMenu Header="{Binding Ribbon.File.Text}">
+                <!-- **********************************************************
+                  Open (ApplicationMenu)
+                *********************************************************** -->
+                <r:MenuItem
+                    Header="{Binding Ribbon.Open.Tooltip}"
+                    Icon="{Binding Ribbon.Open.LargeIcon}"
+                    Command="{Binding Ribbon.Open.Command}" />
+
+                <!-- **********************************************************
+                  Save (ApplicationMenu)
+                *********************************************************** -->
+                <r:MenuItem
+                    Header="{Binding Ribbon.Save.Tooltip}"
+                    Icon="{Binding Ribbon.Save.LargeIcon}"
+                    Command="{Binding Ribbon.Save.Command}" />
+
+                <!-- **********************************************************
+                  SaveAs (ApplicationMenu)
+                *********************************************************** -->
+                <r:MenuItem
+                    Header="{Binding Ribbon.SaveAs.Tooltip}"
+                    Icon="{Binding Ribbon.SaveAs.LargeIcon}"
+                    Command="{Binding Ribbon.SaveAs.Command}" />
+                <Separator />
+
+                <!-- **********************************************************
+                  Settings (ApplicationMenu)
+                *********************************************************** -->
+                <r:MenuItem
+                    Header="{Binding Ribbon.Settings.Tooltip}"
+                    Icon="{Binding Ribbon.Settings.LargeIcon}"
+                    Command="{Binding Ribbon.Settings.Command}" />
+                <Separator />
+
+                <!-- **********************************************************
+                  Close (ApplicationMenu)
+                *********************************************************** -->
+                <r:MenuItem
+                    Header="{Binding Ribbon.Close.Tooltip}"
+                    Icon="{Binding Ribbon.Close.LargeIcon}"
+                    Command="{Binding Ribbon.Close.Command}" />
+
+                <!-- **********************************************************
+                  Exit (ApplicationMenu)
+                *********************************************************** -->
+                <r:MenuItem
+                    Header="{Binding Ribbon.Exit.Tooltip}"
+                    Icon="{Binding Ribbon.Exit.LargeIcon}"
+                    Command="{Binding Ribbon.Exit.Command}" />
+
+                <!-- **********************************************************
+                  Recent files
+                *********************************************************** -->
+                <r:ApplicationMenu.RightPaneContent>
+                    <DockPanel Style="{StaticResource RibbonRecentMenuStyle}">
+                        <TextBlock
+                            Text="{Binding Recent.Menu.Tooltip}"
+                            Style="{StaticResource RibbonRecentTitleStyle}"
+                            DockPanel.Dock="Top" />
+                        <ListBox
+                            ItemsSource="{Binding Recent.Items}"
+                            ItemTemplate="{StaticResource RibbonRecentItemTemplate}"
+                            ItemContainerStyle="{StaticResource RibbonRecentItemStyle}"
+                            Template="{StaticResource RibbonRecentCollectionTemplate}" />
+                    </DockPanel>
+                </r:ApplicationMenu.RightPaneContent>
+            </r:ApplicationMenu>
+        </r:Ribbon.Menu>
     </r:Ribbon>
 </UserControl>

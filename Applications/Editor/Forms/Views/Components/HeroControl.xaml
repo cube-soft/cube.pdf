@@ -58,7 +58,7 @@
             ItemsSource="{Binding Recent.Items}"
             ItemTemplate="{StaticResource HeroRecentItemTemplate}"
             ItemContainerStyle="{StaticResource HeroRecentItemStyle}"
-            Style="{StaticResource HeroRecentCollectionStyle}"
+            Template="{StaticResource HeroRecentCollectionTemplate}"
             Grid.Row="2" />
     </Grid>
 </UserControl>

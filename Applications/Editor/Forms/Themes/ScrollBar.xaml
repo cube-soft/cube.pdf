@@ -38,10 +38,16 @@
             CornerRadius="4" />
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="ScrollBarThumbButton" Property="Background" Value="{StaticResource ScrollBarHoverBrush}" />
+                <Setter
+                    TargetName="ScrollBarThumbButton"
+                    Property="Background"
+                    Value="{StaticResource ScrollBarHoverBrush}" />
             </Trigger>
             <Trigger Property="IsDragging" Value="True">
-                <Setter TargetName="ScrollBarThumbButton" Property="Background" Value="{StaticResource ScrollBarDragBrush}" />
+                <Setter
+                    TargetName="ScrollBarThumbButton"
+                    Property="Background"
+                    Value="{StaticResource ScrollBarDragBrush}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -86,7 +92,7 @@
       ScrollViewer
     *********************************************************************** -->
     <ControlTemplate x:Key="ScrollViewerTemplate" TargetType="{x:Type ScrollViewer}">
-        <Grid Background="{StaticResource DarkBackgroundBrush}">
+        <Grid Background="{TemplateBinding Background}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />

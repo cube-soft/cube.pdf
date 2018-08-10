@@ -162,19 +162,19 @@
     </Style>
 
     <!-- **********************************************************************
-      RightPane for ApplicationMenu
+      RecentMenu (RightPane for ApplicationMenu)
     *********************************************************************** -->
-    <Style x:Key="RecentLabelStyle" TargetType="{x:Type Label}">
+    <Style x:Key="RibbonRecentMenuStyle" TargetType="{x:Type DockPanel}">
+        <Setter Property="Height" Value="280" />
+    </Style>
+
+    <Style x:Key="RibbonRecentTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
         <Setter Property="Padding" Value="8,4,4,8" />
-        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="0" />
     </Style>
 
-    <Style x:Key="RecentListViewStyle" TargetType="{x:Type ListView}">
-        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource LightForegroundBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Margin" Value="0" />
+    <Style x:Key="RibbonRecentItemStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Margin" Value="3" />
     </Style>
 </ResourceDictionary>
