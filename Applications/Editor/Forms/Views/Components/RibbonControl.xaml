@@ -21,7 +21,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:r="urn:fluent-ribbon"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="150"
@@ -375,7 +377,11 @@
                             ItemsSource="{Binding Recent.Items}"
                             ItemTemplate="{StaticResource RibbonRecentItemTemplate}"
                             ItemContainerStyle="{StaticResource RibbonRecentItemStyle}"
-                            Template="{StaticResource RibbonRecentCollectionTemplate}" />
+                            Template="{StaticResource RibbonRecentCollectionTemplate}">
+                            <i:Interaction.Behaviors>
+                                <my:SelectionBehavior />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
                     </DockPanel>
                 </r:ApplicationMenu.RightPaneContent>
             </r:ApplicationMenu>

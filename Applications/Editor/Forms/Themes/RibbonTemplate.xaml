@@ -214,7 +214,7 @@
     </ControlTemplate>
 
     <!-- **********************************************************************
-      ListView (Template)
+      RibbonRecentCollection
     *********************************************************************** -->
     <ControlTemplate x:Key="RibbonRecentCollectionTemplate" TargetType="{x:Type ListBox}">
         <ScrollViewer
@@ -223,7 +223,7 @@
             Template="{StaticResource ScrollViewerTemplate}"
             BorderThickness="0"
             HorizontalScrollBarVisibility="Disabled">
-            <WrapPanel
+            <StackPanel
                 Orientation="Vertical"
                 IsItemsHost="True" />
         </ScrollViewer>
