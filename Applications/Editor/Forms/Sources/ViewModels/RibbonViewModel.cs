@@ -62,7 +62,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry File { get; } = new RibbonEntry(
+        public MenuEntry File { get; } = new MenuEntry(
             () => Properties.Resources.MenuFile
         );
 
@@ -75,7 +75,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Edit { get; } = new RibbonEntry(
+        public MenuEntry Edit { get; } = new MenuEntry(
             () => Properties.Resources.MenuEdit
         );
 
@@ -88,7 +88,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry View { get; } = new RibbonEntry(
+        public MenuEntry View { get; } = new MenuEntry(
             () => Properties.Resources.MenuView
         );
 
@@ -105,7 +105,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Open { get; } = new RibbonEntry(
+        public MenuEntry Open { get; } = new MenuEntry(
             () => Properties.Resources.MenuOpen
         );
 
@@ -118,7 +118,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Save { get; } = new RibbonEntry(
+        public MenuEntry Save { get; } = new MenuEntry(
             () => Properties.Resources.MenuSave,
             () => Properties.Resources.TooltipSave
         );
@@ -132,7 +132,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry SaveAs { get; } = new RibbonEntry(
+        public MenuEntry SaveAs { get; } = new MenuEntry(
             () => Properties.Resources.MenuSaveAs
         );
 
@@ -145,7 +145,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Close { get; } = new RibbonEntry(
+        public MenuEntry Close { get; } = new MenuEntry(
             () => Properties.Resources.MenuClose
         );
 
@@ -158,7 +158,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Exit { get; } = new RibbonEntry(
+        public MenuEntry Exit { get; } = new MenuEntry(
             () => Properties.Resources.MenuExit
         );
 
@@ -171,7 +171,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Undo { get; } = new RibbonEntry(
+        public MenuEntry Undo { get; } = new MenuEntry(
             () => Properties.Resources.MenuUndo
         );
 
@@ -184,7 +184,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Redo { get; } = new RibbonEntry(
+        public MenuEntry Redo { get; } = new MenuEntry(
             () => Properties.Resources.MenuRedo
         );
 
@@ -197,7 +197,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Select { get; } = new RibbonEntry(
+        public MenuEntry Select { get; } = new MenuEntry(
             () => Properties.Resources.MenuSelect
         );
 
@@ -210,7 +210,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry SelectAll { get; } = new RibbonEntry(
+        public MenuEntry SelectAll { get; } = new MenuEntry(
             () => Properties.Resources.MenuSelectAll,
             nameof(Select)
         );
@@ -224,7 +224,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry SelectFlip { get; } = new RibbonEntry(
+        public MenuEntry SelectFlip { get; } = new MenuEntry(
             () => Properties.Resources.MenuSelectFlip,
             nameof(Select)
         );
@@ -238,7 +238,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry SelectClear { get; } = new RibbonEntry(
+        public MenuEntry SelectClear { get; } = new MenuEntry(
             () => Properties.Resources.MenuSelectClear,
             nameof(Select)
         );
@@ -252,7 +252,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Insert { get; } = new RibbonEntry(
+        public MenuEntry Insert { get; } = new MenuEntry(
             () => Properties.Resources.MenuInsert,
             () => Properties.Resources.TooltipInsert
         );
@@ -266,7 +266,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry InsertFront { get; } = new RibbonEntry(
+        public MenuEntry InsertFront { get; } = new MenuEntry(
             () => Properties.Resources.MenuInsertFront,
             nameof(Insert)
         );
@@ -280,7 +280,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry InsertBack { get; } = new RibbonEntry(
+        public MenuEntry InsertBack { get; } = new MenuEntry(
             () => Properties.Resources.MenuInsertBack,
             nameof(Insert)
         );
@@ -294,7 +294,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry InsertOthers { get; } = new RibbonEntry(
+        public MenuEntry InsertOthers { get; } = new MenuEntry(
             () => Properties.Resources.MenuInsertOthers
         );
 
@@ -307,7 +307,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Extract { get; } = new RibbonEntry(
+        public MenuEntry Extract { get; } = new MenuEntry(
             () => Properties.Resources.MenuExtract,
             () => Properties.Resources.TooltipExtract
         );
@@ -322,7 +322,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry ExtractOthers { get; } = new RibbonEntry(
+        public MenuEntry ExtractOthers { get; } = new MenuEntry(
             () => Properties.Resources.MenuExtractOthers
         );
 
@@ -335,7 +335,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Remove { get; } = new RibbonEntry(
+        public MenuEntry Remove { get; } = new MenuEntry(
             () => Properties.Resources.MenuRemove,
             () => Properties.Resources.TooltipRemove
         );
@@ -349,7 +349,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry RemoveOthers { get; } = new RibbonEntry(
+        public MenuEntry RemoveOthers { get; } = new MenuEntry(
             () => Properties.Resources.MenuRemoveRange
         );
 
@@ -362,7 +362,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry MoveNext { get; } = new RibbonEntry(
+        public MenuEntry MoveNext { get; } = new MenuEntry(
             () => Properties.Resources.MenuMoveNext
         );
 
@@ -375,7 +375,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry MovePrevious { get; } = new RibbonEntry(
+        public MenuEntry MovePrevious { get; } = new MenuEntry(
             () => Properties.Resources.MenuMovePrevious
         );
 
@@ -388,7 +388,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry RotateLeft { get; } = new RibbonEntry(
+        public MenuEntry RotateLeft { get; } = new MenuEntry(
             () => Properties.Resources.MenuRotateLeft
         );
 
@@ -401,7 +401,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry RotateRight { get; } = new RibbonEntry(
+        public MenuEntry RotateRight { get; } = new MenuEntry(
             () => Properties.Resources.MenuRotateRight
         );
 
@@ -414,7 +414,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Metadata { get; } = new RibbonEntry(
+        public MenuEntry Metadata { get; } = new MenuEntry(
             () => Properties.Resources.MenuMetadata,
             () => Properties.Resources.TooltipMetadata
         );
@@ -428,7 +428,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Encryption { get; } = new RibbonEntry(
+        public MenuEntry Encryption { get; } = new MenuEntry(
             () => Properties.Resources.MenuEncryption
         );
 
@@ -441,7 +441,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Refresh { get; } = new RibbonEntry(
+        public MenuEntry Refresh { get; } = new MenuEntry(
             () => Properties.Resources.MenuRefresh
         );
 
@@ -454,7 +454,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry ZoomIn { get; } = new RibbonEntry(
+        public MenuEntry ZoomIn { get; } = new MenuEntry(
             () => Properties.Resources.MenuZoomIn
         );
 
@@ -467,7 +467,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry ZoomOut { get; } = new RibbonEntry(
+        public MenuEntry ZoomOut { get; } = new MenuEntry(
             () => Properties.Resources.MenuZoomOut
         );
 
@@ -480,25 +480,8 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry Settings { get; } = new RibbonEntry(
+        public MenuEntry Settings { get; } = new MenuEntry(
             () => Properties.Resources.MenuSettings
-        );
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Recent
-        ///
-        /// <summary>
-        /// 最近開いたファイルメニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RibbonEntry Recent { get; } = new RibbonEntry(
-            () => Properties.Resources.MenuRecent
         );
 
         #endregion

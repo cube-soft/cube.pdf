@@ -25,7 +25,7 @@
       Hero
     *********************************************************************** -->
     <Style x:Key="HeroStyle" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="White" />
+        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
         <Setter Property="Width" Value="550" />
         <Setter Property="Height" Value="300" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -40,11 +40,27 @@
     </Style>
 
     <!-- **********************************************************************
-            HeroRecentCollection (Template)
+      HeroTitle
+    *********************************************************************** -->
+    <ControlTemplate x:Key="HeroTitleTemplate" TargetType="{x:Type Button}">
+        <TextBlock
+            Text="{TemplateBinding Content}"
+            FontSize="14"
+            FontWeight="Bold"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Width="Auto"
+            Margin="8,0,0,0"
+            Foreground="{StaticResource LightForegroundBrush}"
+            Cursor="Hand" />
+    </ControlTemplate>
+
+    <!-- **********************************************************************
+      HeroRecentCollection (Template)
     *********************************************************************** -->
     <ControlTemplate x:Key="HeroRecentCollectionTemplate" TargetType="{x:Type ListBox}">
         <WrapPanel
-            Margin="6,12,6,0"
+            Margin="6,4,6,0"
             Orientation="Vertical"
             ItemWidth="269"
             ItemHeight="27"

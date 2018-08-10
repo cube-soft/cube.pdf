@@ -17,7 +17,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Diagnostics;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -51,6 +53,7 @@ namespace Cube.Pdf.App.Editor
         public RecentViewModel(DirectoryMonitor items, IMessenger messenger) : base(messenger)
         {
             Items = items;
+            Menu.Command = new RelayCommand(() => Send(() => Process.Start(Items.Directory)));
         }
 
         #endregion
@@ -67,6 +70,20 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public DirectoryMonitor Items { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Menu
+        ///
+        /// <summary>
+        /// Gets the menu for recently used PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MenuEntry Menu { get; } = new MenuEntry(
+            () => Properties.Resources.MenuRecent,
+            "Default"
+        );
 
         #endregion
     }

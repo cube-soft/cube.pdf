@@ -101,7 +101,7 @@
                 <r:ApplicationMenu.RightPaneContent>
                     <DockPanel>
                         <Label
-                            Content="{Binding Ribbon.Recent.Tooltip}"
+                            Content="{Binding Recent.Menu.Tooltip}"
                             Style="{StaticResource RecentLabelStyle}"
                             DockPanel.Dock="Top" />
                         <ListView

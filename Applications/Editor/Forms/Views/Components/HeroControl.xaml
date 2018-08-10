@@ -40,6 +40,7 @@
     <Grid Style="{StaticResource HeroStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="90" />
+            <RowDefinition Height="28" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -47,11 +48,17 @@
             Source="pack://application:,,,/Assets/Hero.png"
             Style="{StaticResource HeroImageStyle}" />
 
+        <Button
+            Content="{Binding Recent.Menu.Text}"
+            Command="{Binding Recent.Menu.Command}"
+            Template="{StaticResource HeroTitleTemplate}"
+            Grid.Row="1" />
+
         <ListBox
             ItemsSource="{Binding Recent.Items}"
             ItemTemplate="{StaticResource HeroRecentItemTemplate}"
             ItemContainerStyle="{StaticResource HeroRecentItemStyle}"
             Style="{StaticResource HeroRecentCollectionStyle}"
-            Grid.Row="1" />
+            Grid.Row="2" />
     </Grid>
 </UserControl>

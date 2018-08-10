@@ -26,23 +26,23 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RibbonEntry
+    /// MenuEntry
     ///
     /// <summary>
-    /// Represents the components of a button included in a Ribbon.
+    /// Represents the components of a menu.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RibbonEntry : ObservableProperty, IDisposable
+    public class MenuEntry : ObservableProperty, IDisposable
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RibbonEntry
+        /// MenuEntry
         ///
         /// <summary>
-        /// Initializes a new instance of the RibbonEntry class with the
+        /// Initializes a new instance of the MenuEntry class with the
         /// specified parameters.
         /// </summary>
         ///
@@ -50,15 +50,15 @@ namespace Cube.Pdf.App.Editor
         /// <param name="name">Name for icons.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry(Func<string> text, [CallerMemberName] string name = null) :
+        public MenuEntry(Func<string> text, [CallerMemberName] string name = null) :
             this(text, text, name) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RibbonEntry
+        /// MenuEntry
         ///
         /// <summary>
-        /// Initializes a new instance of the RibbonEntry class with the
+        /// Initializes a new instance of the MenuEntry class with the
         /// specified parameters.
         /// </summary>
         ///
@@ -67,7 +67,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="name">Name for icons.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonEntry(Func<string> text, Func<string> tooltip, [CallerMemberName] string name = null)
+        public MenuEntry(Func<string> text, Func<string> tooltip, [CallerMemberName] string name = null)
         {
             _dispose     = new OnceAction<bool>(Dispose);
             _getText     = text;
@@ -190,14 +190,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~RibbonEntry
+        /// ~MenuEntry
         ///
         /// <summary>
-        /// Finalizes the RibbonEntry.
+        /// Finalizes the MenuEntry.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~RibbonEntry() { _dispose.Invoke(false); }
+        ~MenuEntry() { _dispose.Invoke(false); }
 
         /* ----------------------------------------------------------------- */
         ///

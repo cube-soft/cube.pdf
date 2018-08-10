@@ -128,7 +128,7 @@ namespace Cube.Pdf.Tests.Editor
         /// <param name="src">RibbonEntry that has the command.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Execute(MainViewModel vm, RibbonEntry src)
+        protected void Execute(MainViewModel vm, MenuEntry src)
         {
             Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), "Timeout");
             vm.Data.Message.Value = string.Empty;

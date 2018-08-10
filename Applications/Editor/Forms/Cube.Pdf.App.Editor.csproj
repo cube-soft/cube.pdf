@@ -142,9 +142,9 @@
     <Compile Include="Sources\Models\ImageExtension.cs" />
     <Compile Include="Sources\Models\ImagePreferences.cs" />
     <Compile Include="Sources\Models\ImageSelection.cs" />
+    <Compile Include="Sources\Models\MenuEntry.cs" />
     <Compile Include="Sources\Models\MessageFactory.cs" />
     <Compile Include="Sources\Models\ResourceCulture.cs" />
-    <Compile Include="Sources\Models\RibbonEntry.cs" />
     <Compile Include="Sources\ViewModels\MainBindableData.cs" />
     <Compile Include="Sources\ViewModels\MainFacade.cs" />
     <Compile Include="Sources\ViewModels\MainViewModel.cs" />
@@ -160,6 +160,8 @@
   <ItemGroup>
     <Resource Include="Assets\Large\Close.png" />
     <Resource Include="Assets\Large\CloseDisable.png" />
+    <Resource Include="Assets\Large\Default.png" />
+    <Resource Include="Assets\Large\DefaultDisable.png" />
     <Resource Include="Assets\Large\Encryption.png" />
     <Resource Include="Assets\Large\EncryptionDisable.png" />
     <Resource Include="Assets\Large\Exit.png" />
@@ -210,6 +212,8 @@
     <Resource Include="Assets\Medium\Loading.png" />
     <Resource Include="Assets\Small\Close.png" />
     <Resource Include="Assets\Small\CloseDisable.png" />
+    <Resource Include="Assets\Small\Default.png" />
+    <Resource Include="Assets\Small\DefaultDisable.png" />
     <Resource Include="Assets\Small\Encryption.png" />
     <Resource Include="Assets\Small\EncryptionDisable.png" />
     <Resource Include="Assets\Small\Exit.png" />
