@@ -54,7 +54,7 @@ namespace Cube.Pdf.Pdfium
             PointF point, SizeF size, int flags)
         {
             var retry = 5;
-            var hp = Facade.FPDF_LoadPage(src.RawObject, page.Number - 1, retry);
+            var hp = src.Invoke(e => Facade.FPDF_LoadPage(e, page.Number - 1, retry));
             if (hp == IntPtr.Zero) throw PdfiumLibrary.GetLoadException();
             var hdc = dest.GetHdc();
 

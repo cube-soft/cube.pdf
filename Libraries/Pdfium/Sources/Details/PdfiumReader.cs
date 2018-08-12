@@ -128,17 +128,6 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public IEnumerable<Page> Pages { get; private set; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RawObject
-        ///
-        /// <summary>
-        /// PDFium API へアクセスするためのオブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IntPtr RawObject { get; private set; }
-
         #endregion
 
         #region Methods
@@ -180,6 +169,25 @@ namespace Cube.Pdf.Pdfium
             }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified function.
+        /// </summary>
+        ///
+        /// <param name="func">Function object.</param>
+        ///
+        /// <returns>Return value for the specified object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public T Invoke<T>(Func<IntPtr, T> func)
+        {
+            if (_disposed) throw new ObjectDisposedException(GetType().Name);
+            return func(_core);
+        }
+
         #region IDisposable
 
         /* ----------------------------------------------------------------- */
@@ -195,7 +203,14 @@ namespace Cube.Pdf.Pdfium
         {
             try
             {
-                if (RawObject != IntPtr.Zero) Facade.FPDF_CloseDocument(RawObject);
+                if (_disposed) return;
+                _disposed = true;
+
+                if (_core != IntPtr.Zero)
+                {
+                    Facade.FPDF_CloseDocument(_core);
+                    _core = IntPtr.Zero;
+                }
                 if (disposing) _stream.Dispose();
             }
             finally { base.Dispose(disposing); }
@@ -220,7 +235,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private void Load(string password)
         {
-            RawObject = Facade.FPDF_LoadCustomDocument(
+            _core = Facade.FPDF_LoadCustomDocument(
                 new FileAccess
                 {
                     Length    = (uint)_stream.Length,
@@ -230,14 +245,14 @@ namespace Cube.Pdf.Pdfium
                 password
             );
 
-            if (RawObject == IntPtr.Zero) throw GetLoadException();
+            if (_core == IntPtr.Zero) throw GetLoadException();
 
-            var n = Facade.FPDF_GetPageCount(RawObject);
+            var n = Facade.FPDF_GetPageCount(_core);
 
-            Encryption = EncryptionFactory.Create(RawObject, password);
+            Encryption = EncryptionFactory.Create(_core, password);
             File       = CreateFile(password, n, !Encryption.OpenWithPassword);
-            Pages      = new ReadOnlyPageList(RawObject, File);
-            Metadata   = MetadataFactory.Create(RawObject);
+            Pages      = new ReadOnlyPageList(_core, File);
+            Metadata   = MetadataFactory.Create(_core);
         }
 
         /* ----------------------------------------------------------------- */
@@ -293,6 +308,8 @@ namespace Cube.Pdf.Pdfium
         #region Fields
         private readonly System.IO.Stream _stream;
         private readonly ReadDelegate _delegate;
+        private IntPtr _core;
+        private bool _disposed;
         #endregion
     }
 }
