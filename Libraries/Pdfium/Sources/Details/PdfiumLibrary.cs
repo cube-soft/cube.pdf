@@ -88,7 +88,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private sealed class PdfiumCore : IDisposable
         {
-            public PdfiumCore() { System.Diagnostics.Trace.WriteLine("FPDF_InitLibrary"); Facade.FPDF_InitLibrary(); }
+            public PdfiumCore() { Facade.FPDF_InitLibrary(); }
             ~PdfiumCore() { Dispose(false); }
             public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
             private void Dispose(bool _)
