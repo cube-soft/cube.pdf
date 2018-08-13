@@ -73,7 +73,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSource Image => _image(this);
+        public ImageSource Image => _image?.Invoke(this);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -241,9 +241,11 @@ namespace Cube.Pdf.App.Editor
             if (disposing)
             {
                 IsSelected = false;
-                _selection = null;
+
                 _preferences.PropertyChanged -= WhenPreferencesChanged;
                 _preferences = null;
+                _image       = null;
+                _selection   = null;
             }
         }
 
@@ -303,7 +305,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly OnceAction<bool> _dispose;
-        private readonly Func<ImageEntry, ImageSource> _image;
+        private Func<ImageEntry, ImageSource> _image;
         private ImagePreferences _preferences;
         private ImageSelection _selection;
         private int _index;
