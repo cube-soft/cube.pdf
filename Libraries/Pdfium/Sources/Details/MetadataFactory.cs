@@ -47,7 +47,7 @@ namespace Cube.Pdf.Pdfium
         /// <returns>Metadata</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Metadata Create(IntPtr core) => new Metadata
+        public static Metadata Create(PdfiumReader core) => new Metadata
         {
             Version        = GetVersion(core),
             Title          = GetText(core, nameof(Metadata.Title)),
@@ -72,13 +72,13 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetText(IntPtr core, string name)
+        private static string GetText(PdfiumReader core, string name)
         {
-            var size = Facade.FPDF_GetMetaText(core, name, null, 0);
+            var size = core.Invoke(e => Facade.FPDF_GetMetaText(e, name, null, 0));
             if (size <= 2) return string.Empty;
 
             var buffer = new byte[size];
-            Facade.FPDF_GetMetaText(core, name, buffer, size);
+            core.Invoke(e => Facade.FPDF_GetMetaText(e, name, buffer, size));
             return Encoding.Unicode.GetString(buffer, 0, (int)(size - 2));
         }
 
@@ -91,10 +91,11 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Version GetVersion(IntPtr core) =>
-            Facade.FPDF_GetFileVersion(core, out var version) ?
+        private static Version GetVersion(PdfiumReader core) => core.Invoke(
+            e => Facade.FPDF_GetFileVersion(e, out var version) ?
             new Version(version / 10, version % 10) :
-            new Version(1, 7);
+            new Version(1, 7)
+        );
 
         #endregion
     }

@@ -153,7 +153,7 @@ namespace Cube.Pdf
         /// Dispose
         ///
         /// <summary>
-        /// Releases all resources used by the ImageEntry.
+        /// Releases all resources used by the DocumentReaderBase.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

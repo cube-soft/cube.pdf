@@ -45,27 +45,27 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FPDF_AddRef
+        /// FPDF_InitLibrary
         ///
         /// <summary>
-        /// Increment the reference counter.
+        /// Initialize the FPDFSDK library.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void FPDF_AddRef() =>
-            Invoke(() => NativeMethods.FPDF_AddRef());
+        public static void FPDF_InitLibrary() =>
+            Invoke(() => NativeMethods.FPDF_InitLibrary());
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FPDF_Release
+        /// FPDF_DestroyLibrary
         ///
         /// <summary>
-        /// Decrement the reference counter.
+        /// Release all resources allocated by the FPDFSDK library.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void FPDF_Release() =>
-            Invoke(() => NativeMethods.FPDF_Release());
+        public static void FPDF_DestroyLibrary() =>
+            Invoke(() => NativeMethods.FPDF_DestroyLibrary());
 
         /* ----------------------------------------------------------------- */
         ///

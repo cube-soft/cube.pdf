@@ -43,27 +43,31 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FPDF_AddRef
+        /// FPDF_InitLibrary
         ///
         /// <summary>
-        /// Increment the reference counter.
+        /// Initialize the FPDFSDK library.
         /// </summary>
+        ///
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h"/>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
-        public static extern void FPDF_AddRef();
+        public static extern void FPDF_InitLibrary();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FPDF_Release
+        /// FPDF_DestroyLibrar
         ///
         /// <summary>
-        /// Decrement the reference counter.
+        /// Release all resources allocated by the FPDFSDK library.
         /// </summary>
+        ///
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h"/>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
-        public static extern void FPDF_Release();
+        public static extern void FPDF_DestroyLibrary();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,7 +93,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// Load PDF document from a custom access descriptor.
         /// </summary>
         ///
-        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h"/>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName, CharSet = CharSet.Ansi)]
@@ -104,7 +108,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// Close a loaded PDF document.
         /// </summary>
         ///
-        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h"/>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
@@ -122,7 +126,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// Get total number of pages in the document.
         /// </summary>
         ///
-        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h"/>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
@@ -140,7 +144,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// page_index parameter indicates the first page as ZERO.
         /// </remarks>
         ///
-        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h"/>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
@@ -154,7 +158,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// Close a loaded PDF page.
         /// </summary>
         ///
-        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h"/>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
@@ -168,7 +172,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// Get page width.
         /// </summary>
         ///
-        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h"/>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
@@ -182,7 +186,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// Get page height.
         /// </summary>
         ///
-        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h"/>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
@@ -204,7 +208,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         /// 3 - Rotated 270 degrees clockwise.
         /// </returns>
         ///
-        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_edit.h" />
+        /// <seealso hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_edit.h" />
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]

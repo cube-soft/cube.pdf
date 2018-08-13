@@ -29,7 +29,7 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal abstract class PdfiumLibrary : IDisposable
+    internal abstract class PdfiumLibrary
     {
         #region Constructors
 
@@ -38,15 +38,11 @@ namespace Cube.Pdf.Pdfium
         /// PdfLibrary
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the PdfiumLibrary class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PdfiumLibrary()
-        {
-            _dispose = new OnceAction<bool>(Dispose);
-            Facade.FPDF_AddRef();
-        }
+        protected PdfiumLibrary() { _once.Invoke(); }
 
         #endregion
 
@@ -54,67 +50,62 @@ namespace Cube.Pdf.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetLoadException
+        /// GetLastError
         ///
         /// <summary>
-        /// LoadException オブジェクトを取得します。
+        /// Gets a LoadException object with the last error value.
         /// </summary>
         ///
-        /// <returns>LoadException</returns>
+        /// <returns>LoadException object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static LoadException GetLoadException() =>
+        public LoadException GetLastError() =>
             new LoadException(Facade.FPDF_GetLastError());
 
-        #region IDisposable
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfLibrary
-        ///
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~PdfiumLibrary() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// リソースを開放します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// リソースを開放します。
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// マネージオブジェクトを開放するかどうか
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing) => Facade.FPDF_Release();
-
         #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Initialize
+        ///
+        /// <summary>
+        /// Initializes the PDFium library.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Initialize() => _core = new PdfiumCore();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PdfiumCore
+        ///
+        /// <summary>
+        /// Initializes and destroys the PDFium library.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private sealed class PdfiumCore : IDisposable
+        {
+            public PdfiumCore() { System.Diagnostics.Trace.WriteLine("FPDF_InitLibrary"); Facade.FPDF_InitLibrary(); }
+            ~PdfiumCore() { Dispose(false); }
+            public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
+            private void Dispose(bool _)
+            {
+                if (_disposed) return;
+                _disposed = true;
+                Facade.FPDF_DestroyLibrary();
+            }
+
+            private bool _disposed = false;
+        }
 
         #endregion
 
         #region Fields
-        private OnceAction<bool> _dispose;
+        private static readonly OnceAction _once = new OnceAction(Initialize);
+        private static PdfiumCore _core;
         #endregion
     }
 }

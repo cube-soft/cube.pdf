@@ -49,9 +49,9 @@ namespace Cube.Pdf.Pdfium
         /// <param name="file">PDF ファイル情報</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageList(IntPtr core, PdfFile file)
+        public ReadOnlyPageList(PdfiumReader core, PdfFile file)
         {
-            Debug.Assert(core != IntPtr.Zero);
+            Debug.Assert(core != null);
             Debug.Assert(file != null);
 
             File  = file;
@@ -147,8 +147,8 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private Page GetPage(int index)
         {
-            var page = Facade.FPDF_LoadPage(_core, index, 5);
-            if (page == IntPtr.Zero) throw PdfiumLibrary.GetLoadException();
+            var page = _core.Invoke(e => Facade.FPDF_LoadPage(e, index, 5));
+            if (page == IntPtr.Zero) throw _core.GetLastError();
 
             try
             {
@@ -209,7 +209,7 @@ namespace Cube.Pdf.Pdfium
         #endregion
 
         #region Fields
-        private readonly IntPtr _core;
+        private readonly PdfiumReader _core;
         #endregion
     }
 }

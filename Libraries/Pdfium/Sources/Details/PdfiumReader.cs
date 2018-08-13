@@ -33,7 +33,7 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class PdfiumReader : PdfiumLibrary
+    internal sealed class PdfiumReader : PdfiumLibrary, IDisposable
     {
         #region Constructors
 
@@ -195,25 +195,42 @@ namespace Cube.Pdf.Pdfium
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases all resources used by the PdfiumReader.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing)
+        public void Dispose()
         {
-            try
-            {
-                if (_disposed) return;
-                _disposed = true;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-                if (_core != IntPtr.Zero)
-                {
-                    Facade.FPDF_CloseDocument(_core);
-                    _core = IntPtr.Zero;
-                }
-                if (disposing) _stream.Dispose();
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the PdfiumReader
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            _disposed = true;
+
+            if (_core != IntPtr.Zero)
+            {
+                Facade.FPDF_CloseDocument(_core);
+                _core = IntPtr.Zero;
             }
-            finally { base.Dispose(disposing); }
+            if (disposing) _stream.Dispose();
         }
 
         #endregion
@@ -245,14 +262,14 @@ namespace Cube.Pdf.Pdfium
                 password
             );
 
-            if (_core == IntPtr.Zero) throw GetLoadException();
+            if (_core == IntPtr.Zero) throw GetLastError();
 
             var n = Facade.FPDF_GetPageCount(_core);
 
-            Encryption = EncryptionFactory.Create(_core, password);
+            Encryption = EncryptionFactory.Create(this, password);
             File       = CreateFile(password, n, !Encryption.OpenWithPassword);
-            Pages      = new ReadOnlyPageList(_core, File);
-            Metadata   = MetadataFactory.Create(_core);
+            Pages      = new ReadOnlyPageList(this, File);
+            Metadata   = MetadataFactory.Create(this);
         }
 
         /* ----------------------------------------------------------------- */

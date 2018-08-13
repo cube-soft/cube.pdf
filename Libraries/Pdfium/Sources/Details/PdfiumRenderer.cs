@@ -55,7 +55,7 @@ namespace Cube.Pdf.Pdfium
         {
             var retry = 5;
             var hp = src.Invoke(e => Facade.FPDF_LoadPage(e, page.Number - 1, retry));
-            if (hp == IntPtr.Zero) throw PdfiumLibrary.GetLoadException();
+            if (hp == IntPtr.Zero) throw src.GetLastError();
             var hdc = dest.GetHdc();
 
             try

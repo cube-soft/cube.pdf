@@ -54,10 +54,10 @@ namespace Cube.Pdf.Pdfium
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static Encryption Create(IntPtr core, string password)
+        public static Encryption Create(PdfiumReader core, string password)
         {
-            var method     = Facade.FPDF_GetSecurityHandlerRevision(core);
-            var permission = Facade.FPDF_GetDocPermissions(core);
+            var method     = core.Invoke(e => Facade.FPDF_GetSecurityHandlerRevision(e));
+            var permission = core.Invoke(e => Facade.FPDF_GetDocPermissions(e));
             var restrict   = permission != 0xfffffffc;
 
             return method == -1 ?
