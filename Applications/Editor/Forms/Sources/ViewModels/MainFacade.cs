@@ -170,8 +170,8 @@ namespace Cube.Pdf.App.Editor
         public void Close() => Invoke(() =>
         {
             Bindable.Title.Value = Settings.Title;
-            Images.Clear();
             _core.Clear();
+            Images.Clear();
         });
 
         /* ----------------------------------------------------------------- */
