@@ -64,7 +64,7 @@ namespace Cube.Pdf.Tests.Editor
             var cts  = new CancellationTokenSource();
             dest.PropertyChanged += (s, e) => cts.Cancel();
             Execute(vm, vm.Ribbon.Refresh);
-            Assert.That(Wait.For(cts.Token), "Timeout");
+            Assert.That(Wait.For(cts.Token), nameof(vm.Ribbon.Refresh));
             Assert.That(dest.Image, Is.Not.EqualTo(pref.Dummy));
         });
 
