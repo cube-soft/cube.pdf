@@ -70,7 +70,7 @@ namespace Cube.Pdf.App.Editor
             _cache   = new CacheCollection<ImageEntry, ImageSource>(create);
 
             _cache.Created += (s, e) => e.Key.Refresh();
-            _cache.Failed += (s, e)  => this.LogDebug($"{e.Value.Message} ({e.Value.GetType().Name})");
+            _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
             _inner.CollectionChanged += WhenCollectionChanged;
             Preferences.PropertyChanged += WhenPreferenceChanged;
         }
