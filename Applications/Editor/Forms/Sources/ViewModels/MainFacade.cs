@@ -138,6 +138,25 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OpenLink
+        ///
+        /// <summary>
+        /// Opens a PDF document with the specified link.
+        /// </summary>
+        ///
+        /// <param name="src">Information for the link.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void OpenLink(Information src)
+        {
+            if (src == null) return;
+            var sc = new Shortcut { FullName = src.FullName };
+            sc.Resolve();
+            Open(sc.Target);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Open
         ///
         /// <summary>

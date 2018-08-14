@@ -63,7 +63,7 @@
             Template="{StaticResource HeroRecentCollectionTemplate}"
             Grid.Row="2">
             <i:Interaction.Behaviors>
-                <my:SelectionBehavior />
+                <my:SelectionBehavior Command="{Binding Recent.Open}" />
             </i:Interaction.Behaviors>
         </ListBox>
     </Grid>

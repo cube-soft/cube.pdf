@@ -64,9 +64,9 @@ namespace Cube.Pdf.App.Editor
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached(
                 nameof(Command),
-                typeof(bool),
+                typeof(ICommand),
                 typeof(SelectionBehavior),
-                new PropertyMetadata(false, (s, e) =>
+                new PropertyMetadata(null, (s, e) =>
                 {
                     if (s is SelectionBehavior sm && e.NewValue is ICommand cmd) sm.Command = cmd;
                 })

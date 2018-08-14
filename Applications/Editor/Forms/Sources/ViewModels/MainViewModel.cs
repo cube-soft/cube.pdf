@@ -186,6 +186,13 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetRibbonCommands()
         {
+            Recent.Open = new BindableCommand<object>(
+                e => Async(() => Model.OpenLink(e as Information)),
+                e => !Data.IsOpen.Value && !Data.IsBusy.Value,
+                Data.IsOpen,
+                Data.IsBusy
+            );
+
             Ribbon.Open.Command = new BindableCommand(
                 () => SendOpen(e => Model.Open(e)),
                 () => !Data.IsOpen.Value && !Data.IsBusy.Value,

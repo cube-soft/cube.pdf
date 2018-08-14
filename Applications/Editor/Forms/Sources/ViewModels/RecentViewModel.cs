@@ -20,6 +20,7 @@ using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -84,6 +85,21 @@ namespace Cube.Pdf.App.Editor
             () => Properties.Resources.MenuRecent,
             "Default"
         );
+
+        #endregion
+
+        #region Commands
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// Gets the command to open the specified link.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand Open { get; set; }
 
         #endregion
     }
