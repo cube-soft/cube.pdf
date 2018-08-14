@@ -379,7 +379,9 @@
                             ItemContainerStyle="{StaticResource RibbonRecentItemStyle}"
                             Template="{StaticResource RibbonRecentCollectionTemplate}">
                             <i:Interaction.Behaviors>
-                                <my:SelectionBehavior Command="{Binding Recent.Open}" />
+                                <my:SelectionBehavior
+                                    Command="{Binding Recent.Open}"
+                                    Popup="True" />
                             </i:Interaction.Behaviors>
                         </ListBox>
                     </DockPanel>
