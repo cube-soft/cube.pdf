@@ -159,7 +159,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            _core.Dispose();
+            _core?.Dispose();
         }
 
         #endregion

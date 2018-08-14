@@ -187,7 +187,7 @@ namespace Cube.Pdf.App.Editor
         private void SetRibbonCommands()
         {
             Recent.Open = new BindableCommand<object>(
-                e => Async(() => Model.OpenLink(e as Information)),
+                e => Send(() => Model.OpenLink(e as Information)),
                 e => !Data.IsOpen.Value && !Data.IsBusy.Value,
                 Data.IsOpen,
                 Data.IsBusy
@@ -242,7 +242,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SendOpen(Action<string> action) =>
             Send(MessageFactory.CreateSource(e =>
-                Async(() => { if (e.Result) action(e.FileName); })
+                Send(() => { if (e.Result) action(e.FileName); })
             ));
 
         /* ----------------------------------------------------------------- */
@@ -257,7 +257,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SendSave(Action<string> action) =>
             Send(MessageFactory.CreateDestination(e =>
-                Async(() => { if (e.Result) action(e.FileName); })
+                Send(() => { if (e.Result) action(e.FileName); })
             ));
 
         #region Factory

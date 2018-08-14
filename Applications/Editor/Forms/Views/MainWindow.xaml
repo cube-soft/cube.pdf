@@ -51,6 +51,7 @@
         <xb:SaveFileDialogBehavior Messenger="{Binding Messenger}" />
         <xb:CloseBehavior Messenger="{Binding Messenger}" />
         <xb:UriBehavior Messenger="{Binding Messenger}" />
+        <xb:DialogBehavior Messenger="{Binding Messenger}" />
     </i:Interaction.Behaviors>
 
     <i:Interaction.Triggers>
