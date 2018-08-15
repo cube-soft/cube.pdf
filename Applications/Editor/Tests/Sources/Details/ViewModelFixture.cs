@@ -20,9 +20,9 @@ using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using Cube.Xui.Mixin;
-using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Tests.Editor
@@ -89,8 +89,9 @@ namespace Cube.Pdf.Tests.Editor
                 src.Data.Preferences.VisibleFirst = 0;
                 src.Data.Preferences.VisibleLast = 10;
 
-                Register(src.Messenger);
+                var registry = Register(src);
                 action(src);
+                foreach (var obj in registry) obj.Dispose();
             }
         }
 
@@ -167,7 +168,7 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Register(IMessenger src)
+        private IEnumerable<IDisposable> Register(IMessengerViewModel src)
         {
             void open(OpenFileMessage e)
             {
@@ -183,8 +184,11 @@ namespace Cube.Pdf.Tests.Editor
                 e.Callback.Invoke(e);
             }
 
-            src.Register<OpenFileMessage>(this, open);
-            src.Register<SaveFileMessage>(this, save);
+            return new List<IDisposable>
+            {
+                src.Register<OpenFileMessage>(this, open),
+                src.Register<SaveFileMessage>(this, save),
+            };
         }
 
         #endregion

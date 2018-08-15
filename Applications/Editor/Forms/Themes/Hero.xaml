@@ -25,7 +25,7 @@
       Hero
     *********************************************************************** -->
     <Style x:Key="HeroStyle" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
         <Setter Property="Width" Value="550" />
         <Setter Property="Height" Value="300" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -51,7 +51,7 @@
             VerticalAlignment="Center"
             Width="Auto"
             Margin="8,0,0,0"
-            Foreground="{StaticResource LightForegroundBrush}"
+            Foreground="{StaticResource WindowForegroundBrush}"
             Cursor="Hand" />
     </ControlTemplate>
 
@@ -88,7 +88,6 @@
             <Image
                 Source="pack://application:,,,/Assets/Small/Pdf.png"
                 Stretch="Uniform" />
-
             <TextBlock
                 Text="{Binding NameWithoutExtension}"
                 Grid.Column="2" />

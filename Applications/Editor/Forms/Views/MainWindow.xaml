@@ -47,11 +47,11 @@
       Interaction
     *********************************************************************** -->
     <i:Interaction.Behaviors>
-        <xb:OpenFileDialogBehavior Messenger="{Binding Messenger}" />
-        <xb:SaveFileDialogBehavior Messenger="{Binding Messenger}" />
-        <xb:CloseBehavior Messenger="{Binding Messenger}" />
-        <xb:UriBehavior Messenger="{Binding Messenger}" />
-        <xb:DialogBehavior Messenger="{Binding Messenger}" />
+        <xb:OpenFileDialogBehavior />
+        <xb:SaveFileDialogBehavior />
+        <xb:CloseBehavior />
+        <xb:UriBehavior />
+        <xb:DialogBehavior />
     </i:Interaction.Behaviors>
 
     <i:Interaction.Triggers>

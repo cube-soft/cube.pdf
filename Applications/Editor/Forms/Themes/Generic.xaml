@@ -27,9 +27,13 @@
     <Color x:Key="DarkForegroundColor">#FFE0E0E0</Color>
     <Color x:Key="DarkBorderColor">#FFB3B3B3</Color>
 
-    <Color x:Key="LightBackgroundColor">#FFFFFFFF</Color>
+    <Color x:Key="LightBackgroundColor">#FFF6F6F6</Color>
     <Color x:Key="LightForegroundColor">#FF303030</Color>
-    <Color x:Key="LightBorderColor">#FF303030</Color>
+    <Color x:Key="LightBorderColor">#FFE6E6E6</Color>
+
+    <Color x:Key="WindowBackgroundColor">#FFFFFFFF</Color>
+    <Color x:Key="WindowForegroundColor">#FF303030</Color>
+    <Color x:Key="WindowBorderColor">#FF303030</Color>
 
     <Color x:Key="TabBackgroundColor">#FF2F2F2F</Color>
     <Color x:Key="TabForegroundColor">#FFE0E0E0</Color>
@@ -52,6 +56,10 @@
     <SolidColorBrush x:Key="LightBackgroundBrush" Color="{StaticResource LightBackgroundColor}" />
     <SolidColorBrush x:Key="LightForegroundBrush" Color="{StaticResource LightForegroundColor}" />
     <SolidColorBrush x:Key="LightBorderBrush" Color="{StaticResource LightBorderColor}" />
+
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}" />
+    <SolidColorBrush x:Key="WindowForegroundBrush" Color="{StaticResource WindowForegroundColor}" />
+    <SolidColorBrush x:Key="WindowBorderBrush" Color="{StaticResource WindowBorderColor}" />
 
     <ImageBrush
         x:Key="TabBackgroundBrush"

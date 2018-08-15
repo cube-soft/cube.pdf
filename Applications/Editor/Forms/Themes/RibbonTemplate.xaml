@@ -218,8 +218,8 @@
     *********************************************************************** -->
     <ControlTemplate x:Key="RibbonRecentCollectionTemplate" TargetType="{x:Type ListBox}">
         <ScrollViewer
-            Background="{StaticResource LightBackgroundBrush}"
-            Foreground="{StaticResource LightForegroundBrush}"
+            Background="{StaticResource WindowBackgroundBrush}"
+            Foreground="{StaticResource WindowForegroundBrush}"
             Template="{StaticResource ScrollViewerTemplate}"
             BorderThickness="0"
             HorizontalScrollBarVisibility="Disabled">

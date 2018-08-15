@@ -54,7 +54,7 @@ namespace Cube.Pdf.App.Editor
         public RecentViewModel(DirectoryMonitor items, IMessenger messenger) : base(messenger)
         {
             Items = items;
-            Menu.Command = new RelayCommand(() => Send(() => Process.Start(Items.Directory)));
+            Menu.Command = new RelayCommand(() => Post(() => Process.Start(Items.Directory)));
         }
 
         #endregion

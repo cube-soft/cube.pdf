@@ -58,8 +58,8 @@ namespace Cube.Pdf.App.Editor
             var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", io, ctx);
 
             Model  = new MainFacade(settings, ctx);
-            Ribbon = new RibbonViewModel(Messenger);
-            Recent = new RecentViewModel(mon, Messenger);
+            Ribbon = new RibbonViewModel(MessengerInstance);
+            Recent = new RecentViewModel(mon, MessengerInstance);
 
             SetRibbonEnabled();
             SetRibbonCommands();
@@ -187,7 +187,7 @@ namespace Cube.Pdf.App.Editor
         private void SetRibbonCommands()
         {
             Recent.Open = new BindableCommand<object>(
-                e => Send(() => Model.OpenLink(e as Information)),
+                e => Post(() => Model.OpenLink(e as Information)),
                 e => !Data.IsOpen.Value && !Data.IsBusy.Value,
                 Data.IsOpen,
                 Data.IsBusy
@@ -242,7 +242,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SendOpen(Action<string> action) =>
             Send(MessageFactory.CreateSource(e =>
-                Send(() => { if (e.Result) action(e.FileName); })
+                Post(() => { if (e.Result) action(e.FileName); })
             ));
 
         /* ----------------------------------------------------------------- */
@@ -257,7 +257,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SendSave(Action<string> action) =>
             Send(MessageFactory.CreateDestination(e =>
-                Send(() => { if (e.Result) action(e.FileName); })
+                Post(() => { if (e.Result) action(e.FileName); })
             ));
 
         #region Factory
