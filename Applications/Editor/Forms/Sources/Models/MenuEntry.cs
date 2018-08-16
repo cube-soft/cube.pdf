@@ -29,7 +29,8 @@ namespace Cube.Pdf.App.Editor
     /// MenuEntry
     ///
     /// <summary>
-    /// Represents the components of a menu.
+    /// Represents the components of a menu that has text, tooltip, and
+    /// command.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -47,11 +48,9 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="text">Delegation for getting text.</param>
-        /// <param name="name">Name for icons.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry(Func<string> text, [CallerMemberName] string name = null) :
-            this(text, text, name) { }
+        public MenuEntry(Func<string> text) : this(text, text) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,33 +63,20 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="text">Delegation for getting text.</param>
         /// <param name="tooltip">Delegation for getting tooltip.</param>
-        /// <param name="name">Name for icons.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry(Func<string> text, Func<string> tooltip, [CallerMemberName] string name = null)
+        public MenuEntry(Func<string> text, Func<string> tooltip)
         {
-            _dispose     = new OnceAction<bool>(Dispose);
-            _getText     = text;
-            _getTooltip  = tooltip;
-            _unsubscribe = ResourceCulture.Subscribe(() => RaisePropertyChanged(nameof(Text)));
-            Name         = name;
-            Enabled      = new BindableFunc<bool>(() => Command?.CanExecute() ?? true);
+            _dispose    = new OnceAction<bool>(Dispose);
+            _getText    = text;
+            _getTooltip = tooltip;
+            _registry   = ResourceCulture.Subscribe(() => RaisePropertyChanged(nameof(Text)));
+            Enabled     = new BindableFunc<bool>(() => Command?.CanExecute() ?? true);
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Name
-        ///
-        /// <summary>
-        /// Gets the name for icons.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Name { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -119,7 +105,8 @@ namespace Cube.Pdf.App.Editor
         /// Enabled
         ///
         /// <summary>
-        /// Gets the object indicating whether the Ribbon entry is enabled.
+        /// Gets the object indicating whether the related view component
+        /// is enabled.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -134,7 +121,8 @@ namespace Cube.Pdf.App.Editor
         /// Command
         ///
         /// <summary>
-        /// Gets the command to be executed when clicking the Ribbon entry.
+        /// Gets the command to be executed when clicking the related
+        /// view component.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -150,6 +138,181 @@ namespace Cube.Pdf.App.Editor
                 RaisePropertyChanged(nameof(Command));
             }
         }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~MenuEntry
+        ///
+        /// <summary>
+        /// Finalizes the MenuEntry.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~MenuEntry() { _dispose.Invoke(false); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases all resources used by the class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the class and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _registry.Dispose();
+                if (_command != null) _command.CanExecuteChanged -= WhenCanExecuteChanged;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCanExecuteChanged
+        ///
+        /// <summary>
+        /// Occurs when the CanExecuteChanged event of the Command
+        /// property is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnCanExecuteChanged(EventArgs e) =>
+            Enabled.RaiseValueChanged();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsEnabled
+        ///
+        /// <summary>
+        /// Returns whether the related view component is enabled.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected bool IsEnabled()
+        {
+            if (!Enabled.Value) return false;
+            return Command?.CanExecute() ?? true;
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenCanExecuteChanged
+        ///
+        /// <summary>
+        /// Occurs when the CanExecuteChanged event of the Command
+        /// property is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenCanExecuteChanged(object s, EventArgs e) => OnCanExecuteChanged(e);
+
+        #endregion
+
+        #region Fields
+        private readonly OnceAction<bool> _dispose;
+        private readonly Func<string> _getText;
+        private readonly Func<string> _getTooltip;
+        private readonly IDisposable _registry;
+        private ICommand _command;
+        private BindableFunc<bool> _enabled;
+        #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ImageMenuEntry
+    ///
+    /// <summary>
+    /// Represents the components of a menu that has text, tooltip,
+    /// command, and two sizes of icons.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class ImageMenuEntry : MenuEntry
+    {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageMenuEntry
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ImageMenuEntry class
+        /// with the specified parameters.
+        /// </summary>
+        ///
+        /// <param name="text">Delegation for getting text.</param>
+        /// <param name="name">Name for icons.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageMenuEntry(Func<string> text, [CallerMemberName] string name = null) :
+            this(text, text, name) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageMenuEntry
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ImageMenuEntry class
+        /// with the specified parameters.
+        /// </summary>
+        ///
+        /// <param name="text">Delegation for getting text.</param>
+        /// <param name="tooltip">Delegation for getting tooltip.</param>
+        /// <param name="name">Name for icons.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageMenuEntry(Func<string> text, Func<string> tooltip,
+            [CallerMemberName] string name = null) : base(text, tooltip)
+        {
+            Name = name;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Name
+        ///
+        /// <summary>
+        /// Gets the name for icons.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Name { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -186,61 +349,24 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~MenuEntry
-        ///
-        /// <summary>
-        /// Finalizes the MenuEntry.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~MenuEntry() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the RibbonEntry.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the RibbonEntry
-        /// and optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _unsubscribe.Dispose();
-                if (_command != null) _command.CanExecuteChanged -= WhenCanExecuteChanged;
-            }
-        }
-
-        #endregion
-
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCanExecuteChanged
+        ///
+        /// <summary>
+        /// Occurs when the CanExecuteChanged event of the Command
+        /// property is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnCanExecuteChanged(EventArgs e)
+        {
+            RaisePropertyChanged(nameof(SmallIcon));
+            RaisePropertyChanged(nameof(LargeIcon));
+            base.OnCanExecuteChanged(e);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -253,46 +379,6 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private string GetName() => IsEnabled() ? Name : $"{Name}Disable";
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsEnabled
-        ///
-        /// <summary>
-        /// Returns whether the RibbonEntry is enabled.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsEnabled()
-        {
-            if (!Enabled.Value) return false;
-            return Command?.CanExecute() ?? true;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenCanExecuteChanged
-        ///
-        /// <summary>
-        /// Executes when the CanExecuteChanged event is fired.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenCanExecuteChanged(object s, EventArgs e)
-        {
-            Enabled.RaiseValueChanged();
-            RaisePropertyChanged(nameof(SmallIcon));
-            RaisePropertyChanged(nameof(LargeIcon));
-        }
-
-        #endregion
-
-        #region Fields
-        private readonly OnceAction<bool> _dispose;
-        private readonly Func<string> _getText;
-        private readonly Func<string> _getTooltip;
-        private readonly IDisposable _unsubscribe;
-        private ICommand _command;
-        private BindableFunc<bool> _enabled;
         #endregion
     }
 }

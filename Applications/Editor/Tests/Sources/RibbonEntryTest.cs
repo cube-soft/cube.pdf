@@ -50,7 +50,7 @@ namespace Cube.Pdf.Tests.Editor
             var name = nameof(Properties);
             var text = "GetText";
 
-            using (var dest = new MenuEntry(() => text))
+            using (var dest = new ImageMenuEntry(() => text))
             {
                 Assert.That(dest.Name,      Is.EqualTo(name));
                 Assert.That(dest.Text,      Is.EqualTo(text));

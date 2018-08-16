@@ -82,8 +82,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public MenuEntry Menu { get; } = new MenuEntry(
-            () => Properties.Resources.MenuRecent,
-            "Default"
+            () => Properties.Resources.MenuRecent
         );
 
         #endregion
