@@ -123,6 +123,9 @@
   <data name="FilterPdf" xml:space="preserve">
     <value>PDF files</value>
   </data>
+  <data name="MenuCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="MenuClose" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="MenuMovePrevious" xml:space="preserve">
     <value>Prev</value>
+  </data>
+  <data name="MenuOk" xml:space="preserve">
+    <value>OK</value>
   </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
@@ -236,6 +242,9 @@
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>Open file</value>
+  </data>
+  <data name="TitleRemove" xml:space="preserve">
+    <value>Removal details</value>
   </data>
   <data name="TitleSaveAs" xml:space="preserve">
     <value>Save as</value>

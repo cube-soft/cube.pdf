@@ -131,6 +131,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\Interactions\OtherBehaviors.cs" />
+    <Compile Include="Sources\ViewModels\DialogViewModel.cs" />
+    <Compile Include="Sources\ViewModels\RemoveViewModel.cs" />
     <Compile Include="Sources\Interactions\SelectionBehavior.cs" />
     <Compile Include="Sources\Interactions\SimplexConverter.cs" />
     <Compile Include="Sources\Interactions\VisibleRange.cs" />
@@ -273,7 +276,6 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Compile Include="App.xaml.cs">
-      <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Components\FooterControl.xaml">
@@ -309,12 +311,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="Views\MainWindow.xaml.cs">
-      <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\RemoveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\RemoveWindow.xaml.cs">
+      <DependentUpon>RemoveWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Dialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -52,11 +52,12 @@
         <xb:CloseBehavior />
         <xb:UriBehavior />
         <xb:DialogBehavior />
+        <my:RemoveWindowBehavior />
     </i:Interaction.Behaviors>
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
-            <xb:DisposeAction/>
+            <xb:DisposeAction />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

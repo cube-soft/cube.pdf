@@ -79,6 +79,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Cancel に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuCancel {
+            get {
+                return ResourceManager.GetString("MenuCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Close に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuClose {
@@ -201,6 +210,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuMovePrevious {
             get {
                 return ResourceManager.GetString("MenuMovePrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   OK に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOk {
+            get {
+                return ResourceManager.GetString("MenuOk", resourceCulture);
             }
         }
         
@@ -417,6 +435,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string TitleOpen {
             get {
                 return ResourceManager.GetString("TitleOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Removal details に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleRemove {
+            get {
+                return ResourceManager.GetString("TitleRemove", resourceCulture);
             }
         }
         
