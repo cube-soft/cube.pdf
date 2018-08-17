@@ -232,6 +232,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Page count に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPageCount {
+            get {
+                return ResourceManager.GetString("MenuPageCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recent files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRecent {
@@ -255,6 +264,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuRefresh {
             get {
                 return ResourceManager.GetString("MenuRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Removal range に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuRemovalRange {
+            get {
+                return ResourceManager.GetString("MenuRemovalRange", resourceCulture);
             }
         }
         
@@ -480,6 +498,24 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string TooltipMetadata {
             get {
                 return ResourceManager.GetString("TooltipMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} pages に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TooltipPageCount {
+            get {
+                return ResourceManager.GetString("TooltipPageCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   e.g. 1,2,4-7,9 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TooltipRemovalRange {
+            get {
+                return ResourceManager.GetString("TooltipRemovalRange", resourceCulture);
             }
         }
         

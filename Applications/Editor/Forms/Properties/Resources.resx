@@ -174,6 +174,9 @@
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="MenuPageCount" xml:space="preserve">
+    <value>Page count</value>
+  </data>
   <data name="MenuRecent" xml:space="preserve">
     <value>Recent files</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="MenuRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="MenuRemovalRange" xml:space="preserve">
+    <value>Removal range</value>
   </data>
   <data name="MenuRemove" xml:space="preserve">
     <value>Remove</value>
@@ -257,6 +263,12 @@
   </data>
   <data name="TooltipMetadata" xml:space="preserve">
     <value>PDF document metadata</value>
+  </data>
+  <data name="TooltipPageCount" xml:space="preserve">
+    <value>{0} pages</value>
+  </data>
+  <data name="TooltipRemovalRange" xml:space="preserve">
+    <value>e.g. 1,2,4-7,9</value>
   </data>
   <data name="TooltipRemove" xml:space="preserve">
     <value>Remove the selected pages</value>
