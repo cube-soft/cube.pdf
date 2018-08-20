@@ -123,6 +123,9 @@
   <data name="FilterPdf" xml:space="preserve">
     <value>PDF ファイル</value>
   </data>
+  <data name="MenuCancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
   <data name="MenuClose" xml:space="preserve">
     <value>閉じる</value>
   </data>
@@ -165,8 +168,14 @@
   <data name="MenuMovePrevious" xml:space="preserve">
     <value>前へ</value>
   </data>
+  <data name="MenuOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>開く</value>
+  </data>
+  <data name="MenuPageCount" xml:space="preserve">
+    <value>総ページ数</value>
   </data>
   <data name="MenuRecent" xml:space="preserve">
     <value>最近開いたファイル</value>
@@ -176,6 +185,9 @@
   </data>
   <data name="MenuRefresh" xml:space="preserve">
     <value>更新</value>
+  </data>
+  <data name="MenuRemovalRange" xml:space="preserve">
+    <value>削除する範囲</value>
   </data>
   <data name="MenuRemove" xml:space="preserve">
     <value>削除</value>
@@ -225,17 +237,20 @@
   <data name="MessageLoading" xml:space="preserve">
     <value>{0} を開いています ...</value>
   </data>
-  <data name="MessageSaving" xml:space="preserve">
-    <value>{0} に保存しています ...</value>
-  </data>
   <data name="MessagePage" xml:space="preserve">
     <value>全 {0} ページ</value>
+  </data>
+  <data name="MessageSaving" xml:space="preserve">
+    <value>{0} に保存しています ...</value>
   </data>
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} 個の項目を選択</value>
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>ファイルを開く</value>
+  </data>
+  <data name="TitleRemove" xml:space="preserve">
+    <value>範囲を設定して削除</value>
   </data>
   <data name="TitleSaveAs" xml:space="preserve">
     <value>名前を付けて保存</value>
@@ -248,6 +263,12 @@
   </data>
   <data name="TooltipMetadata" xml:space="preserve">
     <value>PDF 文書プロパティ</value>
+  </data>
+  <data name="TooltipPageCount" xml:space="preserve">
+    <value>{0} ページ</value>
+  </data>
+  <data name="TooltipRemovalRange" xml:space="preserve">
+    <value>例. 1,2,4-7,9</value>
   </data>
   <data name="TooltipRemove" xml:space="preserve">
     <value>選択ページを削除</value>
