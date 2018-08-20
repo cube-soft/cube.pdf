@@ -79,6 +79,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Add ... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAdd {
+            get {
+                return ResourceManager.GetString("MenuAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cancel に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuCancel {
@@ -88,11 +97,29 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Clear に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuClear {
+            get {
+                return ResourceManager.GetString("MenuClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Close に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuClose {
             get {
                 return ResourceManager.GetString("MenuClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Down に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuDown {
+            get {
+                return ResourceManager.GetString("MenuDown", resourceCulture);
             }
         }
         
@@ -241,6 +268,51 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Insert position に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPosition {
+            get {
+                return ResourceManager.GetString("MenuPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Beginning に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPositionFirst {
+            get {
+                return ResourceManager.GetString("MenuPositionFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   End に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPositionLast {
+            get {
+                return ResourceManager.GetString("MenuPositionLast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Selected position に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPositionSelected {
+            get {
+                return ResourceManager.GetString("MenuPositionSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Behind the number of に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPositionSpecified {
+            get {
+                return ResourceManager.GetString("MenuPositionSpecified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recent files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRecent {
@@ -385,6 +457,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Up に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuUp {
+            get {
+                return ResourceManager.GetString("MenuUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   View に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuView {
@@ -444,6 +525,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MessageSelection {
             get {
                 return ResourceManager.GetString("MessageSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Insertion details に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleInsert {
+            get {
+                return ResourceManager.GetString("TitleInsert", resourceCulture);
             }
         }
         

@@ -34,6 +34,17 @@
         <Setter Property="Padding" Value="2" />
     </Style>
 
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="3,0,9,0" />
+    </Style>
+
+    <Style TargetType="{x:Type GroupBox}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="3" />
+    </Style>
+
     <!-- **********************************************************************
       Footer
     *********************************************************************** -->
@@ -47,9 +58,9 @@
       Button
     *********************************************************************** -->
     <Style x:Key="DialogButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="125" />
+        <Setter Property="Width" Value="120" />
         <Setter Property="Height" Value="30" />
-        <Setter Property="Margin" Value="8,0,0,0" />
+        <Setter Property="Margin" Value="3" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Background" Value="{StaticResource LightButtonBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource LightButtonForegroundBrush}" />
@@ -57,10 +68,17 @@
     </Style>
 
     <!-- **********************************************************************
-      CancelButton
+      CencelButton
     *********************************************************************** -->
     <Style x:Key="CancelButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DialogButtonStyle}">
         <Setter Property="Width" Value="100" />
-        <Setter Property="Margin" Value="12,0,0,0" />
+        <Setter Property="Margin" Value="12,3,3,3" />
+    </Style>
+
+    <!-- **********************************************************************
+      TopButton
+    *********************************************************************** -->
+    <Style x:Key="TopButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DialogButtonStyle}">
+        <Setter Property="Margin" Value="3,0,3,3" />
     </Style>
 </ResourceDictionary>

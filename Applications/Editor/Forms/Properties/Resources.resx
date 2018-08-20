@@ -123,11 +123,20 @@
   <data name="FilterPdf" xml:space="preserve">
     <value>PDF files</value>
   </data>
+  <data name="MenuAdd" xml:space="preserve">
+    <value>Add ...</value>
+  </data>
   <data name="MenuCancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="MenuClear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="MenuClose" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="MenuDown" xml:space="preserve">
+    <value>Down</value>
   </data>
   <data name="MenuEdit" xml:space="preserve">
     <value>Edit</value>
@@ -177,6 +186,21 @@
   <data name="MenuPageCount" xml:space="preserve">
     <value>Page count</value>
   </data>
+  <data name="MenuPosition" xml:space="preserve">
+    <value>Insert position</value>
+  </data>
+  <data name="MenuPositionFirst" xml:space="preserve">
+    <value>Beginning</value>
+  </data>
+  <data name="MenuPositionLast" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="MenuPositionSelected" xml:space="preserve">
+    <value>Selected position</value>
+  </data>
+  <data name="MenuPositionSpecified" xml:space="preserve">
+    <value>Behind the number of</value>
+  </data>
   <data name="MenuRecent" xml:space="preserve">
     <value>Recent files</value>
   </data>
@@ -225,6 +249,9 @@
   <data name="MenuUndo" xml:space="preserve">
     <value>Undo</value>
   </data>
+  <data name="MenuUp" xml:space="preserve">
+    <value>Up</value>
+  </data>
   <data name="MenuView" xml:space="preserve">
     <value>View</value>
   </data>
@@ -245,6 +272,9 @@
   </data>
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} pages selected</value>
+  </data>
+  <data name="TitleInsert" xml:space="preserve">
+    <value>Insertion details</value>
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>Open file</value>

@@ -22,6 +22,18 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
+    /// InsertWindowBehavior
+    ///
+    /// <summary>
+    /// Represents the behavior to show a InsertWindow dialog.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class InsertWindowBehavior :
+        ShowDialogBehavior<InsertWindow, InsertViewModel> { }
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// RemoveWindowBehavior
     ///
     /// <summary>

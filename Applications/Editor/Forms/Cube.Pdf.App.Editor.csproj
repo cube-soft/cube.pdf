@@ -131,6 +131,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\ViewModels\InsertViewModel.cs" />
+    <Compile Include="Views\InsertWindow.xaml.cs">
+      <DependentUpon>InsertWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sources\Interactions\OtherBehaviors.cs" />
     <Compile Include="Sources\ViewModels\DialogViewModel.cs" />
     <Compile Include="Sources\ViewModels\RemoveViewModel.cs" />
@@ -278,6 +282,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\InsertWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Components\FooterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

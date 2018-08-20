@@ -47,11 +47,13 @@
       Interaction
     *********************************************************************** -->
     <i:Interaction.Behaviors>
+        <xb:DialogBehavior />
         <xb:OpenFileDialogBehavior />
         <xb:SaveFileDialogBehavior />
         <xb:CloseBehavior />
         <xb:UriBehavior />
-        <xb:DialogBehavior />
+
+        <my:InsertWindowBehavior />
         <my:RemoveWindowBehavior />
     </i:Interaction.Behaviors>
 
