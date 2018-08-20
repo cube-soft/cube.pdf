@@ -29,7 +29,8 @@
     Height="230"
     Width="420"
     WindowStartupLocation="CenterOwner"
-    ResizeMode="NoResize">
+    ResizeMode="NoResize"
+    ShowInTaskbar="False">
 
     <!-- **********************************************************************
       Resources
@@ -101,7 +102,7 @@
             <Button
                 Content="{Binding Cancel.Text}"
                 Command="{Binding Cancel.Command}"
-                Style="{StaticResource DialogButtonStyle}" />
+                Style="{StaticResource CancelButtonStyle}" />
 
             <Button
                 Content="{Binding OK.Text}"

@@ -27,9 +27,17 @@
     <Color x:Key="DarkForegroundColor">#FFE0E0E0</Color>
     <Color x:Key="DarkBorderColor">#FFB3B3B3</Color>
 
+    <Color x:Key="DarkButtonBackgroundColor">#FF202020</Color>
+    <Color x:Key="DarkButtonForegroundColor">#FFE0E0E0</Color>
+    <Color x:Key="DarkButtonBorderColor">#FF303030</Color>
+
     <Color x:Key="LightBackgroundColor">#FFF6F6F6</Color>
     <Color x:Key="LightForegroundColor">#FF303030</Color>
     <Color x:Key="LightBorderColor">#FFE6E6E6</Color>
+
+    <Color x:Key="LightButtonBackgroundColor">#FFE6E6E6</Color>
+    <Color x:Key="LightButtonForegroundColor">#FF000000</Color>
+    <Color x:Key="LightButtonBorderColor">#FFA0A0A0</Color>
 
     <Color x:Key="WindowBackgroundColor">#FFFFFFFF</Color>
     <Color x:Key="WindowForegroundColor">#FF303030</Color>
@@ -40,7 +48,6 @@
     <Color x:Key="TabForegroundInactivateColor">#FF909090</Color>
     <Color x:Key="TabBorderColor">#FF303030</Color>
     <Color x:Key="TabAccentColor">#FFFFB700</Color>
-    <Color x:Key="TabMenuButtonColor">#FF202020</Color>
 
     <Color x:Key="ScrollBarColor">#FF303030</Color>
     <Color x:Key="ScrollBarHoverColor">#FF272727</Color>
@@ -53,9 +60,17 @@
     <SolidColorBrush x:Key="DarkForegroundBrush" Color="{StaticResource DarkForegroundColor}" />
     <SolidColorBrush x:Key="DarkBorderBrush" Color="{StaticResource DarkBorderColor}" />
 
+    <SolidColorBrush x:Key="DarkButtonBackgroundBrush" Color="{StaticResource DarkButtonBackgroundColor}" />
+    <SolidColorBrush x:Key="DarkButtonForegroundBrush" Color="{StaticResource DarkButtonForegroundColor}" />
+    <SolidColorBrush x:Key="DarkButtonBorderBrush" Color="{StaticResource DarkButtonBorderColor}" />
+
     <SolidColorBrush x:Key="LightBackgroundBrush" Color="{StaticResource LightBackgroundColor}" />
     <SolidColorBrush x:Key="LightForegroundBrush" Color="{StaticResource LightForegroundColor}" />
     <SolidColorBrush x:Key="LightBorderBrush" Color="{StaticResource LightBorderColor}" />
+
+    <SolidColorBrush x:Key="LightButtonBackgroundBrush" Color="{StaticResource LightButtonBackgroundColor}" />
+    <SolidColorBrush x:Key="LightButtonForegroundBrush" Color="{StaticResource LightButtonForegroundColor}" />
+    <SolidColorBrush x:Key="LightButtonBorderBrush" Color="{StaticResource LightButtonBorderColor}" />
 
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}" />
     <SolidColorBrush x:Key="WindowForegroundBrush" Color="{StaticResource WindowForegroundColor}" />
@@ -70,7 +85,6 @@
     <SolidColorBrush x:Key="TabForegroundBrush" Color="{StaticResource TabForegroundColor}" />
     <SolidColorBrush x:Key="TabForegroundInactivateBrush" Color="{StaticResource TabForegroundInactivateColor}" />
     <SolidColorBrush x:Key="TabBorderBrush" Color="{StaticResource TabBorderColor}" />
-    <SolidColorBrush x:Key="TabMenuButtonBrush" Color="{StaticResource TabMenuButtonColor}" />
 
     <SolidColorBrush x:Key="ScrollBarBrush" Color="{StaticResource ScrollBarColor}" />
     <SolidColorBrush x:Key="ScrollBarHoverBrush" Color="{StaticResource ScrollBarHoverColor}" />

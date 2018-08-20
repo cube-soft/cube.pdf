@@ -47,9 +47,20 @@
       Button
     *********************************************************************** -->
     <Style x:Key="DialogButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="100" />
+        <Setter Property="Width" Value="125" />
         <Setter Property="Height" Value="30" />
         <Setter Property="Margin" Value="8,0,0,0" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource LightButtonBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightButtonForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource LightButtonBorderBrush}" />
+    </Style>
+
+    <!-- **********************************************************************
+      CancelButton
+    *********************************************************************** -->
+    <Style x:Key="CancelButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DialogButtonStyle}">
+        <Setter Property="Width" Value="100" />
+        <Setter Property="Margin" Value="12,0,0,0" />
     </Style>
 </ResourceDictionary>
