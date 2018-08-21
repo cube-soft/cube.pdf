@@ -130,6 +130,21 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
+        #region Commands
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Drop
+        ///
+        /// <summary>
+        /// Gets the command for Drag&amp;Drop.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand Drop { get; private set; }
+
+        #endregion
+
         #region Implementations
 
         /* ----------------------------------------------------------------- */
@@ -186,6 +201,13 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetRibbonCommands()
         {
+            Drop = new BindableCommand<string>(
+                e => Post(() => Model.Open(e)),
+                e => !Data.IsOpen.Value && !Data.IsBusy.Value,
+                Data.IsOpen,
+                Data.IsBusy
+            );
+
             Recent.Open = new BindableCommand<object>(
                 e => Post(() => Model.OpenLink(e as Information)),
                 e => !Data.IsOpen.Value && !Data.IsBusy.Value,

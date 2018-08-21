@@ -137,6 +137,7 @@
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sources\Interactions\DropBehavior.cs" />
     <Compile Include="Sources\ViewModels\EncryptionViewModel.cs" />
     <Compile Include="Sources\ViewModels\ExtractViewModel.cs" />
     <Compile Include="Sources\ViewModels\SettingsViewModel.cs" />

@@ -34,6 +34,7 @@
     FontFamily="Meiryo UI"
     Height="600"
     Width="800"
+    AllowDrop="True"
     Cursor="{Binding Data.IsBusy.Value, Converter={my:BooleanToCursor}}">
 
     <!-- **********************************************************************
@@ -62,6 +63,7 @@
         <my:MetadataWindowBehavior />
         <my:EncryptionWindowBehavior />
         <my:SettingsWindowBehavior />
+        <my:DropBehavior Command="{Binding Drop}" />
     </i:Interaction.Behaviors>
 
     <i:Interaction.Triggers>
