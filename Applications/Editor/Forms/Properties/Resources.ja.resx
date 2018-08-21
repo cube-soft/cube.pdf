@@ -201,6 +201,9 @@
   <data name="MenuPositionSpecified" xml:space="preserve">
     <value>指定ページの直後</value>
   </data>
+  <data name="MenuPreview" xml:space="preserve">
+    <value>プレビュー</value>
+  </data>
   <data name="MenuRecent" xml:space="preserve">
     <value>最近開いたファイル</value>
   </data>
