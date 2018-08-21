@@ -39,6 +39,10 @@
     <!-- **********************************************************************
       Resources
     *********************************************************************** -->
+    <r:RibbonWindow.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Views/Components/ContextControl.xaml" />
+    </r:RibbonWindow.Resources>
+
     <r:RibbonWindow.DataContext>
         <my:MainViewModel />
     </r:RibbonWindow.DataContext>
@@ -78,6 +82,7 @@
 
         <my:RibbonControl Grid.Row="0" />
         <my:PagesControl
+            ContextMenu="{StaticResource MainContextMenu}"
             Visibility="{Binding Data.IsOpen.Value, Converter={xc:BooleanToVisibility}}"
             Grid.Row="1" />
         <my:HeroControl

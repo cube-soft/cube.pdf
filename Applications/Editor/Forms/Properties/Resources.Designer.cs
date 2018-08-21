@@ -313,6 +313,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Preview に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPreview {
+            get {
+                return ResourceManager.GetString("MenuPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recent files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRecent {

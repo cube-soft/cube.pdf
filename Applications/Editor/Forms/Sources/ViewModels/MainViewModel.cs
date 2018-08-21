@@ -203,6 +203,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.Close.Command         = WhenOpen(() => Model.Close());
             Ribbon.Save.Command          = WhenOpen(() => SendSave(e => Model.Save(e)));
             Ribbon.SaveAs.Command        = WhenOpen(() => SendSave(e => Model.Save(e)));
+            Ribbon.Preview.Command       = None;
             Ribbon.Undo.Command          = None;
             Ribbon.Redo.Command          = None;
             Ribbon.Select.Command        = WhenOpen(() => Model.Select());

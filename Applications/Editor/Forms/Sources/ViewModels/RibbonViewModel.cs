@@ -98,6 +98,20 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Preview
+        ///
+        /// <summary>
+        /// Gets the menu that provides functionality to show the preview
+        /// dialog.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MenuEntry Preview { get; } = new MenuEntry(
+            () => Properties.Resources.MenuPreview
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Open
         ///
         /// <summary>

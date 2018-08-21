@@ -1,0 +1,126 @@
+﻿<!-- **************************************************************************
+
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- **********************************************************************
+      MainContextMenu
+    *********************************************************************** -->
+    <ContextMenu x:Key="MainContextMenu">
+        <!-- ******************************************************************
+          Preview
+        ******************************************************************* -->
+        <MenuItem
+            Command="{Binding Ribbon.Preview.Command}"
+            Header="{Binding Ribbon.Preview.Text}" />
+
+        <Separator />
+
+        <!-- ******************************************************************
+          Insert
+        ******************************************************************* -->
+        <MenuItem Header="{Binding Ribbon.Insert.Text}">
+            <MenuItem
+                Command="{Binding Ribbon.Insert.Command}"
+                Header="{Binding Ribbon.Insert.Tooltip}" />
+            <MenuItem
+                Command="{Binding Ribbon.InsertFront.Command}"
+                Header="{Binding Ribbon.InsertFront.Tooltip}" />
+            <MenuItem
+                Command="{Binding Ribbon.InsertBack.Command}"
+                Header="{Binding Ribbon.InsertBack.Tooltip}" />
+            <MenuItem
+                Command="{Binding Ribbon.InsertOthers.Command}"
+                Header="{Binding Ribbon.InsertOthers.Tooltip}" />
+        </MenuItem>
+
+        <!-- ******************************************************************
+          Extract
+        ******************************************************************* -->
+        <MenuItem Header="{Binding Ribbon.Extract.Text}">
+            <MenuItem
+                Command="{Binding Ribbon.Extract.Command}"
+                Header="{Binding Ribbon.Extract.Tooltip}" />
+            <MenuItem
+                Command="{Binding Ribbon.ExtractOthers.Command}"
+                Header="{Binding Ribbon.ExtractOthers.Tooltip}" />
+        </MenuItem>
+
+        <!-- ******************************************************************
+          Remove
+        ******************************************************************* -->
+        <MenuItem Header="{Binding Ribbon.Remove.Text}">
+            <MenuItem
+                Command="{Binding Ribbon.Remove.Command}"
+                Header="{Binding Ribbon.Remove.Tooltip}" />
+            <MenuItem
+                Command="{Binding Ribbon.RemoveOthers.Command}"
+                Header="{Binding Ribbon.RemoveOthers.Tooltip}" />
+        </MenuItem>
+
+        <Separator />
+
+        <!-- ******************************************************************
+          MovePrevious
+        ******************************************************************* -->
+        <MenuItem
+            Command="{Binding Ribbon.MovePrevious.Command}"
+            Header="{Binding Ribbon.MovePrevious.Text}" />
+
+        <!-- ******************************************************************
+          MoveNext
+        ******************************************************************* -->
+        <MenuItem
+            Command="{Binding Ribbon.MoveNext.Command}"
+            Header="{Binding Ribbon.MoveNext.Text}" />
+
+        <Separator />
+
+        <!-- ******************************************************************
+          RotateLeft
+        ******************************************************************* -->
+        <MenuItem
+            Command="{Binding Ribbon.RotateLeft.Command}"
+            Header="{Binding Ribbon.RotateLeft.Text}" />
+
+        <!-- ******************************************************************
+          RotateRight
+        ******************************************************************* -->
+        <MenuItem
+            Command="{Binding Ribbon.RotateRight.Command}"
+            Header="{Binding Ribbon.RotateRight.Text}" />
+
+        <Separator />
+
+        <!-- ******************************************************************
+          Metadata
+        ******************************************************************* -->
+        <MenuItem
+            Command="{Binding Ribbon.Metadata.Command}"
+            Header="{Binding Ribbon.Metadata.Text}" />
+
+        <!-- ******************************************************************
+          Encryption
+        ******************************************************************* -->
+        <MenuItem
+            Command="{Binding Ribbon.Encryption.Command}"
+            Header="{Binding Ribbon.Encryption.Text}" />
+    </ContextMenu>
+</ResourceDictionary>

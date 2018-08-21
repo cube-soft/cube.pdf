@@ -201,6 +201,9 @@
   <data name="MenuPositionSpecified" xml:space="preserve">
     <value>Behind the number of</value>
   </data>
+  <data name="MenuPreview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
   <data name="MenuRecent" xml:space="preserve">
     <value>Recent files</value>
   </data>
