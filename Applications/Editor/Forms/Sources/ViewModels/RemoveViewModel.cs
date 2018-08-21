@@ -83,8 +83,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public MenuEntry RangeCaption { get; } = new MenuEntry(
-            () => Properties.Resources.MenuRemovalRange,
-            () => Properties.Resources.TooltipRemovalRange
+            () => Properties.Resources.MenuRemoveRange,
+            () => Properties.Resources.TooltipRemoveRange
         );
 
         /* ----------------------------------------------------------------- */

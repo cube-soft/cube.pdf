@@ -340,15 +340,6 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Removal range に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuRemovalRange {
-            get {
-                return ResourceManager.GetString("MenuRemovalRange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Remove に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRemove {
@@ -359,6 +350,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         
         /// <summary>
         ///   Removal details に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuRemoveOthers {
+            get {
+                return ResourceManager.GetString("MenuRemoveOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Removal range に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRemoveRange {
             get {
@@ -601,20 +601,20 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   e.g. 1,2,4-7,9 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TooltipRemovalRange {
-            get {
-                return ResourceManager.GetString("TooltipRemovalRange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Remove the selected pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TooltipRemove {
             get {
                 return ResourceManager.GetString("TooltipRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   e.g. 1,2,4-7,9 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TooltipRemoveRange {
+            get {
+                return ResourceManager.GetString("TooltipRemoveRange", resourceCulture);
             }
         }
         

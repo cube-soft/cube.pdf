@@ -123,11 +123,20 @@
   <data name="FilterPdf" xml:space="preserve">
     <value>PDF ファイル</value>
   </data>
+  <data name="MenuAdd" xml:space="preserve">
+    <value>追加 ...</value>
+  </data>
   <data name="MenuCancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
+  <data name="MenuClear" xml:space="preserve">
+    <value>全て削除</value>
+  </data>
   <data name="MenuClose" xml:space="preserve">
     <value>閉じる</value>
+  </data>
+  <data name="MenuDown" xml:space="preserve">
+    <value>下へ</value>
   </data>
   <data name="MenuEdit" xml:space="preserve">
     <value>編集</value>
@@ -153,11 +162,14 @@
   <data name="MenuInsertBack" xml:space="preserve">
     <value>末尾に挿入</value>
   </data>
+  <data name="MenuInsertFront" xml:space="preserve">
+    <value>先頭に挿入</value>
+  </data>
   <data name="MenuInsertOthers" xml:space="preserve">
     <value>詳細を設定して挿入</value>
   </data>
-  <data name="MenuInsertFront" xml:space="preserve">
-    <value>先頭に挿入</value>
+  <data name="MenuInsertPosition" xml:space="preserve">
+    <value>挿入位置</value>
   </data>
   <data name="MenuMetadata" xml:space="preserve">
     <value>プロパティ</value>
@@ -177,6 +189,18 @@
   <data name="MenuPageCount" xml:space="preserve">
     <value>総ページ数</value>
   </data>
+  <data name="MenuPositionFirst" xml:space="preserve">
+    <value>先頭</value>
+  </data>
+  <data name="MenuPositionLast" xml:space="preserve">
+    <value>末尾</value>
+  </data>
+  <data name="MenuPositionSelected" xml:space="preserve">
+    <value>選択ページの直後</value>
+  </data>
+  <data name="MenuPositionSpecified" xml:space="preserve">
+    <value>指定ページの直後</value>
+  </data>
   <data name="MenuRecent" xml:space="preserve">
     <value>最近開いたファイル</value>
   </data>
@@ -186,14 +210,14 @@
   <data name="MenuRefresh" xml:space="preserve">
     <value>更新</value>
   </data>
-  <data name="MenuRemovalRange" xml:space="preserve">
-    <value>削除する範囲</value>
-  </data>
   <data name="MenuRemove" xml:space="preserve">
     <value>削除</value>
   </data>
-  <data name="MenuRemoveRange" xml:space="preserve">
+  <data name="MenuRemoveOthers" xml:space="preserve">
     <value>範囲を指定して削除</value>
+  </data>
+  <data name="MenuRemoveRange" xml:space="preserve">
+    <value>削除する範囲</value>
   </data>
   <data name="MenuRotateLeft" xml:space="preserve">
     <value>左90度</value>
@@ -225,6 +249,9 @@
   <data name="MenuUndo" xml:space="preserve">
     <value>元に戻す</value>
   </data>
+  <data name="MenuUp" xml:space="preserve">
+    <value>上へ</value>
+  </data>
   <data name="MenuView" xml:space="preserve">
     <value>表示</value>
   </data>
@@ -245,6 +272,9 @@
   </data>
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} 個の項目を選択</value>
+  </data>
+  <data name="TitleInsert" xml:space="preserve">
+    <value>詳細を設定して挿入</value>
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>ファイルを開く</value>
@@ -267,11 +297,11 @@
   <data name="TooltipPageCount" xml:space="preserve">
     <value>{0} ページ</value>
   </data>
-  <data name="TooltipRemovalRange" xml:space="preserve">
-    <value>例. 1,2,4-7,9</value>
-  </data>
   <data name="TooltipRemove" xml:space="preserve">
     <value>選択ページを削除</value>
+  </data>
+  <data name="TooltipRemoveRange" xml:space="preserve">
+    <value>例. 1,2,4-7,9</value>
   </data>
   <data name="TooltipSave" xml:space="preserve">
     <value>上書き保存</value>

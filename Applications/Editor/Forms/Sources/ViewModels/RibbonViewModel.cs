@@ -350,7 +350,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ImageMenuEntry RemoveOthers { get; } = new ImageMenuEntry(
-            () => Properties.Resources.MenuRemoveRange
+            () => Properties.Resources.MenuRemoveOthers
         );
 
         /* ----------------------------------------------------------------- */
