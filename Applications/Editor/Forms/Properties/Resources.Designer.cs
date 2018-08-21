@@ -529,11 +529,38 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Encryption に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleEncryption {
+            get {
+                return ResourceManager.GetString("TitleEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Extraction details に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleExtract {
+            get {
+                return ResourceManager.GetString("TitleExtract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Insertion details に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleInsert {
             get {
                 return ResourceManager.GetString("TitleInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PDF Metadata に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleMetadata {
+            get {
+                return ResourceManager.GetString("TitleMetadata", resourceCulture);
             }
         }
         
@@ -561,6 +588,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string TitleSaveAs {
             get {
                 return ResourceManager.GetString("TitleSaveAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CubePDF Utility settings に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleSettings {
+            get {
+                return ResourceManager.GetString("TitleSettings", resourceCulture);
             }
         }
         

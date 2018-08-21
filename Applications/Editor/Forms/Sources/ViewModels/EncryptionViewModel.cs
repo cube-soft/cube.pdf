@@ -16,31 +16,39 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui.Behaviors;
+using GalaSoft.MvvmLight.Messaging;
+using System.Threading;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// InsertWindowBehavior
+    /// EncryptionViewModel
     ///
     /// <summary>
-    /// Represents the behavior to show a InsertWindow dialog.
+    /// Represents the ViewModel for a <c>EncryptionWindow</c> instance.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertWindowBehavior :
-        ShowDialogBehavior<InsertWindow, InsertViewModel> { }
+    public class EncryptionViewModel : DialogViewModel
+    {
+        #region Constructors
 
-    /* --------------------------------------------------------------------- */
-    ///
-    /// RemoveWindowBehavior
-    ///
-    /// <summary>
-    /// Represents the behavior to show a RemoveWindow dialog.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class RemoveWindowBehavior :
-        ShowDialogBehavior<RemoveWindow, RemoveViewModel> { }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EncryptionViewModel
+        ///
+        /// <summary>
+        /// Initializes a new instance of the <c>EncryptionViewModel</c>
+        /// with the specified argumetns.
+        /// </summary>
+        ///
+        /// <param name="context">Synchronization context.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EncryptionViewModel(SynchronizationContext context) :
+            base(() => Properties.Resources.TitleEncryption, new Messenger(), context) { }
+
+        #endregion
+    }
 }

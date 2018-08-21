@@ -16,73 +16,59 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 *************************************************************************** -->
-<r:RibbonWindow
-    x:Class="Cube.Pdf.App.Editor.MainWindow"
+<Window
+    x:Class="Cube.Pdf.App.Editor.SettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:r="urn:fluent-ribbon"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
-    xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui"
-    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-
-    Title="{Binding Data.Title.Value}"
-    TitleBarHeight="30"
-    FontFamily="Meiryo UI"
-    Height="600"
-    Width="800"
-    Cursor="{Binding Data.IsBusy.Value, Converter={my:BooleanToCursor}}">
+    Title="{Binding Title.Text}"
+    Height="230"
+    Width="420"
+    WindowStartupLocation="CenterOwner"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False">
 
     <!-- **********************************************************************
       Resources
     *********************************************************************** -->
-    <r:RibbonWindow.DataContext>
-        <my:MainViewModel />
-    </r:RibbonWindow.DataContext>
+    <Window.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Dialog.xaml" />
+    </Window.Resources>
 
     <!-- **********************************************************************
-      Interactions
+      Interaction
     *********************************************************************** -->
     <i:Interaction.Behaviors>
-        <xb:DialogBehavior />
-        <xb:OpenFileDialogBehavior />
-        <xb:SaveFileDialogBehavior />
         <xb:CloseBehavior />
-        <xb:UriBehavior />
-        <my:InsertWindowBehavior />
-        <my:ExtractWindowBehavior />
-        <my:RemoveWindowBehavior />
-        <my:MetadataWindowBehavior />
-        <my:EncryptionWindowBehavior />
-        <my:SettingsWindowBehavior />
     </i:Interaction.Behaviors>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closed">
-            <xb:DisposeAction />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
     <!-- **********************************************************************
       Main
     *********************************************************************** -->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
-        <my:RibbonControl Grid.Row="0" />
-        <my:PagesControl
-            Visibility="{Binding Data.IsOpen.Value, Converter={xc:BooleanToVisibility}}"
-            Grid.Row="1" />
-        <my:HeroControl
-            Visibility="{Binding Data.IsOpen.Value, Converter={my:InverseToVisibility}}"
-            Grid.Row="1" />
-        <my:FooterControl Grid.Row="2" />
+        <!-- ******************************************************************
+          Buttons
+        ******************************************************************* -->
+        <StackPanel
+            Style="{StaticResource DialogFooterStyle}"
+            Grid.Row="1">
+            <Button
+                Content="{Binding Cancel.Text}"
+                Command="{Binding Cancel.Command}"
+                Style="{StaticResource CancelButtonStyle}" />
+            <Button
+                Content="{Binding OK.Text}"
+                Command="{Binding OK.Command}"
+                Style="{StaticResource DialogButtonStyle}" />
+        </StackPanel>
     </Grid>
-</r:RibbonWindow>
+</Window>

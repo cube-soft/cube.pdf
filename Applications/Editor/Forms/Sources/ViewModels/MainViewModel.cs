@@ -214,19 +214,19 @@ namespace Cube.Pdf.App.Editor
             Ribbon.InsertBack.Command    = WhenOpen(() => SendOpen(e => Model.Insert(int.MaxValue, e)));
             Ribbon.InsertOthers.Command  = WhenOpen(() => Send(new InsertViewModel(Data.Count.Value, Context)));
             Ribbon.Extract.Command       = None;
-            Ribbon.ExtractOthers.Command = None;
+            Ribbon.ExtractOthers.Command = WhenOpen(() => Send(new ExtractViewModel(Context)));
             Ribbon.Remove.Command        = WhenSelected(() => Model.Remove());
             Ribbon.RemoveOthers.Command  = WhenOpen(() => Send(new RemoveViewModel(Data.Count.Value, Context)));
             Ribbon.MovePrevious.Command  = WhenSelected(() => Model.Move(-1));
             Ribbon.MoveNext.Command      = WhenSelected(() => Model.Move(1));
             Ribbon.RotateLeft.Command    = WhenSelected(() => Model.Rotate(-90));
             Ribbon.RotateRight.Command   = WhenSelected(() => Model.Rotate(90));
-            Ribbon.Metadata.Command      = None;
-            Ribbon.Encryption.Command    = None;
+            Ribbon.Metadata.Command      = WhenOpen(() => Send(new MetadataViewModel(Context)));
+            Ribbon.Encryption.Command    = WhenOpen(() => Send(new EncryptionViewModel(Context)));
             Ribbon.Refresh.Command       = WhenOpen(() => Model.Refresh());
             Ribbon.ZoomIn.Command        = WhenAny(() => Model.Zoom(1));
             Ribbon.ZoomOut.Command       = WhenAny(() => Model.Zoom(-1));
-            Ribbon.Settings.Command      = WhenAny(() => Send(Data.Settings.Uri));
+            Ribbon.Settings.Command      = WhenAny(() => Send(new SettingsViewModel(Context)));
             Ribbon.Exit.Command          = WhenAny(() => Send<CloseMessage>());
         }
 

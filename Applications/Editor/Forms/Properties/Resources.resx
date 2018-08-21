@@ -273,8 +273,17 @@
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} pages selected</value>
   </data>
+  <data name="TitleEncryption" xml:space="preserve">
+    <value>Encryption</value>
+  </data>
+  <data name="TitleExtract" xml:space="preserve">
+    <value>Extraction details</value>
+  </data>
   <data name="TitleInsert" xml:space="preserve">
     <value>Insertion details</value>
+  </data>
+  <data name="TitleMetadata" xml:space="preserve">
+    <value>PDF Metadata</value>
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>Open file</value>
@@ -284,6 +293,9 @@
   </data>
   <data name="TitleSaveAs" xml:space="preserve">
     <value>Save as</value>
+  </data>
+  <data name="TitleSettings" xml:space="preserve">
+    <value>CubePDF Utility settings</value>
   </data>
   <data name="TooltipExtract" xml:space="preserve">
     <value>Extract the selected pages</value>
