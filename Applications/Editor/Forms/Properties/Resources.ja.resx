@@ -273,8 +273,17 @@
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} 個の項目を選択</value>
   </data>
+  <data name="TitleEncryption" xml:space="preserve">
+    <value>セキュリティ</value>
+  </data>
+  <data name="TitleExtract" xml:space="preserve">
+    <value>詳細を設定して抽出</value>
+  </data>
   <data name="TitleInsert" xml:space="preserve">
     <value>詳細を設定して挿入</value>
+  </data>
+  <data name="TitleMetadata" xml:space="preserve">
+    <value>文書プロパティ</value>
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>ファイルを開く</value>
@@ -284,6 +293,9 @@
   </data>
   <data name="TitleSaveAs" xml:space="preserve">
     <value>名前を付けて保存</value>
+  </data>
+  <data name="TitleSettings" xml:space="preserve">
+    <value>CubePDF Utility 設定</value>
   </data>
   <data name="TooltipExtract" xml:space="preserve">
     <value>選択ページを抽出</value>
