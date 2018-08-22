@@ -22,24 +22,24 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MetadataWindow
+    /// ExtractWindow
     ///
     /// <summary>
-    /// Represents the code behind of the MetadataWindow.xaml
+    /// Represents the code behind of the ExtractWindow.xaml
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MetadataWindow : Window
+    public partial class ExtractWindow : Window
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// MetadataWindow
+        /// ExtractWindow
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>MetadataWindow</c> class.
+        /// Initializes a new instance of the <c>ExtractWindow</c> class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataWindow() { InitializeComponent(); }
+        public ExtractWindow() { InitializeComponent(); }
     }
 }

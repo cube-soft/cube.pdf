@@ -26,8 +26,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
-    Height="230"
-    Width="420"
+    Height="500"
+    Width="400"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
     ShowInTaskbar="False">
@@ -51,6 +51,8 @@
     *********************************************************************** -->
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
@@ -60,7 +62,7 @@
         ******************************************************************* -->
         <StackPanel
             Style="{StaticResource DialogFooterStyle}"
-            Grid.Row="1">
+            Grid.Row="3">
             <Button
                 Content="{Binding Cancel.Text}"
                 Command="{Binding Cancel.Command}"
