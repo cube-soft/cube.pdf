@@ -26,8 +26,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
-    Height="500"
-    Width="400"
+    Height="530"
+    Width="470"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
     ShowInTaskbar="False">
@@ -56,6 +56,195 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
+
+        <!-- ******************************************************************
+          Summary
+        ******************************************************************* -->
+        <GroupBox
+            Header="{Binding Summary.Text}"
+            Margin="12,12,12,4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="28" />
+                </Grid.RowDefinitions>
+
+                <!-- **********************************************************
+                  Filename
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Filename.Text}"
+                    Grid.Row="0"
+                    Grid.Column="0" />
+                <TextBlock
+                    Text=""
+                    Grid.Row="0"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  DocumentTitle
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding DocumentTitle.Text}"
+                    Grid.Row="1"
+                    Grid.Column="0" />
+                <TextBox
+                    Text=""
+                    Grid.Row="1"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  Author
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Author.Text}"
+                    Grid.Row="2"
+                    Grid.Column="0" />
+                <TextBox
+                    Text=""
+                    Grid.Row="2"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  Subject
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Subject.Text}"
+                    Grid.Row="3"
+                    Grid.Column="0" />
+                <TextBox
+                    Text=""
+                    Grid.Row="3"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  Keywords
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Keywords.Text}"
+                    Grid.Row="4"
+                    Grid.Column="0" />
+                <TextBox
+                    Text=""
+                    Grid.Row="4"
+                    Grid.Column="1" />
+            </Grid>
+        </GroupBox>
+
+        <!-- ******************************************************************
+          Details
+        ******************************************************************* -->
+        <GroupBox
+            Header="{Binding Details.Text}"
+            Margin="12,4,12,12"
+            Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="24" />
+                </Grid.RowDefinitions>
+
+                <!-- **********************************************************
+                  Version
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Version.Text}"
+                    Grid.Row="0"
+                    Grid.Column="0" />
+                <ComboBox
+                    Grid.Row="0"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  Layout (a.k.a viewer preferences)
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Layout.Text}"
+                    Grid.Row="1"
+                    Grid.Column="0" />
+                <ComboBox
+                    Grid.Row="1"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  Creator
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Creator.Text}"
+                    Grid.Row="2"
+                    Grid.Column="0" />
+                <TextBox
+                    Text=""
+                    Grid.Row="2"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  Producer
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Producer.Text}"
+                    Grid.Row="3"
+                    Grid.Column="0" />
+                <TextBlock
+                    Text=""
+                    Grid.Row="3"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  Length (file size)
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Length.Text}"
+                    Grid.Row="4"
+                    Grid.Column="0" />
+                <TextBlock
+                    Text=""
+                    Grid.Row="4"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  CreationTime
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding CreationTime.Text}"
+                    Grid.Row="5"
+                    Grid.Column="0" />
+                <TextBlock
+                    Text=""
+                    Grid.Row="5"
+                    Grid.Column="1" />
+
+                <!-- **********************************************************
+                  LastWriteTime
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding LastWriteTime.Text}"
+                    Grid.Row="6"
+                    Grid.Column="0" />
+                <TextBlock
+                    Text=""
+                    Grid.Row="6"
+                    Grid.Column="1" />
+            </Grid>
+        </GroupBox>
 
         <!-- ******************************************************************
           Buttons

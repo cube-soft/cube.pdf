@@ -88,6 +88,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Author に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAuthor {
+            get {
+                return ResourceManager.GetString("MenuAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cancel に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuCancel {
@@ -111,6 +120,33 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuClose {
             get {
                 return ResourceManager.GetString("MenuClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Creation に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuCreationTime {
+            get {
+                return ResourceManager.GetString("MenuCreationTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Creator に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuCreator {
+            get {
+                return ResourceManager.GetString("MenuCreator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Details に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuDetails {
+            get {
+                return ResourceManager.GetString("MenuDetails", resourceCulture);
             }
         }
         
@@ -178,6 +214,24 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Filename に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuFilename {
+            get {
+                return ResourceManager.GetString("MenuFilename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   File size に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuFilesize {
+            get {
+                return ResourceManager.GetString("MenuFilesize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Insert に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuInsert {
@@ -210,6 +264,33 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuInsertOthers {
             get {
                 return ResourceManager.GetString("MenuInsertOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Keywords に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuKeywords {
+            get {
+                return ResourceManager.GetString("MenuKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Last updated に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuLastWriteTime {
+            get {
+                return ResourceManager.GetString("MenuLastWriteTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Layout に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuLayout {
+            get {
+                return ResourceManager.GetString("MenuLayout", resourceCulture);
             }
         }
         
@@ -268,6 +349,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   PDF version に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuPdfVersion {
+            get {
+                return ResourceManager.GetString("MenuPdfVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Insert position に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuPosition {
@@ -318,6 +408,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuPreview {
             get {
                 return ResourceManager.GetString("MenuPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Producer に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuProducer {
+            get {
+                return ResourceManager.GetString("MenuProducer", resourceCulture);
             }
         }
         
@@ -453,6 +552,33 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuSettings {
             get {
                 return ResourceManager.GetString("MenuSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Subject に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSubject {
+            get {
+                return ResourceManager.GetString("MenuSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Summary に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSummary {
+            get {
+                return ResourceManager.GetString("MenuSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Title に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuTitle {
+            get {
+                return ResourceManager.GetString("MenuTitle", resourceCulture);
             }
         }
         

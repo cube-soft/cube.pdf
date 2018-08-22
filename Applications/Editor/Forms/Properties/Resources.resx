@@ -126,6 +126,9 @@
   <data name="MenuAdd" xml:space="preserve">
     <value>Add ...</value>
   </data>
+  <data name="MenuAuthor" xml:space="preserve">
+    <value>Author</value>
+  </data>
   <data name="MenuCancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -134,6 +137,15 @@
   </data>
   <data name="MenuClose" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="MenuCreationTime" xml:space="preserve">
+    <value>Creation</value>
+  </data>
+  <data name="MenuCreator" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="MenuDetails" xml:space="preserve">
+    <value>Details</value>
   </data>
   <data name="MenuDown" xml:space="preserve">
     <value>Down</value>
@@ -156,6 +168,12 @@
   <data name="MenuFile" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="MenuFilename" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="MenuFilesize" xml:space="preserve">
+    <value>File size</value>
+  </data>
   <data name="MenuInsert" xml:space="preserve">
     <value>Insert</value>
   </data>
@@ -167,6 +185,15 @@
   </data>
   <data name="MenuInsertOthers" xml:space="preserve">
     <value>Insertion details</value>
+  </data>
+  <data name="MenuKeywords" xml:space="preserve">
+    <value>Keywords</value>
+  </data>
+  <data name="MenuLastWriteTime" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="MenuLayout" xml:space="preserve">
+    <value>Layout</value>
   </data>
   <data name="MenuMetadata" xml:space="preserve">
     <value>Metadata</value>
@@ -186,6 +213,9 @@
   <data name="MenuPageCount" xml:space="preserve">
     <value>Page count</value>
   </data>
+  <data name="MenuPdfVersion" xml:space="preserve">
+    <value>PDF version</value>
+  </data>
   <data name="MenuPosition" xml:space="preserve">
     <value>Insert position</value>
   </data>
@@ -203,6 +233,9 @@
   </data>
   <data name="MenuPreview" xml:space="preserve">
     <value>Preview</value>
+  </data>
+  <data name="MenuProducer" xml:space="preserve">
+    <value>Producer</value>
   </data>
   <data name="MenuRecent" xml:space="preserve">
     <value>Recent files</value>
@@ -248,6 +281,15 @@
   </data>
   <data name="MenuSettings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="MenuSubject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="MenuSummary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="MenuTitle" xml:space="preserve">
+    <value>Title</value>
   </data>
   <data name="MenuUndo" xml:space="preserve">
     <value>Undo</value>

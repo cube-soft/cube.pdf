@@ -34,6 +34,11 @@
         <Setter Property="Padding" Value="2" />
     </Style>
 
+    <Style TargetType="{x:Type ComboBox}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
     <Style TargetType="{x:Type RadioButton}">
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -42,7 +47,7 @@
 
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Padding" Value="3" />
+        <Setter Property="Padding" Value="8,4" />
     </Style>
 
     <!-- **********************************************************************
