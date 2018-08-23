@@ -26,13 +26,13 @@
       Import
     *********************************************************************** -->
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Themes/ScrollBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/ScrollStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- **********************************************************************
       ListView (Template)
     *********************************************************************** -->
-    <ControlTemplate x:Key="PagesTemplate" TargetType="{x:Type ListView}">
+    <ControlTemplate x:Key="PageCollectionTemplate" TargetType="{x:Type ListView}">
         <ScrollViewer
             DataContext="{Binding Preferences}"
             Background="{StaticResource DarkBackgroundBrush}"
@@ -58,13 +58,13 @@
     <!-- **********************************************************************
       ListView
     *********************************************************************** -->
-    <Style x:Key="PagesStyle" TargetType="{x:Type ListView}">
+    <Style x:Key="PageCollectionStyle" TargetType="{x:Type ListView}">
         <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SelectionMode" Value="Extended" />
-        <Setter Property="Template" Value="{StaticResource PagesTemplate}" />
+        <Setter Property="Template" Value="{StaticResource PageCollectionTemplate}" />
     </Style>
 
     <!-- **********************************************************************

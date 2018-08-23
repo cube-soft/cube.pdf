@@ -51,6 +51,13 @@
     </Style>
 
     <!-- **********************************************************************
+      Margin
+    *********************************************************************** -->
+    <Thickness x:Key="VerticalDefault" Left="12" Top="6"  Right="12" Bottom="6"  />
+    <Thickness x:Key="VerticalFirst"   Left="12" Top="12" Right="12" Bottom="6"  />
+    <Thickness x:Key="VerticalLast"    Left="12" Top="6"  Right="12" Bottom="12" />
+
+    <!-- **********************************************************************
       Footer
     *********************************************************************** -->
     <Style x:Key="DialogFooterStyle" TargetType="{x:Type StackPanel}">

@@ -35,7 +35,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Themes/Ribbon.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/RibbonStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Themes/RibbonTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

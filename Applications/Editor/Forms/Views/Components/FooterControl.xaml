@@ -32,7 +32,7 @@
       Resources
     *********************************************************************** -->
     <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Footer.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/FooterStyle.xaml" />
     </UserControl.Resources>
 
     <!-- **********************************************************************

@@ -26,7 +26,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
-    Height="530"
+    Height="540"
     Width="470"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
@@ -36,7 +36,7 @@
       Resources
     *********************************************************************** -->
     <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Dialog.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/GenericDialog.xaml" />
     </Window.Resources>
 
     <!-- **********************************************************************
@@ -62,7 +62,7 @@
         ******************************************************************* -->
         <GroupBox
             Header="{Binding Summary.Text}"
-            Margin="12,12,12,4">
+            Margin="{StaticResource VerticalFirst}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
@@ -144,7 +144,7 @@
         ******************************************************************* -->
         <GroupBox
             Header="{Binding Details.Text}"
-            Margin="12,4,12,12"
+            Margin="{StaticResource VerticalLast}"
             Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>

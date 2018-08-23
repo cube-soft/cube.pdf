@@ -36,7 +36,12 @@
       Resources
     *********************************************************************** -->
     <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Dialog.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/GenericDialog.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/InsertStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 
     <!-- **********************************************************************
@@ -61,7 +66,7 @@
         ******************************************************************* -->
         <GroupBox
             Header="{Binding Position.Text}"
-            Margin="12,12,12,4"
+            Margin="{StaticResource VerticalFirst}"
             Grid.Row="0">
             <StackPanel Orientation="Horizontal">
                 <RadioButton
@@ -87,29 +92,36 @@
         <!-- ******************************************************************
           Contents
         ******************************************************************* -->
-        <Grid Margin="12,4,12,12" Grid.Row="1">
+        <Grid
+            Margin="{StaticResource VerticalLast}"
+            Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ListView />
+            <ListView Style="{StaticResource InsertFilesStyle}" />
 
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <Button
                     Content="{Binding Add.Text}"
+                    Command="{Binding Add.Command}"
                     Style="{StaticResource TopButtonStyle}" />
                 <Button
                     Content="{Binding Up.Text}"
+                    Command="{Binding Up.Command}"
                     Style="{StaticResource DialogButtonStyle}" />
                 <Button
                     Content="{Binding Down.Text}"
+                    Command="{Binding Down.Command}"
                     Style="{StaticResource DialogButtonStyle}" />
                 <Button
                     Content="{Binding Remove.Text}"
+                    Command="{Binding Remove.Command}"
                     Style="{StaticResource DialogButtonStyle}" />
                 <Button
                     Content="{Binding Clear.Text}"
+                    Command="{Binding Clear.Command}"
                     Style="{StaticResource DialogButtonStyle}" />
             </StackPanel>
         </Grid>

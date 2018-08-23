@@ -33,7 +33,7 @@
       Resources
     *********************************************************************** -->
     <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Hero.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/HeroStyle.xaml" />
     </UserControl.Resources>
 
     <!-- **********************************************************************

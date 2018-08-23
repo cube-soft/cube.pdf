@@ -24,7 +24,7 @@
     xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Themes/ScrollBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/ScrollStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- **********************************************************************

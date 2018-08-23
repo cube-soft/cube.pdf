@@ -36,7 +36,7 @@
       Resources
     *********************************************************************** -->
     <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Dialog.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/GenericDialog.xaml" />
     </Window.Resources>
 
     <!-- **********************************************************************

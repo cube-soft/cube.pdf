@@ -32,7 +32,7 @@
       Resources
     *********************************************************************** -->
     <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/Pages.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Themes/PagesStyle.xaml" />
     </UserControl.Resources>
 
     <!-- **********************************************************************
@@ -43,7 +43,7 @@
         ItemsSource="{Binding Images}"
         ItemContainerStyle="{StaticResource PageStyle}"
         ItemTemplate="{StaticResource PageTemplate}"
-        Style="{StaticResource PagesStyle}"
+        Style="{StaticResource PageCollectionStyle}"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.VirtualizationMode="Recycling">
         <i:Interaction.Behaviors>
