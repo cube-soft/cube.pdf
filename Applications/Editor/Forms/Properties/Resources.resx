@@ -172,7 +172,7 @@
     <value>Filename</value>
   </data>
   <data name="MenuFilesize" xml:space="preserve">
-    <value>File size</value>
+    <value>Filesize</value>
   </data>
   <data name="MenuInsert" xml:space="preserve">
     <value>Insert</value>
@@ -185,6 +185,9 @@
   </data>
   <data name="MenuInsertOthers" xml:space="preserve">
     <value>Insertion details</value>
+  </data>
+  <data name="MenuInsertPosition" xml:space="preserve">
+    <value>Insert position</value>
   </data>
   <data name="MenuKeywords" xml:space="preserve">
     <value>Keywords</value>
@@ -215,9 +218,6 @@
   </data>
   <data name="MenuPdfVersion" xml:space="preserve">
     <value>PDF version</value>
-  </data>
-  <data name="MenuPosition" xml:space="preserve">
-    <value>Insert position</value>
   </data>
   <data name="MenuPositionFirst" xml:space="preserve">
     <value>Beginning</value>

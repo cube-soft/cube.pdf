@@ -81,7 +81,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public MenuEntry Position { get; } = new MenuEntry(
-            () => Properties.Resources.MenuPosition
+            () => Properties.Resources.MenuInsertPosition
         );
 
         /* ----------------------------------------------------------------- */

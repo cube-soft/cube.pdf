@@ -126,6 +126,9 @@
   <data name="MenuAdd" xml:space="preserve">
     <value>追加 ...</value>
   </data>
+  <data name="MenuAuthor" xml:space="preserve">
+    <value>作成者</value>
+  </data>
   <data name="MenuCancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
@@ -134,6 +137,15 @@
   </data>
   <data name="MenuClose" xml:space="preserve">
     <value>閉じる</value>
+  </data>
+  <data name="MenuCreationTime" xml:space="preserve">
+    <value>作成日時</value>
+  </data>
+  <data name="MenuCreator" xml:space="preserve">
+    <value>アプリケーション</value>
+  </data>
+  <data name="MenuDetails" xml:space="preserve">
+    <value>詳細情報</value>
   </data>
   <data name="MenuDown" xml:space="preserve">
     <value>下へ</value>
@@ -156,6 +168,12 @@
   <data name="MenuFile" xml:space="preserve">
     <value>ファイル</value>
   </data>
+  <data name="MenuFilename" xml:space="preserve">
+    <value>ファイル名</value>
+  </data>
+  <data name="MenuFilesize" xml:space="preserve">
+    <value>ファイルサイズ</value>
+  </data>
   <data name="MenuInsert" xml:space="preserve">
     <value>挿入</value>
   </data>
@@ -170,6 +188,15 @@
   </data>
   <data name="MenuInsertPosition" xml:space="preserve">
     <value>挿入位置</value>
+  </data>
+  <data name="MenuKeywords" xml:space="preserve">
+    <value>キーワード</value>
+  </data>
+  <data name="MenuLastWriteTime" xml:space="preserve">
+    <value>最終更新日時</value>
+  </data>
+  <data name="MenuLayout" xml:space="preserve">
+    <value>ページレイアウト</value>
   </data>
   <data name="MenuMetadata" xml:space="preserve">
     <value>プロパティ</value>
@@ -189,6 +216,9 @@
   <data name="MenuPageCount" xml:space="preserve">
     <value>総ページ数</value>
   </data>
+  <data name="MenuPdfVersion" xml:space="preserve">
+    <value>PDF バージョン</value>
+  </data>
   <data name="MenuPositionFirst" xml:space="preserve">
     <value>先頭</value>
   </data>
@@ -203,6 +233,9 @@
   </data>
   <data name="MenuPreview" xml:space="preserve">
     <value>プレビュー</value>
+  </data>
+  <data name="MenuProducer" xml:space="preserve">
+    <value>PDF 変換</value>
   </data>
   <data name="MenuRecent" xml:space="preserve">
     <value>最近開いたファイル</value>
@@ -248,6 +281,15 @@
   </data>
   <data name="MenuSettings" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="MenuSubject" xml:space="preserve">
+    <value>サブタイトル</value>
+  </data>
+  <data name="MenuSummary" xml:space="preserve">
+    <value>概要</value>
+  </data>
+  <data name="MenuTitle" xml:space="preserve">
+    <value>タイトル</value>
   </data>
   <data name="MenuUndo" xml:space="preserve">
     <value>元に戻す</value>

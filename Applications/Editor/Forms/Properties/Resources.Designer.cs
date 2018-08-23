@@ -223,7 +223,7 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   File size に類似しているローカライズされた文字列を検索します。
+        ///   Filesize に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuFilesize {
             get {
@@ -264,6 +264,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuInsertOthers {
             get {
                 return ResourceManager.GetString("MenuInsertOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Insert position に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuInsertPosition {
+            get {
+                return ResourceManager.GetString("MenuInsertPosition", resourceCulture);
             }
         }
         
@@ -354,15 +363,6 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuPdfVersion {
             get {
                 return ResourceManager.GetString("MenuPdfVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Insert position に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuPosition {
-            get {
-                return ResourceManager.GetString("MenuPosition", resourceCulture);
             }
         }
         
