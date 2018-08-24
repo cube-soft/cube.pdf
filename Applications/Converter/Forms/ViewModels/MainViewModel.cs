@@ -80,7 +80,7 @@ namespace Cube.Pdf.App.Converter
 
             settings.PropertyChanged += WhenPropertyChanged;
 
-            Async(() => this.Invoke(() => Model.Setup(), false)).Forget();
+            Async(() => this.Invoke(() => Model.Setup(), true)).Forget();
         }
 
         #endregion
@@ -216,7 +216,7 @@ namespace Cube.Pdf.App.Converter
         public void Convert()
         {
             Model.UpdateExtension();
-            Async(() => this.Invoke(() => Model.Convert(), true)).Forget();
+            Async(() => this.InvokeCheck(() => Model.Convert())).Forget();
         }
 
         /* ----------------------------------------------------------------- */

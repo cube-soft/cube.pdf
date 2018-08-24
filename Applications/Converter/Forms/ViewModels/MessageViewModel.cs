@@ -46,7 +46,7 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// InvokeCheck
         ///
         /// <summary>
         /// 処理を実行します。各種プロパティの値をチェックします。
@@ -54,7 +54,6 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <param name="src">MainViewModel</param>
         /// <param name="action">処理内容</param>
-        /// <param name="check">Check or not user input.</param>
         ///
         /// <remarks>
         /// 事前チェックおよびエラー発生時にメッセージを表示するための
@@ -63,19 +62,36 @@ namespace Cube.Pdf.App.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Invoke(this MainViewModel src, Action action, bool check)
+        public static void InvokeCheck(this MainViewModel src, Action action)
         {
-            if (check)
-            {
-                if (!ValidateOwnerPassword(src)) return;
-                if (!ValidateUserPassword(src)) return;
-                if (!ValidateDestination(src)) return;
-            }
+            if (!ValidateOwnerPassword(src)) return;
+            if (!ValidateUserPassword(src)) return;
+            if (!ValidateDestination(src)) return;
 
+            src.Invoke(action, true);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Shows the error message when the specified action raises
+        /// an exception.
+        /// </summary>
+        ///
+        /// <param name="src">MainViewModel</param>
+        /// <param name="action">User action.</param>
+        /// <param name="close">Close the view or not.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Invoke(this MainViewModel src, Action action, bool close)
+        {
             try { action(); }
             catch (Exception err) { src.Show(err); }
-            finally { src.Sync(() => src.Messenger.Close.Publish()); }
+            finally { if (close) src.Sync(() => src.Messenger.Close.Publish()); }
         }
+
         /* ----------------------------------------------------------------- */
         ///
         /// Show
