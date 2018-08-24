@@ -80,7 +80,7 @@ namespace Cube.Pdf.App.Converter
 
             settings.PropertyChanged += WhenPropertyChanged;
 
-            Async(() => this.Invoke(() => Model.Setup(), true)).Forget();
+            Async(() => this.Invoke(() => Model.Setup())).Forget();
         }
 
         #endregion

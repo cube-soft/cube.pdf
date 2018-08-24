@@ -68,7 +68,8 @@ namespace Cube.Pdf.App.Converter
             if (!ValidateUserPassword(src)) return;
             if (!ValidateDestination(src)) return;
 
-            src.Invoke(action, true);
+            src.Invoke(action);
+            src.Sync(() => src.Messenger.Close.Publish());
         }
 
         /* ----------------------------------------------------------------- */
@@ -82,14 +83,12 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <param name="src">MainViewModel</param>
         /// <param name="action">User action.</param>
-        /// <param name="close">Close the view or not.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Invoke(this MainViewModel src, Action action, bool close)
+        public static void Invoke(this MainViewModel src, Action action)
         {
             try { action(); }
             catch (Exception err) { src.Show(err); }
-            finally { if (close) src.Sync(() => src.Messenger.Close.Publish()); }
         }
 
         /* ----------------------------------------------------------------- */

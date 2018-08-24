@@ -113,16 +113,15 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void Setup() => Invoke(() =>
         {
-            var src = Settings.Value.Source;
-            if (!src.HasValue()) return;
+            if (!Value.Source.HasValue()) return;
 
-            using (var stream = IO.OpenRead(src))
+            var cmp = GetDigest(Value.Source);
+            var opt = StringComparison.InvariantCultureIgnoreCase;
+
+            if (!Settings.Digest.Equals(cmp, opt))
             {
-                var cmp = new SHA256CryptoServiceProvider()
-                          .ComputeHash(stream)
-                          .Aggregate("", (s, b) => s += $"{b:x2}");
-                var opt = StringComparison.InvariantCultureIgnoreCase;
-                if (!Settings.Digest.Equals(cmp, opt)) throw new CryptographicException();
+                DeleteSource();
+                throw new CryptographicException();
             }
         });
 
@@ -280,7 +279,7 @@ namespace Cube.Pdf.App.Converter
 
             Poll(10).Wait();
             IO.TryDelete(Settings.WorkDirectory);
-            if (Value.DeleteSource) IO.TryDelete(Value.Source);
+            DeleteSource();
         }
 
         #endregion
@@ -288,6 +287,40 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetDigest
+        ///
+        /// <summary>
+        /// Gets the message digest of the specified file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetDigest(string src)
+        {
+            using (var stream = IO.OpenRead(src))
+            {
+                return new SHA256CryptoServiceProvider()
+                       .ComputeHash(stream)
+                       .Aggregate("", (s, b) => s + $"{b:x2}");
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DeleteSource
+        ///
+        /// <summary>
+        /// Deletes the source file if needed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void DeleteSource()
+        {
+            if (Value.Source.HasValue() && Value.DeleteSource) IO.TryDelete(Value.Source);
+            Value.Source = string.Empty;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
