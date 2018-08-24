@@ -19,11 +19,14 @@
 using Cube.FileSystem;
 using Cube.FileSystem.Mixin;
 using Cube.Forms;
+using Cube.Generics;
 using Cube.Log;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -98,6 +101,30 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Setup
+        ///
+        /// <summary>
+        /// Executes the initialization for CubePDF.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Setup() => Invoke(() =>
+        {
+            var src = Settings.Value.Source;
+            if (!src.HasValue()) return;
+
+            using (var stream = IO.OpenRead(src))
+            {
+                var cmp = new SHA256CryptoServiceProvider()
+                          .ComputeHash(stream)
+                          .Aggregate("", (s, b) => s += $"{b:x2}");
+                var opt = StringComparison.InvariantCultureIgnoreCase;
+                if (!Settings.Digest.Equals(cmp, opt)) throw new CryptographicException();
+            }
+        });
 
         /* ----------------------------------------------------------------- */
         ///

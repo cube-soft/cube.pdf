@@ -79,6 +79,8 @@ namespace Cube.Pdf.App.Converter
             Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger, SynchronizationContext);
 
             settings.PropertyChanged += WhenPropertyChanged;
+
+            Async(() => Model.Setup()).Forget();
         }
 
         #endregion
