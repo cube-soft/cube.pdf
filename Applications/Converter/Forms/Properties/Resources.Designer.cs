@@ -243,7 +243,7 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
-        ///   Open folder に類似しているローカライズされた文字列を検索します。
+        ///   Open directory に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuOpenDirectory {
             get {
@@ -333,6 +333,15 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   Message digest of the source file does not match. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageDigest {
+            get {
+                return ResourceManager.GetString("MessageDigest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0} already exists. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageExists {
@@ -342,7 +351,7 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
-        ///   Ghostscript error ({0}) に類似しているローカライズされた文字列を検索します。
+        ///   Ghostscript error ({0:D}) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageGhostscript {
             get {
