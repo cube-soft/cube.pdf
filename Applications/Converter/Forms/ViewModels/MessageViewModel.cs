@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Forms;
+using Cube.Generics;
 using Cube.Log;
 using Cube.Pdf.Ghostscript;
 using System;
@@ -64,6 +65,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public static void InvokeCheck(this MainViewModel src, Action action)
         {
+            if (!src.Settings.Source.HasValue()) return;
             if (!ValidateOwnerPassword(src)) return;
             if (!ValidateUserPassword(src)) return;
             if (!ValidateDestination(src)) return;
