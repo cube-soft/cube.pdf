@@ -22,6 +22,7 @@ using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
@@ -53,6 +54,7 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <param name="src">MainViewModel</param>
         /// <param name="action">処理内容</param>
+        /// <param name="check">Check or not user input.</param>
         ///
         /// <remarks>
         /// 事前チェックおよびエラー発生時にメッセージを表示するための
@@ -61,17 +63,19 @@ namespace Cube.Pdf.App.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Invoke(this MainViewModel src, Action action)
+        public static void Invoke(this MainViewModel src, Action action, bool check)
         {
-            if (!ValidateOwnerPassword(src)) return;
-            if (!ValidateUserPassword(src)) return;
-            if (!ValidateDestination(src)) return;
+            if (check)
+            {
+                if (!ValidateOwnerPassword(src)) return;
+                if (!ValidateUserPassword(src)) return;
+                if (!ValidateDestination(src)) return;
+            }
 
             try { action(); }
             catch (Exception err) { src.Show(err); }
             finally { src.Sync(() => src.Messenger.Close.Publish()); }
         }
-
         /* ----------------------------------------------------------------- */
         ///
         /// Show
@@ -89,8 +93,9 @@ namespace Cube.Pdf.App.Converter
             if (err is OperationCanceledException) return;
 
             src.LogError(err.ToString(), err);
-            var msg = err is GsApiException gse      ? CreateMessage(gse) :
-                      err is EncryptionException ece ? CreateMessage(ece) :
+            var msg = err is GsApiException gse         ? CreateMessage(gse) :
+                      err is EncryptionException ece    ? CreateMessage(ece) :
+                      err is CryptographicException cpe ? CreateMessage(cpe) :
                       $"{err.Message} ({err.GetType().Name})";
             src.Show(() => MessageFactory.CreateError(msg));
         }
@@ -210,6 +215,19 @@ namespace Cube.Pdf.App.Converter
             Debug.Assert(ok);
             return $"{s0} {s1}";
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMessage
+        ///
+        /// <summary>
+        /// Gets the error message when a <c>CryptographicException</c>
+        /// exception occurs.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string CreateMessage(CryptographicException err) =>
+            Properties.Resources.MessageDigest;
 
         /* ----------------------------------------------------------------- */
         ///
