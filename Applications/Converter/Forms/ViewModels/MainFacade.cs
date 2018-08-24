@@ -19,7 +19,6 @@
 using Cube.FileSystem;
 using Cube.FileSystem.Mixin;
 using Cube.Forms;
-using Cube.Generics;
 using Cube.Log;
 using Cube.Pdf.Ghostscript;
 using System;
@@ -101,29 +100,6 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Setup
-        ///
-        /// <summary>
-        /// Executes the initialization for CubePDF.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Setup() => Invoke(() =>
-        {
-            if (!Value.Source.HasValue()) return;
-
-            var cmp = GetDigest(Value.Source);
-            var opt = StringComparison.InvariantCultureIgnoreCase;
-
-            if (!Settings.Digest.Equals(cmp, opt))
-            {
-                DeleteSource();
-                throw new CryptographicException();
-            }
-        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -279,7 +255,7 @@ namespace Cube.Pdf.App.Converter
 
             Poll(10).Wait();
             IO.TryDelete(Settings.WorkDirectory);
-            DeleteSource();
+            if (Value.DeleteSource) IO.TryDelete(Value.Source);
         }
 
         #endregion
@@ -305,21 +281,6 @@ namespace Cube.Pdf.App.Converter
                        .ComputeHash(stream)
                        .Aggregate("", (s, b) => s + $"{b:x2}");
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DeleteSource
-        ///
-        /// <summary>
-        /// Deletes the source file if needed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void DeleteSource()
-        {
-            if (Value.Source.HasValue() && Value.DeleteSource) IO.TryDelete(Value.Source);
-            Value.Source = string.Empty;
         }
 
         /* ----------------------------------------------------------------- */
@@ -388,6 +349,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeGhostscript(string dest) => InvokeUnlessDisposed(() =>
         {
+            var cmp = GetDigest(Value.Source);
+            var opt = StringComparison.InvariantCultureIgnoreCase;
+            if (!Settings.Digest.Equals(cmp, opt)) throw new CryptographicException();
+
             var gs = GhostscriptFactory.Create(Settings);
             gs.Invoke(Value.Source, dest);
             gs.LogDebug();

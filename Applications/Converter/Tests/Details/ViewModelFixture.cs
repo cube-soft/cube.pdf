@@ -275,9 +275,8 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         protected bool Wait(MainViewModel vm) => Task.Run(async () =>
         {
-            if (!await WaitAsync(() => !vm.IsBusy).ConfigureAwait(false)) return false;
-
             Message = string.Empty;
+
             var closed = false;
             vm.Messenger.Close.Subscribe(() => closed = true);
             vm.Convert();

@@ -47,14 +47,14 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InvokeCheck
+        /// Invoke
         ///
         /// <summary>
-        /// 処理を実行します。各種プロパティの値をチェックします。
+        /// Checks properties and invokes the specified action.
         /// </summary>
         ///
-        /// <param name="src">MainViewModel</param>
-        /// <param name="action">処理内容</param>
+        /// <param name="src">ViewModel object.</param>
+        /// <param name="action">User action.</param>
         ///
         /// <remarks>
         /// 事前チェックおよびエラー発生時にメッセージを表示するための
@@ -63,34 +63,16 @@ namespace Cube.Pdf.App.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void InvokeCheck(this MainViewModel src, Action action)
+        public static void Invoke(this MainViewModel src, Action action)
         {
             if (!src.Settings.Source.HasValue()) return;
             if (!ValidateOwnerPassword(src)) return;
             if (!ValidateUserPassword(src)) return;
             if (!ValidateDestination(src)) return;
 
-            src.Invoke(action);
-            src.Sync(() => src.Messenger.Close.Publish());
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Shows the error message when the specified action raises
-        /// an exception.
-        /// </summary>
-        ///
-        /// <param name="src">MainViewModel</param>
-        /// <param name="action">User action.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Invoke(this MainViewModel src, Action action)
-        {
             try { action(); }
             catch (Exception err) { src.Show(err); }
+            finally { src.Sync(() => src.Messenger.Close.Publish()); }
         }
 
         /* ----------------------------------------------------------------- */
