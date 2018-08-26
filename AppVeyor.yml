@@ -20,10 +20,10 @@ before_build:
     - nuget sources add -name Cube.Images -source https://ci.appveyor.com/nuget/cube.images
     - nuget sources add -name Cube.Forms -source https://ci.appveyor.com/nuget/cube.forms
     - nuget sources add -name Cube.Xui -source https://ci.appveyor.com/nuget/cube.xui
-    - nuget restore Cube.Pdf.All.sln
+    - nuget restore Cube.Pdf.Applications.sln
 build:
     parallel: true
-    project: Cube.Pdf.All.sln
+    project: Cube.Pdf.Applications.sln
     publish_nuget: true
     verbosity: minimal
 after_build:
