@@ -73,7 +73,6 @@ namespace Cube.Pdf.Tests.Converter
                 // Test for SaveOption
                 if (precopy) IO.Copy(GetExamplesWith("Sample.pdf"), vms.Destination);
 
-                Assert.That(vm.IsBusy, Is.False);
                 vm.Messenger.MessageBox.Subscribe(SetMessage);
                 Assert.That(Wait(vm), Is.True, "Timeout");
             }

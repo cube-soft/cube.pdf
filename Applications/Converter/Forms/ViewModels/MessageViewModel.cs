@@ -17,11 +17,13 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Forms;
+using Cube.Generics;
 using Cube.Log;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Converter
@@ -48,11 +50,11 @@ namespace Cube.Pdf.App.Converter
         /// Invoke
         ///
         /// <summary>
-        /// 処理を実行します。各種プロパティの値をチェックします。
+        /// Checks properties and invokes the specified action.
         /// </summary>
         ///
-        /// <param name="src">MainViewModel</param>
-        /// <param name="action">処理内容</param>
+        /// <param name="src">ViewModel object.</param>
+        /// <param name="action">User action.</param>
         ///
         /// <remarks>
         /// 事前チェックおよびエラー発生時にメッセージを表示するための
@@ -63,6 +65,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public static void Invoke(this MainViewModel src, Action action)
         {
+            if (!src.Settings.Source.HasValue()) return;
             if (!ValidateOwnerPassword(src)) return;
             if (!ValidateUserPassword(src)) return;
             if (!ValidateDestination(src)) return;
@@ -89,8 +92,9 @@ namespace Cube.Pdf.App.Converter
             if (err is OperationCanceledException) return;
 
             src.LogError(err.ToString(), err);
-            var msg = err is GsApiException gse      ? CreateMessage(gse) :
-                      err is EncryptionException ece ? CreateMessage(ece) :
+            var msg = err is GsApiException gse         ? CreateMessage(gse) :
+                      err is EncryptionException ece    ? CreateMessage(ece) :
+                      err is CryptographicException cpe ? CreateMessage(cpe) :
                       $"{err.Message} ({err.GetType().Name})";
             src.Show(() => MessageFactory.CreateError(msg));
         }
@@ -210,6 +214,19 @@ namespace Cube.Pdf.App.Converter
             Debug.Assert(ok);
             return $"{s0} {s1}";
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMessage
+        ///
+        /// <summary>
+        /// Gets the error message when a <c>CryptographicException</c>
+        /// exception occurs.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string CreateMessage(CryptographicException err) =>
+            Properties.Resources.MessageDigest;
 
         /* ----------------------------------------------------------------- */
         ///
