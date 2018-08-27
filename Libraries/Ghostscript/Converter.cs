@@ -264,7 +264,7 @@ namespace Cube.Pdf.Ghostscript
             var args = new List<Argument>
             {
                 Format.GetArgument(),
-                new Argument('d', "NOSAFER"),
+                new Argument('d', "SAFER"),
                 new Argument('d', "BATCH"),
                 new Argument('d', "NOPAUSE"),
                 CreateQuiet(),

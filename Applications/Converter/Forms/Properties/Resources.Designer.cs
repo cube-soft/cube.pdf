@@ -333,6 +333,15 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
+        ///   Message digest of the source file does not match. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageDigest {
+            get {
+                return ResourceManager.GetString("MessageDigest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0} already exists. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageExists {
