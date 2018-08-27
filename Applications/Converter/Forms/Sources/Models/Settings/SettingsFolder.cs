@@ -144,6 +144,18 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Digest
+        ///
+        /// <summary>
+        /// Gets the SHA-256 message digest of the source file that
+        /// specified at command line.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Digest { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// WorkDirectory
         ///
         /// <summary>
@@ -190,9 +202,10 @@ namespace Cube.Pdf.App.Converter
             var src = new ArgumentCollection(args, '/');
             var opt = src.Options;
 
-            if (opt.TryGetValue("MachineName", out var pc)) MachineName = pc;
-            if (opt.TryGetValue("UserName", out var user)) UserName = user;
-            if (opt.TryGetValue("DocumentName", out var doc)) DocumentName = new DocumentName(doc, Product, IO);
+            if (opt.TryGetValue(nameof(MachineName), out var pc)) MachineName = pc;
+            if (opt.TryGetValue(nameof(UserName), out var user)) UserName = user;
+            if (opt.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Product, IO);
+            if (opt.TryGetValue(nameof(Digest), out var digest)) Digest = digest;
             if (opt.TryGetValue("InputFile", out var input)) Value.Source = input;
 
             var dest = IO.Get(IO.Combine(Value.Destination, DocumentName.Name));

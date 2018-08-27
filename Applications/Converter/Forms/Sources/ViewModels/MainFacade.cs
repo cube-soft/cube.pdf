@@ -24,6 +24,8 @@ using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -264,6 +266,25 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetDigest
+        ///
+        /// <summary>
+        /// Gets the message digest of the specified file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetDigest(string src)
+        {
+            using (var stream = IO.OpenRead(src))
+            {
+                return new SHA256CryptoServiceProvider()
+                       .ComputeHash(stream)
+                       .Aggregate("", (s, b) => s + $"{b:x2}");
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Poll
         ///
         /// <summary>
@@ -328,6 +349,10 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeGhostscript(string dest) => InvokeUnlessDisposed(() =>
         {
+            var cmp = GetDigest(Value.Source);
+            var opt = StringComparison.InvariantCultureIgnoreCase;
+            if (!Settings.Digest.Equals(cmp, opt)) throw new CryptographicException();
+
             var gs = GhostscriptFactory.Create(Settings);
             gs.Invoke(Value.Source, dest);
             gs.LogDebug();

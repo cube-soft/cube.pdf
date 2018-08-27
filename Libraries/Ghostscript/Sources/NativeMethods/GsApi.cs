@@ -47,26 +47,61 @@ namespace Cube.Pdf.Ghostscript.GsApi
         {
             lock (_lock)
             {
-                NewInstance(out IntPtr core, IntPtr.Zero);
-                if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, nameof(NewInstance));
+                _once.Invoke();
+                if (_core == null || _core.Handle == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, nameof(NewInstance));
 
                 try
                 {
-                    var status = InitWithArgs(core, args.Length, args);
+                    var status = InitWithArgs(_core.Handle, args.Length, args);
                     var error  = status < 0 && status != (int)GsApiStatus.Quit && status != (int)GsApiStatus.Info;
                     if (error) throw new GsApiException(status);
                 }
-                finally
-                {
-                    Exit(core);
-                    DeleteInstance(core);
-                }
+                finally { Exit(_core.Handle); }
             }
         }
 
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Initialize
+        ///
+        /// <summary>
+        /// Initializes the PDFium library.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Initialize() => _core = new GsApiCore();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PdfiumCore
+        ///
+        /// <summary>
+        /// Initializes and destroys the PDFium library.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private sealed class GsApiCore : IDisposable
+        {
+            public IntPtr Handle => _handle;
+            public GsApiCore() { NewInstance(out _handle, IntPtr.Zero); }
+            ~GsApiCore() { Dispose(false); }
+            public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
+            private void Dispose(bool _)
+            {
+                if (_disposed) return;
+                _disposed = true;
+                DeleteInstance(_handle);
+            }
+
+            private bool _disposed = false;
+            private readonly IntPtr _handle;
+        }
+
+        #region APIs
 
         /* ----------------------------------------------------------------- */
         ///
@@ -118,9 +153,13 @@ namespace Cube.Pdf.Ghostscript.GsApi
 
         #endregion
 
+        #endregion
+
         #region Fields
         private const string LibName = "gsdll32.dll";
         private static readonly object _lock = new object();
+        private static readonly OnceAction _once = new OnceAction(Initialize);
+        private static GsApiCore _core;
         #endregion
     }
 }

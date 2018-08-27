@@ -208,6 +208,9 @@
   <data name="MenuTwoPageRight" xml:space="preserve">
     <value>Two page (right)</value>
   </data>
+  <data name="MessageDigest" xml:space="preserve">
+    <value>Message digest of the source file does not match.</value>
+  </data>
   <data name="MessageExists" xml:space="preserve">
     <value>{0} already exists.</value>
   </data>

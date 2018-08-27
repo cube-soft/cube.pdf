@@ -27,6 +27,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Threading;
 
 namespace Cube.Pdf.Tests.Converter
@@ -197,8 +198,15 @@ namespace Cube.Pdf.Tests.Converter
         protected string[] Combine(string[] args, string src)
         {
             var tmp = GetResultsWith(Guid.NewGuid().ToString("D"));
-            IO.Copy(GetExamplesWith(src), tmp);
-            return args.Concat(new[] { "/InputFile", tmp }).ToArray();
+            IO.Copy(GetExamplesWith(src), tmp, true);
+
+            using (var stream = IO.OpenRead(tmp))
+            {
+                var hash = new SHA256CryptoServiceProvider()
+                           .ComputeHash(stream)
+                           .Aggregate("", (s, b) => s + $"{b:X2}");
+                return args.Concat(new[] { "/InputFile", tmp, "/Digest", hash }).ToArray();
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -268,9 +276,11 @@ namespace Cube.Pdf.Tests.Converter
         protected bool WaitConv(MainViewModel vm)
         {
             Message = string.Empty;
+
+            var closed = false;
+            vm.Messenger.Close.Subscribe(() => closed = true);
             vm.Convert();
-            if (!Wait.For(() => vm.IsBusy == true)) return false;
-            return Wait.For(() => vm.IsBusy == false);
+            return Wait.For(() => closed);
         }
 
         /* ----------------------------------------------------------------- */
