@@ -273,7 +273,7 @@ namespace Cube.Pdf.Tests.Converter
         /// <returns>処理が正常に完了したかどうか</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected bool Wait(MainViewModel vm) => Task.Run(async () =>
+        protected bool Wait(MainViewModel vm) => TaskEx.Run(async () =>
         {
             Message = string.Empty;
 
