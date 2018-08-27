@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Pdfium.PdfiumApi;
-using System;
 
 namespace Cube.Pdf.Pdfium
 {
@@ -42,7 +41,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PdfiumLibrary() { _once.Invoke(); }
+        protected PdfiumLibrary() { if (!_core.Invoked) _core.Invoke(); }
 
         #endregion
 
@@ -64,48 +63,11 @@ namespace Cube.Pdf.Pdfium
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Initialize
-        ///
-        /// <summary>
-        /// Initializes the PDFium library.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Initialize() => _core = new PdfiumCore();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfiumCore
-        ///
-        /// <summary>
-        /// Initializes and destroys the PDFium library.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private sealed class PdfiumCore : IDisposable
-        {
-            public PdfiumCore() { Facade.FPDF_InitLibrary(); }
-            ~PdfiumCore() { Dispose(false); }
-            public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
-            private void Dispose(bool _)
-            {
-                if (_disposed) return;
-                _disposed = true;
-                Facade.FPDF_DestroyLibrary();
-            }
-
-            private bool _disposed = false;
-        }
-
-        #endregion
-
         #region Fields
-        private static readonly OnceAction _once = new OnceAction(Initialize);
-        private static PdfiumCore _core;
+        private static readonly OnceInitializer _core = new OnceInitializer(
+            () => Facade.FPDF_InitLibrary(),
+            () => Facade.FPDF_DestroyLibrary()
+        );
         #endregion
     }
 }
