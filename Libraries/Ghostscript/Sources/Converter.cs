@@ -237,7 +237,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> sources, string dest) =>
-            Invoke(() => GsApi.NativeMethods.Invoke(Create()
+            Invoke(() => GsApi.Invoke(Create()
                 .Concat(new[] { new Argument('s', "OutputFile", dest) })
                 .Concat(OnCreateArguments())
                 .Concat(CreateCodes())

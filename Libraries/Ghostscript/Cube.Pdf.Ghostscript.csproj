@@ -87,9 +87,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sources\NativeMethods\GsApi.cs" />
-    <Compile Include="Sources\NativeMethods\GsApiStatus.cs" />
-    <Compile Include="Sources\NativeMethods\GsApiException.cs" />
+    <Compile Include="Sources\Details\GsApi.cs" />
+    <Compile Include="Sources\Details\GsApiStatus.cs" />
+    <Compile Include="Sources\Details\GsApiException.cs" />
     <Compile Include="Sources\Parameters\ColorMode.cs" />
     <Compile Include="Sources\Parameters\Downsampling.cs" />
     <Compile Include="Sources\Parameters\Encoding.cs" />
