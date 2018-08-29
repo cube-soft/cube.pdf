@@ -126,6 +126,27 @@
   <data name="MenuAdd" xml:space="preserve">
     <value>Add ...</value>
   </data>
+  <data name="MenuAllowAccesibility" xml:space="preserve">
+    <value>Allow using contents for accessibility</value>
+  </data>
+  <data name="MenuAllowAnnotation" xml:space="preserve">
+    <value>Allow creating and editing annotations</value>
+  </data>
+  <data name="MenuAllowAssemble" xml:space="preserve">
+    <value>Allow inserting and removing pages</value>
+  </data>
+  <data name="MenuAllowCopy" xml:space="preserve">
+    <value>Allow copying text and images</value>
+  </data>
+  <data name="MenuAllowExtract" xml:space="preserve">
+    <value>Allow extracting pages</value>
+  </data>
+  <data name="MenuAllowForms" xml:space="preserve">
+    <value>Allow filling in forms</value>
+  </data>
+  <data name="MenuAllowPrint" xml:space="preserve">
+    <value>Allow printing</value>
+  </data>
   <data name="MenuAuthor" xml:space="preserve">
     <value>Author</value>
   </data>
@@ -137,6 +158,9 @@
   </data>
   <data name="MenuClose" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="MenuConfirmPassword" xml:space="preserve">
+    <value>Confirm</value>
   </data>
   <data name="MenuCreationTime" xml:space="preserve">
     <value>Creation</value>
@@ -155,6 +179,9 @@
   </data>
   <data name="MenuEncryption" xml:space="preserve">
     <value>Security</value>
+  </data>
+  <data name="MenuEncryptionEnabled" xml:space="preserve">
+    <value>Encrypt the PDF with password</value>
   </data>
   <data name="MenuExit" xml:space="preserve">
     <value>Exit</value>
@@ -212,6 +239,15 @@
   </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
+  </data>
+  <data name="MenuOpenWithPassword" xml:space="preserve">
+    <value>Open with password</value>
+  </data>
+  <data name="MenuOperations" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="MenuOwnerPassword" xml:space="preserve">
+    <value>Password</value>
   </data>
   <data name="MenuPageCount" xml:space="preserve">
     <value>Page count</value>
@@ -282,6 +318,9 @@
   <data name="MenuSettings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="MenuSharePassword" xml:space="preserve">
+    <value>Use owner password</value>
+  </data>
   <data name="MenuSubject" xml:space="preserve">
     <value>Subject</value>
   </data>
@@ -296,6 +335,9 @@
   </data>
   <data name="MenuUp" xml:space="preserve">
     <value>Up</value>
+  </data>
+  <data name="MenuUserPassword" xml:space="preserve">
+    <value>Password</value>
   </data>
   <data name="MenuView" xml:space="preserve">
     <value>View</value>

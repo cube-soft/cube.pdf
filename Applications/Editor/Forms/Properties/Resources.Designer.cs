@@ -88,6 +88,69 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Allow using contents for accessibility に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAllowAccesibility {
+            get {
+                return ResourceManager.GetString("MenuAllowAccesibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Allow creating and editing annotations に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAllowAnnotation {
+            get {
+                return ResourceManager.GetString("MenuAllowAnnotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Allow inserting and removing pages に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAllowAssemble {
+            get {
+                return ResourceManager.GetString("MenuAllowAssemble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Allow copying text and images に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAllowCopy {
+            get {
+                return ResourceManager.GetString("MenuAllowCopy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Allow extracting pages に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAllowExtract {
+            get {
+                return ResourceManager.GetString("MenuAllowExtract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Allow filling in forms に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAllowForms {
+            get {
+                return ResourceManager.GetString("MenuAllowForms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Allow printing に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAllowPrint {
+            get {
+                return ResourceManager.GetString("MenuAllowPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Author に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuAuthor {
@@ -120,6 +183,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuClose {
             get {
                 return ResourceManager.GetString("MenuClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Confirm に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuConfirmPassword {
+            get {
+                return ResourceManager.GetString("MenuConfirmPassword", resourceCulture);
             }
         }
         
@@ -174,6 +246,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuEncryption {
             get {
                 return ResourceManager.GetString("MenuEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Encrypt the PDF with password に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuEncryptionEnabled {
+            get {
+                return ResourceManager.GetString("MenuEncryptionEnabled", resourceCulture);
             }
         }
         
@@ -345,6 +426,33 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuOpen {
             get {
                 return ResourceManager.GetString("MenuOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Open with password に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOpenWithPassword {
+            get {
+                return ResourceManager.GetString("MenuOpenWithPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Operations に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOperations {
+            get {
+                return ResourceManager.GetString("MenuOperations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Password に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOwnerPassword {
+            get {
+                return ResourceManager.GetString("MenuOwnerPassword", resourceCulture);
             }
         }
         
@@ -556,6 +664,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Use owner password に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSharePassword {
+            get {
+                return ResourceManager.GetString("MenuSharePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Subject に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuSubject {
@@ -597,6 +714,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuUp {
             get {
                 return ResourceManager.GetString("MenuUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Password に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuUserPassword {
+            get {
+                return ResourceManager.GetString("MenuUserPassword", resourceCulture);
             }
         }
         
