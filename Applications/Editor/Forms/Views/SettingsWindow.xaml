@@ -26,8 +26,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
-    Height="230"
-    Width="420"
+    Height="400"
+    Width="450"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
     ShowInTaskbar="False">
@@ -51,16 +51,51 @@
     *********************************************************************** -->
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
+
+        <TabControl Margin="12" Height="270">
+            <TabItem Header="その他">
+                <Grid Margin="8,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="26" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="バージョン情報" Grid.Column="0" Grid.Row="0" />
+                    <TextBlock Text="表示言語" Grid.Column="0" Grid.Row="8" />
+
+                    <TextBlock Text="CubePDF Utility 0.5.0β (x64)" Grid.Column="1" Grid.Row="0" />
+                    <TextBlock Text="Microsoft Windows NT 10.0.17134.0" Grid.Column="1" Grid.Row="2" Foreground="Gray" />
+                    <TextBlock Text="Microsoft .NET Framework 4.0.30319.42000" Grid.Column="1" Grid.Row="3" Foreground="Gray" />
+                    <TextBlock Text="Copyright (c) 2010 CubeSoft, Inc." Grid.Column="1" Grid.Row="5" Foreground="Blue" TextDecorations="Underline"  />
+
+                    <CheckBox Content="起動時にアップデートを確認する" Grid.Column="1" Grid.Row="7" />
+                    <ComboBox Grid.Column="1" Grid.Row="8" />
+                </Grid>
+            </TabItem>
+        </TabControl>
 
         <!-- ******************************************************************
           Buttons
         ******************************************************************* -->
         <StackPanel
             Style="{StaticResource DialogFooterStyle}"
-            Grid.Row="1">
+            Grid.Row="2">
             <Button
                 Content="{Binding Cancel.Text}"
                 Command="{Binding Cancel.Command}"

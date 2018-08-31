@@ -50,5 +50,21 @@ namespace Cube.Pdf.App.Editor
             base(() => Properties.Resources.TitleEncryption, new Messenger(), context) { }
 
         #endregion
+
+        #region Properties
+
+        public MenuEntry Enabled { get; } = new MenuEntry(
+            () => Properties.Resources.MenuEncryptionEnabled
+        );
+
+        public MenuEntry OwnerPassword { get; } = new MenuEntry(
+            () => Properties.Resources.MenuOwnerPassword
+        );
+
+        public MenuEntry UserPassword { get; } = new MenuEntry(
+            () => Properties.Resources.MenuUserPassword
+        );
+
+        #endregion
     }
 }
