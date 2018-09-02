@@ -53,16 +53,69 @@ namespace Cube.Pdf.App.Editor
 
         #region Properties
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Enabled
+        ///
+        /// <summary>
+        /// Gets the menu that encryption is enabled.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public MenuEntry Enabled { get; } = new MenuEntry(
             () => Properties.Resources.MenuEncryptionEnabled
         );
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OwnerPassword
+        ///
+        /// <summary>
+        /// Gets the menu of owner password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public MenuEntry OwnerPassword { get; } = new MenuEntry(
             () => Properties.Resources.MenuOwnerPassword
         );
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserPassword
+        ///
+        /// <summary>
+        /// Gets the menu of user password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         public MenuEntry UserPassword { get; } = new MenuEntry(
             () => Properties.Resources.MenuUserPassword
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OpenWithPassword
+        ///
+        /// <summary>
+        /// Gets the menu that user password is enabled.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MenuEntry OpenWithPassword { get; } = new MenuEntry(
+            () => Properties.Resources.MenuOpenWithPassword
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SharePassword
+        ///
+        /// <summary>
+        /// Gets the menu of sharing user password with owner password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MenuEntry SharePassword { get; } = new MenuEntry(
+            () => Properties.Resources.MenuSharePassword
         );
 
         #endregion
