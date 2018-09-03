@@ -18,6 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Generics;
+using Cube.Xui;
+using System;
+using System.Globalization;
 using System.Reflection;
 
 namespace Cube.Pdf.App.Editor
@@ -34,6 +37,28 @@ namespace Cube.Pdf.App.Editor
     public class SettingsFolder : SettingsFolder<Settings>
     {
         #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsFolder
+        ///
+        /// <summary>
+        /// Initializes static fields.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static SettingsFolder()
+        {
+            ResourceCulture.Configure(e =>
+            {
+                var src = e ?? string.Empty;
+                var cmp = Properties.Resources.Culture?.Name;
+                var opt = StringComparison.InvariantCultureIgnoreCase;
+                if (cmp.HasValue() && cmp.Equals(src, opt)) return false;
+                Properties.Resources.Culture = new CultureInfo(src);
+                return true;
+            });
+        }
 
         /* ----------------------------------------------------------------- */
         ///

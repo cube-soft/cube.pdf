@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Editor;
+using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 

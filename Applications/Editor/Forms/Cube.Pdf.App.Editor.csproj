@@ -169,7 +169,6 @@
     <Compile Include="Sources\Models\ImageSelection.cs" />
     <Compile Include="Sources\Models\MenuEntry.cs" />
     <Compile Include="Sources\Models\MessageFactory.cs" />
-    <Compile Include="Sources\Models\ResourceCulture.cs" />
     <Compile Include="Sources\ViewModels\MainBindableData.cs" />
     <Compile Include="Sources\ViewModels\MainFacade.cs" />
     <Compile Include="Sources\ViewModels\MainViewModel.cs" />
