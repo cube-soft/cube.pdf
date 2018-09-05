@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using System.Threading;
 
@@ -62,7 +63,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Summary { get; } = new MenuEntry(
+        public BindableElement Summary { get; } = new BindableElement(
             () => Properties.Resources.MenuSummary
         );
 
@@ -75,7 +76,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Details { get; } = new MenuEntry(
+        public BindableElement Details { get; } = new BindableElement(
             () => Properties.Resources.MenuDetails
         );
 
@@ -88,7 +89,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Filename { get; } = new MenuEntry(
+        public BindableElement Filename { get; } = new BindableElement(
             () => Properties.Resources.MenuFilename
         );
 
@@ -102,7 +103,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry DocumentTitle { get; } = new MenuEntry(
+        public BindableElement DocumentTitle { get; } = new BindableElement(
             () => Properties.Resources.MenuTitle
         );
 
@@ -116,7 +117,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Author { get; } = new MenuEntry(
+        public BindableElement Author { get; } = new BindableElement(
             () => Properties.Resources.MenuAuthor
         );
 
@@ -130,7 +131,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Subject { get; } = new MenuEntry(
+        public BindableElement Subject { get; } = new BindableElement(
             () => Properties.Resources.MenuSubject
         );
 
@@ -144,7 +145,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Keywords { get; } = new MenuEntry(
+        public BindableElement Keywords { get; } = new BindableElement(
             () => Properties.Resources.MenuKeywords
         );
 
@@ -158,7 +159,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Version { get; } = new MenuEntry(
+        public BindableElement Version { get; } = new BindableElement(
             () => Properties.Resources.MenuPdfVersion
         );
 
@@ -172,7 +173,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Layout { get; } = new MenuEntry(
+        public BindableElement Layout { get; } = new BindableElement(
             () => Properties.Resources.MenuLayout
         );
 
@@ -186,7 +187,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Creator { get; } = new MenuEntry(
+        public BindableElement Creator { get; } = new BindableElement(
             () => Properties.Resources.MenuCreator
         );
 
@@ -200,7 +201,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Producer { get; } = new MenuEntry(
+        public BindableElement Producer { get; } = new BindableElement(
             () => Properties.Resources.MenuProducer
         );
 
@@ -213,7 +214,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Length { get; } = new MenuEntry(
+        public BindableElement Length { get; } = new BindableElement(
             () => Properties.Resources.MenuFilesize
         );
 
@@ -227,7 +228,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry CreationTime { get; } = new MenuEntry(
+        public BindableElement CreationTime { get; } = new BindableElement(
             () => Properties.Resources.MenuCreationTime
         );
 
@@ -241,7 +242,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry LastWriteTime { get; } = new MenuEntry(
+        public BindableElement LastWriteTime { get; } = new BindableElement(
             () => Properties.Resources.MenuLastWriteTime
         );
 

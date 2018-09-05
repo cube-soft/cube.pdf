@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using System.Threading;
 
@@ -62,7 +63,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Enabled { get; } = new MenuEntry(
+        public BindableElement Enabled { get; } = new BindableElement(
             () => Properties.Resources.MenuEncryptionEnabled
         );
 
@@ -75,7 +76,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry OwnerPassword { get; } = new MenuEntry(
+        public BindableElement OwnerPassword { get; } = new BindableElement(
             () => Properties.Resources.MenuOwnerPassword
         );
 
@@ -88,7 +89,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry UserPassword { get; } = new MenuEntry(
+        public BindableElement UserPassword { get; } = new BindableElement(
             () => Properties.Resources.MenuUserPassword
         );
 
@@ -101,7 +102,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry OpenWithPassword { get; } = new MenuEntry(
+        public BindableElement OpenWithPassword { get; } = new BindableElement(
             () => Properties.Resources.MenuOpenWithPassword
         );
 
@@ -114,7 +115,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry SharePassword { get; } = new MenuEntry(
+        public BindableElement SharePassword { get; } = new BindableElement(
             () => Properties.Resources.MenuSharePassword
         );
 
