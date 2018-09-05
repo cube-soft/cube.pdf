@@ -222,6 +222,9 @@
   <data name="MenuKeywords" xml:space="preserve">
     <value>Keywords</value>
   </data>
+  <data name="MenuLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
     <value>Last updated</value>
   </data>
@@ -339,8 +342,14 @@
   <data name="MenuUp" xml:space="preserve">
     <value>Up</value>
   </data>
+  <data name="MenuUpdate" xml:space="preserve">
+    <value>Check update at launching</value>
+  </data>
   <data name="MenuUserPassword" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="MenuVersion" xml:space="preserve">
+    <value>Version</value>
   </data>
   <data name="MenuView" xml:space="preserve">
     <value>View</value>

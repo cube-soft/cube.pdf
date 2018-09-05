@@ -76,15 +76,15 @@
                         <RowDefinition Height="26" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="バージョン情報" Grid.Column="0" Grid.Row="0" />
-                    <TextBlock Text="表示言語" Grid.Column="0" Grid.Row="8" />
+                    <TextBlock Text="{Binding Version.Text}" Grid.Column="0" Grid.Row="0" />
+                    <TextBlock Text="{Binding Language.Text}" Grid.Column="0" Grid.Row="8" />
 
                     <TextBlock Text="CubePDF Utility 0.5.0β (x64)" Grid.Column="1" Grid.Row="0" />
                     <TextBlock Text="Microsoft Windows NT 10.0.17134.0" Grid.Column="1" Grid.Row="2" Foreground="Gray" />
                     <TextBlock Text="Microsoft .NET Framework 4.0.30319.42000" Grid.Column="1" Grid.Row="3" Foreground="Gray" />
                     <TextBlock Text="Copyright (c) 2010 CubeSoft, Inc." Grid.Column="1" Grid.Row="5" Foreground="Blue" TextDecorations="Underline"  />
 
-                    <CheckBox Content="起動時にアップデートを確認する" Grid.Column="1" Grid.Row="7" />
+                    <CheckBox Content="{Binding Update.Text}" Grid.Column="1" Grid.Row="7" />
                     <ComboBox Grid.Column="1" Grid.Row="8" />
                 </Grid>
             </TabItem>

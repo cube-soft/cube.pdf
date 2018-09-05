@@ -376,6 +376,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Language に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuLanguage {
+            get {
+                return ResourceManager.GetString("MenuLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Last updated に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuLastWriteTime {
@@ -727,11 +736,29 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Check update at launching に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuUpdate {
+            get {
+                return ResourceManager.GetString("MenuUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Password に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuUserPassword {
             get {
                 return ResourceManager.GetString("MenuUserPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Version に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuVersion {
+            get {
+                return ResourceManager.GetString("MenuVersion", resourceCulture);
             }
         }
         

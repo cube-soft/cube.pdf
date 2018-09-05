@@ -222,6 +222,9 @@
   <data name="MenuKeywords" xml:space="preserve">
     <value>キーワード</value>
   </data>
+  <data name="MenuLanguage" xml:space="preserve">
+    <value>表示言語</value>
+  </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
     <value>最終更新日時</value>
   </data>
@@ -339,8 +342,14 @@
   <data name="MenuUp" xml:space="preserve">
     <value>上へ</value>
   </data>
+  <data name="MenuUpdate" xml:space="preserve">
+    <value>起動時にアップデートを確認する</value>
+  </data>
   <data name="MenuUserPassword" xml:space="preserve">
     <value>閲覧用パスワード</value>
+  </data>
+  <data name="MenuVersion" xml:space="preserve">
+    <value>バージョン情報</value>
   </data>
   <data name="MenuView" xml:space="preserve">
     <value>表示</value>
