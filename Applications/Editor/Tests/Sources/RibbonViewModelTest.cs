@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Editor;
+using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 
@@ -48,7 +49,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetText_English()
         {
-            var dest = new RibbonViewModel(new Messenger());
+            var dest = new RibbonViewModel(() => true, new Messenger());
             ResourceCulture.Set("en");
 
             Assert.That(dest.File.Text,          Is.EqualTo("File"));
@@ -95,7 +96,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetTooltip_English()
         {
-            var dest = new RibbonViewModel(new Messenger());
+            var dest = new RibbonViewModel(() => true, new Messenger());
             ResourceCulture.Set("en");
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo("File"));
@@ -142,7 +143,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetText_Japanese()
         {
-            var dest = new RibbonViewModel(new Messenger());
+            var dest = new RibbonViewModel(() => true, new Messenger());
             ResourceCulture.Set("ja");
 
             Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
@@ -189,7 +190,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetTooltip_Japanese()
         {
-            var dest = new RibbonViewModel(new Messenger());
+            var dest = new RibbonViewModel(() => true, new Messenger());
             ResourceCulture.Set("ja");
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo(dest.File.Text));
@@ -236,7 +237,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetText_Dynamically()
         {
-            var dest = new RibbonViewModel(new Messenger());
+            var dest = new RibbonViewModel(() => true, new Messenger());
 
             ResourceCulture.Set("en");
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");

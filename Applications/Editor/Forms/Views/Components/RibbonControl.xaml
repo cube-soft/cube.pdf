@@ -54,7 +54,7 @@
                     Header="{Binding Ribbon.Open.Text}"
                     Icon="{Binding Ribbon.Open.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Open.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Open.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Open.Enabled}"
                     Command="{Binding Ribbon.Open.Command}" />
 
                 <!-- **********************************************************
@@ -64,7 +64,7 @@
                     Header="{Binding Ribbon.Save.Text}"
                     Icon="{Binding Ribbon.Save.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Save.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Save.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Save.Enabled}"
                     Command="{Binding Ribbon.Save.Command}">
                     <r:MenuItem
                         Header="{Binding Ribbon.Save.Tooltip}"
@@ -83,7 +83,7 @@
                     Header="{Binding Ribbon.Close.Text}"
                     Icon="{Binding Ribbon.Close.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Close.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Close.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Close.Enabled}"
                     Command="{Binding Ribbon.Close.Command}" />
             </r:RibbonGroupBox>
 
@@ -95,7 +95,7 @@
                     Header="{Binding Ribbon.Undo.Text}"
                     Icon="{Binding Ribbon.Undo.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Undo.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Undo.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Undo.Enabled}"
                     Command="{Binding Ribbon.Undo.Command}" />
 
                 <!-- **********************************************************
@@ -105,7 +105,7 @@
                     Header="{Binding Ribbon.Redo.Text}"
                     Icon="{Binding Ribbon.Redo.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Redo.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Redo.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Redo.Enabled}"
                     Command="{Binding Ribbon.Redo.Command}" />
             </r:RibbonGroupBox>
 
@@ -117,7 +117,7 @@
                     Header="{Binding Ribbon.Select.Text}"
                     Icon="{Binding Ribbon.Select.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Select.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Select.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Select.Enabled}"
                     Command="{Binding Ribbon.Select.Command}">
                     <r:MenuItem
                         Header="{Binding Ribbon.SelectAll.Tooltip}"
@@ -140,7 +140,7 @@
                     Header="{Binding Ribbon.Insert.Text}"
                     Icon="{Binding Ribbon.Insert.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Insert.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Insert.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Insert.Enabled}"
                     Command="{Binding Ribbon.Insert.Command}">
                     <r:MenuItem
                         Header="{Binding Ribbon.Insert.Tooltip}"
@@ -165,7 +165,7 @@
                     Header="{Binding Ribbon.Extract.Text}"
                     Icon="{Binding Ribbon.Extract.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Extract.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Extract.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Extract.Enabled}"
                     Command="{Binding Ribbon.Extract.Command}">
                     <r:MenuItem
                         Header="{Binding Ribbon.Extract.Tooltip}"
@@ -184,7 +184,7 @@
                     Header="{Binding Ribbon.Remove.Text}"
                     Icon="{Binding Ribbon.Remove.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Remove.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Remove.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Remove.Enabled}"
                     Command="{Binding Ribbon.Remove.Command}">
                     <r:MenuItem
                         Header="{Binding Ribbon.Remove.Tooltip}"
@@ -205,7 +205,7 @@
                     Header="{Binding Ribbon.MovePrevious.Text}"
                     Icon="{Binding Ribbon.MovePrevious.SmallIcon}"
                     LargeIcon="{Binding Ribbon.MovePrevious.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.MovePrevious.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.MovePrevious.Enabled}"
                     Command="{Binding Ribbon.MovePrevious.Command}" />
 
                 <!-- **********************************************************
@@ -215,7 +215,7 @@
                     Header="{Binding Ribbon.MoveNext.Text}"
                     Icon="{Binding Ribbon.MoveNext.SmallIcon}"
                     LargeIcon="{Binding Ribbon.MoveNext.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.MoveNext.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.MoveNext.Enabled}"
                     Command="{Binding Ribbon.MoveNext.Command}" />
             </r:RibbonGroupBox>
 
@@ -227,7 +227,7 @@
                     Header="{Binding Ribbon.RotateLeft.Text}"
                     Icon="{Binding Ribbon.RotateLeft.SmallIcon}"
                     LargeIcon="{Binding Ribbon.RotateLeft.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.RotateLeft.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.RotateLeft.Enabled}"
                     Command="{Binding Ribbon.RotateLeft.Command}" />
 
                 <!-- **********************************************************
@@ -237,7 +237,7 @@
                     Header="{Binding Ribbon.RotateRight.Text}"
                     Icon="{Binding Ribbon.RotateRight.SmallIcon}"
                     LargeIcon="{Binding Ribbon.RotateRight.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.RotateRight.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.RotateRight.Enabled}"
                     Command="{Binding Ribbon.RotateRight.Command}" />
             </r:RibbonGroupBox>
 
@@ -249,7 +249,7 @@
                     Header="{Binding Ribbon.Metadata.Text}"
                     Icon="{Binding Ribbon.Metadata.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Metadata.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Metadata.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Metadata.Enabled}"
                     Command="{Binding Ribbon.Metadata.Command}" />
 
                 <!-- **********************************************************
@@ -259,7 +259,7 @@
                     Header="{Binding Ribbon.Encryption.Text}"
                     Icon="{Binding Ribbon.Encryption.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Encryption.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Encryption.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Encryption.Enabled}"
                     Command="{Binding Ribbon.Encryption.Command}" />
             </r:RibbonGroupBox>
         </r:RibbonTabItem>
@@ -273,7 +273,7 @@
                     Header="{Binding Ribbon.Refresh.Text}"
                     Icon="{Binding Ribbon.Refresh.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Refresh.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Refresh.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Refresh.Enabled}"
                     Command="{Binding Ribbon.Refresh.Command}" />
             </r:RibbonGroupBox>
 
@@ -285,7 +285,7 @@
                     Header="{Binding Ribbon.ZoomIn.Text}"
                     Icon="{Binding Ribbon.ZoomIn.SmallIcon}"
                     LargeIcon="{Binding Ribbon.ZoomIn.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.ZoomIn.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.ZoomIn.Enabled}"
                     Command="{Binding Ribbon.ZoomIn.Command}" />
 
                 <!-- **********************************************************
@@ -295,7 +295,7 @@
                     Header="{Binding Ribbon.ZoomOut.Text}"
                     Icon="{Binding Ribbon.ZoomOut.SmallIcon}"
                     LargeIcon="{Binding Ribbon.ZoomOut.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.ZoomOut.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.ZoomOut.Enabled}"
                     Command="{Binding Ribbon.ZoomOut.Command}" />
             </r:RibbonGroupBox>
 
@@ -307,7 +307,7 @@
                     Header="{Binding Ribbon.Settings.Text}"
                     Icon="{Binding Ribbon.Settings.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Settings.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Settings.Enabled.Value}"
+                    IsEnabled="{Binding Ribbon.Settings.Enabled}"
                     Command="{Binding Ribbon.Settings.Command}" />
             </r:RibbonGroupBox>
         </r:RibbonTabItem>

@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Editor;
+using Cube.Xui;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Tests.Editor
@@ -50,7 +51,7 @@ namespace Cube.Pdf.Tests.Editor
             var name = nameof(Properties);
             var text = "GetText";
 
-            using (var dest = new ImageMenuEntry(() => text))
+            using (var dest = new RibbonElement(() => text))
             {
                 Assert.That(dest.Name,      Is.EqualTo(name));
                 Assert.That(dest.Text,      Is.EqualTo(text));

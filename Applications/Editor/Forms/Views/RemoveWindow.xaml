@@ -75,7 +75,7 @@
                 Grid.Column="0"
                 Grid.Row="0" />
             <TextBlock
-                Text="{Binding PageCount.Tooltip}"
+                Text="{Binding PageCount.Value}"
                 Grid.Row="0"
                 Grid.Column="1" />
 
@@ -84,7 +84,7 @@
                 Grid.Row="1"
                 Grid.Column="0" />
             <TextBlock
-                Text="{Binding RangeCaption.Tooltip}"
+                Text="{Binding RangeCaption.Value}"
                 Grid.Row="2"
                 Grid.Column="1" />
             <TextBox

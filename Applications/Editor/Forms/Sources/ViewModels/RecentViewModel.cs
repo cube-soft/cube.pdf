@@ -81,7 +81,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Menu { get; } = new MenuEntry(
+        public BindableElement Menu { get; } = new BindableElement(
             () => Properties.Resources.MenuRecent
         );
 

@@ -126,6 +126,27 @@
   <data name="MenuAdd" xml:space="preserve">
     <value>追加 ...</value>
   </data>
+  <data name="MenuAllowAccessibility" xml:space="preserve">
+    <value>アクセシビリティのための内容の抽出を許可する</value>
+  </data>
+  <data name="MenuAllowAnnotation" xml:space="preserve">
+    <value>注釈の追加、編集を許可する</value>
+  </data>
+  <data name="MenuAllowAssemble" xml:space="preserve">
+    <value>ページの挿入、回転、削除を許可する</value>
+  </data>
+  <data name="MenuAllowCopy" xml:space="preserve">
+    <value>テキストや画像のコピーを許可する</value>
+  </data>
+  <data name="MenuAllowExtract" xml:space="preserve">
+    <value>ページの抽出を許可する</value>
+  </data>
+  <data name="MenuAllowForm" xml:space="preserve">
+    <value>フォームへの入力を許可する</value>
+  </data>
+  <data name="MenuAllowPrint" xml:space="preserve">
+    <value>印刷を許可する</value>
+  </data>
   <data name="MenuAuthor" xml:space="preserve">
     <value>作成者</value>
   </data>
@@ -137,6 +158,9 @@
   </data>
   <data name="MenuClose" xml:space="preserve">
     <value>閉じる</value>
+  </data>
+  <data name="MenuConfirmPassword" xml:space="preserve">
+    <value>パスワード確認</value>
   </data>
   <data name="MenuCreationTime" xml:space="preserve">
     <value>作成日時</value>
@@ -155,6 +179,12 @@
   </data>
   <data name="MenuEncryption" xml:space="preserve">
     <value>セキュリティ</value>
+  </data>
+  <data name="MenuEncryptionEnabled" xml:space="preserve">
+    <value>PDF ファイルをパスワードで保護する</value>
+  </data>
+  <data name="MenuEncryptionMethod" xml:space="preserve">
+    <value>暗号化方式</value>
   </data>
   <data name="MenuExit" xml:space="preserve">
     <value>終了</value>
@@ -192,6 +222,9 @@
   <data name="MenuKeywords" xml:space="preserve">
     <value>キーワード</value>
   </data>
+  <data name="MenuLanguage" xml:space="preserve">
+    <value>表示言語</value>
+  </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
     <value>最終更新日時</value>
   </data>
@@ -212,6 +245,15 @@
   </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>開く</value>
+  </data>
+  <data name="MenuOpenWithPassword" xml:space="preserve">
+    <value>PDF ファイルを開く時にパスワードを要求する</value>
+  </data>
+  <data name="MenuOperations" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="MenuOwnerPassword" xml:space="preserve">
+    <value>管理用パスワード</value>
   </data>
   <data name="MenuPageCount" xml:space="preserve">
     <value>総ページ数</value>
@@ -282,6 +324,9 @@
   <data name="MenuSettings" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="MenuSharePassword" xml:space="preserve">
+    <value>管理用パスワードと共用する</value>
+  </data>
   <data name="MenuSubject" xml:space="preserve">
     <value>サブタイトル</value>
   </data>
@@ -296,6 +341,15 @@
   </data>
   <data name="MenuUp" xml:space="preserve">
     <value>上へ</value>
+  </data>
+  <data name="MenuUpdate" xml:space="preserve">
+    <value>起動時にアップデートを確認する</value>
+  </data>
+  <data name="MenuUserPassword" xml:space="preserve">
+    <value>閲覧用パスワード</value>
+  </data>
+  <data name="MenuVersion" xml:space="preserve">
+    <value>バージョン情報</value>
   </data>
   <data name="MenuView" xml:space="preserve">
     <value>表示</value>

@@ -56,12 +56,15 @@ namespace Cube.Pdf.App.Editor
             var ctx      = SynchronizationContext.Current;
             var recent   = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
             var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", io, ctx);
+            var getter   = new Getter<bool>(() => Data.IsOpen.Value && !Data.IsBusy.Value);
 
             Model  = new MainFacade(settings, ctx);
-            Ribbon = new RibbonViewModel(MessengerInstance);
+            Ribbon = new RibbonViewModel(getter, MessengerInstance);
             Recent = new RecentViewModel(mon, MessengerInstance);
 
-            SetRibbonEnabled();
+            Data.IsOpen.PropertyChanged += (s, e) => Ribbon.RaiseEnabledChanged();
+            Data.IsBusy.PropertyChanged += (s, e) => Ribbon.RaiseEnabledChanged();
+
             SetRibbonCommands();
         }
 
@@ -169,25 +172,6 @@ namespace Cube.Pdf.App.Editor
                 Model.Dispose();
                 Ribbon.Dispose();
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetRibbonEnabled
-        ///
-        /// <summary>
-        /// Sets a function object that determines the Ribbon button is
-        /// enabled.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetRibbonEnabled()
-        {
-            var open = IsOpenFunc();
-
-            Ribbon.Insert.Enabled  = open;
-            Ribbon.Extract.Enabled = open;
-            Ribbon.Remove.Enabled  = open;
         }
 
         /* ----------------------------------------------------------------- */
@@ -333,24 +317,6 @@ namespace Cube.Pdf.App.Editor
             Data.IsBusy,
             Data.Selection
         );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsOpenFunc
-        ///
-        /// <summary>
-        /// Creates a BindableFunc(T) for the IsEnabled property of the
-        /// RibbonEntry class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private BindableFunc<bool> IsOpenFunc()
-        {
-            var dest = new BindableFunc<bool>(() => Data.IsOpen.Value && !Data.IsBusy.Value);
-            Data.IsOpen.PropertyChanged += (s, e) => dest.RaiseValueChanged();
-            Data.IsBusy.PropertyChanged += (s, e) => dest.RaiseValueChanged();
-            return dest;
-        }
 
         #endregion
 

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using System.Threading;
 
@@ -48,6 +49,50 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public SettingsViewModel(SynchronizationContext context) :
             base(() => Properties.Resources.TitleSettings, new Messenger(), context) { }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version
+        ///
+        /// <summary>
+        /// Gets the version menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement Version { get; } = new BindableElement(
+            () => Properties.Resources.MenuVersion
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Language
+        ///
+        /// <summary>
+        /// Gets the language menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement Language { get; } = new BindableElement(
+            () => Properties.Resources.MenuLanguage
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        ///
+        /// <summary>
+        /// Gets the menu indicating whether checking software update
+        /// at launching process.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement Update { get; } = new BindableElement(
+            () => Properties.Resources.MenuUpdate
+        );
 
         #endregion
     }

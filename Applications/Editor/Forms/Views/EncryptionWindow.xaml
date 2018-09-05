@@ -26,8 +26,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
-    Height="230"
-    Width="420"
+    Height="550"
+    Width="500"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
     ShowInTaskbar="False">
@@ -51,16 +51,85 @@
     *********************************************************************** -->
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
+
+        <GroupBox Margin="12" Padding="8,12">
+            <GroupBox.Header>
+                <CheckBox Content="{Binding Enabled.Text}" />
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="26" />
+                    <RowDefinition Height="26" />
+                    <RowDefinition Height="26" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="24" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="{Binding OwnerPassword.Text}" Grid.Column="0" Grid.Row="0" />
+                <TextBlock Text="{Binding OwnerConfirm.Text}" Grid.Column="0" Grid.Row="1" />
+                <TextBlock Text="{Binding Method.Text}" Grid.Column="0" Grid.Row="2" />
+                <TextBlock Text="{Binding Operation.Text}" Grid.Column="0" Grid.Row="3" />
+
+                <TextBox Grid.Column="1" Grid.Row="0" />
+                <TextBox Grid.Column="1" Grid.Row="1" />
+
+                <ComboBox Grid.Column="1" Grid.Row="2" />
+
+                <CheckBox Content="{Binding OpenWithPassword.Text}" Grid.Column="1" Grid.Row="3" />
+
+                <Grid Grid.Column="1" Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="26" />
+                        <RowDefinition Height="26" />
+                        <RowDefinition Height="24" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="{Binding UserPassword.Text}" Grid.Column="0" Grid.Row="0" />
+                    <TextBlock Text="{Binding UserConfirm.Text}" Grid.Column="0" Grid.Row="1" />
+
+                    <TextBox Grid.Column="1" Grid.Row="0" />
+                    <TextBox Grid.Column="1" Grid.Row="1" />
+                    <CheckBox Content="{Binding SharePassword.Text}" Grid.Column="1" Grid.Row="2" />
+                </Grid>
+
+                <CheckBox Content="{Binding AllowPrint.Text}" Grid.Column="1" Grid.Row="5" />
+                <CheckBox Content="{Binding AllowCopy.Text}" Grid.Column="1" Grid.Row="6" />
+                <CheckBox Content="{Binding AllowAssemble.Text}" Grid.Column="1" Grid.Row="7" />
+                <CheckBox Content="{Binding AllowExtract.Text}" Grid.Column="1" Grid.Row="8" />
+                <CheckBox Content="{Binding AllowAccessibility.Text}" Grid.Column="1" Grid.Row="9" />
+                <CheckBox Content="{Binding AllowForm.Text}" Grid.Column="1" Grid.Row="10" />
+                <CheckBox Content="{Binding AllowAnnotation.Text}" Grid.Column="1" Grid.Row="11" />
+            </Grid>
+        </GroupBox>
 
         <!-- ******************************************************************
           Buttons
         ******************************************************************* -->
         <StackPanel
             Style="{StaticResource DialogFooterStyle}"
-            Grid.Row="1">
+            Grid.Row="2">
             <Button
                 Content="{Binding Cancel.Text}"
                 Command="{Binding Cancel.Command}"

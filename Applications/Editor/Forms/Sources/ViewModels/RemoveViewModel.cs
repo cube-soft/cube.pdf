@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -51,9 +52,10 @@ namespace Cube.Pdf.App.Editor
         public RemoveViewModel(int n, SynchronizationContext context) :
             base(() => Properties.Resources.TitleRemove, new Messenger(), context)
         {
-            PageCount = new MenuEntry(
-                () => Properties.Resources.MenuPageCount,
-                () => string.Format(Properties.Resources.TooltipPageCount, n)
+            PageCount = new BindableElement<string>(
+                () => string.Format(Properties.Resources.TooltipPageCount, n),
+                e  => throw new InvalidOperationException(),
+                () => Properties.Resources.MenuPageCount
             );
         }
 
@@ -70,7 +72,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry PageCount { get; }
+        public BindableElement<string> PageCount { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,9 +84,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry RangeCaption { get; } = new MenuEntry(
-            () => Properties.Resources.MenuRemoveRange,
-            () => Properties.Resources.TooltipRemoveRange
+        public BindableElement<string> RangeCaption { get; } = new BindableElement<string>(
+            () => Properties.Resources.TooltipRemoveRange,
+            e  => throw new InvalidOperationException(),
+            () => Properties.Resources.MenuRemoveRange
         );
 
         /* ----------------------------------------------------------------- */

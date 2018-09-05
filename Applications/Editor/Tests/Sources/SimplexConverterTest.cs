@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Editor;
+using Cube.Xui;
 using Cube.Xui.Converters;
 using NUnit.Framework;
 using System.Globalization;

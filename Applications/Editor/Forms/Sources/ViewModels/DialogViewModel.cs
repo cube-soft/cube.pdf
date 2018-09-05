@@ -19,7 +19,6 @@
 using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using System;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -51,10 +50,10 @@ namespace Cube.Pdf.App.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected DialogViewModel(Func<string> title, IMessenger messenger,
+        protected DialogViewModel(Getter<string> title, IMessenger messenger,
             SynchronizationContext context) : base(messenger, context)
         {
-            Title = new MenuEntry(title);
+            Title = new BindableElement(title);
             Cancel.Command = new RelayCommand(() => Send<CloseMessage>());
         }
 
@@ -71,7 +70,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Title { get; }
+        public BindableElement Title { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,7 +81,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry OK { get; set; } = new MenuEntry(
+        public BindableElement OK { get; set; } = new BindableElement(
             () => Properties.Resources.MenuOk
         );
 
@@ -95,7 +94,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MenuEntry Cancel { get; set; } = new MenuEntry(
+        public BindableElement Cancel { get; set; } = new BindableElement(
             () => Properties.Resources.MenuCancel
         );
 
