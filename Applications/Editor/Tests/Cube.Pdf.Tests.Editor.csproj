@@ -111,6 +111,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\Details\GlobalSetup.cs" />
     <Compile Include="Sources\Details\ViewModelFixture.cs" />
+    <Compile Include="Sources\HistoryTest.cs" />
     <Compile Include="Sources\MainViewModelTest.cs" />
     <Compile Include="Sources\RibbonEntryTest.cs" />
     <Compile Include="Sources\RibbonViewModelTest.cs" />
