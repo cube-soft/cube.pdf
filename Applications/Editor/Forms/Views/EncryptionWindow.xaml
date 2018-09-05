@@ -58,7 +58,7 @@
 
         <GroupBox Margin="12" Padding="8,12">
             <GroupBox.Header>
-                <CheckBox Content="PDF ファイルをパスワードで保護する" />
+                <CheckBox Content="{Binding Enabled.Text}" />
             </GroupBox.Header>
 
             <Grid>
@@ -82,17 +82,17 @@
                     <RowDefinition Height="24" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="管理用パスワード" Grid.Column="0" Grid.Row="0" />
-                <TextBlock Text="パスワード確認" Grid.Column="0" Grid.Row="1" />
-                <TextBlock Text="暗号化方式" Grid.Column="0" Grid.Row="2" />
-                <TextBlock Text="操作" Grid.Column="0" Grid.Row="3" />
+                <TextBlock Text="{Binding OwnerPassword.Text}" Grid.Column="0" Grid.Row="0" />
+                <TextBlock Text="{Binding OwnerConfirm.Text}" Grid.Column="0" Grid.Row="1" />
+                <TextBlock Text="{Binding Method.Text}" Grid.Column="0" Grid.Row="2" />
+                <TextBlock Text="{Binding Operation.Text}" Grid.Column="0" Grid.Row="3" />
 
                 <TextBox Grid.Column="1" Grid.Row="0" />
                 <TextBox Grid.Column="1" Grid.Row="1" />
 
                 <ComboBox Grid.Column="1" Grid.Row="2" />
 
-                <CheckBox Content="PDF ファイルを開く時にパスワードを要求する" Grid.Column="1" Grid.Row="3" />
+                <CheckBox Content="{Binding OpenWithPassword.Text}" Grid.Column="1" Grid.Row="3" />
 
                 <Grid Grid.Column="1" Grid.Row="4">
                     <Grid.ColumnDefinitions>
@@ -106,21 +106,21 @@
                         <RowDefinition Height="24" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="閲覧用パスワード" Grid.Column="0" Grid.Row="0" />
-                    <TextBlock Text="パスワード確認" Grid.Column="0" Grid.Row="1" />
+                    <TextBlock Text="{Binding UserPassword.Text}" Grid.Column="0" Grid.Row="0" />
+                    <TextBlock Text="{Binding UserConfirm.Text}" Grid.Column="0" Grid.Row="1" />
 
                     <TextBox Grid.Column="1" Grid.Row="0" />
                     <TextBox Grid.Column="1" Grid.Row="1" />
-                    <CheckBox Content="管理用パスワードと共用する" Grid.Column="1" Grid.Row="2" />
+                    <CheckBox Content="{Binding SharePassword.Text}" Grid.Column="1" Grid.Row="2" />
                 </Grid>
 
-                <CheckBox Content="印刷を許可する" Grid.Column="1" Grid.Row="5" />
-                <CheckBox Content="テキストや画像のコピーを許可する" Grid.Column="1" Grid.Row="6" />
-                <CheckBox Content="ページの挿入、回転、削除を許可する" Grid.Column="1" Grid.Row="7" />
-                <CheckBox Content="ページの抽出を許可する" Grid.Column="1" Grid.Row="8" />
-                <CheckBox Content="アクセシビリティのための内容の抽出を許可する" Grid.Column="1" Grid.Row="9" />
-                <CheckBox Content="フォームへの入力を許可する" Grid.Column="1" Grid.Row="10" />
-                <CheckBox Content="注釈の追加、編集を許可する" Grid.Column="1" Grid.Row="11" />
+                <CheckBox Content="{Binding AllowPrint.Text}" Grid.Column="1" Grid.Row="5" />
+                <CheckBox Content="{Binding AllowCopy.Text}" Grid.Column="1" Grid.Row="6" />
+                <CheckBox Content="{Binding AllowAssemble.Text}" Grid.Column="1" Grid.Row="7" />
+                <CheckBox Content="{Binding AllowExtract.Text}" Grid.Column="1" Grid.Row="8" />
+                <CheckBox Content="{Binding AllowAccessibility.Text}" Grid.Column="1" Grid.Row="9" />
+                <CheckBox Content="{Binding AllowForm.Text}" Grid.Column="1" Grid.Row="10" />
+                <CheckBox Content="{Binding AllowAnnotation.Text}" Grid.Column="1" Grid.Row="11" />
             </Grid>
         </GroupBox>
 

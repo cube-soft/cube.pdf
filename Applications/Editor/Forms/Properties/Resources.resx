@@ -126,7 +126,7 @@
   <data name="MenuAdd" xml:space="preserve">
     <value>Add ...</value>
   </data>
-  <data name="MenuAllowAccesibility" xml:space="preserve">
+  <data name="MenuAllowAccessibility" xml:space="preserve">
     <value>Allow using contents for accessibility</value>
   </data>
   <data name="MenuAllowAnnotation" xml:space="preserve">
@@ -141,8 +141,8 @@
   <data name="MenuAllowExtract" xml:space="preserve">
     <value>Allow extracting pages</value>
   </data>
-  <data name="MenuAllowForms" xml:space="preserve">
-    <value>Allow filling in forms</value>
+  <data name="MenuAllowForm" xml:space="preserve">
+    <value>Allow filling in form fields</value>
   </data>
   <data name="MenuAllowPrint" xml:space="preserve">
     <value>Allow printing</value>
@@ -182,6 +182,9 @@
   </data>
   <data name="MenuEncryptionEnabled" xml:space="preserve">
     <value>Encrypt the PDF with password</value>
+  </data>
+  <data name="MenuEncryptionMethod" xml:space="preserve">
+    <value>Method</value>
   </data>
   <data name="MenuExit" xml:space="preserve">
     <value>Exit</value>

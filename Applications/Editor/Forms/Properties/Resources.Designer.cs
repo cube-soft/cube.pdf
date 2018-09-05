@@ -90,9 +90,9 @@ namespace Cube.Pdf.App.Editor.Properties {
         /// <summary>
         ///   Allow using contents for accessibility に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuAllowAccesibility {
+        internal static string MenuAllowAccessibility {
             get {
-                return ResourceManager.GetString("MenuAllowAccesibility", resourceCulture);
+                return ResourceManager.GetString("MenuAllowAccessibility", resourceCulture);
             }
         }
         
@@ -133,11 +133,11 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Allow filling in forms に類似しているローカライズされた文字列を検索します。
+        ///   Allow filling in form fields に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuAllowForms {
+        internal static string MenuAllowForm {
             get {
-                return ResourceManager.GetString("MenuAllowForms", resourceCulture);
+                return ResourceManager.GetString("MenuAllowForm", resourceCulture);
             }
         }
         
@@ -255,6 +255,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuEncryptionEnabled {
             get {
                 return ResourceManager.GetString("MenuEncryptionEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Method に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuEncryptionMethod {
+            get {
+                return ResourceManager.GetString("MenuEncryptionMethod", resourceCulture);
             }
         }
         
