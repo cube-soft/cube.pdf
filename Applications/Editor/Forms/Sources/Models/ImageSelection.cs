@@ -48,14 +48,27 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Index
+        /// First
         ///
         /// <summary>
-        /// Gets the index that is maximum value in the selected images.
+        /// Gets the first index that is maximum value in the selected
+        /// images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Index => _selection.Keys.OrderByDescending(i => i.Index).FirstOrDefault()?.Index ?? -1;
+        public int First => _selection.Keys.OrderBy(i => i.Index).FirstOrDefault()?.Index ?? -1;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Last
+        ///
+        /// <summary>
+        /// Gets the last index that is maximum value in the selected
+        /// images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Last => _selection.Keys.OrderByDescending(i => i.Index).FirstOrDefault()?.Index ?? -1;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -131,7 +144,7 @@ namespace Cube.Pdf.App.Editor
         private void RaiseEvents()
         {
             RaisePropertyChanged(nameof(Count));
-            RaisePropertyChanged(nameof(Index));
+            RaisePropertyChanged(nameof(Last));
             RaisePropertyChanged(nameof(Indices));
             RaisePropertyChanged(nameof(Items));
         }

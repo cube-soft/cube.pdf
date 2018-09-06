@@ -28,6 +28,7 @@
     Title="{Binding Title.Text}"
     Height="550"
     Width="500"
+    FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
     ShowInTaskbar="False">

@@ -123,20 +123,20 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Count,   Is.EqualTo(0));
             Assert.That(dest.Items,   Is.Not.Null);
             Assert.That(dest.Indices, Is.Not.Null);
-            Assert.That(dest.Index,   Is.EqualTo(-1));
+            Assert.That(dest.Last,   Is.EqualTo(-1));
 
             vm.Data.Images.First().IsSelected = true;
             Assert.That(Wait.For(() => !vm.Data.IsBusy.Value));
             Assert.That(dest.Count,   Is.EqualTo(1), nameof(dest.Count));
-            Assert.That(dest.Index,   Is.EqualTo(0), nameof(dest.Index));
+            Assert.That(dest.Last,   Is.EqualTo(0), nameof(dest.Last));
 
             Execute(vm, vm.Ribbon.SelectFlip);
             Assert.That(dest.Count,   Is.EqualTo(8), nameof(dest.Count));
-            Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
+            Assert.That(dest.Last,   Is.EqualTo(8), nameof(dest.Last));
 
             Execute(vm, vm.Ribbon.Select); // SelectAll
             Assert.That(dest.Count,   Is.EqualTo(9), nameof(dest.Count));
-            Assert.That(dest.Index,   Is.EqualTo(8), nameof(dest.Index));
+            Assert.That(dest.Last,   Is.EqualTo(8), nameof(dest.Last));
 
             Execute(vm, vm.Ribbon.Select); // SelectClear
             Assert.That(dest.Count,   Is.EqualTo(0));

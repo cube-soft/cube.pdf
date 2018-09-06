@@ -109,7 +109,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static HistoryItem Insert(this ImageCollection src, IEnumerable<Page> items) =>
-            src.InsertAt(src.Selection.Index + 1, items);
+            src.InsertAt(src.Selection.Last + 1, items);
 
         /* ----------------------------------------------------------------- */
         ///

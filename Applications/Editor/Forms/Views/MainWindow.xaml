@@ -31,9 +31,9 @@
 
     Title="{Binding Data.Title.Value}"
     TitleBarHeight="30"
-    FontFamily="Meiryo UI"
     Height="600"
     Width="800"
+    FontFamily="Meiryo UI"
     AllowDrop="True"
     Cursor="{Binding Data.IsBusy.Value, Converter={my:BooleanToCursor}}">
 
@@ -57,6 +57,7 @@
         <xb:SaveFileDialogBehavior />
         <xb:CloseBehavior />
         <xb:UriBehavior />
+        <my:PreviewWindowBehavior />
         <my:InsertWindowBehavior />
         <my:ExtractWindowBehavior />
         <my:RemoveWindowBehavior />
