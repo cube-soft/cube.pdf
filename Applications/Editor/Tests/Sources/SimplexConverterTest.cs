@@ -40,6 +40,23 @@ namespace Cube.Pdf.Tests.Editor
     {
         #region Tests
 
+        #region TitleConverter
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_Title
+        ///
+        /// <summary>
+        /// Tests to convert a title.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Test", ExpectedResult = "Test - CubePDF Utility")]
+        [TestCase("",     ExpectedResult = "CubePDF Utility")]
+        public string Convert_Title(string name) => Convert<string>(new TitleConverter(), name);
+
+        #endregion
+
         #region BooleanToCursor
 
         /* ----------------------------------------------------------------- */

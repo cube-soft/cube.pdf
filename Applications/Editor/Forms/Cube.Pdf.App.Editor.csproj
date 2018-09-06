@@ -161,7 +161,7 @@
     <Compile Include="Sources\ViewModels\DialogViewModel.cs" />
     <Compile Include="Sources\ViewModels\RemoveViewModel.cs" />
     <Compile Include="Sources\Interactions\SelectionBehavior.cs" />
-    <Compile Include="Sources\Interactions\SimplexConverter.cs" />
+    <Compile Include="Sources\Interactions\SimplexConverters.cs" />
     <Compile Include="Sources\Interactions\VisibleRange.cs" />
     <Compile Include="Sources\Models\Settings\Settings.cs" />
     <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />

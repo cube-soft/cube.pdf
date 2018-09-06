@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
 using Cube.Xui.Converters;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
@@ -56,11 +57,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string Convert(object obj)
-        {
-            var app = "CubePDF Utility";
-            return obj is string s && s.HasValue() ? $"{s} - {app}" : app;
-        }
+        private static string Convert(object obj) => obj is string s && s.HasValue() ? $"{s} - {_app}" : _app;
+
+        #region Fields
+        private static readonly string _app = new AssemblyReader(Assembly.GetExecutingAssembly()).Title;
+        #endregion
     }
 
     #endregion

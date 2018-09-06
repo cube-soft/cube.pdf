@@ -188,23 +188,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Close
-        ///
-        /// <summary>
-        /// Closes the current PDF document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Close() => Invoke(() =>
-        {
-            Bindable.Name.Value = string.Empty;
-            Bindable.History.Clear();
-            _core.Clear();
-            Images.Clear();
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Select
         ///
         /// <summary>
@@ -354,6 +337,23 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Refresh() => Invoke(() => Bindable.Images.Refresh());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Close
+        ///
+        /// <summary>
+        /// Closes the current PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Close() => Invoke(() =>
+        {
+            Bindable.Name.Value = string.Empty;
+            Bindable.History.Clear();
+            _core.Clear();
+            Images.Clear();
+        });
 
         #region IDisposable
 
