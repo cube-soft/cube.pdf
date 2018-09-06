@@ -871,6 +871,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   {0} ({1}/{2} page) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitlePreview {
+            get {
+                return ResourceManager.GetString("TitlePreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Removal details に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleRemove {

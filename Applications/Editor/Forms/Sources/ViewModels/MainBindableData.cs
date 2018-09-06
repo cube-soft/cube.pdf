@@ -146,6 +146,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Name
+        ///
+        /// <summary>
+        /// Gets a filename of the current PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<string> Name { get; } = new Bindable<string>();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Title
         ///
         /// <summary>

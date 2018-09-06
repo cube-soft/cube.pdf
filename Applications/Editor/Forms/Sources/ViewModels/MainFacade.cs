@@ -134,6 +134,7 @@ namespace Cube.Pdf.App.Editor
             var name = IO.Get(src).Name;
             SetStatus(Properties.Resources.MessageLoading, name);
             Images.Add(_core.GetOrAdd(src).Pages);
+            Bindable.Name.Value  = name;
             Bindable.Title.Value = $"{name} - {Settings.Title}";
         });
 
@@ -202,6 +203,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Close() => Invoke(() =>
         {
+            Bindable.Name.Value = string.Empty;
             Bindable.Title.Value = Settings.Title;
             Bindable.History.Clear();
             _core.Clear();
@@ -256,7 +258,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">File path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(string src) => Insert(Bindable.Selection.Index + 1, src);
+        public void Insert(string src) => Insert(Bindable.Selection.Last + 1, src);
 
         /* ----------------------------------------------------------------- */
         ///

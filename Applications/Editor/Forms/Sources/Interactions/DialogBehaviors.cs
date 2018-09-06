@@ -22,6 +22,18 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
+    /// PreviewWindowBehavior
+    ///
+    /// <summary>
+    /// Represents the behavior to show a <c>PreviewWindow</c> dialog.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class PreviewWindowBehavior :
+        ShowDialogBehavior<PreviewWindow, PreviewViewModel> { }
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// InsertWindowBehavior
     ///
     /// <summary>

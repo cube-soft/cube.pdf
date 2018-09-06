@@ -387,6 +387,9 @@
   <data name="TitleOpen" xml:space="preserve">
     <value>Open file</value>
   </data>
+  <data name="TitlePreview" xml:space="preserve">
+    <value>{0} ({1}/{2} page)</value>
+  </data>
   <data name="TitleRemove" xml:space="preserve">
     <value>Removal details</value>
   </data>
