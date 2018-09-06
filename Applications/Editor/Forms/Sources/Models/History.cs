@@ -24,44 +24,6 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// HistoryItem
-    ///
-    /// <summary>
-    /// Represents a pair of undo and redo actions.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class HistoryItem
-    {
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Undo
-        ///
-        /// <summary>
-        /// Gets the action that represents the undo command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Action Undo { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Redo
-        ///
-        /// <summary>
-        /// Gets the action that represents the redo command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Action Redo { get; set; }
-
-        #endregion
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// History
     ///
     /// <summary>
@@ -208,6 +170,44 @@ namespace Cube.Pdf.App.Editor
         #region Fields
         private readonly Stack<HistoryItem> _forward = new Stack<HistoryItem>();
         private readonly Stack<HistoryItem> _reverse = new Stack<HistoryItem>();
+        #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// HistoryItem
+    ///
+    /// <summary>
+    /// Represents a pair of undo and redo actions.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class HistoryItem
+    {
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Undo
+        ///
+        /// <summary>
+        /// Gets the action that represents the undo command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Action Undo { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Redo
+        ///
+        /// <summary>
+        /// Gets the action that represents the redo command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Action Redo { get; set; }
+
         #endregion
     }
 }

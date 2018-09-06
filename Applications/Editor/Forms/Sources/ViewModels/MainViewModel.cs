@@ -22,7 +22,6 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
@@ -53,12 +52,11 @@ namespace Cube.Pdf.App.Editor
         {
             var io       = new IO();
             var settings = new SettingsFolder(Assembly.GetExecutingAssembly(), io);
-            var ctx      = SynchronizationContext.Current;
             var recent   = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
-            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", io, ctx);
+            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", io);
             var getter   = new Getter<bool>(() => Data.IsOpen.Value && !Data.IsBusy.Value);
 
-            Model  = new MainFacade(settings, ctx);
+            Model  = new MainFacade(settings, Context);
             Ribbon = new RibbonViewModel(getter, MessengerInstance);
             Recent = new RecentViewModel(mon, MessengerInstance);
 

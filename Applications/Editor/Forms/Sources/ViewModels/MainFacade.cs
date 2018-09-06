@@ -54,7 +54,7 @@ namespace Cube.Pdf.App.Editor
         {
             _dispose = new OnceAction<bool>(Dispose);
             _core    = new DocumentCollection(e => Bindable.IsOpen.Value = e.Count > 0);
-            Images   = new ImageCollection(e => _core.Get(e), context);
+            Images   = new ImageCollection(e => _core.Get(e));
             Bindable = new MainBindableData(Images, settings);
             Settings = settings;
 
@@ -63,6 +63,7 @@ namespace Cube.Pdf.App.Editor
             Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
             Images.Preferences.ItemMargin    = 3;
             Images.Preferences.TextHeight    = 25;
+            Images.Context                   = context;
         }
 
         #endregion

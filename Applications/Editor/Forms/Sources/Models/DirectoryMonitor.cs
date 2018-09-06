@@ -52,18 +52,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="directory">Target directory.</param>
         /// <param name="filter">Filter string.</param>
-        /// <param name="context">Synchronization context.</param>
         /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DirectoryMonitor(string directory, string filter, IO io, SynchronizationContext context)
+        public DirectoryMonitor(string directory, string filter, IO io)
         {
+            Context   = SynchronizationContext.Current;
             Directory = directory;
             Filter    = filter;
             IO        = io;
 
-            _context = context;
-            _core    = new System.IO.FileSystemWatcher
+            _core = new System.IO.FileSystemWatcher
             {
                 Path                  = Directory,
                 Filter                = Filter,
@@ -119,6 +118,17 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public IO IO { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Context
+        ///
+        /// <summary>
+        /// Gets or sets the synchronization context.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SynchronizationContext Context { get; set; }
+
         #endregion
 
         #region Events
@@ -149,7 +159,7 @@ namespace Cube.Pdf.App.Editor
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (CollectionChanged == null) return;
-            if (_context != null) _context.Send(_ => CollectionChanged(this, e), null);
+            if (Context != null) Context.Send(_ => CollectionChanged(this, e), null);
             else CollectionChanged(this, e);
         }
 
@@ -212,7 +222,6 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
-        private readonly SynchronizationContext _context;
         private readonly System.IO.FileSystemWatcher _core;
         private IEnumerable<Information> _items = new Information[0];
         #endregion
