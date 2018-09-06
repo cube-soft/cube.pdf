@@ -16,10 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Media;
 
 namespace Cube.Pdf.App.Editor
@@ -78,8 +81,42 @@ namespace Cube.Pdf.App.Editor
         /// <param name="items">Insertion items.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Insert(this ImageCollection src, IEnumerable<Page> items) =>
-            src.Insert(src.Selection.Index + 1, items);
+        public static HistoryItem Insert(this ImageCollection src, IEnumerable<Page> items)
+        {
+            var copy    = items.ToList();
+            var index   = src.Selection.Index + 1;
+            var indices = Enumerable.Range(index, copy.Count);
+
+            return Invoke(
+                () => src.Insert(index, copy),
+                () => src.Remove(indices)
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Removes the selected images.
+        /// </summary>
+        ///
+        /// <param name="src">Source collection.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static HistoryItem Remove(this ImageCollection src)
+        {
+            var indices  = GetCopiedIndices(src);
+            var preserve = GetPair(src, indices.OrderBy(i => i));
+
+            void forward() => src.Remove(indices);
+            void reverse()
+            {
+                foreach (var kv in preserve) src.Insert(kv.Key, new[] { kv.Value });
+            }
+
+            return Invoke(forward, reverse);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -93,8 +130,14 @@ namespace Cube.Pdf.App.Editor
         /// <param name="degree">Rotation angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Rotate(this ImageCollection src, int degree) =>
-            src.Rotate(src.Selection.Indices, degree);
+        public static HistoryItem Rotate(this ImageCollection src, int degree)
+        {
+            var indices = GetCopiedIndices(src);
+            return Invoke(
+                () => src.Rotate(indices, degree),
+                () => src.Rotate(indices, -degree)
+            );
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,21 +151,60 @@ namespace Cube.Pdf.App.Editor
         /// <param name="delta">Moving distance.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Move(this ImageCollection src, int delta) =>
-            src.Move(src.Selection.Indices, delta);
+        public static HistoryItem Move(this ImageCollection src, int delta)
+        {
+            var indices = GetCopiedIndices(src);
+            return Invoke(
+                () => src.Move(indices, delta),
+                () => src.Move(indices, -delta)
+            );
+        }
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Remove
+        /// GetPair
         ///
         /// <summary>
-        /// Removes the selected images.
+        /// Gets the collection each element contains a pair of index
+        /// and Page object.
         /// </summary>
         ///
-        /// <param name="src">Source collection.</param>
+        /* ----------------------------------------------------------------- */
+        private static IList<KeyValuePair<int, Page>> GetPair(ImageCollection src,
+            IEnumerable<int> indices) =>
+            indices.Select(i => KeyValuePair.Create(i, src[i].RawObject)).ToList();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetCopiedIndices
+        ///
+        /// <summary>
+        /// Gets the copied collection that represents the selected
+        /// indices.
+        /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Remove(this ImageCollection src) => src.Remove(src.Selection.Indices);
+        private static IList<int> GetCopiedIndices(ImageCollection src) =>
+            src.Selection.Indices.Where(i => i >= 0 && i < src.Count).ToList();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invokes
+        ///
+        /// <summary>
+        /// Invokes the specified action and creates a history item.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static HistoryItem Invoke(Action forward, Action reverse)
+        {
+            forward(); // do
+            return new HistoryItem { Undo = reverse, Redo = forward };
+        }
 
         #endregion
     }

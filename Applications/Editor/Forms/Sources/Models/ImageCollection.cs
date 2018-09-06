@@ -42,7 +42,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCollection : IReadOnlyCollection<ImageEntry>, INotifyCollectionChanged
+    public class ImageCollection : IReadOnlyList<ImageEntry>, INotifyCollectionChanged
     {
         #region Constructors
 
@@ -78,6 +78,17 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Item(int)
+        ///
+        /// <summary>
+        /// Gets the element at the specified index.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageEntry this[int index] => _inner[index];
 
         /* ----------------------------------------------------------------- */
         ///
@@ -287,14 +298,14 @@ namespace Cube.Pdf.App.Editor
         /// Removes the specified images.
         /// </summary>
         ///
-        /// <param name="indecies">Indices for removal items.</param>
+        /// <param name="indices">Indices for removal items.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indecies) => SetIndex(() =>
+        public void Remove(IEnumerable<int> indices) => SetIndex(() =>
         {
             var n   = _inner.Count;
             var pos = int.MaxValue;
-            var src = indecies.Where(i => i >= 0 && i < n).OrderByDescending(i => i);
+            var src = indices.Where(i => i >= 0 && i < n).OrderByDescending(i => i);
 
             foreach (var index in src)
             {
