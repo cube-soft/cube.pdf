@@ -141,8 +141,8 @@ namespace Cube.Pdf.Tests.Editor
             var item = src[index];
             void forward() => src.RemoveAt(index);
             void reverse() => src.Insert(index, item);
-
-            history.Register(forward, reverse);
+            history.Register(new HistoryItem { Undo = reverse, Redo = forward });
+            forward(); // do
         }
 
         /* ----------------------------------------------------------------- */

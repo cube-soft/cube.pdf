@@ -23,6 +23,44 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
+    /// HistoryItem
+    ///
+    /// <summary>
+    /// Represents a pair of undo and redo actions.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class HistoryItem
+    {
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Undo
+        ///
+        /// <summary>
+        /// Gets the action that represents the undo command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Action Undo { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Redo
+        ///
+        /// <summary>
+        /// Gets the action that represents the redo command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Action Redo { get; set; }
+
+        #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// History
     ///
     /// <summary>
@@ -65,16 +103,16 @@ namespace Cube.Pdf.App.Editor
         /// Register
         ///
         /// <summary>
-        /// Registers a pair of forward (do or redo) and reverse (undo)
-        /// actions, and then executes the forward action.
+        /// Registers a history item.
         /// </summary>
         ///
+        /// <param name="item">History item.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Register(Action forward, Action reverse)
+        public void Register(HistoryItem item)
         {
             _reverse.Clear();
-            _forward.Push(new Item { Undo = reverse, Redo = forward });
-            forward();
+            _forward.Push(item);
         }
 
         /* ----------------------------------------------------------------- */
@@ -128,28 +166,9 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Item
-        ///
-        /// <summary>
-        /// Represents a pair of undo and redo actions.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private class Item
-        {
-            public Action Undo { get; set; }
-            public Action Redo { get; set; }
-        }
-
-        #endregion
-
         #region Fields
-        private readonly Stack<Item> _forward = new Stack<Item>();
-        private readonly Stack<Item> _reverse = new Stack<Item>();
+        private readonly Stack<HistoryItem> _forward = new Stack<HistoryItem>();
+        private readonly Stack<HistoryItem> _reverse = new Stack<HistoryItem>();
         #endregion
     }
 }
