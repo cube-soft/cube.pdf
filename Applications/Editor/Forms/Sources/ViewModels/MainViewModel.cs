@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Xui;
-using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Reflection;
@@ -113,21 +112,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected MainFacade Model { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// None
-        ///
-        /// <summary>
-        /// 既定動作を表すコマンドを取得します。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 未実装メニューに対して使用します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand None { get; } = new RelayCommand(() => { }, () => false);
 
         #endregion
 
