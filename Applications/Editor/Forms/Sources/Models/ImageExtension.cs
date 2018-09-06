@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
+using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
 using System;
@@ -67,6 +68,28 @@ namespace Cube.Pdf.App.Editor
                 src.Render(gs, entry.RawObject);
             }
             return dest.ToBitmapImage(true);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Extract
+        ///
+        /// <summary>
+        /// Saves the selected PDF objects as the specified filename.
+        /// </summary>
+        ///
+        /// <param name="src">Source collection.</param>
+        /// <param name="dest">Save path.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Extract(this ImageCollection src, string dest)
+        {
+            var items = GetCopiedIndices(src).OrderBy(i => i).Select(i => src[i].RawObject);
+            using (var writer = new DocumentWriter())
+            {
+                writer.Add(items);
+                writer.Save(dest);
+            }
         }
 
         /* ----------------------------------------------------------------- */

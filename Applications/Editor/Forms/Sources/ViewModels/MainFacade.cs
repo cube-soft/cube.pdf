@@ -180,6 +180,19 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Extract
+        ///
+        /// <summary>
+        /// Saves the selected PDF objects as the specified filename.
+        /// </summary>
+        ///
+        /// <param name="dest">Save path.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Extract(string dest) => Invoke(() => Images.Extract(dest));
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Close
         ///
         /// <summary>
