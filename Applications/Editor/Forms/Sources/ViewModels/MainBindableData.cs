@@ -47,7 +47,6 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public MainBindableData(ImageCollection images, SettingsFolder settings)
         {
-            Title     = new Bindable<string>(settings.Title);
             Images    = images;
             _settings = settings;
         }
@@ -154,17 +153,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Bindable<string> Name { get; } = new Bindable<string>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Title
-        ///
-        /// <summary>
-        /// Gets a title of the application.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bindable<string> Title { get; }
 
         /* ----------------------------------------------------------------- */
         ///

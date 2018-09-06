@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections.Mixin;
 using Cube.FileSystem;
+using Cube.Generics;
 using Cube.Pdf.Itext;
 using System;
 using System.Linq;
@@ -131,11 +132,10 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Open(string src) => Invoke(() =>
         {
-            var name = IO.Get(src).Name;
-            SetStatus(Properties.Resources.MessageLoading, name);
+            if (!src.HasValue()) return;
+            Bindable.Name.Value = IO.Get(src).Name;
+            SetStatus(Properties.Resources.MessageLoading, Bindable.Name.Value);
             Images.Add(_core.GetOrAdd(src).Pages);
-            Bindable.Name.Value  = name;
-            Bindable.Title.Value = $"{name} - {Settings.Title}";
         });
 
         /* ----------------------------------------------------------------- */
@@ -149,13 +149,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">Information for the link.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void OpenLink(Information src)
-        {
-            if (src == null) return;
-            var sc = new Shortcut { FullName = src.FullName };
-            sc.Resolve();
-            Open(sc.Target);
-        }
+        public void OpenLink(Information src) => Open(Shortcut.Resolve(src?.FullName)?.Target);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -204,7 +198,6 @@ namespace Cube.Pdf.App.Editor
         public void Close() => Invoke(() =>
         {
             Bindable.Name.Value = string.Empty;
-            Bindable.Title.Value = Settings.Title;
             Bindable.History.Clear();
             _core.Clear();
             Images.Clear();

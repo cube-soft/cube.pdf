@@ -23,6 +23,48 @@ using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
 {
+    #region TitleConverter
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// TitleConverter
+    ///
+    /// <summary>
+    /// Provides functionality to convert a string.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class TitleConverter : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TitleConverter
+        ///
+        /// <summary>
+        /// Initializes a new instance of the <c>TitleConverter</c> class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public TitleConverter() : base(e => Convert(e)) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Convert to the title.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string Convert(object obj)
+        {
+            var app = "CubePDF Utility";
+            return obj is string s && s.HasValue() ? $"{s} - {app}" : app;
+        }
+    }
+
+    #endregion
+
     #region BooleanToCursor
 
     /* --------------------------------------------------------------------- */
