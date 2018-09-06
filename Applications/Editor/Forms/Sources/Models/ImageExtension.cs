@@ -80,11 +80,34 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">Source collection.</param>
         /// <param name="items">Insertion items.</param>
         ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public static HistoryItem Insert(this ImageCollection src, IEnumerable<Page> items)
+        public static HistoryItem Insert(this ImageCollection src, IEnumerable<Page> items) =>
+            src.InsertAt(src.Selection.Index + 1, items);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertAt
+        ///
+        /// <summary>
+        /// Inserts the specified items behind the specified index.
+        /// </summary>
+        ///
+        /// <param name="src">Source collection.</param>
+        /// <param name="index">Insertion index.</param>
+        /// <param name="items">Insertion items.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static HistoryItem InsertAt(this ImageCollection src, int index, IEnumerable<Page> items)
         {
             var copy    = items.ToList();
-            var index   = src.Selection.Index + 1;
             var indices = Enumerable.Range(index, copy.Count);
 
             return Invoke(
@@ -102,6 +125,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="src">Source collection.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
         ///
         /* ----------------------------------------------------------------- */
         public static HistoryItem Remove(this ImageCollection src)
@@ -129,6 +156,10 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">Source collection.</param>
         /// <param name="degree">Rotation angle in degree unit.</param>
         ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
         /* ----------------------------------------------------------------- */
         public static HistoryItem Rotate(this ImageCollection src, int degree)
         {
@@ -149,6 +180,10 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="src">Source collection.</param>
         /// <param name="delta">Moving distance.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
         ///
         /* ----------------------------------------------------------------- */
         public static HistoryItem Move(this ImageCollection src, int delta)

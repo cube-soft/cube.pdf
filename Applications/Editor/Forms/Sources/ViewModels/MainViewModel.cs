@@ -210,8 +210,8 @@ namespace Cube.Pdf.App.Editor
             Ribbon.Save.Command          = WhenOpen(() => SendSave(e => Model.Save(e)));
             Ribbon.SaveAs.Command        = WhenOpen(() => SendSave(e => Model.Save(e)));
             Ribbon.Preview.Command       = None;
-            Ribbon.Undo.Command          = None;
-            Ribbon.Redo.Command          = None;
+            Ribbon.Undo.Command          = WhenOpen(() => Model.Undo());
+            Ribbon.Redo.Command          = WhenOpen(() => Model.Redo());
             Ribbon.Select.Command        = WhenOpen(() => Model.Select());
             Ribbon.SelectAll.Command     = WhenOpen(() => Model.Select(true));
             Ribbon.SelectFlip.Command    = WhenOpen(() => Model.Flip());

@@ -102,6 +102,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// History
+        ///
+        /// <summary>
+        /// Gets a history to execute the undo and redo actions.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public History History { get; } = new History();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Count
         ///
         /// <summary>

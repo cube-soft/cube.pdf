@@ -259,7 +259,7 @@ namespace Cube.Pdf.App.Editor
         {
             SetStatus(Properties.Resources.MessageLoading, IO.Get(src).Name);
             var n = Math.Min(Math.Max(index, 0), Images.Count);
-            Images.Insert(n, _core.GetOrAdd(src).Pages);
+            Images.InsertAt(n, _core.GetOrAdd(src).Pages);
         });
 
         /* ----------------------------------------------------------------- */
@@ -296,6 +296,28 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Rotate(int degree) => Invoke(() => Images.Rotate(degree));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        ///
+        /// <summary>
+        /// Rotates the selected items with the specified value.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Undo() => Invoke(() => Bindable.History.Undo());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        ///
+        /// <summary>
+        /// Rotates the selected items with the specified value.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Redo() => Invoke(() => Bindable.History.Redo());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -384,6 +406,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action) => Invoke(action, string.Empty);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the user action and registers the hisotry item.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Func<HistoryItem> func) => Invoke(() => Bindable.History.Register(func()));
 
         /* ----------------------------------------------------------------- */
         ///
