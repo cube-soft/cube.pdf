@@ -206,12 +206,22 @@ namespace Cube.Pdf.App.Editor
                 Data.IsBusy
             );
 
+            Ribbon.Undo.Command = new BindableCommand(
+                () => Model.Undo(),
+                () => Data.History.Undoable,
+                Data.History
+            );
+
+            Ribbon.Redo.Command = new BindableCommand(
+                () => Model.Redo(),
+                () => Data.History.Redoable,
+                Data.History
+            );
+
             Ribbon.Close.Command         = WhenOpen(() => Model.Close());
             Ribbon.Save.Command          = WhenOpen(() => SendSave(e => Model.Save(e)));
             Ribbon.SaveAs.Command        = WhenOpen(() => SendSave(e => Model.Save(e)));
             Ribbon.Preview.Command       = None;
-            Ribbon.Undo.Command          = WhenOpen(() => Model.Undo());
-            Ribbon.Redo.Command          = WhenOpen(() => Model.Redo());
             Ribbon.Select.Command        = WhenOpen(() => Model.Select());
             Ribbon.SelectAll.Command     = WhenOpen(() => Model.Select(true));
             Ribbon.SelectFlip.Command    = WhenOpen(() => Model.Flip());

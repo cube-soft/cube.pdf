@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -68,8 +69,26 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class History
+    public class History : ObservableProperty
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// History
+        ///
+        /// <summary>
+        /// Initializes a new instance of the <c>History</c> class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public History()
+        {
+            Context = SynchronizationContext.Current;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -109,11 +128,11 @@ namespace Cube.Pdf.App.Editor
         /// <param name="item">History item.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Register(HistoryItem item)
+        public void Register(HistoryItem item) => Invoke(() =>
         {
             _reverse.Clear();
             _forward.Push(item);
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -124,11 +143,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear()
+        public void Clear() => Invoke(() =>
         {
             _forward.Clear();
             _reverse.Clear();
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -139,13 +158,13 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Undo()
+        public void Undo() => Invoke(() =>
         {
             if (!Undoable) return;
             var item = _forward.Pop();
             item.Undo();
             _reverse.Push(item);
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -156,12 +175,32 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Redo()
+        public void Redo() => Invoke(() =>
         {
             if (!Redoable) return;
             var item = _reverse.Pop();
             item.Redo();
             _forward.Push(item);
+        });
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the action and raises property changed events.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Invoke(Action action)
+        {
+            action();
+            RaisePropertyChanged(nameof(Undoable));
+            RaisePropertyChanged(nameof(Redoable));
         }
 
         #endregion

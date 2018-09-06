@@ -189,9 +189,10 @@ namespace Cube.Pdf.App.Editor
         public static HistoryItem Move(this ImageCollection src, int delta)
         {
             var indices = GetCopiedIndices(src);
+            var cvt     = indices.Select(i => i + delta).ToList();
             return Invoke(
                 () => src.Move(indices, delta),
-                () => src.Move(indices, -delta)
+                () => src.Move(cvt,    -delta)
             );
         }
 
