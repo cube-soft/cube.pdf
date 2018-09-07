@@ -106,13 +106,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public DocumentReader GetOrAdd(string src)
         {
-            var created = false;
-            var dest = _core.GetOrAdd(src, e =>
-            {
-                created = true;
-                return new DocumentReader(e);
-            });
-            if (created) _callback(this);
+            if (_core.TryGetValue(src, out var value)) return value;
+            var dest = _core.GetOrAdd(src, e => new DocumentReader(e));
+            _callback(this);
             return dest;
         }
 
