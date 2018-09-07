@@ -72,6 +72,40 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Select
+        ///
+        /// <summary>
+        /// Sets the IsSelected property of all items to be the specified
+        /// value.
+        /// </summary>
+        ///
+        /// <param name="src">Source collection.</param>
+        /// <param name="selected">true for selected.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Select(this ImageCollection src, bool selected)
+        {
+            foreach (var item in src) item.IsSelected = selected;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Flip
+        ///
+        /// <summary>
+        /// Flips the section of items.
+        /// </summary>
+        ///
+        /// <param name="src">Source collection.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Flip(this ImageCollection src)
+        {
+            foreach (var item in src) item.IsSelected = !item.IsSelected;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Extract
         ///
         /// <summary>

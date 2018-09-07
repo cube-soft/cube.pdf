@@ -362,7 +362,7 @@ namespace Cube.Pdf.App.Editor
         /// ~MainFacade
         ///
         /// <summary>
-        /// Finalizes the MainFacade.
+        /// Finalizes the <c>MainFacade</c>.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -373,7 +373,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases all resources used by the MainFacade.
+        /// Releases all resources used by the <c>MainFacade</c>.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -388,7 +388,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the MainFacade
+        /// Releases the unmanaged resources used by the <c>MainFacade</c>
         /// and optionally releases the managed resources.
         /// </summary>
         ///
@@ -398,7 +398,11 @@ namespace Cube.Pdf.App.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing) => Close();
+        protected virtual void Dispose(bool disposing)
+        {
+            Close();
+            if (disposing) Images.Dispose();
+        }
 
         #endregion
 

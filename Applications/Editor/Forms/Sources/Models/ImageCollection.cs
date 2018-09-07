@@ -42,7 +42,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCollection : IReadOnlyList<ImageEntry>, INotifyCollectionChanged
+    public class ImageCollection : IReadOnlyList<ImageEntry>, INotifyCollectionChanged, IDisposable
     {
         #region Constructors
 
@@ -63,8 +63,9 @@ namespace Cube.Pdf.App.Editor
         {
             ImageSource create(ImageEntry e) => _engine(e.RawObject.File.FullName).Create(e);
 
-            _engine = getter;
-            _cache  = new CacheCollection<ImageEntry, ImageSource>(create);
+            _dispose = new OnceAction<bool>(Dispose);
+            _engine  = getter;
+            _cache   = new CacheCollection<ImageEntry, ImageSource>(create);
 
             _cache.Created += (s, e) => e.Key.Refresh();
             _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
@@ -168,6 +169,62 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Methods
+
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~ImageCollection
+        ///
+        /// <summary>
+        /// Finalizes the <c>ImageCollection</c>.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~ImageCollection() { _dispose.Invoke(false); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases all resources used by the <c>ImageCollection</c>.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the
+        /// <c>ImageCollection</c> and optionally releases the managed
+        /// resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _inner.CollectionChanged    -= WhenCollectionChanged;
+                Preferences.PropertyChanged -= WhenPreferenceChanged;
+                Clear();
+            }
+        }
+
+        #endregion
 
         #region IEnumerable
 
@@ -352,37 +409,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Select
-        ///
-        /// <summary>
-        /// Sets the IsSelected property of all items to be the specified
-        /// value.
-        /// </summary>
-        ///
-        /// <param name="selected">true for selected.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Select(bool selected)
-        {
-            foreach (var item in _inner) item.IsSelected = selected;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Flip
-        ///
-        /// <summary>
-        /// Flips the section of items.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Flip()
-        {
-            foreach (var item in _inner) item.IsSelected = !item.IsSelected;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Zoom
         ///
         /// <summary>
@@ -514,6 +540,7 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
+        private readonly OnceAction<bool> _dispose;
         private readonly Func<string, IDocumentRenderer> _engine;
         private readonly CacheCollection<ImageEntry, ImageSource> _cache;
         private readonly ObservableCollection<ImageEntry> _inner = new ObservableCollection<ImageEntry>();
