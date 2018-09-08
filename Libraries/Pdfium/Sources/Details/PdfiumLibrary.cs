@@ -58,8 +58,7 @@ namespace Cube.Pdf.Pdfium
         /// <returns>LoadException object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public LoadException GetLastError() =>
-            new LoadException(Facade.FPDF_GetLastError());
+        public LoadException GetLastError() => new LoadException(Facade.FPDF_GetLastError());
 
         #endregion
 

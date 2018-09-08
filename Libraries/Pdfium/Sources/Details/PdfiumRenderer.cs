@@ -60,7 +60,7 @@ namespace Cube.Pdf.Pdfium
 
             try
             {
-                Facade.FPDF_RenderPage(
+                src.Invoke(_ => Facade.FPDF_RenderPage(
                     hdc,
                     hp,
                     (int)point.X,
@@ -70,7 +70,7 @@ namespace Cube.Pdf.Pdfium
                     GetRotation(page.Delta),
                     flags,
                     retry
-                );
+                ));
             }
             finally
             {

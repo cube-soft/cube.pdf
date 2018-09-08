@@ -174,6 +174,23 @@ namespace Cube.Pdf.Pdfium
         /// Invoke
         ///
         /// <summary>
+        /// Invokes the specified action.
+        /// </summary>
+        ///
+        /// <param name="action">Action object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Invoke(Action<IntPtr> action)
+        {
+            if (_disposed) throw new ObjectDisposedException(GetType().Name);
+            action(_core);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
         /// Invokes the specified function.
         /// </summary>
         ///
