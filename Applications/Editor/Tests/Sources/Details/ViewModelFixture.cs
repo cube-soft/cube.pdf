@@ -113,7 +113,7 @@ namespace Cube.Pdf.Tests.Editor
         {
             Source = GetExamplesWith(filename);
             Execute(vm, vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.Images.Count == n), nameof(vm.Ribbon.Open));
+            Assert.That(Wait.For(() => vm.Data.Images.Count == n), "Timeout (Open)");
             action(vm);
         });
 
@@ -126,16 +126,16 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /// <param name="vm">MainViewModel instance.</param>
-        /// <param name="src">RibbonEntry that has the command.</param>
+        /// <param name="src">Bindable element.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Execute(MainViewModel vm, RibbonElement src)
+        protected void Execute(MainViewModel vm, BindableElement src)
         {
-            Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), "Timeout (PreExecute)");
+            Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), $"NotReady ({src.Text})");
             vm.Data.Message.Value = string.Empty;
             Assert.That(src.Command.CanExecute(), Is.True, nameof(src.Command.CanExecute));
             src.Command.Execute();
-            Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), "Timeout");
+            Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), $"Timeout ({src.Text})");
             Assert.That(vm.Data.Message.Value, Is.Empty);
         }
 

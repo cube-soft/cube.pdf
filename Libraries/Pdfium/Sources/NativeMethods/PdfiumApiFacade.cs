@@ -442,7 +442,7 @@ namespace Cube.Pdf.Pdfium.PdfiumApi
         #endregion
 
         #region Fields
-        private static readonly string _lock = string.Intern("9864BE23-E546-491D-BADC-4E567C779742");
+        private static readonly object _lock = new object();
         #endregion
     }
 }
