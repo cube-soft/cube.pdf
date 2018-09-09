@@ -39,8 +39,7 @@
       Main
     *********************************************************************** -->
     <ListView
-        DataContext="{Binding Data}"
-        ItemsSource="{Binding Images}"
+        ItemsSource="{Binding Data.Images}"
         ItemContainerStyle="{StaticResource PageStyle}"
         ItemTemplate="{StaticResource PageTemplate}"
         Style="{StaticResource PageCollectionStyle}"

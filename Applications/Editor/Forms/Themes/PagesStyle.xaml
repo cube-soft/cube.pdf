@@ -34,24 +34,30 @@
     *********************************************************************** -->
     <ControlTemplate x:Key="PageCollectionTemplate" TargetType="{x:Type ListView}">
         <ScrollViewer
-            DataContext="{Binding Preferences}"
             Background="{StaticResource DarkBackgroundBrush}"
             Template="{StaticResource ScrollViewerTemplate}"
             HorizontalScrollBarVisibility="Disabled">
             <WrapPanel
-                ItemWidth="{Binding ItemSize}"
-                ItemHeight="{Binding ItemSize}"
-                MinWidth="{Binding ItemSize}"
+                ItemWidth="{Binding Data.Preferences.ItemSize}"
+                ItemHeight="{Binding Data.Preferences.ItemSize}"
+                MinWidth="{Binding Data.Preferences.ItemSize}"
                 Width="{Binding FrameworkElement.ActualWidth,
                 RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
                 IsItemsHost="True" />
+
             <i:Interaction.Behaviors>
                 <my:VisibleRange
-                    First="{Binding VisibleFirst, Mode=TwoWay}"
-                    Last="{Binding VisibleLast, Mode=TwoWay}"
-                    ItemSize="{Binding ItemSize}"
-                    ItemMargin="{Binding ItemMargin}" />
+                    First="{Binding Data.Preferences.VisibleFirst, Mode=TwoWay}"
+                    Last="{Binding Data.Preferences.VisibleLast, Mode=TwoWay}"
+                    ItemSize="{Binding Data.Preferences.ItemSize}"
+                    ItemMargin="{Binding Data.Preferences.ItemMargin}" />
             </i:Interaction.Behaviors>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding Ribbon.Preview.Command}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </ScrollViewer>
     </ControlTemplate>
 
