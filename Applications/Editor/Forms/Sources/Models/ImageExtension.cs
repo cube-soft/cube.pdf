@@ -53,15 +53,16 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="src">Renderer object.</param>
         /// <param name="page">Page object.</param>
+        /// <param name="ratio">Scale ratio.</param>
         ///
         /// <returns>ImageSource object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageSource Create(this IDocumentRenderer src, Page page)
+        public static ImageSource Create(this IDocumentRenderer src, Page page, double ratio)
         {
             if (src == null || page == null) return null;
 
-            var size = page.GetDisplaySize().Value;
+            var size = page.GetDisplaySize(ratio).Value;
             var dest = new Bitmap((int)size.Width, (int)size.Height);
 
             using (var gs = Graphics.FromImage(dest))

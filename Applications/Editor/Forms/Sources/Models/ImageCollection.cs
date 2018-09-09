@@ -416,15 +416,16 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="index">Index of images.</param>
+        /// <param name="ratio">Scale ratio.</param>
         ///
         /// <returns>Image object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSource Preview(int index)
+        public ImageSource Preview(int index, double ratio)
         {
             if (index < 0 || index >= Count) return null;
             var src = _inner[index].RawObject;
-            return _engine(src.File.FullName)?.Create(src);
+            return _engine(src.File.FullName)?.Create(src, ratio);
         }
 
         /* ----------------------------------------------------------------- */
