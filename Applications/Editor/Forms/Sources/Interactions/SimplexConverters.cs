@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Xui.Converters;
 using System.Reflection;
@@ -57,7 +58,15 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string Convert(object obj) => obj is string s && s.HasValue() ? $"{s} - {_app}" : _app;
+        private static string Convert(object obj)
+        {
+            if (obj is string s && s.HasValue())
+            {
+                var io = new IO();
+                return $"{io.Get(s).Name} - {_app}";
+            }
+            else return _app;
+        }
 
         #region Fields
         private static readonly string _app = new AssemblyReader(Assembly.GetExecutingAssembly()).Title;

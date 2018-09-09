@@ -112,6 +112,17 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Source
+        ///
+        /// <summary>
+        /// Gets a file path of the PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<string> Source { get; } = new Bindable<string>();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Count
         ///
         /// <summary>
@@ -142,17 +153,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Bindable<bool> IsBusy { get; } = new Bindable<bool>(false);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Name
-        ///
-        /// <summary>
-        /// Gets a filename of the current PDF file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bindable<string> Name { get; } = new Bindable<string>();
 
         /* ----------------------------------------------------------------- */
         ///

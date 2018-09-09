@@ -29,7 +29,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 
-    Title="{Binding Data.Name.Value, Converter={my:TitleConverter}}"
+    Title="{Binding Data.Source.Value, Converter={my:TitleConverter}}"
     TitleBarHeight="30"
     Height="600"
     Width="800"

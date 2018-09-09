@@ -51,8 +51,9 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Test", ExpectedResult = "Test - CubePDF Utility")]
-        [TestCase("",     ExpectedResult = "CubePDF Utility")]
+        [TestCase("Dir\\To\\File.pdf", ExpectedResult = "File.pdf - CubePDF Utility")]
+        [TestCase("Test",              ExpectedResult = "Test - CubePDF Utility")]
+        [TestCase("",                  ExpectedResult = "CubePDF Utility")]
         public string Convert_Title(string name) => Convert<string>(new TitleConverter(), name);
 
         #endregion

@@ -133,8 +133,8 @@ namespace Cube.Pdf.App.Editor
         public void Open(string src) => Invoke(() =>
         {
             if (!src.HasValue()) return;
-            Bindable.Name.Value = IO.Get(src).Name;
-            SetStatus(Properties.Resources.MessageLoading, Bindable.Name.Value);
+            Bindable.Source.Value = src;
+            SetStatus(Properties.Resources.MessageLoading, src);
             Images.Add(_core.GetOrAdd(src).Pages);
         });
 
@@ -349,7 +349,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Close() => Invoke(() =>
         {
-            Bindable.Name.Value = string.Empty;
+            Bindable.Source.Value = string.Empty;
             Bindable.History.Clear();
             _core.Clear();
             Images.Clear();
