@@ -59,8 +59,11 @@
                 Command="{Binding Ribbon.Extract.Command}"
                 Header="{Binding Ribbon.Extract.Tooltip}" />
             <MenuItem
-                Command="{Binding Ribbon.ExtractOthers.Command}"
-                Header="{Binding Ribbon.ExtractOthers.Tooltip}" />
+                Command="{Binding Ribbon.Split.Command}"
+                Header="{Binding Ribbon.Split.Tooltip}" />
+            <MenuItem
+                Command="{Binding Ribbon.SplitAll.Command}"
+                Header="{Binding Ribbon.SplitAll.Tooltip}" />
         </MenuItem>
 
         <!-- ******************************************************************

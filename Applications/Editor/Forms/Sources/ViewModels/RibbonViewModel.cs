@@ -372,6 +372,36 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Split
+        ///
+        /// <summary>
+        /// Gets the ribbon menu of splitting the selected pages.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonElement Split { get; } = new RibbonElement(
+            () => Properties.Resources.MenuSplit,
+            () => Properties.Resources.MenuSplit,
+            nameof(Extract)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SplitAll
+        ///
+        /// <summary>
+        /// Gets the ribbon menu of splitting all pages.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonElement SplitAll { get; } = new RibbonElement(
+            () => Properties.Resources.MenuSplitAll,
+            () => Properties.Resources.MenuSplitAll,
+            nameof(Extract)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Remove
         ///
         /// <summary>

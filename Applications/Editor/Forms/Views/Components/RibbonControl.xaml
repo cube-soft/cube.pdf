@@ -172,9 +172,11 @@
                         Icon="{Binding Ribbon.Extract.SmallIcon}"
                         Command="{Binding Ribbon.Extract.Command}" />
                     <r:MenuItem
-                        Header="{Binding Ribbon.ExtractOthers.Tooltip}"
-                        Icon="{Binding Ribbon.ExtractOthers.SmallIcon}"
-                        Command="{Binding Ribbon.ExtractOthers.Command}" />
+                        Header="{Binding Ribbon.Split.Tooltip}"
+                        Command="{Binding Ribbon.Split.Command}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.SplitAll.Tooltip}"
+                        Command="{Binding Ribbon.SplitAll.Command}" />
                 </r:SplitButton>
 
                 <!-- **********************************************************
@@ -370,7 +372,7 @@
                 <r:ApplicationMenu.RightPaneContent>
                     <DockPanel Style="{StaticResource RibbonRecentMenuStyle}">
                         <TextBlock
-                            Text="{Binding Recent.Menu.Tooltip}"
+                            Text="{Binding Recent.Menu.Text}"
                             Style="{StaticResource RibbonRecentTitleStyle}"
                             DockPanel.Dock="Top" />
                         <ListBox

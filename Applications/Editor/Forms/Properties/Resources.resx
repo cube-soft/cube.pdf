@@ -327,6 +327,12 @@
   <data name="MenuSharePassword" xml:space="preserve">
     <value>Use owner password</value>
   </data>
+  <data name="MenuSplit" xml:space="preserve">
+    <value>Extract the selected pages (page by page)</value>
+  </data>
+  <data name="MenuSplitAll" xml:space="preserve">
+    <value>Extract all pages (page by page)</value>
+  </data>
   <data name="MenuSubject" xml:space="preserve">
     <value>Subject</value>
   </data>

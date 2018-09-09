@@ -691,6 +691,24 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Extract the selected pages (page by page) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSplit {
+            get {
+                return ResourceManager.GetString("MenuSplit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Extract all pages (page by page) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSplitAll {
+            get {
+                return ResourceManager.GetString("MenuSplitAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Subject に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuSubject {
