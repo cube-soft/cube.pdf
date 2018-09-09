@@ -17,42 +17,42 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using GalaSoft.MvvmLight.Messaging;
-using System.Threading;
+using Cube.Tasks;
+using System.Threading.Tasks;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PreviewViewModel
+    /// PreviewFacade
     ///
     /// <summary>
-    /// Represents the ViewModel for a <c>PreviewWindow</c> instance.
+    /// Provides functionality to show the preview window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PreviewViewModel : DialogViewModel
+    public class PreviewFacade
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PreviewViewModel
+        /// PreviewFacade
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>PreviewViewModel</c>
-        /// with the specified argumetns.
+        /// Initializes a new instance of the <c>PreviewFacade</c> class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">Image collection.</param>
-        /// <param name="file">File information.</param>
-        /// <param name="context">Synchronization context.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public PreviewViewModel(ImageCollection src, Information file, SynchronizationContext context) :
-            base(() => GetTitle(src, file), new Messenger(), context)
+        public PreviewFacade(ImageCollection src, Information file)
         {
-            Model = new PreviewFacade(src, file);
+            var index = src.Selection.First;
+
+            Images   = src;
+            Bindable = new PreviewBindable(file, src[index].RawObject);
+
+            Task.Run(() => Setup(index)).Forget();
         }
 
         #endregion
@@ -61,25 +61,25 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
+        /// Bindable
         ///
         /// <summary>
-        /// Gets the bindable data.
+        /// Gets the bindable object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable Data => Model.Bindable;
+        public PreviewBindable Bindable { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model
+        /// Images
         ///
         /// <summary>
-        /// Gets the model for the window.
+        /// Gets the image collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PreviewFacade Model { get; }
+        protected ImageCollection Images { get; }
 
         #endregion
 
@@ -87,20 +87,22 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetTitle
+        /// Setup
         ///
         /// <summary>
-        /// Gets the title of the preview window.
+        /// Initializes some fields and properties.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetTitle(ImageCollection src, Information file) =>
-            string.Format(
-                Properties.Resources.TitlePreview,
-                file.Name,
-                src.Selection.First + 1,
-                src.Count
-            );
+        private void Setup(int index)
+        {
+            try
+            {
+                Bindable.IsBusy.Value = true;
+                Bindable.Image.Value = Images.Preview(index);
+            }
+            finally { Bindable.IsBusy.Value = false; }
+        }
 
         #endregion
     }

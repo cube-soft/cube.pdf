@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
+using Cube.Generics;
 using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using Cube.Xui.Converters;
@@ -54,7 +56,8 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase("Dir\\To\\File.pdf", ExpectedResult = "File.pdf - CubePDF Utility")]
         [TestCase("Test",              ExpectedResult = "Test - CubePDF Utility")]
         [TestCase("",                  ExpectedResult = "CubePDF Utility")]
-        public string Convert_Title(string name) => Convert<string>(new TitleConverter(), name);
+        public string Convert_Title(string src) =>
+            Convert<string>(new TitleConverter(), src.HasValue() ? new IO().Get(src) : null);
 
         #endregion
 

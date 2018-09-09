@@ -16,36 +16,38 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Xui;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainBindableData
+    /// MainBindable
     ///
     /// <summary>
     /// Provides values for binding to the MainWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainBindableData
+    public class MainBindable
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainBindableData
+        /// MainBindable
         ///
         /// <summary>
-        /// Initializes a new instance with the specified parameters.
+        /// Initializes a new instance of the <c>MainBindable</c> class
+        /// with the specified arguments.
         /// </summary>
         ///
         /// <param name="images">Image collection.</param>
         /// <param name="settings">Settings object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindableData(ImageCollection images, SettingsFolder settings)
+        public MainBindable(ImageCollection images, SettingsFolder settings)
         {
             Images    = images;
             _settings = settings;
@@ -119,7 +121,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<string> Source { get; } = new Bindable<string>();
+        public Bindable<Information> Source { get; } = new Bindable<Information>();
 
         /* ----------------------------------------------------------------- */
         ///

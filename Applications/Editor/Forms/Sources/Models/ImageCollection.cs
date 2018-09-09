@@ -409,6 +409,26 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Preview
+        ///
+        /// <summary>
+        /// Gets the preview image of the specified index.
+        /// </summary>
+        ///
+        /// <param name="index">Index of images.</param>
+        ///
+        /// <returns>Image object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageSource Preview(int index)
+        {
+            if (index < 0 || index >= Count) return null;
+            var src = _inner[index].RawObject;
+            return _engine(src.File.FullName)?.Create(src);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Zoom
         ///
         /// <summary>

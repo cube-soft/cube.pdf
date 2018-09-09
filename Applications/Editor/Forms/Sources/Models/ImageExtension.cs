@@ -47,6 +47,36 @@ namespace Cube.Pdf.App.Editor
         /// Create
         ///
         /// <summary>
+        /// Create a new instance of the <c>ImageSource</c> class with the
+        /// specified parameters.
+        /// </summary>
+        ///
+        /// <param name="src">Renderer object.</param>
+        /// <param name="page">Page object.</param>
+        ///
+        /// <returns>ImageSource object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static ImageSource Create(this IDocumentRenderer src, Page page)
+        {
+            if (src == null || page == null) return null;
+
+            var size = page.GetDisplaySize().Value;
+            var dest = new Bitmap((int)size.Width, (int)size.Height);
+
+            using (var gs = Graphics.FromImage(dest))
+            {
+                gs.Clear(System.Drawing.Color.White);
+                src.Render(gs, page);
+            }
+            return dest.ToBitmapImage(true);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
         /// Create a new instance of the ImageSource class with the
         /// specified parameters.
         /// </summary>

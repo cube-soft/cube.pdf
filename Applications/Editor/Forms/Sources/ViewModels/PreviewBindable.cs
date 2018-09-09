@@ -17,42 +17,45 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using GalaSoft.MvvmLight.Messaging;
-using System.Threading;
+using Cube.Pdf.Mixin;
+using Cube.Xui;
+using System.Windows.Media;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PreviewViewModel
+    /// PreviewBindable
     ///
     /// <summary>
-    /// Represents the ViewModel for a <c>PreviewWindow</c> instance.
+    /// Provides values for binding to the <c>PreviewWindow</c>.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PreviewViewModel : DialogViewModel
+    public class PreviewBindable
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PreviewViewModel
+        /// PreviewBindable
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>PreviewViewModel</c>
-        /// with the specified argumetns.
+        /// Initializes a new instance of the <c>PreviewBindable</c>
+        /// class with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">Image collection.</param>
-        /// <param name="file">File information.</param>
-        /// <param name="context">Synchronization context.</param>
+        /// <param name="file">Information of the PDF file.</param>
+        /// <param name="page">Page object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewViewModel(ImageCollection src, Information file, SynchronizationContext context) :
-            base(() => GetTitle(src, file), new Messenger(), context)
+        public PreviewBindable(Information file, Page page)
         {
-            Model = new PreviewFacade(src, file);
+            var size = page.GetDisplaySize();
+
+            File   = new Bindable<Information>(file);
+            Width  = new Bindable<int>((int)size.Value.Width);
+            Height = new Bindable<int>((int)size.Value.Height);
         }
 
         #endregion
@@ -61,46 +64,58 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
+        /// File
         ///
         /// <summary>
-        /// Gets the bindable data.
+        /// Gets the information of the PDF file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable Data => Model.Bindable;
+        public Bindable<Information> File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model
+        /// Image
         ///
         /// <summary>
-        /// Gets the model for the window.
+        /// Gets the generated image object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PreviewFacade Model { get; }
-
-        #endregion
-
-        #region Implementations
+        public Bindable<ImageSource> Image { get; } = new Bindable<ImageSource>();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetTitle
+        /// Width
         ///
         /// <summary>
-        /// Gets the title of the preview window.
+        /// Gets the width of the window.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetTitle(ImageCollection src, Information file) =>
-            string.Format(
-                Properties.Resources.TitlePreview,
-                file.Name,
-                src.Selection.First + 1,
-                src.Count
-            );
+        public Bindable<int> Width { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Height
+        ///
+        /// <summary>
+        /// Gets the height of the window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<int> Height { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsBusy
+        ///
+        /// <summary>
+        /// Gets a value indicating whether models are busy.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<bool> IsBusy { get; } = new Bindable<bool>(false);
 
         #endregion
     }

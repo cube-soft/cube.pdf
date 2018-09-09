@@ -47,30 +47,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TitleConverter() : base(e => Convert(e)) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Convert
-        ///
-        /// <summary>
-        /// Convert to the title.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static string Convert(object obj)
+        public TitleConverter() : base(e =>
         {
-            if (obj is string s && s.HasValue())
-            {
-                var io = new IO();
-                return $"{io.Get(s).Name} - {_app}";
-            }
-            else return _app;
-        }
-
-        #region Fields
-        private static readonly string _app = new AssemblyReader(Assembly.GetExecutingAssembly()).Title;
-        #endregion
+            var app = Assembly.GetExecutingAssembly().GetReader().Title;
+            return e is Information fi ? $"{fi.Name} - {app}" : app;
+        }) { }
     }
 
     #endregion

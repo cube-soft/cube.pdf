@@ -23,14 +23,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="{Binding Title.Text}"
-    Height="450"
-    Width="800"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
-    ShowInTaskbar="False">
+    ShowInTaskbar="False"
+    Title="{Binding Title.Text}"
+    Width="{Binding Data.Width.Value}"
+    Height="{Binding Data.Height.Value}"
+    Cursor="{Binding Data.IsBusy.Value, Converter={my:BooleanToCursor}}">
 
     <!-- **********************************************************************
       Interaction
@@ -43,10 +45,13 @@
       Main
     *********************************************************************** -->
     <ScrollViewer Background="{StaticResource DarkBackgroundBrush}">
-        <Button>
+        <Button Command="{Binding Cancel.Command}">
             <Button.Template>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Image Stretch="UniformToFill" VerticalAlignment="Center" />
+                    <Image
+                        Source="{Binding Data.Image.Value}"
+                        Stretch="UniformToFill"
+                        VerticalAlignment="Center" />
                 </ControlTemplate>
             </Button.Template>
         </Button>

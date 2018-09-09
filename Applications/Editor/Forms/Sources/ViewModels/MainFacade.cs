@@ -56,7 +56,7 @@ namespace Cube.Pdf.App.Editor
             _dispose = new OnceAction<bool>(Dispose);
             _core    = new DocumentCollection(e => Bindable.IsOpen.Value = e.Count > 0);
             Images   = new ImageCollection(e => _core.Get(e));
-            Bindable = new MainBindableData(Images, settings);
+            Bindable = new MainBindable(Images, settings);
             Settings = settings;
 
             var sizes = Images.Preferences.ItemSizeOptions;
@@ -91,7 +91,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindableData Bindable { get; }
+        public MainBindable Bindable { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -133,7 +133,7 @@ namespace Cube.Pdf.App.Editor
         public void Open(string src) => Invoke(() =>
         {
             if (!src.HasValue()) return;
-            Bindable.Source.Value = src;
+            Bindable.Source.Value = IO.Get(src);
             SetStatus(Properties.Resources.MessageLoading, src);
             Images.Add(_core.GetOrAdd(src).Pages);
         });
@@ -349,7 +349,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Close() => Invoke(() =>
         {
-            Bindable.Source.Value = string.Empty;
+            Bindable.Source.Value = null;
             Bindable.History.Clear();
             _core.Clear();
             Images.Clear();

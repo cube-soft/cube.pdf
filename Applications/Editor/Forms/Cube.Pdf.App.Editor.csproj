@@ -131,6 +131,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\ViewModels\PreviewBindable.cs" />
+    <Compile Include="Sources\ViewModels\PreviewFacade.cs" />
     <Compile Include="Sources\ViewModels\PreviewViewModel.cs" />
     <Compile Include="Views\PreviewWindow.xaml.cs">
       <DependentUpon>PreviewWindow.xaml</DependentUpon>
@@ -174,7 +176,7 @@
     <Compile Include="Sources\Models\ImageSelection.cs" />
     <Compile Include="Sources\Models\RibbonElement.cs" />
     <Compile Include="Sources\Models\MessageFactory.cs" />
-    <Compile Include="Sources\ViewModels\MainBindableData.cs" />
+    <Compile Include="Sources\ViewModels\MainBindable.cs" />
     <Compile Include="Sources\ViewModels\MainFacade.cs" />
     <Compile Include="Sources\ViewModels\MainViewModel.cs" />
     <Compile Include="Sources\ViewModels\RecentViewModel.cs" />
