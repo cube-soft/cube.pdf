@@ -26,6 +26,7 @@
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextTrimming" Value="WordEllipsis" />
     </Style>
 
     <Style TargetType="{x:Type TextBox}">

@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Pdf.Mixin;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using System;
@@ -219,7 +220,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.MoveNext.Command      = WhenSelected(() => Model.Move(1));
             Ribbon.RotateLeft.Command    = WhenSelected(() => Model.Rotate(-90));
             Ribbon.RotateRight.Command   = WhenSelected(() => Model.Rotate(90));
-            Ribbon.Metadata.Command      = WhenOpen(() => Send(new MetadataViewModel(Context)));
+            Ribbon.Metadata.Command      = WhenOpen(() => Send(new MetadataViewModel(e => Model.Update(e), Data.Metadata.Value.Copy(), Data.Source.Value, Context)));
             Ribbon.Encryption.Command    = WhenOpen(() => Send(new EncryptionViewModel(Context)));
             Ribbon.Refresh.Command       = WhenOpen(() => Model.Refresh());
             Ribbon.ZoomIn.Command        = WhenAny(() => Model.Zoom(1));

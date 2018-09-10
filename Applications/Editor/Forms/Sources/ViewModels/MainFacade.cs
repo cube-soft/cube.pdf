@@ -173,6 +173,8 @@ namespace Cube.Pdf.App.Editor
             using (var writer = new DocumentWriter())
             {
                 writer.Add(Images.Select(e => e.RawObject));
+                writer.Set(Bindable.Metadata.Value);
+                writer.Set(Bindable.Encryption.Value);
                 writer.Save(dest);
             }
         });
@@ -293,6 +295,32 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Rotate(int degree) => Invoke(() => Images.Rotate(degree));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        ///
+        /// <summary>
+        /// Updates the <c>Metadata</c> object.
+        /// </summary>
+        ///
+        /// <param name="value"><c>Metadata</c> object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Update(Metadata value) => Invoke(() => this.SetMetadata(value));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        ///
+        /// <summary>
+        /// Updates the <c>Encryption</c> object.
+        /// </summary>
+        ///
+        /// <param name="value"><c>Encryption</c> object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Update(Encryption value) => Invoke(() => this.SetEncryption(value));
 
         /* ----------------------------------------------------------------- */
         ///

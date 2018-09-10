@@ -284,6 +284,56 @@ namespace Cube.Pdf.App.Editor
             );
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetMetadata
+        ///
+        /// <summary>
+        /// Sets the <c>Metadata</c> object.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="value"><c>Metadata</c> object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static HistoryItem SetMetadata(this MainFacade src, Metadata value)
+        {
+            var prev = src.Bindable.Metadata.Value;
+            return Invoke(
+                () => src.Bindable.Metadata.Value = value,
+                () => src.Bindable.Metadata.Value = prev
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetEncryption
+        ///
+        /// <summary>
+        /// Sets the <c>Encryption</c> object.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="value"><c>Encryption</c> object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static HistoryItem SetEncryption(this MainFacade src, Encryption value)
+        {
+            var prev = src.Bindable.Encryption.Value;
+            return Invoke(
+                () => src.Bindable.Encryption.Value = value,
+                () => src.Bindable.Encryption.Value = prev
+            );
+        }
+
         #endregion
 
         #region Implementations

@@ -23,6 +23,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
@@ -86,7 +87,7 @@
                     Grid.Row="0"
                     Grid.Column="0" />
                 <TextBlock
-                    Text=""
+                    Text="{Binding Filename.Value}"
                     Grid.Row="0"
                     Grid.Column="1" />
 
@@ -94,11 +95,11 @@
                   DocumentTitle
                 *********************************************************** -->
                 <TextBlock
-                    Text="{Binding DocumentTitle.Text}"
+                    Text="{Binding Document.Text}"
                     Grid.Row="1"
                     Grid.Column="0" />
                 <TextBox
-                    Text=""
+                    Text="{Binding Document.Value, Mode=TwoWay}"
                     Grid.Row="1"
                     Grid.Column="1" />
 
@@ -110,7 +111,7 @@
                     Grid.Row="2"
                     Grid.Column="0" />
                 <TextBox
-                    Text=""
+                    Text="{Binding Author.Value, Mode=TwoWay}"
                     Grid.Row="2"
                     Grid.Column="1" />
 
@@ -122,7 +123,7 @@
                     Grid.Row="3"
                     Grid.Column="0" />
                 <TextBox
-                    Text=""
+                    Text="{Binding Subject.Value, Mode=TwoWay}"
                     Grid.Row="3"
                     Grid.Column="1" />
 
@@ -134,7 +135,7 @@
                     Grid.Row="4"
                     Grid.Column="0" />
                 <TextBox
-                    Text=""
+                    Text="{Binding Keywords.Value, Mode=TwoWay}"
                     Grid.Row="4"
                     Grid.Column="1" />
             </Grid>
@@ -171,6 +172,8 @@
                     Grid.Row="0"
                     Grid.Column="0" />
                 <ComboBox
+                    ItemsSource="{Binding Versions}"
+                    SelectedValue="{Binding Version.Value, Mode=TwoWay}"
                     Grid.Row="0"
                     Grid.Column="1" />
 
@@ -182,6 +185,8 @@
                     Grid.Row="1"
                     Grid.Column="0" />
                 <ComboBox
+                    ItemsSource="{Binding Layouts}"
+                    SelectedValue="{Binding Layout.Value, Mode=TwoWay}"
                     Grid.Row="1"
                     Grid.Column="1" />
 
@@ -193,7 +198,7 @@
                     Grid.Row="2"
                     Grid.Column="0" />
                 <TextBox
-                    Text=""
+                    Text="{Binding Creator.Value, Mode=TwoWay}"
                     Grid.Row="2"
                     Grid.Column="1" />
 
@@ -205,7 +210,7 @@
                     Grid.Row="3"
                     Grid.Column="0" />
                 <TextBlock
-                    Text=""
+                    Text="{Binding Producer.Value}"
                     Grid.Row="3"
                     Grid.Column="1" />
 
@@ -217,7 +222,7 @@
                     Grid.Row="4"
                     Grid.Column="0" />
                 <TextBlock
-                    Text=""
+                    Text="{Binding Length.Value, Converter={my:ByteConverter}}"
                     Grid.Row="4"
                     Grid.Column="1" />
 
@@ -229,7 +234,7 @@
                     Grid.Row="5"
                     Grid.Column="0" />
                 <TextBlock
-                    Text=""
+                    Text="{Binding CreationTime.Value, StringFormat='yyyy/MM/dd HH:mm:ss'}"
                     Grid.Row="5"
                     Grid.Column="1" />
 
@@ -241,7 +246,7 @@
                     Grid.Row="6"
                     Grid.Column="0" />
                 <TextBlock
-                    Text=""
+                    Text="{Binding LastWriteTime.Value, StringFormat='yyyy/MM/dd HH:mm:ss'}"
                     Grid.Row="6"
                     Grid.Column="1" />
             </Grid>
