@@ -46,9 +46,6 @@
             <MenuItem
                 Command="{Binding Ribbon.InsertBack.Command}"
                 Header="{Binding Ribbon.InsertBack.Tooltip}" />
-            <MenuItem
-                Command="{Binding Ribbon.InsertOthers.Command}"
-                Header="{Binding Ribbon.InsertOthers.Tooltip}" />
         </MenuItem>
 
         <!-- ******************************************************************
