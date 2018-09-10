@@ -192,9 +192,6 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>抽出</value>
   </data>
-  <data name="MenuExtractOthers" xml:space="preserve">
-    <value>詳細を設定して抽出</value>
-  </data>
   <data name="MenuFile" xml:space="preserve">
     <value>ファイル</value>
   </data>
@@ -327,12 +324,6 @@
   <data name="MenuSharePassword" xml:space="preserve">
     <value>管理用パスワードと共用する</value>
   </data>
-  <data name="MenuSplit" xml:space="preserve">
-    <value>選択ページをページ単位で分割</value>
-  </data>
-  <data name="MenuSplitAll" xml:space="preserve">
-    <value>全てのページをページ単位で分割</value>
-  </data>
   <data name="MenuSubject" xml:space="preserve">
     <value>サブタイトル</value>
   </data>
@@ -370,13 +361,19 @@
     <value>{0} を開いています ...</value>
   </data>
   <data name="MessagePage" xml:space="preserve">
-    <value>全 {0} ページ</value>
+    <value>{0} ページ</value>
+  </data>
+  <data name="MessageRemoveRange" xml:space="preserve">
+    <value>例. 1,2,4-7,9</value>
   </data>
   <data name="MessageSaving" xml:space="preserve">
     <value>{0} に保存しています ...</value>
   </data>
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} 個の項目を選択</value>
+  </data>
+  <data name="MessageTotalPage" xml:space="preserve">
+    <value>全 {0} ページ</value>
   </data>
   <data name="TitleEncryption" xml:space="preserve">
     <value>セキュリティ</value>
@@ -414,17 +411,14 @@
   <data name="TooltipMetadata" xml:space="preserve">
     <value>PDF 文書プロパティ</value>
   </data>
-  <data name="TooltipPageCount" xml:space="preserve">
-    <value>{0} ページ</value>
-  </data>
   <data name="TooltipRemove" xml:space="preserve">
     <value>選択ページを削除</value>
   </data>
-  <data name="TooltipRemoveRange" xml:space="preserve">
-    <value>例. 1,2,4-7,9</value>
-  </data>
   <data name="TooltipSave" xml:space="preserve">
     <value>上書き保存</value>
+  </data>
+  <data name="UnitByte" xml:space="preserve">
+    <value>バイト</value>
   </data>
   <data name="VersionSuffix" xml:space="preserve">
     <value>β</value>

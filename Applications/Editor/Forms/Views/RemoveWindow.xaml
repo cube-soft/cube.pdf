@@ -72,11 +72,11 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock
-                Text="{Binding PageCount.Text}"
+                Text="{Binding PageCaption.Text}"
                 Grid.Column="0"
                 Grid.Row="0" />
             <TextBlock
-                Text="{Binding PageCount.Value}"
+                Text="{Binding PageCaption.Value}"
                 Grid.Row="0"
                 Grid.Column="1" />
 

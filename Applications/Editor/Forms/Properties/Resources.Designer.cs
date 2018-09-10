@@ -286,15 +286,6 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Extraction details に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuExtractOthers {
-            get {
-                return ResourceManager.GetString("MenuExtractOthers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   File に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuFile {
@@ -691,24 +682,6 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Extract the selected pages (page by page) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuSplit {
-            get {
-                return ResourceManager.GetString("MenuSplit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Extract all pages (page by page) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuSplitAll {
-            get {
-                return ResourceManager.GetString("MenuSplitAll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Subject に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuSubject {
@@ -826,6 +799,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   e.g. 1,2,4-7,9 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageRemoveRange {
+            get {
+                return ResourceManager.GetString("MessageRemoveRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Saving to {0} ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageSaving {
@@ -840,6 +822,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MessageSelection {
             get {
                 return ResourceManager.GetString("MessageSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} pages に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageTotalPage {
+            get {
+                return ResourceManager.GetString("MessageTotalPage", resourceCulture);
             }
         }
         
@@ -952,29 +943,11 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   {0} pages に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TooltipPageCount {
-            get {
-                return ResourceManager.GetString("TooltipPageCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Remove the selected pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TooltipRemove {
             get {
                 return ResourceManager.GetString("TooltipRemove", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   e.g. 1,2,4-7,9 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TooltipRemoveRange {
-            get {
-                return ResourceManager.GetString("TooltipRemoveRange", resourceCulture);
             }
         }
         

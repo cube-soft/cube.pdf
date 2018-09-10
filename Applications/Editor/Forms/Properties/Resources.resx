@@ -192,9 +192,6 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>Extract</value>
   </data>
-  <data name="MenuExtractOthers" xml:space="preserve">
-    <value>Extraction details</value>
-  </data>
   <data name="MenuFile" xml:space="preserve">
     <value>File</value>
   </data>
@@ -327,12 +324,6 @@
   <data name="MenuSharePassword" xml:space="preserve">
     <value>Use owner password</value>
   </data>
-  <data name="MenuSplit" xml:space="preserve">
-    <value>Extract the selected pages (page by page)</value>
-  </data>
-  <data name="MenuSplitAll" xml:space="preserve">
-    <value>Extract all pages (page by page)</value>
-  </data>
   <data name="MenuSubject" xml:space="preserve">
     <value>Subject</value>
   </data>
@@ -372,11 +363,17 @@
   <data name="MessagePage" xml:space="preserve">
     <value>{0} pages</value>
   </data>
+  <data name="MessageRemoveRange" xml:space="preserve">
+    <value>e.g. 1,2,4-7,9</value>
+  </data>
   <data name="MessageSaving" xml:space="preserve">
     <value>Saving to {0} ...</value>
   </data>
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} pages selected</value>
+  </data>
+  <data name="MessageTotalPage" xml:space="preserve">
+    <value>{0} pages</value>
   </data>
   <data name="TitleEncryption" xml:space="preserve">
     <value>Encryption</value>
@@ -414,14 +411,8 @@
   <data name="TooltipMetadata" xml:space="preserve">
     <value>PDF document metadata</value>
   </data>
-  <data name="TooltipPageCount" xml:space="preserve">
-    <value>{0} pages</value>
-  </data>
   <data name="TooltipRemove" xml:space="preserve">
     <value>Remove the selected pages</value>
-  </data>
-  <data name="TooltipRemoveRange" xml:space="preserve">
-    <value>e.g. 1,2,4-7,9</value>
   </data>
   <data name="TooltipSave" xml:space="preserve">
     <value>Overwrite</value>

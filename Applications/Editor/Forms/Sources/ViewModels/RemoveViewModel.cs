@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
-using System;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -52,10 +52,15 @@ namespace Cube.Pdf.App.Editor
         public RemoveViewModel(int n, SynchronizationContext context) :
             base(() => Properties.Resources.TitleRemove, new Messenger(), context)
         {
-            PageCount = new BindableElement<string>(
-                () => string.Format(Properties.Resources.TooltipPageCount, n),
-                e  => throw new InvalidOperationException(),
+            PageCaption = new BindableElement<string>(
+                () => string.Format(Properties.Resources.MessagePage, n),
                 () => Properties.Resources.MenuPageCount
+            );
+
+            OK.Command = new BindableCommand(
+                () => { },
+                () => Range.Value.HasValue(),
+                Range
             );
         }
 
@@ -65,14 +70,16 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCount
+        /// Range
         ///
         /// <summary>
-        /// Gets the menu that represents the number of pages.
+        /// Gets the removal range.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> PageCount { get; }
+        public Bindable<string> Range { get; } = new Bindable<string>(string.Empty);
+
+        #region Texts
 
         /* ----------------------------------------------------------------- */
         ///
@@ -85,21 +92,22 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public BindableElement<string> RangeCaption { get; } = new BindableElement<string>(
-            () => Properties.Resources.TooltipRemoveRange,
-            e  => throw new InvalidOperationException(),
+            () => Properties.Resources.MessageRemoveRange,
             () => Properties.Resources.MenuRemoveRange
         );
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Range
+        /// PageCaption
         ///
         /// <summary>
-        /// Gets or sets the value that reprensetns the removal range.
+        /// Gets the menu that represents the number of pages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<string> Range { get; } = new Bindable<string>(string.Empty);
+        public BindableElement<string> PageCaption { get; }
+
+        #endregion
 
         #endregion
     }

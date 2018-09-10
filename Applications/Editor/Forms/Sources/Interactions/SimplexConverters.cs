@@ -139,7 +139,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public CountToText() : base(e => string.Format(
-            Properties.Resources.MessagePage, e.TryCast<int>()
+            Properties.Resources.MessageTotalPage, e.TryCast<int>()
         )) { }
     }
 

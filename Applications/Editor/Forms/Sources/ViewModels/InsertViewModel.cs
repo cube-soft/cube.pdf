@@ -53,7 +53,7 @@ namespace Cube.Pdf.App.Editor
             base(() => Properties.Resources.TitleInsert, new Messenger(), context)
         {
             PageCount = new BindableElement<string>(
-                () => string.Format(Properties.Resources.TooltipPageCount, n),
+                () => string.Format(Properties.Resources.MessagePage, n),
                 e  => throw new InvalidOperationException(),
                 () => Properties.Resources.MenuPageCount
             );
