@@ -213,9 +213,6 @@ namespace Cube.Pdf.App.Editor
             Ribbon.InsertBack.Command    = WhenOpen(() => SendOpen(e => Model.Insert(int.MaxValue, e)));
             Ribbon.InsertOthers.Command  = WhenOpen(() => Send(new InsertViewModel(Data.Count.Value, Context)));
             Ribbon.Extract.Command       = WhenSelected(() => SendSave(e => Model.Extract(e)));
-            Ribbon.ExtractOthers.Command = WhenOpen(() => Send(new ExtractViewModel(Context)));
-            Ribbon.Split.Command         = WhenSelected(() => SendSave(e => Model.Extract(e)));
-            Ribbon.SplitAll.Command      = WhenOpen(() => SendSave(e => Model.Extract(e)));
             Ribbon.Remove.Command        = WhenSelected(() => Model.Remove());
             Ribbon.RemoveOthers.Command  = WhenOpen(() => Send(new RemoveViewModel(Data.Count.Value, Context)));
             Ribbon.MovePrevious.Command  = WhenSelected(() => Model.Move(-1));

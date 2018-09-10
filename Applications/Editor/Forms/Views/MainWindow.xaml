@@ -59,7 +59,6 @@
         <xb:UriBehavior />
         <my:PreviewWindowBehavior />
         <my:InsertWindowBehavior />
-        <my:ExtractWindowBehavior />
         <my:RemoveWindowBehavior />
         <my:MetadataWindowBehavior />
         <my:EncryptionWindowBehavior />

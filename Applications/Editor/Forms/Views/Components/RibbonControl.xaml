@@ -161,23 +161,12 @@
                 <!-- **********************************************************
                   Extract
                 *********************************************************** -->
-                <r:SplitButton
+                <r:Button
                     Header="{Binding Ribbon.Extract.Text}"
                     Icon="{Binding Ribbon.Extract.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Extract.LargeIcon}"
                     IsEnabled="{Binding Ribbon.Extract.Enabled}"
-                    Command="{Binding Ribbon.Extract.Command}">
-                    <r:MenuItem
-                        Header="{Binding Ribbon.Extract.Tooltip}"
-                        Icon="{Binding Ribbon.Extract.SmallIcon}"
-                        Command="{Binding Ribbon.Extract.Command}" />
-                    <r:MenuItem
-                        Header="{Binding Ribbon.Split.Tooltip}"
-                        Command="{Binding Ribbon.Split.Command}" />
-                    <r:MenuItem
-                        Header="{Binding Ribbon.SplitAll.Tooltip}"
-                        Command="{Binding Ribbon.SplitAll.Command}" />
-                </r:SplitButton>
+                    Command="{Binding Ribbon.Extract.Command}" />
 
                 <!-- **********************************************************
                   Remove

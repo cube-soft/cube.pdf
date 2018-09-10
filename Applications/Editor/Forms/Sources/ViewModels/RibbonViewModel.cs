@@ -60,13 +60,6 @@ namespace Cube.Pdf.App.Editor
                 nameof(Insert)
             );
 
-            Extract = new RibbonElement(
-                () => Properties.Resources.MenuExtract,
-                () => Properties.Resources.TooltipExtract,
-                getEnabled,
-                nameof(Extract)
-            );
-
             Remove = new RibbonElement(
                 () => Properties.Resources.MenuRemove,
                 () => Properties.Resources.TooltipRemove,
@@ -349,55 +342,10 @@ namespace Cube.Pdf.App.Editor
         /// 抽出メニューを取得します。
         /// </summary>
         ///
-        /// <remarks>
-        /// コンストラクタで初期化します。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Extract { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ExtractOthers
-        ///
-        /// <summary>
-        /// Gets the ribbon menu that provides functionality to show
-        /// the settings dialog and extract items.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RibbonElement ExtractOthers { get; } = new RibbonElement(
-            () => Properties.Resources.MenuExtractOthers
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Split
-        ///
-        /// <summary>
-        /// Gets the ribbon menu of splitting the selected pages.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RibbonElement Split { get; } = new RibbonElement(
-            () => Properties.Resources.MenuSplit,
-            () => Properties.Resources.MenuSplit,
-            nameof(Extract)
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SplitAll
-        ///
-        /// <summary>
-        /// Gets the ribbon menu of splitting all pages.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RibbonElement SplitAll { get; } = new RibbonElement(
-            () => Properties.Resources.MenuSplitAll,
-            () => Properties.Resources.MenuSplitAll,
-            nameof(Extract)
+        public RibbonElement Extract { get; } = new RibbonElement(
+            () => Properties.Resources.MenuExtract,
+            () => Properties.Resources.TooltipExtract
         );
 
         /* ----------------------------------------------------------------- */

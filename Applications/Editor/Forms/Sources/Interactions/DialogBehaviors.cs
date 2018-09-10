@@ -46,18 +46,6 @@ namespace Cube.Pdf.App.Editor
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ExtractWindowBehavior
-    ///
-    /// <summary>
-    /// Represents the behavior to show a <c>ExtractWindow</c> dialog.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class ExtractWindowBehavior :
-        ShowDialogBehavior<ExtractWindow, ExtractViewModel> { }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// RemoveWindowBehavior
     ///
     /// <summary>

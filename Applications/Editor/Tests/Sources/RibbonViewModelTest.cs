@@ -69,7 +69,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.InsertBack.Text,    Is.EqualTo("Insert at the end"));
             Assert.That(dest.InsertOthers.Text,  Is.EqualTo("Insertion details"));
             Assert.That(dest.Extract.Text,       Is.EqualTo("Extract"));
-            Assert.That(dest.ExtractOthers.Text, Is.EqualTo("Extraction details"));
             Assert.That(dest.Remove.Text,        Is.EqualTo("Remove"));
             Assert.That(dest.RemoveOthers.Text,  Is.EqualTo("Removal details"));
             Assert.That(dest.MovePrevious.Text,  Is.EqualTo("Prev"));
@@ -116,7 +115,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.InsertBack.Tooltip,    Is.EqualTo(dest.InsertBack.Text));
             Assert.That(dest.InsertOthers.Tooltip,  Is.EqualTo(dest.InsertOthers.Text));
             Assert.That(dest.Extract.Tooltip,       Is.EqualTo("Extract the selected pages"));
-            Assert.That(dest.ExtractOthers.Tooltip, Is.EqualTo(dest.ExtractOthers.Text));
             Assert.That(dest.Remove.Tooltip,        Is.EqualTo("Remove the selected pages"));
             Assert.That(dest.RemoveOthers.Tooltip,  Is.EqualTo(dest.RemoveOthers.Text));
             Assert.That(dest.MovePrevious.Tooltip,  Is.EqualTo(dest.MovePrevious.Text));
@@ -163,7 +161,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.InsertBack.Text,    Is.EqualTo("末尾に挿入"));
             Assert.That(dest.InsertOthers.Text,  Is.EqualTo("詳細を設定して挿入"));
             Assert.That(dest.Extract.Text,       Is.EqualTo("抽出"));
-            Assert.That(dest.ExtractOthers.Text, Is.EqualTo("詳細を設定して抽出"));
             Assert.That(dest.Remove.Text,        Is.EqualTo("削除"));
             Assert.That(dest.RemoveOthers.Text,  Is.EqualTo("範囲を指定して削除"));
             Assert.That(dest.MovePrevious.Text,  Is.EqualTo("前へ"));
@@ -210,7 +207,6 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.InsertBack.Tooltip,    Is.EqualTo(dest.InsertBack.Text));
             Assert.That(dest.InsertOthers.Tooltip,  Is.EqualTo(dest.InsertOthers.Text));
             Assert.That(dest.Extract.Tooltip,       Is.EqualTo("選択ページを抽出"));
-            Assert.That(dest.ExtractOthers.Tooltip, Is.EqualTo(dest.ExtractOthers.Text));
             Assert.That(dest.Remove.Tooltip,        Is.EqualTo("選択ページを削除"));
             Assert.That(dest.RemoveOthers.Tooltip,  Is.EqualTo(dest.RemoveOthers.Text));
             Assert.That(dest.MovePrevious.Tooltip,  Is.EqualTo(dest.MovePrevious.Text));

@@ -54,17 +54,9 @@
         <!-- ******************************************************************
           Extract
         ******************************************************************* -->
-        <MenuItem Header="{Binding Ribbon.Extract.Text}">
-            <MenuItem
-                Command="{Binding Ribbon.Extract.Command}"
-                Header="{Binding Ribbon.Extract.Tooltip}" />
-            <MenuItem
-                Command="{Binding Ribbon.Split.Command}"
-                Header="{Binding Ribbon.Split.Tooltip}" />
-            <MenuItem
-                Command="{Binding Ribbon.SplitAll.Command}"
-                Header="{Binding Ribbon.SplitAll.Tooltip}" />
-        </MenuItem>
+        <MenuItem
+            Header="{Binding Ribbon.Extract.Text}"
+            Command="{Binding Ribbon.Extract.Command}" />
 
         <!-- ******************************************************************
           Remove
