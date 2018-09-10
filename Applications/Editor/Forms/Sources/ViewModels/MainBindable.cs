@@ -125,6 +125,28 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Gets the metadata of the PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<Metadata> Metadata { get; } = new Bindable<Metadata>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Source
+        ///
+        /// <summary>
+        /// Gets the encryption information of the PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<Encryption> Encryption { get; } = new Bindable<Encryption>();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Count
         ///
         /// <summary>

@@ -133,9 +133,13 @@ namespace Cube.Pdf.App.Editor
         public void Open(string src) => Invoke(() =>
         {
             if (!src.HasValue()) return;
-            Bindable.Source.Value = IO.Get(src);
             SetStatus(Properties.Resources.MessageLoading, src);
-            Images.Add(_core.GetOrAdd(src).Pages);
+
+            var doc = _core.GetOrAdd(src);
+            Bindable.Source.Value = IO.Get(src);
+            Bindable.Metadata.Value = doc.Metadata;
+            Bindable.Encryption.Value = doc.Encryption;
+            Images.Add(doc.Pages);
         });
 
         /* ----------------------------------------------------------------- */
