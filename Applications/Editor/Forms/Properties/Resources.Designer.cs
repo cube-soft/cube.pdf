@@ -988,6 +988,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Bytes に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UnitByte {
+            get {
+                return ResourceManager.GetString("UnitByte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   β に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string VersionSuffix {

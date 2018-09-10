@@ -49,7 +49,7 @@ namespace Cube.Pdf.Tests.Editor
         /// Convert_Title
         ///
         /// <summary>
-        /// Tests to convert a title.
+        /// Tests to convert to a title.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -58,6 +58,27 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase("",                  ExpectedResult = "CubePDF Utility")]
         public string Convert_Title(string src) =>
             Convert<string>(new TitleConverter(), src.HasValue() ? new IO().Get(src) : null);
+
+        #endregion
+
+        #region ByteConverter
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_Byte
+        ///
+        /// <summary>
+        /// Tests to convert a byte size.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(100,    "en", ExpectedResult = "1 KB (100 Bytes)")]
+        [TestCase(101309, "en", ExpectedResult = "98.9 KB (101,309 Bytes)")]
+        public string Convert_Byte(long n, string culture)
+        {
+            ResourceCulture.Set(culture);
+            return Convert<string>(new ByteConverter(), n);
+        }
 
         #endregion
 

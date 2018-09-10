@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Conversions;
 using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Xui.Converters;
@@ -51,6 +52,37 @@ namespace Cube.Pdf.App.Editor
         {
             var app = Assembly.GetExecutingAssembly().GetReader().Title;
             return e is Information fi ? $"{fi.Name} - {app}" : app;
+        }) { }
+    }
+
+    #endregion
+
+    #region ByteConverter
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ByteConverter
+    ///
+    /// <summary>
+    /// Provides functionality to convert a string.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class ByteConverter : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ByteConverter
+        ///
+        /// <summary>
+        /// Initializes a new instance of the <c>ByteConverter</c> class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ByteConverter() : base(e =>
+        {
+            var n  = e.TryCast<long>();
+            return string.Format("{0} ({1:#,0} {2})", n.ToRoughBytes(), n, Properties.Resources.UnitByte);
         }) { }
     }
 
