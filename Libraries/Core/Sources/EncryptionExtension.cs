@@ -25,13 +25,38 @@ namespace Cube.Pdf.Mixin
     /// EncryptionExtension
     ///
     /// <summary>
-    /// Describes extended methods for the Encryption class.
+    /// Describes extended methods for the <c>Encryption</c> class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     public static class EncryptionExtension
     {
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Copy
+        ///
+        /// <summary>
+        /// Gets the copied <c>Encryption</c> object.
+        /// </summary>
+        ///
+        /// <param name="src"><c>Encryption</c> object.</param>
+        ///
+        /// <returns>Copied <c>Encryption</c> object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Encryption Copy(this Encryption src) => new Encryption
+        {
+            Context          = src.Context,
+            IsSynchronous    = src.IsSynchronous,
+            Enabled          = src.Enabled,
+            Method           = src.Method,
+            OwnerPassword    = src.OwnerPassword,
+            UserPassword     = src.UserPassword,
+            OpenWithPassword = src.OpenWithPassword,
+            Permission       = new Permission(src.Permission.Value),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
