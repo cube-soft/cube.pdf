@@ -21,6 +21,7 @@ using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Pdf.Itext;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -271,6 +272,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Remove() => Invoke(() => Images.Remove());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Removes the specified objects.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove(IEnumerable<int> indices) => Invoke(() => Images.RemoveAt(indices));
 
         /* ----------------------------------------------------------------- */
         ///

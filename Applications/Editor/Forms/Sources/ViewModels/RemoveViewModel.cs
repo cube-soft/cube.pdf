@@ -19,6 +19,9 @@
 using Cube.Generics;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -45,11 +48,12 @@ namespace Cube.Pdf.App.Editor
         /// specified argumetns.
         /// </summary>
         ///
+        /// <param name="callback">Callback method when applied.</param>
         /// <param name="n">Number of pages.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RemoveViewModel(int n, SynchronizationContext context) :
+        public RemoveViewModel(Action<IEnumerable<int>> callback, int n, SynchronizationContext context) :
             base(() => Properties.Resources.TitleRemove, new Messenger(), context)
         {
             PageCaption = new BindableElement<string>(
@@ -58,7 +62,7 @@ namespace Cube.Pdf.App.Editor
             );
 
             OK.Command = new BindableCommand(
-                () => { },
+                () => Post(() => Execute(callback, n)),
                 () => Range.Value.HasValue(),
                 Range
             );
@@ -78,8 +82,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Bindable<string> Range { get; } = new Bindable<string>(string.Empty);
-
-        #region Texts
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,6 +110,24 @@ namespace Cube.Pdf.App.Editor
         public BindableElement<string> PageCaption { get; }
 
         #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Execute
+        ///
+        /// <summary>
+        /// Executes the main command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Execute(Action<IEnumerable<int>> callback, int n)
+        {
+            var dest = new Range(Range.Value, n).Select(i => i - 1);
+            callback(dest);
+            Send<CloseMessage>();
+        }
 
         #endregion
     }

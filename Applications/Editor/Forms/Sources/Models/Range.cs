@@ -66,11 +66,12 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="src">String that represents the range.</param>
+        /// <param name="n">Maximum value.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Range(string src)
+        public Range(string src, int n)
         {
-            _inner = Parse(src);
+            _inner = Parse(src, n);
         }
 
         #endregion
@@ -120,7 +121,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static IEnumerable<int> Parse(string src)
+        private static IEnumerable<int> Parse(string src, int n)
         {
             try
             {
@@ -137,7 +138,7 @@ namespace Cube.Pdf.App.Editor
                     }
                     else dest.Add(int.Parse(token));
                 }
-                return dest.Distinct().OrderBy(i => i);
+                return dest.Where(i => i > 0 && i <= n).Distinct().OrderBy(i => i);
             }
             catch { throw new RangeException(); }
         }

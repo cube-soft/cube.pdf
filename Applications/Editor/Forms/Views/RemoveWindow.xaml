@@ -31,7 +31,8 @@
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
-    ShowInTaskbar="False">
+    ShowInTaskbar="False"
+    FocusManager.FocusedElement="{Binding ElementName=RangeTextBox}">
 
     <!-- **********************************************************************
       Resources
@@ -45,6 +46,7 @@
     *********************************************************************** -->
     <i:Interaction.Behaviors>
         <xb:CloseBehavior />
+        <xb:DialogBehavior />
     </i:Interaction.Behaviors>
 
     <!-- **********************************************************************
@@ -89,7 +91,8 @@
                 Grid.Row="2"
                 Grid.Column="1" />
             <TextBox
-                Text="{Binding Range.Value}"
+                x:Name="RangeTextBox"
+                Text="{Binding Range.Value, UpdateSourceTrigger=PropertyChanged}"
                 Grid.Row="1"
                 Grid.Column="1" />
         </Grid>

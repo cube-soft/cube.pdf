@@ -219,9 +219,27 @@ namespace Cube.Pdf.App.Editor
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static HistoryItem Remove(this ImageCollection src)
+        public static HistoryItem Remove(this ImageCollection src) =>
+            src.RemoveAt(GetCopiedIndices(src));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveAt
+        ///
+        /// <summary>
+        /// Removes the specified images.
+        /// </summary>
+        ///
+        /// <param name="src">Source collection.</param>
+        /// <param name="indices">Collection to be removed.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static HistoryItem RemoveAt(this ImageCollection src, IEnumerable<int> indices)
         {
-            var indices  = GetCopiedIndices(src);
             var preserve = GetPair(src, indices.OrderBy(i => i));
 
             void forward() => src.Remove(indices);

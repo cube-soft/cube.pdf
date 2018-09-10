@@ -215,7 +215,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.InsertOthers.Command  = WhenOpen(() => Send(new InsertViewModel(Data.Count.Value, Context)));
             Ribbon.Extract.Command       = WhenSelected(() => SendSave(e => Model.Extract(e)));
             Ribbon.Remove.Command        = WhenSelected(() => Model.Remove());
-            Ribbon.RemoveOthers.Command  = WhenOpen(() => Send(new RemoveViewModel(Data.Count.Value, Context)));
+            Ribbon.RemoveOthers.Command  = WhenOpen(() => Send(new RemoveViewModel(e => Model.Remove(e), Data.Count.Value, Context)));
             Ribbon.MovePrevious.Command  = WhenSelected(() => Model.Move(-1));
             Ribbon.MoveNext.Command      = WhenSelected(() => Model.Move(1));
             Ribbon.RotateLeft.Command    = WhenSelected(() => Model.Rotate(-90));

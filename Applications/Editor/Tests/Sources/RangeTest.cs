@@ -51,7 +51,7 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase("3, 1, 4",  ExpectedResult = 3)]
         [TestCase("2 - 8, 1", ExpectedResult = 8)]
         [TestCase("",         ExpectedResult = 0)]
-        public int Parse(string src) => new Range(src).Count();
+        public int Parse(string src) => new Range(src, 100).Count();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -69,7 +69,7 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase("1+2*3-4/5=6")]
         [TestCase("日本語のテスト")]
         public void Parse_Throws(string src) => Assert.That(
-            () => new Range(src),
+            () => new Range(src, 100),
             Throws.TypeOf<RangeException>()
         );
 
