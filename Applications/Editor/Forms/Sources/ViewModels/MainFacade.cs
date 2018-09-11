@@ -146,7 +146,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Save(Bindable.Source.Value.FullName);
+        public void Save()
+        {
+            if (Bindable.History.Undoable) Save(Bindable.Source.Value.FullName);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
