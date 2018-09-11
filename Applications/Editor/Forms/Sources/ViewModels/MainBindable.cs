@@ -191,6 +191,64 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// Sets properties of the specified <c>IDocumentReader</c>.
+        /// </summary>
+        ///
+        /// <param name="src">Document information.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(IDocumentReader src)
+        {
+            Source.Value     = src.File;
+            Metadata.Value   = src.Metadata;
+            Encryption.Value = src.Encryption;
+
+            Images.Add(src.Pages);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Close
+        ///
+        /// <summary>
+        /// Clears properties of the current PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Close()
+        {
+            Source.Value     = null;
+            Metadata.Value   = null;
+            Encryption.Value = null;
+
+            History.Clear();
+            Images.Clear();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetMessage
+        ///
+        /// <summary>
+        /// Sets the specified message.
+        /// </summary>
+        ///
+        /// <param name="format">Format for the message.</param>
+        /// <param name="args">Additional arguments.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void SetMessage(string format, params object[] args) =>
+            Message.Value = string.Format(format, args);
+
+        #endregion
+
         #region Fields
         private SettingsFolder _settings;
         #endregion

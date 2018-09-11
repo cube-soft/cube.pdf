@@ -120,13 +120,8 @@ namespace Cube.Pdf.App.Editor
         public void Open(string src) => Invoke(() =>
         {
             if (!src.HasValue()) return;
-            SetStatus(Properties.Resources.MessageLoading, src);
-
-            var doc = _core.GetOrAdd(src);
-            Bindable.Source.Value = IO.Get(src);
-            Bindable.Metadata.Value = doc.Metadata;
-            Bindable.Encryption.Value = doc.Encryption;
-            Bindable.Images.Add(doc.Pages);
+            Bindable.SetMessage(Properties.Resources.MessageLoading, src);
+            Bindable.Open(_core.GetOrAdd(src));
         });
 
         /* ----------------------------------------------------------------- */
@@ -156,7 +151,7 @@ namespace Cube.Pdf.App.Editor
         public void Save(string dest) => Invoke(() =>
         {
             var info = IO.Get(dest);
-            SetStatus(Properties.Resources.MessageSaving, info.FullName);
+            Bindable.SetMessage(Properties.Resources.MessageSaving, info.FullName);
             this.Save(info, IO, () => { });
         });
 
@@ -237,7 +232,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Insert(int index, string src) => Invoke(() =>
         {
-            SetStatus(Properties.Resources.MessageLoading, IO.Get(src).Name);
+            Bindable.SetMessage(Properties.Resources.MessageLoading, src);
             var n = Math.Min(Math.Max(index, 0), Bindable.Images.Count);
             Bindable.Images.InsertAt(n, _core.GetOrAdd(src).Pages);
         });
@@ -374,11 +369,7 @@ namespace Cube.Pdf.App.Editor
         public void Close() => Invoke(() =>
         {
             _core.Clear();
-            Bindable.Source.Value = null;
-            Bindable.Metadata.Value = null;
-            Bindable.Encryption.Value = null;
-            Bindable.History.Clear();
-            Bindable.Images.Clear();
+            Bindable.Close();
         });
 
         #region IDisposable
@@ -473,27 +464,15 @@ namespace Cube.Pdf.App.Editor
             {
                 Bindable.IsBusy.Value = true;
                 action();
-                SetStatus(format, args);
+                Bindable.SetMessage(format, args);
             }
-            catch (Exception err) { SetStatus(err.Message); throw; }
+            catch (Exception err) { Bindable.SetMessage(err.Message); throw; }
             finally
             {
                 Bindable.Count.Value = Bindable.Images.Count;
                 Bindable.IsBusy.Value = false;
             }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetStatus
-        ///
-        /// <summary>
-        /// Sets the specified message.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetStatus(string format, params object[] args) =>
-            Bindable.Message.Value = string.Format(format, args);
 
         #endregion
 
