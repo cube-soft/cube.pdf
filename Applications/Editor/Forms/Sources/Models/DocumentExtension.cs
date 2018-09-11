@@ -127,13 +127,42 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static void Save(this MainFacade src, Information dest, IO io, Action close)
         {
-            using (var writer = new DocumentWriter())
+            var tmp = io.Combine(dest.DirectoryName, Guid.NewGuid().ToString("D"));
+
+            try
             {
-                writer.Add(src.Bindable.Images.Select(e => e.RawObject));
-                writer.Set(src.Bindable.Metadata.Value);
-                writer.Set(src.Bindable.Encryption.Value);
-                writer.Save(dest.FullName);
+                using (var writer = new DocumentWriter())
+                {
+                    writer.Add(src.Bindable.Images.Select(e => e.RawObject));
+                    writer.Set(src.Bindable.Metadata.Value);
+                    writer.Set(src.Bindable.Encryption.Value);
+                    writer.Save(tmp);
+                }
+
+                close();
+                io.Move(tmp, dest.FullName, true);
             }
+            finally { io.TryDelete(tmp); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Restruct
+        ///
+        /// <summary>
+        /// Restructs some properties with the specified new PDF document.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="doc">New PDF document.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Restruct(this MainFacade src, IDocumentReader doc)
+        {
+            var items = doc.Pages.Select((v, i) => new { Value = v, Index = i });
+            foreach (var e in items) src.Bindable.Images[e.Index].RawObject = e.Value;
+            src.Bindable.Source.Value = doc.File;
+            src.Bindable.History.Clear();
         }
 
         /* ----------------------------------------------------------------- */

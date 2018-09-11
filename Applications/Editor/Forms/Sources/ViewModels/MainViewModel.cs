@@ -202,7 +202,7 @@ namespace Cube.Pdf.App.Editor
             );
 
             Ribbon.Close.Command         = WhenOpen(() => Model.Close());
-            Ribbon.Save.Command          = WhenOpen(() => SendSave(e => Model.Save(e)));
+            Ribbon.Save.Command          = WhenOpen(() => Model.Save());
             Ribbon.SaveAs.Command        = WhenOpen(() => SendSave(e => Model.Save(e)));
             Ribbon.Preview.Command       = WhenSelected(() => Send(new PreviewViewModel(Data.Images, Data.Source.Value, Context)));
             Ribbon.Select.Command        = WhenOpen(() => Model.Select());

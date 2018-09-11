@@ -139,7 +139,18 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// Save
+        ///
+        /// <summary>
+        /// Overwrites the PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Save() => Save(Bindable.Source.Value.FullName);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
         ///
         /// <summary>
         /// Saves the PDF document to the specified file path.
@@ -150,9 +161,10 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Save(string dest) => Invoke(() =>
         {
-            var info = IO.Get(dest);
-            Bindable.SetMessage(Properties.Resources.MessageSaving, info.FullName);
-            this.Save(info, IO, () => { });
+            var file = IO.Get(dest);
+            Bindable.SetMessage(Properties.Resources.MessageSaving, file.FullName);
+            this.Save(file, IO, () => _core.Clear());
+            this.Restruct(_core.GetOrAdd(dest));
         });
 
         /* ----------------------------------------------------------------- */
