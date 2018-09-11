@@ -79,7 +79,7 @@ namespace Cube.Pdf.App.Editor
         /// File
         ///
         /// <summary>
-        /// ファイルメニューを取得します。
+        /// Gets the file menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -92,7 +92,7 @@ namespace Cube.Pdf.App.Editor
         /// Edit
         ///
         /// <summary>
-        /// 編集メニューを取得します。
+        /// Gets the edit menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -102,15 +102,15 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// View
+        /// Others
         ///
         /// <summary>
-        /// 表示メニューを取得します。
+        /// Gets the others menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement View { get; } = new RibbonElement(
-            () => Properties.Resources.MenuView
+        public RibbonElement Others { get; } = new RibbonElement(
+            () => Properties.Resources.MenuOthers
         );
 
         #endregion

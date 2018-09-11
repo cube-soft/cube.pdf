@@ -251,7 +251,7 @@
             </r:RibbonGroupBox>
         </r:RibbonTabItem>
 
-        <r:RibbonTabItem Header="{Binding Ribbon.View.Text}">
+        <r:RibbonTabItem Header="{Binding Ribbon.Others.Text}">
             <r:RibbonGroupBox>
                 <!-- **********************************************************
                   Refresh

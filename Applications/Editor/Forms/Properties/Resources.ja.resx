@@ -249,6 +249,9 @@
   <data name="MenuOperations" xml:space="preserve">
     <value>操作</value>
   </data>
+  <data name="MenuOthers" xml:space="preserve">
+    <value>その他</value>
+  </data>
   <data name="MenuOwnerPassword" xml:space="preserve">
     <value>管理用パスワード</value>
   </data>
@@ -347,9 +350,6 @@
   </data>
   <data name="MenuVersion" xml:space="preserve">
     <value>バージョン情報</value>
-  </data>
-  <data name="MenuView" xml:space="preserve">
-    <value>表示</value>
   </data>
   <data name="MenuZoomIn" xml:space="preserve">
     <value>拡大</value>

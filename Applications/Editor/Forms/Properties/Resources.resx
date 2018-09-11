@@ -249,6 +249,9 @@
   <data name="MenuOperations" xml:space="preserve">
     <value>Operations</value>
   </data>
+  <data name="MenuOthers" xml:space="preserve">
+    <value>Others</value>
+  </data>
   <data name="MenuOwnerPassword" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -347,9 +350,6 @@
   </data>
   <data name="MenuVersion" xml:space="preserve">
     <value>Version</value>
-  </data>
-  <data name="MenuView" xml:space="preserve">
-    <value>View</value>
   </data>
   <data name="MenuZoomIn" xml:space="preserve">
     <value>ZoomIn</value>
