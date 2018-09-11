@@ -131,6 +131,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\Models\DocumentExtension.cs" />
     <Compile Include="Sources\Models\Range.cs" />
     <Compile Include="Sources\ViewModels\PreviewBindable.cs" />
     <Compile Include="Sources\ViewModels\PreviewFacade.cs" />

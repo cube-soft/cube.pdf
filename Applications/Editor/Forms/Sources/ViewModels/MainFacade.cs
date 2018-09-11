@@ -19,10 +19,8 @@
 using Cube.Collections.Mixin;
 using Cube.FileSystem;
 using Cube.Generics;
-using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -56,16 +54,15 @@ namespace Cube.Pdf.App.Editor
         {
             _dispose = new OnceAction<bool>(Dispose);
             _core    = new DocumentCollection(e => Bindable.IsOpen.Value = e.Count > 0);
-            Images   = new ImageCollection(e => _core.Get(e));
-            Bindable = new MainBindable(Images, settings);
+            Bindable = new MainBindable(new ImageCollection(e => _core.Get(e)), settings);
             Settings = settings;
 
-            var sizes = Images.Preferences.ItemSizeOptions;
+            var sizes = Bindable.Images.Preferences.ItemSizeOptions;
             var index = sizes.LastIndexOf(e => e <= settings.Value.ViewSize);
-            Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
-            Images.Preferences.ItemMargin    = 3;
-            Images.Preferences.TextHeight    = 25;
-            Images.Context                   = context;
+            Bindable.Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
+            Bindable.Images.Preferences.ItemMargin    = 3;
+            Bindable.Images.Preferences.TextHeight    = 25;
+            Bindable.Images.Context                   = context;
         }
 
         #endregion
@@ -93,17 +90,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public MainBindable Bindable { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Images
-        ///
-        /// <summary>
-        /// Gets the image collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected ImageCollection Images { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -140,7 +126,7 @@ namespace Cube.Pdf.App.Editor
             Bindable.Source.Value = IO.Get(src);
             Bindable.Metadata.Value = doc.Metadata;
             Bindable.Encryption.Value = doc.Encryption;
-            Images.Add(doc.Pages);
+            Bindable.Images.Add(doc.Pages);
         });
 
         /* ----------------------------------------------------------------- */
@@ -169,15 +155,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Save(string dest) => Invoke(() =>
         {
-            var name = IO.Get(dest).Name;
-            SetStatus(Properties.Resources.MessageSaving, name);
-            using (var writer = new DocumentWriter())
-            {
-                writer.Add(Images.Select(e => e.RawObject));
-                writer.Set(Bindable.Metadata.Value);
-                writer.Set(Bindable.Encryption.Value);
-                writer.Save(dest);
-            }
+            var info = IO.Get(dest);
+            SetStatus(Properties.Resources.MessageSaving, info.FullName);
+            this.Save(info, IO, () => { });
         });
 
         /* ----------------------------------------------------------------- */
@@ -191,7 +171,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="dest">Save path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Extract(string dest) => Invoke(() => Images.Extract(dest));
+        public void Extract(string dest) => Invoke(() => Bindable.Images.Extract(dest));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -203,7 +183,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Select() => Select(Bindable.Selection.Count < Images.Count);
+        public void Select() => Select(Bindable.Selection.Count < Bindable.Images.Count);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -217,7 +197,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="selected">true for selected.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Select(bool selected) => Invoke(() => Images.Select(selected));
+        public void Select(bool selected) => Invoke(() => Bindable.Images.Select(selected));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -228,7 +208,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Flip() => Invoke(() => Images.Flip());
+        public void Flip() => Invoke(() => Bindable.Images.Flip());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -258,8 +238,8 @@ namespace Cube.Pdf.App.Editor
         public void Insert(int index, string src) => Invoke(() =>
         {
             SetStatus(Properties.Resources.MessageLoading, IO.Get(src).Name);
-            var n = Math.Min(Math.Max(index, 0), Images.Count);
-            Images.InsertAt(n, _core.GetOrAdd(src).Pages);
+            var n = Math.Min(Math.Max(index, 0), Bindable.Images.Count);
+            Bindable.Images.InsertAt(n, _core.GetOrAdd(src).Pages);
         });
 
         /* ----------------------------------------------------------------- */
@@ -271,7 +251,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove() => Invoke(() => Images.Remove());
+        public void Remove() => Invoke(() => Bindable.Images.Remove());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -282,7 +262,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => Invoke(() => Images.RemoveAt(indices));
+        public void Remove(IEnumerable<int> indices) => Invoke(() => Bindable.Images.RemoveAt(indices));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -293,7 +273,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(int delta) => Invoke(() => Images.Move(delta));
+        public void Move(int delta) => Invoke(() => Bindable.Images.Move(delta));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -306,7 +286,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="degree">Angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Rotate(int degree) => Invoke(() => Images.Rotate(degree));
+        public void Rotate(int degree) => Invoke(() => Bindable.Images.Rotate(degree));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -369,7 +349,7 @@ namespace Cube.Pdf.App.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Zoom(int offset) => Invoke(() => Images.Zoom(offset));
+        public void Zoom(int offset) => Invoke(() => Bindable.Images.Zoom(offset));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -393,10 +373,12 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Close() => Invoke(() =>
         {
-            Bindable.Source.Value = null;
-            Bindable.History.Clear();
             _core.Clear();
-            Images.Clear();
+            Bindable.Source.Value = null;
+            Bindable.Metadata.Value = null;
+            Bindable.Encryption.Value = null;
+            Bindable.History.Clear();
+            Bindable.Images.Clear();
         });
 
         #region IDisposable
@@ -445,7 +427,7 @@ namespace Cube.Pdf.App.Editor
         protected virtual void Dispose(bool disposing)
         {
             Close();
-            if (disposing) Images.Dispose();
+            if (disposing) Bindable.Images.Dispose();
         }
 
         #endregion
@@ -496,7 +478,7 @@ namespace Cube.Pdf.App.Editor
             catch (Exception err) { SetStatus(err.Message); throw; }
             finally
             {
-                Bindable.Count.Value = Images.Count;
+                Bindable.Count.Value = Bindable.Images.Count;
                 Bindable.IsBusy.Value = false;
             }
         }

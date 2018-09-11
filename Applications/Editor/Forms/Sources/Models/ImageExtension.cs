@@ -18,13 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.Pdf.Itext;
-using Cube.Pdf.Mixin;
-using Cube.Xui.Converters;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Windows.Media;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -41,65 +37,6 @@ namespace Cube.Pdf.App.Editor
     public static class ImageExtension
     {
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Create a new instance of the <c>ImageSource</c> class with the
-        /// specified parameters.
-        /// </summary>
-        ///
-        /// <param name="src">Renderer object.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="ratio">Scale ratio.</param>
-        ///
-        /// <returns>ImageSource object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static ImageSource Create(this IDocumentRenderer src, Page page, double ratio)
-        {
-            if (src == null || page == null) return null;
-
-            var size = page.GetDisplaySize(ratio).Value;
-            var dest = new Bitmap((int)size.Width, (int)size.Height);
-
-            using (var gs = Graphics.FromImage(dest))
-            {
-                gs.Clear(System.Drawing.Color.White);
-                src.Render(gs, page);
-            }
-            return dest.ToBitmapImage(true);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Create a new instance of the ImageSource class with the
-        /// specified parameters.
-        /// </summary>
-        ///
-        /// <param name="src">Renderer object.</param>
-        /// <param name="entry">Information of the creating image.</param>
-        ///
-        /// <returns>ImageSource object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static ImageSource Create(this IDocumentRenderer src, ImageEntry entry)
-        {
-            if (src == null) return null;
-
-            var dest = new Bitmap(entry.Width, entry.Height);
-            using (var gs = Graphics.FromImage(dest))
-            {
-                gs.Clear(System.Drawing.Color.White);
-                src.Render(gs, entry.RawObject);
-            }
-            return dest.ToBitmapImage(true);
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -299,56 +236,6 @@ namespace Cube.Pdf.App.Editor
             return Invoke(
                 () => src.Move(indices, delta),
                 () => src.Move(cvt,    -delta)
-            );
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetMetadata
-        ///
-        /// <summary>
-        /// Sets the <c>Metadata</c> object.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        /// <param name="value"><c>Metadata</c> object.</param>
-        ///
-        /// <returns>
-        /// History item to execute undo and redo actions.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static HistoryItem SetMetadata(this MainFacade src, Metadata value)
-        {
-            var prev = src.Bindable.Metadata.Value;
-            return Invoke(
-                () => src.Bindable.Metadata.Value = value,
-                () => src.Bindable.Metadata.Value = prev
-            );
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetEncryption
-        ///
-        /// <summary>
-        /// Sets the <c>Encryption</c> object.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        /// <param name="value"><c>Encryption</c> object.</param>
-        ///
-        /// <returns>
-        /// History item to execute undo and redo actions.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static HistoryItem SetEncryption(this MainFacade src, Encryption value)
-        {
-            var prev = src.Bindable.Encryption.Value;
-            return Invoke(
-                () => src.Bindable.Encryption.Value = value,
-                () => src.Bindable.Encryption.Value = prev
             );
         }
 
