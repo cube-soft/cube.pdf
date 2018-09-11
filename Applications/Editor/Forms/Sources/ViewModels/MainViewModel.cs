@@ -221,7 +221,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.RotateLeft.Command    = WhenSelected(() => Model.Rotate(-90));
             Ribbon.RotateRight.Command   = WhenSelected(() => Model.Rotate(90));
             Ribbon.Metadata.Command      = WhenOpen(() => Send(new MetadataViewModel(e => Model.Update(e), Data.Metadata.Value.Copy(), Data.Source.Value, Context)));
-            Ribbon.Encryption.Command    = WhenOpen(() => Send(new EncryptionViewModel(Context)));
+            Ribbon.Encryption.Command    = WhenOpen(() => Send(new EncryptionViewModel(e => Model.Update(e), Data.Encryption.Value.Copy(), Context)));
             Ribbon.Refresh.Command       = WhenOpen(() => Model.Refresh());
             Ribbon.ZoomIn.Command        = WhenAny(() => Model.Zoom(1));
             Ribbon.ZoomOut.Command       = WhenAny(() => Model.Zoom(-1));

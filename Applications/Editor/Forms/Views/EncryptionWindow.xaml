@@ -23,10 +23,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
-    Height="550"
+    Height="520"
     Width="500"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
@@ -59,10 +60,12 @@
 
         <GroupBox Margin="12" Padding="8,12">
             <GroupBox.Header>
-                <CheckBox Content="{Binding Enabled.Text}" />
+                <CheckBox
+                    Content="{Binding Enabled.Text}"
+                    IsChecked="{Binding Enabled.Value}" />
             </GroupBox.Header>
 
-            <Grid>
+            <Grid IsEnabled="{Binding Enabled.Value}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="*" />
@@ -74,28 +77,64 @@
                     <RowDefinition Height="26" />
                     <RowDefinition Height="24" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="24" />
-                    <RowDefinition Height="24" />
-                    <RowDefinition Height="24" />
-                    <RowDefinition Height="24" />
-                    <RowDefinition Height="24" />
-                    <RowDefinition Height="24" />
-                    <RowDefinition Height="24" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="{Binding OwnerPassword.Text}" Grid.Column="0" Grid.Row="0" />
-                <TextBlock Text="{Binding OwnerConfirm.Text}" Grid.Column="0" Grid.Row="1" />
-                <TextBlock Text="{Binding Method.Text}" Grid.Column="0" Grid.Row="2" />
-                <TextBlock Text="{Binding Operation.Text}" Grid.Column="0" Grid.Row="3" />
+                <!-- **********************************************************
+                  OwnerPassword
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding OwnerPassword.Text}"
+                    Grid.Column="0"
+                    Grid.Row="0" />
+                <TextBox
+                    Text="{Binding OwnerPassword.Value, UpdateSourceTrigger=PropertyChanged}"
+                    Grid.Column="1"
+                    Grid.Row="0" />
 
-                <TextBox Grid.Column="1" Grid.Row="0" />
-                <TextBox Grid.Column="1" Grid.Row="1" />
+                <TextBlock
+                    Text="{Binding OwnerConfirm.Text}"
+                    Grid.Column="0"
+                    Grid.Row="1" />
+                <TextBox
+                    Text="{Binding OwnerConfirm.Value, UpdateSourceTrigger=PropertyChanged}"
+                    Grid.Column="1"
+                    Grid.Row="1" />
 
-                <ComboBox Grid.Column="1" Grid.Row="2" />
+                <!-- **********************************************************
+                  EncryptionMethod
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Method.Text}"
+                    Grid.Column="0"
+                    Grid.Row="2" />
+                <ComboBox
+                    ItemsSource="{Binding Methods}"
+                    SelectedValue="{Binding Method.Value}"
+                    Grid.Column="1"
+                    Grid.Row="2" />
 
-                <CheckBox Content="{Binding OpenWithPassword.Text}" Grid.Column="1" Grid.Row="3" />
+                <!-- **********************************************************
+                  Operations
+                *********************************************************** -->
+                <TextBlock
+                    Text="{Binding Operation.Text}"
+                    Grid.Column="0"
+                    Grid.Row="3" />
 
-                <Grid Grid.Column="1" Grid.Row="4">
+                <!-- **********************************************************
+                  UserPassword
+                *********************************************************** -->
+                <CheckBox
+                    Content="{Binding IsOpenPassword.Text}"
+                    IsChecked="{Binding IsOpenPassword.Value}"
+                    Grid.Column="1"
+                    Grid.Row="3" />
+
+                <Grid
+                    IsEnabled="{Binding IsOpenPassword.Value}"
+                    Grid.Column="1"
+                    Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="*" />
@@ -107,21 +146,74 @@
                         <RowDefinition Height="24" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="{Binding UserPassword.Text}" Grid.Column="0" Grid.Row="0" />
-                    <TextBlock Text="{Binding UserConfirm.Text}" Grid.Column="0" Grid.Row="1" />
+                    <TextBlock
+                        Text="{Binding UserPassword.Text}"
+                        Grid.Column="0"
+                        Grid.Row="0" />
+                    <TextBox
+                        Text="{Binding UserPassword.Value, UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="{Binding IsSharePassword.Value, Converter={xc:Inverse}}"
+                        Grid.Column="1"
+                        Grid.Row="0" />
 
-                    <TextBox Grid.Column="1" Grid.Row="0" />
-                    <TextBox Grid.Column="1" Grid.Row="1" />
-                    <CheckBox Content="{Binding SharePassword.Text}" Grid.Column="1" Grid.Row="2" />
+                    <TextBlock
+                        Text="{Binding UserConfirm.Text}"
+                        Grid.Column="0"
+                        Grid.Row="1" />
+                    <TextBox
+                        Text="{Binding UserConfirm.Value, UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="{Binding IsSharePassword.Value, Converter={xc:Inverse}}"
+                        Grid.Column="1"
+                        Grid.Row="1" />
+
+                    <CheckBox
+                        Content="{Binding IsSharePassword.Text}"
+                        IsChecked="{Binding IsSharePassword.Value}"
+                        Grid.Column="1"
+                        Grid.Row="2" />
                 </Grid>
 
-                <CheckBox Content="{Binding AllowPrint.Text}" Grid.Column="1" Grid.Row="5" />
-                <CheckBox Content="{Binding AllowCopy.Text}" Grid.Column="1" Grid.Row="6" />
-                <CheckBox Content="{Binding AllowAssemble.Text}" Grid.Column="1" Grid.Row="7" />
-                <CheckBox Content="{Binding AllowExtract.Text}" Grid.Column="1" Grid.Row="8" />
-                <CheckBox Content="{Binding AllowAccessibility.Text}" Grid.Column="1" Grid.Row="9" />
-                <CheckBox Content="{Binding AllowForm.Text}" Grid.Column="1" Grid.Row="10" />
-                <CheckBox Content="{Binding AllowAnnotation.Text}" Grid.Column="1" Grid.Row="11" />
+                <!-- **********************************************************
+                  Permissions
+                *********************************************************** -->
+                <Grid
+                    IsEnabled="{Binding Operation.Value}"
+                    Grid.Column="1"
+                    Grid.Row="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="24" />
+                    </Grid.RowDefinitions>
+
+                    <CheckBox
+                        Content="{Binding AllowPrint.Text}"
+                        IsChecked="{Binding AllowPrint.Value}"
+                        Grid.Row="0" />
+                    <CheckBox
+                        Content="{Binding AllowCopy.Text}"
+                        IsChecked="{Binding AllowCopy.Value}"
+                        Grid.Row="1" />
+                    <CheckBox
+                        Content="{Binding AllowModify.Text}"
+                        IsChecked="{Binding AllowModify.Value}"
+                        Grid.Row="2" />
+                    <CheckBox
+                        Content="{Binding AllowAccessibility.Text}"
+                        IsChecked="{Binding AllowAccessibility.Value}"
+                        Grid.Row="3" />
+                    <CheckBox
+                        Content="{Binding AllowForm.Text}"
+                        IsChecked="{Binding AllowForm.Value}"
+                        Grid.Row="4" />
+                    <CheckBox
+                        Content="{Binding AllowAnnotation.Text}"
+                        IsChecked="{Binding AllowAnnotation.Value}"
+                        Grid.Row="5" />
+                </Grid>
             </Grid>
         </GroupBox>
 
