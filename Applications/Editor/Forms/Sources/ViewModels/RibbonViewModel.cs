@@ -515,14 +515,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RaiseEnabledChanged
+        /// RaiseEvent
         ///
         /// <summary>
         /// Raises the event that Enabled property is changed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void RaiseEnabledChanged()
+        public void RaiseEvent()
         {
             var name = nameof(RibbonElement.Enabled);
 

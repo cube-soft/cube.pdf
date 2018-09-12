@@ -60,8 +60,8 @@ namespace Cube.Pdf.App.Editor
             Ribbon = new RibbonViewModel(getter, MessengerInstance);
             Recent = new RecentViewModel(mon, MessengerInstance);
 
-            Data.IsOpen.PropertyChanged += (s, e) => Ribbon.RaiseEnabledChanged();
-            Data.IsBusy.PropertyChanged += (s, e) => Ribbon.RaiseEnabledChanged();
+            Data.IsOpen.PropertyChanged += (s, e) => Ribbon.RaiseEvent();
+            Data.IsBusy.PropertyChanged += (s, e) => Ribbon.RaiseEvent();
 
             SetRibbonCommands();
         }
@@ -168,147 +168,249 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetRibbonCommands()
         {
-            Drop = new BindableCommand<string>(
-                e => Post(() => Model.Open(e)),
-                e => !Data.IsOpen.Value && !Data.IsBusy.Value,
-                Data.IsOpen,
-                Data.IsBusy
-            );
-
-            Recent.Open = new BindableCommand<object>(
-                e => Post(() => Model.OpenLink(e as Information)),
-                e => !Data.IsOpen.Value && !Data.IsBusy.Value,
-                Data.IsOpen,
-                Data.IsBusy
-            );
-
-            Ribbon.Open.Command = new BindableCommand(
-                () => SendOpen(e => Model.Open(e)),
-                () => !Data.IsOpen.Value && !Data.IsBusy.Value,
-                Data.IsOpen,
-                Data.IsBusy
-            );
-
-            Ribbon.Undo.Command = new BindableCommand(
-                () => Model.Undo(),
-                () => Data.History.Undoable,
-                Data.History
-            );
-
-            Ribbon.Redo.Command = new BindableCommand(
-                () => Model.Redo(),
-                () => Data.History.Redoable,
-                Data.History
-            );
-
-            Ribbon.Close.Command         = WhenOpen(() => Model.Close());
-            Ribbon.Save.Command          = WhenOpen(() => Model.Save());
-            Ribbon.SaveAs.Command        = WhenOpen(() => SendSave(e => Model.Save(e)));
-            Ribbon.Preview.Command       = WhenSelected(() => Send(new PreviewViewModel(Data.Images, Data.Source.Value, Context)));
-            Ribbon.Select.Command        = WhenOpen(() => Model.Select());
-            Ribbon.SelectAll.Command     = WhenOpen(() => Model.Select(true));
-            Ribbon.SelectFlip.Command    = WhenOpen(() => Model.Flip());
-            Ribbon.SelectClear.Command   = WhenOpen(() => Model.Select(false));
-            Ribbon.Insert.Command        = WhenSelected(() => SendOpen(e => Model.Insert(e)));
-            Ribbon.InsertFront.Command   = WhenOpen(() => SendOpen(e => Model.Insert(0, e)));
-            Ribbon.InsertBack.Command    = WhenOpen(() => SendOpen(e => Model.Insert(int.MaxValue, e)));
-            Ribbon.InsertOthers.Command  = WhenOpen(() => Send(new InsertViewModel(Data.Count.Value, Context)));
-            Ribbon.Extract.Command       = WhenSelected(() => SendSave(e => Model.Extract(e)));
-            Ribbon.Remove.Command        = WhenSelected(() => Model.Remove());
-            Ribbon.RemoveOthers.Command  = WhenOpen(() => Send(new RemoveViewModel(e => Model.Remove(e), Data.Count.Value, Context)));
-            Ribbon.MovePrevious.Command  = WhenSelected(() => Model.Move(-1));
-            Ribbon.MoveNext.Command      = WhenSelected(() => Model.Move(1));
-            Ribbon.RotateLeft.Command    = WhenSelected(() => Model.Rotate(-90));
-            Ribbon.RotateRight.Command   = WhenSelected(() => Model.Rotate(90));
-            Ribbon.Metadata.Command      = WhenOpen(() => Send(new MetadataViewModel(e => Model.Update(e), Data.Metadata.Value.Copy(), Data.Source.Value, Context)));
-            Ribbon.Encryption.Command    = WhenOpen(() => Send(new EncryptionViewModel(e => Model.Update(e), Data.Encryption.Value.Copy(), Context)));
-            Ribbon.Refresh.Command       = WhenOpen(() => Model.Refresh());
-            Ribbon.ZoomIn.Command        = WhenAny(() => Model.Zoom(1));
-            Ribbon.ZoomOut.Command       = WhenAny(() => Model.Zoom(-1));
-            Ribbon.Settings.Command      = WhenAny(() => Send(new SettingsViewModel(Context)));
-            Ribbon.Exit.Command          = WhenAny(() => Send<CloseMessage>());
+            Drop                         = IsDrop();
+            Recent.Open                  = IsLink();
+            Ribbon.Open.Command          = Any(() => SendOpen(e => Model.Open(e)));
+            Ribbon.Close.Command         = IsOpen(() => Send(() => Model.Close()));
+            Ribbon.Save.Command          = IsOpen(() => Post(() => Model.Save()));
+            Ribbon.SaveAs.Command        = IsOpen(() => SendSave(e => Model.Save(e)));
+            Ribbon.Preview.Command       = IsItem(() => SendPreview());
+            Ribbon.Select.Command        = IsOpen(() => Send(() => Model.Select()));
+            Ribbon.SelectAll.Command     = IsOpen(() => Send(() => Model.Select(true)));
+            Ribbon.SelectFlip.Command    = IsOpen(() => Send(() => Model.Flip()));
+            Ribbon.SelectClear.Command   = IsOpen(() => Send(() => Model.Select(false)));
+            Ribbon.Insert.Command        = IsItem(() => SendOpen(e => Model.Insert(e)));
+            Ribbon.InsertFront.Command   = IsOpen(() => SendOpen(e => Model.Insert(0, e)));
+            Ribbon.InsertBack.Command    = IsOpen(() => SendOpen(e => Model.Insert(int.MaxValue, e)));
+            Ribbon.InsertOthers.Command  = IsOpen(() => SendInsert());
+            Ribbon.Extract.Command       = IsItem(() => SendSave(e => Model.Extract(e)));
+            Ribbon.Remove.Command        = IsItem(() => Send(() => Model.Remove()));
+            Ribbon.RemoveOthers.Command  = IsOpen(() => SendRemove());
+            Ribbon.MovePrevious.Command  = IsItem(() => Send(() => Model.Move(-1)));
+            Ribbon.MoveNext.Command      = IsItem(() => Send(() => Model.Move(1)));
+            Ribbon.RotateLeft.Command    = IsItem(() => Send(() => Model.Rotate(-90)));
+            Ribbon.RotateRight.Command   = IsItem(() => Send(() => Model.Rotate(90)));
+            Ribbon.Metadata.Command      = IsOpen(() => SendMetadata());
+            Ribbon.Encryption.Command    = IsOpen(() => SendEncryption());
+            Ribbon.Refresh.Command       = IsOpen(() => Send(() => Model.Refresh()));
+            Ribbon.Undo.Command          = IsUndo();
+            Ribbon.Redo.Command          = IsRedo();
+            Ribbon.ZoomIn.Command        = Any(() => Send(() => Model.Zoom(1)));
+            Ribbon.ZoomOut.Command       = Any(() => Send(() => Model.Zoom(-1)));
+            Ribbon.Settings.Command      = Any(() => SendSettings());
+            Ribbon.Exit.Command          = Any(() => Send<CloseMessage>());
         }
+
+        #region Factory
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Any
+        ///
+        /// <summary>
+        /// Creates a command that can execute at any time.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand Any(Action action) => new BindableCommand(action,
+            () => !Data.IsBusy.Value,
+            Data.IsBusy);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsOpen
+        ///
+        /// <summary>
+        /// Creates a command that can execute when a document is open.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsOpen(Action action) => new BindableCommand(action,
+            () => !Data.IsBusy.Value && Data.IsOpen.Value,
+            Data.IsBusy, Data.IsOpen);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsItem
+        ///
+        /// <summary>
+        /// Creates a command that can execute when any items are
+        /// selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsItem(Action action) => new BindableCommand(action,
+            () => !Data.IsBusy.Value && Data.IsOpen.Value && Data.Selection.Count > 0,
+            Data.IsBusy, Data.IsOpen, Data.Selection);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsUndo
+        ///
+        /// <summary>
+        /// Creates a command that can execute when undo-history items
+        /// exist.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsUndo() => new BindableCommand(() => Model.Undo(),
+            () => !Data.IsBusy.Value && Data.History.Undoable,
+            Data.IsBusy, Data.History);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsRedo
+        ///
+        /// <summary>
+        /// Creates a command that can execute when redo-history items
+        /// exist.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsRedo() => new BindableCommand(() => Model.Redo(),
+            () => !Data.IsBusy.Value && Data.History.Redoable,
+            Data.IsBusy, Data.History);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsLink
+        ///
+        /// <summary>
+        /// Creates a command that can execute when a link is selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsLink() => new BindableCommand<object>(
+            e => Post(() => Model.OpenLink(e as Information)),
+            e => !Data.IsBusy.Value,
+            Data.IsBusy);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsDrop
+        ///
+        /// <summary>
+        /// Creates a command that can execute when an item is dropped.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsDrop() => new BindableCommand<string>(
+            e => Post(() => Model.Open(e)),
+            e => !Data.IsBusy.Value,
+            Data.IsBusy);
+
+        #endregion
+
+        #region Send
 
         /* ----------------------------------------------------------------- */
         ///
         /// SendOpen
         ///
         /// <summary>
-        /// Sends the message that shows OpenFileDialog and executes the
-        /// specified action.
+        /// Sends the message to show a dialog of the <c>OpenFileDialog</c>
+        /// class, and executes the specified action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendOpen(Action<string> action) =>
-            Send(MessageFactory.CreateSource(e =>
-                Post(() => { if (e.Result) action(e.FileName); })
-            ));
+        private void SendOpen(Action<string> action) => Send(MessageFactory.CreateSource(e =>
+            Post(() => { if (e.Result) action(e.FileName); })
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// SendSave
         ///
         /// <summary>
-        /// Sends the message that shows SaveFileDialog and executes the
-        /// specified action.
+        /// Sends the message to show a dialog of the <c>SaveFileDialog</c>
+        /// class, and executes the specified action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendSave(Action<string> action) =>
-            Send(MessageFactory.CreateDestination(e =>
-                Post(() => { if (e.Result) action(e.FileName); })
-            ));
-
-        #region Factory
+        private void SendSave(Action<string> action) => Send(MessageFactory.CreateDestination(e =>
+            Post(() => { if (e.Result) action(e.FileName); })
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenAny
+        /// SendPreview
         ///
         /// <summary>
-        /// Creates a command that can be executed at any time.
+        /// Sends the message to show a dialog of the <c>PreviewWindow</c>
+        /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand WhenAny(Action action) => new BindableCommand(
-            action,
-            () => !Data.IsBusy.Value,
-            Data.IsBusy
-        );
+        private void SendPreview() => Send(new PreviewViewModel(Data.Images, Data.Source.Value, Context));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenOpen
+        /// SendInsert
         ///
         /// <summary>
-        /// Creates a command that can be executed when a document is open.
+        /// Sends the message to show a dialog of the <c>InsertWindow</c>
+        /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand WhenOpen(Action action) => new BindableCommand(
-            action,
-            () => Data.IsOpen.Value && !Data.IsBusy.Value,
-            Data.IsOpen,
-            Data.IsBusy
-        );
+        private void SendInsert() => Send(new InsertViewModel(Data.Count.Value, Context));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenSelected
+        /// SendRemove
         ///
         /// <summary>
-        /// Creates a command that can be executed when any items are
-        /// selected.
+        /// Sends the message to show a dialog of the <c>RemoveWindow</c>
+        /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand WhenSelected(Action action) => new BindableCommand(
-            action,
-            () => Data.IsOpen.Value && Data.Selection.Count > 0 && !Data.IsBusy.Value,
-            Data.IsOpen,
-            Data.IsBusy,
-            Data.Selection
-        );
+        private void SendRemove() => Send(new RemoveViewModel(e => Model.Remove(e), Data.Count.Value, Context));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SendMetadata
+        ///
+        /// <summary>
+        /// Sends the message to show a dialog of the <c>MetadataWindow</c>
+        /// class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SendMetadata() => Send(new MetadataViewModel(
+            e => Model.Update(e),
+            Data.Metadata.Value.Copy(),
+            Data.Source.Value,
+            Context
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SendEncryption
+        ///
+        /// <summary>
+        /// Sends the message to show a dialog of the <c>EncryptionWindow</c>
+        /// class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SendEncryption() => Send(new EncryptionViewModel(
+            e => Model.Update(e),
+            Data.Encryption.Value.Copy(),
+            Context
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SendSettings
+        ///
+        /// <summary>
+        /// Sends the message to show a dialog of the <c>SettingsWindow</c>
+        /// class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SendSettings() => Send(new SettingsViewModel(Context));
 
         #endregion
 
