@@ -249,7 +249,7 @@ namespace Cube.Pdf.App.Editor
         {
             Bindable.SetMessage(Properties.Resources.MessageLoading, src);
             var n = Math.Min(Math.Max(index, 0), Bindable.Images.Count);
-            Bindable.Images.InsertAt(n, _core.GetOrAdd(src).Pages);
+            return Bindable.Images.InsertAt(n, _core.GetOrAdd(src).Pages);
         });
 
         /* ----------------------------------------------------------------- */
