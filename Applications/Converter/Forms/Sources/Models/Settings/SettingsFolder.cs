@@ -404,10 +404,18 @@ namespace Cube.Pdf.App.Converter
         private string NormalizeDestination(Settings src)
         {
             var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            if (!src.Destination.HasValue()) return desktop;
 
-            var dest = IO.Get(src.Destination);
-            return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
+            try
+            {
+                if (!src.Destination.HasValue()) return desktop;
+                var dest = IO.Get(src.Destination);
+                return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
+            }
+            catch (Exception err)
+            {
+                this.LogWarn(err.ToString(), err);
+                return desktop;
+            }
         }
 
         #endregion
