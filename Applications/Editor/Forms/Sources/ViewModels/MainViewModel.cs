@@ -171,20 +171,20 @@ namespace Cube.Pdf.App.Editor
         {
             Drop                         = IsDrop();
             Recent.Open                  = IsLink();
-            Ribbon.Open.Command          = Any(() => SendOpen(e => Model.Open(e)));
+            Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
             Ribbon.Close.Command         = IsOpen(() => Send(() => Model.Close()));
             Ribbon.Save.Command          = IsOpen(() => Post(() => Model.Save()));
-            Ribbon.SaveAs.Command        = IsOpen(() => SendSave(e => Model.Save(e)));
+            Ribbon.SaveAs.Command        = IsOpen(() => PostSave(e => Model.Save(e)));
             Ribbon.Preview.Command       = IsItem(() => SendPreview());
             Ribbon.Select.Command        = IsOpen(() => Send(() => Model.Select()));
             Ribbon.SelectAll.Command     = IsOpen(() => Send(() => Model.Select(true)));
             Ribbon.SelectFlip.Command    = IsOpen(() => Send(() => Model.Flip()));
             Ribbon.SelectClear.Command   = IsOpen(() => Send(() => Model.Select(false)));
-            Ribbon.Insert.Command        = IsItem(() => SendOpen(e => Model.Insert(e)));
-            Ribbon.InsertFront.Command   = IsOpen(() => SendOpen(e => Model.Insert(0, e)));
-            Ribbon.InsertBack.Command    = IsOpen(() => SendOpen(e => Model.Insert(int.MaxValue, e)));
+            Ribbon.Insert.Command        = IsItem(() => PostOpen(e => Model.Insert(e)));
+            Ribbon.InsertFront.Command   = IsOpen(() => PostOpen(e => Model.Insert(0, e)));
+            Ribbon.InsertBack.Command    = IsOpen(() => PostOpen(e => Model.Insert(int.MaxValue, e)));
             Ribbon.InsertOthers.Command  = IsOpen(() => SendInsert());
-            Ribbon.Extract.Command       = IsItem(() => SendSave(e => Model.Extract(e)));
+            Ribbon.Extract.Command       = IsItem(() => PostSave(e => Model.Extract(e)));
             Ribbon.Remove.Command        = IsItem(() => Send(() => Model.Remove()));
             Ribbon.RemoveOthers.Command  = IsOpen(() => SendRemove());
             Ribbon.MovePrevious.Command  = IsItem(() => Send(() => Model.Move(-1)));
@@ -302,7 +302,7 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
-        #region Send
+        #region Send or Post
 
         /* ----------------------------------------------------------------- */
         ///
@@ -310,25 +310,27 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <summary>
         /// Sends the message to show a dialog of the <c>OpenFileDialog</c>
-        /// class, and executes the specified action.
+        /// class, and executes the specified action as an asynchronous
+        /// operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendOpen(Action<string> action) => Send(MessageFactory.CreateSource(e =>
+        private void PostOpen(Action<string> action) => Send(MessageFactory.CreateSource(e =>
             Post(() => { if (e.Result) action(e.FileName); })
         ));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SendSave
+        /// PostSave
         ///
         /// <summary>
         /// Sends the message to show a dialog of the <c>SaveFileDialog</c>
-        /// class, and executes the specified action.
+        /// class, and executes the specified action as an asynchronous
+        /// operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendSave(Action<string> action) => Send(MessageFactory.CreateDestination(e =>
+        private void PostSave(Action<string> action) => Send(MessageFactory.CreateDestination(e =>
             Post(() => { if (e.Result) action(e.FileName); })
         ));
 

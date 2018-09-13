@@ -19,6 +19,7 @@
 using Cube.Collections.Mixin;
 using Cube.FileSystem;
 using Cube.Generics;
+using Cube.Xui.Mixin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace Cube.Pdf.App.Editor
         public MainFacade(SettingsFolder settings, SynchronizationContext context)
         {
             _dispose = new OnceAction<bool>(Dispose);
-            _core    = new DocumentCollection(e => Bindable.IsOpen.Value = e.Count > 0);
+            _core    = new DocumentCollection(e => Bindable.IsOpen.Raise());
             Bindable = new MainBindable(new ImageCollection(e => _core.Get(e)), settings);
             Settings = settings;
 
@@ -506,7 +507,7 @@ namespace Cube.Pdf.App.Editor
             catch (Exception err) { Bindable.SetMessage(err.Message); throw; }
             finally
             {
-                Bindable.Count.Value = Bindable.Images.Count;
+                Bindable.Count.Raise();
                 Bindable.IsBusy.Value = false;
             }
         }

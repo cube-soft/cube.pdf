@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Xui;
+using Cube.Xui.Mixin;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -49,8 +50,10 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public MainBindable(ImageCollection images, SettingsFolder settings)
         {
-            Images    = images;
             _settings = settings;
+            Images    = images;
+            IsOpen    = new Bindable<bool>(() => Source.Value != null);
+            Count     = new Bindable<int>(() => Images.Count);
         }
 
         #endregion
@@ -154,7 +157,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<int> Count { get; } = new Bindable<int>(0);
+        public Bindable<int> Count { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -165,7 +168,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> IsOpen { get; } = new Bindable<bool>(false);
+        public Bindable<bool> IsOpen { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -210,6 +213,7 @@ namespace Cube.Pdf.App.Editor
             Metadata.Value   = src.Metadata;
             Encryption.Value = src.Encryption;
 
+            IsOpen.Raise();
             Images.Add(src.Pages);
         }
 
@@ -228,6 +232,7 @@ namespace Cube.Pdf.App.Editor
             Metadata.Value   = null;
             Encryption.Value = null;
 
+            IsOpen.Raise();
             History.Clear();
             Images.Clear();
         }
