@@ -21,6 +21,7 @@ using Cube.FileSystem;
 using Cube.Generics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -108,6 +109,23 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Setup
+        ///
+        /// <summary>
+        /// Invokes some actions through the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="args">User arguments.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Setup(IEnumerable<string> args)
+        {
+            if (args.Count() <= 0) return;
+            Open(args.First());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Open
         ///
         /// <summary>
@@ -117,12 +135,16 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">File path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open(string src) => Invoke(() =>
+        public void Open(string src)
         {
             if (!src.HasValue()) return;
-            Bindable.SetMessage(Properties.Resources.MessageLoading, src);
-            Bindable.Open(_core.GetOrAdd(src));
-        });
+            if (Bindable.IsOpen.Value) this.StartProcess(src.Quote());
+            else Invoke(() =>
+            {
+                Bindable.SetMessage(Properties.Resources.MessageLoading, src);
+                Bindable.Open(_core.GetOrAdd(src));
+            });
+        }
 
         /* ----------------------------------------------------------------- */
         ///

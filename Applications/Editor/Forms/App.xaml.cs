@@ -30,7 +30,7 @@ namespace Cube.Pdf.App.Editor
     /// App
     ///
     /// <summary>
-    /// メインプログラムを表すクラスです。
+    /// Represents the main program.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -43,7 +43,7 @@ namespace Cube.Pdf.App.Editor
         /// App
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the <c>App</c> class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -54,6 +54,21 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Arguments
+        ///
+        /// <summary>
+        /// Gets the arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<string> Arguments { get; private set; } = new string[0];
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -61,7 +76,7 @@ namespace Cube.Pdf.App.Editor
         /// OnStartup
         ///
         /// <summary>
-        /// 起動時に実行されます。
+        /// Occurs when the Startup event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -73,6 +88,9 @@ namespace Cube.Pdf.App.Editor
             _resources.Add(Logger.ObserveTaskException());
             _resources.Add(this.ObserveUiException());
 
+            Arguments = e.Args ?? new string[0];
+            Logger.Info(GetType(), $"Arguments:{string.Join(" ", Arguments)}");
+
             base.OnStartup(e);
         }
 
@@ -83,7 +101,7 @@ namespace Cube.Pdf.App.Editor
         /// ~App
         ///
         /// <summary>
-        /// オブジェクトを破棄します。
+        /// Finalizes the <c>App</c>.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -94,7 +112,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases all resources used by the <c>App</c>.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -109,11 +127,13 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases the unmanaged resources used by the <c>App</c>
+        /// and optionally releases the managed resources.
         /// </summary>
         ///
         /// <param name="disposing">
-        /// マネージオブジェクトを開放するかどうか
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */

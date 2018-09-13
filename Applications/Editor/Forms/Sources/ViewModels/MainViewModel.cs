@@ -63,7 +63,8 @@ namespace Cube.Pdf.App.Editor
             Data.IsOpen.PropertyChanged += (s, e) => Ribbon.RaiseEvent();
             Data.IsBusy.PropertyChanged += (s, e) => Ribbon.RaiseEvent();
 
-            SetRibbonCommands();
+            SetCommands();
+            Post(() => Model.Setup(App.Arguments));
         }
 
         #endregion
@@ -159,14 +160,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetRibbonCommands
+        /// SetCommands
         ///
         /// <summary>
-        /// Sets commands of Ribbon items.
+        /// Sets commands of the <c>MainWindow</c>.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetRibbonCommands()
+        private void SetCommands()
         {
             Drop                         = IsDrop();
             Recent.Open                  = IsLink();

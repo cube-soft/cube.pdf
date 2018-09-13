@@ -21,8 +21,10 @@ using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Media;
 
 namespace Cube.Pdf.App.Editor
@@ -110,6 +112,25 @@ namespace Cube.Pdf.App.Editor
         }
 
         #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// StartProcess
+        ///
+        /// <summary>
+        /// Starts a new process with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="args">User arguments.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void StartProcess(this MainFacade src, string args) =>
+            Process.Start(new ProcessStartInfo
+            {
+                FileName  = Assembly.GetExecutingAssembly().Location,
+                Arguments = args
+            });
 
         /* ----------------------------------------------------------------- */
         ///
