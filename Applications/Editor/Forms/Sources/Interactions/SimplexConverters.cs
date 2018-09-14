@@ -88,6 +88,45 @@ namespace Cube.Pdf.App.Editor
 
     #endregion
 
+    #region EncryptionMethodConverter
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// EncryptionMethodConverter
+    ///
+    /// <summary>
+    /// Provides functionality to convert a <c>EncryptionMethod</c>.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class EncryptionMethodConverter : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EncryptionMethodConverter
+        ///
+        /// <summary>
+        /// Initializes a new instance of the <c>EncryptionMethodConverter</c>
+        /// class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EncryptionMethodConverter() : base(e =>
+        {
+            switch (e.TryCast<EncryptionMethod>())
+            {
+                case EncryptionMethod.Standard40:  return  "40-bit RC4";
+                case EncryptionMethod.Standard128: return "128-bit RC4";
+                case EncryptionMethod.Aes128:      return "128-bit AES";
+                case EncryptionMethod.Aes256:      return "256-bit AES";
+                case EncryptionMethod.Aes256r6:    return "256-bit AES (Revision 6)";
+                default: return "Unknown";
+            }
+        }) { }
+    }
+
+    #endregion
+
     #region BooleanToCursor
 
     /* --------------------------------------------------------------------- */

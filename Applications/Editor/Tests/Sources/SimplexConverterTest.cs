@@ -24,6 +24,7 @@ using Cube.Xui;
 using Cube.Xui.Converters;
 using NUnit.Framework;
 using System.Globalization;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
@@ -79,6 +80,32 @@ namespace Cube.Pdf.Tests.Editor
         {
             ResourceCulture.Set(culture);
             return Convert<string>(new ByteConverter(), n);
+        }
+
+        #endregion
+
+        #region EncryptionMethodConverter
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_EncryptionMethod
+        ///
+        /// <summary>
+        /// Tests to convert an EncryptionMethod value.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(EncryptionMethod.Standard40,  "en", ExpectedResult = "40-bit RC4")]
+        [TestCase(EncryptionMethod.Standard128, "en", ExpectedResult = "128-bit RC4")]
+        [TestCase(EncryptionMethod.Aes128,      "en", ExpectedResult = "128-bit AES")]
+        [TestCase(EncryptionMethod.Aes256,      "en", ExpectedResult = "256-bit AES")]
+        [TestCase(EncryptionMethod.Aes256r6,    "en", ExpectedResult = "256-bit AES (Revision 6)")]
+        [TestCase(EncryptionMethod.Unknown,     "en", ExpectedResult = "Unknown")]
+        [TestCase(EncryptionMethod.Unknown,     "ja", ExpectedResult = "Unknown")]
+        public string Convert_EncryptionMethod(EncryptionMethod src, string culture)
+        {
+            ResourceCulture.Set(culture);
+            return Convert<string>(new EncryptionMethodConverter(), src);
         }
 
         #endregion
@@ -238,6 +265,28 @@ namespace Cube.Pdf.Tests.Editor
         #endregion
 
         #region Helper methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Setup
+        ///
+        /// <summary>
+        /// Invokes the setup operation at once.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Properties.Resources クラスの表示文字列を設定言語毎に
+        /// 切り替えるための処理を SettingsFolder の静的コンストラクタで
+        /// 実行しています。このコンストラクタが確実に実行されるように
+        /// Setup で SettingsFolder オブジェクトを生成します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            var dummy = new SettingsFolder(Assembly.GetExecutingAssembly(), IO);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

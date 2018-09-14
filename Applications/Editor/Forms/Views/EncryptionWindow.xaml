@@ -24,6 +24,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
     xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
@@ -112,7 +113,13 @@
                     ItemsSource="{Binding Methods}"
                     SelectedValue="{Binding Method.Value}"
                     Grid.Column="1"
-                    Grid.Row="2" />
+                    Grid.Row="2">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={my:EncryptionMethodConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
                 <!-- **********************************************************
                   Operations
