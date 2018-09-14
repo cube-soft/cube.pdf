@@ -808,6 +808,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Saved at {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageSaved {
+            get {
+                return ResourceManager.GetString("MessageSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Saving to {0} ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageSaving {

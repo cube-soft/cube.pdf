@@ -366,6 +366,9 @@
   <data name="MessageRemoveRange" xml:space="preserve">
     <value>例. 1,2,4-7,9</value>
   </data>
+  <data name="MessageSaved" xml:space="preserve">
+    <value>{0} に保存しました</value>
+  </data>
   <data name="MessageSaving" xml:space="preserve">
     <value>{0} に保存しています ...</value>
   </data>

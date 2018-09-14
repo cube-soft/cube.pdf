@@ -203,7 +203,10 @@ namespace Cube.Pdf.App.Editor
         /// <param name="dest">Save path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Extract(string dest) => Invoke(() => Bindable.Images.Extract(dest));
+        public void Extract(string dest) => Invoke(
+            () => Bindable.Images.Extract(dest),
+            Properties.Resources.MessageSaved, dest
+        );
 
         /* ----------------------------------------------------------------- */
         ///
