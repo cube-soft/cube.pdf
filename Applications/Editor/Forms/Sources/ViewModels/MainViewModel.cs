@@ -54,14 +54,14 @@ namespace Cube.Pdf.App.Editor
             var settings = new SettingsFolder(Assembly.GetExecutingAssembly(), io);
             var recent   = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
             var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", io);
-            var getter   = new Getter<bool>(() => Data.IsOpen.Value && !Data.IsBusy.Value);
+            var getter   = new Getter<bool>(() => Data.IsOpen() && !Data.Busy.Value);
 
             Model  = new MainFacade(settings, Context);
             Ribbon = new RibbonViewModel(getter, MessengerInstance);
             Recent = new RecentViewModel(mon, MessengerInstance);
 
-            Data.IsOpen.PropertyChanged += (s, e) => Ribbon.RaiseEvent();
-            Data.IsBusy.PropertyChanged += (s, e) => Ribbon.RaiseEvent();
+            Data.Source.PropertyChanged += (s, e) => Ribbon.RaiseEvent();
+            Data.Busy.PropertyChanged   += (s, e) => Ribbon.RaiseEvent();
 
             SetCommands();
             Post(() => Model.Setup(App.Arguments));
@@ -214,8 +214,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand Any(Action action) => new BindableCommand(action,
-            () => !Data.IsBusy.Value,
-            Data.IsBusy);
+            () => !Data.Busy.Value,
+            Data.Busy);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -227,8 +227,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsOpen(Action action) => new BindableCommand(action,
-            () => !Data.IsBusy.Value && Data.IsOpen.Value,
-            Data.IsBusy, Data.IsOpen);
+            () => !Data.Busy.Value && Data.IsOpen(),
+            Data.Busy, Data.Source);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -241,8 +241,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsItem(Action action) => new BindableCommand(action,
-            () => !Data.IsBusy.Value && Data.IsOpen.Value && Data.Selection.Count > 0,
-            Data.IsBusy, Data.IsOpen, Data.Selection);
+            () => !Data.Busy.Value && Data.IsOpen() && Data.Selection.Count > 0,
+            Data.Busy, Data.Source, Data.Selection);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -255,8 +255,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsUndo() => new BindableCommand(() => Model.Undo(),
-            () => !Data.IsBusy.Value && Data.History.Undoable,
-            Data.IsBusy, Data.History);
+            () => !Data.Busy.Value && Data.History.Undoable,
+            Data.Busy, Data.History);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -269,8 +269,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsRedo() => new BindableCommand(() => Model.Redo(),
-            () => !Data.IsBusy.Value && Data.History.Redoable,
-            Data.IsBusy, Data.History);
+            () => !Data.Busy.Value && Data.History.Redoable,
+            Data.Busy, Data.History);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -283,8 +283,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ICommand IsLink() => new BindableCommand<object>(
             e => Post(() => Model.OpenLink(e as Information)),
-            e => !Data.IsBusy.Value,
-            Data.IsBusy);
+            e => !Data.Busy.Value,
+            Data.Busy);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -297,8 +297,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ICommand IsDrop() => new BindableCommand<string>(
             e => Post(() => Model.Open(e)),
-            e => !Data.IsBusy.Value,
-            Data.IsBusy);
+            e => !Data.Busy.Value,
+            Data.Busy);
 
         #endregion
 

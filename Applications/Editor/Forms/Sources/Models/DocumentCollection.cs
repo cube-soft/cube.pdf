@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Pdfium;
-using System;
 using System.Collections.Concurrent;
 
 namespace Cube.Pdf.App.Editor
@@ -33,29 +32,6 @@ namespace Cube.Pdf.App.Editor
     /* --------------------------------------------------------------------- */
     public class DocumentCollection
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentCollection
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentCollection class
-        /// with the specified parameters.
-        /// </summary>
-        ///
-        /// <param name="updated">
-        /// Called after PDF documents is added or removed.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentCollection(Action<DocumentCollection> updated)
-        {
-            _callback = updated;
-        }
-
-        #endregion
-
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -108,7 +84,6 @@ namespace Cube.Pdf.App.Editor
         {
             if (_core.TryGetValue(src, out var value)) return value;
             var dest = _core.GetOrAdd(src, e => new DocumentReader(e));
-            _callback(this);
             return dest;
         }
 
@@ -130,11 +105,7 @@ namespace Cube.Pdf.App.Editor
         public bool Remove(string src)
         {
             var dest = _core.TryRemove(src, out var removed);
-            if (dest)
-            {
-                removed.Dispose();
-                _callback(this);
-            }
+            if (dest) removed.Dispose();
             return dest;
         }
 
@@ -151,14 +122,12 @@ namespace Cube.Pdf.App.Editor
         {
             foreach (var kv in _core) kv.Value.Dispose();
             _core.Clear();
-            _callback(this);
         }
 
         #endregion
 
         #region Fields
         private readonly ConcurrentDictionary<string, DocumentReader> _core = new ConcurrentDictionary<string, DocumentReader>();
-        private readonly Action<DocumentCollection> _callback;
         #endregion
     }
 }

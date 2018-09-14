@@ -35,7 +35,7 @@
     Width="800"
     FontFamily="Meiryo UI"
     AllowDrop="True"
-    Cursor="{Binding Data.IsBusy.Value, Converter={my:BooleanToCursor}}">
+    Cursor="{Binding Data.Busy.Value, Converter={my:BooleanToCursor}}">
 
     <!-- **********************************************************************
       Resources
@@ -85,10 +85,10 @@
         <my:RibbonControl Grid.Row="0" />
         <my:PagesControl
             ContextMenu="{StaticResource MainContextMenu}"
-            Visibility="{Binding Data.IsOpen.Value, Converter={xc:BooleanToVisibility}}"
+            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibility}}"
             Grid.Row="1" />
         <my:HeroControl
-            Visibility="{Binding Data.IsOpen.Value, Converter={my:InverseToVisibility}}"
+            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibilityInverse}}"
             Grid.Row="1" />
         <my:FooterControl Grid.Row="2" />
     </Grid>

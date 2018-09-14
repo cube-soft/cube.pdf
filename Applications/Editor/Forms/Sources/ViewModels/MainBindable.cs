@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Xui;
-using Cube.Xui.Mixin;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -52,7 +51,6 @@ namespace Cube.Pdf.App.Editor
         {
             _settings = settings;
             Images    = images;
-            IsOpen    = new Bindable<bool>(() => Source.Value != null);
             Count     = new Bindable<int>(() => Images.Count);
         }
 
@@ -161,25 +159,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsOpen
+        /// Busy
         ///
         /// <summary>
-        /// Gets a value that determines whether a PDF document is open.
+        /// Gets a value indicating whether models are busy.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> IsOpen { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsBusy
-        ///
-        /// <summary>
-        /// Gets a value that determines whether models are busy.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bindable<bool> IsBusy { get; } = new Bindable<bool>(false);
+        public Bindable<bool> Busy { get; } = new Bindable<bool>(false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -198,6 +185,19 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IsOpen
+        ///
+        /// <summary>
+        /// Gets the value indicatint whether a PDF document is open.
+        /// </summary>
+        ///
+        /// <returns>true for open.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsOpen() => Source.Value != null;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Open
         ///
         /// <summary>
@@ -213,7 +213,6 @@ namespace Cube.Pdf.App.Editor
             Metadata.Value   = src.Metadata;
             Encryption.Value = src.Encryption;
 
-            IsOpen.Raise();
             Images.Add(src.Pages);
         }
 
@@ -232,7 +231,6 @@ namespace Cube.Pdf.App.Editor
             Metadata.Value   = null;
             Encryption.Value = null;
 
-            IsOpen.Raise();
             History.Clear();
             Images.Clear();
         }

@@ -67,12 +67,12 @@
           Count
         ******************************************************************* -->
         <Separator
-            Visibility="{Binding IsOpen.Value, Converter={xc:BooleanToVisibility}}"
+            Visibility="{Binding Source.Value, Converter={my:HasValueToVisibility}}"
             Style="{StaticResource FooterSeparatorStyle}"
             Grid.Column="3" />
         <StatusBarItem
             Content="{Binding Count.Value, Converter={my:CountToText}}"
-            Visibility="{Binding IsOpen.Value, Converter={xc:BooleanToVisibility}}"
+            Visibility="{Binding Source.Value, Converter={my:HasValueToVisibility}}"
             Style="{StaticResource FooterItemStyle}"
             Grid.Column="4" />
     </StatusBar>

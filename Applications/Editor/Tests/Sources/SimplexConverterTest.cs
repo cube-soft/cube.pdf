@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.FileSystem.TestService;
 using Cube.Generics;
 using Cube.Pdf.App.Editor;
 using Cube.Xui;
@@ -38,7 +39,7 @@ namespace Cube.Pdf.Tests.Editor
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SimplexConverterTest
+    class SimplexConverterTest : FileFixture
     {
         #region Tests
 
@@ -57,7 +58,7 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase("Test",              ExpectedResult = "Test - CubePDF Utility")]
         [TestCase("",                  ExpectedResult = "CubePDF Utility")]
         public string Convert_Title(string src) =>
-            Convert<string>(new TitleConverter(), src.HasValue() ? new IO().Get(src) : null);
+            Convert<string>(new TitleConverter(), src.HasValue() ? IO.Get(src) : null);
 
         #endregion
 
@@ -198,20 +199,37 @@ namespace Cube.Pdf.Tests.Editor
 
         #endregion
 
-        #region InverseToVisibility
+        #region HasValueToVisibility
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_InverseToVisibility
+        /// Convert_HasValueToVisibility
         ///
         /// <summary>
-        /// Tests to convert a boolean value to visibility.
+        /// Tests to convert an object to visibility.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [Test]
-        public void Convert_InverseToVisibility() => Assert.That(
-            Convert<Visibility>(new InverseToVisibility(), true),
+        public void Convert_HasValueToVisibility() => Assert.That(
+            Convert<Visibility>(new HasValueToVisibility(), GetExamplesWith("Sample.pdf")),
+            Is.EqualTo(Visibility.Visible)
+        );
+
+        #endregion
+
+        #region HasValueToVisibilityInverse
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_HasValueToVisibilityInverse
+        ///
+        /// <summary>
+        /// Tests to convert an object to visibility.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Convert_HasValueToVisibilityInverse() => Assert.That(
+            Convert<Visibility>(new HasValueToVisibilityInverse(), GetExamplesWith("Sample.pdf")),
             Is.EqualTo(Visibility.Collapsed)
         );
 

@@ -55,9 +55,8 @@ namespace Cube.Pdf.App.Editor
         public MainFacade(SettingsFolder settings, SynchronizationContext context)
         {
             _dispose = new OnceAction<bool>(Dispose);
-            _core    = new DocumentCollection(e => Bindable.IsOpen.Raise());
-            Bindable = new MainBindable(new ImageCollection(e => _core.GetOrAdd(e)), settings);
             Settings = settings;
+            Bindable = new MainBindable(new ImageCollection(e => _core.GetOrAdd(e)), settings);
 
             var sizes = Bindable.Images.Preferences.ItemSizeOptions;
             var index = sizes.LastIndexOf(e => e <= settings.Value.ViewSize);
@@ -139,7 +138,7 @@ namespace Cube.Pdf.App.Editor
         public void Open(string src)
         {
             if (!src.HasValue()) return;
-            if (Bindable.IsOpen.Value) this.StartProcess(src.Quote());
+            if (Bindable.IsOpen()) this.StartProcess(src.Quote());
             else Invoke(() =>
             {
                 Bindable.SetMessage(Properties.Resources.MessageLoading, src);
@@ -500,7 +499,7 @@ namespace Cube.Pdf.App.Editor
         {
             try
             {
-                Bindable.IsBusy.Value = true;
+                Bindable.Busy.Value = true;
                 action();
                 Bindable.SetMessage(format, args);
             }
@@ -508,7 +507,7 @@ namespace Cube.Pdf.App.Editor
             finally
             {
                 Bindable.Count.Raise();
-                Bindable.IsBusy.Value = false;
+                Bindable.Busy.Value = false;
             }
         }
 
@@ -516,7 +515,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly OnceAction<bool> _dispose;
-        private readonly DocumentCollection _core;
+        private readonly DocumentCollection _core = new DocumentCollection();
         #endregion
     }
 }

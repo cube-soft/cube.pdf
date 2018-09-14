@@ -126,7 +126,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Last,   Is.EqualTo(-1));
 
             vm.Data.Images.First().IsSelected = true;
-            Assert.That(Wait.For(() => !vm.Data.IsBusy.Value));
+            Assert.That(Wait.For(() => !vm.Data.Busy.Value));
             Assert.That(dest.Count,   Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Last,   Is.EqualTo(0), nameof(dest.Last));
 

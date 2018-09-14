@@ -131,11 +131,11 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected void Execute(MainViewModel vm, BindableElement src)
         {
-            Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), $"NotReady ({src.Text})");
+            Assert.That(Wait.For(() => !vm.Data.Busy.Value), $"NotReady ({src.Text})");
             vm.Data.Message.Value = string.Empty;
             Assert.That(src.Command.CanExecute(), Is.True, nameof(src.Command.CanExecute));
             src.Command.Execute();
-            Assert.That(Wait.For(() => !vm.Data.IsBusy.Value), $"Timeout ({src.Text})");
+            Assert.That(Wait.For(() => !vm.Data.Busy.Value), $"Timeout ({src.Text})");
             Assert.That(vm.Data.Message.Value, Is.Empty);
         }
 

@@ -230,32 +230,63 @@ namespace Cube.Pdf.App.Editor
 
     #endregion
 
-    #region InverseToVisibility
+    #region HasValueToVisibility
 
     /* --------------------------------------------------------------------- */
     ///
-    /// InverseToVisibility
+    /// HasValueToVisibility
+    ///
+    /// <summary>
+    /// Provides functionality to convert from the specified value to the
+    /// visibility.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class HasValueToVisibility : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// HasValueToVisibility
+        ///
+        /// <summary>
+        /// Initializes a new instance of the <c>HasValueToVisibility</c>
+        /// class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public HasValueToVisibility() :
+            base(e => e != null ? Visibility.Visible : Visibility.Collapsed) { }
+    }
+
+    #endregion
+
+    #region HasValueToVisibilityInverse
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// HasValueToVisibilityInverse
     ///
     /// <summary>
     /// Provides functionality to convert from the specified value to the
     /// visibility. Note that the class returns Collapsed when the
-    /// specified value is true.
+    /// specified value is null.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InverseToVisibility : BooleanToVisibility
+    public class HasValueToVisibilityInverse : SimplexConverter
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// InverseToVisibility
+        /// HasValueToVisibilityInverse
         ///
         /// <summary>
-        /// Initializes a new instance of the InverseToVisibility class.
+        /// Initializes a new instance of the
+        /// <c>HasValueToVisibilityInverse</c> class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InverseToVisibility() :
-            base(Visibility.Collapsed, Visibility.Visible, e => e.TryCast<bool>()) { }
+        public HasValueToVisibilityInverse() :
+            base(e => e == null ? Visibility.Visible : Visibility.Collapsed) { }
     }
 
     #endregion
