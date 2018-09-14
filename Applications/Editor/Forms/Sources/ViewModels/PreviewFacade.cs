@@ -98,10 +98,10 @@ namespace Cube.Pdf.App.Editor
         {
             try
             {
-                Bindable.IsBusy.Value = true;
+                Bindable.Busy.Value = true;
                 Bindable.Image.Value = Images.Preview(index, 3.0);
             }
-            finally { Bindable.IsBusy.Value = false; }
+            finally { Bindable.Busy.Value = false; }
         }
 
         #endregion

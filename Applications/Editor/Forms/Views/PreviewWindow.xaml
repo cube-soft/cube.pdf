@@ -32,7 +32,7 @@
     Title="{Binding Title.Text}"
     Width="{Binding Data.Width.Value}"
     Height="{Binding Data.Height.Value}"
-    Cursor="{Binding Data.IsBusy.Value, Converter={my:BooleanToCursor}}">
+    Cursor="{Binding Data.Busy.Value, Converter={my:BooleanToCursor}}">
 
     <!-- **********************************************************************
       Interaction

@@ -108,14 +108,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsBusy
+        /// Busy
         ///
         /// <summary>
         /// Gets a value indicating whether models are busy.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> IsBusy { get; } = new Bindable<bool>(false);
+        public Bindable<bool> Busy { get; } = new Bindable<bool>(false);
 
         #endregion
     }
