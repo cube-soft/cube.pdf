@@ -56,7 +56,7 @@ namespace Cube.Pdf.App.Editor
         {
             _dispose = new OnceAction<bool>(Dispose);
             _core    = new DocumentCollection(e => Bindable.IsOpen.Raise());
-            Bindable = new MainBindable(new ImageCollection(e => _core.Get(e)), settings);
+            Bindable = new MainBindable(new ImageCollection(e => _core.GetOrAdd(e)), settings);
             Settings = settings;
 
             var sizes = Bindable.Images.Preferences.ItemSizeOptions;
