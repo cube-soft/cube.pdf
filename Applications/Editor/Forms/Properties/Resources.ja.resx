@@ -222,6 +222,15 @@
   <data name="MenuLanguage" xml:space="preserve">
     <value>表示言語</value>
   </data>
+  <data name="MenuLanguageAuto" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="MenuLanguageEnglish" xml:space="preserve">
+    <value>英語</value>
+  </data>
+  <data name="MenuLanguageJapanese" xml:space="preserve">
+    <value>日本語</value>
+  </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
     <value>最終更新日時</value>
   </data>
@@ -350,6 +359,24 @@
   </data>
   <data name="MenuVersion" xml:space="preserve">
     <value>バージョン情報</value>
+  </data>
+  <data name="MenuViewOneColumn" xml:space="preserve">
+    <value>連続ページ</value>
+  </data>
+  <data name="MenuViewSinglePage" xml:space="preserve">
+    <value>単一ページ</value>
+  </data>
+  <data name="MenuViewTwoColumnLeft" xml:space="preserve">
+    <value>連続見開きページ (左綴じ)</value>
+  </data>
+  <data name="MenuViewTwoColumnRight" xml:space="preserve">
+    <value>連続見開きページ (右綴じ)</value>
+  </data>
+  <data name="MenuViewTwoPageLeft" xml:space="preserve">
+    <value>見開きページ (左綴じ)</value>
+  </data>
+  <data name="MenuViewTwoPageRight" xml:space="preserve">
+    <value>見開きページ (右綴じ)</value>
   </data>
   <data name="MenuZoomIn" xml:space="preserve">
     <value>拡大</value>

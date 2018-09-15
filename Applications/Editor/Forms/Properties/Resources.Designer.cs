@@ -376,6 +376,33 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Auto に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuLanguageAuto {
+            get {
+                return ResourceManager.GetString("MenuLanguageAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   English に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuLanguageEnglish {
+            get {
+                return ResourceManager.GetString("MenuLanguageEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Japanese に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuLanguageJapanese {
+            get {
+                return ResourceManager.GetString("MenuLanguageJapanese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Last updated に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuLastWriteTime {
@@ -759,6 +786,60 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string MenuVersion {
             get {
                 return ResourceManager.GetString("MenuVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   One column に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuViewOneColumn {
+            get {
+                return ResourceManager.GetString("MenuViewOneColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Single page に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuViewSinglePage {
+            get {
+                return ResourceManager.GetString("MenuViewSinglePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Two column (left) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuViewTwoColumnLeft {
+            get {
+                return ResourceManager.GetString("MenuViewTwoColumnLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Two column (right) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuViewTwoColumnRight {
+            get {
+                return ResourceManager.GetString("MenuViewTwoColumnRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Two page (left) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuViewTwoPageLeft {
+            get {
+                return ResourceManager.GetString("MenuViewTwoPageLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Two page (right) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuViewTwoPageRight {
+            get {
+                return ResourceManager.GetString("MenuViewTwoPageRight", resourceCulture);
             }
         }
         
