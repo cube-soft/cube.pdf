@@ -275,7 +275,7 @@ namespace Cube.Pdf.Tests.Converter
                             Subject        = "Linearization test Subject",
                             Keywords       = "Linearization test keywords",
                             Creator        = "Linearization test creator",
-                            DisplayOptions = DisplayOptions.SinglePage,
+                            Viewer = ViewerPreferences.SinglePage,
                         }
                     },
                     CreateArgs("PDF テスト (Linearization)")
@@ -312,7 +312,7 @@ namespace Cube.Pdf.Tests.Converter
                             Subject        = "Encryption test Subject",
                             Keywords       = "Encryption test keywords",
                             Creator        = "Encryption test creator",
-                            DisplayOptions = DisplayOptions.SinglePage,
+                            Viewer = ViewerPreferences.SinglePage,
                         }
                     },
                     CreateArgs("PDF テスト (Encryption)")

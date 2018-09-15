@@ -363,7 +363,7 @@ namespace Cube.Pdf.Tests.Converter
             vm.Subject        = src.Subject;
             vm.Keywords       = src.Keywords;
             vm.Creator        = src.Creator;
-            vm.DisplayOptions = src.DisplayOptions;
+            vm.Viewer = src.Viewer;
         }
 
         /* ----------------------------------------------------------------- */

@@ -63,9 +63,9 @@
             this.FormatComboBox = new System.Windows.Forms.ComboBox();
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.DisplayOptionsComboBox = new System.Windows.Forms.ComboBox();
+            this.ViewerPreferencesComboBox = new System.Windows.Forms.ComboBox();
             this.MetadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.DisplayOptionsLabel = new System.Windows.Forms.Label();
+            this.ViewerPreferencesLabel = new System.Windows.Forms.Label();
             this.CreatorTextBox = new System.Windows.Forms.TextBox();
             this.CreatorLabel = new System.Windows.Forms.Label();
             this.KeywordsTextBox = new System.Windows.Forms.TextBox();
@@ -402,8 +402,8 @@
             // DocumentPanel
             //
             resources.ApplyResources(this.DocumentPanel, "DocumentPanel");
-            this.DocumentPanel.Controls.Add(this.DisplayOptionsComboBox, 1, 5);
-            this.DocumentPanel.Controls.Add(this.DisplayOptionsLabel, 0, 5);
+            this.DocumentPanel.Controls.Add(this.ViewerPreferencesComboBox, 1, 5);
+            this.DocumentPanel.Controls.Add(this.ViewerPreferencesLabel, 0, 5);
             this.DocumentPanel.Controls.Add(this.CreatorTextBox, 1, 4);
             this.DocumentPanel.Controls.Add(this.CreatorLabel, 0, 4);
             this.DocumentPanel.Controls.Add(this.KeywordsTextBox, 1, 3);
@@ -416,22 +416,22 @@
             this.DocumentPanel.Controls.Add(this.TitleLabel, 0, 0);
             this.DocumentPanel.Name = "DocumentPanel";
             //
-            // DisplayOptionsComboBox
+            // ViewerPreferencesComboBox
             //
-            this.DisplayOptionsComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "DisplayOptions", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            resources.ApplyResources(this.DisplayOptionsComboBox, "DisplayOptionsComboBox");
-            this.DisplayOptionsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DisplayOptionsComboBox.FormattingEnabled = true;
-            this.DisplayOptionsComboBox.Name = "DisplayOptionsComboBox";
+            this.ViewerPreferencesComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "Viewer", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            resources.ApplyResources(this.ViewerPreferencesComboBox, "ViewerPreferencesComboBox");
+            this.ViewerPreferencesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ViewerPreferencesComboBox.FormattingEnabled = true;
+            this.ViewerPreferencesComboBox.Name = "ViewerPreferencesComboBox";
             //
             // MetadataBindingSource
             //
             this.MetadataBindingSource.DataSource = typeof(Cube.Pdf.App.Converter.MetadataViewModel);
             //
-            // DisplayOptionsLabel
+            // ViewerPreferencesLabel
             //
-            resources.ApplyResources(this.DisplayOptionsLabel, "DisplayOptionsLabel");
-            this.DisplayOptionsLabel.Name = "DisplayOptionsLabel";
+            resources.ApplyResources(this.ViewerPreferencesLabel, "ViewerPreferencesLabel");
+            this.ViewerPreferencesLabel.Name = "ViewerPreferencesLabel";
             //
             // CreatorTextBox
             //
@@ -633,7 +633,7 @@
             // AllowFormCheckBox
             //
             resources.ApplyResources(this.AllowFormCheckBox, "AllowFormCheckBox");
-            this.AllowFormCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowInputForms", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.AllowFormCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowInputForm", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowFormCheckBox.Name = "AllowFormCheckBox";
             this.AllowFormCheckBox.UseVisualStyleBackColor = true;
             //
@@ -895,8 +895,8 @@
         private System.Windows.Forms.Label CreatorLabel;
         private System.Windows.Forms.TextBox KeywordsTextBox;
         private System.Windows.Forms.TextBox CreatorTextBox;
-        private System.Windows.Forms.Label DisplayOptionsLabel;
-        private System.Windows.Forms.ComboBox DisplayOptionsComboBox;
+        private System.Windows.Forms.Label ViewerPreferencesLabel;
+        private System.Windows.Forms.ComboBox ViewerPreferencesComboBox;
         private System.Windows.Forms.TableLayoutPanel EncryptionOuterPanel;
         private System.Windows.Forms.CheckBox EnableEncryptionCheckBox;
         private System.Windows.Forms.TableLayoutPanel EncryptionPanel;

@@ -97,21 +97,21 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DisplayOptions
+        /// ViewerPreferences
         ///
         /// <summary>
-        /// 表示文字列と DisplayOptions の対応関係を取得します。
+        /// 表示文字列と ViewerPreferences の対応関係を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, DisplayOptions>> DisplayOptions => new []
+        public static IList<KeyValuePair<string, ViewerPreferences>> ViewerPreferences => new []
         {
-            Pair(Properties.Resources.MenuSinglePage,     Pdf.DisplayOptions.SinglePage),
-            Pair(Properties.Resources.MenuOneColumn,      Pdf.DisplayOptions.OneColumn),
-            Pair(Properties.Resources.MenuTwoPageLeft,    Pdf.DisplayOptions.TwoPageLeft),
-            Pair(Properties.Resources.MenuTwoPageRight,   Pdf.DisplayOptions.TwoPageRight),
-            Pair(Properties.Resources.MenuTwoColumnLeft,  Pdf.DisplayOptions.TwoColumnLeft),
-            Pair(Properties.Resources.MenuTwoColumnRight, Pdf.DisplayOptions.TwoColumnRight),
+            Pair(Properties.Resources.MenuSinglePage,     Pdf.ViewerPreferences.SinglePage),
+            Pair(Properties.Resources.MenuOneColumn,      Pdf.ViewerPreferences.OneColumn),
+            Pair(Properties.Resources.MenuTwoPageLeft,    Pdf.ViewerPreferences.TwoPageLeft),
+            Pair(Properties.Resources.MenuTwoPageRight,   Pdf.ViewerPreferences.TwoPageRight),
+            Pair(Properties.Resources.MenuTwoColumnLeft,  Pdf.ViewerPreferences.TwoColumnLeft),
+            Pair(Properties.Resources.MenuTwoColumnRight, Pdf.ViewerPreferences.TwoColumnRight),
         };
 
         /* ----------------------------------------------------------------- */

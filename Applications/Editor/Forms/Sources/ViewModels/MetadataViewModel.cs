@@ -159,7 +159,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<DisplayOptions> Layout { get; }
+        public BindableElement<ViewerPreferences> Layout { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -276,14 +276,14 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<DisplayOptions> Layouts { get; } = new[]
+        public IEnumerable<ViewerPreferences> Layouts { get; } = new[]
         {
-            DisplayOptions.SinglePage,
-            DisplayOptions.OneColumn,
-            DisplayOptions.TwoColumnLeft,
-            DisplayOptions.TwoColumnRight,
-            DisplayOptions.TwoPageLeft,
-            DisplayOptions.TwoPageRight,
+            ViewerPreferences.SinglePage,
+            ViewerPreferences.OneColumn,
+            ViewerPreferences.TwoColumnLeft,
+            ViewerPreferences.TwoColumnRight,
+            ViewerPreferences.TwoPageLeft,
+            ViewerPreferences.TwoPageRight,
         };
 
         #endregion
@@ -321,14 +321,14 @@ namespace Cube.Pdf.App.Editor
         /// CreateLayout
         ///
         /// <summary>
-        /// Creates a new menu for the DisplayOptions property.
+        /// Creates a new menu for the ViewerPreferences property.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static BindableElement<DisplayOptions> CreateLayout(Metadata src)
+        private static BindableElement<ViewerPreferences> CreateLayout(Metadata src)
         {
-            if (src.DisplayOptions == DisplayOptions.None) src.DisplayOptions = DisplayOptions.OneColumn;
-            return Create(() => src.DisplayOptions, e => src.DisplayOptions = e, () => Properties.Resources.MenuLayout);
+            if (src.Viewer == ViewerPreferences.None) src.Viewer = ViewerPreferences.OneColumn;
+            return Create(() => src.Viewer, e => src.Viewer = e, () => Properties.Resources.MenuLayout);
         }
 
         #endregion

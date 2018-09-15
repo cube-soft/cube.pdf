@@ -79,14 +79,14 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static Metadata GetMetadata(this PdfReader src) => new Metadata
         {
-            Version        = new Version(1, src.PdfVersion - '0', 0, 0),
-            Author         = src.Info.ContainsKey("Author")   ? src.Info["Author"]   : string.Empty,
-            Title          = src.Info.ContainsKey("Title")    ? src.Info["Title"]    : string.Empty,
-            Subject        = src.Info.ContainsKey("Subject")  ? src.Info["Subject"]  : string.Empty,
-            Keywords       = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : string.Empty,
-            Creator        = src.Info.ContainsKey("Creator")  ? src.Info["Creator"]  : string.Empty,
-            Producer       = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : string.Empty,
-            DisplayOptions = DisplayOptionsFactory.Create(src.SimpleViewerPreferences),
+            Version  = new Version(1, src.PdfVersion - '0', 0, 0),
+            Author   = src.Info.ContainsKey("Author")   ? src.Info["Author"]   : string.Empty,
+            Title    = src.Info.ContainsKey("Title")    ? src.Info["Title"]    : string.Empty,
+            Subject  = src.Info.ContainsKey("Subject")  ? src.Info["Subject"]  : string.Empty,
+            Keywords = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : string.Empty,
+            Creator  = src.Info.ContainsKey("Creator")  ? src.Info["Creator"]  : string.Empty,
+            Producer = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : string.Empty,
+            Viewer   = ViewerPreferencesFactory.Create(src.SimpleViewerPreferences),
         };
 
         /* ----------------------------------------------------------------- */

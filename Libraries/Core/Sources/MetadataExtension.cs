@@ -38,9 +38,9 @@ namespace Cube.Pdf.Mixin
         /// Gets the copied <c>Metadata</c> object.
         /// </summary>
         ///
-        /// <param name="src"><c>Metadata</c> object.</param>
+        /// <param name="src">Original object.</param>
         ///
-        /// <returns>Copied <c>Metadata</c> object.</returns>
+        /// <returns>Copied object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Metadata Copy(this Metadata src) => new Metadata
@@ -54,7 +54,7 @@ namespace Cube.Pdf.Mixin
             Version        = src.Version,
             Creator        = src.Creator,
             Producer       = src.Producer,
-            DisplayOptions = src.DisplayOptions,
+            Viewer    = src.Viewer,
         };
 
         #endregion

@@ -166,7 +166,7 @@
   <data name="DocumentPage.Text" xml:space="preserve">
     <value>文書プロパティ</value>
   </data>
-  <data name="DisplayOptionsLabel.Text" xml:space="preserve">
+  <data name="ViewerPreferencesLabel.Text" xml:space="preserve">
     <value>表示オプション</value>
   </data>
   <data name="CreatorLabel.Text" xml:space="preserve">

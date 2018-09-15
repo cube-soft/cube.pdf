@@ -61,7 +61,7 @@ namespace Cube.Pdf.Tests
                 Assert.That(dest.Keywords,      Is.EqualTo(expected.Keywords));
                 Assert.That(dest.Creator,       Is.EqualTo(expected.Creator));
                 Assert.That(dest.Producer,      Does.StartWith(expected.Producer));
-                // Assert.That(dest.DisplayOptions, Is.EqualTo(expected.DisplayOptions));
+                // Assert.That(dest.Preferences, Is.EqualTo(expected.Preferences));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Cube.Pdf.Tests
                         Keywords       = "CubeSoft,PDF,Test",
                         Creator        = "CubePDF",
                         Producer       = "iTextSharp",
-                        DisplayOptions = DisplayOptions.TwoPageLeft,
+                        Viewer = ViewerPreferences.TwoPageLeft,
                     });
                 }
             }

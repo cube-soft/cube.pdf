@@ -182,7 +182,7 @@ namespace Cube.Pdf.App.Converter
             FormatComboBox.Bind(ViewResource.Formats);
             FormatOptionComboBox.Bind(ViewResource.FormatOptions);
             SaveOptionComboBox.Bind(ViewResource.SaveOptions);
-            DisplayOptionsComboBox.Bind(ViewResource.DisplayOptions);
+            ViewerPreferencesComboBox.Bind(ViewResource.ViewerPreferences);
             PostProcessComboBox.Bind(ViewResource.PostProcesses);
             LanguageComboBox.Bind(ViewResource.Languages);
         }

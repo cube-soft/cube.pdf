@@ -49,14 +49,14 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public static Metadata Create(PdfiumReader core) => new Metadata
         {
-            Version        = GetVersion(core),
-            Title          = GetText(core, nameof(Metadata.Title)),
-            Author         = GetText(core, nameof(Metadata.Author)),
-            Subject        = GetText(core, nameof(Metadata.Subject)),
-            Keywords       = GetText(core, nameof(Metadata.Keywords)),
-            Creator        = GetText(core, nameof(Metadata.Creator)),
-            Producer       = GetText(core, nameof(Metadata.Producer)),
-            DisplayOptions = DisplayOptions.None,
+            Version  = GetVersion(core),
+            Title    = GetText(core, nameof(Metadata.Title)),
+            Author   = GetText(core, nameof(Metadata.Author)),
+            Subject  = GetText(core, nameof(Metadata.Subject)),
+            Keywords = GetText(core, nameof(Metadata.Keywords)),
+            Creator  = GetText(core, nameof(Metadata.Creator)),
+            Producer = GetText(core, nameof(Metadata.Producer)),
+            Viewer   = ViewerPreferences.None,
         };
 
         #endregion

@@ -221,27 +221,27 @@ namespace Cube.Pdf.Tests.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DisplayOptions
+        /// ViewerPreferences
         ///
         /// <summary>
-        /// DisplayOptions に関する表示文字列を確認します。
+        /// ViewerPreferences に関する表示文字列を確認します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void DisplayOptions() => Create(vm =>
+        public void ViewerPreferences() => Create(vm =>
         {
-            var v = ViewResource.DisplayOptions;
+            var v = ViewResource.ViewerPreferences;
             Assert.That(v.Count, Is.EqualTo(6));
-            Assert.That(v[0].Value, Is.EqualTo(Pdf.DisplayOptions.SinglePage));
-            Assert.That(v[1].Value, Is.EqualTo(Pdf.DisplayOptions.OneColumn));
-            Assert.That(v[2].Value, Is.EqualTo(Pdf.DisplayOptions.TwoPageLeft));
-            Assert.That(v[3].Value, Is.EqualTo(Pdf.DisplayOptions.TwoPageRight));
-            Assert.That(v[4].Value, Is.EqualTo(Pdf.DisplayOptions.TwoColumnLeft));
-            Assert.That(v[5].Value, Is.EqualTo(Pdf.DisplayOptions.TwoColumnRight));
+            Assert.That(v[0].Value, Is.EqualTo(Pdf.ViewerPreferences.SinglePage));
+            Assert.That(v[1].Value, Is.EqualTo(Pdf.ViewerPreferences.OneColumn));
+            Assert.That(v[2].Value, Is.EqualTo(Pdf.ViewerPreferences.TwoPageLeft));
+            Assert.That(v[3].Value, Is.EqualTo(Pdf.ViewerPreferences.TwoPageRight));
+            Assert.That(v[4].Value, Is.EqualTo(Pdf.ViewerPreferences.TwoColumnLeft));
+            Assert.That(v[5].Value, Is.EqualTo(Pdf.ViewerPreferences.TwoColumnRight));
 
             vm.Settings.Language = Language.English;
-            var en = ViewResource.DisplayOptions;
+            var en = ViewResource.ViewerPreferences;
             Assert.That(en[0].Key, Is.EqualTo("Single page"));
             Assert.That(en[1].Key, Is.EqualTo("One column"));
             Assert.That(en[2].Key, Is.EqualTo("Two page (left)"));
@@ -250,7 +250,7 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(en[5].Key, Is.EqualTo("Two column (right)"));
 
             vm.Settings.Language = Language.Japanese;
-            var ja = ViewResource.DisplayOptions;
+            var ja = ViewResource.ViewerPreferences;
             Assert.That(ja[0].Key, Is.EqualTo("単一ページ"));
             Assert.That(ja[1].Key, Is.EqualTo("連続ページ"));
             Assert.That(ja[2].Key, Is.EqualTo("見開きページ（左綴じ）"));

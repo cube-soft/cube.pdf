@@ -263,7 +263,7 @@ namespace Cube.Pdf.App.Converter
             e.NewValue.Orientation = NormalizeOrientation(e.NewValue);
             e.NewValue.Destination = NormalizeDestination(e.NewValue);
             e.NewValue.Metadata.Creator = Product;
-            e.NewValue.Metadata.DisplayOptions = DisplayOptions.OneColumn;
+            e.NewValue.Metadata.Viewer = ViewerPreferences.OneColumn;
             e.NewValue.Encryption.DenyAll();
             e.NewValue.Encryption.Permission.Accessibility = PermissionMethod.Allow;
 

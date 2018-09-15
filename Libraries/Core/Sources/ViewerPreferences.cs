@@ -21,7 +21,7 @@ namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DisplayOptions
+    /// ViewerPreferences
     ///
     /// <summary>
     /// Specifies the display options of the PDF document.
@@ -29,7 +29,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Flags]
-    public enum DisplayOptions
+    public enum ViewerPreferences
     {
         /// <summary>No options.</summary>
         None = 0x0000,
@@ -61,14 +61,14 @@ namespace Cube.Pdf
 
     /* --------------------------------------------------------------------- */
     ///
-    /// DisplayOptionsFactory
+    /// ViewerPreferencesFactory
     ///
     /// <summary>
-    /// Provides extended methods for the DisplayOptions.
+    /// Provides extended methods for the ViewerPreferences.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class DisplayOptionsFactory
+    public static class ViewerPreferencesFactory
     {
         #region Methods
 
@@ -77,19 +77,19 @@ namespace Cube.Pdf
         /// Create
         ///
         /// <summary>
-        /// Creates a DisplayOptions object from the specified value.
+        /// Creates a ViewerPreferences object from the specified value.
         /// </summary>
         ///
         /// <param name="src">Value for options.</param>
         ///
-        /// <returns>DisplayOptions objects.</returns>
+        /// <returns>ViewerPreferences objects.</returns>
         ///
         /// <remarks>
-        /// Ignores flags that do not define in the DisplayOptions.
+        /// Ignores flags that do not define in the ViewerPreferences.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static DisplayOptions Create(int src) => (DisplayOptions)(src & 0x0fff);
+        public static ViewerPreferences Create(int src) => (ViewerPreferences)(src & 0x0fff);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,10 +101,10 @@ namespace Cube.Pdf
         ///
         /// <param name="src">Value for options.</param>
         ///
-        /// <returns>Converted DisplayOptions object.</returns>
+        /// <returns>Converted ViewerPreferences object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DisplayOptions GetLayout(this DisplayOptions src) => (DisplayOptions)((int)src & 0x003f);
+        public static ViewerPreferences GetLayout(this ViewerPreferences src) => (ViewerPreferences)((int)src & 0x003f);
 
         #endregion
     }
