@@ -110,6 +110,31 @@ namespace Cube.Pdf.Tests.Editor
 
         #endregion
 
+        #region ViewerPreferencesConverter
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_ViewerPreferences
+        ///
+        /// <summary>
+        /// Tests to convert a ViewerPreferences value.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(ViewerPreferences.SinglePage,     "en", ExpectedResult = "Single page")]
+        [TestCase(ViewerPreferences.OneColumn,      "ja", ExpectedResult = "連続ページ")]
+        [TestCase(ViewerPreferences.TwoPageLeft,    "en", ExpectedResult = "Two page (left)")]
+        [TestCase(ViewerPreferences.TwoPageRight,   "ja", ExpectedResult = "見開きページ (右綴じ)")]
+        [TestCase(ViewerPreferences.TwoColumnLeft,  "en", ExpectedResult = "Two column (left)")]
+        [TestCase(ViewerPreferences.TwoColumnRight, "ja", ExpectedResult = "連続見開きページ (右綴じ)")]
+        public string Convert_ViewerPreferences(ViewerPreferences src, string culture)
+        {
+            ResourceCulture.Set(culture);
+            return Convert<string>(new ViewerPreferencesConverter(), src);
+        }
+
+        #endregion
+
         #region BooleanToCursor
 
         /* ----------------------------------------------------------------- */

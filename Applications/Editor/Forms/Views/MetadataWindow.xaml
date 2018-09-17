@@ -178,17 +178,23 @@
                     Grid.Column="1" />
 
                 <!-- **********************************************************
-                  Layout (a.k.a viewer preferences)
+                  ViewerPreferences
                 *********************************************************** -->
                 <TextBlock
-                    Text="{Binding Layout.Text}"
+                    Text="{Binding Viewer.Text}"
                     Grid.Row="1"
                     Grid.Column="0" />
                 <ComboBox
-                    ItemsSource="{Binding Layouts}"
-                    SelectedValue="{Binding Layout.Value, Mode=TwoWay}"
+                    ItemsSource="{Binding ViewerPreferences}"
+                    SelectedValue="{Binding Viewer.Value, Mode=TwoWay}"
                     Grid.Row="1"
-                    Grid.Column="1" />
+                    Grid.Column="1">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={my:ViewerPreferencesConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
                 <!-- **********************************************************
                   Creator

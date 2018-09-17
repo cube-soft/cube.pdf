@@ -95,7 +95,7 @@ namespace Cube.Pdf.App.Editor
     /// EncryptionMethodConverter
     ///
     /// <summary>
-    /// Provides functionality to convert a <c>EncryptionMethod</c>.
+    /// Provides functionality to convert an <c>EncryptionMethod</c>.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -122,6 +122,40 @@ namespace Cube.Pdf.App.Editor
                 case EncryptionMethod.Aes256r6:    return "256-bit AES (Revision 6)";
                 default: return "Unknown";
             }
+        }) { }
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ViewerPreferencesConverter
+    ///
+    /// <summary>
+    /// Provides functionality to convert a <c>ViewerPreferences</c>.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class ViewerPreferencesConverter : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewerPreferencesConverter
+        ///
+        /// <summary>
+        /// Initializes a new instance of the <c>ViewerPreferencesConverter</c>
+        /// class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ViewerPreferencesConverter() : base(e =>
+        {
+            var src = e.TryCast<ViewerPreferences>();
+            if (src.HasFlag(ViewerPreferences.SinglePage))     return Properties.Resources.MenuViewSinglePage;
+            if (src.HasFlag(ViewerPreferences.OneColumn))      return Properties.Resources.MenuViewOneColumn;
+            if (src.HasFlag(ViewerPreferences.TwoPageLeft))    return Properties.Resources.MenuViewTwoPageLeft;
+            if (src.HasFlag(ViewerPreferences.TwoPageRight))   return Properties.Resources.MenuViewTwoPageRight;
+            if (src.HasFlag(ViewerPreferences.TwoColumnLeft))  return Properties.Resources.MenuViewTwoColumnLeft;
+            if (src.HasFlag(ViewerPreferences.TwoColumnRight)) return Properties.Resources.MenuViewTwoColumnRight;
+            return "Unknown";
         }) { }
     }
 

@@ -69,7 +69,7 @@ namespace Cube.Pdf.App.Editor
             Keywords = Create(() => src.Keywords, e => src.Keywords = e, () => Properties.Resources.MenuKeywords);
             Creator  = Create(() => src.Creator,  e => src.Creator  = e, () => Properties.Resources.MenuCreator );
             Version  = Create(() => src.Version,  e => src.Version  = e, () => Properties.Resources.MenuVersion );
-            Layout   = CreateLayout(src);
+            Viewer   = CreateViewerPreferences(src);
 
             OK.Command = new RelayCommand(() => { Send<CloseMessage>(); callback(src); });
         }
@@ -151,15 +151,15 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Layout
+        /// Viewer
         ///
         /// <summary>
-        /// Gets the menu that represents the page layout (a.k.a viewer
-        /// preferences) of the PDF document.
+        /// Gets the menu that represents the viewer preferences of the
+        /// PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<ViewerPreferences> Layout { get; }
+        public BindableElement<ViewerPreferences> Viewer { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -269,21 +269,21 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Layouts
+        /// ViewerPreferences
         ///
         /// <summary>
-        /// Gets the collection of display options.
+        /// Gets the collection of viewer preferences.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<ViewerPreferences> Layouts { get; } = new[]
+        public IEnumerable<ViewerPreferences> ViewerPreferences { get; } = new[]
         {
-            ViewerPreferences.SinglePage,
-            ViewerPreferences.OneColumn,
-            ViewerPreferences.TwoColumnLeft,
-            ViewerPreferences.TwoColumnRight,
-            ViewerPreferences.TwoPageLeft,
-            ViewerPreferences.TwoPageRight,
+            Pdf.ViewerPreferences.SinglePage,
+            Pdf.ViewerPreferences.OneColumn,
+            Pdf.ViewerPreferences.TwoColumnLeft,
+            Pdf.ViewerPreferences.TwoColumnRight,
+            Pdf.ViewerPreferences.TwoPageLeft,
+            Pdf.ViewerPreferences.TwoPageRight,
         };
 
         #endregion
@@ -318,16 +318,16 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateLayout
+        /// CreateViewerPreferences
         ///
         /// <summary>
         /// Creates a new menu for the ViewerPreferences property.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static BindableElement<ViewerPreferences> CreateLayout(Metadata src)
+        private static BindableElement<ViewerPreferences> CreateViewerPreferences(Metadata src)
         {
-            if (src.Viewer == ViewerPreferences.None) src.Viewer = ViewerPreferences.OneColumn;
+            if (src.Viewer == Pdf.ViewerPreferences.None) src.Viewer = Pdf.ViewerPreferences.OneColumn;
             return Create(() => src.Viewer, e => src.Viewer = e, () => Properties.Resources.MenuLayout);
         }
 
