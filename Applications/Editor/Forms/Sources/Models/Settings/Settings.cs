@@ -61,6 +61,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public int ViewSize
         {
             get => _viewSize;

@@ -26,7 +26,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
-    Height="400"
+    Height="300"
     Width="450"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
@@ -57,39 +57,65 @@
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
-        <TabControl Margin="12" Height="270">
-            <TabItem Header="その他">
-                <Grid Margin="8,12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="24" />
-                        <RowDefinition Height="26" />
-                    </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="24" />
+                <RowDefinition Height="28" />
+                <RowDefinition Height="26" />
+            </Grid.RowDefinitions>
 
-                    <TextBlock Text="{Binding Version.Text}" Grid.Column="0" Grid.Row="0" />
-                    <TextBlock Text="{Binding Language.Text}" Grid.Column="0" Grid.Row="8" />
+            <!-- **************************************************************
+              Version
+            *************************************************************** -->
+            <TextBlock Text="{Binding Version.Text}" />
 
-                    <TextBlock Text="CubePDF Utility 0.5.0β (x64)" Grid.Column="1" Grid.Row="0" />
-                    <TextBlock Text="Microsoft Windows NT 10.0.17134.0" Grid.Column="1" Grid.Row="2" Foreground="Gray" />
-                    <TextBlock Text="Microsoft .NET Framework 4.0.30319.42000" Grid.Column="1" Grid.Row="3" Foreground="Gray" />
-                    <TextBlock Text="Copyright (c) 2010 CubeSoft, Inc." Grid.Column="1" Grid.Row="5" Foreground="Blue" TextDecorations="Underline"  />
+            <TextBlock
+                Text="CubePDF Utility 0.5.0β (x64)"
+                Grid.Column="1"
+                Grid.Row="0" />
 
-                    <CheckBox Content="{Binding Update.Text}" Grid.Column="1" Grid.Row="7" />
-                    <ComboBox Grid.Column="1" Grid.Row="8" />
-                </Grid>
-            </TabItem>
-        </TabControl>
+            <StackPanel
+                Orientation="Vertical"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Grid.Row="1">
+                <TextBlock
+                    Text="Microsoft Windows NT 10.0.17134.0"
+                    Foreground="Gray" />
+                <TextBlock
+                    Text="Microsoft .NET Framework 4.0.30319.42000"
+                    Foreground="Gray" />
+            </StackPanel>
+
+            <TextBlock Grid.Column="1" Grid.Row="2">
+                <Hyperlink NavigateUri="https://www.cube-soft.jp/cubepdfutility/">
+                    <TextBlock Text="Copyright (c) 2010 CubeSoft, Inc." />
+                </Hyperlink>
+            </TextBlock>
+
+            <CheckBox
+                Content="{Binding Update.Text}"
+                Grid.Column="1"
+                Grid.Row="3" />
+
+            <!-- **************************************************************
+              Language
+            *************************************************************** -->
+            <TextBlock
+                Text="{Binding Language.Text}"
+                Grid.Column="0"
+                Grid.Row="4" />
+            <ComboBox
+                Grid.Column="1"
+                Grid.Row="4" />
+        </Grid>
 
         <!-- ******************************************************************
           Buttons
