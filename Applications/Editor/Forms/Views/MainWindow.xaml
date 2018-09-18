@@ -28,7 +28,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 
-    Title="{Binding Data.Source.Value, Converter={my:TitleConverter}}"
     TitleBarHeight="30"
     Height="600"
     Width="800"
@@ -46,6 +45,16 @@
     <r:RibbonWindow.DataContext>
         <my:MainViewModel />
     </r:RibbonWindow.DataContext>
+
+    <!-- **********************************************************************
+      Title
+    *********************************************************************** -->
+    <r:RibbonWindow.Title>
+        <MultiBinding Converter="{my:TitleConverter}">
+            <Binding Path="Data.Source.Value" />
+            <Binding Path="Data.Modified.Value" />
+        </MultiBinding>
+    </r:RibbonWindow.Title>
 
     <!-- **********************************************************************
       KeyBindings

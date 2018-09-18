@@ -51,6 +51,7 @@ namespace Cube.Pdf.App.Editor
         {
             _settings = settings;
             Images    = images;
+            Modified  = new Bindable<bool>(() => History.Undoable);
             Count     = new Bindable<int>(() => Images.Count);
             ItemSize  = new Bindable<int>(
                 () => Settings.ItemSize,
@@ -154,6 +155,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Bindable<Encryption> Encryption { get; } = new Bindable<Encryption>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Modified
+        ///
+        /// <summary>
+        /// Gets the value indicating whether the PDF document is modified.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<bool> Modified { get; }
 
         /* ----------------------------------------------------------------- */
         ///

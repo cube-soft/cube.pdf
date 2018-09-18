@@ -20,10 +20,14 @@ using Cube.Conversions;
 using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Xui.Converters;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -38,22 +42,48 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class TitleConverter : SimplexConverter
+    public class TitleConverter : MarkupExtension, IMultiValueConverter
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// TitleConverter
+        /// Convert
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>TitleConverter</c> class.
+        /// Converts to the title from the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public TitleConverter() : base(e =>
+        public object Convert(object[] values, Type target, object parameter, CultureInfo culture)
         {
             var app = Assembly.GetExecutingAssembly().GetReader().Title;
-            return e is Information fi ? $"{fi.Name} - {app}" : app;
-        }) { }
+            if (values.Length < 2) return app;
+
+            var m = values[1].TryCast<bool>() ? "*" : "";
+            return values[0] is Information fi ? $"{fi.Name}{m} - {app}" : app;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ConvertBack
+        ///
+        /// <summary>
+        /// Does not support the method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public object[] ConvertBack(object value, Type[] targets, object parameter, CultureInfo culture)
+            => throw new NotSupportedException();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ProvideValue
+        ///
+        /// <summary>
+        /// Gets the this instance.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override object ProvideValue(IServiceProvider serviceProvider) => this;
     }
 
     #endregion

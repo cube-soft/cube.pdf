@@ -161,6 +161,7 @@ namespace Cube.Pdf.App.Editor
             catch (Exception err) { src.Bindable.SetMessage(err.Message); throw; }
             finally
             {
+                src.Bindable.Modified.Raise();
                 src.Bindable.Count.Raise();
                 src.Bindable.Busy.Value = false;
             }

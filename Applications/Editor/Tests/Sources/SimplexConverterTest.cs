@@ -55,11 +55,20 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Dir\\To\\File.pdf", ExpectedResult = "File.pdf - CubePDF Utility")]
-        [TestCase("Test",              ExpectedResult = "Test - CubePDF Utility")]
-        [TestCase("",                  ExpectedResult = "CubePDF Utility")]
-        public string Convert_Title(string src) =>
-            Convert<string>(new TitleConverter(), src.HasValue() ? IO.Get(src) : null);
+        [TestCase("Dir\\To\\File.pdf", false, ExpectedResult = "File.pdf - CubePDF Utility")]
+        [TestCase("Dir\\To\\Mode.pdf", true,  ExpectedResult = "Mode.pdf* - CubePDF Utility")]
+        [TestCase("Test",              false, ExpectedResult = "Test - CubePDF Utility")]
+        [TestCase("Modified",          true,  ExpectedResult = "Modified* - CubePDF Utility")]
+        [TestCase("",                  false, ExpectedResult = "CubePDF Utility")]
+        [TestCase("",                  true,  ExpectedResult = "CubePDF Utility")]
+        public string Convert_Title(string src, bool modified)
+        {
+            var fi   = src.HasValue() ? IO.Get(src) : null;
+            var args = new object[] { fi, modified };
+            var type = typeof(string);
+            var ci   = CultureInfo.CurrentCulture;
+            return new TitleConverter().Convert(args, type, null, ci) as string;
+        }
 
         #endregion
 
