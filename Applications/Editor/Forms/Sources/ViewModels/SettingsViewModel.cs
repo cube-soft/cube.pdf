@@ -17,7 +17,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -44,11 +48,26 @@ namespace Cube.Pdf.App.Editor
         /// with the specified argumetns.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsViewModel(SynchronizationContext context) :
-            base(() => Properties.Resources.TitleSettings, new Messenger(), context) { }
+        public SettingsViewModel(SettingsFolder src, SynchronizationContext context) :
+            base(() => Properties.Resources.TitleSettings, new Messenger(), context)
+        {
+            var asm = Assembly.GetExecutingAssembly().GetReader();
+
+            Language = Create(() => src.Value.Language,    e  => src.Value.Language    = e, () => Properties.Resources.MenuLanguage);
+            Update   = Create(() => src.Value.CheckUpdate, e  => src.Value.CheckUpdate = e, () => Properties.Resources.MenuUpdate  );
+            Version  = Create(() => $"{src.Title} {src.Version.ToString(true)}", () => Properties.Resources.MenuVersion);
+            Link     = Create(() => asm.Copyright, () => src.Value.Uri.ToString());
+
+            OK.Command = new RelayCommand(() =>
+            {
+                Send<UpdateSourcesMessage>();
+                Send<CloseMessage>();
+            });
+        }
 
         #endregion
 
@@ -63,9 +82,18 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Version { get; } = new BindableElement(
-            () => Properties.Resources.MenuVersion
-        );
+        public BindableElement<string> Version { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Link
+        ///
+        /// <summary>
+        /// Gets the link menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<string> Link { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,9 +104,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Language { get; } = new BindableElement(
-            () => Properties.Resources.MenuLanguage
-        );
+        public BindableElement<Language> Language { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -90,9 +116,75 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Update { get; } = new BindableElement(
-            () => Properties.Resources.MenuUpdate
-        );
+        public BindableElement<bool> Update { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Windows
+        ///
+        /// <summary>
+        /// Gets the menu of Windows version.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement Windows { get; } =
+            new BindableElement(() => $"{Environment.OSVersion}");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Framework
+        ///
+        /// <summary>
+        /// Gets the menu of .NET Framework version.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement Framework { get; } =
+            new BindableElement(() => $"Microsoft .NET Framework {Environment.Version}");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Languages
+        ///
+        /// <summary>
+        /// Gets the collection of supported languages.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Language> Languages { get; } = new[]
+        {
+            Editor.Language.Auto,
+            Editor.Language.English,
+            Editor.Language.Japanese,
+        };
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new menu with the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static BindableElement<T> Create<T>(Getter<T> getter, Getter<string> gettext) =>
+            new BindableElement<T>(getter, gettext);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new menu with the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static BindableElement<T> Create<T>(Getter<T> getter, Action<T> setter, Getter<string> gettext) =>
+            new BindableElement<T>(getter, e => { setter(e); return true; }, gettext);
 
         #endregion
     }

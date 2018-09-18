@@ -40,11 +40,16 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/GenericDialog.xaml" />
     </Window.Resources>
 
+    <Window.BindingGroup>
+        <BindingGroup Name="SourceBindings" NotifyOnValidationError="False"/>
+    </Window.BindingGroup>
+
     <!-- **********************************************************************
       Interaction
     *********************************************************************** -->
     <i:Interaction.Behaviors>
         <xb:CloseBehavior />
+        <xb:UpdateSourceBehavior />
     </i:Interaction.Behaviors>
 
     <!-- **********************************************************************
@@ -77,7 +82,7 @@
             <TextBlock Text="{Binding Version.Text}" />
 
             <TextBlock
-                Text="CubePDF Utility 0.5.0β (x64)"
+                Text="{Binding Version.Value}"
                 Grid.Column="1"
                 Grid.Row="0" />
 
@@ -87,21 +92,22 @@
                 VerticalAlignment="Center"
                 Grid.Row="1">
                 <TextBlock
-                    Text="Microsoft Windows NT 10.0.17134.0"
+                    Text="{Binding Windows.Text}"
                     Foreground="Gray" />
                 <TextBlock
-                    Text="Microsoft .NET Framework 4.0.30319.42000"
+                    Text="{Binding Framework.Text}"
                     Foreground="Gray" />
             </StackPanel>
 
             <TextBlock Grid.Column="1" Grid.Row="2">
-                <Hyperlink NavigateUri="https://www.cube-soft.jp/cubepdfutility/">
-                    <TextBlock Text="Copyright (c) 2010 CubeSoft, Inc." />
+                <Hyperlink NavigateUri="{Binding Link.Value}">
+                    <TextBlock Text="{Binding Link.Text}" />
                 </Hyperlink>
             </TextBlock>
 
             <CheckBox
                 Content="{Binding Update.Text}"
+                IsChecked="{Binding Update.Value, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
                 Grid.Column="1"
                 Grid.Row="3" />
 
@@ -113,6 +119,8 @@
                 Grid.Column="0"
                 Grid.Row="4" />
             <ComboBox
+                ItemsSource="{Binding Languages}"
+                SelectedValue="{Binding Language.Value, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
                 Grid.Column="1"
                 Grid.Row="4" />
         </Grid>

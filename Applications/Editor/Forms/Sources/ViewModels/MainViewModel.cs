@@ -413,7 +413,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendSettings() => Send(new SettingsViewModel(Context));
+        private void SendSettings() => Send(new SettingsViewModel(
+            Model.Settings,
+            Context
+        ));
 
         #endregion
 
