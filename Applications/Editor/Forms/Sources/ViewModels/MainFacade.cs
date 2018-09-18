@@ -55,8 +55,11 @@ namespace Cube.Pdf.App.Editor
         public MainFacade(SettingsFolder settings, SynchronizationContext context)
         {
             _dispose = new OnceAction<bool>(Dispose);
-            Settings = settings;
             Bindable = new MainBindable(new ImageCollection(e => _core.GetOrAdd(e)), settings);
+
+            Settings = settings;
+            Settings.Load();
+            Settings.AutoSave = true;
 
             var sizes = Bindable.Images.Preferences.ItemSizeOptions;
             var index = sizes.LastIndexOf(e => e <= settings.Value.ViewSize);
