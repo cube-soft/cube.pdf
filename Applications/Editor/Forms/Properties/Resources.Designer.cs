@@ -1051,7 +1051,7 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   Overwrite に類似しているローカライズされた文字列を検索します。
+        ///   Save に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TooltipSave {
             get {

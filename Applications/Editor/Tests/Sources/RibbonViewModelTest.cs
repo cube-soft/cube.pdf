@@ -102,7 +102,7 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
             Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
-            Assert.That(dest.Save.Tooltip,          Is.EqualTo("Overwrite"));
+            Assert.That(dest.Save.Tooltip,          Is.EqualTo("Save"));
             Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
             Assert.That(dest.Undo.Tooltip,          Is.EqualTo(dest.Undo.Text));
             Assert.That(dest.Redo.Tooltip,          Is.EqualTo(dest.Redo.Text));
