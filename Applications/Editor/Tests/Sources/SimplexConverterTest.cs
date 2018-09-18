@@ -63,6 +63,28 @@ namespace Cube.Pdf.Tests.Editor
 
         #endregion
 
+        #region LanguageConverter
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_Language
+        ///
+        /// <summary>
+        /// Tests to convert to a language.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(Language.Auto,     "en", ExpectedResult = "Auto")]
+        [TestCase(Language.English,  "en", ExpectedResult = "English")]
+        [TestCase(Language.Japanese, "ja", ExpectedResult = "日本語")]
+        public string Convert_Language(Language src, string culture)
+        {
+            ResourceCulture.Set(culture);
+            return Convert<string>(new LanguageConverter(), src);
+        }
+
+        #endregion
+
         #region ByteConverter
 
         /* ----------------------------------------------------------------- */
@@ -74,8 +96,10 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(100,    "en", ExpectedResult = "1 KB (100 Bytes)")]
-        [TestCase(101309, "en", ExpectedResult = "98.9 KB (101,309 Bytes)")]
+        [TestCase(100,     "en", ExpectedResult = "1 KB (100 Bytes)")]
+        [TestCase(101309,  "en", ExpectedResult = "98.9 KB (101,309 Bytes)")]
+        [TestCase(200,     "ja", ExpectedResult = "1 KB (200 バイト)")]
+        [TestCase(7654321, "ja", ExpectedResult = "7.3 MB (7,654,321 バイト)")]
         public string Convert_Byte(long n, string culture)
         {
             ResourceCulture.Set(culture);
