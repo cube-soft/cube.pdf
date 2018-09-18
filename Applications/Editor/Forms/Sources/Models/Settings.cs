@@ -128,7 +128,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdfutility");
+        public Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdfutility/");
 
         #endregion
 
