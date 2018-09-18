@@ -101,9 +101,12 @@ namespace Cube.Pdf.App.Editor
             Version.Digit  = 3;
             Version.Suffix = Properties.Resources.VersionSuffix;
 
-            var dir = IO.Get(asm.Location).DirectoryName;
+            var dir  = IO.Get(asm.Location).DirectoryName;
+            var exec = IO.Combine(dir, $"UpdateChecker.exe");
+            var args = "CubePDF Utility2";
+
             Startup.Name    = $"{Title} UpdateChecker";
-            Startup.Command = IO.Combine(dir, $"UpdateChecker.exe").Quote();
+            Startup.Command = $"{exec.Quote()} {args.Quote()}";
         }
 
         #endregion
@@ -138,6 +141,21 @@ namespace Cube.Pdf.App.Editor
         {
             try { ResourceCulture.Set(e.NewValue.Language.GetName()); }
             finally { base.OnLoaded(e); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnSaved
+        ///
+        /// <summary>
+        /// Occurs when the Saved event is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnSaved(KeyValueEventArgs<Cube.DataContract.Format, string> e)
+        {
+            if (Value != null) Startup.Enabled = Value.CheckUpdate;
+            base.OnSaved(e);
         }
 
         /* ----------------------------------------------------------------- */
