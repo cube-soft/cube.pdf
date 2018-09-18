@@ -92,6 +92,7 @@ namespace Cube.Pdf.App.Editor
             Name = name;
             _getTooltip = tooltip;
             _getEnabled = enabled;
+            _registry   = ResourceCulture.Subscribe(() => RaisePropertyChanged(nameof(Tooltip)));
         }
 
         #endregion
@@ -196,7 +197,11 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (disposing) _canExecute?.Dispose();
+            if (disposing)
+            {
+                _canExecute?.Dispose();
+                _registry.Dispose();
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -252,6 +257,7 @@ namespace Cube.Pdf.App.Editor
         #region Fields
         private readonly Getter<string> _getTooltip;
         private readonly Getter<bool> _getEnabled;
+        private readonly IDisposable _registry;
         private IDisposable _canExecute;
         #endregion
     }
