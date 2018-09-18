@@ -25,6 +25,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 
+
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
@@ -163,7 +164,17 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">Information for the link.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void OpenLink(Information src) => Open(Shortcut.Resolve(src?.FullName)?.Target);
+        public void OpenLink(Information src)
+        {
+            try { Open(Shortcut.Resolve(src?.FullName)?.Target); }
+            catch (Exception e)
+            {
+                var cancel = e is OperationCanceledException ||
+                             e is TwiceException;
+                if (!cancel) IO.TryDelete(src?.FullName);
+                throw;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
