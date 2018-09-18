@@ -246,6 +246,8 @@
 
             <TextBlock
                 Text="{Binding NameWithoutExtension}"
+                TextWrapping="NoWrap"
+                TextTrimming="CharacterEllipsis"
                 Grid.Column="2" />
         </Grid>
     </DataTemplate>
