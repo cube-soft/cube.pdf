@@ -305,7 +305,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SendOpen
+        /// PostOpen
         ///
         /// <summary>
         /// Sends the message to show a dialog of the <c>OpenFileDialog</c>

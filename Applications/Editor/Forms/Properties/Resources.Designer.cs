@@ -880,6 +880,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   PDF is modified. Do you want to overwrite? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageOverwrite {
+            get {
+                return ResourceManager.GetString("MessageOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0} pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessagePage {
