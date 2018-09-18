@@ -288,6 +288,24 @@
 
             <r:RibbonGroupBox>
                 <!-- **********************************************************
+                  ItemSize
+                *********************************************************** -->
+                <ComboBox
+                    ItemsSource="{Binding Data.Images.Preferences.ItemSizeOptions}"
+                    SelectedItem="{Binding Data.ItemSize.Value, Mode=TwoWay}"
+                    Style="{StaticResource RibbonItemSizeStyle}" />
+
+                <!-- **********************************************************
+                  FrameOnly
+                *********************************************************** -->
+                <CheckBox
+                    Content="{Binding Ribbon.FrameOnly.Text}"
+                    IsChecked="{Binding Ribbon.FrameOnly.Value, Mode=TwoWay}"
+                    Style="{StaticResource RibbonFrameOnlyStyle}" />
+            </r:RibbonGroupBox>
+
+            <r:RibbonGroupBox>
+                <!-- **********************************************************
                   Settings
                 *********************************************************** -->
                 <r:Button

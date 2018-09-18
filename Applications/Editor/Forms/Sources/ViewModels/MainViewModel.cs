@@ -54,14 +54,13 @@ namespace Cube.Pdf.App.Editor
             var settings = new SettingsFolder(Assembly.GetExecutingAssembly(), io);
             var recent   = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
             var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", io);
-            var getter   = new Getter<bool>(() => Data.IsOpen() && !Data.Busy.Value);
 
             Model  = new MainFacade(settings, Context);
-            Ribbon = new RibbonViewModel(getter, MessengerInstance);
+            Ribbon = new RibbonViewModel(Model.Bindable, MessengerInstance);
             Recent = new RecentViewModel(mon, MessengerInstance);
 
-            Data.Source.PropertyChanged += (s, e) => Ribbon.RaiseEvent();
-            Data.Busy.PropertyChanged   += (s, e) => Ribbon.RaiseEvent();
+            Data.Source.PropertyChanged += (s, e) => Ribbon.Raise();
+            Data.Busy.PropertyChanged   += (s, e) => Ribbon.Raise();
 
             SetCommands();
             Post(() => Model.Setup(App.Arguments));

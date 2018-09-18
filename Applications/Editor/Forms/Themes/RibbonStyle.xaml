@@ -144,6 +144,29 @@
     </Style>
 
     <!-- **********************************************************************
+      ComboBox for ItemSize
+    *********************************************************************** -->
+    <Style x:Key="RibbonItemSizeStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="Width" Value="90" />
+        <Setter Property="Margin" Value="2,8,0,0" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding StringFormat={}{0} px}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- **********************************************************************
+      CheckBox for FrameOnly
+    *********************************************************************** -->
+    <Style x:Key="RibbonFrameOnlyStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
+        <Setter Property="Margin" Value="0,6,0,0" />
+    </Style>
+
+    <!-- **********************************************************************
       ApplicationMenu
     *********************************************************************** -->
     <Style TargetType="{x:Type r:ApplicationMenu}">

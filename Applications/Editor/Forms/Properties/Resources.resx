@@ -201,6 +201,9 @@
   <data name="MenuFilesize" xml:space="preserve">
     <value>Filesize</value>
   </data>
+  <data name="MenuFrameOnly" xml:space="preserve">
+    <value>Frame only</value>
+  </data>
   <data name="MenuInsert" xml:space="preserve">
     <value>Insert</value>
   </data>

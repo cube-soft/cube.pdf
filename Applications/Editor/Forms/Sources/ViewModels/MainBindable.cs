@@ -52,6 +52,15 @@ namespace Cube.Pdf.App.Editor
             _settings = settings;
             Images    = images;
             Count     = new Bindable<int>(() => Images.Count);
+            ItemSize  = new Bindable<int>(
+                () => Settings.ItemSize,
+                e =>
+                {
+                    if (Settings.ItemSize == e) return false;
+                    Settings.ItemSize = e;
+                    return true;
+                }
+            );
         }
 
         #endregion
@@ -156,6 +165,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Bindable<int> Count { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ItemSize
+        ///
+        /// <summary>
+        /// Gets the displayed item size.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<int> ItemSize { get; }
 
         /* ----------------------------------------------------------------- */
         ///

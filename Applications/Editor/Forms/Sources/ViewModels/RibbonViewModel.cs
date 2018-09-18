@@ -43,28 +43,30 @@ namespace Cube.Pdf.App.Editor
         /// class with the specified arguments.
         /// </summary>
         ///
-        /// <param name="getEnabled">
-        /// Function to get value indicating whether some ribbon buttons
-        /// are enabled.
-        /// </param>
-        ///
+        /// <param name="src">Bindable data.</param>
         /// <param name="messenger">Messenger object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonViewModel(Getter<bool> getEnabled, IMessenger messenger) : base(messenger)
+        public RibbonViewModel(MainBindable src, IMessenger messenger) : base(messenger)
         {
             Insert = new RibbonElement(
                 () => Properties.Resources.MenuInsert,
                 () => Properties.Resources.TooltipInsert,
-                getEnabled,
+                () => !src.Busy.Value && src.IsOpen(),
                 nameof(Insert)
             );
 
             Remove = new RibbonElement(
                 () => Properties.Resources.MenuRemove,
                 () => Properties.Resources.TooltipRemove,
-                getEnabled,
+                () => !src.Busy.Value && src.IsOpen(),
                 nameof(Remove)
+            );
+
+            FrameOnly = this.Create(
+                () => src.Settings.FrameOnly,
+                e  => src.Settings.FrameOnly = e,
+                () => Properties.Resources.MenuFrameOnly
             );
         }
 
@@ -509,26 +511,36 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FrameOnly
+        ///
+        /// <summary>
+        /// Gets the frame only menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> FrameOnly { get; }
+
         #endregion
 
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RaiseEvent
+        /// Raise
         ///
         /// <summary>
         /// Raises the event that Enabled property is changed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void RaiseEvent()
+        public void Raise()
         {
-            var name = nameof(RibbonElement.Enabled);
-
-            Insert.RaisePropertyChanged(name);
-            Extract.RaisePropertyChanged(name);
-            Remove.RaisePropertyChanged(name);
+            foreach (var e in new[] { Insert, Extract, Remove })
+            {
+                e.RaisePropertyChanged(nameof(RibbonElement.Enabled));
+            }
         }
 
         #endregion

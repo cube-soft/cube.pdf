@@ -54,18 +54,35 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewSize
+        /// ItemSize
         ///
         /// <summary>
-        /// サムネイルの表示サイズを取得または設定します。
+        /// Gets or sets the displayed item size.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember(Name = "ViewSize")]
+        public int ItemSize
+        {
+            get => _itemSize;
+            set => SetProperty(ref _itemSize, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FrameOnly
+        ///
+        /// <summary>
+        /// Gets or sets the value indicating whether only the frame
+        /// of each item is displayed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public int ViewSize
+        public bool FrameOnly
         {
-            get => _viewSize;
-            set => SetProperty(ref _viewSize, value);
+            get => _frameOnly;
+            set => SetProperty(ref _frameOnly, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -140,7 +157,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Reset()
         {
-            _viewSize = 250;
+            _itemSize = 250;
             _language = Language.Auto;
             _update   = true;
         }
@@ -148,7 +165,8 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
-        private int _viewSize;
+        private int _itemSize;
+        private bool _frameOnly;
         private Language _language;
         private bool _update;
         #endregion

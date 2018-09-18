@@ -62,7 +62,7 @@ namespace Cube.Pdf.App.Editor
             Settings.AutoSave = true;
 
             var sizes = Bindable.Images.Preferences.ItemSizeOptions;
-            var index = sizes.LastIndexOf(e => e <= settings.Value.ViewSize);
+            var index = sizes.LastIndexOf(e => e <= settings.Value.ItemSize);
             Bindable.Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
             Bindable.Images.Preferences.ItemMargin    = 3;
             Bindable.Images.Preferences.TextHeight    = 25;

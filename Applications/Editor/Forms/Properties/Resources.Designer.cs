@@ -313,6 +313,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Frame only に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuFrameOnly {
+            get {
+                return ResourceManager.GetString("MenuFrameOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Insert に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuInsert {
