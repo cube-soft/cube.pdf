@@ -176,18 +176,14 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionMethodConverter() : base(e =>
+        public EncryptionMethodConverter() : base(e => new Dictionary<EncryptionMethod, string>
         {
-            switch (e.TryCast<EncryptionMethod>())
-            {
-                case EncryptionMethod.Standard40:  return  "40-bit RC4";
-                case EncryptionMethod.Standard128: return "128-bit RC4";
-                case EncryptionMethod.Aes128:      return "128-bit AES";
-                case EncryptionMethod.Aes256:      return "256-bit AES";
-                case EncryptionMethod.Aes256r6:    return "256-bit AES (Revision 6)";
-                default: return "Unknown";
-            }
-        }) { }
+            { EncryptionMethod.Standard40,   "40-bit RC4"              },
+            { EncryptionMethod.Standard128, "128-bit RC4"              },
+            { EncryptionMethod.Aes128,      "128-bit AES"              },
+            { EncryptionMethod.Aes256,      "256-bit AES"              },
+            { EncryptionMethod.Aes256r6,    "256-bit AES (Revision 6)" },
+        }.TryGetValue(e.TryCast<EncryptionMethod>(), out var dest) ? dest : "Unknown") { }
     }
 
     /* --------------------------------------------------------------------- */
