@@ -20,6 +20,7 @@ using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Xui;
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 
@@ -95,10 +96,10 @@ namespace Cube.Pdf.App.Editor
             base(assembly, format, location, io)
         {
             var asm = assembly.GetReader();
-            Title           = asm.Title;
-            AutoSave        = false;
-            Version.Digit   = 3;
-            Version.Suffix  = Properties.Resources.VersionSuffix;
+            Title          = asm.Title;
+            AutoSave       = false;
+            Version.Digit  = 3;
+            Version.Suffix = Properties.Resources.VersionSuffix;
 
             var dir = IO.Get(asm.Location).DirectoryName;
             Startup.Name    = $"{Title} UpdateChecker";
@@ -119,6 +120,44 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public string Title { get; }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLoaded
+        ///
+        /// <summary>
+        /// Occurs when the Loaded event is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnLoaded(ValueChangedEventArgs<Settings> e)
+        {
+            try { ResourceCulture.Set(e.NewValue.Language.GetName()); }
+            finally { base.OnLoaded(e); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPropertyChanged
+        ///
+        /// <summary>
+        /// Occurs when the PropertyChanged event is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            try
+            {
+                if (e.PropertyName != nameof(Value.Language)) return;
+                ResourceCulture.Set(Value.Language.GetName());
+            }
+            finally { base.OnPropertyChanged(e); }
+        }
 
         #endregion
     }

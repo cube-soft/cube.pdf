@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sources\Models\DocumentExtension.cs" />
+    <Compile Include="Sources\Models\Language.cs" />
     <Compile Include="Sources\Models\Range.cs" />
     <Compile Include="Sources\ViewModels\PreviewBindable.cs" />
     <Compile Include="Sources\ViewModels\PreviewFacade.cs" />
@@ -163,8 +164,8 @@
     <Compile Include="Sources\Interactions\SelectionBehavior.cs" />
     <Compile Include="Sources\Interactions\SimplexConverters.cs" />
     <Compile Include="Sources\Interactions\VisibleRange.cs" />
-    <Compile Include="Sources\Models\Settings\Settings.cs" />
-    <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />
+    <Compile Include="Sources\Models\Settings.cs" />
+    <Compile Include="Sources\Models\SettingsFolder.cs" />
     <Compile Include="Sources\Models\DirectoryMonitor.cs" />
     <Compile Include="Sources\Models\DocumentCollection.cs" />
     <Compile Include="Sources\Models\ImageCollection.cs" />

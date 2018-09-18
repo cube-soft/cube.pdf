@@ -16,70 +16,87 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Runtime.Serialization;
+using Cube.Generics;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Settings
+    /// Language
     ///
     /// <summary>
-    /// ユーザ設定を保持するためのクラスです。
+    /// Represents the kind of Language.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [DataContract]
-    public class Settings : ObservableProperty
+    public enum Language
+    {
+        /// <summary>自動</summary>
+        Auto = 0,
+        /// <summary>英語</summary>
+        English = 1,
+        /// <summary>日本語</summary>
+        Japanese = 2,
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// LanguageExtension
+    ///
+    /// <summary>
+    /// Provides extended methods for the <c>Language</c> class.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static class LanguageExtension
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// LanguageExtension
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes static fields
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings() { Reset(); }
-
-        #endregion
-
-        #region Properties
-
-        #region DataMember
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewSize
-        ///
-        /// <summary>
-        /// サムネイルの表示サイズを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public int ViewSize
+        static LanguageExtension()
         {
-            get => _viewSize;
-            set => SetProperty(ref _viewSize, value);
+            _system = Thread.CurrentThread.CurrentUICulture.Name;
         }
 
         #endregion
 
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Uri
+        /// GetName
         ///
         /// <summary>
-        /// Web ページの URL を取得します。
+        /// Gets the name of the specified <c>Language</c>.
         /// </summary>
         ///
+        /// <param name="src">Language</param>
+        ///
+        /// <returns>Name</returns>
+        ///
+        /// <remarks>
+        /// Language.Auto または未対応の値が指定された場合、プログラム
+        /// 起動時の名前を返します。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdfutility");
+        public static string GetName(this Language src)
+        {
+            var status = GetLanguageMap().TryGetValue(src, out var dest);
+            Debug.Assert(status);
+            return dest.HasValue() ? dest : _system;
+        }
 
         #endregion
 
@@ -87,34 +104,28 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnDeserializing
+        /// GetLanguageMap
         ///
         /// <summary>
-        /// デシリアライズ直前に実行されます。
+        /// Gets the collection that each item has the Language and
+        /// its name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext context) => Reset();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        ///
-        /// <summary>
-        /// 値をリセットします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Reset()
-        {
-            _viewSize = 250;
-        }
+        private static IDictionary<Language, string> GetLanguageMap() => _map ?? (
+            _map = new Dictionary<Language, string>
+            {
+                { Language.Auto,     ""   },
+                { Language.English,  "en" },
+                { Language.Japanese, "ja" },
+            }
+        );
 
         #endregion
 
         #region Fields
-        private int _viewSize;
+        private static readonly string _system;
+        private static IDictionary<Language, string> _map;
         #endregion
     }
 }
