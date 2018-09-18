@@ -23,6 +23,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
@@ -122,7 +123,13 @@
                 ItemsSource="{Binding Languages}"
                 SelectedValue="{Binding Language.Value, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
                 Grid.Column="1"
-                Grid.Row="4" />
+                Grid.Row="4">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={my:LanguageConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </Grid>
 
         <!-- ******************************************************************

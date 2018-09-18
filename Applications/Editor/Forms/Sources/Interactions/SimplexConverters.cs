@@ -20,6 +20,7 @@ using Cube.Conversions;
 using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Xui.Converters;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -53,6 +54,40 @@ namespace Cube.Pdf.App.Editor
             var app = Assembly.GetExecutingAssembly().GetReader().Title;
             return e is Information fi ? $"{fi.Name} - {app}" : app;
         }) { }
+    }
+
+    #endregion
+
+    #region LanguageConverter
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// LanguageConverter
+    ///
+    /// <summary>
+    /// Provides functionality to convert a Language value.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class LanguageConverter : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LanguageConverter
+        ///
+        /// <summary>
+        /// Initializes a new instance of the <c>LanguageConverter</c>
+        /// class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public LanguageConverter() : base(e => new Dictionary<Language, string>
+            {
+                { Language.Auto,     Properties.Resources.MenuLanguageAuto     },
+                { Language.English,  Properties.Resources.MenuLanguageEnglish  },
+                { Language.Japanese, Properties.Resources.MenuLanguageJapanese },
+            }.TryGetValue(e.TryCast<Language>(), out var dest) ? dest : Properties.Resources.MenuLanguageAuto
+        ) { }
     }
 
     #endregion
