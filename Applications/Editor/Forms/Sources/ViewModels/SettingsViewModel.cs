@@ -57,10 +57,10 @@ namespace Cube.Pdf.App.Editor
         {
             var asm = Assembly.GetExecutingAssembly().GetReader();
 
-            Language = Create(() => src.Value.Language,    e  => src.Value.Language    = e, () => Properties.Resources.MenuLanguage);
-            Update   = Create(() => src.Value.CheckUpdate, e  => src.Value.CheckUpdate = e, () => Properties.Resources.MenuUpdate  );
-            Version  = Create(() => $"{src.Title} {src.Version.ToString(true)}", () => Properties.Resources.MenuVersion);
-            Link     = Create(() => asm.Copyright, () => src.Value.Uri.ToString());
+            Language = this.Create(() => src.Value.Language,    e  => src.Value.Language    = e, () => Properties.Resources.MenuLanguage);
+            Update   = this.Create(() => src.Value.CheckUpdate, e  => src.Value.CheckUpdate = e, () => Properties.Resources.MenuUpdate  );
+            Version  = this.Create(() => $"{src.Title} {src.Version.ToString(true)}", () => Properties.Resources.MenuVersion);
+            Link     = this.Create(() => asm.Copyright, () => src.Value.Uri.ToString());
 
             OK.Command = new RelayCommand(() =>
             {
@@ -157,34 +157,6 @@ namespace Cube.Pdf.App.Editor
             Editor.Language.English,
             Editor.Language.Japanese,
         };
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new menu with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static BindableElement<T> Create<T>(Getter<T> getter, Getter<string> gettext) =>
-            new BindableElement<T>(getter, gettext);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new menu with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static BindableElement<T> Create<T>(Getter<T> getter, Action<T> setter, Getter<string> gettext) =>
-            new BindableElement<T>(getter, e => { setter(e); return true; }, gettext);
 
         #endregion
     }

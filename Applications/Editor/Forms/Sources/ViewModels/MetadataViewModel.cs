@@ -57,18 +57,18 @@ namespace Cube.Pdf.App.Editor
         public MetadataViewModel(Action<Metadata> callback, Metadata src, Information file, SynchronizationContext context) :
             base(() => Properties.Resources.TitleMetadata, new Messenger(), context)
         {
-            Filename      = Create(() => file.Name,          () => Properties.Resources.MenuFilename     );
-            Producer      = Create(() => src.Producer,       () => Properties.Resources.MenuProducer     );
-            Length        = Create(() => file.Length,        () => Properties.Resources.MenuFilesize     );
-            CreationTime  = Create(() => file.CreationTime,  () => Properties.Resources.MenuCreationTime );
-            LastWriteTime = Create(() => file.LastWriteTime, () => Properties.Resources.MenuLastWriteTime);
+            Filename      = this.Create(() => file.Name,          () => Properties.Resources.MenuFilename     );
+            Producer      = this.Create(() => src.Producer,       () => Properties.Resources.MenuProducer     );
+            Length        = this.Create(() => file.Length,        () => Properties.Resources.MenuFilesize     );
+            CreationTime  = this.Create(() => file.CreationTime,  () => Properties.Resources.MenuCreationTime );
+            LastWriteTime = this.Create(() => file.LastWriteTime, () => Properties.Resources.MenuLastWriteTime);
 
-            Document = Create(() => src.Title,    e => src.Title    = e, () => Properties.Resources.MenuTitle   );
-            Author   = Create(() => src.Author,   e => src.Author   = e, () => Properties.Resources.MenuAuthor  );
-            Subject  = Create(() => src.Subject,  e => src.Subject  = e, () => Properties.Resources.MenuSubject );
-            Keywords = Create(() => src.Keywords, e => src.Keywords = e, () => Properties.Resources.MenuKeywords);
-            Creator  = Create(() => src.Creator,  e => src.Creator  = e, () => Properties.Resources.MenuCreator );
-            Version  = Create(() => src.Version,  e => src.Version  = e, () => Properties.Resources.MenuVersion );
+            Document = this.Create(() => src.Title,    e => src.Title    = e, () => Properties.Resources.MenuTitle   );
+            Author   = this.Create(() => src.Author,   e => src.Author   = e, () => Properties.Resources.MenuAuthor  );
+            Subject  = this.Create(() => src.Subject,  e => src.Subject  = e, () => Properties.Resources.MenuSubject );
+            Keywords = this.Create(() => src.Keywords, e => src.Keywords = e, () => Properties.Resources.MenuKeywords);
+            Creator  = this.Create(() => src.Creator,  e => src.Creator  = e, () => Properties.Resources.MenuCreator );
+            Version  = this.Create(() => src.Version,  e => src.Version  = e, () => Properties.Resources.MenuVersion );
             Viewer   = CreateViewerPreferences(src);
 
             OK.Command = new RelayCommand(() => { Send<CloseMessage>(); callback(src); });
@@ -294,30 +294,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new menu with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static BindableElement<T> Create<T>(Getter<T> getter, Getter<string> gettext) =>
-            new BindableElement<T>(getter, gettext);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new menu with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static BindableElement<T> Create<T>(Getter<T> getter, Action<T> setter, Getter<string> gettext) =>
-            new BindableElement<T>(getter, e => { setter(e); return true; }, gettext);
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// CreateViewerPreferences
         ///
         /// <summary>
@@ -325,10 +301,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static BindableElement<ViewerPreferences> CreateViewerPreferences(Metadata src)
+        private BindableElement<ViewerPreferences> CreateViewerPreferences(Metadata src)
         {
             if (src.Viewer == Pdf.ViewerPreferences.None) src.Viewer = Pdf.ViewerPreferences.OneColumn;
-            return Create(() => src.Viewer, e => src.Viewer = e, () => Properties.Resources.MenuLayout);
+            return this.Create(() => src.Viewer, e => src.Viewer = e, () => Properties.Resources.MenuLayout);
         }
 
         #endregion

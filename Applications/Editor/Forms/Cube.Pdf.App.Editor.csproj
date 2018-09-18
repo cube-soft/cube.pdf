@@ -137,6 +137,7 @@
     <Compile Include="Sources\ViewModels\PreviewBindable.cs" />
     <Compile Include="Sources\ViewModels\PreviewFacade.cs" />
     <Compile Include="Sources\ViewModels\PreviewViewModel.cs" />
+    <Compile Include="Sources\ViewModels\ViewModelExtension.cs" />
     <Compile Include="Views\PreviewWindow.xaml.cs">
       <DependentUpon>PreviewWindow.xaml</DependentUpon>
     </Compile>

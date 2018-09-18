@@ -59,31 +59,31 @@ namespace Cube.Pdf.App.Editor
             if (src.Method == EncryptionMethod.Unknown) src.Method = EncryptionMethod.Aes256;
 
             IsSharePassword = CreateShare(src);
-            Enabled         = Create(() => src.Enabled,          e => src.Enabled          = e, () => Properties.Resources.MenuEncryptionEnabled);
-            Method          = Create(() => src.Method,           e => src.Method           = e, () => Properties.Resources.MenuEncryptionMethod );
-            OwnerPassword   = Create(() => src.OwnerPassword,    e => src.OwnerPassword    = e, () => Properties.Resources.MenuOwnerPassword    );
-            UserPassword    = Create(() => src.UserPassword,     e => src.UserPassword     = e, () => Properties.Resources.MenuUserPassword     );
-            IsOpenPassword  = Create(() => src.OpenWithPassword, e => src.OpenWithPassword = e, () => Properties.Resources.MenuOpenWithPassword );
-            Operation       = Create(() => !IsOpenPassword.Value || !IsSharePassword.Value, () => Properties.Resources.MenuOperations);
+            Enabled         = this.Create(() => src.Enabled,          e => src.Enabled          = e, () => Properties.Resources.MenuEncryptionEnabled);
+            Method          = this.Create(() => src.Method,           e => src.Method           = e, () => Properties.Resources.MenuEncryptionMethod );
+            OwnerPassword   = this.Create(() => src.OwnerPassword,    e => src.OwnerPassword    = e, () => Properties.Resources.MenuOwnerPassword    );
+            UserPassword    = this.Create(() => src.UserPassword,     e => src.UserPassword     = e, () => Properties.Resources.MenuUserPassword     );
+            IsOpenPassword  = this.Create(() => src.OpenWithPassword, e => src.OpenWithPassword = e, () => Properties.Resources.MenuOpenWithPassword );
+            Operation       = this.Create(() => !IsOpenPassword.Value || !IsSharePassword.Value, () => Properties.Resources.MenuOperations);
 
             IsOpenPassword.PropertyChanged  += (s, e) => Operation.RaisePropertyChanged("Value");
             IsSharePassword.PropertyChanged += (s, e) => Operation.RaisePropertyChanged("Value");
 
             var pm = src.Permission;
 
-            AllowPrint = Create(() => pm.Print.IsAllowed(),
+            AllowPrint = this.Create(() => pm.Print.IsAllowed(),
                 e  => pm.Print = Convert(e),
                 () => Properties.Resources.MenuAllowPrint);
-            AllowCopy = Create(() => pm.CopyContents.IsAllowed(),
+            AllowCopy = this.Create(() => pm.CopyContents.IsAllowed(),
                 e  => pm.CopyContents = Convert(e),
                 () => Properties.Resources.MenuAllowCopy);
-            AllowAccessibility = Create(() => pm.Accessibility.IsAllowed(),
+            AllowAccessibility = this.Create(() => pm.Accessibility.IsAllowed(),
                 e  => pm.Accessibility = Convert(e),
                 () => Properties.Resources.MenuAllowAccessibility);
-            AllowForm = Create(() => pm.InputForm.IsAllowed(),
+            AllowForm = this.Create(() => pm.InputForm.IsAllowed(),
                 e  => pm.InputForm = Convert(e),
                 () => Properties.Resources.MenuAllowForm);
-            AllowAnnotation = Create(() => pm.ModifyAnnotations.IsAllowed(),
+            AllowAnnotation = this.Create(() => pm.ModifyAnnotations.IsAllowed(),
                 e  => pm.ModifyAnnotations = Convert(e),
                 () => Properties.Resources.MenuAllowAnnotation);
             AllowModify = CreateModify(pm);
@@ -355,32 +355,8 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static PermissionMethod Convert(bool src) =>
+        private PermissionMethod Convert(bool src) =>
             src ? PermissionMethod.Allow : PermissionMethod.Deny;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new menu with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static BindableElement<T> Create<T>(Getter<T> getter, Getter<string> gettext) =>
-            new BindableElement<T>(getter, gettext);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new menu with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static BindableElement<T> Create<T>(Getter<T> getter, Action<T> setter, Getter<string> gettext) =>
-            new BindableElement<T>(getter, e => { setter(e); return true; }, gettext);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -391,7 +367,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static BindableElement<bool> CreateModify(Permission src) => Create(
+        private BindableElement<bool> CreateModify(Permission src) => this.Create(
             () => src.Assemble.IsAllowed() || src.ModifyContents.IsAllowed(),
             e  => { src.Assemble = Convert(e); src.ModifyContents = Convert(e); },
             () => Properties.Resources.MenuAllowAssemble
@@ -406,7 +382,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static BindableElement<bool> CreateShare(Encryption src)
+        private BindableElement<bool> CreateShare(Encryption src)
         {
             var cmp   = StringComparison.InvariantCulture;
             var value = src.OwnerPassword.HasValue() && src.OwnerPassword.Equals(src.UserPassword, cmp);
