@@ -16,10 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections.Mixin;
 using Cube.FileSystem;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
+using Cube.Xui.Mixin;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -38,7 +40,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class DocumentExtension
+    internal static class DocumentExtension
     {
         #region Methods
 
@@ -109,6 +111,74 @@ namespace Cube.Pdf.App.Editor
                 src.Render(gs, page);
             }
             return dest.ToBitmapImage(true);
+        }
+
+        #endregion
+
+        #region Invoke
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the user action and clears the message.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Invoke(this MainFacade src, Action action) =>
+            src.Invoke(action, string.Empty);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the user action and registers the hisotry item.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Invoke(this MainFacade src, Func<HistoryItem> func) =>
+            src.Invoke(() => src.Bindable.History.Register(func()));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the user action and sets the result message.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Invoke(this MainFacade src, Action action, string format, params object[] args)
+        {
+            try
+            {
+                src.Bindable.Busy.Value = true;
+                action();
+                src.Bindable.SetMessage(format, args);
+            }
+            catch (Exception err) { src.Bindable.SetMessage(err.Message); throw; }
+            finally
+            {
+                src.Bindable.Count.Raise();
+                src.Bindable.Busy.Value = false;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invokes
+        ///
+        /// <summary>
+        /// Invokes the specified action and creates a history item.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static HistoryItem Invoke(Action forward, Action reverse)
+        {
+            forward(); // do
+            return new HistoryItem { Undo = reverse, Redo = forward };
         }
 
         #endregion
@@ -188,6 +258,25 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Zoom
+        ///
+        /// <summary>
+        /// Executes the Zoom command by using the current settings.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Zoom(this MainFacade src)
+        {
+            var items = src.Bindable.Images.Preferences.ItemSizeOptions;
+            var prev  = src.Bindable.Images.Preferences.ItemSizeIndex;
+            var next  = items.LastIndexOf(x => x <= src.Settings.Value.ItemSize);
+            src.Zoom(next - prev);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SetMetadata
         ///
         /// <summary>
@@ -234,25 +323,6 @@ namespace Cube.Pdf.App.Editor
                 () => src.Bindable.Encryption.Value = value,
                 () => src.Bindable.Encryption.Value = prev
             );
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invokes
-        ///
-        /// <summary>
-        /// Invokes the specified action and creates a history item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static HistoryItem Invoke(Action forward, Action reverse)
-        {
-            forward(); // do
-            return new HistoryItem { Undo = reverse, Redo = forward };
         }
 
         #endregion
