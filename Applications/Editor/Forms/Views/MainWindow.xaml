@@ -24,7 +24,6 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:r="urn:fluent-ribbon"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
-    xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui"
     xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -47,6 +46,35 @@
     <r:RibbonWindow.DataContext>
         <my:MainViewModel />
     </r:RibbonWindow.DataContext>
+
+    <!-- **********************************************************************
+      KeyBindings
+    *********************************************************************** -->
+    <r:RibbonWindow.InputBindings>
+        <KeyBinding Gesture="F5"            Command="{Binding Ribbon.Refresh.Command}" />
+        <KeyBinding Gesture="Insert"        Command="{Binding Ribbon.Insert.Command}" />
+        <KeyBinding Gesture="Delete"        Command="{Binding Ribbon.Remove.Command}" />
+        <KeyBinding Gesture="Backspace"     Command="{Binding Ribbon.Remove.Command}" />
+        <KeyBinding Gesture="Ctrl+E"        Command="{Binding Ribbon.Extract.Command}" />
+        <KeyBinding Gesture="Ctrl+O"        Command="{Binding Ribbon.Open.Command}" />
+        <KeyBinding Gesture="Ctrl+S"        Command="{Binding Ribbon.Save.Command}" />
+        <KeyBinding Gesture="Ctrl+Shift+S"  Command="{Binding Ribbon.SaveAs.Command}" />
+        <KeyBinding Gesture="Ctrl+W"        Command="{Binding Ribbon.Close.Command}" />
+        <KeyBinding Gesture="Ctrl+A"        Command="{Binding Ribbon.SelectAll.Command}" />
+        <KeyBinding Gesture="Ctrl+D"        Command="{Binding Ribbon.SelectClear.Command}" />
+        <KeyBinding Gesture="Ctrl+F"        Command="{Binding Ribbon.MoveNext.Command}" />
+        <KeyBinding Gesture="Ctrl+B"        Command="{Binding Ribbon.MovePrevious.Command}" />
+        <KeyBinding Gesture="Ctrl+L"        Command="{Binding Ribbon.RotateLeft.Command}" />
+        <KeyBinding Gesture="Ctrl+R"        Command="{Binding Ribbon.RotateRight.Command}" />
+        <KeyBinding Gesture="Ctrl+I"        Command="{Binding Ribbon.Metadata.Command}" />
+        <KeyBinding Gesture="Ctrl+K"        Command="{Binding Ribbon.Encryption.Command}" />
+        <KeyBinding Gesture="Ctrl+Z"        Command="{Binding Ribbon.Undo.Command}" />
+        <KeyBinding Gesture="Ctrl+Y"        Command="{Binding Ribbon.Redo.Command}" />
+        <KeyBinding Gesture="Ctrl+OemPlus"  Command="{Binding Ribbon.ZoomIn.Command}" />
+        <KeyBinding Gesture="Ctrl+Add"      Command="{Binding Ribbon.ZoomIn.Command}" />
+        <KeyBinding Gesture="Ctrl+OemMinus" Command="{Binding Ribbon.ZoomOut.Command}" />
+        <KeyBinding Gesture="Ctrl+Subtract" Command="{Binding Ribbon.ZoomOut.Command}" />
+    </r:RibbonWindow.InputBindings>
 
     <!-- **********************************************************************
       Interactions
