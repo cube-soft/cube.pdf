@@ -49,7 +49,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetText_English()
         {
-            var dest = new RibbonViewModel(null, new Messenger());
+            var dest = Create();
             ResourceCulture.Set("en");
 
             Assert.That(dest.File.Text,          Is.EqualTo("File"));
@@ -95,7 +95,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetTooltip_English()
         {
-            var dest = new RibbonViewModel(null, new Messenger());
+            var dest = Create();
             ResourceCulture.Set("en");
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo("File"));
@@ -141,7 +141,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetText_Japanese()
         {
-            var dest = new RibbonViewModel(null, new Messenger());
+            var dest = Create();
             ResourceCulture.Set("ja");
 
             Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
@@ -187,7 +187,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetTooltip_Japanese()
         {
-            var dest = new RibbonViewModel(null, new Messenger());
+            var dest = Create();
             ResourceCulture.Set("ja");
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo(dest.File.Text));
@@ -233,7 +233,7 @@ namespace Cube.Pdf.Tests.Editor
         [Test]
         public void GetText_Dynamically()
         {
-            var dest = new RibbonViewModel(null, new Messenger());
+            var dest = Create();
 
             ResourceCulture.Set("en");
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");
@@ -259,6 +259,21 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(dest.Open.Text,    Is.Not.Null.And.Not.Empty, "null");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "null");
         }
+
+        #endregion
+
+        #region Helper methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new instance of the RibbonViewModel class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private RibbonViewModel Create() => new RibbonViewModel(null, new Messenger());
 
         #endregion
     }
