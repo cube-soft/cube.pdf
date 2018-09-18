@@ -474,7 +474,9 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ImageEntry CreateEntry(int index, Page item) => new ImageEntry(
-            e => _cache.TryGetValue(e, out var dest) ? dest : Preferences.Dummy,
+            e => Preferences.FrameOnly ? null :
+                 _cache.TryGetValue(e, out var dest) ? dest :
+                 Preferences.Dummy,
             Selection,
             Preferences)
         {

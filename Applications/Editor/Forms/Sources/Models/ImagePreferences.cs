@@ -103,6 +103,22 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// FrameOnly
+        ///
+        /// <summary>
+        /// Gets or sets the value indicating whether only the frame
+        /// of each item is displayed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool FrameOnly
+        {
+            get => _frameOnly;
+            set => SetProperty(ref _frameOnly, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// TextHeight
         ///
         /// <summary>
@@ -185,6 +201,7 @@ namespace Cube.Pdf.App.Editor
         private int _itemSizeIndex;
         private int _itemMargin;
         private int _textHeight;
+        private bool _frameOnly;
         private ImageSource _dummy;
         #endregion
     }
