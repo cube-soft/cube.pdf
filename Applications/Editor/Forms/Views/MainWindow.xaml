@@ -95,6 +95,7 @@
         <xb:UriBehavior />
         <xb:CloseBehavior />
         <xb:ClosingBehavior Command="{Binding Ribbon.Close.Command}" />
+        <my:PasswordWindowBehavior />
         <my:PreviewWindowBehavior />
         <my:InsertWindowBehavior />
         <my:RemoveWindowBehavior />

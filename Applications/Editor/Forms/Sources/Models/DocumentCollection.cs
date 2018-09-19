@@ -32,6 +32,27 @@ namespace Cube.Pdf.App.Editor
     /* --------------------------------------------------------------------- */
     public class DocumentCollection
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentCollection
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentCollection class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="password">Password query.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentCollection(IQuery<string> password)
+        {
+            _password = password;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -83,7 +104,7 @@ namespace Cube.Pdf.App.Editor
         public DocumentReader GetOrAdd(string src)
         {
             if (_core.TryGetValue(src, out var value)) return value;
-            var dest = _core.GetOrAdd(src, e => new DocumentReader(e));
+            var dest = _core.GetOrAdd(src, e => new DocumentReader(e, _password));
             return dest;
         }
 
@@ -128,6 +149,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly ConcurrentDictionary<string, DocumentReader> _core = new ConcurrentDictionary<string, DocumentReader>();
+        private readonly IQuery<string> _password;
         #endregion
     }
 }

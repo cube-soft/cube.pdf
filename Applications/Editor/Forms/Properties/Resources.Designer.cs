@@ -898,6 +898,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Please enter the owner password for opening and editing {0}. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessagePassword {
+            get {
+                return ResourceManager.GetString("MessagePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   e.g. 1,2,4-7,9 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageRemoveRange {
@@ -984,6 +993,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string TitleOpen {
             get {
                 return ResourceManager.GetString("TitleOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Input password に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitlePassword {
+            get {
+                return ResourceManager.GetString("TitlePassword", resourceCulture);
             }
         }
         

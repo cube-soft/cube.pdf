@@ -396,6 +396,9 @@
   <data name="MessagePage" xml:space="preserve">
     <value>{0} pages</value>
   </data>
+  <data name="MessagePassword" xml:space="preserve">
+    <value>Please enter the owner password for opening and editing {0}.</value>
+  </data>
   <data name="MessageRemoveRange" xml:space="preserve">
     <value>e.g. 1,2,4-7,9</value>
   </data>
@@ -425,6 +428,9 @@
   </data>
   <data name="TitleOpen" xml:space="preserve">
     <value>Open file</value>
+  </data>
+  <data name="TitlePassword" xml:space="preserve">
+    <value>Input password</value>
   </data>
   <data name="TitlePreview" xml:space="preserve">
     <value>{0} ({1}/{2} page)</value>

@@ -45,16 +45,19 @@ namespace Cube.Pdf.App.Editor
         /// MainFacade
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the MainFacade class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">設定情報</param>
-        /// <param name="context">同期用コンテキスト</param>
+        /// <param name="settings">User settings.</param>
+        /// <param name="password">Password query.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingsFolder settings, SynchronizationContext context)
+        public MainFacade(SettingsFolder settings, IQuery<string> password, SynchronizationContext context)
         {
             _dispose = new OnceAction<bool>(Dispose);
+            _core    = new DocumentCollection(password);
             Bindable = new MainBindable(new ImageCollection(e => _core.GetOrAdd(e)), settings);
 
             Settings = settings;
@@ -497,7 +500,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly OnceAction<bool> _dispose;
-        private readonly DocumentCollection _core = new DocumentCollection();
+        private readonly DocumentCollection _core;
         #endregion
     }
 }

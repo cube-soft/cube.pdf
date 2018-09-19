@@ -22,6 +22,18 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
+    /// PasswordWindowBehavior
+    ///
+    /// <summary>
+    /// Represents the behavior to show a PasswordWindow dialog.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class PasswordWindowBehavior :
+        ShowDialogBehavior<PasswordWindow, PasswordViewModel> { }
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// PreviewWindowBehavior
     ///
     /// <summary>

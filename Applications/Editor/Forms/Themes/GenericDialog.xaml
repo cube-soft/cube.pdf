@@ -66,6 +66,14 @@
     <!-- **********************************************************************
       Footer
     *********************************************************************** -->
+    <Style x:Key="DialogContentStyle" TargetType="{x:Type Grid}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="20,0" />
+    </Style>
+
+    <!-- **********************************************************************
+      Footer
+    *********************************************************************** -->
     <Style x:Key="DialogFooterStyle" TargetType="{x:Type StackPanel}">
         <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
         <Setter Property="Orientation" Value="Horizontal" />
