@@ -158,6 +158,7 @@ namespace Cube.Pdf.App.Editor
                 action();
                 src.Bindable.SetMessage(format, args);
             }
+            catch (OperationCanceledException) { /* ignore user cancel */ }
             catch (Exception err) { src.Bindable.SetMessage(err.Message); throw; }
             finally
             {
