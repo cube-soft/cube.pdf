@@ -201,12 +201,29 @@ namespace Cube.Pdf.App.Editor
         /// <param name="dest">File path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save(string dest) => this.Invoke(() =>
+        public void Save(string dest) => Save(dest, true);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// Saves the PDF document to the specified file path.
+        /// </summary>
+        ///
+        /// <param name="dest">File path.</param>
+        /// <param name="reopen">
+        /// Value indicating whether restructuring some inner fields
+        /// after saving.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Save(string dest, bool reopen) => this.Invoke(() =>
         {
             var file = IO.Get(dest);
             Bindable.SetMessage(Properties.Resources.MessageSaving, file.FullName);
             this.Save(file, IO, () => _core.Clear());
-            this.Restruct(_core.GetOrAdd(dest));
+            if (reopen) this.Restruct(_core.GetOrAdd(dest));
         });
 
         /* ----------------------------------------------------------------- */
@@ -426,12 +443,18 @@ namespace Cube.Pdf.App.Editor
         /// Closes the current PDF document.
         /// </summary>
         ///
+        /// <param name="save">Save before closing.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Close() => this.Invoke(() =>
+        public void Close(bool save)
         {
-            _core.Clear();
-            Bindable.Close();
-        });
+            if (save) Save(Bindable.Source.Value.FullName, false);
+            this.Invoke(() =>
+            {
+                _core.Clear();
+                Bindable.Close();
+            });
+        }
 
         #region IDisposable
 
@@ -478,7 +501,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected virtual void Dispose(bool disposing)
         {
-            Close();
+            Close(false);
             if (disposing) Bindable.Images.Dispose();
         }
 

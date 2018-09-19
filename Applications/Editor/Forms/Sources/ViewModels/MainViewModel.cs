@@ -171,7 +171,7 @@ namespace Cube.Pdf.App.Editor
             Drop                         = IsDrop();
             Recent.Open                  = IsLink();
             Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
-            Ribbon.Close.Command         = IsOpen(() => Send(() => Model.Close()));
+            Ribbon.Close.Command         = IsOpen(() => Send(() => Model.Close(false)));
             Ribbon.Save.Command          = IsOpen(() => Post(() => Model.Save()));
             Ribbon.SaveAs.Command        = IsOpen(() => PostSave(e => Model.Save(e)));
             Ribbon.Preview.Command       = IsItem(() => SendPreview());
