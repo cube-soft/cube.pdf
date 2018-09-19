@@ -169,7 +169,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invokes
+        /// Invoke
         ///
         /// <summary>
         /// Invokes the specified action and creates a history item.
@@ -198,10 +198,26 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static void StartProcess(this MainFacade src, string args) =>
             Process.Start(new ProcessStartInfo
-            {
-                FileName  = Assembly.GetExecutingAssembly().Location,
-                Arguments = args
-            });
+        {
+            FileName  = Assembly.GetExecutingAssembly().Location,
+            Arguments = args
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Overwrite
+        ///
+        /// <summary>
+        /// Overwrites the PDF document.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Overwrite(this MainFacade src)
+        {
+            if (src.Bindable.History.Undoable) src.Save(src.Bindable.Source.Value.FullName);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -256,6 +272,36 @@ namespace Cube.Pdf.App.Editor
             src.Bindable.Source.Value = doc.File;
             src.Bindable.History.Clear();
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        ///
+        /// <summary>
+        /// Inserts the page objects of the specified file path.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="path">File path.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Insert(this MainFacade src, string path) =>
+            src.Insert(src.Bindable.Selection.Last + 1, path);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// Sets or resets the IsSelected property of all items according
+        /// to the current condition.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Select(this MainFacade src) =>
+            src.Select(src.Bindable.Selection.Count < src.Bindable.Images.Count);
 
         /* ----------------------------------------------------------------- */
         ///

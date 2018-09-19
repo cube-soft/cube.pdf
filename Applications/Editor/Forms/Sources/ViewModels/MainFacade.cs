@@ -25,7 +25,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 
-
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
@@ -178,16 +177,23 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Save
+        /// Close
         ///
         /// <summary>
-        /// Overwrites the PDF document.
+        /// Closes the current PDF document.
         /// </summary>
         ///
+        /// <param name="save">Save before closing.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Save()
+        public void Close(bool save)
         {
-            if (Bindable.History.Undoable) Save(Bindable.Source.Value.FullName);
+            if (save) Save(Bindable.Source.Value.FullName, false);
+            this.Invoke(() =>
+            {
+                _core.Clear();
+                Bindable.Close();
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -218,7 +224,7 @@ namespace Cube.Pdf.App.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save(string dest, bool reopen) => this.Invoke(() =>
+        private void Save(string dest, bool reopen) => this.Invoke(() =>
         {
             var file = IO.Get(dest);
             Bindable.SetMessage(Properties.Resources.MessageSaving, file.FullName);
@@ -247,18 +253,6 @@ namespace Cube.Pdf.App.Editor
         /// Select
         ///
         /// <summary>
-        /// Sets or resets the IsSelected property of all items according
-        /// to the current condition.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Select() => Select(Bindable.Selection.Count < Bindable.Images.Count);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Select
-        ///
-        /// <summary>
         /// Sets the IsSelected property of all items to be the specified
         /// value.
         /// </summary>
@@ -278,19 +272,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Flip() => this.Invoke(() => Bindable.Images.Flip());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Insert
-        ///
-        /// <summary>
-        /// Inserts the page objects of the specified file path.
-        /// </summary>
-        ///
-        /// <param name="src">File path.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Insert(string src) => Insert(Bindable.Selection.Last + 1, src);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -434,27 +415,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Refresh() => this.Invoke(() => Bindable.Images.Refresh());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Close
-        ///
-        /// <summary>
-        /// Closes the current PDF document.
-        /// </summary>
-        ///
-        /// <param name="save">Save before closing.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Close(bool save)
-        {
-            if (save) Save(Bindable.Source.Value.FullName, false);
-            this.Invoke(() =>
-            {
-                _core.Clear();
-                Bindable.Close();
-            });
-        }
 
         #region IDisposable
 

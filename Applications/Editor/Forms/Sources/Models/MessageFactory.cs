@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Xui;
+using System.Reflection;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -88,6 +89,31 @@ namespace Cube.Pdf.App.Editor
                 new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
                 new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CloseMessage
+        ///
+        /// <summary>
+        /// Creates a message to show the MessageBox of overwriting
+        /// confirmation.
+        /// </summary>
+        ///
+        /// <param name="callback">
+        /// Callback action when terminating the user operation.
+        /// </param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogMessage CloseMessage(DialogCallback callback) => new DialogMessage(
+            Properties.Resources.MessageOverwrite,
+            Assembly.GetExecutingAssembly(),
+            callback)
+        {
+            Button = System.Windows.MessageBoxButton.YesNoCancel,
+            Image  = System.Windows.MessageBoxImage.Information,
         };
 
         #endregion

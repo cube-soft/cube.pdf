@@ -22,6 +22,7 @@ using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
@@ -171,8 +172,8 @@ namespace Cube.Pdf.App.Editor
             Drop                         = IsDrop();
             Recent.Open                  = IsLink();
             Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
-            Ribbon.Close.Command         = IsOpen(() => Send(() => Model.Close(false)));
-            Ribbon.Save.Command          = IsOpen(() => Post(() => Model.Save()));
+            Ribbon.Close.Command         = IsOpen(() => SendClose());
+            Ribbon.Save.Command          = IsOpen(() => Post(() => Model.Overwrite()));
             Ribbon.SaveAs.Command        = IsOpen(() => PostSave(e => Model.Save(e)));
             Ribbon.Preview.Command       = IsItem(() => SendPreview());
             Ribbon.Select.Command        = IsOpen(() => Send(() => Model.Select()));
@@ -323,7 +324,7 @@ namespace Cube.Pdf.App.Editor
         /// PostSave
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the <c>SaveFileDialog</c>
+        /// Sends the message to show a dialog of the SaveFileDialog
         /// class, and executes the specified action as an asynchronous
         /// operation.
         /// </summary>
@@ -332,6 +333,26 @@ namespace Cube.Pdf.App.Editor
         private void PostSave(Action<string> action) => Send(MessageFactory.SaveMessage(e =>
             Post(() => { if (e.Result) action(e.FileName); })
         ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SendClose
+        ///
+        /// <summary>
+        /// Sends the message to show the overwriting confirmation,
+        /// and executes the close action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SendClose()
+        {
+            if (!Data.Modified.Value) Send(() => Model.Close(false));
+            else Send(MessageFactory.CloseMessage(e =>
+            {
+                if (e.Result == MessageBoxResult.Cancel) return;
+                Send(() => Model.Close(e.Result == MessageBoxResult.Yes));
+            }));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
