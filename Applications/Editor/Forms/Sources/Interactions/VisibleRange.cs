@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -49,8 +50,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public int First
         {
-            get => _first;
-            set => SetProperty(ref _first, value, () => SetValue(FirstProperty, value));
+            get => (int)GetValue(FirstProperty);
+            set => SetValue(FirstProperty, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -64,8 +65,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public int Last
         {
-            get => _last;
-            set => SetProperty(ref _last, value, () => SetValue(LastProperty, value));
+            get => (int)GetValue(LastProperty);
+            set => SetValue(LastProperty, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -80,7 +81,7 @@ namespace Cube.Pdf.App.Editor
         public int ItemSize
         {
             get => _itemSize;
-            set => SetProperty(ref _itemSize, value, () => SetRange());
+            set => Set(ref _itemSize, value, () => Update());
         }
 
         /* ----------------------------------------------------------------- */
@@ -95,7 +96,7 @@ namespace Cube.Pdf.App.Editor
         public int ItemMargin
         {
             get => _itemMargin;
-            set => SetProperty(ref _itemMargin, value, () => SetRange());
+            set => Set(ref _itemMargin, value, () => Update());
         }
 
         #endregion
@@ -112,7 +113,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static readonly DependencyProperty FirstProperty =
-            CreateProperty<int>(nameof(First), (s, e) => s.First = e);
+            Create<int>(nameof(First), (s, e) => s.First = e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -124,7 +125,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static readonly DependencyProperty LastProperty =
-            CreateProperty<int>(nameof(Last), (s, e) => s.Last = e);
+            Create<int>(nameof(Last), (s, e) => s.Last = e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -136,7 +137,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static readonly DependencyProperty ItemSizeProperty =
-            CreateProperty<int>(nameof(ItemSize), (s, e) => s.ItemSize = e);
+            Create<int>(nameof(ItemSize), (s, e) => s.ItemSize = e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -148,7 +149,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static readonly DependencyProperty ItemMarginProperty =
-            CreateProperty<int>(nameof(ItemMargin), (s, e) => s.ItemMargin = e);
+            Create<int>(nameof(ItemMargin), (s, e) => s.ItemMargin = e);
 
         #endregion
 
@@ -193,14 +194,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetRange
+        /// Update
         ///
         /// <summary>
-        /// Sets the visible range of the ScrollViewer control.
+        /// Updates the visible range of the ScrollViewer control.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetRange()
+        private void Update()
         {
             if (AssociatedObject == null) return;
 
@@ -220,7 +221,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateProperty
+        /// Create
         ///
         /// <summary>
         /// Creates a new DependencyProperty instance with the specified
@@ -228,21 +229,12 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static DependencyProperty CreateProperty<T>(string name,
-            Action<VisibleRange, T> callback) =>
-            DependencyProperty.RegisterAttached(
-                name,
-                typeof(T),
-                typeof(VisibleRange),
-                new PropertyMetadata((s, e) =>
-                {
-                    if (s is VisibleRange src && e.NewValue is T value) callback(src, value);
-                })
-            );
+        private static DependencyProperty Create<T>(string name,
+            Action<VisibleRange, T> callback) => DependencyFactory.Create(name, callback);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetProperty
+        /// Set
         ///
         /// <summary>
         /// Sets a new value to the specified property and executes the
@@ -250,7 +242,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetProperty<T>(ref T field, T value, Action action)
+        private void Set<T>(ref T field, T value, Action action)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return;
             field = value;
@@ -266,7 +258,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenSizeChanged(object sender, SizeChangedEventArgs e) => SetRange();
+        private void WhenSizeChanged(object sender, SizeChangedEventArgs e) => Update();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -278,13 +270,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenScrollChanged(object sender, ScrollChangedEventArgs e) => SetRange();
+        private void WhenScrollChanged(object sender, ScrollChangedEventArgs e) => Update();
 
         #endregion
 
         #region Fields
-        private int _first;
-        private int _last;
         private int _itemSize;
         private int _itemMargin;
         #endregion

@@ -16,12 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui;
+using Cube.Xui.Behaviors;
 using Fluent;
-using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Interactivity;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -34,25 +33,9 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SelectionBehavior : Behavior<ListBox>
+    public class SelectionBehavior : CommandBehavior<ListBox>
     {
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Command
-        ///
-        /// <summary>
-        /// Gets or sets the command that executes when the selection
-        /// is changed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICommand Command
-        {
-            get => GetValue(CommandProperty) as ICommand;
-            set => SetValue(CommandProperty, value);
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -70,22 +53,6 @@ namespace Cube.Pdf.App.Editor
             set => SetValue(PopupProperty, value);
         }
 
-        #endregion
-
-        #region DependencyProperties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CommandProperty
-        ///
-        /// <summary>
-        /// Gets the DependencyProperty object for the Command property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty CommandProperty =
-            CreateProperty<ICommand>(nameof(Command), (s, e) => s.Command = e);
-
         /* ----------------------------------------------------------------- */
         ///
         /// PopupProperty
@@ -96,32 +63,11 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static readonly DependencyProperty PopupProperty =
-            CreateProperty<bool>(nameof(Popup), (s, e) => s.Popup = e);
+            DependencyFactory.Create<SelectionBehavior, bool>(nameof(Popup), (s, e) => s.Popup = e);
 
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateProperty
-        ///
-        /// <summary>
-        /// Creates a new instance of the DependencyProperty class
-        /// with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static DependencyProperty CreateProperty<T>(string name, Action<SelectionBehavior, T> action) =>
-            DependencyProperty.RegisterAttached(
-                name,
-                typeof(T),
-                typeof(SelectionBehavior),
-                new PropertyMetadata(default(T), (s, e) =>
-                {
-                    if (s is SelectionBehavior sm && e.NewValue is T value) action(sm, value);
-                })
-            );
 
         /* ----------------------------------------------------------------- */
         ///

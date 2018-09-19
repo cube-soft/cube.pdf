@@ -17,11 +17,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
+using Cube.Xui.Behaviors;
 using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Interactivity;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -34,61 +33,9 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DropBehavior : Behavior<Window>
+    public class DropBehavior : CommandBehavior<Window>
     {
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Command
-        ///
-        /// <summary>
-        /// Gets or sets the command that executes when files are dropped.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICommand Command
-        {
-            get => GetValue(CommandProperty) as ICommand;
-            set => SetValue(CommandProperty, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CommandProperty
-        ///
-        /// <summary>
-        /// Gets the DependencyProperty object for the Command property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty CommandProperty =
-            CreateProperty<ICommand>(nameof(Command), (s, e) => s.Command = e);
-
-        #endregion
-
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateProperty
-        ///
-        /// <summary>
-        /// Creates a new instance of the DependencyProperty class
-        /// with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static DependencyProperty CreateProperty<T>(string name, Action<DropBehavior, T> action) =>
-            DependencyProperty.RegisterAttached(
-                name,
-                typeof(T),
-                typeof(DropBehavior),
-                new PropertyMetadata(default(T), (s, e) =>
-                {
-                    if (s is DropBehavior db && e.NewValue is T value) action(db, value);
-                })
-            );
 
         /* ----------------------------------------------------------------- */
         ///
