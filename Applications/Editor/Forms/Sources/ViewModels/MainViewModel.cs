@@ -314,7 +314,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostOpen(Action<string> action) => Send(MessageFactory.CreateSource(e =>
+        private void PostOpen(Action<string> action) => Send(MessageFactory.OpenMessage(e =>
             Post(() => { if (e.Result) action(e.FileName); })
         ));
 
@@ -329,7 +329,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostSave(Action<string> action) => Send(MessageFactory.CreateDestination(e =>
+        private void PostSave(Action<string> action) => Send(MessageFactory.SaveMessage(e =>
             Post(() => { if (e.Result) action(e.FileName); })
         ));
 

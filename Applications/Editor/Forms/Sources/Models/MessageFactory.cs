@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateSource
+        /// OpenMessage
         ///
         /// <summary>
         /// Creates a message to show the OpenFileDialog.
@@ -49,22 +49,22 @@ namespace Cube.Pdf.App.Editor
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateSource(OpenFileCallback callback) =>
+        public static OpenFileMessage OpenMessage(OpenFileCallback callback) =>
             new OpenFileMessage(callback)
+        {
+            Title           = Properties.Resources.TitleOpen,
+            CheckPathExists = true,
+            Multiselect     = false,
+            Filter          = new []
             {
-                Title           = Properties.Resources.TitleOpen,
-                CheckPathExists = true,
-                Multiselect     = false,
-                Filter          = new []
-                {
-                    new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
-                    new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
-                }.GetFilter(),
-            };
+                new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
+                new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
+            }.GetFilter(),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateDestination
+        /// SaveMessage
         ///
         /// <summary>
         /// Creates a message to show the SaveFileDialog.
@@ -77,18 +77,18 @@ namespace Cube.Pdf.App.Editor
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage CreateDestination(SaveFileCallback callback) =>
+        public static SaveFileMessage SaveMessage(SaveFileCallback callback) =>
             new SaveFileMessage(callback)
+        {
+            Title           = Properties.Resources.TitleSaveAs,
+            OverwritePrompt = true,
+            CheckPathExists = false,
+            Filter          = new[]
             {
-                Title           = Properties.Resources.TitleSaveAs,
-                OverwritePrompt = true,
-                CheckPathExists = false,
-                Filter          = new[]
-                {
-                    new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
-                    new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
-                }.GetFilter(),
-            };
+                new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
+                new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
+            }.GetFilter(),
+        };
 
         #endregion
     }
