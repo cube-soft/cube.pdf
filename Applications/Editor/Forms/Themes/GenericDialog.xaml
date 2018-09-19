@@ -66,14 +66,6 @@
     <!-- **********************************************************************
       Footer
     *********************************************************************** -->
-    <Style x:Key="DialogContentStyle" TargetType="{x:Type Grid}">
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="20,0" />
-    </Style>
-
-    <!-- **********************************************************************
-      Footer
-    *********************************************************************** -->
     <Style x:Key="DialogFooterStyle" TargetType="{x:Type StackPanel}">
         <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
         <Setter Property="Orientation" Value="Horizontal" />
@@ -99,6 +91,7 @@
     <Style x:Key="CancelButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DialogButtonStyle}">
         <Setter Property="Width" Value="100" />
         <Setter Property="Margin" Value="12,3,3,3" />
+        <Setter Property="IsCancel" Value="True" />
     </Style>
 
     <!-- **********************************************************************

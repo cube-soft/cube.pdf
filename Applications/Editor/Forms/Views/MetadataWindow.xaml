@@ -271,6 +271,7 @@
             <Button
                 Content="{Binding OK.Text}"
                 Command="{Binding OK.Command}"
+                IsDefault="True"
                 Style="{StaticResource DialogButtonStyle}" />
         </StackPanel>
     </Grid>
