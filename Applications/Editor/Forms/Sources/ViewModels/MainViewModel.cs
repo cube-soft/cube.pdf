@@ -21,6 +21,7 @@ using Cube.Pdf.Mixin;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -172,7 +173,7 @@ namespace Cube.Pdf.App.Editor
             Drop                         = IsDrop();
             Recent.Open                  = IsLink();
             Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
-            Ribbon.Close.Command         = IsOpen(() => SendClose());
+            Ribbon.Close.Command         = Close();
             Ribbon.Save.Command          = IsOpen(() => Post(() => Model.Overwrite()));
             Ribbon.SaveAs.Command        = IsOpen(() => PostSave(e => Model.Save(e)));
             Ribbon.Preview.Command       = IsItem(() => SendPreview());
@@ -215,7 +216,31 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ICommand Any(Action action) => new BindableCommand(action,
             () => !Data.Busy.Value,
-            Data.Busy);
+            Data.Busy
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Close
+        ///
+        /// <summary>
+        /// Creates a close command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand Close() => new BindableCommand<CancelEventArgs>(
+            e => {
+                if (!Data.Modified.Value) Send(() => Model.Close(false));
+                else Send(MessageFactory.CloseMessage(m =>
+                {
+                    e.Cancel = m.Result == MessageBoxResult.Cancel;
+                    if (e.Cancel) return;
+                    Send(() => Model.Close(m.Result == MessageBoxResult.Yes));
+                }));
+            },
+            e => Data.IsOpen() && (e != null || !Data.Busy.Value),
+            Data.Busy, Data.Source
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -228,7 +253,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ICommand IsOpen(Action action) => new BindableCommand(action,
             () => !Data.Busy.Value && Data.IsOpen(),
-            Data.Busy, Data.Source);
+            Data.Busy, Data.Source
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -242,7 +268,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ICommand IsItem(Action action) => new BindableCommand(action,
             () => !Data.Busy.Value && Data.IsOpen() && Data.Selection.Count > 0,
-            Data.Busy, Data.Source, Data.Selection);
+            Data.Busy, Data.Source, Data.Selection
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -256,7 +283,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ICommand IsUndo() => new BindableCommand(() => Model.Undo(),
             () => !Data.Busy.Value && Data.History.Undoable,
-            Data.Busy, Data.History);
+            Data.Busy, Data.History
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -270,7 +298,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ICommand IsRedo() => new BindableCommand(() => Model.Redo(),
             () => !Data.Busy.Value && Data.History.Redoable,
-            Data.Busy, Data.History);
+            Data.Busy, Data.History
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -283,8 +312,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private ICommand IsLink() => new BindableCommand<object>(
             e => Post(() => Model.OpenLink(e as Information)),
-            e => !Data.Busy.Value,
-            Data.Busy);
+            e => !Data.Busy.Value && e is Information,
+            Data.Busy
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -298,7 +328,8 @@ namespace Cube.Pdf.App.Editor
         private ICommand IsDrop() => new BindableCommand<string>(
             e => Post(() => Model.Open(e)),
             e => !Data.Busy.Value,
-            Data.Busy);
+            Data.Busy
+        );
 
         #endregion
 
@@ -336,26 +367,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SendClose
-        ///
-        /// <summary>
-        /// Sends the message to show the overwriting confirmation,
-        /// and executes the close action.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SendClose()
-        {
-            if (!Data.Modified.Value) Send(() => Model.Close(false));
-            else Send(MessageFactory.CloseMessage(e =>
-            {
-                if (e.Result == MessageBoxResult.Cancel) return;
-                Send(() => Model.Close(e.Result == MessageBoxResult.Yes));
-            }));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// SendPreview
         ///
         /// <summary>
@@ -364,7 +375,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendPreview() => Send(new PreviewViewModel(Data.Images, Data.Source.Value, Context));
+        private void SendPreview() => Send(new PreviewViewModel(
+            Data.Images,
+            Data.Source.Value,
+            Context
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -376,7 +391,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendInsert() => Send(new InsertViewModel(Data.Count.Value, Context));
+        private void SendInsert() => Send(new InsertViewModel(
+            Data.Count.Value,
+            Context
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -388,7 +406,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendRemove() => Send(new RemoveViewModel(e => Model.Remove(e), Data.Count.Value, Context));
+        private void SendRemove() => Send(new RemoveViewModel(
+            e => Model.Remove(e),
+            Data.Count.Value,
+            Context
+        ));
 
         /* ----------------------------------------------------------------- */
         ///

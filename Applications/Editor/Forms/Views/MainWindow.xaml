@@ -92,8 +92,9 @@
         <xb:DialogBehavior />
         <xb:OpenFileDialogBehavior />
         <xb:SaveFileDialogBehavior />
-        <xb:CloseBehavior />
         <xb:UriBehavior />
+        <xb:CloseBehavior />
+        <xb:ClosingBehavior Command="{Binding Ribbon.Close.Command}" />
         <my:PreviewWindowBehavior />
         <my:InsertWindowBehavior />
         <my:RemoveWindowBehavior />
