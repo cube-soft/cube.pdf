@@ -88,19 +88,25 @@
                     Text="{Binding OwnerPassword.Text}"
                     Grid.Column="0"
                     Grid.Row="0" />
-                <TextBox
-                    Text="{Binding OwnerPassword.Value, UpdateSourceTrigger=PropertyChanged}"
+                <PasswordBox
                     Grid.Column="1"
-                    Grid.Row="0" />
+                    Grid.Row="0">
+                    <i:Interaction.Behaviors>
+                        <xb:PasswordBehavior Password="{Binding OwnerPassword.Value, Mode=TwoWay}" />
+                    </i:Interaction.Behaviors>
+                </PasswordBox>
 
                 <TextBlock
                     Text="{Binding OwnerConfirm.Text}"
                     Grid.Column="0"
                     Grid.Row="1" />
-                <TextBox
-                    Text="{Binding OwnerConfirm.Value, UpdateSourceTrigger=PropertyChanged}"
+                <PasswordBox
                     Grid.Column="1"
-                    Grid.Row="1" />
+                    Grid.Row="1">
+                    <i:Interaction.Behaviors>
+                        <xb:PasswordBehavior Password="{Binding OwnerConfirm.Value, Mode=TwoWay}" />
+                    </i:Interaction.Behaviors>
+                </PasswordBox>
 
                 <!-- **********************************************************
                   EncryptionMethod
@@ -157,21 +163,27 @@
                         Text="{Binding UserPassword.Text}"
                         Grid.Column="0"
                         Grid.Row="0" />
-                    <TextBox
-                        Text="{Binding UserPassword.Value, UpdateSourceTrigger=PropertyChanged}"
+                    <PasswordBox
                         IsEnabled="{Binding IsSharePassword.Value, Converter={xc:Inverse}}"
                         Grid.Column="1"
-                        Grid.Row="0" />
+                        Grid.Row="0">
+                        <i:Interaction.Behaviors>
+                            <xb:PasswordBehavior Password="{Binding UserPassword.Value, Mode=TwoWay}" />
+                        </i:Interaction.Behaviors>
+                    </PasswordBox>
 
                     <TextBlock
                         Text="{Binding UserConfirm.Text}"
                         Grid.Column="0"
                         Grid.Row="1" />
-                    <TextBox
-                        Text="{Binding UserConfirm.Value, UpdateSourceTrigger=PropertyChanged}"
+                    <PasswordBox
                         IsEnabled="{Binding IsSharePassword.Value, Converter={xc:Inverse}}"
                         Grid.Column="1"
-                        Grid.Row="1" />
+                        Grid.Row="1">
+                        <i:Interaction.Behaviors>
+                            <xb:PasswordBehavior Password="{Binding UserConfirm.Value, Mode=TwoWay}" />
+                        </i:Interaction.Behaviors>
+                    </PasswordBox>
 
                     <CheckBox
                         Content="{Binding IsSharePassword.Text}"

@@ -35,6 +35,12 @@
         <Setter Property="Padding" Value="2" />
     </Style>
 
+    <Style TargetType="{x:Type PasswordBox}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="2" />
+    </Style>
+
     <Style TargetType="{x:Type ComboBox}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
