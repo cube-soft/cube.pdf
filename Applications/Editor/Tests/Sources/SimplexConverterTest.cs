@@ -48,10 +48,10 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_Title
+        /// TitleConverter
         ///
         /// <summary>
-        /// Tests to convert to a title.
+        /// Executes the test of the TitleConverter class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -61,7 +61,7 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase("Modified",          true,  ExpectedResult = "Modified* - CubePDF Utility")]
         [TestCase("",                  false, ExpectedResult = "CubePDF Utility")]
         [TestCase("",                  true,  ExpectedResult = "CubePDF Utility")]
-        public string Convert_Title(string src, bool modified)
+        public string TitleConverter(string src, bool modified)
         {
             var fi   = src.HasValue() ? IO.Get(src) : null;
             var args = new object[] { fi, modified };
@@ -76,21 +76,18 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_Language
+        /// LanguageConverter
         ///
         /// <summary>
-        /// Tests to convert to a language.
+        /// Executes the test of the LanguageConverter class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase(Language.Auto,     "en", ExpectedResult = "Auto")]
         [TestCase(Language.English,  "en", ExpectedResult = "English")]
         [TestCase(Language.Japanese, "ja", ExpectedResult = "日本語")]
-        public string Convert_Language(Language src, string culture)
-        {
-            ResourceCulture.Set(culture);
-            return Convert<string>(new LanguageConverter(), src);
-        }
+        public string LanguageConverter(Language src, string culture) =>
+            Convert<string>(new LanguageConverter(), src, culture);
 
         #endregion
 
@@ -98,10 +95,10 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_Byte
+        /// ByteConverter
         ///
         /// <summary>
-        /// Tests to convert a byte size.
+        /// Executes the test of the ByteConverter class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -109,11 +106,8 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase(101309,  "en", ExpectedResult = "98.9 KB (101,309 Bytes)")]
         [TestCase(200,     "ja", ExpectedResult = "1 KB (200 バイト)")]
         [TestCase(7654321, "ja", ExpectedResult = "7.3 MB (7,654,321 バイト)")]
-        public string Convert_Byte(long n, string culture)
-        {
-            ResourceCulture.Set(culture);
-            return Convert<string>(new ByteConverter(), n);
-        }
+        public string ByteConverter(long n, string culture) =>
+            Convert<string>(new ByteConverter(), n, culture);
 
         #endregion
 
@@ -121,10 +115,10 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_EncryptionMethod
+        /// EncryptionMethodConverter
         ///
         /// <summary>
-        /// Tests to convert an EncryptionMethod value.
+        /// Executes the test of the EncryptionMethodConverter class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -135,11 +129,8 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase(EncryptionMethod.Aes256r6,    "en", ExpectedResult = "256-bit AES (Revision 6)")]
         [TestCase(EncryptionMethod.Unknown,     "en", ExpectedResult = "Unknown")]
         [TestCase(EncryptionMethod.Unknown,     "ja", ExpectedResult = "Unknown")]
-        public string Convert_EncryptionMethod(EncryptionMethod src, string culture)
-        {
-            ResourceCulture.Set(culture);
-            return Convert<string>(new EncryptionMethodConverter(), src);
-        }
+        public string EncryptionMethodConverter(EncryptionMethod src, string culture) =>
+            Convert<string>(new EncryptionMethodConverter(), src, culture);
 
         #endregion
 
@@ -147,10 +138,10 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_ViewerPreferences
+        /// ViewerPreferencesConverter
         ///
         /// <summary>
-        /// Tests to convert a ViewerPreferences value.
+        /// Executes the test of the ViewerPreferencesConverter class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -160,11 +151,8 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase(ViewerPreferences.TwoPageRight,   "ja", ExpectedResult = "見開きページ (右綴じ)")]
         [TestCase(ViewerPreferences.TwoColumnLeft,  "en", ExpectedResult = "Two column (left)")]
         [TestCase(ViewerPreferences.TwoColumnRight, "ja", ExpectedResult = "連続見開きページ (右綴じ)")]
-        public string Convert_ViewerPreferences(ViewerPreferences src, string culture)
-        {
-            ResourceCulture.Set(culture);
-            return Convert<string>(new ViewerPreferencesConverter(), src);
-        }
+        public string ViewerPreferencesConverter(ViewerPreferences src, string culture) =>
+            Convert<string>(new ViewerPreferencesConverter(), src, culture);
 
         #endregion
 
@@ -172,30 +160,30 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_WaitCursor
+        /// BooleanToWaitCursor
         ///
         /// <summary>
-        /// Tests to convert a boolean value to the wait cursor.
+        /// Executes the test of the BooleanToCursor class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Convert_WaitCursor() => Assert.That(
+        public void BooleanToWaitCursor() => Assert.That(
             Convert<Cursor>(new BooleanToCursor(), true),
             Is.EqualTo(Cursors.Wait)
         );
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_ArrowCursor
+        /// BooleanToArrowCursor
         ///
         /// <summary>
-        /// Tests to convert a boolean value to the arrow cursor.
+        /// Executes the test of the BooleanToCursor class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Convert_ArrowCursor() => Assert.That(
+        public void BooleanToArrowCursor() => Assert.That(
             Convert<Cursor>(new BooleanToCursor(), false),
             Is.EqualTo(Cursors.Arrow)
         );
@@ -206,20 +194,17 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_CountToText
+        /// CountToText
         ///
         /// <summary>
-        /// Tests to convert a number of pages to text.
+        /// Executes the test of the CountToText class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase(10, "en", ExpectedResult = "10 pages")]
         [TestCase(20, "ja", ExpectedResult = "全 20 ページ")]
-        public string Convert_CountToText(int n, string culture)
-        {
-            ResourceCulture.Set(culture);
-            return Convert<string>(new CountToText(), n);
-        }
+        public string CountToText(int n, string culture) =>
+            Convert<string>(new CountToText(), n, culture);
 
         #endregion
 
@@ -227,20 +212,17 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_IndexToText
+        /// IndexToText
         ///
         /// <summary>
-        /// Tests to convert an index to text.
+        /// Executes the test of the IndexToText class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase(0, "en", ExpectedResult = "1")]
         [TestCase(9, "ja", ExpectedResult = "10")]
-        public string Convert_IndexToText(int index, string culture)
-        {
-            ResourceCulture.Set(culture);
-            return Convert<string>(new IndexToText(), index);
-        }
+        public string IndexToText(int index, string culture) =>
+            Convert<string>(new IndexToText(), index, culture);
 
         #endregion
 
@@ -248,20 +230,17 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_SelectionToText
+        /// SelectionToText
         ///
         /// <summary>
-        /// Tests to convert selection to text.
+        /// Executes the test of the SelectionToText class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase(5, "en", ExpectedResult = "5 pages selected")]
         [TestCase(8, "ja", ExpectedResult = "8 個の項目を選択")]
-        public string Convert_SelectionToText(int n, string culture)
-        {
-            ResourceCulture.Set(culture);
-            return Convert<string>(new SelectionToText(), n);
-        }
+        public string SelectionToText(int n, string culture) =>
+            Convert<string>(new SelectionToText(), n, culture);
 
         #endregion
 
@@ -269,15 +248,15 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_SelectionToVisibility
+        /// SelectionToVisibility
         ///
         /// <summary>
-        /// Tests to convert selection to visibility.
+        /// Executes the test of the SelectionToVisibility class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Convert_SelectionToVisibility() => Assert.That(
+        public void SelectionToVisibility() => Assert.That(
             Convert<Visibility>(new SelectionToVisibility(), 10),
             Is.EqualTo(Visibility.Visible)
         );
@@ -288,14 +267,15 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_HasValueToVisibility
+        /// HasValueToVisibility
         ///
         /// <summary>
-        /// Tests to convert an object to visibility.
+        /// Executes the test of the HasValueToVisibility class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Convert_HasValueToVisibility() => Assert.That(
+        [Test]
+        public void HasValueToVisibility() => Assert.That(
             Convert<Visibility>(new HasValueToVisibility(), GetExamplesWith("Sample.pdf")),
             Is.EqualTo(Visibility.Visible)
         );
@@ -306,14 +286,15 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert_HasValueToVisibilityInverse
+        /// HasValueToVisibilityInverse
         ///
         /// <summary>
-        /// Tests to convert an object to visibility.
+        /// Executes the test of the HasValueToVisibilityInverse class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Convert_HasValueToVisibilityInverse() => Assert.That(
+        [Test]
+        public void HasValueToVisibilityInverse() => Assert.That(
             Convert<Visibility>(new HasValueToVisibilityInverse(), GetExamplesWith("Sample.pdf")),
             Is.EqualTo(Visibility.Collapsed)
         );
@@ -351,7 +332,23 @@ namespace Cube.Pdf.Tests.Editor
         /// Convert
         ///
         /// <summary>
-        /// Convert メソッドを実行します。
+        /// Sets the culture and executes the Convert method of the
+        /// specified SimplexConverter.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private T Convert<T>(SimplexConverter src, object value, string culture)
+        {
+            ResourceCulture.Set(culture);
+            return Convert<T>(src, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Executes the Convert method of the specified SimplexConverter.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
