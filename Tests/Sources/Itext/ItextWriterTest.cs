@@ -210,7 +210,6 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var w = new DocumentWriter())
             {
-                w.UseSmartCopy = true;
                 w.Add(r0);
                 w.Attach(r0.Attachments);
                 w.Attach(new Attachment(r1.FullName, IO));
@@ -223,6 +222,55 @@ namespace Cube.Pdf.Tests.Itext
                 var option = StringComparison.InvariantCultureIgnoreCase;
                 Assert.That(items.Any(x => x.Name.Equals(file, option)), Is.True);
                 return items.Count();
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetMetadata
+        ///
+        /// <summary>
+        /// Executes the test to set metadata.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Metadata")]
+        [TestCase("日本語のテスト")]
+        public void SetMetadata(string value)
+        {
+            var src  = GetExamplesWith("Sample.pdf");
+            var dest = Path(Args(value));
+            var cmp  = new Metadata
+            {
+                Title    = value,
+                Author   = value,
+                Subject  = value,
+                Keywords = value,
+                Creator  = value,
+                Producer = value,
+                Version  = new Version(1, 5),
+                Viewer   = ViewerPreferences.TwoColumnLeft,
+            };
+
+            using (var w = new DocumentWriter(IO))
+            {
+                w.Set(cmp);
+                w.Add(new DocumentReader(src, "", IO));
+                w.Save(dest);
+            }
+
+            using (var r = new DocumentReader(dest, "", IO))
+            {
+                var m = r.Metadata;
+                Assert.That(m.Title,         Is.EqualTo(cmp.Title), nameof(m.Title));
+                Assert.That(m.Author,        Is.EqualTo(cmp.Author), nameof(m.Author));
+                Assert.That(m.Subject,       Is.EqualTo(cmp.Subject), nameof(m.Subject));
+                Assert.That(m.Keywords,      Is.EqualTo(cmp.Keywords), nameof(m.Keywords));
+                Assert.That(m.Creator,       Is.EqualTo(cmp.Creator), nameof(m.Creator));
+                Assert.That(m.Producer,      Does.StartWith("iTextSharp"));
+                Assert.That(m.Version.Major, Is.EqualTo(cmp.Version.Major));
+                Assert.That(m.Version.Minor, Is.EqualTo(cmp.Version.Minor));
+                Assert.That(m.Viewer,        Is.EqualTo(cmp.Viewer));
             }
         }
 
@@ -252,7 +300,6 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var w = new DocumentWriter(IO))
             {
-                w.UseSmartCopy = true;
                 w.Set(cmp);
                 w.Add(new DocumentReader(src, "", IO));
                 w.Save(dest);
