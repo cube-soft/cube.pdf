@@ -129,6 +129,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Setup(IEnumerable<string> args)
         {
+            foreach (var ps in Settings.GetSplashProcesses()) ps.Kill();
             if (args.Count() <= 0) return;
             Open(args.First());
         }

@@ -20,7 +20,9 @@ using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Xui;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 
@@ -103,10 +105,10 @@ namespace Cube.Pdf.App.Editor
 
             var dir  = IO.Get(asm.Location).DirectoryName;
             var exec = IO.Combine(dir, $"UpdateChecker.exe");
-            var args = "CubePDF Utility2";
+            var sk   = "CubePDF Utility2";
 
             Startup.Name    = $"{Title} UpdateChecker";
-            Startup.Command = $"{exec.Quote()} {args.Quote()}";
+            Startup.Command = $"{exec.Quote()} {Product.Quote()} /subkey {sk.Quote()}";
         }
 
         #endregion
@@ -123,6 +125,22 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public string Title { get; }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetSplashProcesses
+        ///
+        /// <summary>
+        /// Gets the collection of splash window processes.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Process> GetSplashProcesses() =>
+            Process.GetProcessesByName("CubePdfUtilitySplash");
 
         #endregion
 
