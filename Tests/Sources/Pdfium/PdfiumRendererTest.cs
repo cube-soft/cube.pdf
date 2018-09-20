@@ -24,15 +24,15 @@ namespace Cube.Pdf.Tests.Pdfium
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MetadataTest
+    /// PdfiumRendererTest
     ///
     /// <summary>
-    /// Metadata のテスト用クラスです。
+    /// Tests for the DocumentRenderer class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class DocumentRendererTest : DocumentReaderFixture
+    class PdfiumRendererTest : DocumentReaderFixture
     {
         /* ----------------------------------------------------------------- */
         ///

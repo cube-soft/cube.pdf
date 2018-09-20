@@ -108,9 +108,9 @@
     <Compile Include="Sources\Ghostscript\DocumentConverterTest.cs" />
     <Compile Include="Sources\Ghostscript\FormatTest.cs" />
     <Compile Include="Sources\Ghostscript\ImageConverterTest.cs" />
-    <Compile Include="Sources\Itext\DocumentReaderTest.cs" />
-    <Compile Include="Sources\Itext\DocumentWriterTest.cs" />
-    <Compile Include="Sources\Pdfium\DocumentRendererTest.cs" />
+    <Compile Include="Sources\Itext\ItextReaderTest.cs" />
+    <Compile Include="Sources\Itext\ItextWriterTest.cs" />
+    <Compile Include="Sources\Pdfium\PdfiumRendererTest.cs" />
     <Compile Include="Sources\AngleTest.cs" />
     <Compile Include="Sources\EncryptionTest.cs" />
     <Compile Include="Sources\FileTest.cs" />

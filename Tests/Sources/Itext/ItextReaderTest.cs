@@ -25,7 +25,7 @@ namespace Cube.Pdf.Tests.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentReaderTest
+    /// ItextReaderTest
     ///
     /// <summary>
     /// DocumentReader のテスト用クラスです。
@@ -33,7 +33,7 @@ namespace Cube.Pdf.Tests.Itext
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class DocumentReaderTest : FileFixture
+    class ItextReaderTest : FileFixture
     {
         #region Tests
 

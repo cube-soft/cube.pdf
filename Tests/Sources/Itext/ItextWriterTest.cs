@@ -23,12 +23,13 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Cube.Pdf.Tests.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentWriterTest
+    /// ItextWriterTest
     ///
     /// <summary>
     /// DocumentWriter および DocumentSplitter のテスト用クラスです。
@@ -36,7 +37,7 @@ namespace Cube.Pdf.Tests.Itext
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class DocumentWriterTest : FileFixture
+    class ItextWriterTest : FileFixture
     {
         #region Tests
 
@@ -45,7 +46,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Save
         ///
         /// <summary>
-        /// PDF を保存するテストを実行します。
+        /// Executes the test to save the PDF document as a new file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -58,18 +59,17 @@ namespace Cube.Pdf.Tests.Itext
         public int Save(string filename, string password, int degree)
         {
             var src  = GetExamplesWith(filename);
-            var dest = GetResultsWith($"{nameof(Save)}_{filename}");
+            var dest = Path(Args(filename));
 
-            using (var writer = new DocumentWriter(IO))
-            using (var reader = new DocumentReader(src, password, IO))
+            using (var w = new DocumentWriter(IO))
+            using (var r = new DocumentReader(src, password, IO))
             {
-                writer.UseSmartCopy = true;
-                writer.Set(reader.Metadata);
-                writer.Set(reader.Encryption);
-                writer.Add(Rotate(reader.Pages, degree));
-                writer.Save(dest);
+                w.UseSmartCopy = true;
+                w.Set(r.Metadata);
+                w.Set(r.Encryption);
+                w.Add(Rotate(r.Pages, degree));
+                w.Save(dest);
             }
-
             return Count(dest, password, degree);
         }
 
@@ -78,36 +78,26 @@ namespace Cube.Pdf.Tests.Itext
         /// Overwrite
         ///
         /// <summary>
-        /// PDF を上書き保存するテストを実行します。
+        /// Executes the test to overwrite the PDF document.
         /// </summary>
-        ///
-        /// <remarks>
-        /// DocumentWriter で上書きする場合、保存の直前に DocumentReader
-        /// オブジェクトを破棄する必要があるため、Bind(DocumentReader) を
-        /// 利用します。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf",      "",          0, ExpectedResult = 2)]
         [TestCase("SampleRc128.pdf", "password", 90, ExpectedResult = 2)]
         public int Overwrite(string filename, string password, int degree)
         {
-            var name = $"{nameof(Overwrite)}_{filename}";
-            var dest = GetResultsWith(name);
-
+            var dest = Path(Args(filename));
             IO.Copy(GetExamplesWith(filename), dest, true);
 
-            using (var writer = new DocumentWriter(IO))
+            var r = new DocumentReader(dest, password, IO);
+            using (var w = new DocumentWriter(IO))
             {
-                var reader = new DocumentReader(dest, password, IO);
-
-                writer.UseSmartCopy = true;
-                writer.Set(reader.Metadata);
-                writer.Set(reader.Encryption);
-                writer.Add(Rotate(reader.Pages, degree), reader);
-                writer.Save(dest);
+                w.UseSmartCopy = false;
+                w.Set(r.Metadata);
+                w.Set(r.Encryption);
+                w.Add(Rotate(r.Pages, degree), r);
+                w.Save(dest);
             }
-
             return Count(dest, password, degree);
         }
 
@@ -116,29 +106,23 @@ namespace Cube.Pdf.Tests.Itext
         /// Merge
         ///
         /// <summary>
-        /// PDF ファイルを結合するテストを実行します。
+        /// Executes the test to merge PDF documents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", "SampleBookmark.pdf", 90, ExpectedResult = 11)]
         public int Merge(string f0, string f1, int degree)
         {
-            var s0   = IO.Get(f0).NameWithoutExtension;
-            var s1   = IO.Get(f1).NameWithoutExtension;
-            var dest = GetResultsWith($"{nameof(Merge)}_{s0}_{s1}.pdf");
+            var r0   = new DocumentReader(GetExamplesWith(f0), "", IO);
+            var r1   = new DocumentReader(GetExamplesWith(f1), "", IO);
+            var dest = Path(Args(r0.File.NameWithoutExtension, r1.File.NameWithoutExtension));
 
-            using (var writer = new DocumentWriter(IO))
-            using (var r0 = new DocumentReader(GetExamplesWith(f0), "", IO))
-            using (var r1 = new DocumentReader(GetExamplesWith(f1), "", IO))
+            using (var w = new DocumentWriter(IO))
             {
-                writer.UseSmartCopy = true;
-                writer.Set(r0.Metadata);
-                writer.Set(r0.Encryption);
-                writer.Add(Rotate(r0.Pages, degree));
-                writer.Add(Rotate(r1.Pages, degree));
-                writer.Save(dest);
+                w.Add(Rotate(r0.Pages, degree), r0);
+                w.Add(Rotate(r1.Pages, degree), r1);
+                w.Save(dest);
             }
-
             return Count(dest, "", degree);
         }
 
@@ -147,29 +131,23 @@ namespace Cube.Pdf.Tests.Itext
         /// Merge_Image
         ///
         /// <summary>
-        /// PDF ファイルに対して画像ファイルを結合して保存するテストを
-        /// 実行します。
+        /// Executes the test to merge a PDF document and an image file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("SampleBookmark.pdf", "SampleImage01.png", 90, ExpectedResult = 10)]
-        public int Merge_Image(string pdf, string image, int degree)
+        public int Merge_Image(string doc, string image, int degree)
         {
-            var s0   = IO.Get(pdf).NameWithoutExtension;
-            var s1   = IO.Get(image).NameWithoutExtension;
-            var dest = GetResultsWith($"{nameof(Merge_Image)}_{s0}_{s1}.pdf");
+            var r0   = new DocumentReader(GetExamplesWith(doc), "", IO);
+            var dest = Path(Args(r0.File.NameWithoutExtension, IO.Get(image).NameWithoutExtension));
 
-            using (var writer = new DocumentWriter(IO))
-            using (var reader = new DocumentReader(GetExamplesWith(pdf), "", IO))
+            using (var w = new DocumentWriter(IO))
+            using (var r = new DocumentReader(GetExamplesWith(doc), "", IO))
             {
-                writer.UseSmartCopy = true;
-                writer.Set(reader.Metadata);
-                writer.Set(reader.Encryption);
-                writer.Add(Rotate(reader.Pages, degree));
-                writer.Add(Rotate(IO.GetImagePages(GetExamplesWith(image)), degree));
-                writer.Save(dest);
+                w.Add(Rotate(r0.Pages, degree), r0);
+                w.Add(Rotate(IO.GetImagePages(GetExamplesWith(image)), degree));
+                w.Save(dest);
             }
-
             return Count(dest, "", degree);
         }
 
@@ -178,7 +156,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Split
         ///
         /// <summary>
-        /// PDF ファイルを分割保存するテストを実行します。
+        /// Executes the test to split a PDF document in page by page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -190,27 +168,22 @@ namespace Cube.Pdf.Tests.Itext
             var info = IO.Get(src);
             var name = info.NameWithoutExtension;
             var ext  = info.Extension;
-            var dest = GetResultsWith($"{nameof(Split)}_{name}");
-            var copy = IO.Combine(dest, $"{name}-01{ext}");
+            var dest = Path(Args(name));
 
-            IO.Copy(src, copy, true);
+            IO.Copy(src, IO.Combine(dest, $"{name}-01{ext}"), true);
 
-            using (var writer = new DocumentSplitter(IO))
-            using (var reader = new DocumentReader(src, password, IO))
+            using (var w = new DocumentSplitter(IO))
             {
-                writer.UseSmartCopy = true;
-                writer.Set(reader.Metadata);
-                writer.Set(reader.Encryption);
-                writer.Add(reader.Pages);
-                writer.Save(dest);
+                w.Add(new DocumentReader(src, password, IO));
+                w.Save(dest);
 
-                var n   = writer.Results.Count;
+                var n   = w.Results.Count;
                 var cmp = IO.GetFiles(dest).Length;
                 Assert.That(cmp, Is.EqualTo(n + 1));
                 Assert.That(IO.Exists(IO.Combine(dest, $"{name}-01 (1){ext}")));
 
-                writer.Reset();
-                Assert.That(writer.Results.Count, Is.EqualTo(0));
+                w.Reset();
+                Assert.That(w.Results.Count, Is.EqualTo(0));
 
                 return n;
             }
@@ -221,39 +194,84 @@ namespace Cube.Pdf.Tests.Itext
         /// Attach
         ///
         /// <summary>
-        /// ファイルを添付するテストを実行します。
+        /// Executes the test to attach a file to a PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("SampleRotation.pdf",   "SampleImage01.png",   ExpectedResult = 1)]
         [TestCase("SampleAttachment.pdf", "SampleImage02.png",   ExpectedResult = 4)]
         [TestCase("SampleAttachment.pdf", "日本語のサンプル.md", ExpectedResult = 4)]
-        public int Attach(string pdf, string file)
+        public int Attach(string doc, string file)
         {
-            var s0   = IO.Get(GetExamplesWith(pdf)).NameWithoutExtension;
-            var s1   = IO.Get(GetExamplesWith(file)).NameWithoutExtension;
-            var src  = GetExamplesWith(pdf);
-            var dest = GetResultsWith($"{nameof(Attach)}_{s0}_{s1}.pdf");
+            var src  = GetExamplesWith(doc);
+            var r0   = new DocumentReader(src, "", IO);
+            var r1   = IO.Get(GetExamplesWith(file));
+            var dest = Path(Args(r0.File.NameWithoutExtension, r1.NameWithoutExtension));
 
-            using (var writer = new DocumentWriter())
+            using (var w = new DocumentWriter())
             {
-                var reader = new DocumentReader(src, "", IO);
-
-                writer.UseSmartCopy = true;
-                writer.Set(reader.Metadata);
-                writer.Set(reader.Encryption);
-                writer.Add(reader);
-                writer.Attach(reader.Attachments);
-                writer.Attach(new Attachment(GetExamplesWith(file), IO));
-                writer.Save(dest);
+                w.UseSmartCopy = true;
+                w.Add(r0);
+                w.Attach(r0.Attachments);
+                w.Attach(new Attachment(r1.FullName, IO));
+                w.Save(dest);
             }
 
-            using (var reader = new DocumentReader(dest, "", IO))
+            using (var r = new DocumentReader(dest, "", IO))
             {
-                var items  = reader.Attachments;
+                var items  = r.Attachments;
                 var option = StringComparison.InvariantCultureIgnoreCase;
                 Assert.That(items.Any(x => x.Name.Equals(file, option)), Is.True);
                 return items.Count();
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetEncryption
+        ///
+        /// <summary>
+        /// Executes the test to set the encryption information.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(EncryptionMethod.Aes128, 0xfffff0c0L)]
+        public void SetEncryption(EncryptionMethod method, long permission)
+        {
+            var src  = GetExamplesWith("Sample.pdf");
+            var dest = Path(Args(method, permission));
+            var cmp  = new Encryption
+            {
+                OwnerPassword    = "owner",
+                UserPassword     = "user",
+                OpenWithPassword = true,
+                Method           = method,
+                Enabled          = true,
+                Permission       = new Permission(permission),
+            };
+
+            using (var w = new DocumentWriter(IO))
+            {
+                w.UseSmartCopy = true;
+                w.Set(cmp);
+                w.Add(new DocumentReader(src, "", IO));
+                w.Save(dest);
+            }
+
+            using (var r = new DocumentReader(dest, cmp.OwnerPassword))
+            {
+                Assert.That(r.Encryption.Enabled,       Is.True);
+                Assert.That(r.Encryption.OwnerPassword, Is.EqualTo(cmp.OwnerPassword));
+                Assert.That(r.Encryption.Method,        Is.EqualTo(cmp.Method));
+
+                var x = r.Encryption.Permission;
+                var y = cmp.Permission;
+                Assert.That(x.Print,             Is.EqualTo(y.Print),             nameof(x.Print));
+                Assert.That(x.CopyContents,      Is.EqualTo(y.CopyContents),      nameof(x.CopyContents));
+                Assert.That(x.ModifyContents,    Is.EqualTo(y.ModifyContents),    nameof(x.ModifyContents));
+                Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
+                Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
+                Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
             }
         }
 
@@ -263,10 +281,35 @@ namespace Cube.Pdf.Tests.Itext
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Args
+        ///
+        /// <summary>
+        /// Converts params to an object array.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private object[] Args(params object[] src) => src;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Path
+        ///
+        /// <summary>
+        /// Creates the path by using the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string Path(object[] parts, [CallerMemberName] string name = null) =>
+           GetResultsWith($"{name}_{string.Join("_", parts)}.pdf");
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Rotate
         ///
         /// <summary>
-        /// 指定された全てのページを回転します。
+        /// Sets the Delta property of all specified Page objects
+        /// so that the rotation of the pages become the specified
+        /// degree.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -278,13 +321,15 @@ namespace Cube.Pdf.Tests.Itext
         /// Rotate
         ///
         /// <summary>
-        /// ページを回転します。
+        /// Sets the Delta property of the specified Page object
+        /// so that the rotation of the page becomes the specified
+        /// degree.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private Page Rotate(Page src, int degree)
         {
-            src.Delta += degree;
+            src.Delta = new Angle(degree - src.Rotation.Degree);
             return src;
         }
 
@@ -293,7 +338,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Count
         ///
         /// <summary>
-        /// ページ数を取得します。
+        /// Gets the number of pages.
         /// </summary>
         ///
         /// <remarks>
@@ -307,15 +352,11 @@ namespace Cube.Pdf.Tests.Itext
             using (var reader = new DocumentReader(src, password, IO))
             {
                 Assert.That(reader.File.Count, Is.EqualTo(reader.Pages.Count()));
-
-                for (var i = 0; i < reader.File.Count; ++i)
-                {
-                    var n = i + 1;
-                    var page = reader.GetPage(n);
-
-                    // see ramarks
-                    // Assert.That(page.Rotation, Is.EqualTo(degree), $"{src}:{n}");
-                }
+                //Assert.That(
+                //    reader.Pages.Select(e => e.Rotation.Degree),
+                //    Is.EquivalentTo(Enumerable.Repeat(degree, reader.File.Count)),
+                //    nameof(Page.Rotation)
+                //);
                 return reader.File.Count;
             }
         }
