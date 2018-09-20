@@ -296,13 +296,12 @@ namespace Cube.Pdf.Tests.Converter
                             OpenWithPassword = true,
                             Permission       = new Permission
                             {
-                                Accessibility     = PermissionMethod.Allow,
-                                Assemble          = PermissionMethod.Deny,
-                                CopyContents      = PermissionMethod.Deny,
-                                InputForm         = PermissionMethod.Allow,
-                                ModifyAnnotations = PermissionMethod.Deny,
-                                ModifyContents    = PermissionMethod.Deny,
-                                Print             = PermissionMethod.Deny,
+                                Accessibility     = PermissionValue.Allow,
+                                CopyContents      = PermissionValue.Deny,
+                                InputForm         = PermissionValue.Allow,
+                                ModifyAnnotations = PermissionValue.Deny,
+                                ModifyContents    = PermissionValue.Deny,
+                                Print             = PermissionValue.Deny,
                             }
                         },
                         Metadata = new Metadata

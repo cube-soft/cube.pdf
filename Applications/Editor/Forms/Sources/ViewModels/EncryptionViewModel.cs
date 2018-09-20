@@ -355,8 +355,8 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PermissionMethod Convert(bool src) =>
-            src ? PermissionMethod.Allow : PermissionMethod.Deny;
+        private PermissionValue Convert(bool src) =>
+            src ? PermissionValue.Allow : PermissionValue.Deny;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -368,8 +368,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private BindableElement<bool> CreateModify(Permission src) => this.Create(
-            () => src.Assemble.IsAllowed() || src.ModifyContents.IsAllowed(),
-            e  => { src.Assemble = Convert(e); src.ModifyContents = Convert(e); },
+            () => src.ModifyContents.IsAllowed(),
+            e  => src.ModifyContents = Convert(e),
             () => Properties.Resources.MenuAllowAssemble
         );
 

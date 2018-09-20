@@ -38,12 +38,12 @@ namespace Cube.Pdf.Mixin
         /// Copy
         ///
         /// <summary>
-        /// Gets the copied <c>Encryption</c> object.
+        /// Gets the copied Encryption.
         /// </summary>
         ///
-        /// <param name="src"><c>Encryption</c> object.</param>
+        /// <param name="src">Original object.</param>
         ///
-        /// <returns>Copied <c>Encryption</c> object.</returns>
+        /// <returns>Copied object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Encryption Copy(this Encryption src) => new Encryption
@@ -60,36 +60,36 @@ namespace Cube.Pdf.Mixin
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DenyAll
+        /// Deny
         ///
         /// <summary>
-        /// Denies all of the permissions.
+        /// Denies all operations.
         /// </summary>
         ///
         /// <param name="src">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void DenyAll(this Encryption src) => src.SetAll(PermissionMethod.Deny);
+        public static void Deny(this Encryption src) => src.Set(PermissionValue.Deny);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// AllowAll
+        /// Allow
         ///
         /// <summary>
-        /// Allows all of the permissions.
+        /// Allows all operations.
         /// </summary>
         ///
         /// <param name="src">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void AllowAll(this Encryption src) => src.SetAll(PermissionMethod.Allow);
+        public static void Allow(this Encryption src) => src.Set(PermissionValue.Allow);
 
         /* ----------------------------------------------------------------- */
         ///
         /// IsAllowed
         ///
         /// <summary>
-        /// Determines whether the specified object is allowed.
+        /// Determines whether the specified operation is allowed.
         /// </summary>
         ///
         /// <param name="src">PermissionMethod object.</param>
@@ -97,14 +97,14 @@ namespace Cube.Pdf.Mixin
         /// <returns>true for allowed.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static bool IsAllowed(this PermissionMethod src) => src == PermissionMethod.Allow;
+        public static bool IsAllowed(this PermissionValue src) => src == PermissionValue.Allow;
 
         /* ----------------------------------------------------------------- */
         ///
         /// IsDenid
         ///
         /// <summary>
-        /// Determines whether the specified object is denied.
+        /// Determines whether the specified operation is denied.
         /// </summary>
         ///
         /// <param name="src">PermissionMethod object.</param>
@@ -112,7 +112,7 @@ namespace Cube.Pdf.Mixin
         /// <returns>true for denied.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static bool IsDenid(this PermissionMethod src) => src == PermissionMethod.Deny;
+        public static bool IsDenid(this PermissionValue src) => src == PermissionValue.Deny;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -154,22 +154,21 @@ namespace Cube.Pdf.Mixin
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetAll
+        /// Set
         ///
         /// <summary>
         /// Sets all of the methods to the same permission.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void SetAll(this Encryption src, PermissionMethod method)
+        private static void Set(this Encryption src, PermissionValue value)
         {
-            src.Permission.Accessibility     = method;
-            src.Permission.Assemble          = method;
-            src.Permission.CopyContents      = method;
-            src.Permission.InputForm         = method;
-            src.Permission.ModifyAnnotations = method;
-            src.Permission.ModifyContents    = method;
-            src.Permission.Print             = method;
+            src.Permission.Accessibility     = value;
+            src.Permission.CopyContents      = value;
+            src.Permission.InputForm         = value;
+            src.Permission.ModifyAnnotations = value;
+            src.Permission.ModifyContents    = value;
+            src.Permission.Print             = value;
         }
 
         #endregion

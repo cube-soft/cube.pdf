@@ -126,13 +126,12 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(ec.UserPassword,       Is.Empty);
 
             var pm = dest.Encryption.Permission;
-            Assert.That(pm.Accessibility,      Is.EqualTo(PermissionMethod.Allow), nameof(pm.Accessibility));
-            Assert.That(pm.Assemble,           Is.EqualTo(PermissionMethod.Deny),  nameof(pm.Assemble));
-            Assert.That(pm.CopyContents,       Is.EqualTo(PermissionMethod.Deny),  nameof(pm.CopyContents));
-            Assert.That(pm.InputForm,          Is.EqualTo(PermissionMethod.Deny),  nameof(pm.InputForm));
-            Assert.That(pm.ModifyAnnotations,  Is.EqualTo(PermissionMethod.Deny),  nameof(pm.ModifyAnnotations));
-            Assert.That(pm.ModifyContents,     Is.EqualTo(PermissionMethod.Deny),  nameof(pm.ModifyContents));
-            Assert.That(pm.Print,              Is.EqualTo(PermissionMethod.Deny),  nameof(pm.Print));
+            Assert.That(pm.Accessibility,      Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));
+            Assert.That(pm.CopyContents,       Is.EqualTo(PermissionValue.Deny),  nameof(pm.CopyContents));
+            Assert.That(pm.InputForm,          Is.EqualTo(PermissionValue.Deny),  nameof(pm.InputForm));
+            Assert.That(pm.ModifyAnnotations,  Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyAnnotations));
+            Assert.That(pm.ModifyContents,     Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyContents));
+            Assert.That(pm.Print,              Is.EqualTo(PermissionValue.Deny),  nameof(pm.Print));
         }
 
         /* ----------------------------------------------------------------- */

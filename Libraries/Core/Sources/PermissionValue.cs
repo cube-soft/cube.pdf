@@ -21,14 +21,14 @@ namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PermissionMethod
+    /// PermissionValue
     ///
     /// <summary>
     /// Specifies the permission method for operations.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public enum PermissionMethod
+    public enum PermissionValue
     {
         /// <summary>禁止</summary>
         Deny,
@@ -108,6 +108,6 @@ namespace Cube.Pdf
         /// Assemble the document (insert, rotate, or delete pages and
         /// create bookmarks or thumbnail images), even if bit 4 is clear.
         /// </summary>
-        ModifyPagesAndBookmarks = 0x00000400,
+        Assemble = 0x00000400,
     }
 }

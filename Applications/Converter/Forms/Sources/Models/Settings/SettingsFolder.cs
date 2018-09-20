@@ -264,8 +264,8 @@ namespace Cube.Pdf.App.Converter
             e.NewValue.Destination = NormalizeDestination(e.NewValue);
             e.NewValue.Metadata.Creator = Product;
             e.NewValue.Metadata.Viewer = ViewerPreferences.OneColumn;
-            e.NewValue.Encryption.DenyAll();
-            e.NewValue.Encryption.Permission.Accessibility = PermissionMethod.Allow;
+            e.NewValue.Encryption.Deny();
+            e.NewValue.Encryption.Permission.Accessibility = PermissionValue.Allow;
 
             base.OnLoaded(e);
         }

@@ -55,22 +55,21 @@ namespace Cube.Pdf.Tests
             using (var reader = Create(klass, src, password))
             {
                 var dest = reader.Encryption;
-                Assert.That(dest.Enabled,          Is.EqualTo(expected.Enabled), nameof(dest.Enabled));
-                Assert.That(dest.Method,           Is.EqualTo(expected.Method), nameof(dest.Method));
-                Assert.That(dest.OwnerPassword,    Is.EqualTo(expected.OwnerPassword), nameof(dest.OwnerPassword));
-                // Assert.That(dest.OpenWithPassword, Is.EqualTo(expected.OpenWithPassword), nameof(dest.OpenWithPassword));
-                // Assert.That(dest.UserPassword,     Is.EqualTo(expected.UserPassword), nameof(dest.UserPassword));
+                Assert.That(dest.Enabled,          Is.EqualTo(expected.Enabled),          nameof(dest.Enabled));
+                Assert.That(dest.Method,           Is.EqualTo(expected.Method),           nameof(dest.Method));
+                Assert.That(dest.OwnerPassword,    Is.EqualTo(expected.OwnerPassword),    nameof(dest.OwnerPassword));
+                //Assert.That(dest.OpenWithPassword, Is.EqualTo(expected.OpenWithPassword), nameof(dest.OpenWithPassword));
+                //Assert.That(dest.UserPassword,     Is.EqualTo(expected.UserPassword),     nameof(dest.UserPassword));
 
                 var pm  = dest.Permission;
                 var epm = expected.Permission;
-                Assert.That(pm.Accessibility,      Is.EqualTo(epm.Accessibility), nameof(pm.Accessibility));
-                Assert.That(pm.Assemble,           Is.EqualTo(epm.Assemble), nameof(pm.Assemble));
-                Assert.That(pm.CopyContents,       Is.EqualTo(epm.CopyContents), nameof(pm.CopyContents));
-                Assert.That(pm.InputForm,          Is.EqualTo(epm.InputForm), nameof(pm.InputForm));
-                Assert.That(pm.ModifyAnnotations,  Is.EqualTo(epm.ModifyAnnotations), nameof(pm.ModifyAnnotations));
-                Assert.That(pm.ModifyContents,     Is.EqualTo(epm.ModifyContents), nameof(pm.ModifyContents));
-                Assert.That(pm.Print,              Is.EqualTo(epm.Print), nameof(pm.Print));
-                Assert.That(pm.Value,              Is.EqualTo(epm.Value), nameof(pm.Value));
+                Assert.That(pm.Accessibility,     Is.EqualTo(epm.Accessibility),     nameof(pm.Accessibility));
+                Assert.That(pm.CopyContents,      Is.EqualTo(epm.CopyContents),      nameof(pm.CopyContents));
+                Assert.That(pm.InputForm,         Is.EqualTo(epm.InputForm),         nameof(pm.InputForm));
+                Assert.That(pm.ModifyAnnotations, Is.EqualTo(epm.ModifyAnnotations), nameof(pm.ModifyAnnotations));
+                Assert.That(pm.ModifyContents,    Is.EqualTo(epm.ModifyContents),    nameof(pm.ModifyContents));
+                Assert.That(pm.Print,             Is.EqualTo(epm.Print),             nameof(pm.Print));
+                Assert.That(pm.Value,             Is.EqualTo(epm.Value),             nameof(pm.Value));
             }
         }
 
@@ -102,13 +101,12 @@ namespace Cube.Pdf.Tests
                         UserPassword     = string.Empty,
                         Permission       = new Permission
                         {
-                            Accessibility     = PermissionMethod.Allow,
-                            Assemble          = PermissionMethod.Allow,
-                            CopyContents      = PermissionMethod.Allow,
-                            InputForm         = PermissionMethod.Allow,
-                            ModifyAnnotations = PermissionMethod.Allow,
-                            ModifyContents    = PermissionMethod.Allow,
-                            Print             = PermissionMethod.Allow,
+                            Accessibility     = PermissionValue.Allow,
+                            CopyContents      = PermissionValue.Allow,
+                            InputForm         = PermissionValue.Allow,
+                            ModifyAnnotations = PermissionValue.Allow,
+                            ModifyContents    = PermissionValue.Allow,
+                            Print             = PermissionValue.Allow,
                         }
                     });
 
@@ -121,13 +119,12 @@ namespace Cube.Pdf.Tests
                         UserPassword     = "view",
                         Permission       = new Permission
                         {
-                            Accessibility     = PermissionMethod.Allow,
-                            Assemble          = PermissionMethod.Allow,
-                            CopyContents      = PermissionMethod.Allow,
-                            InputForm         = PermissionMethod.Allow,
-                            ModifyAnnotations = PermissionMethod.Allow,
-                            ModifyContents    = PermissionMethod.Allow,
-                            Print             = PermissionMethod.Allow,
+                            Accessibility     = PermissionValue.Allow,
+                            CopyContents      = PermissionValue.Allow,
+                            InputForm         = PermissionValue.Allow,
+                            ModifyAnnotations = PermissionValue.Allow,
+                            ModifyContents    = PermissionValue.Allow,
+                            Print             = PermissionValue.Allow,
                         }
                     });
 
@@ -140,13 +137,12 @@ namespace Cube.Pdf.Tests
                         UserPassword     = "view",
                         Permission       = new Permission
                         {
-                            Accessibility     = PermissionMethod.Allow,
-                            Assemble          = PermissionMethod.Allow,
-                            CopyContents      = PermissionMethod.Allow,
-                            InputForm         = PermissionMethod.Allow,
-                            ModifyAnnotations = PermissionMethod.Allow,
-                            ModifyContents    = PermissionMethod.Allow,
-                            Print             = PermissionMethod.Allow,
+                            Accessibility     = PermissionValue.Allow,
+                            CopyContents      = PermissionValue.Allow,
+                            InputForm         = PermissionValue.Allow,
+                            ModifyAnnotations = PermissionValue.Allow,
+                            ModifyContents    = PermissionValue.Allow,
+                            Print             = PermissionValue.Allow,
                         }
                     });
 
@@ -159,13 +155,12 @@ namespace Cube.Pdf.Tests
                         UserPassword     = "view",
                         Permission       = new Permission
                         {
-                            Accessibility     = PermissionMethod.Deny,
-                            Assemble          = PermissionMethod.Deny,
-                            CopyContents      = PermissionMethod.Deny,
-                            InputForm         = PermissionMethod.Deny,
-                            ModifyAnnotations = PermissionMethod.Deny,
-                            ModifyContents    = PermissionMethod.Deny,
-                            Print             = PermissionMethod.Deny,
+                            Accessibility     = PermissionValue.Deny,
+                            CopyContents      = PermissionValue.Deny,
+                            InputForm         = PermissionValue.Deny,
+                            ModifyAnnotations = PermissionValue.Deny,
+                            ModifyContents    = PermissionValue.Deny,
+                            Print             = PermissionValue.Deny,
                         }
                     });
 
@@ -178,13 +173,12 @@ namespace Cube.Pdf.Tests
                         UserPassword     = "view",
                         Permission       = new Permission
                         {
-                            Accessibility     = PermissionMethod.Allow,
-                            Assemble          = PermissionMethod.Allow,
-                            CopyContents      = PermissionMethod.Allow,
-                            InputForm         = PermissionMethod.Allow,
-                            ModifyAnnotations = PermissionMethod.Allow,
-                            ModifyContents    = PermissionMethod.Allow,
-                            Print             = PermissionMethod.Allow,
+                            Accessibility     = PermissionValue.Allow,
+                            CopyContents      = PermissionValue.Allow,
+                            InputForm         = PermissionValue.Allow,
+                            ModifyAnnotations = PermissionValue.Allow,
+                            ModifyContents    = PermissionValue.Allow,
+                            Print             = PermissionValue.Allow,
                         }
                     });
                 }
@@ -198,13 +192,12 @@ namespace Cube.Pdf.Tests
                     UserPassword     = "view",
                     Permission       = new Permission
                     {
-                        Accessibility     = PermissionMethod.Allow,
-                        Assemble          = PermissionMethod.Allow,
-                        CopyContents      = PermissionMethod.Allow,
-                        InputForm         = PermissionMethod.Allow,
-                        ModifyAnnotations = PermissionMethod.Allow,
-                        ModifyContents    = PermissionMethod.Allow,
-                        Print             = PermissionMethod.Allow,
+                        Accessibility     = PermissionValue.Allow,
+                        CopyContents      = PermissionValue.Allow,
+                        InputForm         = PermissionValue.Allow,
+                        ModifyAnnotations = PermissionValue.Allow,
+                        ModifyContents    = PermissionValue.Allow,
+                        Print             = PermissionValue.Allow,
                     }
                 });
             }

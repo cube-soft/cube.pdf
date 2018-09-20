@@ -279,7 +279,6 @@ namespace Cube.Pdf.App.Converter
             get => Model.Permission.ModifyContents.IsAllowed();
             set
             {
-                Model.Permission.Assemble          = GetMethod(value);
                 Model.Permission.ModifyContents    = GetMethod(value);
                 Model.Permission.ModifyAnnotations = GetMethod(value);
                 RaisePropertyChanged(nameof(AllowModify));
@@ -299,8 +298,8 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PermissionMethod GetMethod(bool allow) =>
-            allow ? PermissionMethod.Allow : PermissionMethod.Deny;
+        private PermissionValue GetMethod(bool allow) =>
+            allow ? PermissionValue.Allow : PermissionValue.Deny;
 
         #endregion
 

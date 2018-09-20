@@ -116,7 +116,7 @@
     <Compile Include="Sources\Page.cs" />
     <Compile Include="Sources\PageExtension.cs" />
     <Compile Include="Sources\Permission.cs" />
-    <Compile Include="Sources\PermissionMethod.cs" />
+    <Compile Include="Sources\PermissionValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Cube.snk" />
