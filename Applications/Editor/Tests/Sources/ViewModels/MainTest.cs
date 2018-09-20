@@ -22,11 +22,11 @@ using NUnit.Framework;
 using System.Linq;
 using System.Threading;
 
-namespace Cube.Pdf.Tests.Editor
+namespace Cube.Pdf.Tests.Editor.ViewModels
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainViewModelTest
+    /// MainTest
     ///
     /// <summary>
     /// Tests for the MainViewModel class.
@@ -34,7 +34,7 @@ namespace Cube.Pdf.Tests.Editor
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class MainViewModelTest : ViewModelFixture
+    class MainTest : ViewModelFixture
     {
         #region Tests
 

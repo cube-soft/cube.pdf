@@ -24,15 +24,15 @@ namespace Cube.Pdf.Tests.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RibbonEntryTest
+    /// RibbonElementTest
     ///
     /// <summary>
-    /// RibbonEntry のテスト用クラスです。
+    /// Tests for the RibbonElement class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class RibbonEntryTest
+    class RibbonElementTest
     {
         #region Tests
 

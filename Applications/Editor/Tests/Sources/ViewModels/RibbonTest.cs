@@ -21,19 +21,19 @@ using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Tests.Editor
+namespace Cube.Pdf.Tests.Editor.ViewModels
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RibbonViewModel
+    /// RibbonTest
     ///
     /// <summary>
-    /// RibbonViewModel のテスト用クラスです。
+    /// Tests for the RibbonViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class RibbonViewModelTest
+    class RibbonTest
     {
         #region Tests
 

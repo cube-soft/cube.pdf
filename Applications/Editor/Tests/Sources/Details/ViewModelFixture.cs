@@ -23,6 +23,7 @@ using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Tests.Editor
@@ -138,6 +139,29 @@ namespace Cube.Pdf.Tests.Editor
             Assert.That(Wait.For(() => !vm.Data.Busy.Value), $"Timeout ({src.Text})");
             Assert.That(vm.Data.Message.Value, Is.Empty);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Args
+        ///
+        /// <summary>
+        /// Converts params to an object array.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected object[] Args(params object[] src) => src;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Path
+        ///
+        /// <summary>
+        /// Creates the path by using the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected string Path(object[] parts, [CallerMemberName] string name = null) =>
+           GetResultsWith($"{name}_{string.Join("_", parts)}.pdf");
 
         #endregion
 
