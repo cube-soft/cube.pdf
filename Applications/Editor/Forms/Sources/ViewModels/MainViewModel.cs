@@ -425,7 +425,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SendMetadata() => Send(new MetadataViewModel(
             e => Model.Update(e),
-            Data.Metadata.Value.Copy(),
+            Model.GetMetadata().Copy(),
             Data.Source.Value,
             Context
         ));
@@ -442,7 +442,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SendEncryption() => Send(new EncryptionViewModel(
             e => Model.Update(e),
-            Data.Encryption.Value.Copy(),
+            Model.GetEncryption().Copy(),
             Context
         ));
 

@@ -880,6 +880,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Loading metadata ... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageLoadingMetadata {
+            get {
+                return ResourceManager.GetString("MessageLoadingMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   PDF is modified. Do you want to overwrite? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageOverwrite {

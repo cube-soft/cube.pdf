@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections.Mixin;
 using Cube.FileSystem;
+using Cube.Log;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
@@ -185,24 +186,128 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
+        #region Metadata
+
         /* ----------------------------------------------------------------- */
         ///
-        /// StartProcess
+        /// GetMetadata
         ///
         /// <summary>
-        /// Starts a new process with the specified arguments.
+        /// Gets the current Metadata object.
         /// </summary>
         ///
         /// <param name="src">Facade object.</param>
-        /// <param name="args">User arguments.</param>
+        ///
+        /// <returns>Metadata object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static void StartProcess(this MainFacade src, string args) =>
-            Process.Start(new ProcessStartInfo
+        public static Metadata GetMetadata(this MainFacade src)
         {
-            FileName  = Assembly.GetExecutingAssembly().Location,
-            Arguments = args
+            if (src.Bindable.Source.Value != null &&
+                src.Bindable.Metadata.Value == null) src.LoadMetadata();
+            return src.Bindable.Metadata.Value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetMetadata
+        ///
+        /// <summary>
+        /// Sets the Metadata object.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="value">Metadata object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static HistoryItem SetMetadata(this MainFacade src, Metadata value)
+        {
+            var prev = src.Bindable.Metadata.Value;
+            return Invoke(
+                () => src.Bindable.Metadata.Value = value,
+                () => src.Bindable.Metadata.Value = prev
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEncryption
+        ///
+        /// <summary>
+        /// Gets the current Encryption object.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        ///
+        /// <returns>Metadata object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Encryption GetEncryption(this MainFacade src)
+        {
+            if (src.Bindable.Source.Value != null &&
+                src.Bindable.Encryption.Value == null) src.LoadMetadata();
+            return src.Bindable.Encryption.Value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetEncryption
+        ///
+        /// <summary>
+        /// Sets the Encryption object.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="value">Encryption object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static HistoryItem SetEncryption(this MainFacade src, Encryption value)
+        {
+            var prev = src.Bindable.Encryption.Value;
+            return Invoke(
+                () => src.Bindable.Encryption.Value = value,
+                () => src.Bindable.Encryption.Value = prev
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LoadMetadata
+        ///
+        /// <summary>
+        /// Loads metadata of the current PDF document.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void LoadMetadata(this MainFacade src) => src.Invoke(() =>
+        {
+            try
+            {
+                var data = src.Bindable;
+                data.SetMessage(Properties.Resources.MessageLoadingMetadata);
+
+                using (var r = GetReader(data.Source.Value))
+                {
+                    if (data.Metadata.Value   == null) data.Metadata.Value   = r.Metadata;
+                    if (data.Encryption.Value == null) data.Encryption.Value = r.Encryption;
+                }
+            }
+            catch (Exception err) { src.LogWarn(err.ToString(), err); }
         });
+
+        #endregion
+
+        #region Save
 
         /* ----------------------------------------------------------------- */
         ///
@@ -242,9 +347,12 @@ namespace Cube.Pdf.App.Editor
             {
                 using (var writer = new DocumentWriter())
                 {
-                    writer.Add(src.Bindable.Images.Select(e => e.RawObject));
-                    writer.Set(src.Bindable.Metadata.Value);
-                    writer.Set(src.Bindable.Encryption.Value);
+                    var data   = src.Bindable;
+                    var reader = GetReader(data.Source.Value);
+
+                    writer.Add(data.Images.Select(e => e.RawObject), reader);
+                    writer.Set(data.Metadata.Value ?? reader.Metadata);
+                    writer.Set(data.Encryption.Value ?? reader.Encryption);
                     writer.Save(tmp);
                 }
 
@@ -273,6 +381,8 @@ namespace Cube.Pdf.App.Editor
             src.Bindable.Source.Value = doc.File;
             src.Bindable.History.Clear();
         }
+
+        #endregion
 
         /* ----------------------------------------------------------------- */
         ///
@@ -325,53 +435,38 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetMetadata
+        /// StartProcess
         ///
         /// <summary>
-        /// Sets the Metadata object.
+        /// Starts a new process with the specified arguments.
         /// </summary>
         ///
         /// <param name="src">Facade object.</param>
-        /// <param name="value">Metadata object.</param>
-        ///
-        /// <returns>
-        /// History item to execute undo and redo actions.
-        /// </returns>
+        /// <param name="args">User arguments.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static HistoryItem SetMetadata(this MainFacade src, Metadata value)
+        public static void StartProcess(this MainFacade src, string args) =>
+            Process.Start(new ProcessStartInfo
         {
-            var prev = src.Bindable.Metadata.Value;
-            return Invoke(
-                () => src.Bindable.Metadata.Value = value,
-                () => src.Bindable.Metadata.Value = prev
-            );
-        }
+            FileName  = Assembly.GetExecutingAssembly().Location,
+            Arguments = args
+        });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetEncryption
+        /// GetReader
         ///
         /// <summary>
-        /// Sets the Encryption object.
+        /// Gets the DocumentReader of the specified file.
         /// </summary>
         ///
-        /// <param name="src">Facade object.</param>
-        /// <param name="value">Encryption object.</param>
+        /// <param name="src">File information.</param>
         ///
-        /// <returns>
-        /// History item to execute undo and redo actions.
-        /// </returns>
+        /// <returns>DocumentReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static HistoryItem SetEncryption(this MainFacade src, Encryption value)
-        {
-            var prev = src.Bindable.Encryption.Value;
-            return Invoke(
-                () => src.Bindable.Encryption.Value = value,
-                () => src.Bindable.Encryption.Value = prev
-            );
-        }
+        private static DocumentReader GetReader(Information src) =>
+            new DocumentReader(src.FullName, src is PdfFile f ? f.Password : "");
 
         #endregion
     }

@@ -18,8 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
-using Cube.Pdf.Mixin;
-using Cube.Pdf.Pdfium;
+using Cube.Pdf.Itext;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
@@ -96,7 +95,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         [Test]
         public void Cancel() => Create("Sample.pdf", 2, vm =>
         {
-            var cmp = vm.Data.Metadata.Value.Copy();
             using (var _ = vm.Register<MetadataViewModel>(this, e =>
             {
                 e.Document.Value = "dummy";
@@ -106,7 +104,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
-            AssertMetadata(vm.Data.Metadata.Value, cmp);
+            Assert.That(vm.Data.Metadata.Value.Title, Is.Not.EqualTo("dummy"));
         });
 
         #endregion

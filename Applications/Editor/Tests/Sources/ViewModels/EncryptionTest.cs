@@ -18,8 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
+using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
-using Cube.Pdf.Pdfium;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
@@ -96,7 +96,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         [Test]
         public void Cancel() => Create("Sample.pdf", 2, vm =>
         {
-            var cmp = vm.Data.Encryption.Value.Copy();
             using (var _ = vm.Register<EncryptionViewModel>(this, e =>
             {
                 e.OwnerPassword.Value = "dummy";
@@ -106,7 +105,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
-            AssertEncryption(vm.Data.Encryption.Value, cmp);
+            Assert.That(vm.Data.Encryption.Value.OwnerPassword, Is.Not.EqualTo("dummy"));
         });
 
         #endregion

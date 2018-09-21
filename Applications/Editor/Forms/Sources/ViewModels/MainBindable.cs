@@ -238,12 +238,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="src">Document information.</param>
         ///
+        /// <remarks>
+        /// PDFium は Metadata や Encryption の情報取得が不完全なため、
+        /// これらの情報は、必要になったタイミングで iTextSharp を用いて
+        /// 取得します。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         public void Open(IDocumentReader src)
         {
-            Source.Value     = src.File;
-            Metadata.Value   = src.Metadata;
-            Encryption.Value = src.Encryption;
+            Source.Value = src.File;
+            if (!src.Encryption.Enabled) Encryption.Value = src.Encryption;
 
             Images.Add(src.Pages);
         }
