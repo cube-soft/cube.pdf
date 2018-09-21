@@ -96,9 +96,8 @@
     <Compile Include="Sources\Details\PdfiumReader.cs" />
     <Compile Include="Sources\Details\PdfiumRenderer.cs" />
     <Compile Include="Sources\Details\ReadOnlyPageList.cs" />
-    <Compile Include="Sources\NativeMethods\PdfiumApi.cs" />
-    <Compile Include="Sources\NativeMethods\PdfiumApiFacade.cs" />
-    <Compile Include="Sources\NativeMethods\PdfiumApiStructure.cs" />
+    <Compile Include="Sources\Details\NativeMethods.cs" />
+    <Compile Include="Sources\Details\PdfiumApi.cs" />
     <Compile Include="Sources\DocumentReader.cs" />
     <Compile Include="Sources\LoadException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

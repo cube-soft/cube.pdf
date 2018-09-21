@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Pdfium.PdfiumApi;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -147,7 +146,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private Page GetPage(int index)
         {
-            var page = _core.Invoke(e => Facade.FPDF_LoadPage(e, index, 5));
+            var page = _core.Invoke(e => PdfiumApi.FPDF_LoadPage(e, index, 5));
             if (page == IntPtr.Zero) throw _core.GetLastError();
 
             try
@@ -163,7 +162,7 @@ namespace Cube.Pdf.Pdfium
                     new PointF(72.0f, 72.0f) // Resolution
                 );
             }
-            finally { Facade.FPDF_ClosePage(page); }
+            finally { PdfiumApi.FPDF_ClosePage(page); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -183,8 +182,8 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private SizeF GetPageSize(IntPtr handle, int degree)
         {
-            var w = (float)Facade.FPDF_GetPageWidth(handle);
-            var h = (float)Facade.FPDF_GetPageHeight(handle);
+            var w = (float)PdfiumApi.FPDF_GetPageWidth(handle);
+            var h = (float)PdfiumApi.FPDF_GetPageHeight(handle);
 
             return (degree != 90 && degree != 270) ? new SizeF(w, h) : new SizeF(h, w);
         }
@@ -200,7 +199,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private int GetPageRotation(IntPtr handle)
         {
-            var dest = Facade.FPDFPage_GetRotation(handle);
+            var dest = PdfiumApi.FPDFPage_GetRotation(handle);
             return dest == 1 ?  90 :
                    dest == 2 ? 180 :
                    dest == 3 ? 270 : 0;

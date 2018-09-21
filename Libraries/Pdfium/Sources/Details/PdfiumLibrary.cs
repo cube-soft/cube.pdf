@@ -15,8 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Pdfium.PdfiumApi;
-
 namespace Cube.Pdf.Pdfium
 {
     /* --------------------------------------------------------------------- */
@@ -58,14 +56,14 @@ namespace Cube.Pdf.Pdfium
         /// <returns>LoadException object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public LoadException GetLastError() => new LoadException(Facade.FPDF_GetLastError());
+        public LoadException GetLastError() => new LoadException(PdfiumApi.FPDF_GetLastError());
 
         #endregion
 
         #region Fields
         private static readonly OnceInitializer _core = new OnceInitializer(
-            () => Facade.FPDF_InitLibrary(),
-            () => Facade.FPDF_DestroyLibrary()
+            () => PdfiumApi.FPDF_InitLibrary(),
+            () => PdfiumApi.FPDF_DestroyLibrary()
         );
         #endregion
     }

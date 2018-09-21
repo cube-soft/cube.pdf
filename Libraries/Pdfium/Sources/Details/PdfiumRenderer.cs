@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Pdfium.PdfiumApi;
 using System;
 using System.Drawing;
 
@@ -54,13 +53,13 @@ namespace Cube.Pdf.Pdfium
             PointF point, SizeF size, int flags)
         {
             var retry = 5;
-            var hp = src.Invoke(e => Facade.FPDF_LoadPage(e, page.Number - 1, retry));
+            var hp = src.Invoke(e => PdfiumApi.FPDF_LoadPage(e, page.Number - 1, retry));
             if (hp == IntPtr.Zero) throw src.GetLastError();
             var hdc = dest.GetHdc();
 
             try
             {
-                src.Invoke(_ => Facade.FPDF_RenderPage(
+                src.Invoke(_ => PdfiumApi.FPDF_RenderPage(
                     hdc,
                     hp,
                     (int)point.X,
@@ -75,7 +74,7 @@ namespace Cube.Pdf.Pdfium
             finally
             {
                 dest.ReleaseHdc(hdc);
-                Facade.FPDF_ClosePage(hp);
+                PdfiumApi.FPDF_ClosePage(hp);
             }
         }
 

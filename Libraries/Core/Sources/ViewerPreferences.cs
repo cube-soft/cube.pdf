@@ -27,6 +27,10 @@ namespace Cube.Pdf
     /// Specifies the display options of the PDF document.
     /// </summary>
     ///
+    /// <remarks>
+    /// PageOnly = 0x0040 は None で代替する。
+    /// </remarks>
+    ///
     /* --------------------------------------------------------------------- */
     [Flags]
     public enum ViewerPreferences
@@ -45,8 +49,6 @@ namespace Cube.Pdf
         TwoPageLeft = 0x0010,
         /// <summary>Two page (right)</summary>
         TwoPageRight = 0x0020,
-        /// <summary>Shows only pages.</summary>
-        PageOnly = 0x0040,
         /// <summary>Shows outline.</summary>
         Outline = 0x0080,
         /// <summary>Shows thumbnail of the pages.</summary>
@@ -90,21 +92,6 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         public static ViewerPreferences Create(int src) => (ViewerPreferences)(src & 0x0fff);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetLayout
-        ///
-        /// <summary>
-        /// Gets the settings for layout with specified value.
-        /// </summary>
-        ///
-        /// <param name="src">Value for options.</param>
-        ///
-        /// <returns>Converted ViewerPreferences object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static ViewerPreferences GetLayout(this ViewerPreferences src) => (ViewerPreferences)((int)src & 0x003f);
 
         #endregion
     }

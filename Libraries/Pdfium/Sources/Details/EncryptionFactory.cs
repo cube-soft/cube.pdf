@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Pdfium.PdfiumApi;
 using System;
 
 namespace Cube.Pdf.Pdfium
@@ -56,8 +55,8 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public static Encryption Create(PdfiumReader core, string password)
         {
-            var method     = core.Invoke(e => Facade.FPDF_GetSecurityHandlerRevision(e));
-            var permission = core.Invoke(e => Facade.FPDF_GetDocPermissions(e));
+            var method     = core.Invoke(e => PdfiumApi.FPDF_GetSecurityHandlerRevision(e));
+            var permission = core.Invoke(e => PdfiumApi.FPDF_GetDocPermissions(e));
             var restrict   = permission != 0xfffffffc;
 
             return method == -1 ?

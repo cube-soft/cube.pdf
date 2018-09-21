@@ -19,6 +19,7 @@
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using Cube.Pdf.Mixin;
+using Cube.Pdf.Pdfium;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
@@ -76,6 +77,11 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                 Execute(vm, vm.Ribbon.SaveAs);
                 Assert.That(Wait.For(() => IO.Exists(Destination)));
             });
+
+            using (var r = new DocumentReader(Destination, cmp.OwnerPassword))
+            {
+                AssertEncryption(r.Encryption, cmp);
+            }
         }
 
         /* ----------------------------------------------------------------- */

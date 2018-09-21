@@ -17,7 +17,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Pdf.Mixin;
-using Cube.Pdf.Pdfium.PdfiumApi;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -244,7 +243,7 @@ namespace Cube.Pdf.Pdfium
 
             if (_core != IntPtr.Zero)
             {
-                Facade.FPDF_CloseDocument(_core);
+                PdfiumApi.FPDF_CloseDocument(_core);
                 _core = IntPtr.Zero;
             }
             if (disposing) _stream.Dispose();
@@ -269,7 +268,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private void Load(string password)
         {
-            _core = Facade.FPDF_LoadCustomDocument(
+            _core = PdfiumApi.FPDF_LoadCustomDocument(
                 new FileAccess
                 {
                     Length    = (uint)_stream.Length,
@@ -281,7 +280,7 @@ namespace Cube.Pdf.Pdfium
 
             if (_core == IntPtr.Zero) throw GetLastError();
 
-            var n = Facade.FPDF_GetPageCount(_core);
+            var n = PdfiumApi.FPDF_GetPageCount(_core);
 
             Encryption = EncryptionFactory.Create(this, password);
             File       = CreateFile(password, n, !Encryption.OpenWithPassword);

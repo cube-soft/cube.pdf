@@ -18,8 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
-using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
+using Cube.Pdf.Pdfium;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
