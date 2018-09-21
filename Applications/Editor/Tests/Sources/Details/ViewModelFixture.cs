@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
+using Cube.Generics;
 using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using Cube.Xui.Mixin;
@@ -38,8 +39,23 @@ namespace Cube.Pdf.Tests.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ViewModelFixture : FileFixture
+    public abstract class ViewModelFixture : FileFixture
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewModelFixture
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ViewModelFixture class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected ViewModelFixture() { }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -47,22 +63,33 @@ namespace Cube.Pdf.Tests.Editor
         /// Source
         ///
         /// <summary>
-        /// Gets or sets a file path that uses in the OpenFileDialog.
+        /// Gets or sets a loading path.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Source { get; set; }
+        protected string Source { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Destination
         ///
         /// <summary>
-        /// Gets or sets a file path that uses in the SaveFileDialog.
+        /// Gets or sets a saving path.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Destination { get; set; }
+        protected string Destination { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Password
+        ///
+        /// <summary>
+        /// Gets or sets a password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected string Password { get; set; }
 
         #endregion
 
@@ -103,14 +130,17 @@ namespace Cube.Pdf.Tests.Editor
         /// the Open command, and runs the specified action.
         /// </summary>
         ///
-        /// <param name="action">User action.</param>
-        /// <param name="n">Number of pages.</param>
         /// <param name="filename">Filename of the source.</param>
+        /// <param name="password">Password of the source.</param>
+        /// <param name="n">Number of pages.</param>
+        /// <param name="action">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Create(string filename, int n, Action<MainViewModel> action) => Create(vm =>
+        protected void Create(string filename, string password, int n,
+            Action<MainViewModel> action) => Create(vm =>
         {
-            Source = GetExamplesWith(filename);
+            Source   = GetExamplesWith(filename);
+            Password = password;
             Execute(vm, vm.Ribbon.Open);
             Assert.That(Wait.For(() => vm.Data.Images.Count == n), "Timeout (Open)");
             action(vm);
@@ -150,14 +180,16 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /// <param name="filename">Filename of the source.</param>
+        /// <param name="password">Password of the source.</param>
         /// <param name="n">Number of pages.</param>
         /// <param name="callback">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected Task CreateAsync(string filename, int n,
+        protected Task CreateAsync(string filename, string password, int n,
             Func<MainViewModel, Task> callback) => CreateAsync(async (vm) =>
         {
-            Source = GetExamplesWith(filename);
+            Source   = GetExamplesWith(filename);
+            Password = password;
             await ExecuteAsync(vm, vm.Ribbon.Open).ConfigureAwait(false);
             var open = await Wait.ForAsync(() => vm.Data.Images.Count == n).ConfigureAwait(false);
             Assert.That(open, "Timeout (Open)");
@@ -252,6 +284,7 @@ namespace Cube.Pdf.Tests.Editor
         {
             Source      = string.Empty;
             Destination = string.Empty;
+            Password    = string.Empty;
         }
 
         /* ----------------------------------------------------------------- */
@@ -282,7 +315,7 @@ namespace Cube.Pdf.Tests.Editor
         /// Register
         ///
         /// <summary>
-        /// Register some dummy callbacks to the specified Messenger.
+        /// Sets some dummy callbacks to the specified Messenger.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -302,10 +335,19 @@ namespace Cube.Pdf.Tests.Editor
                 e.Callback.Invoke(e);
             }
 
+            void pass(PasswordViewModel e)
+            {
+                e.Password.Value = Password;
+                var dest = Password.HasValue() ? e.OK : e.Cancel;
+                Assert.That(dest.Command.CanExecute(), $"{dest.Text} (Password)");
+                dest.Command.Execute();
+            }
+
             return new List<IDisposable>
             {
                 src.Register<OpenFileMessage>(this, open),
                 src.Register<SaveFileMessage>(this, save),
+                src.Register<PasswordViewModel>(this, pass),
             };
         }
 

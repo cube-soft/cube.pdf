@@ -112,12 +112,12 @@
     <Compile Include="Sources\Details\GlobalSetup.cs" />
     <Compile Include="Sources\Details\ViewModelFixture.cs" />
     <Compile Include="Sources\ViewModels\EncryptionTest.cs" />
-    <Compile Include="Sources\HistoryTest.cs" />
     <Compile Include="Sources\ViewModels\MainTest.cs" />
-    <Compile Include="Sources\RangeTest.cs" />
-    <Compile Include="Sources\RibbonElementTest.cs" />
     <Compile Include="Sources\ViewModels\MetadataTest.cs" />
     <Compile Include="Sources\ViewModels\RibbonTest.cs" />
+    <Compile Include="Sources\HistoryTest.cs" />
+    <Compile Include="Sources\RangeTest.cs" />
+    <Compile Include="Sources\RibbonElementTest.cs" />
     <Compile Include="Sources\SimplexConverterTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +127,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\Sample.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleAes128.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\SampleRotation.pdf">

@@ -55,7 +55,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         [TestCaseSource(nameof(TestCases))]
         public async Task Set(int index, Encryption cmp)
         {
-            await CreateAsync("Sample.pdf", 2, async (vm) =>
+            await CreateAsync("Sample.pdf", "", 2, async (vm) =>
             {
                 var cts = new CancellationTokenSource();
                 using (var _ = Register(vm, cmp, false, cts))
@@ -88,7 +88,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => CreateAsync("Sample.pdf", 2, async (vm) =>
+        public void Cancel() => CreateAsync("Sample.pdf", "", 2, async (vm) =>
         {
             var cts = new CancellationTokenSource();
             var dp  = vm.Register<EncryptionViewModel>(this, e =>

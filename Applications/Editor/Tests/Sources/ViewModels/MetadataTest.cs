@@ -54,7 +54,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         [TestCaseSource(nameof(TestCases))]
         public async Task Set(int index, Metadata cmp)
         {
-            await CreateAsync("Sample.pdf", 2, async (vm) =>
+            await CreateAsync("Sample.pdf", "", 2, async (vm) =>
             {
                 var cts = new CancellationTokenSource();
                 using (var _ = Register(vm, cmp, cts))
@@ -87,7 +87,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public Task Cancel() => CreateAsync("Sample.pdf", 2, async (vm) =>
+        public Task Cancel() => CreateAsync("Sample.pdf", "", 2, async (vm) =>
         {
             var cts = new CancellationTokenSource();
             var dp  = vm.Register<MetadataViewModel>(this, e =>

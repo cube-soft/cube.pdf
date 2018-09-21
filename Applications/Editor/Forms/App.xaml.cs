@@ -85,8 +85,8 @@ namespace Cube.Pdf.App.Editor
             Logger.Configure();
             Logger.Info(GetType(), Assembly.GetExecutingAssembly());
 
-            _resources.Add(Logger.ObserveTaskException());
-            _resources.Add(this.ObserveUiException());
+            _observer.Add(Logger.ObserveTaskException());
+            _observer.Add(this.ObserveUiException());
 
             Arguments = e.Args ?? new string[0];
             Logger.Info(GetType(), $"Arguments:{string.Join(" ", Arguments)}");
@@ -141,7 +141,7 @@ namespace Cube.Pdf.App.Editor
         {
             if (disposing)
             {
-                foreach (var obj in _resources) obj.Dispose();
+                foreach (var obj in _observer) obj.Dispose();
             }
         }
 
@@ -151,7 +151,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly OnceAction<bool> _dispose;
-        private readonly IList<IDisposable> _resources = new List<IDisposable>();
+        private readonly IList<IDisposable> _observer = new List<IDisposable>();
         #endregion
     }
 }

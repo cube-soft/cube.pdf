@@ -48,8 +48,10 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf", 2)]
-        public void Open(string filename, int n) => Create(filename, n, vm =>
+        [TestCase("Sample.pdf",       "",         2)]
+        [TestCase("SampleAes128.pdf", "password", 2)]
+        public void Open(string filename, string password, int n) =>
+            Create(filename, password, n, vm =>
         {
             var pref = vm.Data.Preferences;
             Assert.That(pref.ItemSize,      Is.EqualTo(250));
@@ -78,7 +80,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Save() => Create("Sample.pdf", 2, vm =>
+        public void Save() => Create("Sample.pdf", "", 2, vm =>
         {
             Destination = GetResultsWith($"Sample{nameof(Save)}.pdf");
             Assert.That(IO.Exists(Destination), Is.False);
@@ -117,7 +119,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Select() => Create("SampleRotation.pdf", 9, vm =>
+        public void Select() => Create("SampleRotation.pdf", "", 9, vm =>
         {
             var dest = vm.Data.Selection;
             Assert.That(dest.Count,   Is.EqualTo(0));
@@ -152,7 +154,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Insert() => Create("SampleRotation.pdf", 9, vm =>
+        public void Insert() => Create("SampleRotation.pdf", "", 9, vm =>
         {
             vm.Data.Images.Skip(2).First().IsSelected = true;
             Source = GetExamplesWith("Sample.pdf");
@@ -173,7 +175,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Remove() => Create("SampleRotation.pdf", 9, vm =>
+        public void Remove() => Create("SampleRotation.pdf", "", 9, vm =>
         {
             var src = vm.Data.Images.ToList();
             src[3].IsSelected = true;
@@ -195,7 +197,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Rotate() => Create("Sample.pdf", 2, vm =>
+        public void Rotate() => Create("Sample.pdf", "", 2, vm =>
         {
             var images = vm.Data.Images.ToList();
             var dest   = images[0];
