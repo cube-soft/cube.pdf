@@ -390,6 +390,9 @@
   <data name="MessageLoading" xml:space="preserve">
     <value>{0} を開いています ...</value>
   </data>
+  <data name="MessageLoadingMetadata" xml:space="preserve">
+    <value>メタ情報を読み込んでいます ...</value>
+  </data>
   <data name="MessageOverwrite" xml:space="preserve">
     <value>PDF の内容が編集されています。上書き保存しますか？</value>
   </data>
