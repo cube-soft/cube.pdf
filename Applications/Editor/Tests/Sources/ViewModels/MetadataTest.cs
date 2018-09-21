@@ -54,7 +54,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         [TestCaseSource(nameof(TestCases))]
         public async Task Set(int index, Metadata cmp)
         {
-            await CreateAsync("Sample.pdf", 2, vm => Task.Run(async () =>
+            await CreateAsync("Sample.pdf", 2, async (vm) =>
             {
                 var cts = new CancellationTokenSource();
                 using (var _ = Register(vm, cmp, cts))
@@ -72,7 +72,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                 await ExecuteAsync(vm, vm.Ribbon.SaveAs).ConfigureAwait(false);
                 var save = await Wait.ForAsync(() => IO.Exists(Destination)).ConfigureAwait(false);
                 Assert.That(save, $"Timeout (SaveAs)");
-            }));
+            });
 
             AssertMetadata(Destination, cmp);
         }
@@ -87,7 +87,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public Task Cancel() => CreateAsync("Sample.pdf", 2, vm => Task.Run(async () =>
+        public Task Cancel() => CreateAsync("Sample.pdf", 2, async (vm) =>
         {
             var cts = new CancellationTokenSource();
             var dp  = vm.Register<MetadataViewModel>(this, e =>
@@ -106,7 +106,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
             Assert.That(vm.Data.Metadata.Value.Title, Is.Not.EqualTo("dummy"));
-        }));
+        });
 
         #endregion
 
