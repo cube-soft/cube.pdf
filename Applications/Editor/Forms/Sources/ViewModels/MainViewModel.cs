@@ -193,8 +193,8 @@ namespace Cube.Pdf.App.Editor
             Ribbon.MoveNext.Command      = IsItem(() => Send(() => Model.Move(1)));
             Ribbon.RotateLeft.Command    = IsItem(() => Send(() => Model.Rotate(-90)));
             Ribbon.RotateRight.Command   = IsItem(() => Send(() => Model.Rotate(90)));
-            Ribbon.Metadata.Command      = IsOpen(() => SendMetadata());
-            Ribbon.Encryption.Command    = IsOpen(() => SendEncryption());
+            Ribbon.Metadata.Command      = IsOpen(() => PostMetadata());
+            Ribbon.Encryption.Command    = IsOpen(() => PostEncryption());
             Ribbon.Refresh.Command       = IsOpen(() => Send(() => Model.Refresh()));
             Ribbon.Undo.Command          = IsUndo();
             Ribbon.Redo.Command          = IsRedo();
@@ -341,7 +341,7 @@ namespace Cube.Pdf.App.Editor
         /// PostOpen
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the OpenFileDialog
+        /// Posts the message to show a dialog of the OpenFileDialog
         /// class, and executes the specified action as an asynchronous
         /// operation.
         /// </summary>
@@ -356,7 +356,7 @@ namespace Cube.Pdf.App.Editor
         /// PostSave
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the SaveFileDialog
+        /// Posts the message to show a dialog of the SaveFileDialog
         /// class, and executes the specified action as an asynchronous
         /// operation.
         /// </summary>
@@ -415,36 +415,35 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SendMetadata
+        /// PostMetadata
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the MetadataWindow
+        /// Posts the message to show a dialog of the MetadataWindow
         /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendMetadata() => Send(new MetadataViewModel(
-            e => Model.Update(e),
-            Model.GetMetadata().Copy(),
-            Data.Source.Value,
-            Context
-        ));
+        private void PostMetadata() => Post(() =>
+        {
+            var m = Model.GetMetadata().Copy();
+            Post(new MetadataViewModel(e => Model.Update(e), m, Data.Source.Value, Context));
+        });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SendEncryption
+        /// PostEncryption
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the EncryptionWindow
+        /// Posts the message to show a dialog of the EncryptionWindow
         /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendEncryption() => Send(new EncryptionViewModel(
-            e => Model.Update(e),
-            Model.GetEncryption().Copy(),
-            Context
-        ));
+        private void PostEncryption() => Post(() =>
+        {
+            var m = Model.GetEncryption().Copy();
+            Post(new EncryptionViewModel(e => Model.Update(e), m, Context));
+        });
 
         /* ----------------------------------------------------------------- */
         ///

@@ -23,6 +23,9 @@ using Cube.Pdf.Mixin;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Cube.Pdf.Tests.Editor.ViewModels
 {
@@ -49,39 +52,30 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(EncryptionMethod.Aes128, 0xfffff0c0L)]
-        public void Set(EncryptionMethod method, long permission)
+        [TestCaseSource(nameof(TestCases))]
+        public async Task Set(int index, Encryption cmp)
         {
-            var cmp  = new Encryption
+            await CreateAsync("Sample.pdf", 2, vm => Task.Run(async () =>
             {
-                OwnerPassword    = "owner",
-                UserPassword     = "user",
-                OpenWithPassword = true,
-                Method           = method,
-                Enabled          = true,
-                Permission       = new Permission(permission),
-            };
-
-            Create("Sample.pdf", 2, vm =>
-            {
-                using (var _ = Register(vm, cmp, false))
+                var cts = new CancellationTokenSource();
+                using (var _ = Register(vm, cmp, false, cts))
                 {
                     Assert.That(vm.Ribbon.Encryption.Command.CanExecute(), Is.True);
                     vm.Ribbon.Encryption.Command.Execute();
+                    var done = await Wait.ForAsync(cts.Token).ConfigureAwait(false);
+                    Assert.That(done, $"Timeout (Encryption)");
                 }
 
                 Assert.That(vm.Data.History.Undoable, Is.True);
                 Assert.That(vm.Data.History.Redoable, Is.False);
 
-                Destination = Path(Args(method, permission));
-                Execute(vm, vm.Ribbon.SaveAs);
-                Assert.That(Wait.For(() => IO.Exists(Destination)));
-            });
+                Destination = Path(Args(index, cmp.Method));
+                await ExecuteAsync(vm, vm.Ribbon.SaveAs);
+                var save = await Wait.ForAsync(() => IO.Exists(Destination)).ConfigureAwait(false);
+                Assert.That(save, $"Timeout (SaveAs)");
+            }));
 
-            using (var r = new DocumentReader(Destination, cmp.OwnerPassword))
-            {
-                AssertEncryption(r.Encryption, cmp);
-            }
+            AssertEncryption(Destination, cmp);
         }
 
         /* ----------------------------------------------------------------- */
@@ -94,19 +88,57 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => Create("Sample.pdf", 2, vm =>
+        public void Cancel() => CreateAsync("Sample.pdf", 2, vm => Task.Run(async () =>
         {
-            using (var _ = vm.Register<EncryptionViewModel>(this, e =>
+            var cts = new CancellationTokenSource();
+            var dp  = vm.Register<EncryptionViewModel>(this, e =>
             {
                 e.OwnerPassword.Value = "dummy";
                 Assert.That(e.Cancel.Command.CanExecute(), Is.True);
                 e.Cancel.Command.Execute();
-            })) vm.Ribbon.Encryption.Command.Execute();
+                cts.Cancel();
+            });
 
+            vm.Ribbon.Encryption.Command.Execute();
+            var done = await Wait.ForAsync(cts.Token);
+            dp.Dispose();
+
+            Assert.That(done, $"Timeout (Encryption)");
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
             Assert.That(vm.Data.Encryption.Value.OwnerPassword, Is.Not.EqualTo("dummy"));
-        });
+        }));
+
+        #endregion
+
+        #region TestCases
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TestCases
+        ///
+        /// <summary>
+        /// Gets test cases.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<TestCaseData> TestCases
+        {
+            get
+            {
+                var index = 0;
+
+                yield return new TestCaseData(++index, new Encryption
+                {
+                    OwnerPassword    = "owner",
+                    UserPassword     = "user",
+                    OpenWithPassword = true,
+                    Method           = EncryptionMethod.Aes128,
+                    Enabled          = true,
+                    Permission       = new Permission(0xfffff0c0L),
+                });
+            }
+        }
 
         #endregion
 
@@ -122,8 +154,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IDisposable Register(MainViewModel vm, Encryption src, bool share) =>
-            vm.Register<EncryptionViewModel>(this, e =>
+        private IDisposable Register(MainViewModel vm, Encryption src, bool share,
+            CancellationTokenSource cts) => vm.Register<EncryptionViewModel>(this, e =>
         {
             var pm = src.Permission;
 
@@ -144,7 +176,25 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             Assert.That(e.OK.Command.CanExecute(), Is.True);
             e.OK.Command.Execute();
+            cts.Cancel(); // done
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AssertEncryption
+        ///
+        /// <summary>
+        /// Confirms that properties of the specified objects are equal.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AssertEncryption(string src, Encryption cmp)
+        {
+            using (var r = new DocumentReader(src, cmp.OwnerPassword))
+            {
+                AssertEncryption(r.Encryption, cmp);
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
