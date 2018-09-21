@@ -25,7 +25,8 @@ namespace Cube.Pdf.Tests
     /// EncryptionTest
     ///
     /// <summary>
-    /// Encryption のテスト用クラスです。
+    /// Tests for the Encryption class through various IDocumentReader
+    /// implementations.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -39,37 +40,42 @@ namespace Cube.Pdf.Tests
         /// Get
         ///
         /// <summary>
-        /// 暗号化情報を確認します。
+        /// Executes the test to get encryption information.
         /// </summary>
         ///
         /// <remarks>
-        /// UserPassword に関する情報の取得が未実装（主に PDFium）。
+        /// TODO: PDFium は「現在」の許可設定が返される。したがって、
+        /// OwnerPassword で PDF を開いた場合、元の許可設定に関わらず
+        /// 全て Allow と言う結果となる。元の許可設定を取得する方法を
+        /// 要検討。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Get(string klass, string filename, string password, Encryption expected)
+        public void Get(string klass, string filename, string password, Encryption cmp)
         {
-            var src = GetExamplesWith(filename);
-
-            using (var reader = Create(klass, src, password))
+            using (var r = Create(klass, GetExamplesWith(filename), password))
             {
-                var dest = reader.Encryption;
-                Assert.That(dest.Enabled,          Is.EqualTo(expected.Enabled),          nameof(dest.Enabled));
-                Assert.That(dest.Method,           Is.EqualTo(expected.Method),           nameof(dest.Method));
-                Assert.That(dest.OwnerPassword,    Is.EqualTo(expected.OwnerPassword),    nameof(dest.OwnerPassword));
-                //Assert.That(dest.OpenWithPassword, Is.EqualTo(expected.OpenWithPassword), nameof(dest.OpenWithPassword));
-                //Assert.That(dest.UserPassword,     Is.EqualTo(expected.UserPassword),     nameof(dest.UserPassword));
+                var dest = r.Encryption;
 
-                var pm  = dest.Permission;
-                var epm = expected.Permission;
-                Assert.That(pm.Accessibility,     Is.EqualTo(epm.Accessibility),     nameof(pm.Accessibility));
-                Assert.That(pm.CopyContents,      Is.EqualTo(epm.CopyContents),      nameof(pm.CopyContents));
-                Assert.That(pm.InputForm,         Is.EqualTo(epm.InputForm),         nameof(pm.InputForm));
-                Assert.That(pm.ModifyAnnotations, Is.EqualTo(epm.ModifyAnnotations), nameof(pm.ModifyAnnotations));
-                Assert.That(pm.ModifyContents,    Is.EqualTo(epm.ModifyContents),    nameof(pm.ModifyContents));
-                Assert.That(pm.Print,             Is.EqualTo(epm.Print),             nameof(pm.Print));
-                Assert.That(pm.Value,             Is.EqualTo(epm.Value),             nameof(pm.Value));
+                Assert.That(dest.Enabled,       Is.EqualTo(cmp.Enabled),       nameof(dest.Enabled));
+                Assert.That(dest.Method,        Is.EqualTo(cmp.Method),        nameof(dest.Method));
+                Assert.That(dest.OwnerPassword, Is.EqualTo(cmp.OwnerPassword), nameof(dest.OwnerPassword));
+
+                // TODO: Implementation of PDFium is incomplete.
+                // Assert.That(dest.OpenWithPassword, Is.EqualTo(cmp.OpenWithPassword), nameof(dest.OpenWithPassword));
+                // Assert.That(dest.UserPassword, Is.EqualTo(cmp.UserPassword), nameof(dest.UserPassword));
+
+                var x = dest.Permission;
+                var y = cmp.Permission;
+
+                Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
+                Assert.That(x.CopyContents,      Is.EqualTo(y.CopyContents),      nameof(x.CopyContents));
+                Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
+                Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
+                Assert.That(x.ModifyContents,    Is.EqualTo(y.ModifyContents),    nameof(x.ModifyContents));
+                Assert.That(x.Print,             Is.EqualTo(y.Print),             nameof(x.Print));
+                Assert.That(x.Value,             Is.EqualTo(y.Value),             nameof(x.Value));
             }
         }
 
@@ -82,7 +88,7 @@ namespace Cube.Pdf.Tests
         /// TestCases
         ///
         /// <summary>
-        /// テストケース一覧を取得します。
+        /// Gets test cases.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -182,6 +188,24 @@ namespace Cube.Pdf.Tests
                         }
                     });
                 }
+
+                yield return new TestCaseData(nameof(Cube.Pdf.Itext), "SampleAes128.pdf", "password", new Encryption
+                {
+                    Method           = EncryptionMethod.Aes128,
+                    Enabled          = true,
+                    OwnerPassword    = "password",
+                    OpenWithPassword = true,
+                    UserPassword     = "view",
+                    Permission       = new Permission
+                    {
+                        Accessibility     = PermissionValue.Deny,
+                        CopyContents      = PermissionValue.Deny,
+                        InputForm         = PermissionValue.Deny,
+                        ModifyAnnotations = PermissionValue.Deny,
+                        ModifyContents    = PermissionValue.Deny,
+                        Print             = PermissionValue.Deny,
+                    }
+                });
 
                 yield return new TestCaseData(nameof(Cube.Pdf.Pdfium), "SampleAes256r6.pdf", "password", new Encryption
                 {
