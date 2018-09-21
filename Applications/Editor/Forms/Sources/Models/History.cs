@@ -40,7 +40,7 @@ namespace Cube.Pdf.App.Editor
         /// History
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>History</c> class.
+        /// Initializes a new instance of the History class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

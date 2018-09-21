@@ -40,7 +40,7 @@ namespace Cube.Pdf.App.Editor
         /// PreviewFacade
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>PreviewFacade</c> class
+        /// Initializes a new instance of the PreviewFacade class
         /// with the specified arguments.
         /// </summary>
         ///

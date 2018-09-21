@@ -22,7 +22,7 @@ namespace Cube.Pdf.Mixin
     /// MetadataExtension
     ///
     /// <summary>
-    /// Describes extended methods for the <c>Metadata</c> class.
+    /// Describes extended methods for the Metadata class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -35,7 +35,7 @@ namespace Cube.Pdf.Mixin
         /// Copy
         ///
         /// <summary>
-        /// Gets the copied <c>Metadata</c> object.
+        /// Gets the copied Metadata object.
         /// </summary>
         ///
         /// <param name="src">Original object.</param>

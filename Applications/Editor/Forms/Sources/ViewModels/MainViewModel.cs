@@ -165,7 +165,7 @@ namespace Cube.Pdf.App.Editor
         /// SetCommands
         ///
         /// <summary>
-        /// Sets commands of the <c>MainWindow</c>.
+        /// Sets commands of the MainWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -341,7 +341,7 @@ namespace Cube.Pdf.App.Editor
         /// PostOpen
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the <c>OpenFileDialog</c>
+        /// Sends the message to show a dialog of the OpenFileDialog
         /// class, and executes the specified action as an asynchronous
         /// operation.
         /// </summary>
@@ -371,7 +371,7 @@ namespace Cube.Pdf.App.Editor
         /// SendPreview
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the <c>PreviewWindow</c>
+        /// Sends the message to show a dialog of the PreviewWindow
         /// class.
         /// </summary>
         ///
@@ -387,7 +387,7 @@ namespace Cube.Pdf.App.Editor
         /// SendInsert
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the <c>InsertWindow</c>
+        /// Sends the message to show a dialog of the InsertWindow
         /// class.
         /// </summary>
         ///
@@ -402,7 +402,7 @@ namespace Cube.Pdf.App.Editor
         /// SendRemove
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the <c>RemoveWindow</c>
+        /// Sends the message to show a dialog of the RemoveWindow
         /// class.
         /// </summary>
         ///
@@ -418,7 +418,7 @@ namespace Cube.Pdf.App.Editor
         /// SendMetadata
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the <c>MetadataWindow</c>
+        /// Sends the message to show a dialog of the MetadataWindow
         /// class.
         /// </summary>
         ///
@@ -435,7 +435,7 @@ namespace Cube.Pdf.App.Editor
         /// SendEncryption
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the <c>EncryptionWindow</c>
+        /// Sends the message to show a dialog of the EncryptionWindow
         /// class.
         /// </summary>
         ///
@@ -451,7 +451,7 @@ namespace Cube.Pdf.App.Editor
         /// SendSettings
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the <c>SettingsWindow</c>
+        /// Sends the message to show a dialog of the SettingsWindow
         /// class.
         /// </summary>
         ///

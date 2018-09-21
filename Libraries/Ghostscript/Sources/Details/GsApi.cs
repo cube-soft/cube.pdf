@@ -39,7 +39,7 @@ namespace Cube.Pdf.Ghostscript
         /// GsApi
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>GsApi</c> class.
+        /// Initializes a new instance of the GsApi class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -115,7 +115,7 @@ namespace Cube.Pdf.Ghostscript
         /// ~GsApi
         ///
         /// <summary>
-        /// Finalizes the <c>GsApi</c>.
+        /// Finalizes the GsApi.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Ghostscript
         /// Dispose
         ///
         /// <summary>
-        /// Releases all resources used by the <c>GsApi</c>.
+        /// Releases all resources used by the GsApi.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -141,7 +141,7 @@ namespace Cube.Pdf.Ghostscript
         /// Dispose
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the <c>GsApi</c>
+        /// Releases the unmanaged resources used by the GsApi
         /// and optionally releases the managed resources.
         /// </summary>
         ///

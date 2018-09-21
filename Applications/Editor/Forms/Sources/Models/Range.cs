@@ -61,7 +61,7 @@ namespace Cube.Pdf.App.Editor
         /// Range
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>Range</c> class with the
+        /// Initializes a new instance of the Range class with the
         /// specified arguments.
         /// </summary>
         ///

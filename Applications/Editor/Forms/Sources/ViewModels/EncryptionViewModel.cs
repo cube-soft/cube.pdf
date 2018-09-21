@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.Editor
     /// EncryptionViewModel
     ///
     /// <summary>
-    /// Represents the ViewModel for a <c>EncryptionWindow</c> instance.
+    /// Represents the ViewModel for a EncryptionWindow instance.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -44,12 +44,12 @@ namespace Cube.Pdf.App.Editor
         /// EncryptionViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>EncryptionViewModel</c>
+        /// Initializes a new instance of the EncryptionViewModel
         /// with the specified argumetns.
         /// </summary>
         ///
         /// <param name="callback">Callback method when applied.</param>
-        /// <param name="src"><c>Encryption</c> object.</param>
+        /// <param name="src">Encryption object.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -351,7 +351,7 @@ namespace Cube.Pdf.App.Editor
         /// Convert
         ///
         /// <summary>
-        /// Converts the specified value to the <c>PermissionMethod</c>.
+        /// Converts the specified value to the PermissionMethod.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

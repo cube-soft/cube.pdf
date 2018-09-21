@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.Editor
     /// SettingsViewModel
     ///
     /// <summary>
-    /// Represents the ViewModel for a <c>SettingsWindow</c> instance.
+    /// Represents the ViewModel for a SettingsWindow instance.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -44,7 +44,7 @@ namespace Cube.Pdf.App.Editor
         /// SettingsViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>SettingsViewModel</c>
+        /// Initializes a new instance of the SettingsViewModel
         /// with the specified argumetns.
         /// </summary>
         ///

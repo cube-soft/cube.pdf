@@ -27,7 +27,7 @@ namespace Cube.Pdf.Tests.Editor
     /// HistoryTest
     ///
     /// <summary>
-    /// Tests for the <c>History</c> class.
+    /// Tests for the History class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

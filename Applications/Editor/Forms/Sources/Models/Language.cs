@@ -47,7 +47,7 @@ namespace Cube.Pdf.App.Editor
     /// LanguageExtension
     ///
     /// <summary>
-    /// Provides extended methods for the <c>Language</c> class.
+    /// Provides extended methods for the Language class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -78,7 +78,7 @@ namespace Cube.Pdf.App.Editor
         /// GetName
         ///
         /// <summary>
-        /// Gets the name of the specified <c>Language</c>.
+        /// Gets the name of the specified Language.
         /// </summary>
         ///
         /// <param name="src">Language</param>

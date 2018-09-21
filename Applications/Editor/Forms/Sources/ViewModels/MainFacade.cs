@@ -347,10 +347,10 @@ namespace Cube.Pdf.App.Editor
         /// Update
         ///
         /// <summary>
-        /// Updates the <c>Metadata</c> object.
+        /// Updates the Metadata object.
         /// </summary>
         ///
-        /// <param name="value"><c>Metadata</c> object.</param>
+        /// <param name="value">Metadata object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Update(Metadata value) => this.Invoke(() => this.SetMetadata(value));
@@ -360,10 +360,10 @@ namespace Cube.Pdf.App.Editor
         /// Update
         ///
         /// <summary>
-        /// Updates the <c>Encryption</c> object.
+        /// Updates the Encryption object.
         /// </summary>
         ///
-        /// <param name="value"><c>Encryption</c> object.</param>
+        /// <param name="value">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Update(Encryption value) => this.Invoke(() => this.SetEncryption(value));
@@ -427,7 +427,7 @@ namespace Cube.Pdf.App.Editor
         /// ~MainFacade
         ///
         /// <summary>
-        /// Finalizes the <c>MainFacade</c>.
+        /// Finalizes the MainFacade.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -438,7 +438,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases all resources used by the <c>MainFacade</c>.
+        /// Releases all resources used by the MainFacade.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -453,7 +453,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the <c>MainFacade</c>
+        /// Releases the unmanaged resources used by the MainFacade
         /// and optionally releases the managed resources.
         /// </summary>
         ///

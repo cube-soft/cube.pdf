@@ -25,7 +25,7 @@ namespace Cube.Pdf.App.Editor
     /// PreviewWindow
     ///
     /// <summary>
-    /// Represents the code behind of the MetadataWindow.xaml
+    /// Represents the code behind of the PreviewWindow.xaml
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Editor
         /// PreviewWindow
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>PreviewWindow</c> class.
+        /// Initializes a new instance of the PreviewWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

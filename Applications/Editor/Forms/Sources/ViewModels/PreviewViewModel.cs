@@ -27,7 +27,7 @@ namespace Cube.Pdf.App.Editor
     /// PreviewViewModel
     ///
     /// <summary>
-    /// Represents the ViewModel for a <c>PreviewWindow</c> instance.
+    /// Represents the ViewModel for a PreviewWindow instance.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,7 +40,7 @@ namespace Cube.Pdf.App.Editor
         /// PreviewViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>PreviewViewModel</c>
+        /// Initializes a new instance of the PreviewViewModel
         /// with the specified argumetns.
         /// </summary>
         ///

@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Editor
         /// SettingsWindow
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>SettingsWindow</c> class.
+        /// Initializes a new instance of the SettingsWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

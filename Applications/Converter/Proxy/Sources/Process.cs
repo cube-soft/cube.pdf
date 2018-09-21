@@ -49,7 +49,7 @@ namespace Cube.Processes
         /// <param name="program">実行プログラムのパス</param>
         /// <param name="arguments">プログラムの引数</param>
         ///
-        /// <returns>実行に成功した <c>Process</c> オブジェクト</returns>
+        /// <returns>実行に成功した Process オブジェクト</returns>
         ///
         /// <remarks>
         /// アクティブユーザが複数存在する場合、操作は失敗します。
@@ -69,7 +69,7 @@ namespace Cube.Processes
         ///
         /// <param name="cmdline">実行するコマンドライン</param>
         ///
-        /// <returns>実行に成功した <c>Process</c> オブジェクト</returns>
+        /// <returns>実行に成功した Process オブジェクト</returns>
         ///
         /// <remarks>
         /// アクティブユーザが複数存在する場合、操作は失敗します。
@@ -91,7 +91,7 @@ namespace Cube.Processes
         /// <param name="program">実行プログラムのパス</param>
         /// <param name="arguments">プログラムの引数</param>
         ///
-        /// <returns>実行に成功した <c>Process</c> オブジェクト</returns>
+        /// <returns>実行に成功した Process オブジェクト</returns>
         ///
         /// <remarks>
         /// 指定されたユーザがアクティブである必要があります。
@@ -113,7 +113,7 @@ namespace Cube.Processes
         /// <param name="username">ユーザ名</param>
         /// <param name="cmdline">実行するコマンドライン</param>
         ///
-        /// <returns>実行に成功した <c>Process</c> オブジェクト</returns>
+        /// <returns>実行に成功した Process オブジェクト</returns>
         ///
         /// <remarks>
         /// 指定されたユーザがアクティブである必要があります。
@@ -135,7 +135,7 @@ namespace Cube.Processes
         /// <param name="program">実行プログラムのパス</param>
         /// <param name="arguments">プログラムの引数</param>
         ///
-        /// <returns>実行に成功した <c>Process</c> オブジェクト</returns>
+        /// <returns>実行に成功した Process オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAs(IntPtr token,
@@ -153,7 +153,7 @@ namespace Cube.Processes
         /// <param name="token">実行ユーザのトークン</param>
         /// <param name="cmdline">実行するコマンドライン</param>
         ///
-        /// <returns>実行に成功した <c>Process</c> オブジェクト</returns>
+        /// <returns>実行に成功した Process オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAs(IntPtr token, string cmdline)
@@ -188,7 +188,7 @@ namespace Cube.Processes
         /// <param name="program">実行プログラムのパス</param>
         /// <param name="arguments">プログラムの引数</param>
         ///
-        /// <returns>実行に成功した <c>Process</c> オブジェクト</returns>
+        /// <returns>実行に成功した Process オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAs(uint tid, string program, string[] arguments) =>
@@ -205,7 +205,7 @@ namespace Cube.Processes
         /// <param name="tid">スレッド ID</param>
         /// <param name="cmdline">実行するコマンドライン</param>
         ///
-        /// <returns>実行に成功した <c>Process</c> オブジェクト</returns>
+        /// <returns>実行に成功した Process オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAs(uint tid, string cmdline) =>

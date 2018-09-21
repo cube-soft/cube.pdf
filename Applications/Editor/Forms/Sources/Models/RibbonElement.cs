@@ -43,7 +43,7 @@ namespace Cube.Pdf.App.Editor
         /// RibbonElement
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>RibbonElement</c> class
+        /// Initializes a new instance of the RibbonElement class
         /// with the specified arguments.
         /// </summary>
         ///
@@ -59,7 +59,7 @@ namespace Cube.Pdf.App.Editor
         /// RibbonElement
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>RibbonElement</c> class
+        /// Initializes a new instance of the RibbonElement class
         /// with the specified arguments.
         /// </summary>
         ///
@@ -76,7 +76,7 @@ namespace Cube.Pdf.App.Editor
         /// RibbonElement
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>RibbonElement</c> class
+        /// Initializes a new instance of the RibbonElement class
         /// with the specified arguments.
         /// </summary>
         ///

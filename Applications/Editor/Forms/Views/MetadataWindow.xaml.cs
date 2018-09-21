@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Editor
         /// MetadataWindow
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>MetadataWindow</c> class.
+        /// Initializes a new instance of the MetadataWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

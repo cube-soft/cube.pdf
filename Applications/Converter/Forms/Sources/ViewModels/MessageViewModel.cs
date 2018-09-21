@@ -220,7 +220,7 @@ namespace Cube.Pdf.App.Converter
         /// CreateMessage
         ///
         /// <summary>
-        /// Gets the error message when a <c>CryptographicException</c>
+        /// Gets the error message when a CryptographicException
         /// exception occurs.
         /// </summary>
         ///

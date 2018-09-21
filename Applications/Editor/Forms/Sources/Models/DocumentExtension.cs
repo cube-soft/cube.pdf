@@ -51,7 +51,7 @@ namespace Cube.Pdf.App.Editor
         /// Create
         ///
         /// <summary>
-        /// Create a new instance of the <c>ImageSource</c> class with the
+        /// Create a new instance of the ImageSource class with the
         /// specified parameters.
         /// </summary>
         ///
@@ -328,11 +328,11 @@ namespace Cube.Pdf.App.Editor
         /// SetMetadata
         ///
         /// <summary>
-        /// Sets the <c>Metadata</c> object.
+        /// Sets the Metadata object.
         /// </summary>
         ///
         /// <param name="src">Facade object.</param>
-        /// <param name="value"><c>Metadata</c> object.</param>
+        /// <param name="value">Metadata object.</param>
         ///
         /// <returns>
         /// History item to execute undo and redo actions.
@@ -353,11 +353,11 @@ namespace Cube.Pdf.App.Editor
         /// SetEncryption
         ///
         /// <summary>
-        /// Sets the <c>Encryption</c> object.
+        /// Sets the Encryption object.
         /// </summary>
         ///
         /// <param name="src">Facade object.</param>
-        /// <param name="value"><c>Encryption</c> object.</param>
+        /// <param name="value">Encryption object.</param>
         ///
         /// <returns>
         /// History item to execute undo and redo actions.

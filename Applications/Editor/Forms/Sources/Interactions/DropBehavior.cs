@@ -77,7 +77,7 @@ namespace Cube.Pdf.App.Editor
         /// WhenDrop
         ///
         /// <summary>
-        /// Occurs when the <c>PreviewDrop</c> event is fired.
+        /// Occurs when the PreviewDrop event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Editor
         /// WhenDragOver
         ///
         /// <summary>
-        /// Occurs when the <c>PreviewDragOver</c> event is fired.
+        /// Occurs when the PreviewDragOver event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

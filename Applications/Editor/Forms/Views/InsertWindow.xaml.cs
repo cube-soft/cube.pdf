@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Editor
         /// InsertWindow
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>InsertWindow</c> class.
+        /// Initializes a new instance of the InsertWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

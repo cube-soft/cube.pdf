@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Editor
         /// EncryptionWindow
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>EncryptionWindow</c> class.
+        /// Initializes a new instance of the EncryptionWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

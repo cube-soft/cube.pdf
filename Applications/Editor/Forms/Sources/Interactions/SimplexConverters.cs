@@ -106,7 +106,7 @@ namespace Cube.Pdf.App.Editor
         /// LanguageConverter
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>LanguageConverter</c>
+        /// Initializes a new instance of the LanguageConverter
         /// class.
         /// </summary>
         ///
@@ -140,7 +140,7 @@ namespace Cube.Pdf.App.Editor
         /// ByteConverter
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>ByteConverter</c> class.
+        /// Initializes a new instance of the ByteConverter class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -160,7 +160,7 @@ namespace Cube.Pdf.App.Editor
     /// EncryptionMethodConverter
     ///
     /// <summary>
-    /// Provides functionality to convert an <c>EncryptionMethod</c>.
+    /// Provides functionality to convert an EncryptionMethod.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -171,7 +171,7 @@ namespace Cube.Pdf.App.Editor
         /// EncryptionMethodConverter
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>EncryptionMethodConverter</c>
+        /// Initializes a new instance of the EncryptionMethodConverter
         /// class.
         /// </summary>
         ///
@@ -191,7 +191,7 @@ namespace Cube.Pdf.App.Editor
     /// ViewerPreferencesConverter
     ///
     /// <summary>
-    /// Provides functionality to convert a <c>ViewerPreferences</c>.
+    /// Provides functionality to convert a ViewerPreferences.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -202,7 +202,7 @@ namespace Cube.Pdf.App.Editor
         /// ViewerPreferencesConverter
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>ViewerPreferencesConverter</c>
+        /// Initializes a new instance of the ViewerPreferencesConverter
         /// class.
         /// </summary>
         ///
@@ -383,7 +383,7 @@ namespace Cube.Pdf.App.Editor
         /// HasValueToVisibility
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>HasValueToVisibility</c>
+        /// Initializes a new instance of the HasValueToVisibility
         /// class.
         /// </summary>
         ///
@@ -415,7 +415,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the
-        /// <c>HasValueToVisibilityInverse</c> class.
+        /// HasValueToVisibilityInverse class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

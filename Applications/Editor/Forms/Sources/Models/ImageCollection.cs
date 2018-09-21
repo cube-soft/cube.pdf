@@ -177,7 +177,7 @@ namespace Cube.Pdf.App.Editor
         /// ~ImageCollection
         ///
         /// <summary>
-        /// Finalizes the <c>ImageCollection</c>.
+        /// Finalizes the ImageCollection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -188,7 +188,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases all resources used by the <c>ImageCollection</c>.
+        /// Releases all resources used by the ImageCollection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -204,7 +204,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <summary>
         /// Releases the unmanaged resources used by the
-        /// <c>ImageCollection</c> and optionally releases the managed
+        /// ImageCollection and optionally releases the managed
         /// resources.
         /// </summary>
         ///

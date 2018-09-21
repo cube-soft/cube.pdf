@@ -27,7 +27,7 @@ namespace Cube.Pdf.Tests.Editor
     /// RangeTest
     ///
     /// <summary>
-    /// Tests for the <c>Range</c> class.
+    /// Tests for the Range class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

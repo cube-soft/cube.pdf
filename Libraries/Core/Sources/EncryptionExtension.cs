@@ -25,7 +25,7 @@ namespace Cube.Pdf.Mixin
     /// EncryptionExtension
     ///
     /// <summary>
-    /// Describes extended methods for the <c>Encryption</c> class.
+    /// Describes extended methods for the Encryption class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Editor
     /// PreviewWindowBehavior
     ///
     /// <summary>
-    /// Represents the behavior to show a <c>PreviewWindow</c> dialog.
+    /// Represents the behavior to show a PreviewWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -49,7 +49,7 @@ namespace Cube.Pdf.App.Editor
     /// InsertWindowBehavior
     ///
     /// <summary>
-    /// Represents the behavior to show a <c>InsertWindow</c> dialog.
+    /// Represents the behavior to show a InsertWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -61,7 +61,7 @@ namespace Cube.Pdf.App.Editor
     /// RemoveWindowBehavior
     ///
     /// <summary>
-    /// Represents the behavior to show a <c>RemoveWindow</c> dialog.
+    /// Represents the behavior to show a RemoveWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -73,7 +73,7 @@ namespace Cube.Pdf.App.Editor
     /// MetadataWindowBehavior
     ///
     /// <summary>
-    /// Represents the behavior to show a <c>MetadataWindow</c> dialog.
+    /// Represents the behavior to show a MetadataWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -85,7 +85,7 @@ namespace Cube.Pdf.App.Editor
     /// EncryptionWindowBehavior
     ///
     /// <summary>
-    /// Represents the behavior to show a <c>EncryptionWindow</c> dialog.
+    /// Represents the behavior to show a EncryptionWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -97,7 +97,7 @@ namespace Cube.Pdf.App.Editor
     /// SettingsWindowBehavior
     ///
     /// <summary>
-    /// Represents the behavior to show a <c>SettingsWindow</c> dialog.
+    /// Represents the behavior to show a SettingsWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

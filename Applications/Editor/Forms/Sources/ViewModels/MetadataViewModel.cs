@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.Editor
     /// MetadataViewModel
     ///
     /// <summary>
-    /// Represents the ViewModel for a <c>MetadataWindow</c> instance.
+    /// Represents the ViewModel for a MetadataWindow instance.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -44,7 +44,7 @@ namespace Cube.Pdf.App.Editor
         /// MetadataViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>MetadataViewModel</c>
+        /// Initializes a new instance of the MetadataViewModel
         /// with the specified argumetns.
         /// </summary>
         ///

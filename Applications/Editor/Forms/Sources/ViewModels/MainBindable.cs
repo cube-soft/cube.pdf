@@ -39,7 +39,7 @@ namespace Cube.Pdf.App.Editor
         /// MainBindable
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>MainBindable</c> class
+        /// Initializes a new instance of the MainBindable class
         /// with the specified arguments.
         /// </summary>
         ///
@@ -233,7 +233,7 @@ namespace Cube.Pdf.App.Editor
         /// Open
         ///
         /// <summary>
-        /// Sets properties of the specified <c>IDocumentReader</c>.
+        /// Sets properties of the specified IDocumentReader.
         /// </summary>
         ///
         /// <param name="src">Document information.</param>

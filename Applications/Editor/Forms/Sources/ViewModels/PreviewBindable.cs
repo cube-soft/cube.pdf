@@ -28,7 +28,7 @@ namespace Cube.Pdf.App.Editor
     /// PreviewBindable
     ///
     /// <summary>
-    /// Provides values for binding to the <c>PreviewWindow</c>.
+    /// Provides values for binding to the PreviewWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,7 +41,7 @@ namespace Cube.Pdf.App.Editor
         /// PreviewBindable
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>PreviewBindable</c>
+        /// Initializes a new instance of the PreviewBindable
         /// class with the specified arguments.
         /// </summary>
         ///

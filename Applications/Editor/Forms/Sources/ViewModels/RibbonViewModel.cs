@@ -39,7 +39,7 @@ namespace Cube.Pdf.App.Editor
         /// RibbonViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>RibbonViewModel</c>
+        /// Initializes a new instance of the RibbonViewModel
         /// class with the specified arguments.
         /// </summary>
         ///

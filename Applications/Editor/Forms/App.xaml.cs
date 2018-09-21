@@ -43,7 +43,7 @@ namespace Cube.Pdf.App.Editor
         /// App
         ///
         /// <summary>
-        /// Initializes a new instance of the <c>App</c> class.
+        /// Initializes a new instance of the App class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -101,7 +101,7 @@ namespace Cube.Pdf.App.Editor
         /// ~App
         ///
         /// <summary>
-        /// Finalizes the <c>App</c>.
+        /// Finalizes the App.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -112,7 +112,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases all resources used by the <c>App</c>.
+        /// Releases all resources used by the App.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -127,7 +127,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the <c>App</c>
+        /// Releases the unmanaged resources used by the App
         /// and optionally releases the managed resources.
         /// </summary>
         ///
