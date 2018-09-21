@@ -44,7 +44,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Set
         ///
         /// <summary>
-        /// Executes the test to set the encryption information
+        /// Executes the test to set the encryption information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -91,15 +91,12 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         public void Cancel() => Create("Sample.pdf", 2, vm =>
         {
             var cmp = vm.Data.Encryption.Value.Copy();
-            var dp  = vm.Register<EncryptionViewModel>(this, e =>
+            using (var _ = vm.Register<EncryptionViewModel>(this, e =>
             {
                 e.OwnerPassword.Value = "dummy";
                 Assert.That(e.Cancel.Command.CanExecute(), Is.True);
                 e.Cancel.Command.Execute();
-            });
-
-            vm.Ribbon.Encryption.Command.Execute();
-            dp.Dispose();
+            })) vm.Ribbon.Encryption.Command.Execute();
 
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
