@@ -345,14 +345,17 @@ namespace Cube.Pdf.App.Editor
 
             try
             {
+                var data   = src.Bindable;
+                var reader = GetReader(data.Source.Value);
+
+                if (data.Metadata.Value   == null) data.Metadata.Value   = reader.Metadata;
+                if (data.Encryption.Value == null) data.Encryption.Value = reader.Encryption;
+
                 using (var writer = new DocumentWriter())
                 {
-                    var data   = src.Bindable;
-                    var reader = GetReader(data.Source.Value);
-
                     writer.Add(data.Images.Select(e => e.RawObject), reader);
-                    writer.Set(data.Metadata.Value ?? reader.Metadata);
-                    writer.Set(data.Encryption.Value ?? reader.Encryption);
+                    writer.Set(data.Metadata.Value);
+                    writer.Set(data.Encryption.Value);
                     writer.Save(tmp);
                 }
 

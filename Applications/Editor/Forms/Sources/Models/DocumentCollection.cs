@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using Cube.Pdf.Pdfium;
 using System.Collections.Concurrent;
 
@@ -101,10 +102,31 @@ namespace Cube.Pdf.App.Editor
         /// <returns>DocumentReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader GetOrAdd(string src)
+        public DocumentReader GetOrAdd(string src) => GetOrAdd(src, string.Empty);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetOrAdd
+        ///
+        /// <summary>
+        /// Adds a DocumentReader if the specified path does not already
+        /// exist.
+        /// </summary>
+        ///
+        /// <param name="src">File path.</param>
+        /// <param name="password">Password of the source.</param>
+        ///
+        /// <returns>DocumentReader object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader GetOrAdd(string src, string password)
         {
             if (_core.TryGetValue(src, out var value)) return value;
-            var dest = _core.GetOrAdd(src, e => new DocumentReader(e, _password));
+            var dest = _core.GetOrAdd(src, e =>
+                password.HasValue() ?
+                new DocumentReader(e, password) :
+                new DocumentReader(e, _password)
+            );
             return dest;
         }
 
