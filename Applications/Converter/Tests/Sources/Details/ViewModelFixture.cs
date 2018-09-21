@@ -34,10 +34,10 @@ namespace Cube.Pdf.Tests.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// GlobalSetup
+    /// ViewModelFixture
     ///
     /// <summary>
-    /// NUnit で最初に実行する処理を記述するテストです。
+    /// Provides functionality to test ViewModel classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -280,7 +280,7 @@ namespace Cube.Pdf.Tests.Converter
             var closed = false;
             vm.Messenger.Close.Subscribe(() => closed = true);
             vm.Convert();
-            return Wait.For(() => closed);
+            return Wait.For(() => closed, TimeSpan.FromSeconds(10));
         }
 
         /* ----------------------------------------------------------------- */

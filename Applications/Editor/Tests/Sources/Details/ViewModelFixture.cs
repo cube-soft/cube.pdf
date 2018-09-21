@@ -34,7 +34,7 @@ namespace Cube.Pdf.Tests.Editor
     /// ViewModelFixture
     ///
     /// <summary>
-    /// Provides functionality to test throw ViewModel classes.
+    /// Provides functionality to test ViewModel classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
