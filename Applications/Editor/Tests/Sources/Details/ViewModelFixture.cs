@@ -24,6 +24,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Tests.Editor
@@ -67,6 +68,8 @@ namespace Cube.Pdf.Tests.Editor
 
         #region Methods
 
+        #region Create
+
         /* ----------------------------------------------------------------- */
         ///
         /// Create
@@ -76,25 +79,20 @@ namespace Cube.Pdf.Tests.Editor
         /// the specified action.
         /// </summary>
         ///
-        /// <param name="action">User action.</param>
+        /// <param name="callback">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Create(Action<MainViewModel> action)
+        protected void Create(Action<MainViewModel> callback)
         {
-            //using (var src = new MainViewModel())
-            var src = new MainViewModel();
+            //using (var src = Create())
+            var src = Create();
             {
-                var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
-
-                src.Data.Preferences.Dummy = dummy;
-                src.Data.Preferences.VisibleFirst = 0;
-                src.Data.Preferences.VisibleLast = 10;
-
-                var registry = Register(src);
-                action(src);
-                foreach (var obj in registry) obj.Dispose();
+                var dps = Register(src);
+                callback(src);
+                foreach (var e in dps) e.Dispose();
             }
         }
+
 
         /* ----------------------------------------------------------------- */
         ///
@@ -120,6 +118,58 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CreateAsync
+        ///
+        /// <summary>
+        /// Gets a new instance of the MainViewModel class and execute
+        /// the specified callback as an asynchronous operation.
+        /// </summary>
+        ///
+        /// <param name="callback">User action.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected async Task CreateAsync(Func<MainViewModel, Task> callback)
+        {
+            //using (var src = Create())
+            var src = Create();
+            {
+                var dps = Register(src);
+                await callback(src);
+                foreach (var e in dps) e.Dispose();
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateAsync
+        ///
+        /// <summary>
+        /// Gets a new instance of the MainViewModel class, executes
+        /// the Open command, and runs the specified action as an
+        /// asynchronous operation.
+        /// </summary>
+        ///
+        /// <param name="filename">Filename of the source.</param>
+        /// <param name="n">Number of pages.</param>
+        /// <param name="callback">User action.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected Task CreateAsync(string filename, int n,
+            Func<MainViewModel, Task> callback) => CreateAsync(async (vm) =>
+        {
+            Source = GetExamplesWith(filename);
+            await ExecuteAsync(vm, vm.Ribbon.Open).ConfigureAwait(false);
+            var open = await Wait.ForAsync(() => vm.Data.Images.Count == n).ConfigureAwait(false);
+            Assert.That(open, "Timeout (Open)");
+            await callback(vm).ConfigureAwait(false);
+        });
+
+        #endregion
+
+        #region Execute
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Execute
         ///
         /// <summary>
@@ -130,15 +180,36 @@ namespace Cube.Pdf.Tests.Editor
         /// <param name="src">Bindable element.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Execute(MainViewModel vm, BindableElement src)
+        protected void Execute(MainViewModel vm, BindableElement src) =>
+            ExecuteAsync(vm, src).Wait();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ExecuteAsync
+        ///
+        /// <summary>
+        /// Execute the specified command as an asynchronous operation.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel instance.</param>
+        /// <param name="src">Bindable element.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected async Task ExecuteAsync(MainViewModel vm, BindableElement src)
         {
-            Assert.That(Wait.For(() => !vm.Data.Busy.Value), $"NotReady ({src.Text})");
-            vm.Data.Message.Value = string.Empty;
-            Assert.That(src.Command.CanExecute(), Is.True, nameof(src.Command.CanExecute));
+            var data  = vm.Data;
+            var ready = await Wait.ForAsync(() => !data.Busy.Value).ConfigureAwait(false);
+            Assert.That(ready, $"NotReady ({src.Text})");
+
+            data.SetMessage(string.Empty);
+            Assert.That(src.Command.CanExecute(), nameof(src.Command.CanExecute));
             src.Command.Execute();
-            Assert.That(Wait.For(() => !vm.Data.Busy.Value), $"Timeout ({src.Text})");
-            Assert.That(vm.Data.Message.Value, Is.Empty);
+
+            var done = await Wait.ForAsync(() => !data.Busy.Value).ConfigureAwait(false);
+            Assert.That(done, $"Timeout ({src.Text})");
         }
+
+        #endregion
 
         /* ----------------------------------------------------------------- */
         ///
@@ -177,10 +248,33 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         [SetUp]
-        private void Setup()
+        protected virtual void Setup()
         {
             Source      = string.Empty;
             Destination = string.Empty;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Gets a new instance of the MainViewModel class.
+        /// </summary>
+        ///
+        /// <returns>MainViewModel object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private MainViewModel Create()
+        {
+            var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
+            var dest  = new MainViewModel();
+
+            dest.Data.Preferences.Dummy = dummy;
+            dest.Data.Preferences.VisibleFirst = 0;
+            dest.Data.Preferences.VisibleLast = 10;
+
+            return dest;
         }
 
         /* ----------------------------------------------------------------- */
