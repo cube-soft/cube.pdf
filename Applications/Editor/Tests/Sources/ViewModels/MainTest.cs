@@ -79,14 +79,19 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [Test]
-        public void Save() => Create("Sample.pdf", "", 2, vm =>
+        [TestCase("Sample.pdf",       "",         2)]
+        [TestCase("SampleAes128.pdf", "password", 2)]
+        public void Save(string filename, string password, int n) =>
+            Create(filename, password, n, vm =>
         {
-            Destination = GetResultsWith($"Sample{nameof(Save)}.pdf");
+            var fi = IO.Get(Source);
+            Destination = Path(Args(fi.NameWithoutExtension));
+            Password    = string.Empty;
             Assert.That(IO.Exists(Destination), Is.False);
 
             Execute(vm, vm.Ribbon.SaveAs);
             Assert.That(Wait.For(() => IO.Exists(Destination)));
+            Assert.That(vm.Data.Source.Value.FullName, Is.EqualTo(Destination));
         });
 
         /* ----------------------------------------------------------------- */
@@ -125,23 +130,23 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(dest.Count,   Is.EqualTo(0));
             Assert.That(dest.Items,   Is.Not.Null);
             Assert.That(dest.Indices, Is.Not.Null);
-            Assert.That(dest.Last,   Is.EqualTo(-1));
+            Assert.That(dest.Last,    Is.EqualTo(-1));
 
             vm.Data.Images.First().IsSelected = true;
             Assert.That(Wait.For(() => !vm.Data.Busy.Value));
-            Assert.That(dest.Count,   Is.EqualTo(1), nameof(dest.Count));
-            Assert.That(dest.Last,   Is.EqualTo(0), nameof(dest.Last));
+            Assert.That(dest.Count, Is.EqualTo(1), nameof(dest.Count));
+            Assert.That(dest.Last,  Is.EqualTo(0), nameof(dest.Last));
 
             Execute(vm, vm.Ribbon.SelectFlip);
-            Assert.That(dest.Count,   Is.EqualTo(8), nameof(dest.Count));
-            Assert.That(dest.Last,   Is.EqualTo(8), nameof(dest.Last));
+            Assert.That(dest.Count, Is.EqualTo(8), nameof(dest.Count));
+            Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
 
             Execute(vm, vm.Ribbon.Select); // SelectAll
-            Assert.That(dest.Count,   Is.EqualTo(9), nameof(dest.Count));
-            Assert.That(dest.Last,   Is.EqualTo(8), nameof(dest.Last));
+            Assert.That(dest.Count, Is.EqualTo(9), nameof(dest.Count));
+            Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
 
             Execute(vm, vm.Ribbon.Select); // SelectClear
-            Assert.That(dest.Count,   Is.EqualTo(0));
+            Assert.That(dest.Count, Is.EqualTo(0));
         });
 
         /* ----------------------------------------------------------------- */
@@ -217,13 +222,13 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Execute(vm, vm.Ribbon.RotateLeft);
             Assert.That(Wait.For(() => count >= 4), "Timeout (Left)");
             Assert.That(dest.Image,  Is.Not.EqualTo(image).And.Not.EqualTo(dummy), "Left");
-            Assert.That(dest.Width,  Is.Not.EqualTo(width), nameof(width));
+            Assert.That(dest.Width,  Is.Not.EqualTo(width),  nameof(width));
             Assert.That(dest.Height, Is.Not.EqualTo(height), nameof(height));
 
             Execute(vm, vm.Ribbon.RotateRight);
             Assert.That(Wait.For(() => count >= 8), "Timeout (Right)");
             Assert.That(dest.Image,  Is.Not.EqualTo(image).And.Not.EqualTo(dummy), "Right");
-            Assert.That(dest.Width,  Is.EqualTo(width), nameof(width));
+            Assert.That(dest.Width,  Is.EqualTo(width),  nameof(width));
             Assert.That(dest.Height, Is.EqualTo(height), nameof(height));
         });
 
