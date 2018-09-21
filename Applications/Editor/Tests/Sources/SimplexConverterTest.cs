@@ -23,6 +23,7 @@ using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using Cube.Xui.Converters;
 using NUnit.Framework;
+using System;
 using System.Globalization;
 using System.Reflection;
 using System.Windows;
@@ -67,8 +68,26 @@ namespace Cube.Pdf.Tests.Editor
             var args = new object[] { fi, modified };
             var type = typeof(string);
             var ci   = CultureInfo.CurrentCulture;
-            return new TitleConverter().Convert(args, type, null, ci) as string;
+            var dest = new TitleConverter();
+
+            Assert.That(dest.ProvideValue(null), Is.EqualTo(dest));
+            return dest.Convert(args, type, null, ci) as string;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TitleConverter_Throws
+        ///
+        /// <summary>
+        /// Confirms the result when the unsupported method is used.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void TitleConverter_Throws() => Assert.That(
+            () => new TitleConverter().ConvertBack(null, null, null, null),
+            Throws.TypeOf<NotSupportedException>()
+        );
 
         #endregion
 
