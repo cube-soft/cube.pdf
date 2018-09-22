@@ -426,11 +426,6 @@ namespace Cube.Pdf.Tests.Itext
         /// Gets the number of pages.
         /// </summary>
         ///
-        /// <remarks>
-        /// リファクタリング以前からページ回転に関して不都合があった様子。
-        /// ページ回転を要修正。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         private int Count(string src, string password, int degree)
         {
