@@ -142,7 +142,7 @@ namespace Cube.Pdf.App.Converter
                 writer.Set(Value.Metadata);
                 writer.Set(Value.Encryption);
                 Add(writer, Value.Destination, SaveOption.MergeTail);
-                writer.Add(new DocumentReader(src, string.Empty, IO));
+                writer.Add(new DocumentReader(src, string.Empty, false, IO));
                 Add(writer, Value.Destination, SaveOption.MergeHead);
                 writer.Save(tmp);
             }
@@ -187,7 +187,7 @@ namespace Cube.Pdf.App.Converter
                            Value.Encryption.OwnerPassword :
                            string.Empty;
 
-            src.Add(new DocumentReader(path, password, IO));
+            src.Add(new DocumentReader(path, password, true, IO));
         }
 
         #endregion

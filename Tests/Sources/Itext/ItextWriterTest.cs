@@ -62,7 +62,7 @@ namespace Cube.Pdf.Tests.Itext
             var dest = Path(Args(filename));
 
             using (var w = new DocumentWriter(IO))
-            using (var r = new DocumentReader(src, password, IO))
+            using (var r = new DocumentReader(src, password, true, IO))
             {
                 w.UseSmartCopy = true;
                 w.Set(r.Metadata);
@@ -89,7 +89,7 @@ namespace Cube.Pdf.Tests.Itext
             var dest = Path(Args(filename));
             IO.Copy(GetExamplesWith(filename), dest, true);
 
-            var r = new DocumentReader(dest, password, IO);
+            var r = new DocumentReader(dest, password, false, IO);
             using (var w = new DocumentWriter(IO))
             {
                 w.UseSmartCopy = false;
@@ -113,8 +113,8 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("Sample.pdf", "SampleBookmark.pdf", 90, ExpectedResult = 11)]
         public int Merge(string f0, string f1, int degree)
         {
-            var r0   = new DocumentReader(GetExamplesWith(f0), "", IO);
-            var r1   = new DocumentReader(GetExamplesWith(f1), "", IO);
+            var r0   = new DocumentReader(GetExamplesWith(f0), "", false, IO);
+            var r1   = new DocumentReader(GetExamplesWith(f1), "", false, IO);
             var dest = Path(Args(r0.File.NameWithoutExtension, r1.File.NameWithoutExtension));
 
             using (var w = new DocumentWriter(IO))
@@ -138,11 +138,11 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleBookmark.pdf", "SampleImage01.png", 90, ExpectedResult = 10)]
         public int Merge_Image(string doc, string image, int degree)
         {
-            var r0   = new DocumentReader(GetExamplesWith(doc), "", IO);
+            var r0   = new DocumentReader(GetExamplesWith(doc), "", false, IO);
             var dest = Path(Args(r0.File.NameWithoutExtension, IO.Get(image).NameWithoutExtension));
 
             using (var w = new DocumentWriter(IO))
-            using (var r = new DocumentReader(GetExamplesWith(doc), "", IO))
+            using (var r = new DocumentReader(GetExamplesWith(doc), "", false, IO))
             {
                 w.Add(Rotate(r0.Pages, degree), r0);
                 w.Add(Rotate(IO.GetImagePages(GetExamplesWith(image)), degree));
@@ -174,7 +174,7 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var w = new DocumentSplitter(IO))
             {
-                w.Add(new DocumentReader(src, password, IO));
+                w.Add(new DocumentReader(src, password, false, IO));
                 w.Save(dest);
 
                 var n   = w.Results.Count;
@@ -204,7 +204,7 @@ namespace Cube.Pdf.Tests.Itext
         public int Attach(string doc, string file)
         {
             var src  = GetExamplesWith(doc);
-            var r0   = new DocumentReader(src, "", IO);
+            var r0   = new DocumentReader(src, "", false, IO);
             var r1   = IO.Get(GetExamplesWith(file));
             var dest = Path(Args(r0.File.NameWithoutExtension, r1.NameWithoutExtension));
 
@@ -216,7 +216,7 @@ namespace Cube.Pdf.Tests.Itext
                 w.Save(dest);
             }
 
-            using (var r = new DocumentReader(dest, "", IO))
+            using (var r = new DocumentReader(dest, "", false, IO))
             {
                 var items  = r.Attachments;
                 var option = StringComparison.InvariantCultureIgnoreCase;
@@ -255,11 +255,11 @@ namespace Cube.Pdf.Tests.Itext
             using (var w = new DocumentWriter(IO))
             {
                 w.Set(cmp);
-                w.Add(new DocumentReader(src, "", IO));
+                w.Add(new DocumentReader(src, "", false, IO));
                 w.Save(dest);
             }
 
-            using (var r = new DocumentReader(dest, "", IO))
+            using (var r = new DocumentReader(dest, "", false, IO))
             {
                 var m = r.Metadata;
                 Assert.That(m.Title,         Is.EqualTo(cmp.Title), nameof(m.Title));
@@ -301,7 +301,7 @@ namespace Cube.Pdf.Tests.Itext
             using (var w = new DocumentWriter(IO))
             {
                 w.Set(cmp);
-                w.Add(new DocumentReader(src, "", IO));
+                w.Add(new DocumentReader(src, "", false, IO));
                 w.Save(dest);
             }
 
@@ -319,6 +319,44 @@ namespace Cube.Pdf.Tests.Itext
                 Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
                 Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
                 Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate_Failed
+        ///
+        /// <summary>
+        /// Confirms that the rotation settings is not applied.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Partial モードが有効な DocumentReader オブジェクトを指定した
+        /// 場合、回転情報の変更は適用されません。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Rotate_Failed()
+        {
+            var src    = GetExamplesWith("Sample.pdf");
+            var dest   = Path(Args("Sample"));
+            var degree = 90;
+
+            using (var w = new DocumentWriter(IO))
+            {
+                var r = new DocumentReader(src, "", true, IO);
+
+                w.UseSmartCopy = true;
+                w.Set(r.Metadata);
+                w.Set(r.Encryption);
+                w.Add(Rotate(r.Pages, degree), r);
+                w.Save(dest);
+            }
+
+            using (var r = new DocumentReader(dest))
+            {
+                foreach (var page in r.Pages) Assert.That(page.Rotation, Is.Not.EqualTo(degree));
             }
         }
 
@@ -396,14 +434,14 @@ namespace Cube.Pdf.Tests.Itext
         /* ----------------------------------------------------------------- */
         private int Count(string src, string password, int degree)
         {
-            using (var reader = new DocumentReader(src, password, IO))
+            using (var reader = new DocumentReader(src, password, true, IO))
             {
                 Assert.That(reader.File.Count, Is.EqualTo(reader.Pages.Count()));
-                //Assert.That(
-                //    reader.Pages.Select(e => e.Rotation.Degree),
-                //    Is.EquivalentTo(Enumerable.Repeat(degree, reader.File.Count)),
-                //    nameof(Page.Rotation)
-                //);
+                Assert.That(
+                    reader.Pages.Select(e => e.Rotation.Degree),
+                    Is.EquivalentTo(Enumerable.Repeat(degree, reader.File.Count)),
+                    nameof(Page.Rotation)
+                );
                 return reader.File.Count;
             }
         }

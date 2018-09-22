@@ -231,7 +231,7 @@ namespace Cube.Pdf.App.Editor
         {
             var file = IO.Get(dest);
             Bindable.SetMessage(Properties.Resources.MessageSaving, file.FullName);
-            this.Save(file, IO, () => _core.Clear());
+            this.Save(file, () => _core.Clear());
             if (reopen) this.Restruct(_core.GetOrAdd(dest, Bindable.Encryption.Value.OwnerPassword));
         });
 

@@ -119,7 +119,7 @@ namespace Cube.Pdf.Tests.Itext
         ///
         /* ----------------------------------------------------------------- */
         private DocumentReader Create(string filename, string password) =>
-            new DocumentReader(GetExamplesWith(filename), password, IO);
+            new DocumentReader(GetExamplesWith(filename), password, true, IO);
 
         #endregion
     }

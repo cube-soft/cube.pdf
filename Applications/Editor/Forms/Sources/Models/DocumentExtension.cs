@@ -296,7 +296,7 @@ namespace Cube.Pdf.App.Editor
                 var data = src.Bindable;
                 data.SetMessage(Properties.Resources.MessageLoadingMetadata);
 
-                using (var r = GetReader(data.Source.Value))
+                using (var r = GetReader(data.Source.Value, src.Settings.IO))
                 {
                     if (data.Metadata.Value   == null) data.Metadata.Value   = r.Metadata;
                     if (data.Encryption.Value == null) data.Encryption.Value = r.Encryption;
@@ -335,18 +335,18 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="src">Facade object.</param>
         /// <param name="dest">Saving file information.</param>
-        /// <param name="io">I/O handler</param>
         /// <param name="close">Close action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Save(this MainFacade src, Information dest, IO io, Action close)
+        public static void Save(this MainFacade src, Information dest, Action close)
         {
+            var io  = src.Settings.IO;
             var tmp = io.Combine(dest.DirectoryName, Guid.NewGuid().ToString("D"));
 
             try
             {
                 var data   = src.Bindable;
-                var reader = GetReader(data.Source.Value);
+                var reader = GetReader(data.Source.Value, io);
 
                 if (data.Metadata.Value   == null) data.Metadata.Value   = reader.Metadata;
                 if (data.Encryption.Value == null) data.Encryption.Value = reader.Encryption;
@@ -463,13 +463,14 @@ namespace Cube.Pdf.App.Editor
         /// Gets the DocumentReader of the specified file.
         /// </summary>
         ///
-        /// <param name="src">File information.</param>
-        ///
-        /// <returns>DocumentReader object.</returns>
+        /// <remarks>
+        /// Partial モードは必ず無効にする必要があります。有効にした場合、
+        /// ページ回転情報が正常に適用されない可能性があります。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private static DocumentReader GetReader(Information src) =>
-            new DocumentReader(src.FullName, src is PdfFile f ? f.Password : "");
+        private static DocumentReader GetReader(Information src, IO io) =>
+            new DocumentReader(src.FullName, src is PdfFile f ? f.Password : "", false, io);
 
         #endregion
     }

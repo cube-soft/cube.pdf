@@ -131,7 +131,7 @@ namespace Cube.Pdf.App.Clip
             }
 
             Close();
-            Source = new Cube.Pdf.Itext.DocumentReader(src, "", IO);
+            Source = new Cube.Pdf.Itext.DocumentReader(src, "", true, IO);
             Reset();
         }
 

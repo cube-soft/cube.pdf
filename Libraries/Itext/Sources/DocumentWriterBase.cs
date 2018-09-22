@@ -468,7 +468,7 @@ namespace Cube.Pdf.Itext
         private PdfReader GetRawReader(Page src, PdfFile file)
         {
             var path = src.File.FullName;
-            if (!IsBound(path)) Bind(new DocumentReader(path, file.Password, IO));
+            if (!IsBound(path)) Bind(new DocumentReader(path, file.Password, false, IO));
 
             return _bounds[path] is DocumentReader dest ?
                    dest.RawObject.TryCast<PdfReader>() :

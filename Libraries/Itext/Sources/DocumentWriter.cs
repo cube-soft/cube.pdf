@@ -31,6 +31,15 @@ namespace Cube.Pdf.Itext
     /// PDF ファイルを生成するためのクラスです。
     /// </summary>
     ///
+    /// <remarks>
+    /// DocumentWriter はページ回転情報 (Page.Rotation.Delta) を
+    /// DocumentReader の内部オブジェクトを変更する事によって実現します。
+    /// しかし、DocumentReader を Partial モードで生成している場合、この
+    /// 変更が無効化されるためページ回転の変更結果を反映する事ができません。
+    /// ページを回転させた場合は、Partial モードを無効化した DocumentReader
+    /// オブジェクトを指定するようにして下さい。
+    /// </remarks>
+    ///
     /* --------------------------------------------------------------------- */
     public class DocumentWriter : DocumentWriterBase
     {

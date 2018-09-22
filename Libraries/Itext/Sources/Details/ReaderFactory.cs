@@ -46,12 +46,12 @@ namespace Cube.Pdf.Itext
         /// Create
         ///
         /// <summary>
-        /// PdfReader オブジェクトを生成します。
+        /// Creates a new instance of the PdfReader class.
         /// </summary>
         ///
-        /// <param name="src">PDF ファイルのパス</param>
+        /// <param name="src">PDF document path.</param>
         ///
-        /// <returns>PdfReader オブジェクト</returns>
+        /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static PdfReader Create(string src) => new PdfReader(src);
@@ -61,17 +61,18 @@ namespace Cube.Pdf.Itext
         /// Create
         ///
         /// <summary>
-        /// PdfReader オブジェクトを生成します。
+        /// Creates a new instance of the PdfReader class.
         /// </summary>
         ///
-        /// <param name="src">PDF ファイルのパス</param>
-        /// <param name="query">パスワード用オブジェクト</param>
-        /// <param name="password">入力されたパスワード</param>
+        /// <param name="src">PDF document path.</param>
+        /// <param name="query">Password query.</param>
+        /// <param name="partial">true for partial mode.</param>
+        /// <param name="password">Password input by user.</param>
         ///
-        /// <returns>PdfReader オブジェクト</returns>
+        /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader Create(string src, IQuery<string> query, out string password)
+        public static PdfReader Create(string src, IQuery<string> query, bool partial, out string password)
         {
             password = string.Empty;
 
@@ -80,7 +81,7 @@ namespace Cube.Pdf.Itext
                 try
                 {
                     var bytes = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
-                    return new PdfReader(src, bytes, true);
+                    return new PdfReader(src, bytes, partial);
                 }
                 catch (BadPasswordException)
                 {
@@ -126,8 +127,8 @@ namespace Cube.Pdf.Itext
                     image.SelectActiveFrame(dim, i);
 
                     var scale = PdfFile.Point / image.HorizontalResolution;
-                    var w = (float)(image.Width * scale);
-                    var h = (float)(image.Height * scale);
+                    var w = image.Width  * scale;
+                    var h = image.Height * scale;
 
                     doc.SetPageSize(new iTextSharp.text.Rectangle(w, h));
                     doc.NewPage();
