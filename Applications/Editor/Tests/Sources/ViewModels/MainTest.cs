@@ -106,7 +106,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         [Test]
         public void Close() => Create(vm =>
         {
-            Source = GetResultsWith($"{nameof(Close)}Sample.pdf");
+            Source = Path(Args("Sample"));
             IO.Copy(GetExamplesWith("Sample.pdf"), Source, true);
             Execute(vm, vm.Ribbon.Open);
             Assert.That(Wait.For(() => vm.Data.Images.Count == 2), nameof(vm.Ribbon.Open));

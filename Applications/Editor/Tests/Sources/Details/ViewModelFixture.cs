@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Tests.Editor
@@ -312,6 +313,24 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Select
+        ///
+        /// <summary>
+        /// Selects a button.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private MessageBoxResult Select(MessageBoxButton src) =>
+            new Dictionary<MessageBoxButton, MessageBoxResult>
+        {
+                { MessageBoxButton.OK,          MessageBoxResult.OK  },
+                { MessageBoxButton.OKCancel,    MessageBoxResult.OK  },
+                { MessageBoxButton.YesNo,       MessageBoxResult.Yes },
+                { MessageBoxButton.YesNoCancel, MessageBoxResult.Yes },
+        }.TryGetValue(src, out var dest) ? dest : MessageBoxResult.OK;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Register
         ///
         /// <summary>
@@ -321,6 +340,13 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         private IEnumerable<IDisposable> Register(IMessengerViewModel src)
         {
+            void dialog(DialogMessage e)
+            {
+                Assert.That(e.Image, Is.Not.EqualTo(MessageBoxImage.Error), e.Content);
+                e.Result = Select(e.Button);
+                e.Callback?.Invoke(e);
+            }
+
             void open(OpenFileMessage e)
             {
                 e.FileName = Source;
@@ -345,6 +371,7 @@ namespace Cube.Pdf.Tests.Editor
 
             return new List<IDisposable>
             {
+                src.Register<DialogMessage>(this, dialog),
                 src.Register<OpenFileMessage>(this, open),
                 src.Register<SaveFileMessage>(this, save),
                 src.Register<PasswordViewModel>(this, pass),
