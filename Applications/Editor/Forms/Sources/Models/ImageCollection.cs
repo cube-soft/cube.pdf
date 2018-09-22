@@ -57,15 +57,20 @@ namespace Cube.Pdf.App.Editor
         /// <param name="getter">
         /// Function for getting IDocumentRenderer objects.
         /// </param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageCollection(Func<string, IDocumentRenderer> getter)
+        public ImageCollection(Func<string, IDocumentRenderer> getter, SynchronizationContext context)
         {
             ImageSource create(ImageEntry e) => _engine(e.RawObject.File.FullName).Create(e);
 
             _dispose = new OnceAction<bool>(Dispose);
+            _context = context;
             _engine  = getter;
             _cache   = new CacheCollection<ImageEntry, ImageSource>(create);
+
+            Selection   = new ImageSelection { Context = context };
+            Preferences = new ImagePreferences { Context = context };
 
             _cache.Created += (s, e) => e.Key.Refresh();
             _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
@@ -108,7 +113,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSelection Selection { get; } = new ImageSelection();
+        public ImageSelection Selection { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -119,18 +124,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImagePreferences Preferences { get; } = new ImagePreferences();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Context
-        ///
-        /// <summary>
-        /// Gets or sets the synchronization context.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SynchronizationContext Context { get; set; }
+        public ImagePreferences Preferences { get; }
 
         #endregion
 
@@ -162,7 +156,7 @@ namespace Cube.Pdf.App.Editor
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (CollectionChanged == null) return;
-            if (Context != null) Context.Send(_ => CollectionChanged(this, e), null);
+            if (_context != null) _context.Send(_ => CollectionChanged(this, e), null);
             else CollectionChanged(this, e);
         }
 
@@ -564,6 +558,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly OnceAction<bool> _dispose;
+        private readonly SynchronizationContext _context;
         private readonly Func<string, IDocumentRenderer> _engine;
         private readonly CacheCollection<ImageEntry, ImageSource> _cache;
         private readonly ObservableCollection<ImageEntry> _inner = new ObservableCollection<ImageEntry>();
