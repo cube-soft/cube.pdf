@@ -98,7 +98,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password, IO io) :
-            this(src, password, false, io) { }
+            this(src, new OnceQuery<string>(password), io) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -113,48 +113,10 @@ namespace Cube.Pdf.Itext
         /// <param name="io">I/O オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query, IO io) :
-            this(src, query, false, io) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentReader
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /// <param name="src">PDF ファイルのパス</param>
-        /// <param name="password">パスワード</param>
-        /// <param name="denyUserPassword">
-        /// ユーザパスワードの入力を拒否するかどうか
-        /// </param>
-        /// <param name="io">I/O オブジェクト</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, string password, bool denyUserPassword, IO io) :
-            this(src, new OnceQuery<string>(password), denyUserPassword, io) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentReader
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /// <param name="src">PDF ファイルのパス</param>
-        /// <param name="query">パスワード用オブジェクト</param>
-        /// <param name="denyUserPassword">
-        /// ユーザパスワードの入力を拒否するかどうか
-        /// </param>
-        /// <param name="io">I/O オブジェクト</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query, bool denyUserPassword, IO io) : base(io)
+        public DocumentReader(string src, IQuery<string> query, IO io) : base(io)
         {
             Debug.Assert(io != null);
-            _core = ReaderFactory.Create(src, query, denyUserPassword, out string password);
+            _core = ReaderFactory.Create(src, query, out string password);
             Debug.Assert(_core != null);
 
             var f = new PdfFile(src, password, io.GetRefreshable())

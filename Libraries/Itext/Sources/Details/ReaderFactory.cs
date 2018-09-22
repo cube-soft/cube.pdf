@@ -66,22 +66,22 @@ namespace Cube.Pdf.Itext
         ///
         /// <param name="src">PDF ファイルのパス</param>
         /// <param name="query">パスワード用オブジェクト</param>
-        /// <param name="denyUserPassword">
-        /// ユーザパスワードの入力を拒否するかどうか
-        /// </param>
         /// <param name="password">入力されたパスワード</param>
         ///
         /// <returns>PdfReader オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader Create(string src, IQuery<string> query,
-            bool denyUserPassword, out string password)
+        public static PdfReader Create(string src, IQuery<string> query, out string password)
         {
             password = string.Empty;
 
             while (true)
             {
-                try { return CreateCore(src, password, denyUserPassword); }
+                try
+                {
+                    var bytes = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
+                    return new PdfReader(src, bytes, true);
+                }
                 catch (BadPasswordException)
                 {
                     var e = query.RequestPassword(src);
@@ -139,34 +139,6 @@ namespace Cube.Pdf.Itext
 
                 return new PdfReader(ms.ToArray());
             }
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateCore
-        ///
-        /// <summary>
-        /// PdfReader オブジェクトを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static PdfReader CreateCore(string src, string password, bool denyUserPassword)
-        {
-            var bytes = !string.IsNullOrEmpty(password) ? Encoding.UTF8.GetBytes(password) : null;
-            var dest  = new PdfReader(src, bytes, true);
-            var deny  = denyUserPassword && !dest.IsOpenedWithFullPermissions;
-
-            if (deny)
-            {
-                dest.Dispose();
-                var msg = Properties.Resources.ErrorDenyUserPassword;
-                throw new BadPasswordException(msg);
-            }
-            return dest;
         }
 
         #endregion
