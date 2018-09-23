@@ -46,19 +46,31 @@ namespace Cube.Pdf.App.Editor
         /// MainViewModel
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel() : base(new Messenger())
-        {
-            var io       = new IO();
-            var settings = new SettingsFolder(Assembly.GetExecutingAssembly(), io);
-            var recent   = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
-            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", io);
-            var password = new Query<string>(e => Send(new PasswordViewModel(e, io, Context)));
+        public MainViewModel() : this (
+            new SettingsFolder(Assembly.GetExecutingAssembly(), new IO()) { AutoSave = true }
+        ) { }
 
-            Model  = new MainFacade(settings, password, Context);
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MainViewModel
+        ///
+        /// <summary>
+        /// Initializes a new instance of the MainViewModel class
+        /// with the specified settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainViewModel(SettingsFolder src) : base(new Messenger())
+        {
+            var recent   = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
+            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO);
+            var password = new Query<string>(e => Send(new PasswordViewModel(e, src.IO, Context)));
+
+            Model  = new MainFacade(src, password, Context);
             Ribbon = new RibbonViewModel(Model.Bindable, MessengerInstance);
             Recent = new RecentViewModel(mon, MessengerInstance);
 

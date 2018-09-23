@@ -62,7 +62,6 @@ namespace Cube.Pdf.App.Editor
 
             Settings = settings;
             Settings.Load();
-            Settings.AutoSave = true;
             Settings.PropertyChanged += SettingsChanged;
 
             var sizes = Bindable.Images.Preferences.ItemSizeOptions;

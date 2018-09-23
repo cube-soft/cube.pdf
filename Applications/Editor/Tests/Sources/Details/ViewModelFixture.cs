@@ -25,6 +25,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -303,7 +304,8 @@ namespace Cube.Pdf.Tests.Editor
         private MainViewModel Create()
         {
             var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
-            var dest  = new MainViewModel();
+            var src   = new SettingsFolder(Assembly.GetExecutingAssembly(), IO) { AutoSave = false };
+            var dest  = new MainViewModel(src);
 
             dest.Data.Preferences.Dummy = dummy;
             dest.Data.Preferences.VisibleFirst = 0;
