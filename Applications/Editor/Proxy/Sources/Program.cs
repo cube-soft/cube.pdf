@@ -17,6 +17,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Editor
@@ -32,6 +37,8 @@ namespace Cube.Pdf.App.Editor
     /* --------------------------------------------------------------------- */
     static class Program
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// Main
@@ -42,11 +49,67 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            var mutex = new Mutex(true, Properties.Resources.SplashProgram, out var created);
+            if (!created) return;
+
+            try
+            {
+                if (IsSkip()) { Start(args); return; }
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+
+                var view = new MainForm();
+                view.Shown += (_, __) =>
+                {
+                    try { Start(args); }
+                    catch (Exception err) { view.Error(err); }
+                };
+
+                Application.Run(view);
+            }
+            catch (Exception err) { Trace.WriteLine(err.ToString()); }
+            finally { mutex.ReleaseMutex(); }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Start
+        ///
+        /// <summary>
+        /// Starts the main process.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static void Start(string[] args)
+        {
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Process.Start(new ProcessStartInfo
+            {
+                FileName  = Path.Combine(dir, $"{Properties.Resources.MainProgram}.exe"),
+                Arguments = string.Join(" ", args.Select(s => $"\"{s}\"")),
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsSkip
+        ///
+        /// <summary>
+        /// Gets a value indicating whether to skip displaying the splash
+        /// window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static bool IsSkip()
+        {
+            var p = Process.GetProcessesByName(Properties.Resources.MainProgram);
+            var n = p?.Length ?? 0;
+            return n > 0;
+        }
+
+        #endregion
     }
 }

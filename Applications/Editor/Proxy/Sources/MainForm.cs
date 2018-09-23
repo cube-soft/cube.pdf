@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.App.Editor
@@ -45,6 +47,17 @@ namespace Cube.Pdf.App.Editor
         public MainForm()
         {
             InitializeComponent();
+
+            var count = 0;
+
+            VersionLabel.Text = GetVersion();
+            RefreshTimer.Tick += (_, __) =>
+            {
+                if (count++ >= 60) Close();
+                else MessageLabel.Text += ".";
+            };
+
+            RefreshTimer.Start();
         }
 
         #endregion
@@ -56,7 +69,7 @@ namespace Cube.Pdf.App.Editor
         /// CreateParams
         ///
         /// <summary>
-        /// Get the value of initialzing information.
+        /// Gets the value of initialzing information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -68,6 +81,47 @@ namespace Cube.Pdf.App.Editor
                 cp.ClassStyle |= 0x00020000;
                 return cp;
             }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Error
+        ///
+        /// <summary>
+        /// Shows the error message and close the window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Error(Exception src)
+        {
+            MessageBox.Show($"{src.Message} ({src.GetType().Name})",
+                "CubePDF Utility", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Close();
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetVersion
+        ///
+        /// <summary>
+        /// Get the version string.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetVersion()
+        {
+            var app  = Assembly.GetExecutingAssembly().GetName().Version;
+            var fw   = Environment.Version;
+            var arch = (IntPtr.Size == 4) ? "x86" : "x64";
+            return $"Version {app} ({arch}) Microsoft {fw}";
         }
 
         #endregion

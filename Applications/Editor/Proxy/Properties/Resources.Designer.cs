@@ -69,5 +69,23 @@ namespace Cube.Pdf.App.Editor.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   CubePdfUtility に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MainProgram {
+            get {
+                return ResourceManager.GetString("MainProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   CubePdfUtilitySplash に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SplashProgram {
+            get {
+                return ResourceManager.GetString("SplashProgram", resourceCulture);
+            }
+        }
     }
 }
