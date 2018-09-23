@@ -149,7 +149,7 @@
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sources\Interactions\DropBehavior.cs" />
+    <Compile Include="Sources\Interactions\DragFileBehavior.cs" />
     <Compile Include="Sources\ViewModels\EncryptionViewModel.cs" />
     <Compile Include="Sources\ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\EncryptionWindow.xaml.cs">

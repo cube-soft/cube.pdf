@@ -102,7 +102,7 @@
         <my:MetadataWindowBehavior />
         <my:EncryptionWindowBehavior />
         <my:SettingsWindowBehavior />
-        <my:DropBehavior Command="{Binding Drop}" />
+        <my:DragFileBehavior Command="{Binding Drop}" />
     </i:Interaction.Behaviors>
 
     <i:Interaction.Triggers>
