@@ -11,9 +11,7 @@ nuget:
 platform: Any CPU
 configuration: Release
 before_build:
-    - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x86.7z
     - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
-    - 7z x -o"..\native\x86" gs-x86.7z
     - 7z x -o"..\native\x64" gs-x64.7z
     - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
     - nuget sources add -name Cube.FileSystem -source https://ci.appveyor.com/nuget/cube.filesystem
@@ -35,15 +33,13 @@ after_build:
     - xcopy /q /Y /I ..\native\x64\lib\*.* Tests\bin\Release\lib
     - xcopy /q /Y /I ..\native\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
     - xcopy /q /Y /I ..\native\x64\lib\*.* Applications\Converter\Tests\bin\Release\lib
-    - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\x64\pdfium.dll Tests\bin\Release
-    - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.v8-xfa.2018.4.8.256\Build\x64\pdfium.dll Applications\Editor\Tests\bin\Release
+    - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.no_v8-no_xfa.2018.4.8.256\Build\x64\pdfium.dll Tests\bin\Release
+    - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.no_v8-no_xfa.2018.4.8.256\Build\x64\pdfium.dll Applications\Editor\Tests\bin\Release
 artifacts:
     - path: CubePdf
     - path: CubePdf.Proxy
     - path: CubePdf.Utility
     - path: CubePdf.Utility.Proxy
-    - path: gs-x86.7z
-    - path: gs-x64.7z
 test_script:
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
