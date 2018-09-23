@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentCollection
+    internal class DocumentCollection
     {
         #region Constructors
 
@@ -54,39 +54,7 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Count
-        ///
-        /// <summary>
-        /// Gets the number of DocumentReader objects contained in this
-        /// class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Count => _core.Count;
-
-        #endregion
-
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Get
-        ///
-        /// <summary>
-        /// Gets the DocumentReader object of the specified file path.
-        /// </summary>
-        ///
-        /// <param name="src">File path.</param>
-        ///
-        /// <returns>DocumentReader object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentReader Get(string src) =>
-            _core.TryGetValue(src, out var dest) ? dest : null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -127,28 +95,6 @@ namespace Cube.Pdf.App.Editor
                 new DocumentReader(e, password) :
                 new DocumentReader(e, _password)
             );
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Remove
-        ///
-        /// <summary>
-        /// Attempts to remove the DocumentReader of the specified file path.
-        /// </summary>
-        ///
-        /// <param name="src">File path.</param>
-        ///
-        /// <returns>
-        /// true if the object was removed successfully; otherwise, false.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool Remove(string src)
-        {
-            var dest = _core.TryRemove(src, out var removed);
-            if (dest) removed.Dispose();
             return dest;
         }
 
