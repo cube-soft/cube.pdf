@@ -212,6 +212,38 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(dest.Height, Is.EqualTo(height), nameof(height));
         });
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Undo
+        ///
+        /// <summary>
+        /// Executes the test to undo the last action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Undo() => Create("SampleRotation.pdf", "", 9, vm =>
+        {
+            Execute(vm, vm.Ribbon.Select);
+            Execute(vm, vm.Ribbon.Remove);
+
+            Assert.That(vm.Data.Images.Count, Is.EqualTo(0));
+            Assert.That(vm.Data.History.Undoable, Is.True);
+            Assert.That(vm.Data.History.Redoable, Is.False);
+
+            Execute(vm, vm.Ribbon.Undo);
+
+            Assert.That(vm.Data.Images.Count, Is.EqualTo(9));
+            Assert.That(vm.Data.History.Undoable, Is.False);
+            Assert.That(vm.Data.History.Redoable, Is.True);
+
+            Execute(vm, vm.Ribbon.Redo);
+
+            Assert.That(vm.Data.Images.Count, Is.EqualTo(0));
+            Assert.That(vm.Data.History.Undoable, Is.True);
+            Assert.That(vm.Data.History.Redoable, Is.False);
+        });
+
         #endregion
     }
 }
