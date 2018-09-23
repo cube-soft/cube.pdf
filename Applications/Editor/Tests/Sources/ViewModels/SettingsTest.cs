@@ -20,6 +20,7 @@ using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,7 +63,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                 Assert.That(e.Windows.Text,      Does.StartWith("Microsoft Windows"));
                 Assert.That(e.Framework.Text,    Does.StartWith("Microsoft .NET Framework"));
                 Assert.That(e.Link.Text,         Is.EqualTo("Copyright © 2010 CubeSoft, Inc."));
-                Assert.That(e.Link.Value,        Is.EqualTo("https://www.cube-soft.jp/cubepdfutility/"));
+                Assert.That(e.Link.Value,        Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdfutility/")));
                 Assert.That(e.Update.Text,       Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Update.Value,      Is.True);
                 Assert.That(e.Language.Text,     Is.Not.Null.And.Not.Empty);
