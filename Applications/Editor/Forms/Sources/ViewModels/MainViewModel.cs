@@ -177,7 +177,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.Close.Command         = Close();
             Ribbon.Save.Command          = IsOpen(() => Post(() => Model.Overwrite()));
             Ribbon.SaveAs.Command        = IsOpen(() => PostSave(e => Model.Save(e)));
-            Ribbon.Preview.Command       = IsItem(() => SendPreview());
+            Ribbon.Preview.Command       = IsItem(() => PostPreview());
             Ribbon.Select.Command        = IsOpen(() => Send(() => Model.Select()));
             Ribbon.SelectAll.Command     = IsOpen(() => Send(() => Model.Select(true)));
             Ribbon.SelectFlip.Command    = IsOpen(() => Send(() => Model.Flip()));
@@ -185,10 +185,10 @@ namespace Cube.Pdf.App.Editor
             Ribbon.Insert.Command        = IsItem(() => PostOpen(e => Model.Insert(e)));
             Ribbon.InsertFront.Command   = IsOpen(() => PostOpen(e => Model.Insert(0, e)));
             Ribbon.InsertBack.Command    = IsOpen(() => PostOpen(e => Model.Insert(int.MaxValue, e)));
-            Ribbon.InsertOthers.Command  = IsOpen(() => SendInsert());
+            Ribbon.InsertOthers.Command  = IsOpen(() => PostInsert());
             Ribbon.Extract.Command       = IsItem(() => PostSave(e => Model.Extract(e)));
             Ribbon.Remove.Command        = IsItem(() => Send(() => Model.Remove()));
-            Ribbon.RemoveOthers.Command  = IsOpen(() => SendRemove());
+            Ribbon.RemoveOthers.Command  = IsOpen(() => PostRemove());
             Ribbon.MovePrevious.Command  = IsItem(() => Send(() => Model.Move(-1)));
             Ribbon.MoveNext.Command      = IsItem(() => Send(() => Model.Move(1)));
             Ribbon.RotateLeft.Command    = IsItem(() => Send(() => Model.Rotate(-90)));
@@ -200,7 +200,7 @@ namespace Cube.Pdf.App.Editor
             Ribbon.Redo.Command          = IsRedo();
             Ribbon.ZoomIn.Command        = Any(() => Send(() => Model.Zoom(1)));
             Ribbon.ZoomOut.Command       = Any(() => Send(() => Model.Zoom(-1)));
-            Ribbon.Settings.Command      = Any(() => SendSettings());
+            Ribbon.Settings.Command      = Any(() => PostSettings());
             Ribbon.Exit.Command          = Any(() => Send<CloseMessage>());
         }
 
@@ -385,35 +385,35 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SendPreview
+        /// PostPreview
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the PreviewWindow
+        /// Posts the message to show a dialog of the PreviewWindow
         /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendPreview() => Send(new PreviewViewModel(
+        private void PostPreview() => Post(new PreviewViewModel(
             Data.Images, Data.Source.Value, Context
         ));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SendInsert
+        /// PostInsert
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the InsertWindow
+        /// Posts the message to show a dialog of the InsertWindow
         /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendInsert() => Send(new InsertViewModel(
+        private void PostInsert() => Post(new InsertViewModel(
             Data.Count.Value, Context
         ));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SendRemove
+        /// PostRemove
         ///
         /// <summary>
         /// Sends the message to show a dialog of the RemoveWindow
@@ -421,7 +421,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendRemove() => Send(new RemoveViewModel(
+        private void PostRemove() => Post(new RemoveViewModel(
             e => Model.Remove(e), Data.Count.Value, Context
         ));
 
@@ -459,15 +459,15 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SendSettings
+        /// PostSettings
         ///
         /// <summary>
-        /// Sends the message to show a dialog of the SettingsWindow
+        /// Posts the message to show a dialog of the SettingsWindow
         /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendSettings() => Send(new SettingsViewModel(Model.Settings, Context));
+        private void PostSettings() => Post(new SettingsViewModel(Model.Settings, Context));
 
         #endregion
 
