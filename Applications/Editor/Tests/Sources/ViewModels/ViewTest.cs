@@ -109,6 +109,47 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(dest.Count, Is.EqualTo(0));
         });
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Zoom
+        ///
+        /// <summary>
+        /// Executes the test to change the item size.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Zoom() => Create("Sample.pdf", "", 2, vm =>
+        {
+            var ip = vm.Data.Images.Preferences;
+            Assert.That(ip.ItemSizeOptions.Count, Is.EqualTo(9));
+            Assert.That(ip.ItemSizeIndex,         Is.EqualTo(3));
+            Assert.That(ip.ItemSize,              Is.EqualTo(250));
+
+            vm.Data.ItemSize.Value = 325;
+            Wait.For(() => !vm.Data.Busy.Value);
+
+            Assert.That(ip.ItemSizeIndex, Is.EqualTo(4));
+            Assert.That(ip.ItemSize,      Is.EqualTo(300));
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FrameOnly
+        ///
+        /// <summary>
+        /// Executes the test to change the FrameOnly setting.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void FrameOnly() => Create("Sample.pdf", "", 2, vm =>
+        {
+            Assert.That(vm.Ribbon.FrameOnly.Value, Is.False);
+            vm.Ribbon.FrameOnly.Value = true;
+            foreach (var item in vm.Data.Images) Assert.That(item.Image, Is.Null);
+        });
+
         #endregion
     }
 }
