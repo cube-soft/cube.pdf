@@ -43,8 +43,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Open
         ///
         /// <summary>
-        /// Tests to open a PDF document and create images as an
-        /// asynchronous operation.
+        /// Executes the test to open a PDF document and create images
+        /// as an asynchronous operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -75,7 +75,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Save
         ///
         /// <summary>
-        /// Tests to save a PDF document.
+        /// Executes the test to save the PDF document as a new file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Close
         ///
         /// <summary>
-        /// Tests to close a PDF document.
+        /// Executes the test to close the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -127,10 +127,36 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Extract
+        ///
+        /// <summary>
+        /// Executes the test to extract selected items as a new PDF
+        /// document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Extract() => Create("Sample.pdf", "", 2, vm =>
+        {
+            Destination = Path(Args("Sample"));
+            Assert.That(IO.Exists(Destination), Is.False);
+
+            Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.False);
+            vm.Data.Images.First().IsSelected = true;
+            Wait.For(() => !vm.Data.Busy.Value);
+            Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.True);
+
+            Execute(vm, vm.Ribbon.Extract);
+            Assert.That(Wait.For(() => IO.Exists(Destination)));
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Insert
         ///
         /// <summary>
-        /// Tests to insert a new PDF behind the selected index.
+        /// Executes the test to insert a new PDF document behind the
+        /// selected index.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -151,7 +177,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Rotate
         ///
         /// <summary>
-        /// Tests to rotate the selected item.
+        /// Executes the test to rotate selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
