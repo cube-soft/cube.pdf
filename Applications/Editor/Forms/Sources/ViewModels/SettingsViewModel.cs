@@ -60,9 +60,10 @@ namespace Cube.Pdf.App.Editor
             Language = this.Create(() => src.Value.Language,    e  => src.Value.Language    = e, () => Properties.Resources.MenuLanguage);
             Update   = this.Create(() => src.Value.CheckUpdate, e  => src.Value.CheckUpdate = e, () => Properties.Resources.MenuUpdate  );
             Version  = this.Create(() => $"{src.Title} {src.Version.ToString(true)}", () => Properties.Resources.MenuVersion);
-            Link     = this.Create(() => src.Value.Uri.ToString(), () => asm.Copyright);
+            Link     = this.Create(() => src.Value.Uri, () => asm.Copyright);
 
-            OK.Command = new RelayCommand(() =>
+            Link.Command = new RelayCommand(() => Post(Link.Value));
+            OK.Command   = new RelayCommand(() =>
             {
                 Send<UpdateSourcesMessage>();
                 Send<CloseMessage>();
@@ -93,7 +94,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Link { get; }
+        public BindableElement<Uri> Link { get; }
 
         /* ----------------------------------------------------------------- */
         ///

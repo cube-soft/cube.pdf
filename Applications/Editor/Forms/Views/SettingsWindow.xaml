@@ -23,6 +23,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui"
     xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -49,6 +50,7 @@
       Interaction
     *********************************************************************** -->
     <i:Interaction.Behaviors>
+        <xb:UriBehavior />
         <xb:CloseBehavior />
         <xb:UpdateSourceBehavior />
     </i:Interaction.Behaviors>
@@ -101,7 +103,7 @@
             </StackPanel>
 
             <TextBlock Grid.Column="1" Grid.Row="2">
-                <Hyperlink NavigateUri="{Binding Link.Value}">
+                <Hyperlink Command="{Binding Link.Command}">
                     <TextBlock Text="{Binding Link.Text}" />
                 </Hyperlink>
             </TextBlock>
