@@ -29,7 +29,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
     /// MainTest
     ///
     /// <summary>
-    /// Tests for the MainViewModel class.
+    /// Tests for editing operations of the MainViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -123,41 +123,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Execute(vm, vm.Ribbon.Close);
             Assert.That(Wait.For(() => !vm.Data.IsOpen()), $"Timeout (Close)");
             Assert.That(IO.TryDelete(Source), Is.True);
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Select
-        ///
-        /// <summary>
-        /// Tests to select items.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Select() => Create("SampleRotation.pdf", "", 9, vm =>
-        {
-            var dest = vm.Data.Selection;
-            Assert.That(dest.Count,   Is.EqualTo(0));
-            Assert.That(dest.Items,   Is.Not.Null);
-            Assert.That(dest.Indices, Is.Not.Null);
-            Assert.That(dest.Last,    Is.EqualTo(-1));
-
-            vm.Data.Images.First().IsSelected = true;
-            Assert.That(Wait.For(() => !vm.Data.Busy.Value));
-            Assert.That(dest.Count, Is.EqualTo(1), nameof(dest.Count));
-            Assert.That(dest.Last,  Is.EqualTo(0), nameof(dest.Last));
-
-            Execute(vm, vm.Ribbon.SelectFlip);
-            Assert.That(dest.Count, Is.EqualTo(8), nameof(dest.Count));
-            Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
-
-            Execute(vm, vm.Ribbon.Select); // SelectAll
-            Assert.That(dest.Count, Is.EqualTo(9), nameof(dest.Count));
-            Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
-
-            Execute(vm, vm.Ribbon.Select); // SelectClear
-            Assert.That(dest.Count, Is.EqualTo(0));
         });
 
         /* ----------------------------------------------------------------- */

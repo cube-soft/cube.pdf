@@ -120,6 +120,7 @@
     <Compile Include="Sources\RangeTest.cs" />
     <Compile Include="Sources\RibbonElementTest.cs" />
     <Compile Include="Sources\SimplexConverterTest.cs" />
+    <Compile Include="Sources\ViewModels\ViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
