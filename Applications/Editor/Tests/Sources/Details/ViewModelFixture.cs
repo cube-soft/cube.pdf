@@ -24,6 +24,7 @@ using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -320,14 +321,20 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private MessageBoxResult Select(MessageBoxButton src) =>
-            new Dictionary<MessageBoxButton, MessageBoxResult>
+        private MessageBoxResult Select(MessageBoxButton src)
         {
+            var dic = new Dictionary<MessageBoxButton, MessageBoxResult>
+            {
                 { MessageBoxButton.OK,          MessageBoxResult.OK  },
                 { MessageBoxButton.OKCancel,    MessageBoxResult.OK  },
                 { MessageBoxButton.YesNo,       MessageBoxResult.Yes },
                 { MessageBoxButton.YesNoCancel, MessageBoxResult.Yes },
-        }.TryGetValue(src, out var dest) ? dest : MessageBoxResult.OK;
+            };
+
+            var check = dic.TryGetValue(src, out var dest);
+            Debug.Assert(check);
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
