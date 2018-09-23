@@ -94,8 +94,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                 cts.Cancel(); // done
             });
 
-            Assert.That(vm.Ribbon.Settings.Command.CanExecute(), Is.True);
-            vm.Ribbon.Settings.Command.Execute();
+            Assert.That(vm.Ribbon.RemoveOthers.Command.CanExecute(), Is.True);
+            vm.Ribbon.RemoveOthers.Command.Execute();
             await Wait.ForAsync(cts.Token);
             dp.Dispose();
         });
