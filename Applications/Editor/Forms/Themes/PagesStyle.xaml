@@ -51,13 +51,10 @@
                     Last="{Binding Data.Preferences.VisibleLast, Mode=TwoWay}"
                     ItemSize="{Binding Data.Preferences.ItemSize}"
                     ItemMargin="{Binding Data.Preferences.ItemMargin}" />
+                <my:PreviewBehavior
+                    PreCommand="{Binding Ribbon.SelectClear.Command}"
+                    Command="{Binding Ribbon.Preview.Command}" />
             </i:Interaction.Behaviors>
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding Ribbon.Preview.Command}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
         </ScrollViewer>
     </ControlTemplate>
 
