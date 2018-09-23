@@ -148,28 +148,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Remove
-        ///
-        /// <summary>
-        /// Tests to remove the selected items.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Remove() => Create("SampleRotation.pdf", "", 9, vm =>
-        {
-            var src = vm.Data.Images.ToList();
-            src[3].IsSelected = true;
-            src[5].IsSelected = true;
-            Execute(vm, vm.Ribbon.Remove);
-
-            var dest = vm.Data.Images.ToList();
-            Assert.That(dest.Count, Is.EqualTo(7));
-            for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Rotate
         ///
         /// <summary>

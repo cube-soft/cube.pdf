@@ -115,6 +115,7 @@
     <Compile Include="Sources\ViewModels\EncryptionTest.cs" />
     <Compile Include="Sources\ViewModels\MainTest.cs" />
     <Compile Include="Sources\ViewModels\MetadataTest.cs" />
+    <Compile Include="Sources\ViewModels\RemoveTest.cs" />
     <Compile Include="Sources\ViewModels\RibbonTest.cs" />
     <Compile Include="Sources\HistoryTest.cs" />
     <Compile Include="Sources\RangeTest.cs" />
