@@ -100,10 +100,9 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             });
 
             vm.Ribbon.Encryption.Command.Execute();
-            var done = await Wait.ForAsync(cts.Token);
+            await Wait.ForAsync(cts.Token);
             dp.Dispose();
 
-            Assert.That(done, $"Timeout (Encryption)");
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
             Assert.That(vm.Data.Encryption.Value.OwnerPassword, Is.Not.EqualTo("dummy"));

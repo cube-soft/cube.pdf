@@ -99,10 +99,9 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             });
 
             vm.Ribbon.Metadata.Command.Execute();
-            var done = await Wait.ForAsync(cts.Token);
+            await Wait.ForAsync(cts.Token);
             dp.Dispose();
 
-            Assert.That(done, $"Timeout (Metadata)");
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
             Assert.That(vm.Data.Metadata.Value.Title, Is.Not.EqualTo("dummy"));

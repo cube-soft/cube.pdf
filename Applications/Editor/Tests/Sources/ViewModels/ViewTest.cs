@@ -60,18 +60,17 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                 Assert.That(e.Data.Width.Value,  Is.GreaterThan(0));
                 Assert.That(e.Data.Height.Value, Is.GreaterThan(0));
 
-                Assert.That(Wait.For(() => !e.Data.Busy.Value), "Timeout (Preview)");
+                Assert.That(Wait.For(() => !e.Data.Busy.Value), "Timeout (PreviewImage)");
                 Assert.That(e.Data.Image.Value,  Is.Not.Null);
 
-                Assert.That(e.OK.Command.CanExecute(),     Is.True);
-                Assert.That(e.Cancel.Command.CanExecute(), Is.True);
-
-                e.OK.Command.Execute();
+                e.Cancel.Command.Execute();
                 cts.Cancel(); // done
             });
 
+            await ExecuteAsync(vm, vm.Ribbon.Select);
+            Assert.That(vm.Ribbon.Preview.Command.CanExecute(), Is.True);
             vm.Ribbon.Preview.Command.Execute();
-            var done = await Wait.ForAsync(cts.Token);
+            await Wait.ForAsync(cts.Token);
             dp.Dispose();
         });
 
