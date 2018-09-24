@@ -402,6 +402,9 @@
   <data name="MessagePassword" xml:space="preserve">
     <value>Please enter the owner password for opening and editing {0}.</value>
   </data>
+  <data name="MessageRangeError" xml:space="preserve">
+    <value>Failed to parse the removal range.</value>
+  </data>
   <data name="MessageRemoveRange" xml:space="preserve">
     <value>e.g. 1,2,4-7,9</value>
   </data>

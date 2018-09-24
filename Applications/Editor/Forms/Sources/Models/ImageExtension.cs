@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class ImageExtension
+    internal static class ImageExtension
     {
         #region Methods
 

@@ -34,7 +34,19 @@ namespace Cube.Pdf.App.Editor
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public class RangeException : Exception { }
+    public class RangeException : Exception
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RangeException
+        ///
+        /// <summary>
+        /// Initializes a new instance of the RangeException class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RangeException() : base(Properties.Resources.MessageRangeError) { }
+    }
 
     /* --------------------------------------------------------------------- */
     ///

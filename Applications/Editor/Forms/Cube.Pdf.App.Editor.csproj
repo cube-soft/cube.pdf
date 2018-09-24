@@ -175,12 +175,12 @@
     <Compile Include="Sources\Models\DirectoryMonitor.cs" />
     <Compile Include="Sources\Models\DocumentCollection.cs" />
     <Compile Include="Sources\Models\ImageCollection.cs" />
-    <Compile Include="Sources\Models\ImageEntry.cs" />
+    <Compile Include="Sources\Models\ImageItem.cs" />
     <Compile Include="Sources\Models\ImageExtension.cs" />
     <Compile Include="Sources\Models\ImagePreferences.cs" />
     <Compile Include="Sources\Models\ImageSelection.cs" />
     <Compile Include="Sources\Models\RibbonElement.cs" />
-    <Compile Include="Sources\Models\MessageFactory.cs" />
+    <Compile Include="Sources\Models\Factory.cs" />
     <Compile Include="Sources\ViewModels\MainBindable.cs" />
     <Compile Include="Sources\ViewModels\MainFacade.cs" />
     <Compile Include="Sources\ViewModels\MainViewModel.cs" />

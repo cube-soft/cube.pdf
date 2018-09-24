@@ -402,6 +402,9 @@
   <data name="MessagePassword" xml:space="preserve">
     <value>{0} はパスワードで保護されています。編集するためには管理用パスワードを入力して下さい。</value>
   </data>
+  <data name="MessageRangeError" xml:space="preserve">
+    <value>削除範囲の解析に失敗しました。不適切な文字が含まれていないか確認して下さい。</value>
+  </data>
   <data name="MessageRemoveRange" xml:space="preserve">
     <value>例. 1,2,4-7,9</value>
   </data>

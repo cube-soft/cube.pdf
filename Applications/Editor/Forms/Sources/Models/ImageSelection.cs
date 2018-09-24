@@ -90,7 +90,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<ImageEntry> Items => _selection.Keys;
+        public IEnumerable<ImageItem> Items => _selection.Keys;
 
         #endregion
 
@@ -107,7 +107,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">Image entry.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(ImageEntry src)
+        public void Add(ImageItem src)
         {
             if (_selection.TryAdd(src, 0)) RaiseEvents();
         }
@@ -123,7 +123,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">Image entry.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(ImageEntry src)
+        public void Remove(ImageItem src)
         {
             if (_selection.TryRemove(src, out var _)) RaiseEvents();
         }
@@ -152,7 +152,7 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
-        private readonly ConcurrentDictionary<ImageEntry, byte> _selection = new ConcurrentDictionary<ImageEntry, byte>();
+        private readonly ConcurrentDictionary<ImageItem, byte> _selection = new ConcurrentDictionary<ImageItem, byte>();
         #endregion
     }
 }

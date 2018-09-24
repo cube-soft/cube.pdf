@@ -42,7 +42,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCollection : IReadOnlyList<ImageEntry>, INotifyCollectionChanged, IDisposable
+    public class ImageCollection : IReadOnlyList<ImageItem>, INotifyCollectionChanged, IDisposable
     {
         #region Constructors
 
@@ -62,12 +62,12 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ImageCollection(Func<string, IDocumentRenderer> getter, SynchronizationContext context)
         {
-            ImageSource create(ImageEntry e) => _engine(e.RawObject.File.FullName).Create(e);
+            ImageSource create(ImageItem e) => _engine(e.RawObject.File.FullName).Create(e);
 
             _dispose = new OnceAction<bool>(Dispose);
             _context = context;
             _engine  = getter;
-            _cache   = new CacheCollection<ImageEntry, ImageSource>(create);
+            _cache   = new CacheCollection<ImageItem, ImageSource>(create);
 
             Selection   = new ImageSelection { Context = context };
             Preferences = new ImagePreferences { Context = context };
@@ -91,7 +91,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageEntry this[int index] => _inner[index];
+        public ImageItem this[int index] => _inner[index];
 
         /* ----------------------------------------------------------------- */
         ///
@@ -235,7 +235,7 @@ namespace Cube.Pdf.App.Editor
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<ImageEntry> GetEnumerator() => _inner.GetEnumerator();
+        public IEnumerator<ImageItem> GetEnumerator() => _inner.GetEnumerator();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -467,7 +467,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ImageEntry CreateEntry(int index, Page item) => new ImageEntry(
+        private ImageItem CreateEntry(int index, Page item) => new ImageItem(
             e => Preferences.FrameOnly ? null :
                  _cache.TryGetValue(e, out var dest) ? dest :
                  Preferences.Dummy,
@@ -560,8 +560,8 @@ namespace Cube.Pdf.App.Editor
         private readonly OnceAction<bool> _dispose;
         private readonly SynchronizationContext _context;
         private readonly Func<string, IDocumentRenderer> _engine;
-        private readonly CacheCollection<ImageEntry, ImageSource> _cache;
-        private readonly ObservableCollection<ImageEntry> _inner = new ObservableCollection<ImageEntry>();
+        private readonly CacheCollection<ImageItem, ImageSource> _cache;
+        private readonly ObservableCollection<ImageItem> _inner = new ObservableCollection<ImageItem>();
         private CancellationTokenSource _task;
         #endregion
     }

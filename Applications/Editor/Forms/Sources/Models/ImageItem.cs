@@ -26,14 +26,14 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageEntry
+    /// ImageItem
     ///
     /// <summary>
     /// Stores an image and related information.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageEntry : ObservableProperty, IListItem, IDisposable
+    public class ImageItem : ObservableProperty, IListItem, IDisposable
     {
         #region Constructors
 
@@ -50,7 +50,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="preferences">Image preferences.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageEntry(Func<ImageEntry, ImageSource> image,
+        public ImageItem(Func<ImageItem, ImageSource> image,
             ImageSelection selection, ImagePreferences preferences)
         {
             _dispose     = new OnceAction<bool>(Dispose);
@@ -204,7 +204,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~ImageEntry() { _dispose.Invoke(false); }
+        ~ImageItem() { _dispose.Invoke(false); }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -305,7 +305,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly OnceAction<bool> _dispose;
-        private Func<ImageEntry, ImageSource> _image;
+        private Func<ImageItem, ImageSource> _image;
         private ImagePreferences _preferences;
         private ImageSelection _selection;
         private int _index;

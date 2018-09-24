@@ -81,7 +81,7 @@
     <!-- **********************************************************************
       ListViewItem (DataTemplate)
     *********************************************************************** -->
-    <DataTemplate x:Key="PageTemplate" DataType="{x:Type my:ImageEntry}">
+    <DataTemplate x:Key="PageTemplate" DataType="{x:Type my:ImageItem}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />

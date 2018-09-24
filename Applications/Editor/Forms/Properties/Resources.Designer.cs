@@ -916,6 +916,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Failed to parse the removal range. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageRangeError {
+            get {
+                return ResourceManager.GetString("MessageRangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   e.g. 1,2,4-7,9 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageRemoveRange {

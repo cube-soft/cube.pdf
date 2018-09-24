@@ -85,7 +85,7 @@ namespace Cube.Pdf.App.Editor
         /// <returns>ImageSource object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageSource Create(this IDocumentRenderer src, ImageEntry entry) =>
+        public static ImageSource Create(this IDocumentRenderer src, ImageItem entry) =>
             src?.Create(new Bitmap(entry.Width, entry.Height), entry.RawObject);
 
         /* ----------------------------------------------------------------- */

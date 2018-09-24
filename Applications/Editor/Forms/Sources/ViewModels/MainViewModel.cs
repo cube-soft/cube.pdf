@@ -244,7 +244,7 @@ namespace Cube.Pdf.App.Editor
         private ICommand Close() => new BindableCommand<CancelEventArgs>(
             e => {
                 if (!Data.Modified.Value) Send(() => Model.Close(false));
-                else Send(MessageFactory.CloseMessage(m => PostClose(e, m.Result)));
+                else Send(Factory.CloseMessage(m => PostClose(e, m.Result)));
             },
             e => Data.IsOpen() && (e != null || !Data.Busy.Value),
             Data.Busy, Data.Source
@@ -354,7 +354,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostOpen(Action<string> action) => Send(MessageFactory.OpenMessage(e =>
+        private void PostOpen(Action<string> action) => Send(Factory.OpenMessage(e =>
             Post(() => { if (e.Result) action(e.FileName); })
         ));
 
@@ -369,7 +369,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostSave(Action<string> action) => Send(MessageFactory.SaveMessage(e =>
+        private void PostSave(Action<string> action) => Send(Factory.SaveMessage(e =>
             Post(() => { if (e.Result) action(e.FileName); })
         ));
 
@@ -378,7 +378,7 @@ namespace Cube.Pdf.App.Editor
         /// PostClose
         ///
         /// <summary>
-        /// Posts the message to close the current PDF document.
+        /// Posts the message to close the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -386,13 +386,11 @@ namespace Cube.Pdf.App.Editor
         {
             var e = src ?? new CancelEventArgs();
             e.Cancel = (m == MessageBoxResult.Cancel);
+            if (e.Cancel) return;
 
-            if (!e.Cancel)
-            {
-                void close() => Model.Close(m == MessageBoxResult.Yes);
-                if (src != null) Send(close);
-                else Post(close);
-            }
+            void close() => Model.Close(m == MessageBoxResult.Yes);
+            if (src != null) Send(close);
+            else Post(close);
         }
 
         /* ----------------------------------------------------------------- */

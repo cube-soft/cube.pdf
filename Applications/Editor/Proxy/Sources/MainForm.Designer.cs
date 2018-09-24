@@ -87,7 +87,7 @@
             // 
             // RefreshTimer
             // 
-            this.RefreshTimer.Interval = 500;
+            this.RefreshTimer.Interval = 1000;
             // 
             // MainForm
             // 

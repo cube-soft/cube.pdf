@@ -24,14 +24,14 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MessageFactory
+    /// Factory
     ///
     /// <summary>
-    /// Provides functionality to create messsage objects.
+    /// Provides functionality to create objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class MessageFactory
+    internal static class Factory
     {
         #region Methods
 
@@ -107,10 +107,9 @@ namespace Cube.Pdf.App.Editor
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage CloseMessage(DialogCallback callback) => new DialogMessage(
-            Properties.Resources.MessageOverwrite,
-            Assembly.GetExecutingAssembly(),
-            callback)
+        public static DialogMessage CloseMessage(DialogCallback callback) =>
+            new DialogMessage(Properties.Resources.MessageOverwrite,
+            Assembly.GetExecutingAssembly(), callback)
         {
             Button = System.Windows.MessageBoxButton.YesNoCancel,
             Image  = System.Windows.MessageBoxImage.Information,

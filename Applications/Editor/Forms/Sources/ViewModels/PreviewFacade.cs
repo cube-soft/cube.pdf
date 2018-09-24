@@ -99,7 +99,7 @@ namespace Cube.Pdf.App.Editor
             try
             {
                 Bindable.Busy.Value = true;
-                Bindable.Image.Value = Images.Preview(index, 3.0);
+                Bindable.Image.Value = Images.Preview(index, 2.0);
             }
             finally { Bindable.Busy.Value = false; }
         }
