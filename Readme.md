@@ -3,15 +3,15 @@ Cube.Pdf
 
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
-[![Codacy](https://api.codacy.com/project/badge/Grade/f9fd6adc5a5f44d38c8088516ac9e936)](https://www.codacy.com/app/clown/Cube.Pdf)
 
-Cube.Pdf projects wrap [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party's PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more.
+Cube.Pdf projects wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party's PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. We will move [CubePdfLib](https://github.com/cube-soft/CubePdfLib), [CubePdfViewer](https://github.com/cube-soft/CubePdfViewer), and [CubePdfUtility2](https://github.com/cube-soft/CubePdfUtility2) to the repository.
 Note that some projects are licensed under the GNU AGPLv3. See the License section for details.
 
 ## Dependencies
 
 * [Cube.Core](https://github.com/cube-soft/Cube.Core)
 * [Cube.FileSystem](https://github.com/cube-soft/Cube.FileSystem)
+* [PDFium](https://pdfium.googlesource.com/pdfium/)
 * [Ghostscript](https://www.ghostscript.com/)
 * [iTextSharp](https://www.nuget.org/packages/iTextSharp/)
 
@@ -34,6 +34,7 @@ Projects are respectively licensed as follows:
 | Name | License |
 | ---- | ------- |
 | [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Core)                    | Apache 2.0 |
+| [Cube.Pdf.Pdfium](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Pdfium)           | Apache 2.0 |
 | [Cube.Pdf.Ghostscript](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Ghostscript) | GNU AGPLv3 |
 | [Cube.Pdf.Itext](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Itext)             | GNU AGPLv3 |
 
@@ -42,6 +43,7 @@ Projects are respectively licensed as follows:
 | Name | License |
 | ---- | ------- |
 | [CubePDF](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter)          | GNU AGPLv3 |
+| [CubePDF Utility](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor)     | GNU AGPLv3 |
 | [CubePDF Clip](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Clip)          | GNU AGPLv3 |
 | [CubePDF Page](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Pages)         | GNU AGPLv3 |
 | [CubePDF ImagePicker](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Picker) | GNU AGPLv3 |

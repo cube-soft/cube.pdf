@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Cube.Pdf.Pdfium</id>
+    <version>2.11.0</version>
+    <title>Cube.Pdf.Pdfium</title>
+    <authors>CubeSoft</authors>
+    <owners>CubeSoft</owners>
+    <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
+    <description>PDFium based PDF library for CubeSoft applications.</description>
+    <tags>Cube PDF PDFium</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
+    <licenseUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Pdfium/License.txt</licenseUrl>
+    <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
+    <dependencies>
+      <group targetFramework="net45">
+        <dependency id="Cube.Core" version="1.11.0" />
+        <dependency id="Cube.FileSystem" version="1.11.0" />
+      </group>
+      <group targetFramework="net35">
+        <dependency id="Cube.Backwards" version="1.5.0" />
+        <dependency id="Cube.Core" version="1.11.0" />
+        <dependency id="Cube.FileSystem" version="1.11.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Cube.Pdf.Pdfium.dll" target="lib\net45" />
+    <file src="bin\Release\Cube.Pdf.Pdfium.xml" target="lib\net45" />
+    <file src="bin\net35\Release\Cube.Pdf.Pdfium.dll" target="lib\net35" />
+    <file src="bin\net35\Release\Cube.Pdf.Pdfium.xml" target="lib\net35" />
+  </files>
+</package>

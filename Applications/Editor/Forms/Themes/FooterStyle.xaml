@@ -1,0 +1,72 @@
+﻿<!-- **************************************************************************
+
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- **********************************************************************
+      StatusBar
+    *********************************************************************** -->
+    <Style x:Key="FooterStyle" TargetType="{x:Type StatusBar}">
+        <Setter Property="Height" Value="23" />
+        <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
+    </Style>
+
+    <!-- **********************************************************************
+      StatusBar (Template)
+    *********************************************************************** -->
+    <ControlTemplate x:Key="FooterTemplate" TargetType="{x:Type StatusBar}">
+        <Border
+            Height="Auto"
+            Background="{StaticResource TabBackgroundBrush}"
+            BorderThickness="0">
+            <ItemsPresenter Height="Auto" />
+        </Border>
+    </ControlTemplate>
+
+    <!-- **********************************************************************
+      StatusBar (ItemsPanel)
+    *********************************************************************** -->
+    <ItemsPanelTemplate x:Key="FooterItemsPanelTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </ItemsPanelTemplate>
+
+    <!-- **********************************************************************
+      StatusBarItem
+    *********************************************************************** -->
+    <Style x:Key="FooterItemStyle" TargetType="{x:Type StatusBarItem}">
+        <Setter Property="Margin" Value="20,0,30,0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <!-- **********************************************************************
+      Separator
+    *********************************************************************** -->
+    <Style x:Key="FooterSeparatorStyle" TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{StaticResource TabBorderBrush}" />
+    </Style>
+</ResourceDictionary>

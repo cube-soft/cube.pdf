@@ -83,13 +83,13 @@
       <HintPath>..\..\..\packages\AsyncBridge.0.3.1\lib\net35-Client\AsyncBridge.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Backwards">
-      <HintPath>..\..\..\packages\Cube.Backwards.1.4.1\lib\net35\Cube.Backwards.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Backwards.1.5.0\lib\net35\Cube.Backwards.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\packages\Cube.Core.1.10.0\lib\net35\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Core.1.11.0\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\packages\Cube.FileSystem.1.10.0\lib\net35\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.FileSystem.1.11.0\lib\net35\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
@@ -103,25 +103,29 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attachment.cs" />
-    <Compile Include="Encryption.cs" />
-    <Compile Include="EncryptionException.cs" />
-    <Compile Include="EncryptionExtension.cs" />
-    <Compile Include="EncryptionMethod.cs" />
-    <Compile Include="File.cs" />
-    <Compile Include="FileExtension.cs" />
-    <Compile Include="IDocumentReader.cs" />
-    <Compile Include="IDocumentReaderExtension.cs" />
-    <Compile Include="IDocumentWriter.cs" />
-    <Compile Include="IDocumentWriterExtension.cs" />
-    <Compile Include="Metadata.cs" />
-    <Compile Include="OnceQuery.cs" />
-    <Compile Include="Page.cs" />
-    <Compile Include="PageExtension.cs" />
-    <Compile Include="Permission.cs" />
-    <Compile Include="PermissionMethod.cs" />
-    <Compile Include="ViewOption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sources\Angle.cs" />
+    <Compile Include="Sources\Attachment.cs" />
+    <Compile Include="Sources\ViewerPreferences.cs" />
+    <Compile Include="Sources\DocumentReaderBase.cs" />
+    <Compile Include="Sources\Encryption.cs" />
+    <Compile Include="Sources\EncryptionException.cs" />
+    <Compile Include="Sources\EncryptionExtension.cs" />
+    <Compile Include="Sources\EncryptionMethod.cs" />
+    <Compile Include="Sources\File.cs" />
+    <Compile Include="Sources\FileExtension.cs" />
+    <Compile Include="Sources\IDocumentReader.cs" />
+    <Compile Include="Sources\IDocumentReaderExtension.cs" />
+    <Compile Include="Sources\IDocumentRenderer.cs" />
+    <Compile Include="Sources\IDocumentRendererExtension.cs" />
+    <Compile Include="Sources\IDocumentWriter.cs" />
+    <Compile Include="Sources\IDocumentWriterExtension.cs" />
+    <Compile Include="Sources\Metadata.cs" />
+    <Compile Include="Sources\MetadataExtension.cs" />
+    <Compile Include="Sources\Page.cs" />
+    <Compile Include="Sources\PageExtension.cs" />
+    <Compile Include="Sources\Permission.cs" />
+    <Compile Include="Sources\PermissionValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Cube.snk" />
