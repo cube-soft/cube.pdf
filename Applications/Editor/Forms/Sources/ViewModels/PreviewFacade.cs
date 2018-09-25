@@ -52,7 +52,7 @@ namespace Cube.Pdf.App.Editor
             Images   = src;
             Bindable = new PreviewBindable(file, src[index].RawObject);
 
-            Task.Run(() => Setup(index)).Forget();
+            TaskEx.Run(() => Setup(index)).Forget();
         }
 
         #endregion

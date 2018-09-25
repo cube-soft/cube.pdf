@@ -45,7 +45,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IReadOnlyList<int> ItemSizeOptions { get; } = new List<int>
+        public IList<int> ItemSizeOptions { get; } = new List<int>
         {
             100, 150, 200, 250, 300, 400, 500, 600, 900,
         };

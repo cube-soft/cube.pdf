@@ -39,6 +39,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
+    [Ignore("Task based tests do not support in .NET Framework 3.5.")]
     class EncryptionTest : ViewModelFixture
     {
         #region Tests

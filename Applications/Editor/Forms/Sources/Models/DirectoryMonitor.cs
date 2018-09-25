@@ -210,7 +210,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Refresh() => Task.Run(() =>
+        private void Refresh() => TaskEx.Run(() =>
         {
             var dest = IO.GetFiles(Directory, Filter)
                          .Select(e => IO.Get(e))

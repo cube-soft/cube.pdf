@@ -20,6 +20,7 @@ using Cube.Log;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 
@@ -89,7 +90,7 @@ namespace Cube.Pdf.App.Editor
             _observer.Add(this.ObserveUiException());
 
             Arguments = e.Args ?? new string[0];
-            Logger.Info(GetType(), $"Arguments:{string.Join(" ", Arguments)}");
+            Logger.Info(GetType(), $"Arguments:{string.Join(" ", Arguments.ToArray())}");
 
             base.OnStartup(e);
         }

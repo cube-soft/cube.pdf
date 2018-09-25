@@ -515,7 +515,7 @@ namespace Cube.Pdf.App.Editor
             var begin = Math.Max(Preferences.VisibleFirst, 0);
             var end   = Math.Min(Preferences.VisibleLast, _inner.Count);
 
-            Task.Run(() =>
+            TaskEx.Run(() =>
             {
                 for (var i = begin; i < end; ++i)
                 {

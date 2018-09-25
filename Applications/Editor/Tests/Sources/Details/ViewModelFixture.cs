@@ -25,6 +25,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -267,7 +268,7 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected string Path(object[] parts, [CallerMemberName] string name = null) =>
-           GetResultsWith($"{name}_{string.Join("_", parts)}.pdf");
+           GetResultsWith($"{name}_{string.Join("_", parts.Select(e => e.ToString()).ToArray())}.pdf");
 
         #endregion
 

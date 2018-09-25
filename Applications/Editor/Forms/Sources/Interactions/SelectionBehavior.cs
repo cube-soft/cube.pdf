@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using Cube.Xui.Behaviors;
-using Fluent;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -120,7 +119,7 @@ namespace Cube.Pdf.App.Editor
             finally
             {
                 AssociatedObject.UnselectAll();
-                if (Popup) PopupService.RaiseDismissPopupEventAsync(AssociatedObject, DismissPopupMode.Always);
+                //if (Popup) PopupService.RaiseDismissPopupEventAsync(AssociatedObject, DismissPopupMode.Always);
             }
         }
 

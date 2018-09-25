@@ -21,14 +21,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:r="urn:fluent-ribbon"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:xi="clr-namespace:Cube.Xui;assembly=Cube.Xui"
     xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 
-    TitleBarHeight="30"
     Height="600"
     Width="800"
     FontFamily="Meiryo UI"
@@ -60,29 +60,29 @@
       KeyBindings
     *********************************************************************** -->
     <r:RibbonWindow.InputBindings>
-        <KeyBinding Gesture="F5"            Command="{Binding Ribbon.Refresh.Command}" />
-        <KeyBinding Gesture="Insert"        Command="{Binding Ribbon.Insert.Command}" />
-        <KeyBinding Gesture="Delete"        Command="{Binding Ribbon.Remove.Command}" />
-        <KeyBinding Gesture="Backspace"     Command="{Binding Ribbon.Remove.Command}" />
-        <KeyBinding Gesture="Ctrl+E"        Command="{Binding Ribbon.Extract.Command}" />
-        <KeyBinding Gesture="Ctrl+O"        Command="{Binding Ribbon.Open.Command}" />
-        <KeyBinding Gesture="Ctrl+S"        Command="{Binding Ribbon.Save.Command}" />
-        <KeyBinding Gesture="Ctrl+Shift+S"  Command="{Binding Ribbon.SaveAs.Command}" />
-        <KeyBinding Gesture="Ctrl+W"        Command="{Binding Ribbon.Close.Command}" />
-        <KeyBinding Gesture="Ctrl+A"        Command="{Binding Ribbon.SelectAll.Command}" />
-        <KeyBinding Gesture="Ctrl+D"        Command="{Binding Ribbon.SelectClear.Command}" />
-        <KeyBinding Gesture="Ctrl+F"        Command="{Binding Ribbon.MoveNext.Command}" />
-        <KeyBinding Gesture="Ctrl+B"        Command="{Binding Ribbon.MovePrevious.Command}" />
-        <KeyBinding Gesture="Ctrl+L"        Command="{Binding Ribbon.RotateLeft.Command}" />
-        <KeyBinding Gesture="Ctrl+R"        Command="{Binding Ribbon.RotateRight.Command}" />
-        <KeyBinding Gesture="Ctrl+I"        Command="{Binding Ribbon.Metadata.Command}" />
-        <KeyBinding Gesture="Ctrl+K"        Command="{Binding Ribbon.Encryption.Command}" />
-        <KeyBinding Gesture="Ctrl+Z"        Command="{Binding Ribbon.Undo.Command}" />
-        <KeyBinding Gesture="Ctrl+Y"        Command="{Binding Ribbon.Redo.Command}" />
-        <KeyBinding Gesture="Ctrl+OemPlus"  Command="{Binding Ribbon.ZoomIn.Command}" />
-        <KeyBinding Gesture="Ctrl+Add"      Command="{Binding Ribbon.ZoomIn.Command}" />
-        <KeyBinding Gesture="Ctrl+OemMinus" Command="{Binding Ribbon.ZoomOut.Command}" />
-        <KeyBinding Gesture="Ctrl+Subtract" Command="{Binding Ribbon.ZoomOut.Command}" />
+        <xi:RelayKeyBinding Gesture="F5"            CommandEx="{Binding Ribbon.Refresh.Command}" />
+        <xi:RelayKeyBinding Gesture="Insert"        CommandEx="{Binding Ribbon.Insert.Command}" />
+        <xi:RelayKeyBinding Gesture="Delete"        CommandEx="{Binding Ribbon.Remove.Command}" />
+        <xi:RelayKeyBinding Gesture="Backspace"     CommandEx="{Binding Ribbon.Remove.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+E"        CommandEx="{Binding Ribbon.Extract.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+O"        CommandEx="{Binding Ribbon.Open.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+S"        CommandEx="{Binding Ribbon.Save.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+Shift+S"  CommandEx="{Binding Ribbon.SaveAs.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+W"        CommandEx="{Binding Ribbon.Close.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+A"        CommandEx="{Binding Ribbon.SelectAll.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+D"        CommandEx="{Binding Ribbon.SelectClear.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+F"        CommandEx="{Binding Ribbon.MoveNext.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+B"        CommandEx="{Binding Ribbon.MovePrevious.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+L"        CommandEx="{Binding Ribbon.RotateLeft.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+R"        CommandEx="{Binding Ribbon.RotateRight.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+I"        CommandEx="{Binding Ribbon.Metadata.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+K"        CommandEx="{Binding Ribbon.Encryption.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+Z"        CommandEx="{Binding Ribbon.Undo.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+Y"        CommandEx="{Binding Ribbon.Redo.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+OemPlus"  CommandEx="{Binding Ribbon.ZoomIn.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+Add"      CommandEx="{Binding Ribbon.ZoomIn.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+OemMinus" CommandEx="{Binding Ribbon.ZoomOut.Command}" />
+        <xi:RelayKeyBinding Gesture="Ctrl+Subtract" CommandEx="{Binding Ribbon.ZoomOut.Command}" />
     </r:RibbonWindow.InputBindings>
 
     <!-- **********************************************************************
