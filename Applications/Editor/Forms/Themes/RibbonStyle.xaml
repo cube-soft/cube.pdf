@@ -30,8 +30,8 @@
         <Setter Property="BorderBrush" Value="{StaticResource TabBorderBrush}" />
         <Setter Property="CheckedBackground" Value="{StaticResource TabBackgroundBrush}" />
         <Setter Property="CheckedBorderBrush" Value="{StaticResource TabBorderBrush}" />
-        <Setter Property="MouseOverBackground" Value="#30FFB700" />
-        <Setter Property="MouseOverBorderBrush" Value="#30FFB700" />
+        <Setter Property="MouseOverBackground" Value="{StaticResource TabAccentBrush}" />
+        <Setter Property="MouseOverBorderBrush" Value="{StaticResource TabAccentBrush}" />
     </Style>
 
     <!-- **********************************************************************

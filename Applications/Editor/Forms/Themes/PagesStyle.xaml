@@ -76,6 +76,16 @@
     <Style x:Key="PageStyle" TargetType="{x:Type ListViewItem}">
         <Setter Property="Margin" Value="3" />
         <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWay}" />
+        <Style.Resources>
+            <SolidColorBrush
+                x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                Color="{StaticResource AccentColor}"
+                Opacity="0.33" />
+            <SolidColorBrush
+                x:Key="{x:Static SystemColors.ControlBrushKey}"
+                Color="{StaticResource AccentColor}"
+                Opacity="0.33" />
+        </Style.Resources>
     </Style>
 
     <!-- **********************************************************************
