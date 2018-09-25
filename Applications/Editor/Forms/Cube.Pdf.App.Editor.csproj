@@ -107,17 +107,11 @@
     <Reference Include="Cube.Xui">
       <HintPath>..\..\..\..\packages\Cube.Xui.1.11.0\lib\net35\Cube.Xui.dll</HintPath>
     </Reference>
-    <Reference Include="Fluent">
-      <HintPath>..\..\..\..\packages\Fluent.Ribbon.6.1.0.326\lib\net35\Fluent.dll</HintPath>
-    </Reference>
     <Reference Include="GalaSoft.MvvmLight">
       <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net35\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras">
       <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net35\GalaSoft.MvvmLight.Extras.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Platform">
-      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net35\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>
