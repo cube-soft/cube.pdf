@@ -23,6 +23,8 @@
     <!-- **********************************************************************
       Colors
     *********************************************************************** -->
+    <Color x:Key="AccentColor">#FFFFB700</Color>
+
     <Color x:Key="DarkBackgroundColor">#FF555555</Color>
     <Color x:Key="DarkForegroundColor">#FFE0E0E0</Color>
     <Color x:Key="DarkBorderColor">#FFB3B3B3</Color>
@@ -47,7 +49,6 @@
     <Color x:Key="TabForegroundColor">#FFE0E0E0</Color>
     <Color x:Key="TabForegroundInactivateColor">#FF909090</Color>
     <Color x:Key="TabBorderColor">#FF303030</Color>
-    <Color x:Key="TabAccentColor">#FFFFB700</Color>
 
     <Color x:Key="ScrollBarColor">#FF303030</Color>
     <Color x:Key="ScrollBarHoverColor">#FF272727</Color>
@@ -85,6 +86,7 @@
     <SolidColorBrush x:Key="TabForegroundBrush" Color="{StaticResource TabForegroundColor}" />
     <SolidColorBrush x:Key="TabForegroundInactivateBrush" Color="{StaticResource TabForegroundInactivateColor}" />
     <SolidColorBrush x:Key="TabBorderBrush" Color="{StaticResource TabBorderColor}" />
+    <SolidColorBrush x:Key="TabAccentBrush" Color="{StaticResource AccentColor}" Opacity="0.2" />
 
     <SolidColorBrush x:Key="ScrollBarBrush" Color="{StaticResource ScrollBarColor}" />
     <SolidColorBrush x:Key="ScrollBarHoverBrush" Color="{StaticResource ScrollBarHoverColor}" />

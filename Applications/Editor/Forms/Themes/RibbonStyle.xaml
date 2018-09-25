@@ -35,13 +35,13 @@
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.DropDown.BorderBrush"
                      Color="{StaticResource TabBorderColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.MouseOver.BorderBrush"
-                     Color="{StaticResource TabAccentColor}" Opacity="0.4" />
+                     Color="{StaticResource AccentColor}" Opacity="0.4" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.MouseOver.Background"
-                     Color="{StaticResource TabAccentColor}" Opacity="0.2" />
+                     Color="{StaticResource AccentColor}" Opacity="0.2" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.BorderBrush"
-                     Color="{StaticResource TabAccentColor}" Opacity="0.5" />
+                     Color="{StaticResource AccentColor}" Opacity="0.5" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.Background"
-                     Color="{StaticResource TabAccentColor}" Opacity="0.25" />
+                     Color="{StaticResource AccentColor}" Opacity="0.25" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Separator.Background"
                      Color="{StaticResource TabBorderColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Separator.BorderBrush"
