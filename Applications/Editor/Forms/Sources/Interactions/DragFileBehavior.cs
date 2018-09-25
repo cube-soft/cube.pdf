@@ -99,11 +99,12 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenDragOver(object s, DragEventArgs e)
         {
+            e.Handled = e.Data.GetDataPresent(DataFormats.FileDrop);
+            if (!e.Handled) return;
+
             var dest = GetFirst(e.Data);
             var ok   = dest.HasValue() && (Command?.CanExecute(dest) ?? false);
-
             e.Effects = ok ? DragDropEffects.Copy : DragDropEffects.None;
-            e.Handled = true;
         }
 
         /* ----------------------------------------------------------------- */
