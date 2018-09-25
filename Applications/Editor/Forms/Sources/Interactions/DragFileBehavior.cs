@@ -83,9 +83,11 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenDrop(object s, DragEventArgs e)
         {
+            if (!(AssociatedObject.DataContext is MainViewModel vm)) return;
+
             var dest = GetFirst(e.Data);
-            e.Handled = dest.HasValue() && (Command?.CanExecute(dest) ?? false);
-            if (e.Handled) Command.Execute(dest);
+            e.Handled = dest.HasValue() && (vm.Drop?.CanExecute(dest) ?? false);
+            if (e.Handled) vm.Drop.Execute(dest);
         }
 
         /* ----------------------------------------------------------------- */
@@ -99,8 +101,10 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenDragOver(object s, DragEventArgs e)
         {
+            if (!(AssociatedObject.DataContext is MainViewModel vm)) return;
+
             var dest = GetFirst(e.Data);
-            var ok   = dest.HasValue() && (Command?.CanExecute(dest) ?? false);
+            var ok   = dest.HasValue() && (vm.Drop?.CanExecute(dest) ?? false);
 
             e.Effects = ok ? DragDropEffects.Copy : DragDropEffects.None;
             e.Handled = true;

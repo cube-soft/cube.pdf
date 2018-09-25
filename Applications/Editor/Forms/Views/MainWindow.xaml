@@ -94,7 +94,7 @@
         <xb:SaveFileDialogBehavior />
         <xb:UriBehavior />
         <xb:CloseBehavior />
-        <xb:ClosingBehavior Command="{Binding Ribbon.Close.Command}" />
+        <xb:ClosingBehavior />
         <my:PasswordWindowBehavior />
         <my:PreviewWindowBehavior />
         <my:InsertWindowBehavior />
@@ -102,7 +102,7 @@
         <my:MetadataWindowBehavior />
         <my:EncryptionWindowBehavior />
         <my:SettingsWindowBehavior />
-        <my:DragFileBehavior Command="{Binding Drop}" />
+        <my:DragFileBehavior />
     </i:Interaction.Behaviors>
 
     <i:Interaction.Triggers>
