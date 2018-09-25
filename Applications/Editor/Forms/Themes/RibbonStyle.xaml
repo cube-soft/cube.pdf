@@ -114,5 +114,6 @@
     <Style x:Key="RibbonRecentItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Margin" Value="3" />
         <Setter Property="Foreground" Value="{StaticResource LightForegroundBrush}" />
+        <Setter Property="Cursor" Value="Hand" />
     </Style>
 </ResourceDictionary>
