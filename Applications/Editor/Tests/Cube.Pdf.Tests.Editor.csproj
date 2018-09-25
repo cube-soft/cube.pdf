@@ -72,6 +72,9 @@
     <DocumentationFile>bin\x64\Release\Cube.Pdf.Tests.Editor.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AlphaFS">
+      <HintPath>..\..\..\..\packages\AlphaFS.2.2.6\lib\net45\AlphaFS.dll</HintPath>
+    </Reference>
     <Reference Include="Cube.Core">
       <HintPath>..\..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>

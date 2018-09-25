@@ -360,7 +360,7 @@ namespace Cube.Pdf.App.Editor
                 }
 
                 close();
-                io.Move(tmp, dest.FullName, true);
+                io.Copy(tmp, dest.FullName, true);
             }
             finally { io.TryDelete(tmp); }
         }
