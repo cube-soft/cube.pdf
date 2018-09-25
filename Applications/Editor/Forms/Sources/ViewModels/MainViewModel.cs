@@ -144,6 +144,17 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ICommand Drop { get; private set; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Exit
+        ///
+        /// <summary>
+        /// Gets the Exit command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand Exit { get; private set; }
+
         #endregion
 
         #region Implementations
@@ -214,6 +225,13 @@ namespace Cube.Pdf.App.Editor
             Ribbon.ZoomOut.Command       = Any(() => Send(() => Model.Zoom(-1)));
             Ribbon.Settings.Command      = Any(() => PostSettings());
             Ribbon.Exit.Command          = Any(() => Send<CloseMessage>());
+
+            // Hack for .NET 3.5.
+            Exit = new BindableCommand<CancelEventArgs>(
+                e => { if (Data.Modified.Value) Send(Factory.CloseMessage(m => PostClose(e, m.Result))); },
+                e => Data.IsOpen(),
+                Data.Source
+            );
         }
 
         #region Factory
@@ -241,12 +259,12 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand Close() => new BindableCommand<CancelEventArgs>(
-            e => {
+        private ICommand Close() => new BindableCommand(
+            () => {
                 if (!Data.Modified.Value) Send(() => Model.Close(false));
-                else Send(Factory.CloseMessage(m => PostClose(e, m.Result)));
+                else Send(Factory.CloseMessage(m => PostClose(null, m.Result)));
             },
-            e => Data.IsOpen() && (e != null || !Data.Busy.Value),
+            () => Data.IsOpen() && !Data.Busy.Value,
             Data.Busy, Data.Source
         );
 

@@ -85,9 +85,7 @@ namespace Cube.Pdf.App.Editor
         private void WhenClosing(object s, CancelEventArgs e)
         {
             if (!(AssociatedObject.DataContext is MainViewModel vm)) return;
-
-            var cmd = vm.Ribbon.Close.Command;
-            if (cmd?.CanExecute(e) ?? false) cmd.Execute(e);
+            if (vm.Exit?.CanExecute(e) ?? false) vm.Exit.Execute(e);
         }
 
         /* ----------------------------------------------------------------- */
