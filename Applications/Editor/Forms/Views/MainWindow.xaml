@@ -127,7 +127,11 @@
         </Grid.RowDefinitions>
 
         <my:RibbonControl Grid.Row="0" />
+        <my:FooterControl Grid.Row="2" />
 
+        <!-- ******************************************************************
+          Thumbnail list of the PDF document
+        ******************************************************************* -->
         <ListView
             ContextMenu="{StaticResource MainContextMenu}"
             ItemsSource="{Binding Data.Images}"
@@ -144,9 +148,11 @@
             </i:Interaction.Behaviors>
         </ListView>
 
+        <!-- ******************************************************************
+          Recent files (when not open)
+        ******************************************************************* -->
         <my:HeroControl
             Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibilityInverse}}"
             Grid.Row="1" />
-        <my:FooterControl Grid.Row="2" />
     </Grid>
 </r:RibbonWindow>
