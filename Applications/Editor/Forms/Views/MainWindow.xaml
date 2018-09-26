@@ -39,7 +39,12 @@
       Resources
     *********************************************************************** -->
     <r:RibbonWindow.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Views/Components/ContextControl.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Views/Components/ContextControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/PagesStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </r:RibbonWindow.Resources>
 
     <r:RibbonWindow.DataContext>
@@ -122,10 +127,23 @@
         </Grid.RowDefinitions>
 
         <my:RibbonControl Grid.Row="0" />
-        <my:PagesControl
+
+        <ListView
             ContextMenu="{StaticResource MainContextMenu}"
+            ItemsSource="{Binding Data.Images}"
+            ItemContainerStyle="{StaticResource PageStyle}"
+            ItemTemplate="{StaticResource PageTemplate}"
+            Style="{StaticResource PageCollectionStyle}"
             Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibility}}"
-            Grid.Row="1" />
+            VirtualizingStackPanel.IsVirtualizing="True"
+            VirtualizingStackPanel.VirtualizationMode="Recycling"
+            Grid.Row="1">
+            <i:Interaction.Behaviors>
+                <xb:SelectionBehavior />
+                <my:DragMoveBehavior />
+            </i:Interaction.Behaviors>
+        </ListView>
+
         <my:HeroControl
             Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibilityInverse}}"
             Grid.Row="1" />

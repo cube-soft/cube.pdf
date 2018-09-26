@@ -134,6 +134,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\Interactions\DragMoveBehavior.cs" />
     <Compile Include="Sources\Interactions\PreviewBehavior.cs" />
     <Compile Include="Sources\ViewModels\PasswordViewModel.cs" />
     <Compile Include="Views\PasswordWindow.xaml.cs">
@@ -358,13 +359,6 @@
     </Page>
     <Compile Include="Views\Components\HeroControl.xaml.cs">
       <DependentUpon>HeroControl.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\Components\PagesControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="Views\Components\PagesControl.xaml.cs">
-      <DependentUpon>PagesControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Components\RibbonControl.xaml">
       <SubType>Designer</SubType>
