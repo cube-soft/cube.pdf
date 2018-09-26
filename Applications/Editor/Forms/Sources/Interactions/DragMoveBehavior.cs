@@ -163,6 +163,11 @@ namespace Cube.Pdf.App.Editor
         /// Occurs when the LeftMouseButtonDown event is fired.
         /// </summary>
         ///
+        /// <remarks>
+        /// TODO: 複数項目の Drag&amp;Drop 処理に問題があるため対応を
+        /// 要検討。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         private void WhenMouseDown(object s, MouseButtonEventArgs e)
         {
@@ -178,8 +183,8 @@ namespace Cube.Pdf.App.Editor
                 Bounds = GetBounds(AssociatedObject.Items.Count - 1),
             };
 
-            e.Handled = item?.IsSelected ?? false;
-            if (e.Handled) Drag();
+            // e.Handled = item?.IsSelected ?? false;
+            // if (e.Handled) Drag();
         }
 
         /* ----------------------------------------------------------------- */

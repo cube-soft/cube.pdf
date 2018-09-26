@@ -138,11 +138,22 @@ namespace Cube.Pdf.App.Editor
         /// Drop
         ///
         /// <summary>
-        /// Gets the command for Drag&amp;Drop.
+        /// Gets the Drag&amp;Drop command to open a new PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public ICommand Drop { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// Gets the Drag&amp;Drop command to move items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand Move { get; private set; }
 
         #endregion
 
@@ -184,6 +195,7 @@ namespace Cube.Pdf.App.Editor
         private void SetCommands()
         {
             Drop                         = IsDrop();
+            Move                         = IsDragMove();
             Recent.Open                  = IsLink();
             Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
             Ribbon.Close.Command         = Close();
@@ -322,6 +334,21 @@ namespace Cube.Pdf.App.Editor
             e => Post(() => Model.OpenLink(e as Information)),
             e => !Data.Busy.Value && e is Information,
             Data.Busy
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsDragMove
+        ///
+        /// <summary>
+        /// Creates a Drag&amp;Drop command to move items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsDragMove() => new BindableCommand<int>(
+            e => Post(() => Model.Move(e)),
+            e => e != 0 && !Data.Busy.Value && Data.IsOpen(),
+            Data.Busy, Data.Source
         );
 
         /* ----------------------------------------------------------------- */

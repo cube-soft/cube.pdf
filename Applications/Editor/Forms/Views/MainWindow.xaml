@@ -140,7 +140,7 @@
             Grid.Row="1">
             <i:Interaction.Behaviors>
                 <xb:SelectionBehavior />
-                <my:DragMoveBehavior />
+                <my:DragMoveBehavior Command="{Binding Move}" />
             </i:Interaction.Behaviors>
         </ListView>
 
