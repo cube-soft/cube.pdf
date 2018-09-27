@@ -4,7 +4,8 @@ Cube.Pdf
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
 
-Cube.Pdf projects wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party's PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. We will move [CubePdfLib](https://github.com/cube-soft/CubePdfLib), [CubePdfViewer](https://github.com/cube-soft/CubePdfViewer), and [CubePdfUtility2](https://github.com/cube-soft/CubePdfUtility2) to the repository.
+Cube.Pdf projects wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party's PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. 
+We will move [CubePdfViewer](https://github.com/cube-soft/CubePdfViewer) to the repository.
 Note that some projects are licensed under the GNU AGPLv3. See the License section for details.
 
 ## Dependencies
