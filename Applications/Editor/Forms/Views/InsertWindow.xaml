@@ -1,0 +1,147 @@
+﻿<!-- **************************************************************************
+
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<Window
+    x:Class="Cube.Pdf.App.Editor.InsertWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="{Binding Title.Text}"
+    Height="380"
+    Width="680"
+    FontFamily="Meiryo UI"
+    WindowStartupLocation="CenterOwner"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False">
+
+    <!-- **********************************************************************
+      Resources
+    *********************************************************************** -->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/GenericDialog.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/InsertStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!-- **********************************************************************
+      Interaction
+    *********************************************************************** -->
+    <i:Interaction.Behaviors>
+        <xb:CloseBehavior />
+    </i:Interaction.Behaviors>
+
+    <!-- **********************************************************************
+      Main
+    *********************************************************************** -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+
+        <!-- ******************************************************************
+          Position
+        ******************************************************************* -->
+        <GroupBox
+            Header="{Binding Position.Text}"
+            Margin="{StaticResource VerticalFirst}"
+            Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton
+                    Content="{Binding Selected.Text}" />
+                <RadioButton
+                    Content="{Binding First.Text}" />
+                <RadioButton
+                    Content="{Binding Last.Text}" />
+                <RadioButton
+                    Content="{Binding Specified.Text}" />
+
+                <TextBox
+                    Width="50" />
+                <TextBlock
+                    Text="/"
+                    Margin="4,0,0,1" />
+                <TextBlock
+                    Text="{Binding PageCount.Value}"
+                    Margin="0,0,0,1" />
+            </StackPanel>
+        </GroupBox>
+
+        <!-- ******************************************************************
+          Contents
+        ******************************************************************* -->
+        <Grid
+            Margin="{StaticResource VerticalLast}"
+            Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ListView Style="{StaticResource InsertFilesStyle}" />
+
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+                <Button
+                    Content="{Binding Add.Text}"
+                    Command="{Binding Add.Command}"
+                    Style="{StaticResource TopButtonStyle}" />
+                <Button
+                    Content="{Binding Up.Text}"
+                    Command="{Binding Up.Command}"
+                    Style="{StaticResource DialogButtonStyle}" />
+                <Button
+                    Content="{Binding Down.Text}"
+                    Command="{Binding Down.Command}"
+                    Style="{StaticResource DialogButtonStyle}" />
+                <Button
+                    Content="{Binding Remove.Text}"
+                    Command="{Binding Remove.Command}"
+                    Style="{StaticResource DialogButtonStyle}" />
+                <Button
+                    Content="{Binding Clear.Text}"
+                    Command="{Binding Clear.Command}"
+                    Style="{StaticResource DialogButtonStyle}" />
+            </StackPanel>
+        </Grid>
+
+        <!-- ******************************************************************
+          Buttons
+        ******************************************************************* -->
+        <StackPanel
+            Style="{StaticResource DialogFooterStyle}"
+            Grid.Row="2">
+            <Button
+                Content="{Binding Cancel.Text}"
+                Command="{Binding Cancel.Command}"
+                Style="{StaticResource CancelButtonStyle}" />
+            <Button
+                Content="{Binding OK.Text}"
+                Command="{Binding OK.Command}"
+                IsDefault="True"
+                Style="{StaticResource DialogButtonStyle}" />
+        </StackPanel>
+    </Grid>
+</Window>

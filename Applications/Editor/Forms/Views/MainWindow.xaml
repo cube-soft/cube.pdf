@@ -1,0 +1,158 @@
+﻿<!-- **************************************************************************
+
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<r:RibbonWindow
+    x:Class="Cube.Pdf.App.Editor.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:r="urn:fluent-ribbon"
+    xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+
+    TitleBarHeight="30"
+    Height="600"
+    Width="800"
+    FontFamily="Meiryo UI"
+    AllowDrop="True"
+    Cursor="{Binding Data.Busy.Value, Converter={my:BooleanToCursor}}">
+
+    <!-- **********************************************************************
+      Resources
+    *********************************************************************** -->
+    <r:RibbonWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Views/Components/ContextControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/PagesStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </r:RibbonWindow.Resources>
+
+    <r:RibbonWindow.DataContext>
+        <my:MainViewModel />
+    </r:RibbonWindow.DataContext>
+
+    <!-- **********************************************************************
+      Title
+    *********************************************************************** -->
+    <r:RibbonWindow.Title>
+        <MultiBinding Converter="{my:TitleConverter}">
+            <Binding Path="Data.Source.Value" />
+            <Binding Path="Data.Modified.Value" />
+        </MultiBinding>
+    </r:RibbonWindow.Title>
+
+    <!-- **********************************************************************
+      KeyBindings
+    *********************************************************************** -->
+    <r:RibbonWindow.InputBindings>
+        <KeyBinding Gesture="F5"            Command="{Binding Ribbon.Refresh.Command}" />
+        <KeyBinding Gesture="Insert"        Command="{Binding Ribbon.Insert.Command}" />
+        <KeyBinding Gesture="Delete"        Command="{Binding Ribbon.Remove.Command}" />
+        <KeyBinding Gesture="Backspace"     Command="{Binding Ribbon.Remove.Command}" />
+        <KeyBinding Gesture="Ctrl+E"        Command="{Binding Ribbon.Extract.Command}" />
+        <KeyBinding Gesture="Ctrl+O"        Command="{Binding Ribbon.Open.Command}" />
+        <KeyBinding Gesture="Ctrl+S"        Command="{Binding Ribbon.Save.Command}" />
+        <KeyBinding Gesture="Ctrl+Shift+S"  Command="{Binding Ribbon.SaveAs.Command}" />
+        <KeyBinding Gesture="Ctrl+W"        Command="{Binding Ribbon.Close.Command}" />
+        <KeyBinding Gesture="Ctrl+A"        Command="{Binding Ribbon.SelectAll.Command}" />
+        <KeyBinding Gesture="Ctrl+D"        Command="{Binding Ribbon.SelectClear.Command}" />
+        <KeyBinding Gesture="Ctrl+F"        Command="{Binding Ribbon.MoveNext.Command}" />
+        <KeyBinding Gesture="Ctrl+B"        Command="{Binding Ribbon.MovePrevious.Command}" />
+        <KeyBinding Gesture="Ctrl+L"        Command="{Binding Ribbon.RotateLeft.Command}" />
+        <KeyBinding Gesture="Ctrl+R"        Command="{Binding Ribbon.RotateRight.Command}" />
+        <KeyBinding Gesture="Ctrl+I"        Command="{Binding Ribbon.Metadata.Command}" />
+        <KeyBinding Gesture="Ctrl+K"        Command="{Binding Ribbon.Encryption.Command}" />
+        <KeyBinding Gesture="Ctrl+Z"        Command="{Binding Ribbon.Undo.Command}" />
+        <KeyBinding Gesture="Ctrl+Y"        Command="{Binding Ribbon.Redo.Command}" />
+        <KeyBinding Gesture="Ctrl+OemPlus"  Command="{Binding Ribbon.ZoomIn.Command}" />
+        <KeyBinding Gesture="Ctrl+Add"      Command="{Binding Ribbon.ZoomIn.Command}" />
+        <KeyBinding Gesture="Ctrl+OemMinus" Command="{Binding Ribbon.ZoomOut.Command}" />
+        <KeyBinding Gesture="Ctrl+Subtract" Command="{Binding Ribbon.ZoomOut.Command}" />
+    </r:RibbonWindow.InputBindings>
+
+    <!-- **********************************************************************
+      Interactions
+    *********************************************************************** -->
+    <i:Interaction.Behaviors>
+        <xb:DialogBehavior />
+        <xb:OpenFileDialogBehavior />
+        <xb:SaveFileDialogBehavior />
+        <xb:UriBehavior />
+        <xb:CloseBehavior />
+        <xb:ClosingBehavior Command="{Binding Ribbon.Close.Command}" />
+        <my:PasswordWindowBehavior />
+        <my:PreviewWindowBehavior />
+        <my:InsertWindowBehavior />
+        <my:RemoveWindowBehavior />
+        <my:MetadataWindowBehavior />
+        <my:EncryptionWindowBehavior />
+        <my:SettingsWindowBehavior />
+        <my:DragFileBehavior Command="{Binding Drop}" />
+    </i:Interaction.Behaviors>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <xb:DisposeAction />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <!-- **********************************************************************
+      Main
+    *********************************************************************** -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <my:RibbonControl Grid.Row="0" />
+        <my:FooterControl Grid.Row="2" />
+
+        <!-- ******************************************************************
+          Thumbnail list of the PDF document
+        ******************************************************************* -->
+        <ListView
+            ContextMenu="{StaticResource MainContextMenu}"
+            ItemsSource="{Binding Data.Images}"
+            ItemContainerStyle="{StaticResource PageStyle}"
+            ItemTemplate="{StaticResource PageTemplate}"
+            Style="{StaticResource PageCollectionStyle}"
+            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibility}}"
+            VirtualizingStackPanel.IsVirtualizing="True"
+            VirtualizingStackPanel.VirtualizationMode="Recycling"
+            Grid.Row="1">
+            <i:Interaction.Behaviors>
+                <xb:SelectionBehavior />
+                <my:DragMoveBehavior Command="{Binding Move}" />
+            </i:Interaction.Behaviors>
+        </ListView>
+
+        <!-- ******************************************************************
+          Recent files (when not open)
+        ******************************************************************* -->
+        <my:HeroControl
+            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibilityInverse}}"
+            Grid.Row="1" />
+    </Grid>
+</r:RibbonWindow>

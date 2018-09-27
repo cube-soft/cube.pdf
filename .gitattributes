@@ -25,3 +25,4 @@
 *.pdf           binary
 *.ps            binary
 *.eps           binary
+*.svg           binary

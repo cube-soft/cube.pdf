@@ -73,19 +73,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AlphaFS">
-      <HintPath>..\..\..\..\packages\AlphaFS.2.2.1\lib\net45\AlphaFS.dll</HintPath>
+      <HintPath>..\..\..\..\packages\AlphaFS.2.2.6\lib\net45\AlphaFS.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.11.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\..\packages\Cube.Images.1.10.0\lib\net45\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Images.1.11.0\lib\net45\Cube.Images.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Forms">
-      <HintPath>..\..\..\..\packages\Cube.Forms.1.10.0\lib\net45\Cube.Forms.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Forms.1.11.0\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -100,14 +100,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Details\GlobalSetup.cs" />
-    <Compile Include="Details\ViewModelFixture.cs" />
-    <Compile Include="ConverterTest.cs" />
-    <Compile Include="DocumentNameTest.cs" />
-    <Compile Include="SettingsTest.cs" />
-    <Compile Include="StringExtensionTest.cs" />
-    <Compile Include="ViewModelTest.cs" />
-    <Compile Include="ViewResourceTest.cs" />
+    <Compile Include="Sources\Details\GlobalSetup.cs" />
+    <Compile Include="Sources\Details\ViewModelFixture.cs" />
+    <Compile Include="Sources\ConverterTest.cs" />
+    <Compile Include="Sources\DocumentNameTest.cs" />
+    <Compile Include="Sources\SettingsTest.cs" />
+    <Compile Include="Sources\StringExtensionTest.cs" />
+    <Compile Include="Sources\ViewModelTest.cs" />
+    <Compile Include="Sources\ViewResourceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

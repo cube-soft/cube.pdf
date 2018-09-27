@@ -77,19 +77,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AlphaFS">
-      <HintPath>..\..\..\packages\AlphaFS.2.2.1\lib\net45\AlphaFS.dll</HintPath>
+      <HintPath>..\..\..\packages\AlphaFS.2.2.6\lib\net45\AlphaFS.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.FileSystem.1.11.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\packages\Cube.Images.1.10.0\lib\net45\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Images.1.11.0\lib\net45\Cube.Images.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Forms">
-      <HintPath>..\..\..\packages\Cube.Forms.1.10.0\lib\net45\Cube.Forms.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Forms.1.11.0\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -104,41 +104,41 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Aggregator.cs" />
-    <Compile Include="Models\ImageCollection.cs" />
-    <Compile Include="Presenters\DropPresenter.cs" />
-    <Compile Include="Presenters\ProgressPresenter.cs" />
-    <Compile Include="Presenters\ThumbnailPresenter.cs" />
-    <Compile Include="Views\Dialogs.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Sources\Models\Aggregator.cs" />
+    <Compile Include="Sources\Models\ImageCollection.cs" />
+    <Compile Include="Sources\Presenters\DropPresenter.cs" />
+    <Compile Include="Sources\Presenters\ProgressPresenter.cs" />
+    <Compile Include="Sources\Presenters\ThumbnailPresenter.cs" />
+    <Compile Include="Sources\Views\Dialogs.cs" />
+    <Compile Include="Sources\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\DropForm.cs">
+    <Compile Include="Sources\Views\DropForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\DropForm.Designer.cs">
+    <Compile Include="Sources\Views\DropForm.Designer.cs">
       <DependentUpon>DropForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\PreviewForm.cs">
+    <Compile Include="Sources\Views\PreviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\PreviewForm.Designer.cs">
+    <Compile Include="Sources\Views\PreviewForm.Designer.cs">
       <DependentUpon>PreviewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProgressForm.cs">
+    <Compile Include="Sources\Views\ProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\ProgressForm.Designer.cs">
+    <Compile Include="Sources\Views\ProgressForm.Designer.cs">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ThumbnailForm.cs">
+    <Compile Include="Sources\Views\ThumbnailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\ThumbnailForm.Designer.cs">
+    <Compile Include="Sources\Views\ThumbnailForm.Designer.cs">
       <DependentUpon>ThumbnailForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ThumbnailMenuControl.cs">
+    <Compile Include="Sources\Views\ThumbnailMenuControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -157,16 +157,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\DropForm.resx">
+    <EmbeddedResource Include="Sources\Views\DropForm.resx">
       <DependentUpon>DropForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\PreviewForm.resx">
+    <EmbeddedResource Include="Sources\Views\PreviewForm.resx">
       <DependentUpon>PreviewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProgressForm.resx">
+    <EmbeddedResource Include="Sources\Views\ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ThumbnailForm.resx">
+    <EmbeddedResource Include="Sources\Views\ThumbnailForm.resx">
       <DependentUpon>ThumbnailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -180,11 +180,11 @@
     <None Include="App.config" />
     <None Include="App.manifest" />
     <None Include="Packages.config" />
-    <None Include="Resources\CloseButton.png" />
-    <None Include="Resources\DragDrop.png" />
-    <None Include="Resources\HeaderImage.png" />
-    <None Include="Resources\HeaderLogo.png" />
-    <None Include="Resources\Logo.png" />
+    <None Include="Assets\CloseButton.png" />
+    <None Include="Assets\DragDrop.png" />
+    <None Include="Assets\HeaderImage.png" />
+    <None Include="Assets\HeaderLogo.png" />
+    <None Include="Assets\Logo.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Core\Cube.Pdf.Core.csproj">

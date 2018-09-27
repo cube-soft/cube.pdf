@@ -78,13 +78,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.FileSystem.1.11.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\packages\Cube.Images.1.10.0\lib\net45\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Images.1.11.0\lib\net45\Cube.Images.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\..\..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
@@ -98,19 +98,19 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Details\EmbeddedAttachment.cs" />
-    <Compile Include="Details\EmbeddedImageCollection.cs" />
-    <Compile Include="Details\ImageExtension.cs" />
-    <Compile Include="Details\ReaderExtension.cs" />
-    <Compile Include="Details\ReaderFactory.cs" />
-    <Compile Include="Details\ReadOnlyAttachmentList.cs" />
-    <Compile Include="Details\ReadOnlyPageList.cs" />
-    <Compile Include="Details\WriterExtension.cs" />
-    <Compile Include="Details\WriterFactory.cs" />
-    <Compile Include="DocumentReader.cs" />
-    <Compile Include="DocumentSplitter.cs" />
-    <Compile Include="DocumentWriterBase.cs" />
-    <Compile Include="DocumentWriter.cs" />
+    <Compile Include="Sources\Details\EmbeddedAttachment.cs" />
+    <Compile Include="Sources\Details\EmbeddedImageCollection.cs" />
+    <Compile Include="Sources\Details\ImageExtension.cs" />
+    <Compile Include="Sources\Details\ReaderExtension.cs" />
+    <Compile Include="Sources\Details\ReaderFactory.cs" />
+    <Compile Include="Sources\Details\ReadOnlyAttachmentList.cs" />
+    <Compile Include="Sources\Details\ReadOnlyPageList.cs" />
+    <Compile Include="Sources\Details\WriterExtension.cs" />
+    <Compile Include="Sources\Details\WriterFactory.cs" />
+    <Compile Include="Sources\DocumentReader.cs" />
+    <Compile Include="Sources\DocumentSplitter.cs" />
+    <Compile Include="Sources\DocumentWriterBase.cs" />
+    <Compile Include="Sources\DocumentWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <copyright>$copyright$</copyright>
+    <description>PDFium based PDF library for CubeSoft applications.</description>
+    <tags>Cube PDF PDFium</tags>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Pdfium/License.txt</licenseUrl>
+    <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
+    <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
+  </metadata>
+</package>

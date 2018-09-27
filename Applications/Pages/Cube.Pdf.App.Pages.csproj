@@ -77,19 +77,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AlphaFS">
-      <HintPath>..\..\..\packages\AlphaFS.2.2.1\lib\net45\AlphaFS.dll</HintPath>
+      <HintPath>..\..\..\packages\AlphaFS.2.2.6\lib\net45\AlphaFS.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\packages\Cube.Core.1.10.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Core.1.11.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\packages\Cube.FileSystem.1.10.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.FileSystem.1.11.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\packages\Cube.Images.1.10.0\lib\net45\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Images.1.11.0\lib\net45\Cube.Images.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Forms">
-      <HintPath>..\..\..\packages\Cube.Forms.1.10.0\lib\net45\Cube.Forms.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Forms.1.11.0\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -103,33 +103,33 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Aggregator.cs" />
-    <Compile Include="Models\FileCollection.cs" />
-    <Compile Include="Models\IconCollection.cs" />
-    <Compile Include="Models\Settings.cs" />
-    <Compile Include="Presenters\FileCollectionPresenter.cs" />
-    <Compile Include="Presenters\MenuPresenter.cs" />
-    <Compile Include="Views\FileGridView.cs">
+    <Compile Include="Sources\Models\Aggregator.cs" />
+    <Compile Include="Sources\Models\FileCollection.cs" />
+    <Compile Include="Sources\Models\IconCollection.cs" />
+    <Compile Include="Sources\Models\Settings.cs" />
+    <Compile Include="Sources\Presenters\FileCollectionPresenter.cs" />
+    <Compile Include="Sources\Presenters\MenuPresenter.cs" />
+    <Compile Include="Sources\Views\FileGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\ViewFactory.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Sources\Views\ViewFactory.cs" />
+    <Compile Include="Sources\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\FileMenuControl.cs">
+    <Compile Include="Sources\Views\FileMenuControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\MainForm.cs">
+    <Compile Include="Sources\Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\MainForm.Designer.cs">
+    <Compile Include="Sources\Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\PasswordForm.cs">
+    <Compile Include="Sources\Views\PasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\PasswordForm.Designer.cs">
+    <Compile Include="Sources\Views\PasswordForm.Designer.cs">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -148,10 +148,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MainForm.resx">
+    <EmbeddedResource Include="Sources\Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\PasswordForm.resx">
+    <EmbeddedResource Include="Sources\Views\PasswordForm.resx">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -165,10 +165,10 @@
     <None Include="App.config" />
     <None Include="App.manifest" />
     <None Include="Packages.config" />
-    <None Include="Resources\HeaderImage.png" />
-    <None Include="Resources\HeaderTitle.png" />
-    <None Include="Resources\Logo.png" />
-    <None Include="Resources\NotAssociated.ico" />
+    <None Include="Assets\HeaderImage.png" />
+    <None Include="Assets\HeaderTitle.png" />
+    <None Include="Assets\Logo.png" />
+    <None Include="Assets\NotAssociated.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Core\Cube.Pdf.Core.csproj">

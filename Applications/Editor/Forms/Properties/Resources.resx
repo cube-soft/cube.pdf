@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FilterAll" xml:space="preserve">
+    <value>All files</value>
+  </data>
+  <data name="FilterPdf" xml:space="preserve">
+    <value>PDF files</value>
+  </data>
+  <data name="MenuAdd" xml:space="preserve">
+    <value>Add ...</value>
+  </data>
+  <data name="MenuAllowAccessibility" xml:space="preserve">
+    <value>Allow using contents for accessibility</value>
+  </data>
+  <data name="MenuAllowAnnotation" xml:space="preserve">
+    <value>Allow creating and editing annotations</value>
+  </data>
+  <data name="MenuAllowAssemble" xml:space="preserve">
+    <value>Allow inserting and removing pages</value>
+  </data>
+  <data name="MenuAllowCopy" xml:space="preserve">
+    <value>Allow copying text and images</value>
+  </data>
+  <data name="MenuAllowExtract" xml:space="preserve">
+    <value>Allow extracting pages</value>
+  </data>
+  <data name="MenuAllowForm" xml:space="preserve">
+    <value>Allow filling in form fields</value>
+  </data>
+  <data name="MenuAllowPrint" xml:space="preserve">
+    <value>Allow printing</value>
+  </data>
+  <data name="MenuAuthor" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="MenuCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="MenuClear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="MenuClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="MenuConfirmPassword" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="MenuCreationTime" xml:space="preserve">
+    <value>Creation</value>
+  </data>
+  <data name="MenuCreator" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="MenuDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="MenuDown" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MenuEncryption" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="MenuEncryptionEnabled" xml:space="preserve">
+    <value>Encrypt the PDF with password</value>
+  </data>
+  <data name="MenuEncryptionMethod" xml:space="preserve">
+    <value>Method</value>
+  </data>
+  <data name="MenuExit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="MenuExtract" xml:space="preserve">
+    <value>Extract</value>
+  </data>
+  <data name="MenuFile" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="MenuFilename" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="MenuFilesize" xml:space="preserve">
+    <value>Filesize</value>
+  </data>
+  <data name="MenuFrameOnly" xml:space="preserve">
+    <value>Frame only</value>
+  </data>
+  <data name="MenuInsert" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="MenuInsertBack" xml:space="preserve">
+    <value>Insert at the end</value>
+  </data>
+  <data name="MenuInsertFront" xml:space="preserve">
+    <value>Insert at the beginning</value>
+  </data>
+  <data name="MenuInsertOthers" xml:space="preserve">
+    <value>Insertion details</value>
+  </data>
+  <data name="MenuInsertPosition" xml:space="preserve">
+    <value>Insert position</value>
+  </data>
+  <data name="MenuKeywords" xml:space="preserve">
+    <value>Keywords</value>
+  </data>
+  <data name="MenuLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="MenuLanguageAuto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="MenuLanguageEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="MenuLanguageJapanese" xml:space="preserve">
+    <value>Japanese</value>
+  </data>
+  <data name="MenuLastWriteTime" xml:space="preserve">
+    <value>Last updated</value>
+  </data>
+  <data name="MenuLayout" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="MenuMetadata" xml:space="preserve">
+    <value>Metadata</value>
+  </data>
+  <data name="MenuMoveNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="MenuMovePrevious" xml:space="preserve">
+    <value>Prev</value>
+  </data>
+  <data name="MenuOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="MenuOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="MenuOpenWithPassword" xml:space="preserve">
+    <value>Open with password</value>
+  </data>
+  <data name="MenuOperations" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="MenuOthers" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="MenuOwnerPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="MenuPageCount" xml:space="preserve">
+    <value>Page count</value>
+  </data>
+  <data name="MenuPdfVersion" xml:space="preserve">
+    <value>PDF version</value>
+  </data>
+  <data name="MenuPositionFirst" xml:space="preserve">
+    <value>Beginning</value>
+  </data>
+  <data name="MenuPositionLast" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="MenuPositionSelected" xml:space="preserve">
+    <value>Selected position</value>
+  </data>
+  <data name="MenuPositionSpecified" xml:space="preserve">
+    <value>Behind the number of</value>
+  </data>
+  <data name="MenuPreview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="MenuProducer" xml:space="preserve">
+    <value>Producer</value>
+  </data>
+  <data name="MenuRecent" xml:space="preserve">
+    <value>Recent files</value>
+  </data>
+  <data name="MenuRedo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="MenuRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="MenuRemove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="MenuRemoveOthers" xml:space="preserve">
+    <value>Removal details</value>
+  </data>
+  <data name="MenuRemoveRange" xml:space="preserve">
+    <value>Removal range</value>
+  </data>
+  <data name="MenuRotateLeft" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="MenuRotateRight" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="MenuSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MenuSaveAs" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="MenuSelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="MenuSelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="MenuSelectClear" xml:space="preserve">
+    <value>Cancel selection</value>
+  </data>
+  <data name="MenuSelectFlip" xml:space="preserve">
+    <value>Flip selection</value>
+  </data>
+  <data name="MenuSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MenuSharePassword" xml:space="preserve">
+    <value>Use owner password</value>
+  </data>
+  <data name="MenuSubject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="MenuSummary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="MenuTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="MenuUndo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="MenuUp" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="MenuUpdate" xml:space="preserve">
+    <value>Check update at launching</value>
+  </data>
+  <data name="MenuUserPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="MenuVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="MenuViewOneColumn" xml:space="preserve">
+    <value>One column</value>
+  </data>
+  <data name="MenuViewSinglePage" xml:space="preserve">
+    <value>Single page</value>
+  </data>
+  <data name="MenuViewTwoColumnLeft" xml:space="preserve">
+    <value>Two column (left)</value>
+  </data>
+  <data name="MenuViewTwoColumnRight" xml:space="preserve">
+    <value>Two column (right)</value>
+  </data>
+  <data name="MenuViewTwoPageLeft" xml:space="preserve">
+    <value>Two page (left)</value>
+  </data>
+  <data name="MenuViewTwoPageRight" xml:space="preserve">
+    <value>Two page (right)</value>
+  </data>
+  <data name="MenuZoomIn" xml:space="preserve">
+    <value>ZoomIn</value>
+  </data>
+  <data name="MenuZoomOut" xml:space="preserve">
+    <value>ZoomOut</value>
+  </data>
+  <data name="MessageLoading" xml:space="preserve">
+    <value>Loading {0} ...</value>
+  </data>
+  <data name="MessageLoadingMetadata" xml:space="preserve">
+    <value>Loading metadata ...</value>
+  </data>
+  <data name="MessageOverwrite" xml:space="preserve">
+    <value>PDF is modified. Do you want to overwrite?</value>
+  </data>
+  <data name="MessagePage" xml:space="preserve">
+    <value>{0} pages</value>
+  </data>
+  <data name="MessagePassword" xml:space="preserve">
+    <value>Please enter the owner password for opening and editing {0}.</value>
+  </data>
+  <data name="MessageRangeError" xml:space="preserve">
+    <value>Failed to parse the removal range.</value>
+  </data>
+  <data name="MessageRemoveRange" xml:space="preserve">
+    <value>e.g. 1,2,4-7,9</value>
+  </data>
+  <data name="MessageSaved" xml:space="preserve">
+    <value>Saved at {0}</value>
+  </data>
+  <data name="MessageSaving" xml:space="preserve">
+    <value>Saving to {0} ...</value>
+  </data>
+  <data name="MessageSelection" xml:space="preserve">
+    <value>{0} pages selected</value>
+  </data>
+  <data name="MessageTotalPage" xml:space="preserve">
+    <value>{0} pages</value>
+  </data>
+  <data name="TitleEncryption" xml:space="preserve">
+    <value>Encryption</value>
+  </data>
+  <data name="TitleExtract" xml:space="preserve">
+    <value>Extraction details</value>
+  </data>
+  <data name="TitleInsert" xml:space="preserve">
+    <value>Insertion details</value>
+  </data>
+  <data name="TitleMetadata" xml:space="preserve">
+    <value>PDF Metadata</value>
+  </data>
+  <data name="TitleOpen" xml:space="preserve">
+    <value>Open file</value>
+  </data>
+  <data name="TitlePassword" xml:space="preserve">
+    <value>Input password</value>
+  </data>
+  <data name="TitlePreview" xml:space="preserve">
+    <value>{0} ({1}/{2} page)</value>
+  </data>
+  <data name="TitleRemove" xml:space="preserve">
+    <value>Removal details</value>
+  </data>
+  <data name="TitleSaveAs" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="TitleSettings" xml:space="preserve">
+    <value>CubePDF Utility settings</value>
+  </data>
+  <data name="TooltipExtract" xml:space="preserve">
+    <value>Extract the selected pages</value>
+  </data>
+  <data name="TooltipInsert" xml:space="preserve">
+    <value>Insert behind selected position</value>
+  </data>
+  <data name="TooltipMetadata" xml:space="preserve">
+    <value>PDF document metadata</value>
+  </data>
+  <data name="TooltipRemove" xml:space="preserve">
+    <value>Remove the selected pages</value>
+  </data>
+  <data name="TooltipSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UnitByte" xml:space="preserve">
+    <value>Bytes</value>
+  </data>
+  <data name="VersionSuffix" xml:space="preserve">
+    <value>β</value>
+  </data>
+</root>
