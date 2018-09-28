@@ -13,6 +13,27 @@ Note that some projects are licensed under the GNU AGPLv3. See the License secti
 
 ## Summary
 
+### Libraries
+
+Cube.Pdf Libraries provide functionality to treat third-party libraries as the same interface as possible (except for Cube.Pdf.Ghostscript). Interfaces of the Cube.Pdf are as follows:
+
+* [IDocumentReader](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentReader.cs)
+* [IDocumentRenderer](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentRenderer.cs)
+* [IDocumentWriter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentWriter.cs)
+
+For example, the avobe program accesses a PDF document by using the iTextSharp library.
+And when you want to use the PDFium library, you only modify the description of "Cube.Pdf.Itext.DocumentReader" to "Cube.Pdf.Pdfium.DocumentReader".
+
+```cs
+// Set password directly or using Query<string>
+var password = new Cube.Query<string>(e => e.Result = "password");
+var path = @"path/to/sample.pdf";
+using (var reader = new Cube.Pdf.Itext.DocumentReader(path, password))
+{
+    // Do something.
+}
+```
+
 ### CubePDF
 
 ![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Overview.png?raw=true)
