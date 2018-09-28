@@ -21,7 +21,7 @@ Cube.Pdf Libraries provide functionality to treat third-party libraries as the s
 * [IDocumentRenderer](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentRenderer.cs)
 * [IDocumentWriter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentWriter.cs)
 
-For example, the avobe program accesses a PDF document by using the iTextSharp library.
+For example, the following code accesses a PDF document by using the iTextSharp library.
 And when you want to use the PDFium library, you only modify the description of "Cube.Pdf.Itext.DocumentReader" to "Cube.Pdf.Pdfium.DocumentReader".
 
 ```cs
