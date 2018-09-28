@@ -304,7 +304,10 @@ namespace Cube.Pdf.Tests.Editor
         private MainViewModel Create()
         {
             var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
-            var src   = new SettingsFolder(Assembly.GetExecutingAssembly(), IO) { AutoSave = false };
+            var asm   = Assembly.GetExecutingAssembly();
+            var fmt   = DataContract.Format.Registry;
+            var path  = @"CubeSoft\Cube.Pdf.Tests.Editor";
+            var src   = new SettingsFolder(asm, fmt, path, IO) { AutoSave = false };
             var dest  = new MainViewModel(src);
 
             dest.Data.Preferences.Dummy = dummy;

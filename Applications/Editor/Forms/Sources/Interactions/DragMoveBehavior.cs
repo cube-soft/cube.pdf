@@ -63,8 +63,8 @@ namespace Cube.Pdf.App.Editor
             Drawing.DragOver   += WhenDragOver;
             Drawing.Drop       += WhenDrop;
 
-            Canvas = new Canvas { Visibility = Visibility.Collapsed };
-            Canvas.Children.Add(Drawing);
+            DrawingCanvas = new Canvas { Visibility = Visibility.Collapsed };
+            DrawingCanvas.Children.Add(Drawing);
         }
 
         #endregion
@@ -73,14 +73,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Canvas
+        /// DrawingCanvas
         ///
         /// <summary>
-        /// Gets the canvas that draws the moving position.
+        /// Gets the canvas to draw the moving position.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Canvas Canvas { get; }
+        public Canvas DrawingCanvas { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -124,8 +124,8 @@ namespace Cube.Pdf.App.Editor
             AssociatedObject.Drop -= WhenDrop;
             AssociatedObject.Drop += WhenDrop;
 
-            var obj = GetParent<Grid>(AssociatedObject);
-            if (obj != null) obj.Children.Add(Canvas);
+            _root = GetParent<Panel>(AssociatedObject);
+            _root?.Children.Add(DrawingCanvas);
         }
 
         /* ----------------------------------------------------------------- */
@@ -147,8 +147,7 @@ namespace Cube.Pdf.App.Editor
             AssociatedObject.DragOver -= WhenDragOver;
             AssociatedObject.Drop -= WhenDrop;
 
-            var obj = GetParent<Grid>(AssociatedObject);
-            if (obj != null) obj.Children.Remove(Canvas);
+            _root?.Children.Remove(DrawingCanvas);
 
             base.OnDetaching();
         }
@@ -219,7 +218,7 @@ namespace Cube.Pdf.App.Editor
         private void WhenMouseEnter(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed) return;
-            Canvas.Visibility = Visibility.Collapsed;
+            DrawingCanvas.Visibility = Visibility.Collapsed;
             Reset();
         }
 
@@ -258,7 +257,7 @@ namespace Cube.Pdf.App.Editor
         {
             try
             {
-                Canvas.Visibility = Visibility.Collapsed;
+                DrawingCanvas.Visibility = Visibility.Collapsed;
                 var index = GetTargetIndex(e.GetPosition(AssociatedObject));
                 var delta = index - _core.Source;
                 if (Command?.CanExecute(delta) ?? false) Command.Execute(delta);
@@ -285,8 +284,8 @@ namespace Cube.Pdf.App.Editor
             if (index == -1 || index == AssociatedObject.Items.Count) return index;
 
             var r = GetBounds(index);
-            var cmp = GetWindowPoint(new Point(r.Left + r.Width / 2, r.Top + r.Height / 2));
-            var cvt = GetWindowPoint(pt);
+            var cmp = Conver(new Point(r.Left + r.Width / 2, r.Top + r.Height / 2), _root);
+            var cvt = Conver(pt, _root);
 
             var n = AssociatedObject.Items.Count;
             if (_core.Source < index && cvt.X < cmp.X) return Math.Max(index - 1, 0);
@@ -321,21 +320,6 @@ namespace Cube.Pdf.App.Editor
             var m = GetItem(0)?.Margin.Right ?? 0;
             var x = (w - pt.X < _core.Bounds.Width) ? (w - _core.Bounds.Width) : (pt.X - m);
             return (x != pt.X) ? GetIndex(new Point(x, pt.Y)) : dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetWindowPoint
-        ///
-        /// <summary>
-        /// Converts the specified point based on the Window coordinate.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Point GetWindowPoint(Point pt)
-        {
-            var tmp = AssociatedObject.PointToScreen(pt);
-            return Application.Current.MainWindow.PointFromScreen(tmp);
         }
 
         /* ----------------------------------------------------------------- */
@@ -442,6 +426,20 @@ namespace Cube.Pdf.App.Editor
             return default(T);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Converts the specified point based on the specified control.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Point Conver<T>(Point pt, T control) where T : UIElement =>
+            control != null ?
+            control.PointFromScreen(AssociatedObject.PointToScreen(pt)) :
+            pt;
+
         #endregion
 
         #region Others
@@ -457,7 +455,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Drag()
         {
-            Canvas.Visibility = Visibility.Collapsed;
+            DrawingCanvas.Visibility = Visibility.Collapsed;
             DragDrop.DoDragDrop(AssociatedObject, _core.Source, DragDropEffects.Move);
         }
 
@@ -475,16 +473,16 @@ namespace Cube.Pdf.App.Editor
             var dest = GetIndexTrick(pt);
             var ok   = _core.Source >= 0 && dest >= 0;
 
-            Canvas.Visibility = ok ? Visibility.Visible : Visibility.Collapsed;
+            DrawingCanvas.Visibility = ok ? Visibility.Visible : Visibility.Collapsed;
             if (!ok) return;
 
             var n    = AssociatedObject.Items.Count;
             var rect = GetBounds(Math.Max(Math.Min(dest, n - 1), 0));
-            var cvt  = GetWindowPoint(pt);
+            var cvt  = Conver(pt, _root);
 
             var w = rect.Width  + 6;
             var h = rect.Height + 6;
-            var o = GetWindowPoint(new Point(rect.Left + w / 2, rect.Top));
+            var o = Conver(new Point(rect.Left + w / 2, rect.Top + h / 6), _root);
             var x = (dest == n || cvt.X >= o.X) ? o.X : o.X - w;
             var y = o.Y;
 
@@ -533,6 +531,7 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
+        private Panel _root;
         private Core _core;
         private class Core
         {
