@@ -28,7 +28,7 @@ You can get the executable installer from the [download page](https://www.cube-s
 
 ## Dependencies
 
-Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries) are as follows. Applications may use some other third-party's libraries.
+Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries) are as follows. [Applications](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications) may use some other third-party's libraries.
 
 * [Cube.Core](https://github.com/cube-soft/Cube.Core)
 * [Cube.FileSystem](https://github.com/cube-soft/Cube.FileSystem)
