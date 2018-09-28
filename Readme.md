@@ -9,7 +9,7 @@ Note that some projects are licensed under the GNU AGPLv3. See the License secti
 
 ## Summary
 
-### ![Logo](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/App.svg?raw=true) CubePDF
+### CubePDF
 
 ![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Overview.png?raw=true)
 
@@ -18,7 +18,7 @@ Note that some projects are licensed under the GNU AGPLv3. See the License secti
 You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) (Japanese), or [directly download link](https://www.cube-soft.jp/cubepdf/dl.php).
 Note that the installer always shows menus and other messages only in Japanese. Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
 
-### ![Logo](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/App.svg?raw=true) CubePDF Utility
+### CubePDF Utility
 
 ![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Overview.png?raw=true)
 
