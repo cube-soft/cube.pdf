@@ -123,7 +123,7 @@ namespace Cube.Pdf.Mixin
         /// </summary>
         ///
         /// <param name="query">Query object.</param>
-        /// <param name="src">PDF file path.</param>
+        /// <param name="src">Path of the PDF file.</param>
         ///
         /// <returns>Query result.</returns>
         ///
@@ -142,10 +142,9 @@ namespace Cube.Pdf.Mixin
             {
                 query.Request(dest);
                 if (dest.Cancel || dest.Result.HasValue()) return dest;
+                else throw new ArgumentException(Properties.Resources.ErrorPasswordEmpty);
             }
-            catch (Exception) { /* throw EncryptionException */ }
-
-            throw new EncryptionException(Properties.Resources.ErrorPassword);
+            catch (Exception err) { throw Convert(err); }
         }
 
         #endregion
@@ -170,6 +169,19 @@ namespace Cube.Pdf.Mixin
             src.Permission.ModifyContents    = value;
             src.Permission.Print             = value;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Creates a new instance of the EncryptionException class from
+        /// the specified exception object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static EncryptionException Convert(Exception src) =>
+            new EncryptionException(Properties.Resources.ErrorPassword, src);
 
         #endregion
     }

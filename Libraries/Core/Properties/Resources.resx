@@ -120,4 +120,7 @@
   <data name="ErrorPassword" xml:space="preserve">
     <value>Input password may be incorrect.</value>
   </data>
+  <data name="ErrorPasswordEmpty" xml:space="preserve">
+    <value>Password is empty.</value>
+  </data>
 </root>
