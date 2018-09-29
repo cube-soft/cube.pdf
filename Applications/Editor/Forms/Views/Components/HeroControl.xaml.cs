@@ -25,7 +25,7 @@ namespace Cube.Pdf.App.Editor
     /// FooterControl
     ///
     /// <summary>
-    /// Represents the logic for HeroControl.xaml.
+    /// Represents the code behind of the HeroControl.xaml.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

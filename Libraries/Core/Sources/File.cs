@@ -27,7 +27,7 @@ namespace Cube.Pdf
     /// File
     ///
     /// <summary>
-    /// PDF や画像等のファイル情報を保持するための基底クラスです。
+    /// Represents information of PDF and image files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,10 +40,11 @@ namespace Cube.Pdf
         /// File
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the File class with the specified
+        /// file path.
         /// </summary>
         ///
-        /// <param name="src">ファイルまたはディレクトリのパス</param>
+        /// <param name="src">Path of the source file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public File(string src) : base(src) { }
@@ -53,11 +54,14 @@ namespace Cube.Pdf
         /// File
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the File class with the specified
+        /// arguments.
         /// </summary>
         ///
-        /// <param name="src">ファイルまたはディレクトリのパス</param>
-        /// <param name="refreshable">更新用オブジェクト</param>
+        /// <param name="src">Path of the source file.</param>
+        /// <param name="refreshable">
+        /// Object to refresh file information.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         public File(string src, IRefreshable refreshable) : base(src, refreshable) { }
@@ -71,7 +75,7 @@ namespace Cube.Pdf
         /// Count
         ///
         /// <summary>
-        /// ページ数に相当する値を取得または設定します。
+        /// Gets the number of pages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -82,7 +86,7 @@ namespace Cube.Pdf
         /// Resolution
         ///
         /// <summary>
-        /// ファイルの解像度を取得または設定します。
+        /// Gets the resolution of the PDF or image object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -100,7 +104,7 @@ namespace Cube.Pdf
     /// PdfFile
     ///
     /// <summary>
-    /// PDF ファイルの情報を保持するためのクラスです。
+    /// Represents information of a PDF file.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -113,10 +117,11 @@ namespace Cube.Pdf
         /// PdfFile
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the PdfFile class with the
+        /// specified file path.
         /// </summary>
         ///
-        /// <param name="src">ファイルのパス</param>
+        /// <param name="src">Path of the PDF file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public PdfFile(string src) : this(src, string.Empty) { }
@@ -126,11 +131,12 @@ namespace Cube.Pdf
         /// PdfFile
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the PdfFile class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="src">ファイルのパス</param>
-        /// <param name="password">ファイルを開くためのパスワード</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password to open the PDF file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public PdfFile(string src, string password) : base(src)
@@ -143,12 +149,15 @@ namespace Cube.Pdf
         /// PdfFile
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the PdfFile class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="src">ファイルのパス</param>
-        /// <param name="password">ファイルを開くためのパスワード</param>
-        /// <param name="refreshable">情報更新用オブジェクト</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password to open the PDF file.</param>
+        /// <param name="refreshable">
+        /// Object to refresh file information.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         public PdfFile(string src, string password, IRefreshable refreshable) :
@@ -166,8 +175,7 @@ namespace Cube.Pdf
         /// Point
         ///
         /// <summary>
-        /// PDF ファイル中に記載される各種サイズの単位である Point の
-        /// dpi 換算値を取得します。
+        /// Gets the DPI value of the "Point" unit.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -178,7 +186,7 @@ namespace Cube.Pdf
         /// Password
         ///
         /// <summary>
-        /// オーナパスワードまたはユーザパスワードを取得または設定します。
+        /// Gets or sets the owner or user password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -189,8 +197,8 @@ namespace Cube.Pdf
         /// FullAccess
         ///
         /// <summary>
-        /// ファイルの全ての内容にアクセス可能かどうかを示す値を取得または
-        /// 設定します。
+        /// Gets or sets the value indicating whether you can access
+        /// all contents of the PDF document.
         /// </summary>
         ///
         /// <remarks>
@@ -210,7 +218,7 @@ namespace Cube.Pdf
         /// Initialize
         ///
         /// <summary>
-        /// 内部情報を初期化します。
+        /// Initializes properties of the PdfFile class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -232,7 +240,7 @@ namespace Cube.Pdf
     /// ImageFile
     ///
     /// <summary>
-    /// 画像ファイルの情報を保持するためのクラスです。
+    /// Represents information of an image file.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -245,10 +253,11 @@ namespace Cube.Pdf
         /// ImageFile
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ImageFile class with the
+        /// specified file path.
         /// </summary>
         ///
-        /// <param name="src">ファイルまたはディレクトリのパス</param>
+        /// <param name="src">Path of the image file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ImageFile(string src) : base(src) { }
@@ -258,11 +267,14 @@ namespace Cube.Pdf
         /// ImageFile
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ImageFile class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="src">ファイルまたはディレクトリのパス</param>
-        /// <param name="refreshable">更新用オブジェクト</param>
+        /// <param name="src">Path of the image file.</param>
+        /// <param name="refreshable">
+        /// Object to refresh file information.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         public ImageFile(string src, IRefreshable refreshable) : base(src, refreshable) { }

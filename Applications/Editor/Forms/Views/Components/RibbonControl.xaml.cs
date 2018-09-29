@@ -25,7 +25,7 @@ namespace Cube.Pdf.App.Editor
     /// RibbonControl
     ///
     /// <summary>
-    /// Ribbon メニューを表すクラスです。
+    /// Represents the code behind of the RibbonControl.xaml
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -36,7 +36,7 @@ namespace Cube.Pdf.App.Editor
         /// RibbonControl
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the RibbonControl class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

@@ -25,7 +25,7 @@ namespace Cube.Pdf
     /// IDocumentWriter
     ///
     /// <summary>
-    /// PDF ファイルを作成、保存するためのインターフェースです。
+    /// Represents properties and methods to create or modify a document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -36,7 +36,7 @@ namespace Cube.Pdf
         /// Reset
         ///
         /// <summary>
-        /// 初期状態にリセットします。
+        /// Resets values.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -47,7 +47,7 @@ namespace Cube.Pdf
         /// Save
         ///
         /// <summary>
-        /// 指定されたパスに PDF ファイルを保存します。
+        /// Saves the document to the specified path.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -58,10 +58,10 @@ namespace Cube.Pdf
         /// Add
         ///
         /// <summary>
-        /// ページを追加します。
+        /// Adds pages to the document.
         /// </summary>
         ///
-        /// <param name="pages">ページ一覧</param>
+        /// <param name="pages">Collection of adding pages.</param>
         ///
         /* ----------------------------------------------------------------- */
         void Add(IEnumerable<Page> pages);
@@ -71,12 +71,13 @@ namespace Cube.Pdf
         /// Add
         ///
         /// <summary>
-        /// ページを追加します。
+        /// Adds pages to the document.
         /// </summary>
         ///
-        /// <param name="pages">ページ一覧</param>
+        /// <param name="pages">Collection of the adding pages.</param>
         /// <param name="hint">
-        /// ページの詳細情報を取得するためのオブジェクト
+        /// Document reader object to get more detailed information about
+        /// the specified pages.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
@@ -87,10 +88,10 @@ namespace Cube.Pdf
         /// Attach
         ///
         /// <summary>
-        /// ファイルを添付します。
+        /// Adds attached objects to the document.
         /// </summary>
         ///
-        /// <param name="files">添付ファイル一覧</param>
+        /// <param name="files">Collection of attached files.</param>
         ///
         /* ----------------------------------------------------------------- */
         void Attach(IEnumerable<Attachment> files);
@@ -100,10 +101,10 @@ namespace Cube.Pdf
         /// Set
         ///
         /// <summary>
-        /// PDF ファイルのメタデータを設定します。
+        /// Sets the PDF metadata.
         /// </summary>
         ///
-        /// <param name="metadata">メタデータ</param>
+        /// <param name="metadata">Metadata object.</param>
         ///
         /* ----------------------------------------------------------------- */
         void Set(Metadata metadata);
@@ -113,10 +114,10 @@ namespace Cube.Pdf
         /// Set
         ///
         /// <summary>
-        /// 暗号化に関する情報を設定します。
+        /// Sets the encryption settings.
         /// </summary>
         ///
-        /// <param name="encryption">暗号化情報</param>
+        /// <param name="encryption">Encryption settings.</param>
         ///
         /* ----------------------------------------------------------------- */
         void Set(Encryption encryption);

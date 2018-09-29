@@ -40,9 +40,6 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewWindow()
-        {
-            InitializeComponent();
-        }
+        public PreviewWindow() { InitializeComponent(); }
     }
 }

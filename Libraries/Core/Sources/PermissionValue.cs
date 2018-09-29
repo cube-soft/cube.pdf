@@ -30,11 +30,11 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     public enum PermissionValue
     {
-        /// <summary>禁止</summary>
+        /// <summary>Operation is denied.</summary>
         Deny,
-        /// <summary>一部制限</summary>
+        /// <summary>Part of the operation is allowed.</summary>
         Restrict,
-        /// <summary>許可</summary>
+        /// <summary>Operation is allowed.</summary>
         Allow,
     }
 
