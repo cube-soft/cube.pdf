@@ -280,29 +280,28 @@ namespace Cube.Pdf.Pdfium
 
             if (_core == IntPtr.Zero) throw GetLastError();
 
-            var n = PdfiumApi.FPDF_GetPageCount(_core);
-
             Encryption = EncryptionFactory.Create(this, password);
-            File       = CreateFile(password, n, !Encryption.OpenWithPassword);
+            File       = Create(password, !Encryption.OpenWithPassword);
             Pages      = new ReadOnlyPageList(this, File);
             Metadata   = MetadataFactory.Create(this);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateFile
+        /// Create
         ///
         /// <summary>
-        /// File オブジェクトを生成します。
+        /// Creates a PdfFile object from the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfFile CreateFile(string password, int n, bool fullaccess) =>
-            new PdfFile(Source, password, IO.GetRefreshable())
-            {
-                FullAccess = fullaccess,
-                Count      = n,
-            };
+        private PdfFile Create(string password, bool fullaccess)
+        {
+            var dest = IO.GetPdfFile(Source, password);
+            dest.Count      = PdfiumApi.FPDF_GetPageCount(_core);
+            dest.FullAccess = fullaccess;
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///

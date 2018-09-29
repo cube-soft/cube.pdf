@@ -31,23 +31,9 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class File : Information
+    public abstract class File : Information
     {
         #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// File
-        ///
-        /// <summary>
-        /// Initializes a new instance of the File class with the specified
-        /// file path.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the source file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public File(string src) : base(src) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,7 +50,7 @@ namespace Cube.Pdf
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public File(string src, IRefreshable refreshable) : base(src, refreshable) { }
+        protected File(string src, IRefreshable refreshable) : base(src, refreshable) { }
 
         #endregion
 
@@ -118,38 +104,6 @@ namespace Cube.Pdf
         ///
         /// <summary>
         /// Initializes a new instance of the PdfFile class with the
-        /// specified file path.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PdfFile(string src) : this(src, string.Empty) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfFile
-        ///
-        /// <summary>
-        /// Initializes a new instance of the PdfFile class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password to open the PDF file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PdfFile(string src, string password) : base(src)
-        {
-            Initialize(password);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfFile
-        ///
-        /// <summary>
-        /// Initializes a new instance of the PdfFile class with the
         /// specified arguments.
         /// </summary>
         ///
@@ -160,10 +114,11 @@ namespace Cube.Pdf
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public PdfFile(string src, string password, IRefreshable refreshable) :
+        internal PdfFile(string src, string password, IRefreshable refreshable) :
             base(src, refreshable)
         {
-            Initialize(password);
+            Password   = password;
+            Resolution = new PointF(Point, Point);
         }
 
         #endregion
@@ -179,7 +134,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static int Point => 72;
+        public static float Point => 72.0F;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -210,25 +165,6 @@ namespace Cube.Pdf
         public bool FullAccess { get; set; } = true;
 
         #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Initialize
-        ///
-        /// <summary>
-        /// Initializes properties of the PdfFile class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Initialize(string password)
-        {
-            Password   = password;
-            Resolution = new PointF(Point, Point);
-        }
-
-        #endregion
     }
 
     #endregion
@@ -254,20 +190,6 @@ namespace Cube.Pdf
         ///
         /// <summary>
         /// Initializes a new instance of the ImageFile class with the
-        /// specified file path.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the image file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageFile(string src) : base(src) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageFile
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ImageFile class with the
         /// specified arguments.
         /// </summary>
         ///
@@ -277,7 +199,7 @@ namespace Cube.Pdf
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageFile(string src, IRefreshable refreshable) : base(src, refreshable) { }
+        internal ImageFile(string src, IRefreshable refreshable) : base(src, refreshable) { }
 
         #endregion
     }

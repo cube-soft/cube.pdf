@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Pdf.Mixin;
 using iTextSharp.text.pdf;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -126,11 +127,9 @@ namespace Cube.Pdf.Itext
             _core = ReaderFactory.Create(src, query, partial, out string password);
             Debug.Assert(_core != null);
 
-            var f = new PdfFile(src, password, io.GetRefreshable())
-            {
-                FullAccess = _core.IsOpenedWithFullPermissions,
-                Count      = _core.NumberOfPages
-            };
+            var f = io.GetPdfFile(src, password);
+            f.Count      = _core.NumberOfPages;
+            f.FullAccess = _core.IsOpenedWithFullPermissions;
 
             File        = f;
             Metadata    = _core.GetMetadata();

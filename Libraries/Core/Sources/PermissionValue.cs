@@ -71,7 +71,7 @@ namespace Cube.Pdf
         /// <summary>
         /// Print the document at the highest quality level.
         /// </summary>
-        PrintHighQuality = 0x00000800 | Print,
+        PrintHighQuality = 0x00000800,
 
         /// <summary>
         /// Modify the contents of the document by operations other than

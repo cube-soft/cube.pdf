@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Pages
         {
             var ext = IO.Get(path).Extension.ToLower();
             if (ext == ".pdf") AddDocument(path);
-            else lock (_lock) Add(new ImageFile(path, IO.GetRefreshable()));
+            else lock (_lock) Add(IO.GetImageFile(path));
         }
 
         /* --------------------------------------------------------------------- */

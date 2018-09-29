@@ -272,7 +272,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         private bool SetPrintPermission(PermissionValue value)
         {
-            var both = PermissionFlags.PrintHighQuality;
+            var both = PermissionFlags.Print | PermissionFlags.PrintHighQuality;
             var dest = value.IsAllowed() ? (_flags | both) : (_flags & ~both);
             if (value == PermissionValue.Restrict) dest |= PermissionFlags.Print;
             return Set(ref _flags, dest, nameof(Print));

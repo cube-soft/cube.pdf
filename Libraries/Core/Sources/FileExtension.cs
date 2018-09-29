@@ -37,6 +37,24 @@ namespace Cube.Pdf.Mixin
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetPdfFile
+        ///
+        /// <summary>
+        /// Gets the File object that represents the specified PDF document.
+        /// </summary>
+        ///
+        /// <param name="io">I/O handler.</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password to open the PDF file.</param>
+        ///
+        /// <returns>PdfFile object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PdfFile GetPdfFile(this IO io, string src, string password) =>
+            new PdfFile(src, password, io.GetRefreshable());
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetImageFile
         ///
         /// <summary>
