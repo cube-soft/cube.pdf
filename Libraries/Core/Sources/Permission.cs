@@ -199,6 +199,19 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Get
+        ///
+        /// <summary>
+        /// Gets the permission for the specified operations.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private PermissionValue Get(PermissionFlags primary, PermissionFlags secondary) =>
+            _flags.HasFlag(primary)   ? PermissionValue.Allow    :
+            _flags.HasFlag(secondary) ? PermissionValue.Restrict : PermissionValue.Deny;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetPrintPermission
         ///
         /// <summary>
@@ -207,9 +220,7 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         private PermissionValue GetPrintPermission() =>
-            _flags.HasFlag(PermissionFlags.PrintHighQuality) ? PermissionValue.Allow :
-            _flags.HasFlag(PermissionFlags.Print)            ? PermissionValue.Restrict :
-                                                               PermissionValue.Deny;
+            Get(PermissionFlags.PrintHighQuality, PermissionFlags.Print);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -221,9 +232,7 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         private PermissionValue GetModifyContentsPermission() =>
-            _flags.HasFlag(PermissionFlags.ModifyContents) ? PermissionValue.Allow :
-            _flags.HasFlag(PermissionFlags.Assemble)       ? PermissionValue.Restrict :
-                                                             PermissionValue.Deny;
+            Get(PermissionFlags.ModifyContents, PermissionFlags.Assemble);
 
         /* ----------------------------------------------------------------- */
         ///
