@@ -47,14 +47,14 @@ namespace Cube.Pdf.Tests
         [Test]
         public void Create()
         {
-            var name = "日本語のサンプル.md";
+            var name = "SampleImage02.png";
             var src  = GetExamplesWith(name);
             var dest = new Attachment(src);
 
             Assert.That(dest.Name,            Is.EqualTo(name));
             Assert.That(dest.Source,          Is.EqualTo(src));
-            Assert.That(dest.Length,          Is.EqualTo(12843));
-            Assert.That(dest.Data.Length,     Is.EqualTo(12843));
+            Assert.That(dest.Length,          Is.EqualTo(3765));
+            Assert.That(dest.Data.Length,     Is.EqualTo(3765));
             Assert.That(dest.Checksum.Length, Is.EqualTo(32));
         }
 
