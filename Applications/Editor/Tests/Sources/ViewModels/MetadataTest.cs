@@ -47,7 +47,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Set
         ///
         /// <summary>
-        /// Executes the test to set the metadata.
+        /// Executes the test for setting the PDF metadata.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -82,7 +82,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test to cancel the MetadataWindow.
+        /// Executes the test for selecting the cancel button in the
+        /// MetadataWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

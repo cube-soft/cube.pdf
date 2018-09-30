@@ -41,7 +41,7 @@ namespace Cube.Pdf.Tests
         /// Get
         ///
         /// <summary>
-        /// Executes the test to get information of the specified file.
+        /// Executes the test for getting information of the specified file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -70,7 +70,7 @@ namespace Cube.Pdf.Tests
         /// Get
         ///
         /// <summary>
-        /// Executes the test to get information of the image file.
+        /// Executes the test for getting information of the image file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -92,8 +92,8 @@ namespace Cube.Pdf.Tests
         /// Open_BadPassword_Throws
         ///
         /// <summary>
-        /// Executes the test to confirm the result when the input password
-        /// is wrong.
+        /// Executes the test for confirming the result when the input
+        /// password is wrong.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -112,8 +112,8 @@ namespace Cube.Pdf.Tests
         /// Open_PasswordCancel_Throws
         ///
         /// <summary>
-        /// Executes the test to confirm the result when the user cancels
-        /// to input password.
+        /// Executes the test for confirming the result of canceling
+        /// password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

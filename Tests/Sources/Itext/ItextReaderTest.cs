@@ -96,7 +96,7 @@ namespace Cube.Pdf.Tests.Itext
 
         #endregion
 
-        #region Helper methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

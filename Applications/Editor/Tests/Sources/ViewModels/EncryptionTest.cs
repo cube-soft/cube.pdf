@@ -48,7 +48,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Set
         ///
         /// <summary>
-        /// Executes the test to set the encryption information.
+        /// Executes the test for setting the encryption settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -83,7 +83,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test to cancel the EncryptionWindow.
+        /// Executes the test for selecting the cancel button in the
+        /// EncryptionWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

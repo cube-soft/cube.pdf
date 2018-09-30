@@ -45,7 +45,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Preview
         ///
         /// <summary>
-        /// Executes the test to preview an item.
+        /// Executes the test for showing the PreviewWindow of the selected
+        /// item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -79,7 +80,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Select
         ///
         /// <summary>
-        /// Executes the test to select some items.
+        /// Executes the test for selecting some items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -114,7 +115,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Zoom
         ///
         /// <summary>
-        /// Executes the test to change the item size.
+        /// Executes the test for changing the item size.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -138,7 +139,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// FrameOnly
         ///
         /// <summary>
-        /// Executes the test to change the FrameOnly setting.
+        /// Executes the test for changing the FrameOnly setting.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

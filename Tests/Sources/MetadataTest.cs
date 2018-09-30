@@ -41,7 +41,7 @@ namespace Cube.Pdf.Tests
         /// Get
         ///
         /// <summary>
-        /// Executes the test to get metadata of the specified PDF
+        /// Executes the test for getting metadata of the specified PDF
         /// document.
         /// </summary>
         ///

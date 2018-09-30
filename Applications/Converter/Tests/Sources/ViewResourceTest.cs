@@ -385,7 +385,7 @@ namespace Cube.Pdf.Tests.Converter
 
         #endregion
 
-        #region Helper methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

@@ -322,7 +322,7 @@ namespace Cube.Pdf.Tests.Editor
 
         #endregion
 
-        #region Helper methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

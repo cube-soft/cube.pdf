@@ -46,7 +46,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test to confirm properties and invoke the
+        /// Executes the test for confirming properties and invoking the
         /// Cancel command.
         /// </summary>
         ///

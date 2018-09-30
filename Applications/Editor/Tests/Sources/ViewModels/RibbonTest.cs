@@ -262,7 +262,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
         #endregion
 
-        #region Helper methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

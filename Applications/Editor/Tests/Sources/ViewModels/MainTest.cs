@@ -43,8 +43,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Open
         ///
         /// <summary>
-        /// Executes the test to open a PDF document and create images
-        /// as an asynchronous operation.
+        /// Executes the test for opening a PDF document and creating
+        /// images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -75,7 +75,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Save
         ///
         /// <summary>
-        /// Executes the test to save the PDF document as a new file.
+        /// Executes the test for saving the PDF document as a new file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Close
         ///
         /// <summary>
-        /// Executes the test to close the PDF document.
+        /// Executes the test for closing the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -130,7 +130,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Extract
         ///
         /// <summary>
-        /// Executes the test to extract selected items as a new PDF
+        /// Executes the test for extracting selected items as a new PDF
         /// document.
         /// </summary>
         ///
@@ -155,7 +155,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Insert
         ///
         /// <summary>
-        /// Executes the test to insert a new PDF document behind the
+        /// Executes the test for inserting a new PDF document behind the
         /// selected index.
         /// </summary>
         ///
@@ -177,7 +177,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Move
         ///
         /// <summary>
-        /// Executes the test to move selected items.
+        /// Executes the test for moving selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -199,7 +199,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Rotate
         ///
         /// <summary>
-        /// Executes the test to rotate selected items.
+        /// Executes the test for rotating selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -239,7 +239,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Undo
         ///
         /// <summary>
-        /// Executes the test to undo the last action.
+        /// Executes the test for canceling the last action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

@@ -45,7 +45,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Remove
         ///
         /// <summary>
-        /// Executes the test to remove selected items.
+        /// Executes the test for removing selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -67,7 +67,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// RemoveOthers
         ///
         /// <summary>
-        /// Executes the test to show the RemoveWindow and remove
+        /// Executes the test for showing the RemoveWindow and remove
         /// specified items.
         /// </summary>
         ///

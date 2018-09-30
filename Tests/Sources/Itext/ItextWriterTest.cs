@@ -46,7 +46,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Save
         ///
         /// <summary>
-        /// Executes the test to save the PDF document as a new file.
+        /// Executes the test for saving the PDF document as a new file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -78,7 +78,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Overwrite
         ///
         /// <summary>
-        /// Executes the test to overwrite the PDF document.
+        /// Executes the test for overwriting the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -106,7 +106,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Merge
         ///
         /// <summary>
-        /// Executes the test to merge PDF documents.
+        /// Executes the test for merging PDF documents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -131,7 +131,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Merge_Image
         ///
         /// <summary>
-        /// Executes the test to merge a PDF document and an image file.
+        /// Executes the test for merging a PDF document and an image file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -156,7 +156,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Split
         ///
         /// <summary>
-        /// Executes the test to split a PDF document in page by page.
+        /// Executes the test for spliting a PDF document in page by page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -194,7 +194,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Attach
         ///
         /// <summary>
-        /// Executes the test to attach a file to a PDF document.
+        /// Executes the test for attaching a file to a PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -230,7 +230,7 @@ namespace Cube.Pdf.Tests.Itext
         /// SetMetadata
         ///
         /// <summary>
-        /// Executes the test to set metadata.
+        /// Executes the test for setting PDF metadata.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -279,7 +279,7 @@ namespace Cube.Pdf.Tests.Itext
         /// SetEncryption
         ///
         /// <summary>
-        /// Executes the test to set the encryption information.
+        /// Executes the test for setting the encryption settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -362,7 +362,7 @@ namespace Cube.Pdf.Tests.Itext
 
         #endregion
 
-        #region Helper methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
