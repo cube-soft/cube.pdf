@@ -250,7 +250,7 @@ namespace Cube.Pdf.App.Picker
         private void WhenPasswordRequired(QueryEventArgs<string> e)
         {
             e.Cancel = true;
-            throw new EncryptionException(string.Format(
+            throw new ArgumentException(string.Format(
                 Properties.Resources.MessagePassword,
                 IO.Get(e.Query).Name
             ));
