@@ -111,6 +111,7 @@ namespace Cube.Pdf.Tests.Itext
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", "SampleBookmark.pdf", 90, ExpectedResult = 11)]
+        [TestCase("Sample.pdf", "Sample.pdf",          0, ExpectedResult =  4)]
         public int Merge(string f0, string f1, int degree)
         {
             var r0   = new DocumentReader(GetExamplesWith(f0), "", false, IO);

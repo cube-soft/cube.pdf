@@ -52,7 +52,15 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleAttachment.pdf", ExpectedResult = 3)]
         public int Open_Attachments_Count(string filename)
         {
-            using (var reader = Create(filename)) return reader.Attachments.Count();
+            using (var reader = Create(filename))
+            {
+                foreach (var obj in reader.Attachments)
+                {
+                    Assert.That(obj.Data,            Is.Not.Null);
+                    Assert.That(obj.Checksum.Length, Is.EqualTo(32));
+                }
+                return reader.Attachments.Count();
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -72,7 +80,10 @@ namespace Cube.Pdf.Tests.Itext
         {
             using (var reader = Create(filename))
             {
-                return reader.Attachments.First(x => x.Name == key).Length;
+                var dest = reader.Attachments.First(x => x.Name == key);
+                Assert.That(dest.Data,            Is.Not.Null);
+                Assert.That(dest.Checksum.Length, Is.EqualTo(32));
+                return dest.Length;
             }
         }
 

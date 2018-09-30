@@ -69,9 +69,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         protected override long GetLength() =>
-            _core?.GetAsDict(PdfName.PARAMS)
-                 ?.GetAsNumber(PdfName.SIZE)
-                 ?.LongValue ?? 0;
+            _core?.GetAsDict(PdfName.PARAMS)?.GetAsNumber(PdfName.SIZE)?.LongValue ?? 0;
 
         /* ----------------------------------------------------------------- */
         ///

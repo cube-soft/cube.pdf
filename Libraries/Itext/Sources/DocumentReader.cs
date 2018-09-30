@@ -135,7 +135,7 @@ namespace Cube.Pdf.Itext
             Metadata    = _core.GetMetadata();
             Encryption  = _core.GetEncryption(f);
             Pages       = new ReadOnlyPageList(_core, f);
-            Attachments = new ReadOnlyAttachmentList(_core, f, IO);
+            Attachments = new AttachmentCollection(_core, f, IO);
         }
 
         #endregion
