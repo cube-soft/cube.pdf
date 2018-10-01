@@ -120,7 +120,7 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var w = new DocumentWriter(IO))
             {
-                w.Add(Rotate(r0.Pages, degree), r0);
+                foreach (var p in r0.Pages) w.Add(Rotate(p, degree), r0);
                 w.Add(Rotate(r1.Pages, degree), r1);
                 w.Save(dest);
             }
@@ -145,7 +145,7 @@ namespace Cube.Pdf.Tests.Itext
             using (var w = new DocumentWriter(IO))
             using (var r = new DocumentReader(GetExamplesWith(doc), "", false, IO))
             {
-                w.Add(Rotate(r0.Pages, degree), r0);
+                foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
                 w.Add(Rotate(IO.GetImagePages(GetExamplesWith(image)), degree));
                 w.Save(dest);
             }
@@ -219,9 +219,10 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var r = new DocumentReader(dest, "", false, IO))
             {
-                var items  = r.Attachments;
-                var option = StringComparison.InvariantCultureIgnoreCase;
-                Assert.That(items.Any(x => x.Name.Equals(file, option)), Is.True);
+                var items = r.Attachments;
+                var opt   = StringComparison.InvariantCultureIgnoreCase;
+                Assert.That(items.Any(x => x.Name.Equals(file, opt)), Is.True);
+                foreach (var obj in items) Assert.That(obj.Length, Is.AtLeast(1));
                 return items.Count();
             }
         }

@@ -50,6 +50,25 @@ namespace Cube.Pdf.Mixin
         /// Add
         ///
         /// <summary>
+        /// Adds a new page.
+        /// </summary>
+        ///
+        /// <param name="src">IDocumentWriter object.</param>
+        /// <param name="page">Page information.</param>
+        /// <param name="hint">
+        /// Document reader object to get more detailed information about
+        /// the specified pages.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Add(this IDocumentWriter src, Page page, IDocumentReader hint) =>
+            src.Add(new[] { page }, hint);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        ///
+        /// <summary>
         /// Adds all pages of the specified document.
         /// </summary>
         ///
