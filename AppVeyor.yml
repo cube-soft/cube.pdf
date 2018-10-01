@@ -40,6 +40,7 @@ artifacts:
     - path: CubePdf.Proxy
     - path: CubePdf.Utility
     - path: CubePdf.Utility.Proxy
+    - path: CoverResults.xml
 test_script:
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
@@ -50,7 +51,7 @@ test_script:
       -targetdir:Tests\bin\Release
       -returntargetcode
       -hideskipped:All
-      -output:CoverResult.xml
+      -output:CoverResults.xml
       -filter:"+[*]* -[*]*NativeMethods -[*]*Properties.*"
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
@@ -62,7 +63,7 @@ test_script:
       -returntargetcode
       -hideskipped:All
       -mergeoutput
-      -output:CoverResult.xml
+      -output:CoverResults.xml
       -filter:"+[*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program"
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
@@ -74,9 +75,9 @@ test_script:
       -returntargetcode
       -hideskipped:All
       -mergeoutput
-      -output:CoverResult.xml
+      -output:CoverResults.xml
       -filter:"+[*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Window -[*]*Control -[*]*.App"
 after_test:
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
-    - codecov -f "CoverResult.xml"
+    - codecov -f "CoverResults.xml"
