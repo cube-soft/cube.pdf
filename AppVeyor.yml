@@ -64,7 +64,7 @@ test_script:
       -hideskipped:All
       -mergeoutput
       -output:CoverResults.xml
-      -filter:"+[Cube*]* -[Cube*]*NativeMethods -[Cube*]*Properties.* -[Cube*]*Form -[Cube*]*.Program"
+      -filter:"+[Cube]* -[Cube]*NativeMethods -[Cube]*Properties.* -[Cube]*Form -[Cube]*.Program"
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
       -log:Error
@@ -76,7 +76,7 @@ test_script:
       -hideskipped:All
       -mergeoutput
       -output:CoverResults.xml
-      -filter:"+[Cube*]* -[Cube*]*NativeMethods -[Cube*]*Properties.* -[Cube*]*Window -[Cube*]*Control -[Cube*]*.App"
+      -filter:"+[Cube]* -[Cube]*NativeMethods -[Cube]*Properties.* -[Cube]*Window -[Cube]*Control -[Cube]*.App"
 after_test:
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
