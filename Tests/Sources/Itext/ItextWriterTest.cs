@@ -212,7 +212,7 @@ namespace Cube.Pdf.Tests.Itext
             using (var w = new DocumentWriter())
             {
                 w.Add(r0);
-                w.Attach(r0.Attachments);
+                w.Add(r0.Attachments);
                 w.Attach(new Attachment(r1.FullName, IO));
                 w.Save(dest);
             }

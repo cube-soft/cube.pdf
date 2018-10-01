@@ -50,6 +50,8 @@ namespace Cube.Pdf
         /// Saves the document to the specified path.
         /// </summary>
         ///
+        /// <param name="path">Path to save.</param>
+        ///
         /* ----------------------------------------------------------------- */
         void Save(string path);
 
@@ -61,7 +63,7 @@ namespace Cube.Pdf
         /// Adds pages to the document.
         /// </summary>
         ///
-        /// <param name="pages">Collection of adding pages.</param>
+        /// <param name="pages">Collection of pages.</param>
         ///
         /* ----------------------------------------------------------------- */
         void Add(IEnumerable<Page> pages);
@@ -74,7 +76,7 @@ namespace Cube.Pdf
         /// Adds pages to the document.
         /// </summary>
         ///
-        /// <param name="pages">Collection of the adding pages.</param>
+        /// <param name="pages">Collection of pages.</param>
         /// <param name="hint">
         /// Document reader object to get more detailed information about
         /// the specified pages.
@@ -85,7 +87,7 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Attach
+        /// Add
         ///
         /// <summary>
         /// Adds attached objects to the document.
@@ -94,7 +96,7 @@ namespace Cube.Pdf
         /// <param name="files">Collection of attached files.</param>
         ///
         /* ----------------------------------------------------------------- */
-        void Attach(IEnumerable<Attachment> files);
+        void Add(IEnumerable<Attachment> files);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -104,7 +106,7 @@ namespace Cube.Pdf
         /// Sets the PDF metadata.
         /// </summary>
         ///
-        /// <param name="metadata">Metadata object.</param>
+        /// <param name="metadata">PDF metadata.</param>
         ///
         /* ----------------------------------------------------------------- */
         void Set(Metadata metadata);

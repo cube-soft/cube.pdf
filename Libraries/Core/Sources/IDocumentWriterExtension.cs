@@ -73,7 +73,7 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         public static void Attach(this IDocumentWriter src, Attachment file) =>
-            src.Attach(new[] { file });
+            src.Add(new[] { file });
 
         #endregion
     }

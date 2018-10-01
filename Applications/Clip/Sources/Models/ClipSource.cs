@@ -176,7 +176,7 @@ namespace Cube.Pdf.App.Clip
                 writer.Set(Source.Metadata);
                 writer.Set(Source.Encryption);
                 writer.Add(Source.Pages);
-                writer.Attach(items);
+                writer.Add(items);
 
                 IO.TryDelete(tmp);
                 writer.Save(tmp);
