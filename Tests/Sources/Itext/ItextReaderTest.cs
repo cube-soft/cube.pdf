@@ -48,8 +48,9 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("SampleRotation.pdf",   ExpectedResult = 0)]
-        [TestCase("SampleAttachment.pdf", ExpectedResult = 3)]
+        [TestCase("SampleRotation.pdf",        ExpectedResult = 0)]
+        [TestCase("SampleAttachment.pdf",      ExpectedResult = 2)]
+        [TestCase("SampleAttachmentEmpty.pdf", ExpectedResult = 3)]
         public int Open_Attachments_Count(string filename)
         {
             using (var reader = Create(filename))
@@ -72,10 +73,10 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("SampleAttachment.pdf",    "CubePDF.png",         ExpectedResult =   3765L)]
-        [TestCase("SampleAttachment.pdf",    "CubeICE.png",         ExpectedResult = 165524L)]
-        [TestCase("SampleAttachment.pdf",    "Empty",               ExpectedResult =      0L)]
-        [TestCase("SampleAttachmentCjk.pdf", "日本語のサンプル.md", ExpectedResult =  12843L)]
+        [TestCase("SampleAttachment.pdf",      "CubePDF.png",         ExpectedResult =   3765L)]
+        [TestCase("SampleAttachment.pdf",      "CubeICE.png",         ExpectedResult = 165524L)]
+        [TestCase("SampleAttachmentEmpty.pdf", "Empty",               ExpectedResult =      0L)]
+        [TestCase("SampleAttachmentCjk.pdf",   "日本語のサンプル.md", ExpectedResult =  12843L)]
         public long Open_Attachments_Length(string filename, string key)
         {
             using (var reader = Create(filename))

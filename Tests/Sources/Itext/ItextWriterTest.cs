@@ -200,8 +200,8 @@ namespace Cube.Pdf.Tests.Itext
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("SampleRotation.pdf",   "SampleImage01.png",   ExpectedResult = 1)]
-        [TestCase("SampleAttachment.pdf", "SampleImage02.png",   ExpectedResult = 4)]
-        [TestCase("SampleAttachment.pdf", "日本語のサンプル.md", ExpectedResult = 4)]
+        [TestCase("SampleAttachment.pdf", "SampleImage02.png",   ExpectedResult = 3)]
+        [TestCase("SampleAttachment.pdf", "日本語のサンプル.md", ExpectedResult = 3)]
         public int Attach(string doc, string file)
         {
             var src  = GetExamplesWith(doc);
