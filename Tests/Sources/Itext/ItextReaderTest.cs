@@ -19,6 +19,7 @@
 using Cube.FileSystem.TestService;
 using Cube.Pdf.Itext;
 using NUnit.Framework;
+using System.Drawing.Imaging;
 using System.Linq;
 
 namespace Cube.Pdf.Tests.Itext
@@ -28,7 +29,7 @@ namespace Cube.Pdf.Tests.Itext
     /// ItextReaderTest
     ///
     /// <summary>
-    /// DocumentReader のテスト用クラスです。
+    /// Tests for the DocumentReader class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -92,18 +93,30 @@ namespace Cube.Pdf.Tests.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ExtractImages
+        /// GetEmbeddedImages
         ///
         /// <summary>
-        /// ページ内に存在する画像の抽出テストを実行します。
+        /// Executes the test for getting embedded images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [TestCase("SampleAlpha.pdf", 1, ExpectedResult = 2)]
         [TestCase("SampleImage.pdf", 1, ExpectedResult = 2)]
         [TestCase("SampleImage.pdf", 2, ExpectedResult = 0)]
-        public int ExtractImages(string filename, int n)
+        public int GetEmbeddedImages(string filename, int n)
         {
-            using (var reader = Create(filename)) return reader.GetEmbeddedImages(n).Count();
+            using (var reader = Create(filename))
+            {
+                var name = IO.Get(filename).NameWithoutExtension;
+                var dest = reader.GetEmbeddedImages(n).ToList();
+
+                for (var i = 0; i < dest.Count; ++i)
+                {
+                    var path = GetResultsWith($"{name}-{n}-{i}.png");
+                    dest[i].Save(path, ImageFormat.Png);
+                }
+                return dest.Count;
+            }
         }
 
         #endregion

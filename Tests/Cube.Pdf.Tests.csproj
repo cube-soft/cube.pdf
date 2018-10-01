@@ -136,6 +136,9 @@
     <None Include="Examples\Sample.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\SampleAlpha.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\SampleAnnotation.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
