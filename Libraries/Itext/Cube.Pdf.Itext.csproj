@@ -109,6 +109,7 @@
     <Compile Include="Sources\Details\WriterExtension.cs" />
     <Compile Include="Sources\Details\WriterFactory.cs" />
     <Compile Include="Sources\DocumentReader.cs" />
+    <Compile Include="Sources\DocumentReaderExtension.cs" />
     <Compile Include="Sources\DocumentSplitter.cs" />
     <Compile Include="Sources\DocumentWriterBase.cs" />
     <Compile Include="Sources\DocumentWriter.cs" />

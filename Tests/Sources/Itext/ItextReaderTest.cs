@@ -103,7 +103,7 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleImage.pdf", 2, ExpectedResult = 0)]
         public int ExtractImages(string filename, int n)
         {
-            using (var reader = Create(filename)) return reader.ExtractImages(n).Count();
+            using (var reader = Create(filename)) return reader.GetEmbeddedImages(n).Count();
         }
 
         #endregion

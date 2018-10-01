@@ -19,9 +19,7 @@
 using Cube.FileSystem;
 using Cube.Pdf.Mixin;
 using iTextSharp.text.pdf;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 
 namespace Cube.Pdf.Itext
 {
@@ -30,7 +28,7 @@ namespace Cube.Pdf.Itext
     /// DocumentReader
     ///
     /// <summary>
-    /// PDF ファイルを読み込んで各種情報を保持するためのクラスです。
+    /// Provides functionality to read a PDF document.
     /// </summary>
     ///
     /// <remarks>
@@ -48,7 +46,7 @@ namespace Cube.Pdf.Itext
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentReader class
-        /// with the specified arguments..
+        /// with the specified arguments.
         /// </summary>
         ///
         /// <param name="src">PDF document path.</param>
@@ -62,7 +60,7 @@ namespace Cube.Pdf.Itext
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentReader class
-        /// with the specified arguments..
+        /// with the specified arguments.
         /// </summary>
         ///
         /// <param name="src">PDF document path.</param>
@@ -147,7 +145,7 @@ namespace Cube.Pdf.Itext
         /// RawObject
         ///
         /// <summary>
-        /// 内部実装オブジェクトを取得します。
+        /// Gets the raw object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -159,31 +157,17 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ExtractImages
-        ///
-        /// <summary>
-        /// 指定されたページ中に存在する画像を抽出します。
-        /// </summary>
-        ///
-        /// <param name="pagenum">ページ番号</param>
-        ///
-        /// <returns>抽出された Image オブジェクトのリスト</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<Image> ExtractImages(int pagenum)
-        {
-            var dest = new EmbeddedImageCollection();
-            _core.GetContentParser().ProcessContent(pagenum, dest);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases the unmanaged resources used by the DocumentReader
+        /// and optionally releases the managed resources.
         /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
