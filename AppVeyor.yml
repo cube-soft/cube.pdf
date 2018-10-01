@@ -52,7 +52,7 @@ test_script:
       -returntargetcode
       -hideskipped:All
       -output:CoverResults.xml
-      -filter:"+[*]* -[*]*NativeMethods -[*]*Properties.*"
+      -filter:"+[*]* -[nunit]* -[*]*NativeMethods -[*]*Properties.*"
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
       -log:Error
@@ -64,7 +64,7 @@ test_script:
       -hideskipped:All
       -mergeoutput
       -output:CoverResults.xml
-      -filter:"+[*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program"
+      -filter:"+[*]* -[nunit]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program"
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
       -log:Error
@@ -76,7 +76,7 @@ test_script:
       -hideskipped:All
       -mergeoutput
       -output:CoverResults.xml
-      -filter:"+[*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Window -[*]*Control -[*]*.App"
+      -filter:"+[*]* -[nunit]* -[GalaSoft]* -[*]*NativeMethods -[*]*Properties.* -[*]*Window -[*]*Control -[*]*.App"
 after_test:
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
