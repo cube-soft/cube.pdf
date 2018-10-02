@@ -182,7 +182,7 @@ namespace Cube.Pdf.Pdfium
         public void Invoke(Action<IntPtr> action)
         {
             if (_disposed) throw new ObjectDisposedException(GetType().Name);
-            action(_core);
+            lock (_lock) action(_core);
         }
 
         /* ----------------------------------------------------------------- */
@@ -201,7 +201,7 @@ namespace Cube.Pdf.Pdfium
         public T Invoke<T>(Func<IntPtr, T> func)
         {
             if (_disposed) throw new ObjectDisposedException(GetType().Name);
-            return func(_core);
+            lock (_lock) return func(_core);
         }
 
         #region IDisposable
@@ -241,11 +241,15 @@ namespace Cube.Pdf.Pdfium
             if (_disposed) return;
             _disposed = true;
 
-            if (_core != IntPtr.Zero)
+            lock (_lock)
             {
-                PdfiumApi.FPDF_CloseDocument(_core);
-                _core = IntPtr.Zero;
+                if (_core != IntPtr.Zero)
+                {
+                    PdfiumApi.FPDF_CloseDocument(_core);
+                    _core = IntPtr.Zero;
+                }
             }
+
             if (disposing) _stream.Dispose();
         }
 
@@ -268,7 +272,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private void Load(string password)
         {
-            _core = PdfiumApi.FPDF_LoadCustomDocument(
+            var core = PdfiumApi.FPDF_LoadCustomDocument(
                 new FileAccess
                 {
                     Length    = (uint)_stream.Length,
@@ -278,8 +282,9 @@ namespace Cube.Pdf.Pdfium
                 password
             );
 
-            if (_core == IntPtr.Zero) throw GetLastError();
+            if (core == IntPtr.Zero) throw GetLastError();
 
+            _core      = core;
             Encryption = EncryptionFactory.Create(this, password);
             File       = Create(password, !Encryption.OpenWithPassword);
             Pages      = new ReadOnlyPageList(this, File);
@@ -298,7 +303,7 @@ namespace Cube.Pdf.Pdfium
         private PdfFile Create(string password, bool fullaccess)
         {
             var dest = IO.GetPdfFile(Source, password);
-            dest.Count      = PdfiumApi.FPDF_GetPageCount(_core);
+            dest.Count      = Invoke(e => PdfiumApi.FPDF_GetPageCount(e));
             dest.FullAccess = fullaccess;
             return dest;
         }
@@ -314,13 +319,17 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private int Read(IntPtr param, uint pos, IntPtr buffer, uint size)
         {
-            var managed = new byte[size];
+            try
+            {
+                var managed = new byte[size];
 
-            _stream.Position = pos;
-            if (_stream.Read(managed, 0, (int)size) != size) return 0;
+                _stream.Position = pos;
+                if (_stream.Read(managed, 0, (int)size) != size) return 0;
 
-            Marshal.Copy(managed, 0, buffer, (int)size);
-            return 1;
+                Marshal.Copy(managed, 0, buffer, (int)size);
+                return 1;
+            }
+            catch { return 0; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -338,6 +347,7 @@ namespace Cube.Pdf.Pdfium
         #endregion
 
         #region Fields
+        private readonly object _lock = new object();
         private readonly System.IO.Stream _stream;
         private readonly ReadDelegate _delegate;
         private IntPtr _core;
