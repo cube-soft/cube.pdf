@@ -122,7 +122,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             Execute(vm, vm.Ribbon.Close);
             Assert.That(Wait.For(() => !vm.Data.IsOpen()), $"Timeout (Close)");
-            Assert.That(IO.TryDelete(Source), Is.True);
         });
 
         /* ----------------------------------------------------------------- */
