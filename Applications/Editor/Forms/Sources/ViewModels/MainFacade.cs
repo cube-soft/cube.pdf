@@ -58,7 +58,7 @@ namespace Cube.Pdf.App.Editor
         {
             _dispose = new OnceAction<bool>(Dispose);
             _core    = new DocumentCollection(password);
-            Bindable = new MainBindable(new ImageCollection(e => _core.GetOrAdd(e), context), settings);
+            Bindable = new MainBindable(new ImageCollection(e => _core?.GetOrAdd(e), context), settings);
 
             Settings = settings;
             Settings.Load();
@@ -463,7 +463,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected virtual void Dispose(bool disposing)
         {
-            Close(false);
+            Interlocked.Exchange(ref _core, null)?.Clear();
+            Bindable.Close();
             if (disposing) Bindable.Images.Dispose();
         }
 
@@ -499,7 +500,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly OnceAction<bool> _dispose;
-        private readonly DocumentCollection _core;
+        private DocumentCollection _core;
         #endregion
     }
 }
