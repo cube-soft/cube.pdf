@@ -84,6 +84,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         public void Save(string filename, string password, int n) =>
             Create(filename, password, n, vm =>
         {
+            Assert.That(vm.Recent.Items, Is.Not.Null);
+
             var fi = IO.Get(Source);
             Destination = Path(Args(fi.NameWithoutExtension));
             Password    = string.Empty;
