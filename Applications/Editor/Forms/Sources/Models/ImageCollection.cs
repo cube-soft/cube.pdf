@@ -62,7 +62,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ImageCollection(Func<string, IDocumentRenderer> getter, SynchronizationContext context)
         {
-            ImageSource create(ImageItem e) => _engine(e.RawObject.File.FullName).Create(e);
+            ImageSource create(ImageItem e) => _engine(e.RawObject.File.FullName)?.Create(e);
 
             _dispose = new OnceAction<bool>(Dispose);
             _context = context;
@@ -505,12 +505,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Reschedule(Action before)
+        private void Reschedule(Action action)
         {
-            _task?.Cancel();
             var cts = new CancellationTokenSource();
-            _task = cts;
-            before?.Invoke();
+            Interlocked.Exchange(ref _task, cts)?.Cancel();
+            action?.Invoke();
 
             var begin = Math.Max(Preferences.VisibleFirst, 0);
             var end   = Math.Min(Preferences.VisibleLast, _inner.Count);
@@ -519,7 +518,7 @@ namespace Cube.Pdf.App.Editor
             {
                 for (var i = begin; i < end; ++i)
                 {
-                    if (cts.Token.IsCancellationRequested) return;
+                    if (cts.Token.IsCancellationRequested || _dispose.Invoked) return;
                     _cache.GetOrCreate(_inner[i]);
                 }
             }).Forget();
@@ -536,7 +535,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenCollectionChanged(object s, NotifyCollectionChangedEventArgs e)
         {
-            Reschedule(null);
+            Reschedule(default(Action));
             OnCollectionChanged(e);
         }
 
@@ -551,7 +550,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPreferenceChanged(object s, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Preferences.VisibleLast)) Reschedule(null);
+            var exec = (e.PropertyName == nameof(Preferences.VisibleLast));
+            if (exec) Reschedule(default(Action));
         }
 
         #endregion
