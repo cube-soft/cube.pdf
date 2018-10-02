@@ -214,6 +214,7 @@ namespace Cube.Pdf.Tests.Itext
                 w.Add(r0);
                 w.Add(r0.Attachments);
                 w.Attach(new Attachment(r1.FullName, IO));
+                w.Attach(new Attachment(r1.FullName, IO)); // Skip duplicated object.
                 w.Save(dest);
             }
 

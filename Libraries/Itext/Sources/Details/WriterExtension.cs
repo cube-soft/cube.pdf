@@ -46,18 +46,18 @@ namespace Cube.Pdf.Itext
         ///
         /// <param name="src">PdfStamper object.</param>
         /// <param name="data">PDf metadata.</param>
-        /// <param name="original">Original PDF metadata.</param>
+        /// <param name="info">Original PDF metadata.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Set(this PdfStamper src, Metadata data, IDictionary<string, string> original)
+        public static void Set(this PdfStamper src, Metadata data, IDictionary<string, string> info)
         {
-            original.Update("Title",    data.Title);
-            original.Update("Subject",  data.Subject);
-            original.Update("Keywords", data.Keywords);
-            original.Update("Creator",  data.Creator);
-            original.Update("Author",   data.Author);
+            info.Update("Title",    data.Title);
+            info.Update("Subject",  data.Subject);
+            info.Update("Keywords", data.Keywords);
+            info.Update("Creator",  data.Creator);
+            info.Update("Author",   data.Author);
 
-            src.MoreInfo = original;
+            src.MoreInfo = info;
         }
 
         /* ----------------------------------------------------------------- */
@@ -81,7 +81,7 @@ namespace Cube.Pdf.Itext
 
             var owner = data.OwnerPassword;
             var user  = !data.OpenWithPassword ? string.Empty :
-                        !string.IsNullOrEmpty(data.UserPassword) ? data.UserPassword :
+                        data.UserPassword.HasValue() ? data.UserPassword :
                         owner;
 
             src.SetEncryption(m, user, owner, p);

@@ -145,28 +145,23 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void Parse()
         {
-            if (_core == null) return;
-
             if (!(PdfReader.GetPdfObject(_core.Catalog.Get(PdfName.NAMES)) is PdfDictionary c)) return;
             if (!(PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) is PdfDictionary e)) return;
 
-            var files = e.GetAsArray(PdfName.NAMES);
-            if (files == null) return;
+            var items = e.GetAsArray(PdfName.NAMES);
+            if (items == null) return;
 
-            for (var i = 1; i < files.Size; i += 2) // see remarks
+            for (var i = 1; i < items.Size; i += 2) // see remarks
             {
-                var item = files.GetAsDict(i);
-                var name = item.GetAsString(PdfName.UF)?.ToUnicodeString();
-                if (string.IsNullOrEmpty(name)) name = item.GetAsString(PdfName.F)?.ToString();
-                if (string.IsNullOrEmpty(name)) continue;
+                var cur  = items.GetAsDict(i);
+                var name = cur.GetAsString(PdfName.UF) ?? cur.GetAsString(PdfName.F);
+                var dic  = cur.GetAsDict(PdfName.EF);
+                if (name == null || dic == null) continue;
 
-                var ef = item.GetAsDict(PdfName.EF);
-                if (ef == null) continue;
-
-                foreach (var key in ef.Keys)
+                foreach (var key in dic.Keys)
                 {
-                    if (!(PdfReader.GetPdfObject(ef.GetAsIndirectObject(key)) is PRStream stream)) continue;
-                    _inner.Add(new EmbeddedAttachment(name, File.FullName, IO, stream));
+                    if (!(PdfReader.GetPdfObject(dic.GetAsIndirectObject(key)) is PRStream stream)) continue;
+                    _inner.Add(new EmbeddedAttachment(name.ToUnicodeString(), File.FullName, IO, stream));
                     break;
                 }
             }

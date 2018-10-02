@@ -76,12 +76,12 @@ namespace Cube.Pdf.Itext
         public void RenderImage(ImageRenderInfo info)
         {
             var obj = info.GetImage();
-            if (!(obj?.Get(PdfName.FILTER) is PdfName)) return;
+            if (!(obj.Get(PdfName.FILTER) is PdfName)) return;
 
-            var raw = obj?.GetDrawingImage();
+            var raw = obj.GetDrawingImage();
             if (raw == null) return;
 
-            var sm = obj?.GetDictionary()?.GetDirectObject(PdfName.SMASK);
+            var sm = obj.GetDictionary().GetDirectObject(PdfName.SMASK);
             if (sm == null)
             {
                 _inner.Add(raw);
@@ -89,7 +89,7 @@ namespace Cube.Pdf.Itext
             }
 
             var tmp  = new PdfImageObject(sm as PRStream);
-            var mask = tmp?.GetDrawingImage();
+            var mask = tmp.GetDrawingImage();
             var dest = Restore(raw as Bitmap, mask as Bitmap);
             _inner.Add(dest ?? raw);
         }

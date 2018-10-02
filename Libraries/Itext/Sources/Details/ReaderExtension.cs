@@ -80,12 +80,12 @@ namespace Cube.Pdf.Itext
         public static Metadata GetMetadata(this PdfReader src) => new Metadata
         {
             Version  = new Version(1, src.PdfVersion - '0', 0, 0),
-            Author   = src.Info.ContainsKey("Author")   ? src.Info["Author"]   : string.Empty,
-            Title    = src.Info.ContainsKey("Title")    ? src.Info["Title"]    : string.Empty,
-            Subject  = src.Info.ContainsKey("Subject")  ? src.Info["Subject"]  : string.Empty,
-            Keywords = src.Info.ContainsKey("Keywords") ? src.Info["Keywords"] : string.Empty,
-            Creator  = src.Info.ContainsKey("Creator")  ? src.Info["Creator"]  : string.Empty,
-            Producer = src.Info.ContainsKey("Producer") ? src.Info["Producer"] : string.Empty,
+            Author   = src.Info.TryGetValue("Author",   out var s0) ? s0 : string.Empty,
+            Title    = src.Info.TryGetValue("Title",    out var s1) ? s1 : string.Empty,
+            Subject  = src.Info.TryGetValue("Subject",  out var s2) ? s2 : string.Empty,
+            Keywords = src.Info.TryGetValue("Keywords", out var s3) ? s3 : string.Empty,
+            Creator  = src.Info.TryGetValue("Creator",  out var s4) ? s4 : string.Empty,
+            Producer = src.Info.TryGetValue("Producer", out var s5) ? s5 : string.Empty,
             Viewer   = ViewerPreferencesFactory.Create(src.SimpleViewerPreferences),
         };
 
@@ -134,14 +134,15 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static EncryptionMethod GetEncryptionMethod(this PdfReader src)
         {
-            switch (src.GetCryptoMode())
+            var dic = new Dictionary<int, EncryptionMethod>
             {
-                case PdfWriter.STANDARD_ENCRYPTION_40:  return EncryptionMethod.Standard40;
-                case PdfWriter.STANDARD_ENCRYPTION_128: return EncryptionMethod.Standard128;
-                case PdfWriter.ENCRYPTION_AES_128:      return EncryptionMethod.Aes128;
-                case PdfWriter.ENCRYPTION_AES_256:      return EncryptionMethod.Aes256;
-                default:                                return EncryptionMethod.Unknown;
-            }
+                { PdfWriter.STANDARD_ENCRYPTION_40,  EncryptionMethod.Standard40 },
+                { PdfWriter.STANDARD_ENCRYPTION_128, EncryptionMethod.Standard128 },
+                { PdfWriter.ENCRYPTION_AES_128,      EncryptionMethod.Aes128 },
+                { PdfWriter.ENCRYPTION_AES_256,      EncryptionMethod.Aes256 },
+            };
+
+            return dic.TryGetValue(src.GetCryptoMode(), out var dest) ? dest : EncryptionMethod.Unknown;
         }
 
         /* ----------------------------------------------------------------- */
