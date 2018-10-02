@@ -17,10 +17,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
+using Cube.Pdf.App.Editor;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System.Linq;
-using System.Threading;
 
 namespace Cube.Pdf.Tests.Editor.ViewModels
 {
@@ -53,21 +53,17 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         public void Open(string filename, string password, int n) =>
             Create(filename, password, n, vm =>
         {
+            Assert.That(vm.Recent.Items,    Is.Not.Null);
+
             var pref = vm.Data.Preferences;
             Assert.That(pref.ItemSize,      Is.EqualTo(250));
             Assert.That(pref.ItemSizeIndex, Is.EqualTo(3));
             Assert.That(pref.ItemMargin,    Is.EqualTo(3));
             Assert.That(pref.TextHeight,    Is.EqualTo(25));
 
-            var images = vm.Data.Images.ToList();
-            foreach (var item in images) Assert.That(item.Image, Is.Not.Null);
-
-            var dest = images[0];
-            var cts  = new CancellationTokenSource();
-            dest.PropertyChanged += (s, e) => cts.Cancel();
+            var dest = vm.Data.Images.First();
             Execute(vm, vm.Ribbon.Refresh);
-            Assert.That(Wait.For(cts.Token), nameof(vm.Ribbon.Refresh));
-            Assert.That(dest.Image, Is.Not.EqualTo(pref.Dummy));
+            Assert.That(Wait.For(() => dest.Image != pref.Dummy), nameof(vm.Ribbon.Refresh));
         });
 
         /* ----------------------------------------------------------------- */
@@ -84,16 +80,14 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         public void Save(string filename, string password, int n) =>
             Create(filename, password, n, vm =>
         {
-            Assert.That(vm.Recent.Items, Is.Not.Null);
-
             var fi = IO.Get(Source);
             Destination = Path(Args(fi.NameWithoutExtension));
             Password    = string.Empty;
             Assert.That(IO.Exists(Destination), Is.False);
 
             Execute(vm, vm.Ribbon.SaveAs);
-            Assert.That(Wait.For(() => IO.Exists(Destination)));
-            Assert.That(vm.Data.Source.Value.FullName, Is.EqualTo(Destination));
+            Assert.That(Wait.For(() => vm.Data.Source.Value.FullName == Destination), "Timeout (Save)");
+            Assert.That(IO.Exists(Destination), Is.True);
         });
 
         /* ----------------------------------------------------------------- */
@@ -105,23 +99,12 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf", true )]
-        [TestCase("Sample.pdf", false)]
-        public void Close(string filename, bool modify) => Create(vm =>
+        [TestCase("Sample.pdf", 2, true )]
+        [TestCase("Sample.pdf", 2, false)]
+        public void Close(string filename, int n, bool modify) =>
+            Create(filename, "", n, vm =>
         {
-            var fi = IO.Get(GetExamplesWith(filename));
-            Source = Path(Args(fi.NameWithoutExtension, modify));
-            IO.Copy(fi.FullName, Source, true);
-
-            Execute(vm, vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.Images.Count == 2), $"Timeout (Open)");
-
-            if (modify)
-            {
-                Execute(vm, vm.Ribbon.Select);
-                Execute(vm, vm.Ribbon.RotateLeft);
-            }
-
+            if (modify) Modify(vm);
             Execute(vm, vm.Ribbon.Close);
             Assert.That(Wait.For(() => !vm.Data.IsOpen()), $"Timeout (Close)");
         });
@@ -144,11 +127,10 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.False);
             vm.Data.Images.First().IsSelected = true;
-            Wait.For(() => !vm.Data.Busy.Value);
-            Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.True);
+            Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
 
             Execute(vm, vm.Ribbon.Extract);
-            Assert.That(Wait.For(() => IO.Exists(Destination)));
+            Assert.That(Wait.For(() => IO.Exists(Destination)), "Timeout (Extract)");
         });
 
         /* ----------------------------------------------------------------- */
@@ -266,6 +248,25 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(vm.Data.History.Undoable, Is.True);
             Assert.That(vm.Data.History.Redoable, Is.False);
         });
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Modify
+        ///
+        /// <summary>
+        /// Executes some modifications to the specified ViewModel.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Modify(MainViewModel vm)
+        {
+            Execute(vm, vm.Ribbon.Select);
+            Execute(vm, vm.Ribbon.RotateLeft);
+        }
 
         #endregion
     }

@@ -550,7 +550,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPreferenceChanged(object s, PropertyChangedEventArgs e)
         {
-            var exec = (e.PropertyName == nameof(Preferences.VisibleLast));
+            var exec = e.PropertyName == nameof(Preferences.VisibleLast);
             if (exec) Reschedule(default(Action));
         }
 

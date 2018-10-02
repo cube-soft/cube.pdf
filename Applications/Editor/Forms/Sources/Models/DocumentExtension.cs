@@ -23,6 +23,7 @@ using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -111,25 +112,6 @@ namespace Cube.Pdf.App.Editor
                 src.Render(gs, page);
             }
             return dest.ToBitmapImage(true);
-        }
-
-        #endregion
-
-        #region Invoke
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the specified action and creates a history item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static HistoryItem Invoke(Action forward, Action reverse)
-        {
-            forward(); // do
-            return new HistoryItem { Undo = reverse, Redo = forward };
         }
 
         #endregion
@@ -255,6 +237,72 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
+        #region Open
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Setup
+        ///
+        /// <summary>
+        /// Invokes some actions through the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="args">User arguments.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Setup(this MainFacade src, IEnumerable<string> args)
+        {
+            foreach (var ps in src.Settings.GetSplashProcesses()) ps.Kill();
+            if (args.Count() <= 0) return;
+            src.Open(args.First());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OpenLink
+        ///
+        /// <summary>
+        /// Opens a PDF document with the specified link.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="link">Information for the link.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void OpenLink(this MainFacade src, Information link)
+        {
+            try { src.Open(Shortcut.Resolve(link?.FullName)?.Target); }
+            catch (Exception e)
+            {
+                var cancel = e is OperationCanceledException ||
+                             e is TwiceException;
+                if (!cancel) src.Settings.IO.TryDelete(link?.FullName);
+                throw;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// StartProcess
+        ///
+        /// <summary>
+        /// Starts a new process with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="args">User arguments.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void StartProcess(this MainFacade src, string args) =>
+            Process.Start(new ProcessStartInfo
+            {
+                FileName  = Assembly.GetExecutingAssembly().Location,
+                Arguments = args
+            });
+
+        #endregion
+
         #region Save
 
         /* ----------------------------------------------------------------- */
@@ -272,6 +320,20 @@ namespace Cube.Pdf.App.Editor
         {
             if (src.Bindable.History.Undoable) src.Save(src.Bindable.Source.Value.FullName);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// Saves the PDF document to the specified file path.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="dest">File path.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Save(this MainFacade src, string dest) => src.Save(dest, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -384,24 +446,9 @@ namespace Cube.Pdf.App.Editor
             src.Zoom(next - prev);
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// StartProcess
-        ///
-        /// <summary>
-        /// Starts a new process with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        /// <param name="args">User arguments.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void StartProcess(this MainFacade src, string args) =>
-            Process.Start(new ProcessStartInfo
-        {
-            FileName  = Assembly.GetExecutingAssembly().Location,
-            Arguments = args
-        });
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -419,6 +466,21 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private static DocumentReader GetReader(Information src, IO io) =>
             new DocumentReader(src.FullName, src is PdfFile f ? f.Password : "", false, io);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action and creates a history item.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static HistoryItem Invoke(Action forward, Action reverse)
+        {
+            forward(); // do
+            return new HistoryItem { Undo = reverse, Redo = forward };
+        }
 
         #endregion
     }

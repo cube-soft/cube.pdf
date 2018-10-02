@@ -17,13 +17,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections.Mixin;
-using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Xui.Mixin;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -33,7 +30,8 @@ namespace Cube.Pdf.App.Editor
     /// MainFacade
     ///
     /// <summary>
-    /// MainViewModel と各種 Model の窓口となるクラスです。
+    /// Provides functionality to communicate with the MainViewModel and
+    /// other model classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -63,7 +61,7 @@ namespace Cube.Pdf.App.Editor
 
             Settings = settings;
             Settings.Load();
-            Settings.PropertyChanged += SettingsChanged;
+            Settings.PropertyChanged += (s, e) => Update(e.PropertyName);
 
             var sizes = Bindable.Images.Preferences.ItemSizeOptions;
             var index = sizes.LastIndexOf(e => e <= Bindable.ItemSize.Value);
@@ -83,7 +81,7 @@ namespace Cube.Pdf.App.Editor
         /// Settings
         ///
         /// <summary>
-        /// 設定情報を取得します。
+        /// Gets user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -100,38 +98,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public MainBindable Bindable { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected IO IO => Settings.IO;
-
         #endregion
 
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Setup
-        ///
-        /// <summary>
-        /// Invokes some actions through the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="args">User arguments.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Setup(IEnumerable<string> args)
-        {
-            foreach (var ps in Settings.GetSplashProcesses()) ps.Kill();
-            if (args.Count() <= 0) return;
-            Open(args.First());
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -152,30 +121,7 @@ namespace Cube.Pdf.App.Editor
             {
                 Bindable.SetMessage(Properties.Resources.MessageLoading, src);
                 Bindable.Open(_core.GetOrAdd(src));
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OpenLink
-        ///
-        /// <summary>
-        /// Opens a PDF document with the specified link.
-        /// </summary>
-        ///
-        /// <param name="src">Information for the link.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void OpenLink(Information src)
-        {
-            try { Open(Shortcut.Resolve(src?.FullName)?.Target); }
-            catch (Exception e)
-            {
-                var cancel = e is OperationCanceledException ||
-                             e is TwiceException;
-                if (!cancel) IO.TryDelete(src?.FullName);
-                throw;
-            }
+            }, "");
         }
 
         /* ----------------------------------------------------------------- */
@@ -196,21 +142,8 @@ namespace Cube.Pdf.App.Editor
             {
                 _core.Clear();
                 Bindable.Close();
-            });
+            }, "");
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Save
-        ///
-        /// <summary>
-        /// Saves the PDF document to the specified file path.
-        /// </summary>
-        ///
-        /// <param name="dest">File path.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Save(string dest) => Save(dest, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -227,13 +160,12 @@ namespace Cube.Pdf.App.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        private void Save(string dest, bool reopen) => Invoke(() =>
+        public void Save(string dest, bool reopen) => Invoke(() =>
         {
-            var file = IO.Get(dest);
-            Bindable.SetMessage(Properties.Resources.MessageSaving, file.FullName);
-            this.Save(file, () => _core.Clear());
+            Bindable.SetMessage(Properties.Resources.MessageSaving, dest);
+            this.Save(Settings.IO.Get(dest), () => _core.Clear());
             if (reopen) this.Restruct(_core.GetOrAdd(dest, Bindable.Encryption.Value.OwnerPassword));
-        });
+        }, "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -246,10 +178,8 @@ namespace Cube.Pdf.App.Editor
         /// <param name="dest">Save path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Extract(string dest) => Invoke(
-            () => Bindable.Images.Extract(dest),
-            Properties.Resources.MessageSaved, dest
-        );
+        public void Extract(string dest) => Invoke(() => Bindable.Images.Extract(dest),
+            Properties.Resources.MessageSaved, dest);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -263,7 +193,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="selected">true for selected.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Select(bool selected) => Invoke(() => Bindable.Images.Select(selected));
+        public void Select(bool selected) => Invoke(() => Bindable.Images.Select(selected), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -274,7 +204,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Flip() => Invoke(() => Bindable.Images.Flip());
+        public void Flip() => Invoke(() => Bindable.Images.Flip(), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -293,7 +223,7 @@ namespace Cube.Pdf.App.Editor
             Bindable.SetMessage(Properties.Resources.MessageLoading, src);
             var n = Math.Min(Math.Max(index, 0), Bindable.Images.Count);
             return Bindable.Images.InsertAt(n, _core.GetOrAdd(src).Pages);
-        });
+        }, "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -304,7 +234,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove() => Invoke(() => Bindable.Images.Remove());
+        public void Remove() => Invoke(() => Bindable.Images.Remove(), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -315,7 +245,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => Invoke(() => Bindable.Images.RemoveAt(indices));
+        public void Remove(IEnumerable<int> indices) => Invoke(() => Bindable.Images.RemoveAt(indices), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -326,7 +256,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(int delta) => Invoke(() => Bindable.Images.Move(delta));
+        public void Move(int delta) => Invoke(() => Bindable.Images.Move(delta), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -339,7 +269,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="degree">Angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Rotate(int degree) => Invoke(() => Bindable.Images.Rotate(degree));
+        public void Rotate(int degree) => Invoke(() => Bindable.Images.Rotate(degree), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -352,7 +282,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="value">Metadata object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update(Metadata value) => Invoke(() => this.SetMetadata(value));
+        public void Update(Metadata value) => Invoke(() => this.SetMetadata(value), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -365,7 +295,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="value">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update(Encryption value) => Invoke(() => this.SetEncryption(value));
+        public void Update(Encryption value) => Invoke(() => this.SetEncryption(value), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -376,7 +306,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Undo() => Invoke(() => Bindable.History.Undo());
+        public void Undo() => Invoke(() => Bindable.History.Undo(), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -387,7 +317,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Redo() => Invoke(() => Bindable.History.Redo());
+        public void Redo() => Invoke(() => Bindable.History.Redo(), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -406,7 +336,7 @@ namespace Cube.Pdf.App.Editor
         {
             Bindable.Images.Zoom(offset);
             Bindable.ItemSize.Value = Bindable.Images.Preferences.ItemSize;
-        });
+        }, "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -417,7 +347,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Refresh() => this.Invoke(() => Bindable.Images.Refresh());
+        public void Refresh() => Invoke(() => Bindable.Images.Refresh(), "");
 
         #region IDisposable
 
@@ -480,23 +410,12 @@ namespace Cube.Pdf.App.Editor
         /// Invoke
         ///
         /// <summary>
-        /// Invokes the user action and clears the message.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Invoke(Action action) => Invoke(action, string.Empty);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
         /// Invokes the user action and registers the hisotry item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Invoke(Func<HistoryItem> func) =>
-            Invoke(() => Bindable.History.Register(func()));
+        private void Invoke(Func<HistoryItem> func, string format, params object[] args) =>
+            Invoke(() => Bindable.History.Register(func()), format, args);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -529,16 +448,16 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsChanged
+        /// Update
         ///
         /// <summary>
-        /// Occurs when the PropertyChanged event is fired.
+        /// Updates values corresponding to the specified name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SettingsChanged(object s, PropertyChangedEventArgs e)
+        private void Update(string name)
         {
-            switch (e.PropertyName)
+            switch (name)
             {
                 case nameof(Settings.Value.ItemSize):
                     this.Zoom();
