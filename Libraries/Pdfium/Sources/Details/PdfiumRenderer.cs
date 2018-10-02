@@ -38,28 +38,47 @@ namespace Cube.Pdf.Pdfium
         /// Render
         ///
         /// <summary>
-        /// 指定された条件で描画します。
+        /// Executes the rendering with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDFium オブジェクト</param>
-        /// <param name="dest">出力オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="point">描画開始座標</param>
-        /// <param name="size">描画サイズ</param>
-        /// <param name="flags">描画フラグ</param>
+        /// <param name="src">PDFium object.</param>
+        /// <param name="dest">Graphics to be rendered.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="point">Starting point.</param>
+        /// <param name="size">Drawing size.</param>
+        /// <param name="flags">Drawing flags.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Render(this PdfiumReader src, Graphics dest, Page page,
+            PointF point, SizeF size, int flags) =>
+            src.Invoke(e => Render(e, dest, page, point, size, flags));
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Render
+        ///
+        /// <summary>
+        /// Executes the rendering with the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Render(IntPtr core, Graphics dest, Page page,
             PointF point, SizeF size, int flags)
         {
-            var retry = 5;
-            var hp = src.Invoke(e => PdfiumApi.FPDF_LoadPage(e, page.Number - 1, retry));
-            if (hp == IntPtr.Zero) throw src.GetLastError();
+            if (core == IntPtr.Zero) return;
+
+            var n = 5;
+            var hp = PdfiumApi.FPDF_LoadPage(core, page.Number - 1, n);
+            if (hp == IntPtr.Zero) throw new LoadException(LoadStatus.PageError);
             var hdc = dest.GetHdc();
 
             try
             {
-                src.Invoke(_ => PdfiumApi.FPDF_RenderPage(
+                PdfiumApi.FPDF_RenderPage(
                     hdc,
                     hp,
                     (int)point.X,
@@ -68,8 +87,8 @@ namespace Cube.Pdf.Pdfium
                     (int)size.Height,
                     GetRotation(page.Delta),
                     flags,
-                    retry
-                ));
+                    n
+                );
             }
             finally
             {
@@ -78,16 +97,12 @@ namespace Cube.Pdf.Pdfium
             }
         }
 
-        #endregion
-
-        #region Implementations
-
         /* ----------------------------------------------------------------- */
         ///
         /// GetRotation
         ///
         /// <summary>
-        /// 回転角度を表す値を取得します。
+        /// Gets the rotation angle in degree unit.
         /// </summary>
         ///
         /// <remarks>
