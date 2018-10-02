@@ -114,8 +114,7 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected void Create(Action<MainViewModel> callback)
         {
-            //using (var src = Create())
-            var src = Create();
+            using (var src = Create())
             {
                 var dps = Register(src);
                 callback(src);
@@ -163,8 +162,7 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected async Task CreateAsync(Func<MainViewModel, Task> callback)
         {
-            //using (var src = Create())
-            var src = Create();
+            using (var src = Create())
             {
                 var dps = Register(src);
                 await callback(src);
