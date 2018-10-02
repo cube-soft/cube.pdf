@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("Cube.Pdf.Tests.Editor")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Tests for CubePDF Utility")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CubeSoft")]
 [assembly: AssemblyProduct("Cube.Pdf.Tests.Editor")]
