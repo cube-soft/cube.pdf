@@ -22,7 +22,6 @@ using Cube.Log;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
-using Cube.Xui.Mixin;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -117,57 +116,6 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Invoke
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the user action and clears the message.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Invoke(this MainFacade src, Action action) =>
-            src.Invoke(action, string.Empty);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the user action and registers the hisotry item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Invoke(this MainFacade src, Func<HistoryItem> func) =>
-            src.Invoke(() => src.Bindable.History.Register(func()));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the user action and sets the result message.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Invoke(this MainFacade src, Action action, string format, params object[] args)
-        {
-            try
-            {
-                src.Bindable.Busy.Value = true;
-                action();
-                src.Bindable.SetMessage(format, args);
-            }
-            catch (OperationCanceledException) { /* ignore user cancel */ }
-            catch (Exception err) { src.Bindable.SetMessage(err.Message); throw; }
-            finally
-            {
-                src.Bindable.Modified.Raise();
-                src.Bindable.Count.Raise();
-                src.Bindable.Busy.Value = false;
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -289,7 +237,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">Facade object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        private static void LoadMetadata(this MainFacade src) => src.Invoke(() =>
+        private static void LoadMetadata(this MainFacade src)
         {
             try
             {
@@ -303,7 +251,7 @@ namespace Cube.Pdf.App.Editor
                 }
             }
             catch (Exception err) { src.LogWarn(err.ToString(), err); }
-        });
+        }
 
         #endregion
 
