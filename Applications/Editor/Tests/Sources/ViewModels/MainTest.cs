@@ -101,9 +101,14 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", 2, true )]
         [TestCase("Sample.pdf", 2, false)]
-        public void Close(string filename, int n, bool modify) =>
-            Create(filename, "", n, vm =>
+        public void Close(string filename, int n, bool modify) => Create(vm =>
         {
+            var fi = IO.Get(GetExamplesWith(filename));
+            Source = Path(Args(fi.NameWithoutExtension, modify));
+            IO.Copy(fi.FullName, Source, true);
+            Execute(vm, vm.Ribbon.Open);
+            Assert.That(Wait.For(() => vm.Data.Images.Count == n));
+
             if (modify) Modify(vm);
             Execute(vm, vm.Ribbon.Close);
             Assert.That(Wait.For(() => !vm.Data.IsOpen()), $"Timeout (Close)");
