@@ -62,11 +62,10 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ImageCollection(Func<string, IDocumentRenderer> getter, SynchronizationContext context)
         {
-            ImageSource create(ImageItem e) => _engine(e.RawObject.File.FullName)?.Create(e);
+            ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName)?.Create(e);
 
             _dispose = new OnceAction<bool>(Dispose);
             _context = context;
-            _engine  = getter;
             _cache   = new CacheCollection<ImageItem, ImageSource>(create);
 
             Selection   = new ImageSelection { Context = context };
@@ -76,6 +75,13 @@ namespace Cube.Pdf.App.Editor
             _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
             _inner.CollectionChanged += WhenCollectionChanged;
             Preferences.PropertyChanged += WhenPreferenceChanged;
+
+            Create = (i, r) =>
+            {
+                if (i < 0 || i >= Count) return null;
+                var src = _inner[i].RawObject;
+                return getter(src.File.FullName)?.Create(src, r);
+            };
         }
 
         #endregion
@@ -125,6 +131,18 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ImagePreferences Preferences { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Gets the function to create a new image with the specified
+        /// arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Func<int, double, ImageSource> Create { get; }
 
         #endregion
 
@@ -403,27 +421,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Preview
-        ///
-        /// <summary>
-        /// Gets the preview image of the specified index.
-        /// </summary>
-        ///
-        /// <param name="index">Index of images.</param>
-        /// <param name="ratio">Scale ratio.</param>
-        ///
-        /// <returns>Image object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageSource Preview(int index, double ratio)
-        {
-            if (index < 0 || index >= Count) return null;
-            var src = _inner[index].RawObject;
-            return _engine(src.File.FullName)?.Create(src, ratio);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Zoom
         ///
         /// <summary>
@@ -559,7 +556,6 @@ namespace Cube.Pdf.App.Editor
         #region Fields
         private readonly OnceAction<bool> _dispose;
         private readonly SynchronizationContext _context;
-        private readonly Func<string, IDocumentRenderer> _engine;
         private readonly CacheCollection<ImageItem, ImageSource> _cache;
         private readonly ObservableCollection<ImageItem> _inner = new ObservableCollection<ImageItem>();
         private CancellationTokenSource _task;
