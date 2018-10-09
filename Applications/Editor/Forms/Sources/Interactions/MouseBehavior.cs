@@ -18,85 +18,69 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// VisibleRange
+    /// DragMoveBehavior
     ///
     /// <summary>
-    /// Provides the indices of currently visible items in the
-    /// ScrollViewer control.
+    /// Represents the mouse behavior of the ListView component.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class VisibleRange : Behavior<ScrollViewer>
+    public class MouseBehavior : Behavior<ListView>
     {
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// First
+        /// Clear
         ///
         /// <summary>
-        /// Gets or sets the first index of currently visible items.
+        /// Gets or sets the command to clear the selection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int First
+        public ICommand Clear
         {
-            get => (int)GetValue(FirstProperty);
-            set => SetValue(FirstProperty, value);
+            get => (_clear as ICommandable)?.Command;
+            set => Set(_clear, value, ClearProperty);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Last
+        /// Move
         ///
         /// <summary>
-        /// Gets or sets the last index of currently visible items.
+        /// Gets or sets the command to move selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Last
+        public ICommand Move
         {
-            get => (int)GetValue(LastProperty);
-            set => SetValue(LastProperty, value);
+            get => (_move as ICommandable)?.Command;
+            set => Set(_move, value, MoveProperty);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemSize
+        /// Preview
         ///
         /// <summary>
-        /// Gets or sets the size of each item.
+        /// Gets or sets the command to preview the selected item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int ItemSize
+        public ICommand Preview
         {
-            get => _itemSize;
-            set => Set(ref _itemSize, value, () => Update());
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ItemMargin
-        ///
-        /// <summary>
-        /// Gets or sets the margin of each item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int ItemMargin
-        {
-            get => _itemMargin;
-            set => Set(ref _itemMargin, value, () => Update());
+            get => (_preview as ICommandable)?.Command;
+            set => Set(_preview, value, PreviewProperty);
         }
 
         #endregion
@@ -105,51 +89,39 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FirstProperty
+        /// ClearProperty
         ///
         /// <summary>
-        /// DependencyProperty object for the First property.
+        /// Gets the DependencyProperty object for the Clear command.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty FirstProperty =
-            Create<int>(nameof(First), (s, e) => s.First = e);
+        public static readonly DependencyProperty ClearProperty =
+            Create<ICommand>(nameof(Clear), (s, e) => s.Clear = e);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// LastProperty
+        /// MoveProperty
         ///
         /// <summary>
-        /// DependencyProperty object for the Last property.
+        /// Gets the DependencyProperty object for the Move command.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty LastProperty =
-            Create<int>(nameof(Last), (s, e) => s.Last = e);
+        public static readonly DependencyProperty MoveProperty =
+            Create<ICommand>(nameof(Move), (s, e) => s.Move = e);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemSizeProperty
+        /// PreviewProperty
         ///
         /// <summary>
-        /// DependencyProperty object for the ItemWidth property.
+        /// Gets the DependencyProperty object for the Preview command.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty ItemSizeProperty =
-            Create<int>(nameof(ItemSize), (s, e) => s.ItemSize = e);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ItemMarginProperty
-        ///
-        /// <summary>
-        /// DependencyProperty object for the ItemMargin property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty ItemMarginProperty =
-            Create<int>(nameof(ItemMargin), (s, e) => s.ItemMargin = e);
+        public static readonly DependencyProperty PreviewProperty =
+            Create<ICommand>(nameof(Preview), (s, e) => s.Preview = e);
 
         #endregion
 
@@ -167,8 +139,9 @@ namespace Cube.Pdf.App.Editor
         protected override void OnAttached()
         {
             base.OnAttached();
-            AssociatedObject.SizeChanged   += WhenChanged;
-            AssociatedObject.ScrollChanged += WhenChanged;
+            _clear.Attach(AssociatedObject);
+            _move.Attach(AssociatedObject);
+            _preview.Attach(AssociatedObject);
         }
 
         /* ----------------------------------------------------------------- */
@@ -183,36 +156,28 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.SizeChanged   -= WhenChanged;
-            AssociatedObject.ScrollChanged -= WhenChanged;
+            _clear.Detach();
+            _move.Detach();
+            _preview.Detach();
             base.OnDetaching();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Update
+        /// Set
         ///
         /// <summary>
-        /// Updates the visible range of the ScrollViewer control.
+        /// Sets the value to the specified component.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Update()
+        private void Set(Behavior<ListView> src, ICommand value, DependencyProperty dp)
         {
-            if (AssociatedObject == null) return;
-
-            var size   = Math.Max(ItemSize, 1.0);
-            var margin = Math.Max(ItemMargin * 2, 0.0);
-
-            var column = Math.Max((int)(AssociatedObject.ActualWidth / (size + margin)), 1);
-            var row    = Math.Max((int)(AssociatedObject.ActualHeight / (size + margin)), 1);
-
-            var index  = (int)(AssociatedObject.VerticalOffset / size + 0.5) * column;
-            var first  = Math.Max(index - column, 0);
-            var last   = index + column * (row + 3);
-
-            First = first;
-            Last  = last;
+            if (src is ICommandable cb)
+            {
+                cb.Command = value;
+                SetValue(dp, value);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -220,47 +185,43 @@ namespace Cube.Pdf.App.Editor
         /// Create
         ///
         /// <summary>
-        /// Creates a new DependencyProperty instance with the specified
-        /// parameters.
+        /// Creates a new instance of the DependencyProperty class with
+        /// the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static DependencyProperty Create<T>(string name,
-            Action<VisibleRange, T> callback) => DependencyFactory.Create(name, callback);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Set
-        ///
-        /// <summary>
-        /// Sets a new value to the specified property and executes the
-        /// action when setting complete.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Set<T>(ref T field, T value, Action action)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return;
-            field = value;
-            action();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenChanged
-        ///
-        /// <summary>
-        /// Occurs when some condition of the AssociatedObject is changed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenChanged(object sender, EventArgs e) => Update();
+        private static DependencyProperty Create<T>(string name, Action<MouseBehavior, T> callback) =>
+            DependencyFactory.Create(name, callback);
 
         #endregion
 
         #region Fields
-        private int _itemSize;
-        private int _itemMargin;
+        private readonly Behavior<ListView> _clear = new MouseClear();
+        private readonly Behavior<ListView> _move = new MouseMove();
+        private readonly Behavior<ListView> _preview = new MousePreview();
         #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ICommandable
+    ///
+    /// <summary>
+    /// Represents the interface that has a Command property.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public interface ICommandable
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Command
+        ///
+        /// <summary>
+        /// Gets or sets the command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ICommand Command { get; set; }
     }
 }

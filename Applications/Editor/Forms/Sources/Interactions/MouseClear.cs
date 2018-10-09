@@ -16,58 +16,36 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
-using Cube.Xui.Behaviors;
 using Cube.Xui.Mixin;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interactivity;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PreviewBehavior
+    /// MouseClear
     ///
     /// <summary>
-    /// Represents the behavior when PreviewMouseDown or MouseDoubleClick
-    /// events are fired in the ScrollViewer/ListView control.
+    /// Represents the action to clear selection through the mouse event.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PreviewBehavior : CommandBehavior<ScrollViewer>
+    public class MouseClear : Behavior<ListView>, ICommandable
     {
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PreCommand
+        /// Command
         ///
         /// <summary>
-        /// Gets or sets the command when the PreviewMouseDown event
-        /// is fired.
+        /// Gets or sets the command.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand PreCommand
-        {
-            get => GetValue(PreCommandProperty) as ICommand;
-            set => SetValue(PreCommandProperty, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PreCommandProperty
-        ///
-        /// <summary>
-        /// Gets the DependencyProperty object for the PreCommand property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty PreCommandProperty =
-            DependencyFactory.Create<PreviewBehavior, ICommand>(
-                nameof(PreCommand), (s, e) => s.PreCommand = e
-            );
+        public ICommand Command { get; set; }
 
         #endregion
 
@@ -78,19 +56,14 @@ namespace Cube.Pdf.App.Editor
         /// OnAttached
         ///
         /// <summary>
-        /// Called after the action is attached to an AssociatedObject.
+        /// Called when the action is attached to an AssociatedObject.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         protected override void OnAttached()
         {
             base.OnAttached();
-
-            AssociatedObject.PreviewMouseDown -= WhenMouseDown;
-            AssociatedObject.PreviewMouseDown += WhenMouseDown;
-
-            AssociatedObject.MouseDoubleClick -= WhenDoubleClick;
-            AssociatedObject.MouseDoubleClick += WhenDoubleClick;
+            AssociatedObject.PreviewMouseLeftButtonDown += WhenMouseDown;
         }
 
         /* ----------------------------------------------------------------- */
@@ -105,9 +78,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.PreviewMouseDown -= WhenMouseDown;
-            AssociatedObject.MouseDoubleClick -= WhenDoubleClick;
-
+            AssociatedObject.PreviewMouseLeftButtonDown -= WhenMouseDown;
             base.OnDetaching();
         }
 
@@ -116,28 +87,25 @@ namespace Cube.Pdf.App.Editor
         /// WhenMouseDown
         ///
         /// <summary>
-        /// Occurs when the PreviewMouseDown event is fired.
+        /// Occurs when the MouseDown event is fired.
         /// </summary>
+        ///
+        /// <remarks>
+        /// 右端のスクロールバー領域を適当な値で判定している。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private void WhenMouseDown(object s, MouseButtonEventArgs e)
         {
             if (IsKeyPresses()) return;
-            if (PreCommand.CanExecute()) PreCommand.Execute();
-        }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenDoubleClick
-        ///
-        /// <summary>
-        /// Occurs when the MouseDoubleClick event is fired.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left && Command.CanExecute()) Command.Execute();
+            var pt = e.GetPosition(AssociatedObject);
+            if (pt.X >= AssociatedObject.ActualWidth - 16) return;
+
+            var obj = AssociatedObject.GetObject<ListViewItem>(pt);
+            if (obj?.IsSealed ?? false) return;
+
+            if (Command?.CanExecute() ?? false) Command?.Execute();
         }
 
         /* ----------------------------------------------------------------- */

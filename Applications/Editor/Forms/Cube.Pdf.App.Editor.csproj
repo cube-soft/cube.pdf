@@ -134,8 +134,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sources\Interactions\DragMoveBehavior.cs" />
-    <Compile Include="Sources\Interactions\PreviewBehavior.cs" />
+    <Compile Include="Sources\Interactions\MouseBehavior.cs" />
+    <Compile Include="Sources\Interactions\MouseClear.cs" />
+    <Compile Include="Sources\Interactions\MouseExtension.cs" />
+    <Compile Include="Sources\Interactions\MouseMove.cs" />
+    <Compile Include="Sources\Interactions\MousePreview.cs" />
     <Compile Include="Sources\ViewModels\PasswordViewModel.cs" />
     <Compile Include="Views\PasswordWindow.xaml.cs">
       <DependentUpon>PasswordWindow.xaml</DependentUpon>

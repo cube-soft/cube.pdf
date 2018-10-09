@@ -144,7 +144,10 @@
             Grid.Row="1">
             <i:Interaction.Behaviors>
                 <xb:SelectionBehavior />
-                <my:DragMoveBehavior Command="{Binding Move}" />
+                <my:MouseBehavior
+                    Move="{Binding Move}"
+                    Clear="{Binding Ribbon.SelectClear.Command}"
+                    Preview="{Binding Ribbon.Preview.Command}" />
             </i:Interaction.Behaviors>
         </ListView>
 

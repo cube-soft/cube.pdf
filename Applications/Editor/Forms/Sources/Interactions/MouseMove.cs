@@ -16,39 +16,39 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui.Behaviors;
 using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
+using System.Windows.Interactivity;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DragMoveBehavior
+    /// MouseMove
     ///
     /// <summary>
-    /// Represents the mouse behavior of the ListView component.
+    /// Represents the action to move items through the drag&amp;drop
+    /// event.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DragMoveBehavior : CommandBehavior<ListView>
+    public class MouseMove : Behavior<ListView>, ICommandable
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MouseBehavior
+        /// MouseMove
         ///
         /// <summary>
-        /// Creates a new instance of the MouseBehavior class.
+        /// Initializes a new instance of the MouseMove class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DragMoveBehavior()
+        public MouseMove()
         {
             Drawing = new Border
             {
@@ -70,6 +70,17 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Command
+        ///
+        /// <summary>
+        /// Gets or sets the command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand Command { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -102,29 +113,23 @@ namespace Cube.Pdf.App.Editor
         /// OnAttached
         ///
         /// <summary>
-        /// Called after the action is attached to an AssociatedObject.
+        /// Called when the action is attached to an AssociatedObject.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         protected override void OnAttached()
         {
             base.OnAttached();
-
             Reset();
 
             AssociatedObject.AllowDrop = true;
-            AssociatedObject.PreviewMouseLeftButtonDown -= WhenMouseDown;
             AssociatedObject.PreviewMouseLeftButtonDown += WhenMouseDown;
-            AssociatedObject.MouseMove -= WhenMouseMove;
             AssociatedObject.MouseMove += WhenMouseMove;
-            AssociatedObject.MouseEnter -= WhenMouseEnter;
             AssociatedObject.MouseEnter += WhenMouseEnter;
-            AssociatedObject.DragOver -= WhenDragOver;
             AssociatedObject.DragOver += WhenDragOver;
-            AssociatedObject.Drop -= WhenDrop;
             AssociatedObject.Drop += WhenDrop;
 
-            _root = GetParent<Panel>(AssociatedObject);
+            _root = AssociatedObject.GetParent<Panel>();
             _root?.Children.Add(DrawingCanvas);
         }
 
@@ -148,7 +153,6 @@ namespace Cube.Pdf.App.Editor
             AssociatedObject.Drop -= WhenDrop;
 
             _root?.Children.Remove(DrawingCanvas);
-
             base.OnDetaching();
         }
 
@@ -172,18 +176,18 @@ namespace Cube.Pdf.App.Editor
         {
             Debug.Assert(AssociatedObject.Items != null);
 
-            var pt = e.GetPosition(AssociatedObject);
-            var item = GetObject<ListViewItem>(pt);
+            var pt   = e.GetPosition(AssociatedObject);
+            var item = AssociatedObject.GetObject<ListViewItem>(pt);
 
             _core = new Core
             {
                 Origin = pt,
                 Source = (item != null) ? AssociatedObject.Items.IndexOf(item.Content) : -1,
-                Bounds = GetBounds(AssociatedObject.Items.Count - 1),
+                Bounds = AssociatedObject.GetBounds(AssociatedObject.Items.Count - 1),
             };
 
-            // e.Handled = item?.IsSelected ?? false;
-            // if (e.Handled) Drag();
+            e.Handled = item?.IsSelected ?? false;
+            if (e.Handled) Drag();
         }
 
         /* ----------------------------------------------------------------- */
@@ -267,8 +271,6 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
-        #region Get
-
         /* ----------------------------------------------------------------- */
         ///
         /// GetTargetIndex
@@ -280,10 +282,10 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private int GetTargetIndex(Point pt)
         {
-            var index = GetIndexTrick(pt);
+            var index = GetIndex(pt);
             if (index == -1 || index == AssociatedObject.Items.Count) return index;
 
-            var r = GetBounds(index);
+            var r = AssociatedObject.GetBounds(index);
             var cmp = Conver(new Point(r.Left + r.Width / 2, r.Top + r.Height / 2), _root);
             var cvt = Conver(pt, _root);
 
@@ -306,143 +308,21 @@ namespace Cube.Pdf.App.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private int GetIndexTrick(Point pt)
+        private int GetIndex(Point pt)
         {
-            var dest = GetIndex(pt);
+            var dest = AssociatedObject.GetIndex(pt);
             if (dest >= 0) return dest;
 
             // 最後の項目の右側
             if (pt.Y > _core.Bounds.Bottom ||
-                pt.X > _core.Bounds.Right  &&
+                pt.X > _core.Bounds.Right &&
                 pt.Y > _core.Bounds.Top) return AssociatedObject.Items.Count;
 
             var w = AssociatedObject.ActualWidth;
-            var m = GetItem(0)?.Margin.Right ?? 0;
+            var m = AssociatedObject.GetItem(0)?.Margin.Right ?? 0;
             var x = (w - pt.X < _core.Bounds.Width) ? (w - _core.Bounds.Width) : (pt.X - m);
-            return (x != pt.X) ? GetIndex(new Point(x, pt.Y)) : dest;
+            return (x != pt.X) ? AssociatedObject.GetIndex(new Point(x, pt.Y)) : dest;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetIndex
-        ///
-        /// <summary>
-        /// Gets the item index located at the specified point.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private int GetIndex(Point pt)
-        {
-            var obj = GetObject<ListViewItem>(pt);
-            return (obj != null) ? AssociatedObject.Items.IndexOf(obj.Content) : -1;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetBounds
-        ///
-        /// <summary>
-        /// Gets the bound of the specified index.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Rect GetBounds(int index)
-        {
-            if (index < 0 || index >= AssociatedObject.Items.Count) return new Rect();
-
-            var item = GetItem(index);
-            if (item == null) return new Rect();
-
-            var delta = item.TransformToVisual(AssociatedObject).Transform(new Point());
-            var dest = VisualTreeHelper.GetDescendantBounds(item);
-            dest.Offset(delta.X, delta.Y);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetItem
-        ///
-        /// <summary>
-        /// Gets the item from the specified index.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ListViewItem GetItem(int index) =>
-            AssociatedObject.ItemContainerGenerator.ContainerFromIndex(index) as ListViewItem;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetObject
-        ///
-        /// <summary>
-        /// Gets the object of type T at the specified point.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private T GetObject<T>(Point pt) where T : DependencyObject => GetParent<T>(
-            VisualTreeHelper.HitTest(AssociatedObject, pt)?.VisualHit
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetParent
-        ///
-        /// <summary>
-        /// Gets the parent object which type is T.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private T GetParent<T>(DependencyObject src) where T : DependencyObject
-        {
-            for (var obj = src; obj != null; obj = VisualTreeHelper.GetParent(obj))
-            {
-                if (obj is T dest) return dest;
-            }
-            return default(T);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetChild
-        ///
-        /// <summary>
-        /// Gets the child object which type is T.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private T GetChild<T>(DependencyObject src) where T : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(src); ++i)
-            {
-                var obj = VisualTreeHelper.GetChild(src, i);
-                if (obj is T dest) return dest;
-                else
-                {
-                    var gc = GetChild<T>(obj);
-                    if (gc != null) return gc;
-                }
-            }
-            return default(T);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Convert
-        ///
-        /// <summary>
-        /// Converts the specified point based on the specified control.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Point Conver<T>(Point pt, T control) where T : UIElement =>
-            control != null ?
-            control.PointFromScreen(AssociatedObject.PointToScreen(pt)) :
-            pt;
-
-        #endregion
-
-        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
@@ -470,24 +350,24 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Draw(Point pt)
         {
-            var dest = GetIndexTrick(pt);
+            var dest = GetIndex(pt);
             var ok   = _core.Source >= 0 && dest >= 0;
 
             DrawingCanvas.Visibility = ok ? Visibility.Visible : Visibility.Collapsed;
             if (!ok) return;
 
             var n    = AssociatedObject.Items.Count;
-            var rect = GetBounds(Math.Max(Math.Min(dest, n - 1), 0));
+            var rect = AssociatedObject.GetBounds(Math.Max(Math.Min(dest, n - 1), 0));
             var cvt  = Conver(pt, _root);
 
-            var w = rect.Width  + 6;
+            var w = rect.Width + 6;
             var h = rect.Height + 6;
             var o = Conver(new Point(rect.Left + w / 2, rect.Top + h / 6), _root);
             var x = (dest == n || cvt.X >= o.X) ? o.X : o.X - w;
             var y = o.Y;
 
             Canvas.SetLeft(Drawing, x);
-            Canvas.SetTop(Drawing,  y);
+            Canvas.SetTop(Drawing, y);
 
             Drawing.Width  = w;
             Drawing.Height = h * (2 / 3.0);
@@ -504,7 +384,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Scroll(Point pt)
         {
-            var sv = GetChild<ScrollViewer>(AssociatedObject);
+            var sv = AssociatedObject.GetChild<ScrollViewer>();
             if (sv == null) return;
 
             var height = AssociatedObject.ActualHeight;
@@ -514,6 +394,20 @@ namespace Cube.Pdf.App.Editor
             if (pt.Y < margin) sv.ScrollToVerticalOffset(sv.VerticalOffset - offset);
             else if (pt.Y > height - margin) sv.ScrollToVerticalOffset(sv.VerticalOffset + offset);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Converts the specified point based on the specified control.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Point Conver<T>(Point pt, T control) where T : UIElement =>
+            control != null ?
+            control.PointFromScreen(AssociatedObject.PointToScreen(pt)) :
+            pt;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -528,16 +422,14 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
-        #endregion
-
         #region Fields
         private Panel _root;
         private Core _core;
         private class Core
         {
-            public int   Source { get; set; } = -1;
+            public int Source { get; set; } = -1;
             public Point Origin { get; set; } = new Point();
-            public Rect  Bounds { get; set; } = new Rect();
+            public Rect Bounds { get; set; } = new Rect();
         }
         #endregion
     }
