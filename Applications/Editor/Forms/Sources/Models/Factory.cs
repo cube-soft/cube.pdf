@@ -58,8 +58,8 @@ namespace Cube.Pdf.App.Editor
             Multiselect     = false,
             Filter          = new []
             {
-                new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
-                new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
+                new ExtensionFilter(Properties.Resources.FilterPdf, true, ".pdf"),
+                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
 
@@ -86,8 +86,8 @@ namespace Cube.Pdf.App.Editor
             CheckPathExists = false,
             Filter          = new[]
             {
-                new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
-                new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
+                new ExtensionFilter(Properties.Resources.FilterPdf, true, ".pdf"),
+                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
 

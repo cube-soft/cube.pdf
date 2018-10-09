@@ -1,4 +1,4 @@
-version: 2.11.1.{build}
+version: 2.12.0.{build}
 branches:
     only:
         - master
@@ -25,10 +25,6 @@ build:
     publish_nuget: true
     verbosity: minimal
 after_build:
-    - xcopy /q /Y /I Applications\Converter\Forms\bin\Release CubePdf
-    - xcopy /q /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
-    - xcopy /q /Y /I Applications\Editor\Forms\bin\Release CubePdf.Utility
-    - xcopy /q /Y /I Applications\Editor\Proxy\bin\Release CubePdf.Utility.Proxy
     - xcopy /q /Y /I ..\native\x64\bin\gsdll32.dll Tests\bin\Release
     - xcopy /q /Y /I ..\native\x64\lib\*.* Tests\bin\Release\lib
     - xcopy /q /Y /I ..\native\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
@@ -72,10 +68,14 @@ test_script:
       -output:CoverResults.xml
       -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Window -[*]*Control -[*]*.App"
 after_test:
+    - xcopy /q /Y /I CoverResults.xml Tests\
     - xcopy /q /Y /I Tests\bin\Release\Cube.Pdf.Tests.log Tests\
     - xcopy /q /Y /I Applications\Converter\Tests\bin\Release\Cube.Pdf.Tests.Converter.log Tests\
     - xcopy /q /Y /I Applications\Editor\Tests\bin\Release\Cube.Pdf.Tests.Editor.log Tests\
-    - xcopy /q /Y /I CoverResults.xml Tests\
+    - xcopy /q /Y /I Applications\Converter\Forms\bin\Release CubePdf
+    - xcopy /q /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
+    - xcopy /q /Y /I Applications\Editor\Forms\bin\Release CubePdf.Utility
+    - xcopy /q /Y /I Applications\Editor\Proxy\bin\Release CubePdf.Utility.Proxy
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
     - codecov -f "CoverResults.xml"
