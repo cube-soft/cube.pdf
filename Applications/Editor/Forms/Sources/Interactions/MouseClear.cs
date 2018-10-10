@@ -32,7 +32,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MouseClear : Behavior<ListView>, ICommandable
+    public class MouseClear : Behavior<ListView>
     {
         #region Properties
 

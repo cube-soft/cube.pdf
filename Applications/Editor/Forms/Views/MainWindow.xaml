@@ -147,7 +147,8 @@
                 <my:MouseBehavior
                     Move="{Binding Move}"
                     Clear="{Binding Ribbon.SelectClear.Command}"
-                    Preview="{Binding Ribbon.Preview.Command}" />
+                    Preview="{Binding Ribbon.Preview.Command}"
+                    Selection="{Binding Data.Selection}" />
             </i:Interaction.Behaviors>
         </ListView>
 

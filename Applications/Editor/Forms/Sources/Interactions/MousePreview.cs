@@ -33,7 +33,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MousePreview : Behavior<ListView>, ICommandable
+    public class MousePreview : Behavior<ListView>
     {
         #region Properties
 

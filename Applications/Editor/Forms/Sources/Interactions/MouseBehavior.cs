@@ -40,6 +40,25 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Selection
+        ///
+        /// <summary>
+        /// Gets or sets the collection of selected items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageSelection Selection
+        {
+            get => _move.Selection;
+            set
+            {
+                _move.Selection = value;
+                SetValue(SelectionProperty, value);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Clear
         ///
         /// <summary>
@@ -49,8 +68,12 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ICommand Clear
         {
-            get => (_clear as ICommandable)?.Command;
-            set => Set(_clear, value, ClearProperty);
+            get => _clear.Command;
+            set
+            {
+                _clear.Command = value;
+                SetValue(ClearProperty, value);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -64,8 +87,12 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ICommand Move
         {
-            get => (_move as ICommandable)?.Command;
-            set => Set(_move, value, MoveProperty);
+            get => _move.Command;
+            set
+            {
+                _move.Command = value;
+                SetValue(MoveProperty, value);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -79,13 +106,29 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ICommand Preview
         {
-            get => (_preview as ICommandable)?.Command;
-            set => Set(_preview, value, PreviewProperty);
+            get => _preview.Command;
+            set
+            {
+                _preview.Command = value;
+                SetValue(PreviewProperty, value);
+            }
         }
 
         #endregion
 
         #region Dependencies
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectionProperty
+        ///
+        /// <summary>
+        /// Gets the DependencyProperty object for the Selection property.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static readonly DependencyProperty SelectionProperty =
+            Create<ImageSelection>(nameof(Selection), (s, e) => s.Selection = e);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -164,24 +207,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Set
-        ///
-        /// <summary>
-        /// Sets the value to the specified component.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Set(Behavior<ListView> src, ICommand value, DependencyProperty dp)
-        {
-            if (src is ICommandable cb)
-            {
-                cb.Command = value;
-                SetValue(dp, value);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Create
         ///
         /// <summary>
@@ -196,32 +221,9 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
-        private readonly Behavior<ListView> _clear = new MouseClear();
-        private readonly Behavior<ListView> _move = new MouseMove();
-        private readonly Behavior<ListView> _preview = new MousePreview();
+        private readonly MouseClear _clear = new MouseClear();
+        private readonly MouseMove _move = new MouseMove();
+        private readonly MousePreview _preview = new MousePreview();
         #endregion
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// ICommandable
-    ///
-    /// <summary>
-    /// Represents the interface that has a Command property.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public interface ICommandable
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Command
-        ///
-        /// <summary>
-        /// Gets or sets the command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ICommand Command { get; set; }
     }
 }

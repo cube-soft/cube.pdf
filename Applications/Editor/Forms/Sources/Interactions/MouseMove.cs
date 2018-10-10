@@ -35,7 +35,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MouseMove : Behavior<ListView>, ICommandable
+    public class MouseMove : Behavior<ListView>
     {
         #region Constructors
 
@@ -81,6 +81,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand Command { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Selection
+        ///
+        /// <summary>
+        /// Gets or sets the collection of selected items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageSelection Selection { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -297,7 +308,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetIndexTrick
+        /// GetIndex
         ///
         /// <summary>
         /// Gets the item index located at the specified point.
