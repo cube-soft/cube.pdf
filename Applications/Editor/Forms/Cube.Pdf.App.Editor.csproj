@@ -134,6 +134,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\Interactions\DragDropObject.cs" />
     <Compile Include="Sources\Interactions\MouseClearBehavior.cs" />
     <Compile Include="Sources\Interactions\MouseExtension.cs" />
     <Compile Include="Sources\Interactions\MouseMoveBehavior.cs" />

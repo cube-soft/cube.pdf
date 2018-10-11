@@ -20,6 +20,7 @@ using Cube.Xui;
 using Cube.Xui.Behaviors;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -36,7 +37,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MouseMoveBehavior : CommandBehavior<ListView>
+    public sealed class MouseMoveBehavior : CommandBehavior<ListView>
     {
         #region Constructors
 
@@ -109,6 +110,17 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public Border Drawing { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Core
+        ///
+        /// <summary>
+        /// Gets the object for inner implementations.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private CoreObject Core => _core ?? (_core = new CoreObject());
+
         #endregion
 
         #region Dependencies
@@ -143,7 +155,7 @@ namespace Cube.Pdf.App.Editor
         protected override void OnAttached()
         {
             base.OnAttached();
-            Reset();
+            Reset(null);
 
             AssociatedObject.AllowDrop = true;
             AssociatedObject.PreviewMouseLeftButtonDown += WhenMouseDown;
@@ -152,8 +164,8 @@ namespace Cube.Pdf.App.Editor
             AssociatedObject.DragOver += WhenDragOver;
             AssociatedObject.Drop += WhenDrop;
 
-            _root = AssociatedObject.GetParent<Panel>();
-            _root?.Children.Add(DrawingCanvas);
+            _attached = AssociatedObject.GetParent<Panel>();
+            _attached?.Children.Add(DrawingCanvas);
         }
 
         /* ----------------------------------------------------------------- */
@@ -168,14 +180,14 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            Reset();
+            Reset(null);
 
             AssociatedObject.PreviewMouseLeftButtonDown -= WhenMouseDown;
             AssociatedObject.MouseMove -= WhenMouseMove;
             AssociatedObject.DragOver -= WhenDragOver;
             AssociatedObject.Drop -= WhenDrop;
 
-            _root?.Children.Remove(DrawingCanvas);
+            _attached?.Children.Remove(DrawingCanvas);
             base.OnDetaching();
         }
 
@@ -202,12 +214,12 @@ namespace Cube.Pdf.App.Editor
             var pt   = e.GetPosition(AssociatedObject);
             var item = AssociatedObject.GetObject<ListViewItem>(pt);
 
-            _core = new Core
+            Reset(new CoreObject
             {
                 Origin = pt,
                 Source = (item != null) ? AssociatedObject.Items.IndexOf(item.Content) : -1,
                 Bounds = AssociatedObject.GetBounds(AssociatedObject.Items.Count - 1),
-            };
+            });
 
             e.Handled = item?.IsSelected ?? false;
             if (e.Handled) Drag();
@@ -224,7 +236,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && _core.Source >= 0) Drag();
+            if (e.LeftButton == MouseButtonState.Pressed && Core.Source >= 0) Drag();
         }
 
         /* ----------------------------------------------------------------- */
@@ -244,9 +256,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseEnter(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed) return;
-            DrawingCanvas.Visibility = Visibility.Collapsed;
-            Reset();
+            if (e.LeftButton != MouseButtonState.Pressed) Reset(null);
         }
 
         /* ----------------------------------------------------------------- */
@@ -260,7 +270,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenDragOver(object s, DragEventArgs e)
         {
-            e.Handled = (_core.Source >= 0);
+            e.Handled = (Core.Source >= 0);
             if (e.Handled)
             {
                 e.Effects = DragDropEffects.Move;
@@ -284,12 +294,13 @@ namespace Cube.Pdf.App.Editor
         {
             try
             {
-                DrawingCanvas.Visibility = Visibility.Collapsed;
-                var index = GetTargetIndex(e.GetPosition(AssociatedObject));
-                var delta = index - _core.Source;
-                if (Command?.CanExecute(delta) ?? false) Command.Execute(delta);
+                if (e.Data.GetData(DataFormats.Serializable) is DragDropObject obj)
+                {
+                    obj.DropIndex = GetTargetIndex(e.GetPosition(AssociatedObject));
+                    if (Command?.CanExecute(obj) ?? false) Command.Execute(obj);
+                }
             }
-            finally { Reset(); }
+            finally { Reset(null); }
         }
 
         #endregion
@@ -309,12 +320,12 @@ namespace Cube.Pdf.App.Editor
             if (index == -1 || index == AssociatedObject.Items.Count) return index;
 
             var r = AssociatedObject.GetBounds(index);
-            var cmp = Conver(new Point(r.Left + r.Width / 2, r.Top + r.Height / 2), _root);
-            var cvt = Conver(pt, _root);
+            var cmp = Conver(new Point(r.Left + r.Width / 2, r.Top + r.Height / 2), _attached);
+            var cvt = Conver(pt, _attached);
 
             var n = AssociatedObject.Items.Count;
-            if (_core.Source < index && cvt.X < cmp.X) return Math.Max(index - 1, 0);
-            else if (_core.Source > index && cvt.X >= cmp.X) return Math.Min(index + 1, n);
+            if (Core.Source < index && cvt.X < cmp.X) return Math.Max(index - 1, 0);
+            else if (Core.Source > index && cvt.X >= cmp.X) return Math.Min(index + 1, n);
             else return index;
         }
 
@@ -337,13 +348,13 @@ namespace Cube.Pdf.App.Editor
             if (dest >= 0) return dest;
 
             // 最後の項目の右側
-            if (pt.Y > _core.Bounds.Bottom ||
-                pt.X > _core.Bounds.Right &&
-                pt.Y > _core.Bounds.Top) return AssociatedObject.Items.Count;
+            if (pt.Y > Core.Bounds.Bottom ||
+                pt.X > Core.Bounds.Right &&
+                pt.Y > Core.Bounds.Top) return AssociatedObject.Items.Count;
 
             var w = AssociatedObject.ActualWidth;
             var m = AssociatedObject.GetItem(0)?.Margin.Right ?? 0;
-            var x = (w - pt.X < _core.Bounds.Width) ? (w - _core.Bounds.Width) : (pt.X - m);
+            var x = (w - pt.X < Core.Bounds.Width) ? (w - Core.Bounds.Width) : (pt.X - m);
             return (x != pt.X) ? AssociatedObject.GetIndex(new Point(x, pt.Y)) : dest;
         }
 
@@ -358,8 +369,19 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Drag()
         {
-            DrawingCanvas.Visibility = Visibility.Collapsed;
-            DragDrop.DoDragDrop(AssociatedObject, _core.Source, DragDropEffects.Move);
+            var obj = new DragDropObject
+            {
+                Pid       = Core.Pid,
+                DragIndex = Core.Source,
+                DropIndex = -1,
+                Selection = Selection.Items.Select(e => e.RawObject).ToList(),
+            };
+
+            DragDrop.DoDragDrop(
+                AssociatedObject,
+                new DataObject(DataFormats.Serializable, obj),
+                DragDropEffects.Copy | DragDropEffects.Move
+            );
         }
 
         /* ----------------------------------------------------------------- */
@@ -374,18 +396,18 @@ namespace Cube.Pdf.App.Editor
         private void Draw(Point pt)
         {
             var dest = GetIndex(pt);
-            var ok   = _core.Source >= 0 && dest >= 0;
+            var ok   = Core.Source >= 0 && dest >= 0;
 
             DrawingCanvas.Visibility = ok ? Visibility.Visible : Visibility.Collapsed;
             if (!ok) return;
 
             var n    = AssociatedObject.Items.Count;
             var rect = AssociatedObject.GetBounds(Math.Max(Math.Min(dest, n - 1), 0));
-            var cvt  = Conver(pt, _root);
+            var cvt  = Conver(pt, _attached);
 
             var w = rect.Width + 6;
             var h = rect.Height + 6;
-            var o = Conver(new Point(rect.Left + w / 2, rect.Top + h / 6), _root);
+            var o = Conver(new Point(rect.Left + w / 2, rect.Top + h / 6), _attached);
             var x = (dest == n || cvt.X >= o.X) ? o.X : o.X - w;
             var y = o.Y;
 
@@ -412,7 +434,7 @@ namespace Cube.Pdf.App.Editor
 
             var height = AssociatedObject.ActualHeight;
             var margin = height / 5.0;
-            var offset = Math.Max(_core.Bounds.Height / 10, 50);
+            var offset = Math.Max(Core.Bounds.Height / 10, 50);
 
             if (pt.Y < margin) sv.ScrollToVerticalOffset(sv.VerticalOffset - offset);
             else if (pt.Y > height - margin) sv.ScrollToVerticalOffset(sv.VerticalOffset + offset);
@@ -441,15 +463,20 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Reset() => _core = new Core();
+        private void Reset(CoreObject value)
+        {
+            DrawingCanvas.Visibility = Visibility.Collapsed;
+            _core = value;
+        }
 
         #endregion
 
         #region Fields
-        private Panel _root;
-        private Core _core;
-        private class Core
+        private Panel _attached;
+        private CoreObject _core;
+        private class CoreObject
         {
+            public int Pid { get; } = Process.GetCurrentProcess().Id;
             public int Source { get; set; } = -1;
             public Point Origin { get; set; } = new Point();
             public Rect Bounds { get; set; } = new Rect();
