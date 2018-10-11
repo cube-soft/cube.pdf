@@ -16,18 +16,19 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui;
+using Cube.Xui.Behaviors;
 using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MouseMove
+    /// MouseMoveBehavior
     ///
     /// <summary>
     /// Represents the action to move items through the drag&amp;drop
@@ -35,7 +36,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MouseMove : Behavior<ListView>
+    public class MouseMoveBehavior : CommandBehavior<ListView>
     {
         #region Constructors
 
@@ -48,7 +49,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MouseMove()
+        public MouseMoveBehavior()
         {
             Drawing = new Border
             {
@@ -73,17 +74,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Command
-        ///
-        /// <summary>
-        /// Gets or sets the command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICommand Command { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Selection
         ///
         /// <summary>
@@ -91,7 +81,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSelection Selection { get; set; }
+        public ImageSelection Selection
+        {
+            get => GetValue(SelectionProperty) as ImageSelection;
+            set => SetValue(SelectionProperty, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,6 +108,24 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Border Drawing { get; }
+
+        #endregion
+
+        #region Dependencies
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectionProperty
+        ///
+        /// <summary>
+        /// Gets a dependency object for the Selection property.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DependencyProperty SelectionProperty =
+            DependencyFactory.Create<MouseMoveBehavior, ImageSelection>(
+                nameof(Selection), (s, e) => s.Selection = e
+            );
 
         #endregion
 

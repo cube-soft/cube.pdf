@@ -107,7 +107,7 @@
         <my:MetadataWindowBehavior />
         <my:EncryptionWindowBehavior />
         <my:SettingsWindowBehavior />
-        <my:DragFileBehavior Command="{Binding Drop}" />
+        <my:MouseOpenBehavior Command="{Binding Drop}" />
     </i:Interaction.Behaviors>
 
     <i:Interaction.Triggers>
@@ -144,10 +144,10 @@
             Grid.Row="1">
             <i:Interaction.Behaviors>
                 <xb:SelectionBehavior />
-                <my:MouseBehavior
-                    Move="{Binding Move}"
-                    Clear="{Binding Ribbon.SelectClear.Command}"
-                    Preview="{Binding Ribbon.Preview.Command}"
+                <my:MouseClearBehavior Command="{Binding Ribbon.SelectClear.Command}" />
+                <my:MousePreviewBehavior Command="{Binding Ribbon.Preview.Command}" />
+                <my:MouseMoveBehavior
+                    Command="{Binding Move}"
                     Selection="{Binding Data.Selection}" />
             </i:Interaction.Behaviors>
         </ListView>

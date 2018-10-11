@@ -134,11 +134,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sources\Interactions\MouseBehavior.cs" />
-    <Compile Include="Sources\Interactions\MouseClear.cs" />
+    <Compile Include="Sources\Interactions\MouseClearBehavior.cs" />
     <Compile Include="Sources\Interactions\MouseExtension.cs" />
-    <Compile Include="Sources\Interactions\MouseMove.cs" />
-    <Compile Include="Sources\Interactions\MousePreview.cs" />
+    <Compile Include="Sources\Interactions\MouseMoveBehavior.cs" />
+    <Compile Include="Sources\Interactions\MousePreviewBehavior.cs" />
     <Compile Include="Sources\ViewModels\PasswordViewModel.cs" />
     <Compile Include="Views\PasswordWindow.xaml.cs">
       <DependentUpon>PasswordWindow.xaml</DependentUpon>
@@ -157,7 +156,7 @@
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sources\Interactions\DragFileBehavior.cs" />
+    <Compile Include="Sources\Interactions\MouseOpenBehavior.cs" />
     <Compile Include="Sources\ViewModels\EncryptionViewModel.cs" />
     <Compile Include="Sources\ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\EncryptionWindow.xaml.cs">

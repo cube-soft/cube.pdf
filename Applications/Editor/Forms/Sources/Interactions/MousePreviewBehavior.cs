@@ -16,39 +16,25 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Xui.Behaviors;
 using Cube.Xui.Mixin;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MouseClear
+    /// MousePreviewBehavior
     ///
     /// <summary>
-    /// Represents the action to clear selection through the mouse event.
+    /// Represents the action to show a preview dialog through the mouse
+    /// event.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MouseClear : Behavior<ListView>
+    public class MousePreviewBehavior : CommandBehavior<ListView>
     {
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Command
-        ///
-        /// <summary>
-        /// Gets or sets the command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICommand Command { get; set; }
-
-        #endregion
-
         #region Implementations
 
         /* ----------------------------------------------------------------- */
@@ -63,7 +49,7 @@ namespace Cube.Pdf.App.Editor
         protected override void OnAttached()
         {
             base.OnAttached();
-            AssociatedObject.PreviewMouseLeftButtonDown += WhenMouseDown;
+            AssociatedObject.MouseDoubleClick += WhenDoubleClick;
         }
 
         /* ----------------------------------------------------------------- */
@@ -78,7 +64,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.PreviewMouseLeftButtonDown -= WhenMouseDown;
+            AssociatedObject.MouseDoubleClick -= WhenDoubleClick;
             base.OnDetaching();
         }
 
@@ -87,42 +73,17 @@ namespace Cube.Pdf.App.Editor
         /// WhenMouseDown
         ///
         /// <summary>
-        /// Occurs when the MouseDown event is fired.
+        /// Occurs when the MouseDoubleClick event is fired.
         /// </summary>
         ///
-        /// <remarks>
-        /// 右端のスクロールバー領域を適当な値で判定している。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        private void WhenMouseDown(object s, MouseButtonEventArgs e)
+        private void WhenDoubleClick(object s, MouseButtonEventArgs e)
         {
-            if (IsKeyPresses()) return;
-
-            var pt = e.GetPosition(AssociatedObject);
-            if (pt.X >= AssociatedObject.ActualWidth - 16) return;
-
+            if (e.ChangedButton != MouseButton.Left) return;
+            var pt  = e.GetPosition(AssociatedObject);
             var obj = AssociatedObject.GetObject<ListViewItem>(pt);
-            if (obj?.IsSealed ?? false) return;
-
-            if (Command?.CanExecute() ?? false) Command?.Execute();
+            if (obj != null && Command != null && Command.CanExecute()) Command.Execute();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsKeyPressed
-        ///
-        /// <summary>
-        /// Gets a value indicating whether the Ctrl or Shift key is
-        /// pressed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsKeyPresses() =>
-            (Keyboard.GetKeyStates(Key.LeftShift)  & KeyStates.Down) == KeyStates.Down ||
-            (Keyboard.GetKeyStates(Key.RightShift) & KeyStates.Down) == KeyStates.Down ||
-            (Keyboard.GetKeyStates(Key.LeftCtrl)   & KeyStates.Down) == KeyStates.Down ||
-            (Keyboard.GetKeyStates(Key.RightCtrl)  & KeyStates.Down) == KeyStates.Down;
 
         #endregion
     }

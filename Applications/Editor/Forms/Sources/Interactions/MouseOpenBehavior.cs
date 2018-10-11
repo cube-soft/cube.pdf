@@ -26,14 +26,14 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DragFileBehavior
+    /// MouseOpenBehavior
     ///
     /// <summary>
     /// Represents the behavior when files are dropped.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DragFileBehavior : CommandBehavior<Window>
+    public class MouseOpenBehavior : CommandBehavior<Window>
     {
         #region Implementations
 
