@@ -28,6 +28,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public enum PermissionValue
     {
         /// <summary>Operation is denied.</summary>

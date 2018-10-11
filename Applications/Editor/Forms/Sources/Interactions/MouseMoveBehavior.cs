@@ -110,17 +110,6 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public Border Drawing { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Core
-        ///
-        /// <summary>
-        /// Gets the object for inner implementations.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private CoreObject Core => _core ?? (_core = new CoreObject());
-
         #endregion
 
         #region Dependencies
@@ -155,7 +144,6 @@ namespace Cube.Pdf.App.Editor
         protected override void OnAttached()
         {
             base.OnAttached();
-            Reset(null);
 
             AssociatedObject.AllowDrop = true;
             AssociatedObject.PreviewMouseLeftButtonDown += WhenMouseDown;
@@ -180,10 +168,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            Reset(null);
-
             AssociatedObject.PreviewMouseLeftButtonDown -= WhenMouseDown;
             AssociatedObject.MouseMove -= WhenMouseMove;
+            AssociatedObject.MouseEnter -= WhenMouseEnter;
             AssociatedObject.DragOver -= WhenDragOver;
             AssociatedObject.Drop -= WhenDrop;
 
@@ -207,22 +194,16 @@ namespace Cube.Pdf.App.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenMouseDown(object s, MouseButtonEventArgs e)
+        private void WhenMouseDown(object s, MouseEventArgs e)
         {
             Debug.Assert(AssociatedObject.Items != null);
 
-            var pt   = e.GetPosition(AssociatedObject);
-            var item = AssociatedObject.GetObject<ListViewItem>(pt);
-
-            Reset(new CoreObject
-            {
-                Origin = pt,
-                Source = (item != null) ? AssociatedObject.Items.IndexOf(item.Content) : -1,
-                Bounds = AssociatedObject.GetBounds(AssociatedObject.Items.Count - 1),
-            });
+            var pt    = e.GetPosition(AssociatedObject);
+            var item  = AssociatedObject.GetObject<ListViewItem>(pt);
+            var index = (item != null) ? AssociatedObject.Items.IndexOf(item.Content) : -1;
 
             e.Handled = item?.IsSelected ?? false;
-            if (e.Handled) Drag();
+            if (e.Handled) Drag(index);
         }
 
         /* ----------------------------------------------------------------- */
@@ -234,9 +215,9 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenMouseMove(object sender, MouseEventArgs e)
+        private void WhenMouseMove(object s, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && Core.Source >= 0) Drag();
+            if (e.LeftButton == MouseButtonState.Pressed) WhenMouseDown(s, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -247,16 +228,11 @@ namespace Cube.Pdf.App.Editor
         /// Occurs when the MouseEnter event is fired.
         /// </summary>
         ///
-        /// <remarks>
-        /// Windows 外で Drop した場合、描画内容が残ったままとなります。
-        /// そこで、MouseEnter イベントが発生したタイミングで非表示に
-        /// します。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        private void WhenMouseEnter(object sender, MouseEventArgs e)
+        private void WhenMouseEnter(object s, MouseEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed) Reset(null);
+            if (e.LeftButton == MouseButtonState.Pressed) return;
+            DrawingCanvas.Visibility = Visibility.Collapsed;
         }
 
         /* ----------------------------------------------------------------- */
@@ -270,15 +246,20 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenDragOver(object s, DragEventArgs e)
         {
-            e.Handled = (Core.Source >= 0);
-            if (e.Handled)
+            if (e.Data.GetData(DataFormats.Serializable) is DragDropObject obj && obj.DragIndex >= 0)
             {
+                if (DrawingCanvas.Visibility != Visibility.Visible) DrawingCanvas.Visibility = Visibility.Visible;
+
+                e.Handled = true;
                 e.Effects = DragDropEffects.Move;
 
-                var pt = e.GetPosition(AssociatedObject);
-                Scroll(pt);
-                Draw(pt);
+                var pt   = e.GetPosition(AssociatedObject);
+                var unit = GetBounds();
+
+                Scroll(obj, pt, unit);
+                Draw(obj, pt, unit);
             }
+            else e.Handled = false;
         }
 
         /* ----------------------------------------------------------------- */
@@ -292,71 +273,15 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenDrop(object s, DragEventArgs e)
         {
-            try
+            DrawingCanvas.Visibility = Visibility.Collapsed;
+            if (e.Data.GetData(DataFormats.Serializable) is DragDropObject obj)
             {
-                if (e.Data.GetData(DataFormats.Serializable) is DragDropObject obj)
-                {
-                    obj.DropIndex = GetTargetIndex(e.GetPosition(AssociatedObject));
-                    if (Command?.CanExecute(obj) ?? false) Command.Execute(obj);
-                }
+                obj.DropIndex = GetTargetIndex(obj, e.GetPosition(AssociatedObject), GetBounds());
+                if (Command?.CanExecute(obj) ?? false) Command.Execute(obj);
             }
-            finally { Reset(null); }
         }
 
         #endregion
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetTargetIndex
-        ///
-        /// <summary>
-        /// Gets the item index located at the specified point.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private int GetTargetIndex(Point pt)
-        {
-            var index = GetIndex(pt);
-            if (index == -1 || index == AssociatedObject.Items.Count) return index;
-
-            var r = AssociatedObject.GetBounds(index);
-            var cmp = Conver(new Point(r.Left + r.Width / 2, r.Top + r.Height / 2), _attached);
-            var cvt = Conver(pt, _attached);
-
-            var n = AssociatedObject.Items.Count;
-            if (Core.Source < index && cvt.X < cmp.X) return Math.Max(index - 1, 0);
-            else if (Core.Source > index && cvt.X >= cmp.X) return Math.Min(index + 1, n);
-            else return index;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetIndex
-        ///
-        /// <summary>
-        /// Gets the item index located at the specified point.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 右端のマージンを考慮してインデックスを決定します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private int GetIndex(Point pt)
-        {
-            var dest = AssociatedObject.GetIndex(pt);
-            if (dest >= 0) return dest;
-
-            // 最後の項目の右側
-            if (pt.Y > Core.Bounds.Bottom ||
-                pt.X > Core.Bounds.Right &&
-                pt.Y > Core.Bounds.Top) return AssociatedObject.Items.Count;
-
-            var w = AssociatedObject.ActualWidth;
-            var m = AssociatedObject.GetItem(0)?.Margin.Right ?? 0;
-            var x = (w - pt.X < Core.Bounds.Width) ? (w - Core.Bounds.Width) : (pt.X - m);
-            return (x != pt.X) ? AssociatedObject.GetIndex(new Point(x, pt.Y)) : dest;
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -367,22 +292,15 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Drag()
-        {
-            var obj = new DragDropObject
+        private void Drag(int index) => DragDrop.DoDragDrop(AssociatedObject,
+            new DataObject(DataFormats.Serializable, new DragDropObject
             {
-                Pid       = Core.Pid,
-                DragIndex = Core.Source,
+                Pid       = Process.GetCurrentProcess().Id,
+                DragIndex = index,
                 DropIndex = -1,
                 Selection = Selection.Items.Select(e => e.RawObject).ToList(),
-            };
-
-            DragDrop.DoDragDrop(
-                AssociatedObject,
-                new DataObject(DataFormats.Serializable, obj),
-                DragDropEffects.Copy | DragDropEffects.Move
-            );
-        }
+            }),
+            DragDropEffects.Copy | DragDropEffects.Move);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -393,10 +311,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Draw(Point pt)
+        private void Draw(DragDropObject src, Point pt, Rect unit)
         {
-            var dest = GetIndex(pt);
-            var ok   = Core.Source >= 0 && dest >= 0;
+            var dest = GetIndex(src, pt, unit);
+            var ok   = src.DragIndex >= 0 && dest >= 0;
 
             DrawingCanvas.Visibility = ok ? Visibility.Visible : Visibility.Collapsed;
             if (!ok) return;
@@ -427,18 +345,86 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Scroll(Point pt)
+        private void Scroll(DragDropObject src, Point pt, Rect unit)
         {
             var sv = AssociatedObject.GetChild<ScrollViewer>();
             if (sv == null) return;
 
             var height = AssociatedObject.ActualHeight;
             var margin = height / 5.0;
-            var offset = Math.Max(Core.Bounds.Height / 10, 50);
+            var offset = Math.Max(unit.Height / 10, 50);
 
             if (pt.Y < margin) sv.ScrollToVerticalOffset(sv.VerticalOffset - offset);
             else if (pt.Y > height - margin) sv.ScrollToVerticalOffset(sv.VerticalOffset + offset);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTargetIndex
+        ///
+        /// <summary>
+        /// Gets the item index located at the specified point.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private int GetTargetIndex(DragDropObject src, Point pt, Rect unit)
+        {
+            var index = GetIndex(src, pt, unit);
+            if (index == -1 || index == AssociatedObject.Items.Count) return index;
+
+            var rect = AssociatedObject.GetBounds(index);
+            var x    = rect.Left + rect.Width / 2;
+            var y    = rect.Top + rect.Height / 2;
+            var cmp  = Conver(new Point(x, y), _attached);
+            var cvt  = Conver(pt, _attached);
+
+            var n = AssociatedObject.Items.Count;
+            if (src.DragIndex < index && cvt.X < cmp.X) return Math.Max(index - 1, 0);
+            else if (src.DragIndex > index && cvt.X >= cmp.X) return Math.Min(index + 1, n);
+            else return index;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetIndex
+        ///
+        /// <summary>
+        /// Gets the item index located at the specified point.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 右端のマージンを考慮してインデックスを決定します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private int GetIndex(DragDropObject src, Point pt, Rect unit)
+        {
+            var obj = AssociatedObject;
+            var dest = obj.GetIndex(pt);
+            if (dest >= 0) return dest;
+
+            // 最後の項目の右側
+            if (pt.Y > unit.Bottom || (pt.X > unit.Right && pt.Y > unit.Top)) return obj.Items.Count;
+
+            var w = obj.ActualWidth;
+            var m = obj.GetItem(0)?.Margin.Right ?? 0;
+            var x = (w - pt.X < unit.Width) ? (w - unit.Width) : (pt.X - m);
+            return (x != pt.X) ? obj.GetIndex(new Point(x, pt.Y)) : dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetBounds
+        ///
+        /// <summary>
+        /// Gets the bound of the first item.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Rect GetBounds() =>
+            AssociatedObject.Items.Count > 0 ?
+            AssociatedObject.GetBounds(0) :
+            new Rect();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -454,33 +440,10 @@ namespace Cube.Pdf.App.Editor
             control.PointFromScreen(AssociatedObject.PointToScreen(pt)) :
             pt;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        ///
-        /// <summary>
-        /// Resets the inner objects.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Reset(CoreObject value)
-        {
-            DrawingCanvas.Visibility = Visibility.Collapsed;
-            _core = value;
-        }
-
         #endregion
 
         #region Fields
         private Panel _attached;
-        private CoreObject _core;
-        private class CoreObject
-        {
-            public int Pid { get; } = Process.GetCurrentProcess().Id;
-            public int Source { get; set; } = -1;
-            public Point Origin { get; set; } = new Point();
-            public Rect Bounds { get; set; } = new Rect();
-        }
         #endregion
     }
 }

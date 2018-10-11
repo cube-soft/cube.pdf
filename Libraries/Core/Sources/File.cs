@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using System;
 using System.Drawing;
 
 namespace Cube.Pdf
@@ -31,6 +32,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public abstract class File : Information
     {
         #region Constructors
@@ -94,6 +96,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public class PdfFile : File
     {
         #region Constructors
@@ -180,6 +183,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public class ImageFile : File
     {
         #region Constructors

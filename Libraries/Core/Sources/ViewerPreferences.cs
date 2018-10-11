@@ -33,6 +33,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Flags]
+    [Serializable]
     public enum ViewerPreferences
     {
         /// <summary>No options.</summary>

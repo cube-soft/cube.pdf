@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Mixin;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace Cube.Pdf
@@ -30,6 +31,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public class Permission : ObservableProperty
     {
         #region Constructors

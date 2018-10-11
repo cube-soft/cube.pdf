@@ -28,6 +28,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public class Metadata : ObservableProperty
     {
         #region Properties
