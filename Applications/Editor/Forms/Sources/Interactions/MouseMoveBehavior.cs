@@ -217,7 +217,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseMove(object s, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed) WhenMouseDown(s, e);
+            if (e.LeftButton.IsPressed()) WhenMouseDown(s, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -231,8 +231,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseEnter(object s, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed) return;
-            DrawingCanvas.Visibility = Visibility.Collapsed;
+            if (!e.LeftButton.IsPressed()) DrawingCanvas.SetVisible(false);
         }
 
         /* ----------------------------------------------------------------- */
@@ -246,20 +245,15 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenDragOver(object s, DragEventArgs e)
         {
-            if (e.Data.GetData(DataFormats.Serializable) is DragDropObject obj && obj.DragIndex >= 0)
-            {
-                if (DrawingCanvas.Visibility != Visibility.Visible) DrawingCanvas.Visibility = Visibility.Visible;
+            var obj = e.Data.GetData(DataFormats.Serializable) as DragDropObject;
+            e.Handled = obj != null && obj.DragIndex >= 0;
+            e.Effects = e.Handled ? DragDropEffects.Move : DragDropEffects.None;
+            if (!e.Handled) return;
 
-                e.Handled = true;
-                e.Effects = DragDropEffects.Move;
-
-                var pt   = e.GetPosition(AssociatedObject);
-                var unit = GetBounds();
-
-                Scroll(obj, pt, unit);
-                Draw(obj, pt, unit);
-            }
-            else e.Handled = false;
+            var pt   = e.GetPosition(AssociatedObject);
+            var unit = AssociatedObject.GetBounds();
+            Scroll(obj, pt, unit);
+            Draw(obj, pt, unit);
         }
 
         /* ----------------------------------------------------------------- */
@@ -273,12 +267,16 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenDrop(object s, DragEventArgs e)
         {
-            DrawingCanvas.Visibility = Visibility.Collapsed;
-            if (e.Data.GetData(DataFormats.Serializable) is DragDropObject obj)
-            {
-                obj.DropIndex = GetTargetIndex(obj, e.GetPosition(AssociatedObject), GetBounds());
-                if (Command?.CanExecute(obj) ?? false) Command.Execute(obj);
-            }
+            DrawingCanvas.SetVisible(false);
+
+            var obj = e.Data.GetData(DataFormats.Serializable) as DragDropObject;
+            e.Handled = obj != null;
+            if (!e.Handled) return;
+
+            var pt   = e.GetPosition(AssociatedObject);
+            var unit = AssociatedObject.GetBounds();
+            obj.DropIndex = GetTargetIndex(obj, pt, unit);
+            if (Command?.CanExecute(obj) ?? false) Command.Execute(obj);
         }
 
         #endregion
@@ -300,7 +298,7 @@ namespace Cube.Pdf.App.Editor
                 DropIndex = -1,
                 Selection = Selection.Items.Select(e => e.RawObject).ToList(),
             }),
-            DragDropEffects.Copy | DragDropEffects.Move);
+            DragDropEffects.Move);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -316,7 +314,7 @@ namespace Cube.Pdf.App.Editor
             var dest = GetIndex(src, pt, unit);
             var ok   = src.DragIndex >= 0 && dest >= 0;
 
-            DrawingCanvas.Visibility = ok ? Visibility.Visible : Visibility.Collapsed;
+            DrawingCanvas.SetVisible(ok);
             if (!ok) return;
 
             var n    = AssociatedObject.Items.Count;
@@ -366,6 +364,11 @@ namespace Cube.Pdf.App.Editor
         /// Gets the item index located at the specified point.
         /// </summary>
         ///
+        /// <remarks>
+        /// 指定位置がサムネイル上にある場合、その x 座標がサムネイル上の
+        /// 右半分か左半分かで挿入位置をずらします。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         private int GetTargetIndex(DragDropObject src, Point pt, Rect unit)
         {
@@ -411,20 +414,6 @@ namespace Cube.Pdf.App.Editor
             var x = (w - pt.X < unit.Width) ? (w - unit.Width) : (pt.X - m);
             return (x != pt.X) ? obj.GetIndex(new Point(x, pt.Y)) : dest;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetBounds
-        ///
-        /// <summary>
-        /// Gets the bound of the first item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Rect GetBounds() =>
-            AssociatedObject.Items.Count > 0 ?
-            AssociatedObject.GetBounds(0) :
-            new Rect();
 
         /* ----------------------------------------------------------------- */
         ///

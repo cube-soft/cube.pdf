@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Cube.Pdf.App.Editor
@@ -40,11 +41,29 @@ namespace Cube.Pdf.App.Editor
         /// GetBounds
         ///
         /// <summary>
+        /// Gets the bound of the first item.
+        /// </summary>
+        ///
+        /// <param name="src">UI element.</param>
+        ///
+        /// <returns>Rect object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Rect GetBounds(this ListView src) =>
+            src.Items.Count > 0 ? src.GetBounds(0) : new Rect();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetBounds
+        ///
+        /// <summary>
         /// Gets the bound of the specified index.
         /// </summary>
         ///
         /// <param name="src">UI element.</param>
         /// <param name="index">Target index.</param>
+        ///
+        /// <returns>Rect object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Rect GetBounds(this ListView src, int index)
@@ -71,6 +90,8 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">UI element.</param>
         /// <param name="index">Target index.</param>
         ///
+        /// <returns>ListViewItem object.</returns>
+        ///
         /* ----------------------------------------------------------------- */
         public static ListViewItem GetItem(this ListView src, int index) =>
             src.ItemContainerGenerator.ContainerFromIndex(index) as ListViewItem;
@@ -85,6 +106,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="src">UI element.</param>
         /// <param name="pt">Target point.</param>
+        ///
+        /// <returns>Index of the item.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static int GetIndex(this ListView src, Point pt)
@@ -104,6 +127,8 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">UI element.</param>
         /// <param name="pt">Target point.</param>
         ///
+        /// <returns>Found object.</returns>
+        ///
         /* ----------------------------------------------------------------- */
         public static T GetObject<T>(this ListView src, Point pt)
             where T : DependencyObject => GetParent<T>(
@@ -119,6 +144,8 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="src">UI element.</param>
+        ///
+        /// <returns>Found object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static T GetParent<T>(this DependencyObject src) where T : DependencyObject
@@ -140,6 +167,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="src">UI element.</param>
         ///
+        /// <returns>Found object.</returns>
+        ///
         /* ----------------------------------------------------------------- */
         public static T GetChild<T>(this DependencyObject src) where T : DependencyObject
         {
@@ -155,6 +184,41 @@ namespace Cube.Pdf.App.Editor
             }
             return default(T);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetVisible
+        ///
+        /// <summary>
+        /// Sets the specified visibility.
+        /// </summary>
+        ///
+        /// <param name="src">UI element.</param>
+        /// <param name="visible">
+        /// true for Visiblity.Visible; otherwise Visiblity.Collapsed.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void SetVisible(this UIElement src, bool visible)
+        {
+            var cvt = visible ? Visibility.Visible : Visibility.Collapsed;
+            if (src.Visibility != cvt) src.Visibility = cvt;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsPressed
+        ///
+        /// <summary>
+        /// Gets the value indicating whether the specified mouse button
+        /// is pressed.
+        /// </summary>
+        ///
+        /// <param name="src">Mouse button.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsPressed(this MouseButtonState src) =>
+            src == MouseButtonState.Pressed;
 
         #endregion
     }

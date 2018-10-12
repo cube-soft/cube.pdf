@@ -83,13 +83,13 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseDown(object s, MouseButtonEventArgs e)
         {
-            if (IsKeyPresses()) return;
+            if (IsKeyPressed()) return;
 
             var pt = e.GetPosition(AssociatedObject);
             if (pt.X >= AssociatedObject.ActualWidth - 16) return;
 
             var obj = AssociatedObject.GetObject<ListViewItem>(pt);
-            if (obj?.IsSealed ?? false) return;
+            if (obj != null && obj.IsSelected) return;
 
             if (Command?.CanExecute() ?? false) Command?.Execute();
         }
@@ -104,7 +104,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private bool IsKeyPresses() =>
+        private bool IsKeyPressed() =>
             (Keyboard.GetKeyStates(Key.LeftShift)  & KeyStates.Down) == KeyStates.Down ||
             (Keyboard.GetKeyStates(Key.RightShift) & KeyStates.Down) == KeyStates.Down ||
             (Keyboard.GetKeyStates(Key.LeftCtrl)   & KeyStates.Down) == KeyStates.Down ||
