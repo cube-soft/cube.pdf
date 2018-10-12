@@ -162,28 +162,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Move
-        ///
-        /// <summary>
-        /// Executes the test for moving selected items.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Move() => Create("SampleRotation.pdf", "", 9, vm =>
-        {
-            var src = vm.Data.Images.ToList();
-            src[2].IsSelected = true;
-            src[4].IsSelected = true;
-            Execute(vm, vm.Ribbon.MoveNext);
-
-            var dest = vm.Data.Images.ToList();
-            Assert.That(dest.Count, Is.EqualTo(9));
-            for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Rotate
         ///
         /// <summary>
