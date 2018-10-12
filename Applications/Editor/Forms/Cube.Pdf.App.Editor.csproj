@@ -139,11 +139,12 @@
     <Compile Include="Sources\Interactions\MouseExtension.cs" />
     <Compile Include="Sources\Interactions\MouseMoveBehavior.cs" />
     <Compile Include="Sources\Interactions\MousePreviewBehavior.cs" />
+    <Compile Include="Sources\Models\DocumentExtension.cs" />
     <Compile Include="Sources\ViewModels\PasswordViewModel.cs" />
     <Compile Include="Views\PasswordWindow.xaml.cs">
       <DependentUpon>PasswordWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Sources\Models\DocumentExtension.cs" />
+    <Compile Include="Sources\ViewModels\MainFacadeExtension.cs" />
     <Compile Include="Sources\Models\Language.cs" />
     <Compile Include="Sources\Models\Range.cs" />
     <Compile Include="Sources\ViewModels\PreviewBindable.cs" />

@@ -45,13 +45,12 @@ namespace Cube.Pdf.App.Editor
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="pid">Process ID.</param>
         /// <param name="index">Index of the dragged item.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DragDropObject(int pid, int index)
+        public DragDropObject(int index)
         {
-            Pid       = pid;
+            Pid       = Process.GetCurrentProcess().Id;
             DragIndex = index;
         }
 

@@ -291,16 +291,13 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Drag(int index) => DragDrop.DoDragDrop(AssociatedObject,
-            new DataObject(
-                DataFormats.Serializable,
-                new DragDropObject(Process.GetCurrentProcess().Id, index)
-                {
-                    Pages = Selection.Items
-                                     .OrderBy(e => e.Index)
-                                     .Select(e => e.RawObject)
-                                     .ToList(),
-                }
-            ),
+            new DataObject(DataFormats.Serializable, new DragDropObject(index)
+            {
+                Pages = Selection.Items
+                                 .OrderBy(e => e.Index)
+                                 .Select(e => e.RawObject)
+                                 .ToList(),
+            }),
             DragDropEffects.Move);
 
         /* ----------------------------------------------------------------- */
