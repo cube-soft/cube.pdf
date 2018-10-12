@@ -70,14 +70,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Selection
+        /// Pages
         ///
         /// <summary>
-        /// Gets or sets the collection of selected items when dragging.
+        /// Gets or sets the collection of selected pages when dragging.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page> Selection { get; set; }
+        public IEnumerable<Page> Pages { get; set; }
 
         #endregion
     }

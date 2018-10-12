@@ -146,7 +146,7 @@ namespace Cube.Pdf.App.Editor
             base.OnAttached();
 
             AssociatedObject.AllowDrop = true;
-            AssociatedObject.PreviewMouseLeftButtonDown += WhenMouseDown;
+            AssociatedObject.PreviewMouseLeftButtonDown += WhenDragStart;
             AssociatedObject.MouseMove += WhenMouseMove;
             AssociatedObject.MouseEnter += WhenMouseEnter;
             AssociatedObject.DragOver += WhenDragOver;
@@ -168,7 +168,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.PreviewMouseLeftButtonDown -= WhenMouseDown;
+            AssociatedObject.PreviewMouseLeftButtonDown -= WhenDragStart;
             AssociatedObject.MouseMove -= WhenMouseMove;
             AssociatedObject.MouseEnter -= WhenMouseEnter;
             AssociatedObject.DragOver -= WhenDragOver;
@@ -182,32 +182,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenMouseDown
-        ///
-        /// <summary>
-        /// Occurs when the LeftMouseButtonDown event is fired.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// TODO: 複数項目の Drag&amp;Drop 処理に問題があるため対応を
-        /// 要検討。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenMouseDown(object s, MouseEventArgs e)
-        {
-            Debug.Assert(AssociatedObject.Items != null);
-
-            var pt    = e.GetPosition(AssociatedObject);
-            var item  = AssociatedObject.GetObject<ListViewItem>(pt);
-            var index = (item != null) ? AssociatedObject.Items.IndexOf(item.Content) : -1;
-
-            e.Handled = item?.IsSelected ?? false;
-            if (e.Handled) Drag(index);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// WhenMouseMove
         ///
         /// <summary>
@@ -217,7 +191,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseMove(object s, MouseEventArgs e)
         {
-            if (e.LeftButton.IsPressed()) WhenMouseDown(s, e);
+            if (e.LeftButton.IsPressed()) WhenDragStart(s, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -236,6 +210,32 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// WhenDragStart
+        ///
+        /// <summary>
+        /// Occurs when the Drag&amp;Drop operation starts.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// TODO: 複数項目の Drag&amp;Drop 処理に問題があるため対応を
+        /// 要検討。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenDragStart(object s, MouseEventArgs e)
+        {
+            Debug.Assert(AssociatedObject.Items != null);
+
+            var pt = e.GetPosition(AssociatedObject);
+            var item = AssociatedObject.GetObject<ListViewItem>(pt);
+            var index = (item != null) ? AssociatedObject.Items.IndexOf(item.Content) : -1;
+
+            e.Handled = item?.IsSelected ?? false;
+            if (e.Handled) Drag(index);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// WhenDragOver
         ///
         /// <summary>
@@ -250,7 +250,7 @@ namespace Cube.Pdf.App.Editor
             e.Effects = e.Handled ? DragDropEffects.Move : DragDropEffects.None;
             if (!e.Handled) return;
 
-            var pt   = e.GetPosition(AssociatedObject);
+            var pt = e.GetPosition(AssociatedObject);
             var unit = AssociatedObject.GetBounds();
             Scroll(obj, pt, unit);
             Draw(obj, pt, unit);
@@ -273,7 +273,7 @@ namespace Cube.Pdf.App.Editor
             e.Handled = obj != null;
             if (!e.Handled) return;
 
-            var pt   = e.GetPosition(AssociatedObject);
+            var pt = e.GetPosition(AssociatedObject);
             var unit = AssociatedObject.GetBounds();
             obj.DropIndex = GetTargetIndex(obj, pt, unit);
             if (Command?.CanExecute(obj) ?? false) Command.Execute(obj);
@@ -296,7 +296,10 @@ namespace Cube.Pdf.App.Editor
                 Pid       = Process.GetCurrentProcess().Id,
                 DragIndex = index,
                 DropIndex = -1,
-                Selection = Selection.Items.Select(e => e.RawObject).ToList(),
+                Pages     = Selection.Items
+                                     .OrderBy(e => e.Index)
+                                     .Select(e => e.RawObject)
+                                     .ToList(),
             }),
             DragDropEffects.Move);
 
@@ -376,14 +379,15 @@ namespace Cube.Pdf.App.Editor
             if (index == -1 || index == AssociatedObject.Items.Count) return index;
 
             var rect = AssociatedObject.GetBounds(index);
+            var n    = AssociatedObject.Items.Count;
             var x    = rect.Left + rect.Width / 2;
             var y    = rect.Top + rect.Height / 2;
             var cmp  = Conver(new Point(x, y), _attached);
             var cvt  = Conver(pt, _attached);
+            var pid  = Process.GetCurrentProcess().Id;
 
-            var n = AssociatedObject.Items.Count;
-            if (src.DragIndex < index && cvt.X < cmp.X) return Math.Max(index - 1, 0);
-            else if (src.DragIndex > index && cvt.X >= cmp.X) return Math.Min(index + 1, n);
+            if (cvt.X < cmp.X && (src.Pid != pid || src.DragIndex < index)) return Math.Max(index - 1, 0);
+            else if (cvt.X >= cmp.X && src.DragIndex > index) return Math.Min(index + 1, n);
             else return index;
         }
 
