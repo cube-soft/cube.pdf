@@ -104,6 +104,33 @@ namespace Cube.Pdf.App.Editor
         /// Gets the item index located at the specified point.
         /// </summary>
         ///
+        /// <remarks>
+        /// 右端のマージンを考慮してインデックスを決定します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static int GetIndex(this ListView obj, Point pt, Rect unit)
+        {
+            var dest = obj.GetIndex(pt);
+            if (dest >= 0) return dest;
+
+            // 最後の項目の右側
+            if (pt.Y > unit.Bottom || (pt.X > unit.Right && pt.Y > unit.Top)) return obj.Items.Count;
+
+            var w = obj.ActualWidth;
+            var m = obj.GetItem(0)?.Margin.Right ?? 0;
+            var x = (w - pt.X < unit.Width) ? (w - unit.Width) : (pt.X - m);
+            return (x != pt.X) ? obj.GetIndex(new Point(x, pt.Y)) : dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetIndex
+        ///
+        /// <summary>
+        /// Gets the item index located at the specified point.
+        /// </summary>
+        ///
         /// <param name="src">UI element.</param>
         /// <param name="pt">Target point.</param>
         ///

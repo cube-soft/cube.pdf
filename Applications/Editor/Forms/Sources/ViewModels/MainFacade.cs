@@ -222,8 +222,23 @@ namespace Cube.Pdf.App.Editor
         {
             Bindable.SetMessage(Properties.Resources.MessageLoading, src);
             var n = Math.Min(Math.Max(index, 0), Bindable.Images.Count);
-            return Bindable.Images.InsertAt(n, _core.GetOrAdd(src).Pages);
+            Insert(n, _core.GetOrAdd(src).Pages);
         }, "");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        ///
+        /// <summary>
+        /// Inserts specified pages at the specified index.
+        /// </summary>
+        ///
+        /// <param name="index">Insertion index.</param>
+        /// <param name="pages">Collection of pages.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Insert(int index, IEnumerable<Page> pages) =>
+            Invoke(() => Bindable.Images.InsertAt(index, pages), "");
 
         /* ----------------------------------------------------------------- */
         ///

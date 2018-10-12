@@ -291,16 +291,16 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void Drag(int index) => DragDrop.DoDragDrop(AssociatedObject,
-            new DataObject(DataFormats.Serializable, new DragDropObject
-            {
-                Pid       = Process.GetCurrentProcess().Id,
-                DragIndex = index,
-                DropIndex = -1,
-                Pages     = Selection.Items
+            new DataObject(
+                DataFormats.Serializable,
+                new DragDropObject(Process.GetCurrentProcess().Id, index)
+                {
+                    Pages = Selection.Items
                                      .OrderBy(e => e.Index)
                                      .Select(e => e.RawObject)
                                      .ToList(),
-            }),
+                }
+            ),
             DragDropEffects.Move);
 
         /* ----------------------------------------------------------------- */
@@ -314,7 +314,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Draw(DragDropObject src, Point pt, Rect unit)
         {
-            var dest = GetIndex(src, pt, unit);
+            var dest = AssociatedObject.GetIndex(pt, unit);
             var ok   = src.DragIndex >= 0 && dest >= 0;
 
             DrawingCanvas.SetVisible(ok);
@@ -327,7 +327,7 @@ namespace Cube.Pdf.App.Editor
             var w = rect.Width + 6;
             var h = rect.Height + 6;
             var o = Conver(new Point(rect.Left + w / 2, rect.Top + h / 6), _attached);
-            var x = (dest == n || cvt.X >= o.X) ? o.X : o.X - w;
+            var x = (dest == n || cvt.X > o.X) ? o.X : o.X - w;
             var y = o.Y;
 
             Canvas.SetLeft(Drawing, x);
@@ -375,48 +375,20 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private int GetTargetIndex(DragDropObject src, Point pt, Rect unit)
         {
-            var index = GetIndex(src, pt, unit);
-            if (index == -1 || index == AssociatedObject.Items.Count) return index;
+            var drag = src.IsCurrentProcess ? src.DragIndex : -1;
+            var drop = AssociatedObject.GetIndex(pt, unit);
+            if (drop == -1 || drop == AssociatedObject.Items.Count) return drop;
 
-            var rect = AssociatedObject.GetBounds(index);
+            var rect = AssociatedObject.GetBounds(drop);
             var n    = AssociatedObject.Items.Count;
             var x    = rect.Left + rect.Width / 2;
             var y    = rect.Top + rect.Height / 2;
             var cmp  = Conver(new Point(x, y), _attached);
             var cvt  = Conver(pt, _attached);
-            var pid  = Process.GetCurrentProcess().Id;
 
-            if (cvt.X < cmp.X && (src.Pid != pid || src.DragIndex < index)) return Math.Max(index - 1, 0);
-            else if (cvt.X >= cmp.X && src.DragIndex > index) return Math.Min(index + 1, n);
-            else return index;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetIndex
-        ///
-        /// <summary>
-        /// Gets the item index located at the specified point.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 右端のマージンを考慮してインデックスを決定します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private int GetIndex(DragDropObject src, Point pt, Rect unit)
-        {
-            var obj = AssociatedObject;
-            var dest = obj.GetIndex(pt);
-            if (dest >= 0) return dest;
-
-            // 最後の項目の右側
-            if (pt.Y > unit.Bottom || (pt.X > unit.Right && pt.Y > unit.Top)) return obj.Items.Count;
-
-            var w = obj.ActualWidth;
-            var m = obj.GetItem(0)?.Margin.Right ?? 0;
-            var x = (w - pt.X < unit.Width) ? (w - unit.Width) : (pt.X - m);
-            return (x != pt.X) ? obj.GetIndex(new Point(x, pt.Y)) : dest;
+            if (cvt.X <= cmp.X && drag < drop) return Math.Max(drop - 1, -1);
+            else if (cvt.X > cmp.X && drag > drop) return Math.Min(drop + 1, n);
+            else return drop;
         }
 
         /* ----------------------------------------------------------------- */

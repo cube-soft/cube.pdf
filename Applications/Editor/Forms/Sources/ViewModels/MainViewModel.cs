@@ -346,8 +346,9 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsDragMove() => new BindableCommand<DragDropObject>(
-            e => Post(() => Model.Move(e.DropIndex - e.DragIndex)),
-            e => !Data.Busy.Value && Data.IsOpen() && e.DropIndex - e.DragIndex != 0,
+            e => Post(() => Model.InsertOrMove(e)),
+            e => !Data.Busy.Value && Data.IsOpen() &&
+                 (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0),
             Data.Busy, Data.Source
         );
 

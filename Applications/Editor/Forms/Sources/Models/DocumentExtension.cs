@@ -414,6 +414,29 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// InsertOrMove
+        ///
+        /// <summary>
+        /// Inserts or moves the specified pages accoding to the specified
+        /// condition.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="obj">Drag&amp;Drop result.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void InsertOrMove(this MainFacade src, DragDropObject obj)
+        {
+            if (!obj.IsCurrentProcess)
+            {
+                var n = Math.Min(obj.DropIndex + 1, src.Bindable.Count.Value);
+                src.Insert(n, obj.Pages);
+            }
+            else src.Move(obj.DropIndex - obj.DragIndex);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Select
         ///
         /// <summary>

@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -33,6 +34,29 @@ namespace Cube.Pdf.App.Editor
     [Serializable]
     public class DragDropObject
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DragDropObject
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DragDropObject class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="pid">Process ID.</param>
+        /// <param name="index">Index of the dragged item.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DragDropObject(int pid, int index)
+        {
+            Pid       = pid;
+            DragIndex = index;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -40,22 +64,34 @@ namespace Cube.Pdf.App.Editor
         /// Pid
         ///
         /// <summary>
-        /// Gets or sets the process ID of the dragged application.
+        /// Gets the process ID of the dragged application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Pid { get; set; }
+        public int Pid { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsCurrentProcess
+        ///
+        /// <summary>
+        /// Gets the value indicating whether the process ID of the
+        /// created object is equal to the that of current process.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsCurrentProcess => (Pid == Process.GetCurrentProcess().Id);
 
         /* ----------------------------------------------------------------- */
         ///
         /// DragIndex
         ///
         /// <summary>
-        /// Gets or sets the index of the dragged item.
+        /// Gets the index of the dragged item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int DragIndex { get; set; }
+        public int DragIndex { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,7 +102,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int DropIndex { get; set; }
+        public int DropIndex { get; set; } = -1;
 
         /* ----------------------------------------------------------------- */
         ///
