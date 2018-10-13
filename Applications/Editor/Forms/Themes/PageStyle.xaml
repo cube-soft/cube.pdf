@@ -30,6 +30,46 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- **********************************************************************
+      ListViewItem (DataTemplate)
+    *********************************************************************** -->
+    <DataTemplate x:Key="PageTemplate" DataType="{x:Type my:ImageItem}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border
+                Width="{Binding Width}"
+                Height="{Binding Height}"
+                BorderThickness="1"
+                BorderBrush="{StaticResource DarkBorderBrush}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <Image
+                    Source="{Binding Image}"
+                    Stretch="None"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+            </Border>
+
+            <TextBlock
+                Grid.Row="1"
+                Text="{Binding Index, Converter={my:IndexToText}}"
+                TextAlignment="Center"
+                Foreground="{StaticResource DarkForegroundBrush}" />
+        </Grid>
+    </DataTemplate>
+
+    <!-- **********************************************************************
+      ListViewItem
+    *********************************************************************** -->
+    <Style x:Key="PageStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWay}" />
+    </Style>
+
+    <!-- **********************************************************************
       ListView (Template)
     *********************************************************************** -->
     <ControlTemplate x:Key="PageCollectionTemplate" TargetType="{x:Type ListView}">
@@ -64,46 +104,10 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SelectionMode" Value="Extended" />
+        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource PageStyle}" />
+        <Setter Property="ItemTemplate" Value="{StaticResource PageTemplate}" />
         <Setter Property="Template" Value="{StaticResource PageCollectionTemplate}" />
     </Style>
-
-    <!-- **********************************************************************
-      ListViewItem
-    *********************************************************************** -->
-    <Style x:Key="PageStyle" TargetType="{x:Type ListViewItem}">
-        <Setter Property="Margin" Value="3" />
-        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWay}" />
-    </Style>
-
-    <!-- **********************************************************************
-      ListViewItem (DataTemplate)
-    *********************************************************************** -->
-    <DataTemplate x:Key="PageTemplate" DataType="{x:Type my:ImageItem}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Border
-                Width="{Binding Width}"
-                Height="{Binding Height}"
-                BorderThickness="1"
-                BorderBrush="{StaticResource DarkBorderBrush}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-                <Image
-                    Source="{Binding Image}"
-                    Stretch="None"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" />
-            </Border>
-
-            <TextBlock
-                Grid.Row="1"
-                Text="{Binding Index, Converter={my:IndexToText}}"
-                TextAlignment="Center"
-                Foreground="{StaticResource DarkForegroundBrush}" />
-        </Grid>
-    </DataTemplate>
 </ResourceDictionary>

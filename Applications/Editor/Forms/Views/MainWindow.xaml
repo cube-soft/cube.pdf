@@ -42,7 +42,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Views/Components/ContextControl.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Themes/PagesStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/PageStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </r:RibbonWindow.Resources>
@@ -107,7 +107,7 @@
         <my:MetadataWindowBehavior />
         <my:EncryptionWindowBehavior />
         <my:SettingsWindowBehavior />
-        <my:MouseOpenBehavior Command="{Binding Drop}" />
+        <my:MouseOpenBehavior Command="{Binding Open}" />
     </i:Interaction.Behaviors>
 
     <i:Interaction.Triggers>
@@ -135,19 +135,15 @@
         <ListView
             ContextMenu="{StaticResource MainContextMenu}"
             ItemsSource="{Binding Data.Images}"
-            ItemContainerStyle="{StaticResource PageStyle}"
-            ItemTemplate="{StaticResource PageTemplate}"
-            Style="{StaticResource PageCollectionStyle}"
             Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibility}}"
-            VirtualizingStackPanel.IsVirtualizing="True"
-            VirtualizingStackPanel.VirtualizationMode="Recycling"
+            Style="{StaticResource PageCollectionStyle}"
             Grid.Row="1">
             <i:Interaction.Behaviors>
                 <xb:SelectionBehavior />
                 <my:MouseClearBehavior Command="{Binding Ribbon.SelectClear.Command}" />
                 <my:MousePreviewBehavior Command="{Binding Ribbon.Preview.Command}" />
                 <my:MouseMoveBehavior
-                    Command="{Binding Move}"
+                    Command="{Binding InsertOrMove}"
                     Selection="{Binding Data.Selection}" />
             </i:Interaction.Behaviors>
         </ListView>

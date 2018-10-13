@@ -88,7 +88,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             src[3].IsSelected = true;
             src[6].IsSelected = true;
             Assert.That(Wait.For(() => !vm.Data.Busy.Value), "Timeout");
-            vm.Move.Execute(obj);
+            vm.InsertOrMove.Execute(obj);
             Assert.That(Wait.For(() => !vm.Data.Busy.Value), "Timeout");
 
             var dest = vm.Data.Images.ToList();
