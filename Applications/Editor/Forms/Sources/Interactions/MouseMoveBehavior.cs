@@ -146,7 +146,7 @@ namespace Cube.Pdf.App.Editor
             base.OnAttached();
 
             AssociatedObject.AllowDrop = true;
-            AssociatedObject.PreviewMouseLeftButtonDown += WhenDragStart;
+            AssociatedObject.PreviewMouseLeftButtonDown += WhenMouseDown;
             AssociatedObject.MouseMove += WhenMouseMove;
             AssociatedObject.MouseEnter += WhenMouseEnter;
             AssociatedObject.DragOver += WhenDragOver;
@@ -168,7 +168,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.PreviewMouseLeftButtonDown -= WhenDragStart;
+            AssociatedObject.PreviewMouseLeftButtonDown -= WhenMouseDown;
             AssociatedObject.MouseMove -= WhenMouseMove;
             AssociatedObject.MouseEnter -= WhenMouseEnter;
             AssociatedObject.DragOver -= WhenDragOver;
@@ -179,6 +179,30 @@ namespace Cube.Pdf.App.Editor
         }
 
         #region EventHandler
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenMouseDown
+        ///
+        /// <summary>
+        /// Occurs when the MouseDown event is fired.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 単項目が選択されている場合、ダブルクリックによるプレビュー機能
+        /// などの他の操作を無効にする可能性があるので MouseMove イベント
+        /// まで実行を遅延させます。
+        ///
+        /// 一方、複数項目が選択されている場合、MouseMove イベントまで
+        /// 実行を遅延させると選択状況が解除されてしまうため、MouseDown の
+        /// タイミングで Drag&amp;Drop を実行します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenMouseDown(object s, MouseEventArgs e)
+        {
+            if (Selection.Count > 1) WhenDragStart(s, e);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -215,11 +239,6 @@ namespace Cube.Pdf.App.Editor
         /// <summary>
         /// Occurs when the Drag&amp;Drop operation starts.
         /// </summary>
-        ///
-        /// <remarks>
-        /// TODO: 複数項目の Drag&amp;Drop 処理に問題があるため対応を
-        /// 要検討。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private void WhenDragStart(object s, MouseEventArgs e)
