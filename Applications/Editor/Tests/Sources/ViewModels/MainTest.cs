@@ -140,28 +140,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Insert
-        ///
-        /// <summary>
-        /// Executes the test for inserting a new PDF document behind the
-        /// selected index.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Insert() => Create("SampleRotation.pdf", "", 9, vm =>
-        {
-            vm.Data.Images.Skip(2).First().IsSelected = true;
-            Source = GetExamplesWith("Sample.pdf");
-            Execute(vm, vm.Ribbon.Insert);
-
-            var dest = vm.Data.Images.ToList();
-            Assert.That(dest.Count, Is.EqualTo(9));
-            for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Rotate
         ///
         /// <summary>

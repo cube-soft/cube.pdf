@@ -116,6 +116,7 @@
     <Compile Include="Sources\Details\GlobalSetup.cs" />
     <Compile Include="Sources\Details\ViewModelFixture.cs" />
     <Compile Include="Sources\ViewModels\EncryptionTest.cs" />
+    <Compile Include="Sources\ViewModels\InsertTest.cs" />
     <Compile Include="Sources\ViewModels\MainTest.cs" />
     <Compile Include="Sources\ViewModels\MetadataTest.cs" />
     <Compile Include="Sources\ViewModels\MoveTest.cs" />

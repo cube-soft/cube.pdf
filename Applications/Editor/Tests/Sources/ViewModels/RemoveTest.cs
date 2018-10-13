@@ -31,7 +31,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
     /// RemoveTest
     ///
     /// <summary>
-    /// Tests for Remove commands and the SettingsViewModel class.
+    /// Tests for Remove commands and the RemoveViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

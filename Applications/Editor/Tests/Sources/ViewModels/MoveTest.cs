@@ -20,6 +20,7 @@ using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using NUnit.Framework;
 using System.Linq;
+using System.Threading;
 
 namespace Cube.Pdf.Tests.Editor.ViewModels
 {
@@ -87,22 +88,23 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             src[1].IsSelected = true;
             src[3].IsSelected = true;
             src[6].IsSelected = true;
-            Assert.That(Wait.For(() => !vm.Data.Busy.Value), "Timeout");
+
+            var cts = new CancellationTokenSource();
+            vm.Data.Modified.PropertyChanged += (s, e) => cts.Cancel();
             vm.InsertOrMove.Execute(obj);
-            Assert.That(Wait.For(() => !vm.Data.Busy.Value), "Timeout");
+            Assert.That(Wait.For(cts.Token), "Timeout");
 
             var dest = vm.Data.Images.ToList();
-
             Assert.That(dest.Count,               Is.EqualTo(9));
-            //Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
-            //Assert.That(dest[1].RawObject.Number, Is.EqualTo(3));
-            //Assert.That(dest[2].RawObject.Number, Is.EqualTo(5));
-            //Assert.That(dest[3].RawObject.Number, Is.EqualTo(2));
-            //Assert.That(dest[4].RawObject.Number, Is.EqualTo(6));
-            //Assert.That(dest[5].RawObject.Number, Is.EqualTo(4));
-            //Assert.That(dest[6].RawObject.Number, Is.EqualTo(8));
-            //Assert.That(dest[7].RawObject.Number, Is.EqualTo(9));
-            //Assert.That(dest[8].RawObject.Number, Is.EqualTo(7));
+            Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
+            Assert.That(dest[1].RawObject.Number, Is.EqualTo(3));
+            Assert.That(dest[2].RawObject.Number, Is.EqualTo(5));
+            Assert.That(dest[3].RawObject.Number, Is.EqualTo(2));
+            Assert.That(dest[4].RawObject.Number, Is.EqualTo(6));
+            Assert.That(dest[5].RawObject.Number, Is.EqualTo(4));
+            Assert.That(dest[6].RawObject.Number, Is.EqualTo(8));
+            Assert.That(dest[7].RawObject.Number, Is.EqualTo(9));
+            Assert.That(dest[8].RawObject.Number, Is.EqualTo(7));
 
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
         });

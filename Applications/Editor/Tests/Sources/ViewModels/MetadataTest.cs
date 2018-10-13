@@ -57,7 +57,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             await CreateAsync("Sample.pdf", "", 2, async (vm) =>
             {
                 var cts = new CancellationTokenSource();
-                using (var _ = Register(vm, cmp, cts))
+                using (Register(vm, cmp, cts))
                 {
                     Assert.That(vm.Ribbon.Metadata.Command.CanExecute(), Is.True);
                     vm.Ribbon.Metadata.Command.Execute();

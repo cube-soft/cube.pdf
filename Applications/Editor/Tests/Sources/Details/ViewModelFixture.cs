@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -191,9 +192,12 @@ namespace Cube.Pdf.Tests.Editor
         {
             Source   = GetExamplesWith(filename);
             Password = password;
-            await ExecuteAsync(vm, vm.Ribbon.Open).ConfigureAwait(false);
-            var open = await Wait.ForAsync(() => vm.Data.Images.Count == n).ConfigureAwait(false);
-            Assert.That(open, "Timeout (Open)");
+
+            Assert.That(vm.Ribbon.Open.Command.CanExecute(), Is.True);
+            vm.Ribbon.Open.Command.Execute();
+            var done = await Wait.ForAsync(() => vm.Data.Images.Count == n).ConfigureAwait(false);
+            Assert.That(done, "Timeout (Open)");
+
             await callback(vm).ConfigureAwait(false);
         });
 
@@ -230,15 +234,20 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected async Task ExecuteAsync(MainViewModel vm, BindableElement src)
         {
-            var data  = vm.Data;
-            var ready = await Wait.ForAsync(() => !data.Busy.Value).ConfigureAwait(false);
-            Assert.That(ready, $"NotReady ({src.Text})");
+            var cts = new CancellationTokenSource();
+            void action(object s, EventArgs e)
+            {
+                if (!vm.Data.Busy.Value) return;
+                vm.Data.Busy.PropertyChanged -= action;
+                cts.Cancel();
+            }
 
-            data.SetMessage(string.Empty);
-            Assert.That(src.Command.CanExecute(), nameof(src.Command.CanExecute));
+            Assert.That(vm.Data.Busy.Value, Is.False);
+            vm.Data.Busy.PropertyChanged += action;
+            Assert.That(src.Command.CanExecute(), Is.True);
             src.Command.Execute();
 
-            var done = await Wait.ForAsync(() => !data.Busy.Value).ConfigureAwait(false);
+            var done = await Wait.ForAsync(cts.Token).ConfigureAwait(false);
             Assert.That(done, $"Timeout ({src.Text})");
         }
 
