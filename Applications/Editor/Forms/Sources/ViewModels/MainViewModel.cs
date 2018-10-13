@@ -195,7 +195,7 @@ namespace Cube.Pdf.App.Editor
         private void SetCommands()
         {
             Open                         = IsDrop();
-            InsertOrMove                         = IsDragMove();
+            InsertOrMove                 = IsDragMove();
             Recent.Open                  = IsLink();
             Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
             Ribbon.Close.Command         = Close();

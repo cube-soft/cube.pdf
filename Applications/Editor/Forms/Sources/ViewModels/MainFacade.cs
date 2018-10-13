@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections.Mixin;
 using Cube.Generics;
-using Cube.Xui.Mixin;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -441,25 +440,12 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Invoke(Action action, string format, params object[] args)
+        private void Invoke(Action action, string format, params object[] args) => Bindable.Invoke(() =>
         {
             if (_core == null) return;
-
-            try
-            {
-                Bindable.Busy.Value = true;
-                action();
-                Bindable.SetMessage(format, args);
-            }
-            catch (OperationCanceledException) { /* ignore user cancel */ }
-            catch (Exception err) { Bindable.SetMessage(err.Message); throw; }
-            finally
-            {
-                Bindable.Modified.Raise();
-                Bindable.Count.Raise();
-                Bindable.Busy.Value = false;
-            }
-        }
+            action();
+            Bindable.SetMessage(format, args);
+        });
 
         /* ----------------------------------------------------------------- */
         ///

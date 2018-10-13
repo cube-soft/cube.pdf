@@ -18,6 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Xui;
+using Cube.Xui.Mixin;
+using System;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -51,6 +53,7 @@ namespace Cube.Pdf.App.Editor
         {
             _settings = settings;
             Images    = images;
+            Busy      = new Bindable<bool>(() => _busy);
             Modified  = new Bindable<bool>(() => History.Undoable);
             Count     = new Bindable<int>(() => Images.Count);
             ItemSize  = new Bindable<int>(
@@ -158,6 +161,22 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Busy
+        ///
+        /// <summary>
+        /// Gets the value indicating whether models are busy.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// この値は外部から変更する事はできません。Invoke メソッドの実行中
+        /// のみ Busy.Value の値が true に設定されます。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<bool> Busy { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Modified
         ///
         /// <summary>
@@ -188,17 +207,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Bindable<int> ItemSize { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Busy
-        ///
-        /// <summary>
-        /// Gets a value indicating whether models are busy.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Bindable<bool> Busy { get; } = new Bindable<bool>(false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -249,7 +257,6 @@ namespace Cube.Pdf.App.Editor
         {
             Source.Value = src.File;
             if (!src.Encryption.Enabled) Encryption.Value = src.Encryption;
-
             Images.Add(src.Pages);
         }
 
@@ -267,9 +274,36 @@ namespace Cube.Pdf.App.Editor
             Source.Value     = null;
             Metadata.Value   = null;
             Encryption.Value = null;
-
             History.Clear();
             Images.Clear();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Invoke(Action action)
+        {
+            try
+            {
+                _busy = true;
+                Busy.Raise();
+                action();
+            }
+            catch (OperationCanceledException) { /* ignore user cancel */ }
+            catch (Exception err) { SetMessage(err.Message); throw; }
+            finally
+            {
+                _busy = false;
+                Busy.Raise();
+                Modified.Raise();
+                Count.Raise();
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -291,6 +325,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private SettingsFolder _settings;
+        private bool _busy = false;
         #endregion
     }
 }
