@@ -60,31 +60,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveAs
-        ///
-        /// <summary>
-        /// Executes the test for saving the PDF document as a new file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf",       "",         2)]
-        [TestCase("SampleAes128.pdf", "password", 2)]
-        public void SaveAs(string filename, string password, int n) =>
-            Create(filename, password, n, vm =>
-        {
-            var fi = IO.Get(Source);
-            Destination = Path(Args(fi.NameWithoutExtension));
-            Password    = string.Empty;
-            Assert.That(IO.Exists(Destination), Is.False);
-
-            var src = vm.Data.Source;
-            vm.Ribbon.SaveAs.Command.Execute();
-            Assert.That(Wait.For(() => src.Value.FullName == Destination), "Timeout (Save)");
-            Assert.That(IO.Exists(Destination), Is.True);
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Close
         ///
         /// <summary>
@@ -99,8 +74,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             var fi = IO.Get(GetExamplesWith(filename));
             Source = Path(Args(fi.NameWithoutExtension, modify));
             IO.Copy(fi.FullName, Source, true);
-            Execute(vm, vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.Images.Count == n));
+            vm.Ribbon.Open.Command.Execute();
+            Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Open)");
 
             if (modify)
             {
