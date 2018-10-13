@@ -17,8 +17,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
+using Cube.Pdf.App.Editor;
+using Cube.Pdf.Pdfium;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cube.Pdf.Tests.Editor.ViewModels
@@ -61,10 +64,52 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(dest[ 0].RawObject.Number, Is.EqualTo(1));
             Assert.That(dest[ 1].RawObject.Number, Is.EqualTo(2));
             Assert.That(dest[ 2].RawObject.Number, Is.EqualTo(3));
-            Assert.That(dest[ 3].RawObject.Number, Is.EqualTo(1));
-            Assert.That(dest[ 4].RawObject.Number, Is.EqualTo(2));
+            Assert.That(dest[ 3].RawObject.Number, Is.EqualTo(1)); // Insert
+            Assert.That(dest[ 4].RawObject.Number, Is.EqualTo(2)); // Insert
             Assert.That(dest[ 5].RawObject.Number, Is.EqualTo(4));
             Assert.That(dest[ 6].RawObject.Number, Is.EqualTo(5));
+            Assert.That(dest[ 7].RawObject.Number, Is.EqualTo(6));
+            Assert.That(dest[ 8].RawObject.Number, Is.EqualTo(7));
+            Assert.That(dest[ 9].RawObject.Number, Is.EqualTo(8));
+            Assert.That(dest[10].RawObject.Number, Is.EqualTo(9));
+
+            for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert_DragDrop
+        ///
+        /// <summary>
+        /// Executes the test for inserting PDF pages through
+        /// Drag&amp;Drop operations.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Inser_DragDrop() => Create("SampleRotation.pdf", "", 9, vm =>
+        {
+            var f = GetExamplesWith("Sample.pdf");
+            var pages = new List<Page>();
+            using (var r = new DocumentReader(f)) pages.AddRange(r.Pages);
+
+            vm.InsertOrMove.Execute(new DragDropObject(-1, 0)
+            {
+                DropIndex = 4,
+                Pages     = pages,
+            });
+
+            Assert.That(Wait.For(() => vm.Data.Count.Value == 11), "Timeout (Insert)");
+
+            var dest = vm.Data.Images.ToList();
+
+            Assert.That(dest[ 0].RawObject.Number, Is.EqualTo(1));
+            Assert.That(dest[ 1].RawObject.Number, Is.EqualTo(2));
+            Assert.That(dest[ 2].RawObject.Number, Is.EqualTo(3));
+            Assert.That(dest[ 3].RawObject.Number, Is.EqualTo(4));
+            Assert.That(dest[ 4].RawObject.Number, Is.EqualTo(5));
+            Assert.That(dest[ 5].RawObject.Number, Is.EqualTo(1)); // Insert
+            Assert.That(dest[ 6].RawObject.Number, Is.EqualTo(2)); // Insert
             Assert.That(dest[ 7].RawObject.Number, Is.EqualTo(6));
             Assert.That(dest[ 8].RawObject.Number, Is.EqualTo(7));
             Assert.That(dest[ 9].RawObject.Number, Is.EqualTo(8));
