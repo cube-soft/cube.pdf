@@ -361,7 +361,6 @@ namespace Cube.Pdf.Tests.Editor
         {
             void dialog(DialogMessage e)
             {
-                Assert.That(e.Image, Is.Not.EqualTo(MessageBoxImage.Error), e.Content);
                 e.Result = Select(e.Button);
                 e.Callback?.Invoke(e);
             }

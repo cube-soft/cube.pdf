@@ -117,9 +117,10 @@
     <Compile Include="Sources\Details\ViewModelFixture.cs" />
     <Compile Include="Sources\ViewModels\EncryptionTest.cs" />
     <Compile Include="Sources\ViewModels\InsertTest.cs" />
-    <Compile Include="Sources\ViewModels\MainTest.cs" />
+    <Compile Include="Sources\ViewModels\OthersTest.cs" />
     <Compile Include="Sources\ViewModels\MetadataTest.cs" />
     <Compile Include="Sources\ViewModels\MoveTest.cs" />
+    <Compile Include="Sources\ViewModels\OpenTest.cs" />
     <Compile Include="Sources\ViewModels\RemoveTest.cs" />
     <Compile Include="Sources\ViewModels\RibbonTest.cs" />
     <Compile Include="Sources\HistoryTest.cs" />

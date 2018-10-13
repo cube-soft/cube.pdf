@@ -26,15 +26,15 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainTest
+    /// OthersTest
     ///
     /// <summary>
-    /// Tests for editing operations of the MainViewModel class.
+    /// Uncategoriezed tests of the MainViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class MainTest : ViewModelFixture
+    class OthersTest : ViewModelFixture
     {
         #region Tests
 
@@ -57,55 +57,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(pf.ItemMargin,    Is.EqualTo(3));
             Assert.That(pf.TextHeight,    Is.EqualTo(25));
         });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// Executes the test for opening a PDF document and creating
-        /// images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf",       "",         2)]
-        [TestCase("SampleAes128.pdf", "password", 2)]
-        public void Open(string filename, string password, int n) =>
-            Create(filename, password, n, vm =>
-        {
-            var dummy = vm.Data.Preferences.Dummy;
-            var dest  = vm.Data.Images.First();
-            Execute(vm, vm.Ribbon.Refresh);
-            Assert.That(Wait.For(() => dest.Image != dummy), "Timeout");
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OpenLink
-        ///
-        /// <summary>
-        /// Executes the test of the OpenLink command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf")]
-        public void OpenLink(string filename)
-        {
-            new Shortcut(IO)
-            {
-                FullName     = GetResultsWith(filename),
-                Target       = GetExamplesWith(filename),
-                IconLocation = GetExamplesWith(filename),
-            }.Create();
-
-            Create(vm =>
-            {
-                var src = IO.Get(GetResultsWith($"{filename}.lnk"));
-                Assert.That(src.Exists, Is.True);
-                vm.Recent.Open.Execute(src);
-                Assert.That(Wait.For(() => vm.Data.Count.Value == 2), "Timeout");
-            });
-        }
 
         /* ----------------------------------------------------------------- */
         ///
