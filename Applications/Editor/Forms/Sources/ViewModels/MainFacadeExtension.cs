@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections.Mixin;
 using Cube.FileSystem;
-using Cube.Log;
 using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
@@ -58,8 +57,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static Metadata GetMetadata(this MainFacade src)
         {
-            if (src.Bindable.Source.Value != null &&
-                src.Bindable.Metadata.Value == null) src.LoadMetadata();
+            Debug.Assert(src.Bindable.IsOpen());
+            if (src.Bindable.Metadata.Value == null) src.LoadMetadata();
             return src.Bindable.Metadata.Value;
         }
 
@@ -103,8 +102,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static Encryption GetEncryption(this MainFacade src)
         {
-            if (src.Bindable.Source.Value != null &&
-                src.Bindable.Encryption.Value == null) src.LoadMetadata();
+            Debug.Assert(src.Bindable.IsOpen());
+            if (src.Bindable.Encryption.Value == null) src.LoadMetadata();
             return src.Bindable.Encryption.Value;
         }
 
@@ -146,18 +145,13 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private static void LoadMetadata(this MainFacade src)
         {
-            try
+            var data = src.Bindable;
+            data.SetMessage(Properties.Resources.MessageLoadingMetadata);
+            using (var r = GetReader(data.Source.Value, src.Settings.IO))
             {
-                var data = src.Bindable;
-                data.SetMessage(Properties.Resources.MessageLoadingMetadata);
-
-                using (var r = GetReader(data.Source.Value, src.Settings.IO))
-                {
-                    if (data.Metadata.Value   == null) data.Metadata.Value   = r.Metadata;
-                    if (data.Encryption.Value == null) data.Encryption.Value = r.Encryption;
-                }
+                if (data.Metadata.Value   == null) data.Metadata.Value   = r.Metadata;
+                if (data.Encryption.Value == null) data.Encryption.Value = r.Encryption;
             }
-            catch (Exception err) { src.LogWarn(err.ToString(), err); }
         }
 
         #endregion
