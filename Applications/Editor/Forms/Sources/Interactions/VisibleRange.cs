@@ -254,7 +254,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenChanged(object sender, EventArgs e) => Update();
+        private void WhenChanged(object s, EventArgs e) => Update();
 
         #endregion
 

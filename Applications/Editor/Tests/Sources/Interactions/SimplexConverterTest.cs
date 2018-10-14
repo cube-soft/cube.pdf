@@ -29,7 +29,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Cube.Pdf.Tests.Editor
+namespace Cube.Pdf.Tests.Editor.Interactions
 {
     /* --------------------------------------------------------------------- */
     ///
