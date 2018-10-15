@@ -140,6 +140,8 @@
     <Compile Include="Sources\Interactions\MouseMoveBehavior.cs" />
     <Compile Include="Sources\Interactions\MousePreviewBehavior.cs" />
     <Compile Include="Sources\Models\DocumentExtension.cs" />
+    <Compile Include="Sources\ViewModels\InsertBindable.cs" />
+    <Compile Include="Sources\ViewModels\InsertFacade.cs" />
     <Compile Include="Sources\ViewModels\PasswordViewModel.cs" />
     <Compile Include="Views\PasswordWindow.xaml.cs">
       <DependentUpon>PasswordWindow.xaml</DependentUpon>

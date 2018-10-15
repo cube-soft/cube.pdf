@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
-using System;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -45,23 +44,42 @@ namespace Cube.Pdf.App.Editor
         /// specified argumetns.
         /// </summary>
         ///
+        /// <param name="i">Selected index.</param>
         /// <param name="n">Number of pages.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertViewModel(int n, SynchronizationContext context) :
+        public InsertViewModel(int i, int n, SynchronizationContext context) :
             base(() => Properties.Resources.TitleInsert, new Messenger(), context)
         {
+            Model = new InsertFacade(i, n, context);
+
             PageCount = new BindableElement<string>(
-                () => string.Format(Properties.Resources.MessagePage, n),
-                e  => throw new InvalidOperationException(),
+                () => string.Format(Properties.Resources.MessagePage, Data.Count),
                 () => Properties.Resources.MenuPageCount
+            );
+
+            Specified = new BindableElement<int>(
+                () => Data.Index.Value + 1,
+                e  => { Data.Index.Value = e - 1; return true; },
+                () => Properties.Resources.MenuPositionSpecified
             );
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Data
+        ///
+        /// <summary>
+        /// Gets data for binding to the InsertWindow.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public InsertBindable Data => Model.Bindable;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -137,9 +155,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Specified { get; } = new BindableElement(
-            () => Properties.Resources.MenuPositionSpecified
-        );
+        public BindableElement<int> Specified { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -205,6 +221,17 @@ namespace Cube.Pdf.App.Editor
         public BindableElement Down { get; } = new BindableElement(
             () => Properties.Resources.MenuDown
         );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model
+        ///
+        /// <summary>
+        /// Gets the model object of the ViewModel.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected InsertFacade Model { get; }
 
         #endregion
     }

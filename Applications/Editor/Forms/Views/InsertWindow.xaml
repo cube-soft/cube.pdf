@@ -49,6 +49,8 @@
       Interaction
     *********************************************************************** -->
     <i:Interaction.Behaviors>
+        <xb:DialogBehavior />
+        <xb:OpenFileDialogBehavior />
         <xb:CloseBehavior />
     </i:Interaction.Behaviors>
 
@@ -80,6 +82,7 @@
                     Content="{Binding Specified.Text}" />
 
                 <TextBox
+                    Text="{Binding Specified.Value}"
                     Width="50" />
                 <TextBlock
                     Text="/"
