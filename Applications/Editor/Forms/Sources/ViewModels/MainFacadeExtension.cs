@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections.Mixin;
 using Cube.FileSystem;
+using Cube.Generics;
 using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
@@ -173,8 +174,26 @@ namespace Cube.Pdf.App.Editor
         public static void Setup(this MainFacade src, IEnumerable<string> args)
         {
             foreach (var ps in src.Settings.GetSplashProcesses()) ps.Kill();
-            if (args.Count() <= 0) return;
-            src.Open(args.First());
+            var path = src.GetFirst(args);
+            if (path.HasValue()) src.Open(path);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// Opens the first item of the specified collection.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="files">File collection.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Open(this MainFacade src, IEnumerable<string> files)
+        {
+            var path = src.GetFirst(files);
+            if (path.HasValue()) src.Open(path);
         }
 
         /* ----------------------------------------------------------------- */
@@ -219,6 +238,24 @@ namespace Cube.Pdf.App.Editor
                 FileName  = Assembly.GetExecutingAssembly().Location,
                 Arguments = args
             });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetFirst
+        ///
+        /// <summary>
+        /// Gets the first item of the specified collection
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="files">File collection.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string GetFirst(this MainFacade src, IEnumerable<string> files)
+        {
+            var opt = StringComparison.InvariantCultureIgnoreCase;
+            return files.FirstOrDefault(e => e.EndsWith(".pdf", opt));
+        }
 
         #endregion
 

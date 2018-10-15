@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Generics;
 using Cube.Pdf.Mixin;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
@@ -361,9 +362,9 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsDrop() => new BindableCommand<string>(
+        private ICommand IsDrop() => new BindableCommand<string[]>(
             e => Post(() => Model.Open(e)),
-            e => !Data.Busy.Value,
+            e => !Data.Busy.Value && Model.GetFirst(e).HasValue(),
             Data.Busy
         );
 
@@ -446,7 +447,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void PostInsert() => Post(new InsertViewModel(
-            Data.Count.Value, Context
+            Data.Selection.First, Data.Count.Value, Context
         ));
 
         /* ----------------------------------------------------------------- */
