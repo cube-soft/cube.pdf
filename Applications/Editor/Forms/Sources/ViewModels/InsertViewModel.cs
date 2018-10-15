@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
-using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Threading;
 
@@ -47,36 +46,31 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="i">Selected index.</param>
         /// <param name="n">Number of pages.</param>
-        /// <param name="selected">Any items are selected.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertViewModel(int i, int n, bool selected, SynchronizationContext context) :
+        public InsertViewModel(int i, int n, SynchronizationContext context) :
             base(() => Properties.Resources.TitleInsert, new Messenger(), context)
         {
-            Model = new InsertFacade(i, n, context);
-
-            Selected = new BindableElement<bool>(
-                () => selected,
-                () => Properties.Resources.MenuPositionSelected
-            );
-
-            UserSpecified = new BindableElement<int>(
-                () => Data.Index.Value + 1,
-                e  => { Data.Index.Value = e - 1; return true; },
-                () => Properties.Resources.MenuPositionSpecified
-            );
-
-            UserSpecifiedSuffix = new BindableElement(() => string.Format(
-                $"/ {Properties.Resources.MessagePage}", Data.Count
-            ));
-
+            Model    = new InsertFacade(i, n, context);
+            Position = new PositionElement(Data);
             SetCommands();
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Model
+        ///
+        /// <summary>
+        /// Gets the model object of the ViewModel.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected InsertFacade Model { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -98,71 +92,9 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Position { get; } = new BindableElement(
-            () => Properties.Resources.MenuInsertPosition
-        );
+        public PositionElement Position { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// First
-        ///
-        /// <summary>
-        /// Gets the menu that represents the begging of the document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement First { get; } = new BindableElement(
-            () => Properties.Resources.MenuPositionFirst
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Last
-        ///
-        /// <summary>
-        /// Gets the menu that represents the end of the document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement Last { get; } = new BindableElement(
-            () => Properties.Resources.MenuPositionLast
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Selected
-        ///
-        /// <summary>
-        /// Gets the menu that represents the selected position of the
-        /// document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> Selected { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UserSpecified
-        ///
-        /// <summary>
-        /// Gets the menu that represents the user specified position
-        /// of the document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<int> UserSpecified { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UserSpecifiedSuffix
-        ///
-        /// <summary>
-        /// Gets the text that represents the suffix of UserSpecified
-        /// menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement UserSpecifiedSuffix { get; }
+        #region Buttons
 
         /* ----------------------------------------------------------------- */
         ///
@@ -229,16 +161,7 @@ namespace Cube.Pdf.App.Editor
             () => Properties.Resources.MenuDown
         );
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model
-        ///
-        /// <summary>
-        /// Gets the model object of the ViewModel.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected InsertFacade Model { get; }
+        #endregion
 
         #endregion
 
@@ -253,10 +176,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetCommands()
-        {
-            Position.Command = new RelayCommand<int>(e => Data.Index.Value = e);
-        }
+        private void SetCommands() { }
 
         #endregion
     }

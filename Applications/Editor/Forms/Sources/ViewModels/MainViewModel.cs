@@ -447,7 +447,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void PostInsert() => Post(new InsertViewModel(
-            Data.Selection.First, Data.Count.Value, Data.Selection.Count > 0, Context
+            Data.Selection.First, Data.Count.Value, Context
         ));
 
         /* ----------------------------------------------------------------- */

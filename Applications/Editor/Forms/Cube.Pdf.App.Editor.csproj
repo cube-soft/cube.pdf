@@ -142,6 +142,7 @@
     <Compile Include="Sources\Models\DocumentExtension.cs" />
     <Compile Include="Sources\ViewModels\InsertBindable.cs" />
     <Compile Include="Sources\ViewModels\InsertFacade.cs" />
+    <Compile Include="Sources\Interactions\PositionElement.cs" />
     <Compile Include="Sources\ViewModels\PasswordViewModel.cs" />
     <Compile Include="Views\PasswordWindow.xaml.cs">
       <DependentUpon>PasswordWindow.xaml</DependentUpon>
@@ -188,7 +189,7 @@
     <Compile Include="Sources\Models\ImageExtension.cs" />
     <Compile Include="Sources\Models\ImagePreferences.cs" />
     <Compile Include="Sources\Models\ImageSelection.cs" />
-    <Compile Include="Sources\Models\RibbonElement.cs" />
+    <Compile Include="Sources\Interactions\RibbonElement.cs" />
     <Compile Include="Sources\Models\Factory.cs" />
     <Compile Include="Sources\ViewModels\MainBindable.cs" />
     <Compile Include="Sources\ViewModels\MainFacade.cs" />

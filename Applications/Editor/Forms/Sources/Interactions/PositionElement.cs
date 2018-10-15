@@ -17,46 +17,52 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
-using System;
-using System.Threading;
+using GalaSoft.MvvmLight.Command;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// InsertBindable
+    /// PositionElement
     ///
     /// <summary>
-    /// Provides values for binding to the InsertWindow.
+    /// Represents insert position menus of the InsertWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertBindable
+    public class PositionElement : BindableElement
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InsertBindable
+        /// PositionElement
         ///
         /// <summary>
-        /// Initializes a new instance of the InsertBindable class
+        /// Initializes a new instance of the InsertPosition class
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="i">Selected index.</param>
-        /// <param name="n">Number of pages.</param>
-        /// <param name="context">Synchronization context.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable(int i, int n, SynchronizationContext context)
+        public PositionElement(InsertBindable data) :
+            base(() => Properties.Resources.MenuInsertPosition)
         {
-            Files              = new BindableCollection<string> { Context = context };
-            Count              = n;
-            SelectedIndex      = i;
-            Index              = new Bindable<int>(Math.Max(i, 0)) { Context = context };
-            UserSpecifiedIndex = new Bindable<int>(Math.Max(i, 0)) { Context = context };
-            UserSpecifiedIndex.PropertyChanged += (s, e) => Index.Value = UserSpecifiedIndex.Value;
+            Command = new RelayCommand<int>(e => data.Index.Value = e);
+
+            Selected = new BindableElement<bool>(
+                () => data.SelectedIndex >= 0,
+                () => Properties.Resources.MenuPositionSelected
+            );
+
+            UserSpecified = new BindableElement<int>(
+                () => data.UserSpecifiedIndex.Value + 1,
+                e => { data.UserSpecifiedIndex.Value = e - 1; return true; },
+                () => Properties.Resources.MenuPositionSpecified
+            );
+
+            UserSpecifiedSuffix = new BindableElement(() => string.Format(
+                $"/ {Properties.Resources.MessagePage}", data.Count
+            ));
         }
 
         #endregion
@@ -65,59 +71,65 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Files
+        /// First
         ///
         /// <summary>
-        /// Gets the collection of insertion files.
+        /// Gets the menu that represents the begging of the document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableCollection<string> Files { get; }
+        public BindableElement First { get; } = new BindableElement(
+            () => Properties.Resources.MenuPositionFirst
+        );
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Index
+        /// Last
         ///
         /// <summary>
-        /// Gets or sets the value that represents the insertion position.
+        /// Gets the menu that represents the end of the document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<int> Index { get; }
+        public BindableElement Last { get; } = new BindableElement(
+            () => Properties.Resources.MenuPositionLast
+        );
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UserSpecifiedIndex
+        /// Selected
         ///
         /// <summary>
-        /// Gets or sets the value that represents the insertion position
-        /// specified by users.
+        /// Gets the menu that represents the selected position of the
+        /// document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<int> UserSpecifiedIndex { get; }
+        public BindableElement<bool> Selected { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SelectedIndex
+        /// UserSpecified
         ///
         /// <summary>
-        /// Gets the index of the selected item.
+        /// Gets the menu that represents the user specified position
+        /// of the document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int SelectedIndex { get; }
+        public BindableElement<int> UserSpecified { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Count
+        /// UserSpecifiedSuffix
         ///
         /// <summary>
-        /// Gets the number of pages.
+        /// Gets the text that represents the suffix of UserSpecified
+        /// menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count { get; }
+        public BindableElement UserSpecifiedSuffix { get; }
 
         #endregion
     }
