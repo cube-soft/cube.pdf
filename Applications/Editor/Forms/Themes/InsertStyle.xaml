@@ -26,6 +26,7 @@
     <Style x:Key="InsertPositionStyle" TargetType="{x:Type TextBox}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Right" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="Width" Value="50" />
         <Setter Property="Margin" Value="0,0,4,0" />

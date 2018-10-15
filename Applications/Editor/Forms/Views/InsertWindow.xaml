@@ -68,70 +68,7 @@
         <!-- ******************************************************************
           Position
         ******************************************************************* -->
-        <GroupBox
-            Header="{Binding Position.Text}"
-            Margin="{StaticResource VerticalFirst}"
-            Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <!-- **********************************************************
-                  Selected
-                *********************************************************** -->
-                <RadioButton
-                    Content="{Binding Position.Selected.Text}"
-                    IsEnabled="{Binding Position.Selected.Value}">
-                    <i:Interaction.Behaviors>
-                        <my:InsertPositionBehavior
-                            Command="{Binding Position.Command}"
-                            CommandParameter="{Binding Data.SelectedIndex}" />
-                    </i:Interaction.Behaviors>
-                </RadioButton>
-
-                <!-- **********************************************************
-                  First
-                *********************************************************** -->
-                <RadioButton Content="{Binding Position.First.Text}">
-                    <i:Interaction.Behaviors>
-                        <my:InsertPositionBehavior
-                            Command="{Binding Position.Command}"
-                            CommandParameter="{StaticResource Zero}" />
-                    </i:Interaction.Behaviors>
-                </RadioButton>
-
-                <!-- **********************************************************
-                  Last
-                *********************************************************** -->
-                <RadioButton Content="{Binding Position.Last.Text}">
-                    <i:Interaction.Behaviors>
-                        <my:InsertPositionBehavior
-                            Command="{Binding Position.Command}"
-                            CommandParameter="{Binding Data.Count}" />
-                    </i:Interaction.Behaviors>
-                </RadioButton>
-
-                <!-- **********************************************************
-                  UserSpecified
-                *********************************************************** -->
-                <RadioButton
-                    x:Name="SpecifiedRadioButton"
-                    Content="{Binding Position.UserSpecified.Text}"
-                    IsChecked="True">
-                    <i:Interaction.Behaviors>
-                        <my:InsertPositionBehavior
-                            Command="{Binding Position.Command}"
-                            CommandParameter="{Binding Data.UserSpecifiedIndex.Value}" />
-                    </i:Interaction.Behaviors>
-                </RadioButton>
-
-                <StackPanel
-                    Orientation="Horizontal"
-                    IsEnabled="{Binding IsChecked, ElementName=SpecifiedRadioButton}">
-                    <TextBox
-                        Text="{Binding Position.UserSpecified.Value}"
-                        Style="{StaticResource InsertPositionStyle}" />
-                    <TextBlock Text="{Binding Position.UserSpecifiedSuffix.Text}" />
-                </StackPanel>
-            </StackPanel>
-        </GroupBox>
+        <my:PositionControl />
 
         <!-- ******************************************************************
           Contents

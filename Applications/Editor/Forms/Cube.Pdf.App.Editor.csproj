@@ -134,6 +134,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\Components\PositionControl.xaml.cs">
+      <DependentUpon>PositionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sources\Interactions\DragDropObject.cs" />
     <Compile Include="Sources\Interactions\MouseClearBehavior.cs" />
     <Compile Include="Sources\Interactions\MouseExtension.cs" />
@@ -320,6 +323,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Components\PositionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
