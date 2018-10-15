@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Threading;
 
@@ -54,7 +55,7 @@ namespace Cube.Pdf.App.Editor
         {
             Model    = new InsertFacade(i, n, context);
             Position = new PositionElement(Data);
-            SetCommands();
+            OK.Command = new RelayCommand(() => Send<CloseMessage>());
         }
 
         #endregion
@@ -162,21 +163,6 @@ namespace Cube.Pdf.App.Editor
         );
 
         #endregion
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetCommands
-        ///
-        /// <summary>
-        /// Sets commands of the InsertWindow.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetCommands() { }
 
         #endregion
     }

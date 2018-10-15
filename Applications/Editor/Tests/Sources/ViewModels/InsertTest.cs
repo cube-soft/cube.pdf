@@ -118,6 +118,56 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
         });
 
+        #region InsertWindow
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Properties_English
+        ///
+        /// <summary>
+        /// Executes the test for showing the InsertWindow.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Properties_English() => Create("SampleRotation.pdf", "", 9, vm =>
+        {
+            vm.Register<InsertViewModel>(this, e =>
+            {
+                Assert.That(e.Title.Text,     Is.EqualTo("Insertion details"));
+                Assert.That(e.Data,           Is.Not.Null);
+                Assert.That(e.Add.Text,       Is.EqualTo("Add ..."));
+                Assert.That(e.Up.Text,        Is.EqualTo("Up"));
+                Assert.That(e.Down.Text,      Is.EqualTo("Down"));
+                Assert.That(e.Remove.Text,    Is.EqualTo("Remove"));
+                Assert.That(e.Clear.Text,     Is.EqualTo("Clear"));
+                Assert.That(e.OK.Text,        Is.EqualTo("OK"));
+                Assert.That(e.OK.Command,     Is.Not.Null);
+                Assert.That(e.Cancel.Text,    Is.EqualTo("Cancel"));
+                Assert.That(e.Cancel.Command, Is.Not.Null);
+
+                var pos = e.Position;
+                Assert.That(pos.Text,                     Is.EqualTo("Insert position"));
+                Assert.That(pos.Command,                  Is.Not.Null);
+                Assert.That(pos.First.Text,               Is.EqualTo("Beginning"));
+                Assert.That(pos.Last.Text,                Is.EqualTo("End"));
+                Assert.That(pos.Selected.Text,            Is.EqualTo("Selected position"));
+                Assert.That(pos.Selected.Value,           Is.False);
+                Assert.That(pos.UserSpecified.Text,       Is.EqualTo("Behind the number of"));
+                Assert.That(pos.UserSpecified.Value,      Is.EqualTo(1));
+                Assert.That(pos.UserSpecifiedSuffix.Text, Is.EqualTo("/ 9 pages"));
+
+                Assert.That(e.Cancel.Command.CanExecute(), Is.True);
+                e.Cancel.Command.Execute();
+            });
+
+            vm.Data.Settings.Language = Language.English;
+            Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute(), Is.True);
+            vm.Ribbon.InsertOthers.Command.Execute();
+        });
+
+        #endregion
+
         #endregion
     }
 }
