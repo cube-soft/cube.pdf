@@ -81,7 +81,7 @@ namespace Cube.Pdf.App.Editor
         protected override void OnAttached()
         {
             base.OnAttached();
-            AssociatedObject.SelectionChanged += WhenSelectionChanged;
+            AssociatedObject.SelectionChanged += WhenChanged;
         }
 
         /* ----------------------------------------------------------------- */
@@ -96,20 +96,20 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.SelectionChanged -= WhenSelectionChanged;
+            AssociatedObject.SelectionChanged -= WhenChanged;
             base.OnDetaching();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenSelectionChanged
+        /// WhenChanged
         ///
         /// <summary>
         /// Called when the selection of the ListBox is changed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenSelectionChanged(object s, SelectionChangedEventArgs e)
+        private void WhenChanged(object s, SelectionChangedEventArgs e)
         {
             try
             {
