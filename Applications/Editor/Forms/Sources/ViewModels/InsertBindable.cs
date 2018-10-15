@@ -51,10 +51,12 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public InsertBindable(int i, int n, SynchronizationContext context)
         {
-            Count         = n;
-            SelectedIndex = Math.Max(i, 0);
-            Index         = new Bindable<int>(SelectedIndex) { Context = context };
-            Files         = new BindableCollection<string> { Context = context };
+            Files              = new BindableCollection<string> { Context = context };
+            Count              = n;
+            SelectedIndex      = Math.Max(i, 0);
+            Index              = new Bindable<int>(SelectedIndex) { Context = context };
+            UserSpecifiedIndex = new Bindable<int>(SelectedIndex) { Context = context };
+            UserSpecifiedIndex.PropertyChanged += (s, e) => Index.Value = UserSpecifiedIndex.Value;
         }
 
         #endregion
@@ -82,6 +84,18 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Bindable<int> Index { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserSpecifiedIndex
+        ///
+        /// <summary>
+        /// Gets or sets the value that represents the insertion position
+        /// specified by users.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<int> UserSpecifiedIndex { get; }
 
         /* ----------------------------------------------------------------- */
         ///

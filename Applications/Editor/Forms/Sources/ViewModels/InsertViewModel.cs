@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Threading;
 
@@ -46,24 +47,31 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="i">Selected index.</param>
         /// <param name="n">Number of pages.</param>
+        /// <param name="selected">Any items are selected.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertViewModel(int i, int n, SynchronizationContext context) :
+        public InsertViewModel(int i, int n, bool selected, SynchronizationContext context) :
             base(() => Properties.Resources.TitleInsert, new Messenger(), context)
         {
             Model = new InsertFacade(i, n, context);
 
-            PageCount = new BindableElement<string>(
-                () => string.Format(Properties.Resources.MessagePage, Data.Count),
-                () => Properties.Resources.MenuPageCount
+            Selected = new BindableElement<bool>(
+                () => selected,
+                () => Properties.Resources.MenuPositionSelected
             );
 
-            Specified = new BindableElement<int>(
+            UserSpecified = new BindableElement<int>(
                 () => Data.Index.Value + 1,
                 e  => { Data.Index.Value = e - 1; return true; },
                 () => Properties.Resources.MenuPositionSpecified
             );
+
+            UserSpecifiedSuffix = new BindableElement(() => string.Format(
+                $"/ {Properties.Resources.MessagePage}", Data.Count
+            ));
+
+            SetCommands();
         }
 
         #endregion
@@ -80,17 +88,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public InsertBindable Data => Model.Bindable;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PageCount
-        ///
-        /// <summary>
-        /// Gets the menu that represents the number of pages.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<string> PageCount { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,13 +138,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Selected { get; } = new BindableElement(
-            () => Properties.Resources.MenuPositionSelected
-        );
+        public BindableElement<bool> Selected { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Specified
+        /// UserSpecified
         ///
         /// <summary>
         /// Gets the menu that represents the user specified position
@@ -155,7 +150,19 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<int> Specified { get; }
+        public BindableElement<int> UserSpecified { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserSpecifiedSuffix
+        ///
+        /// <summary>
+        /// Gets the text that represents the suffix of UserSpecified
+        /// menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement UserSpecifiedSuffix { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -232,6 +239,24 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected InsertFacade Model { get; }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetCommands
+        ///
+        /// <summary>
+        /// Sets commands of the InsertWindow.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetCommands()
+        {
+            Position.Command = new RelayCommand<int>(e => Data.Index.Value = e);
+        }
 
         #endregion
     }

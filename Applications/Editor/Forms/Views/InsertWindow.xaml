@@ -23,6 +23,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
@@ -72,24 +73,63 @@
             Margin="{StaticResource VerticalFirst}"
             Grid.Row="0">
             <StackPanel Orientation="Horizontal">
+                <!-- **********************************************************
+                  Selected
+                *********************************************************** -->
                 <RadioButton
-                    Content="{Binding Selected.Text}" />
-                <RadioButton
-                    Content="{Binding First.Text}" />
-                <RadioButton
-                    Content="{Binding Last.Text}" />
-                <RadioButton
-                    Content="{Binding Specified.Text}" />
+                    Content="{Binding Selected.Text}"
+                    IsEnabled="{Binding Selected.Value}">
+                    <i:Interaction.Behaviors>
+                        <my:InsertPositionBehavior
+                            Command="{Binding Position.Command}"
+                            CommandParameter="{Binding Data.SelectedIndex}" />
+                    </i:Interaction.Behaviors>
+                </RadioButton>
 
-                <TextBox
-                    Text="{Binding Specified.Value}"
-                    Width="50" />
-                <TextBlock
-                    Text="/"
-                    Margin="4,0,0,1" />
-                <TextBlock
-                    Text="{Binding PageCount.Value}"
-                    Margin="0,0,0,1" />
+                <!-- **********************************************************
+                  First
+                *********************************************************** -->
+                <RadioButton Content="{Binding First.Text}">
+                    <i:Interaction.Behaviors>
+                        <my:InsertPositionBehavior
+                            Command="{Binding Position.Command}"
+                            CommandParameter="{StaticResource Zero}" />
+                    </i:Interaction.Behaviors>
+                </RadioButton>
+
+                <!-- **********************************************************
+                  Last
+                *********************************************************** -->
+                <RadioButton Content="{Binding Last.Text}">
+                    <i:Interaction.Behaviors>
+                        <my:InsertPositionBehavior
+                            Command="{Binding Position.Command}"
+                            CommandParameter="{Binding Data.Count}" />
+                    </i:Interaction.Behaviors>
+                </RadioButton>
+
+                <!-- **********************************************************
+                  UserSpecified
+                *********************************************************** -->
+                <RadioButton
+                    x:Name="SpecifiedRadioButton"
+                    Content="{Binding UserSpecified.Text}"
+                    IsChecked="True">
+                    <i:Interaction.Behaviors>
+                        <my:InsertPositionBehavior
+                            Command="{Binding Position.Command}"
+                            CommandParameter="{Binding UserSpecified.Value}" />
+                    </i:Interaction.Behaviors>
+                </RadioButton>
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    IsEnabled="{Binding IsChecked, ElementName=SpecifiedRadioButton}">
+                    <TextBox
+                        Text="{Binding UserSpecified.Value}"
+                        Style="{StaticResource InsertPositionStyle}" />
+                    <TextBlock Text="{Binding UserSpecifiedSuffix.Text}" />
+                </StackPanel>
             </StackPanel>
         </GroupBox>
 

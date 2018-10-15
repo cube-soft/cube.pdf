@@ -21,6 +21,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- **********************************************************************
+      InsertPositionStyle
+    *********************************************************************** -->
+    <Style x:Key="InsertPositionStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Margin" Value="0,0,4,0" />
+    </Style>
+
+    <!-- **********************************************************************
       InsertFilesStyle
     *********************************************************************** -->
     <Style x:Key="InsertFilesStyle" TargetType="{x:Type ListView}">
