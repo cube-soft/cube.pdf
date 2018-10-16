@@ -28,6 +28,41 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- **********************************************************************
+      GridViewColumnHeader
+    *********************************************************************** -->
+    <ControlTemplate x:Key="ColumnHeaderTemplate" TargetType="{x:Type GridViewColumnHeader}">
+        <Border
+            Padding="8,2"
+            Margin="0,0,0,2"
+            BorderThickness="0,0,1,0"
+            BorderBrush="{StaticResource LightBorderBrush}">
+            <TextBlock Text="{TemplateBinding Content}" />
+        </Border>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="IsEnabled" Value="False" />
+        <Setter Property="Foreground" Value="{StaticResource WindowForegroundBrush}" />
+        <Setter Property="Template" Value="{StaticResource ColumnHeaderTemplate}" />
+    </Style>
+
+    <!-- **********************************************************************
+      PrimaryTextStyle
+    *********************************************************************** -->
+    <Style x:Key="PrimaryTextStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Margin" Value="6,0,0,0" />
+        <Setter Property="TextTrimming" Value="WordEllipsis" />
+    </Style>
+
+    <!-- **********************************************************************
+      SecondaryTextStyle
+    *********************************************************************** -->
+    <Style x:Key="SecondaryTextStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="Gray" />
+        <Setter Property="TextTrimming" Value="WordEllipsis" />
+    </Style>
+
+    <!-- **********************************************************************
       InsertPositionStyle
     *********************************************************************** -->
     <Style x:Key="InsertPositionStyle" TargetType="{x:Type TextBox}">
@@ -91,23 +126,5 @@
     *********************************************************************** -->
     <Style x:Key="OperationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DialogButtonStyle}">
         <Setter Property="Width" Value="100" />
-    </Style>
-
-    <!-- **********************************************************************
-      GridViewColumnHeader
-    *********************************************************************** -->
-    <ControlTemplate x:Key="ColumnHeaderTemplate" TargetType="{x:Type GridViewColumnHeader}">
-        <Border
-            Padding="8,2"
-            Margin="0,0,0,2"
-            BorderThickness="0,0,1,0"
-            BorderBrush="{StaticResource LightBorderBrush}">
-            <TextBlock Text="{TemplateBinding Content}" />
-        </Border>
-    </ControlTemplate>
-
-    <Style TargetType="{x:Type GridViewColumnHeader}">
-        <Setter Property="IsEnabled" Value="False" />
-        <Setter Property="Template" Value="{StaticResource ColumnHeaderTemplate}" />
     </Style>
 </ResourceDictionary>

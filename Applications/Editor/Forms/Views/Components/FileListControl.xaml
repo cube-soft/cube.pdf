@@ -24,7 +24,8 @@
     xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="400" d:DesignWidth="700">
+    d:DesignHeight="400"
+    d:DesignWidth="700">
 
     <!-- **********************************************************************
       Resources
@@ -49,25 +50,16 @@
                 <!-- **********************************************************
                     Filename
                 *********************************************************** -->
-                <GridViewColumn Width="200" DisplayMemberBinding="{Binding Name}">
+                <GridViewColumn Width="240">
                     <GridViewColumnHeader Content="{Binding FileName.Text}" />
-                </GridViewColumn>
-
-                <!-- **********************************************************
-                    Type
-                *********************************************************** -->
-                <GridViewColumn Width="80">
-                    <GridViewColumnHeader Content="{Binding FileType.Text}" />
-                </GridViewColumn>
-
-                <!-- **********************************************************
-                    LastWriteTime
-                *********************************************************** -->
-                <GridViewColumn Width="130">
-                    <GridViewColumnHeader Content="{Binding LastWriteTime.Text}" />
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding LastWriteTime, StringFormat='yyyy/MM/dd HH:mm:ss'}" />
+                            <StackPanel Orientation="Horizontal" ToolTip="{Binding FullName}">
+                                <Image Source="{Binding Icon}" />
+                                <TextBlock
+                                    Text="{Binding Name}"
+                                    Style="{StaticResource PrimaryTextStyle}" />
+                            </StackPanel>
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
@@ -79,7 +71,23 @@
                     <GridViewColumnHeader Content="{Binding FileLength.Text}" />
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Length, Converter={my:ByteConverterLite}}" />
+                            <TextBlock
+                                Text="{Binding Length, Converter={my:ByteConverterLite}}"
+                                Style="{StaticResource SecondaryTextStyle}" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <!-- **********************************************************
+                    LastWriteTime
+                *********************************************************** -->
+                <GridViewColumn Width="160">
+                    <GridViewColumnHeader Content="{Binding LastWriteTime.Text}" />
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Text="{Binding LastWriteTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"
+                                Style="{StaticResource SecondaryTextStyle}" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
