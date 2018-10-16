@@ -134,6 +134,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\Models\FileItem.cs" />
     <Compile Include="Views\Components\FileListControl.xaml.cs">
       <DependentUpon>FileListControl.xaml</DependentUpon>
     </Compile>

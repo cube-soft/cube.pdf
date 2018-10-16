@@ -16,9 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -47,15 +49,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="i">Selected index.</param>
         /// <param name="n">Number of pages.</param>
+        /// <param name="io">I/O handler.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertViewModel(int i, int n, SynchronizationContext context) :
+        public InsertViewModel(int i, int n, IO io, SynchronizationContext context) :
             base(() => Properties.Resources.TitleInsert, new Messenger(), context)
         {
-            Model    = new InsertFacade(i, n, context);
+            Model    = new InsertFacade(i, n, io, context);
             Position = new InsertPosition(Data);
             OK.Command = new RelayCommand(() => Send<CloseMessage>());
+            Add.Command = new RelayCommand(() => PostOpen(e => Model.Add(e)));
         }
 
         #endregion
@@ -219,6 +223,25 @@ namespace Cube.Pdf.App.Editor
         );
 
         #endregion
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PostOpen
+        ///
+        /// <summary>
+        /// Posts the message to show a dialog of the OpenFileDialog
+        /// class, and executes the specified action as an asynchronous
+        /// operation.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PostOpen(Action<string> action) => Send(Factory.OpenMessage(e =>
+            Post(() => { if (e.Result) action(e.FileName); })
+        ));
 
         #endregion
     }

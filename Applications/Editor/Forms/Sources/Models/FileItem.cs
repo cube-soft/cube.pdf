@@ -17,43 +17,47 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using System.Threading;
+using Cube.Images.Icons;
+using Cube.Xui;
+using Cube.Xui.Converters;
+using System;
+using System.Windows.Media;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainFacade
+    /// FileItem
     ///
     /// <summary>
-    /// Provides functionality to communicate with the InsertViewModel
-    /// and other model classes.
+    /// Represents information of a file.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertFacade
+    public class FileItem : ObservableProperty, IListItem
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InsertFacade
+        /// FileItem
         ///
         /// <summary>
-        /// Initializes a new instance of the InsertFacade with the
-        /// specified argumetns.
+        /// Initializes a new instance with the specified arguments.
         /// </summary>
         ///
-        /// <param name="i">Selected index.</param>
-        /// <param name="n">Number of pages.</param>
-        /// <param name="io">I/O handler</param>
-        /// <param name="context">Synchronization context.</param>
+        /// <param name="src">Path of the source file.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertFacade(int i, int n, IO io, SynchronizationContext context)
+        public FileItem(string src, IO io)
         {
-            IO       = io;
-            Bindable = new InsertBindable(i, n, context);
+            var info = io.Get(src);
+            Name          = info.Name;
+            FullName      = info.FullName;
+            Length        = info.Length;
+            LastWriteTime = info.LastWriteTime;
+            Icon          = info.GetIcon(IconSize.Small).ToBitmap().ToBitmapImage(true);
         }
 
         #endregion
@@ -62,43 +66,78 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Bindable
+        /// Name
         ///
         /// <summary>
-        /// Gets bindable data.
+        /// Gets the filename.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable Bindable { get; }
+        public string Name { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
+        /// FullName
         ///
         /// <summary>
-        /// Gets the I/O handler.
+        /// Gets the full path of the file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IO IO { get; }
+        public string FullName { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Length
+        ///
+        /// <summary>
+        /// Gets the filesize.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public long Length { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LastWriteTime
+        ///
+        /// <summary>
+        /// Gets the last written time.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DateTime LastWriteTime { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Icon
+        ///
+        /// <summary>
+        /// Gets the icon image.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageSource Icon { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsSelected
+        ///
+        /// <summary>
+        /// Gets or sets the value indicating whether the item is selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsSelected
+        {
+            get => _selected;
+            set => SetProperty(ref _selected, value);
+        }
 
         #endregion
 
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds a new file.
-        /// </summary>
-        ///
-        /// <param name="src">File path.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Add(string src) => Bindable.Files.Add(new FileItem(src, IO));
-
+        #region Fields
+        private bool _selected = false;
         #endregion
     }
 }

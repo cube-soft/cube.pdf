@@ -51,7 +51,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public InsertBindable(int i, int n, SynchronizationContext context)
         {
-            Files              = new BindableCollection<string> { Context = context };
+            Files              = new BindableCollection<FileItem> { Context = context };
             Count              = n;
             SelectedIndex      = i;
             Index              = new Bindable<int>(Math.Max(i, 0)) { Context = context };
@@ -72,7 +72,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableCollection<string> Files { get; }
+        public BindableCollection<FileItem> Files { get; }
 
         /* ----------------------------------------------------------------- */
         ///

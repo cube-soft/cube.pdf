@@ -29,7 +29,7 @@ namespace Cube.Pdf.App.Editor
     /// ImageItem
     ///
     /// <summary>
-    /// Stores an image and related information.
+    /// Represents information of an image.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,7 +42,8 @@ namespace Cube.Pdf.App.Editor
         /// ImageEntry
         ///
         /// <summary>
-        /// Initializes a new instance with the specified arguments.
+        /// Initializes a new instance of the ImageItem class with the
+        /// specified arguments.
         /// </summary>
         ///
         /// <param name="image">Delegation to get an image.</param>
