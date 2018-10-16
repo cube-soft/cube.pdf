@@ -134,6 +134,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\Components\FileListControl.xaml.cs">
+      <DependentUpon>FileListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Components\PositionControl.xaml.cs">
       <DependentUpon>PositionControl.xaml</DependentUpon>
     </Compile>
@@ -323,6 +326,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Components\FileListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Components\PositionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

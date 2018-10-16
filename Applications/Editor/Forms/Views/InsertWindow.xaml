@@ -68,7 +68,7 @@
         <!-- ******************************************************************
           Position
         ******************************************************************* -->
-        <my:PositionControl />
+        <my:PositionControl Grid.Row="0" />
 
         <!-- ******************************************************************
           Contents
@@ -81,48 +81,36 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ListView
-                ItemsSource="{Binding Data.Files}"
-                Style="{StaticResource InsertCollectionStyle}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="200" DisplayMemberBinding="{Binding Name}">
-                            <GridViewColumnHeader Content="{Binding FileName.Text}" />
-                        </GridViewColumn>
-                        <GridViewColumn Width="80">
-                            <GridViewColumnHeader Content="{Binding FileType.Text}" />
-                        </GridViewColumn>
-                        <GridViewColumn Width="110" DisplayMemberBinding="{Binding LastWriteTime}">
-                            <GridViewColumnHeader Content="{Binding LastWriteTime.Text}" />
-                        </GridViewColumn>
-                        <GridViewColumn Width="100" DisplayMemberBinding="{Binding Length}">
-                            <GridViewColumnHeader Content="{Binding FileLength.Text}" />
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <!-- **************************************************************
+              FileList
+            *************************************************************** -->
+            <my:FileListControl Grid.Column="0" />
 
+            <!-- **************************************************************
+              Operations
+            *************************************************************** -->
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <Button
                     Content="{Binding Add.Text}"
                     Command="{Binding Add.Command}"
-                    Style="{StaticResource TopButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}"
+                    Margin="3,0,3,3" />
                 <Button
                     Content="{Binding Up.Text}"
                     Command="{Binding Up.Command}"
-                    Style="{StaticResource DialogButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}" />
                 <Button
                     Content="{Binding Down.Text}"
                     Command="{Binding Down.Command}"
-                    Style="{StaticResource DialogButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}" />
                 <Button
                     Content="{Binding Remove.Text}"
                     Command="{Binding Remove.Command}"
-                    Style="{StaticResource DialogButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}" />
                 <Button
                     Content="{Binding Clear.Text}"
                     Command="{Binding Clear.Command}"
-                    Style="{StaticResource DialogButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}" />
             </StackPanel>
         </Grid>
 

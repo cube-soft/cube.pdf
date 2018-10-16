@@ -21,6 +21,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- **********************************************************************
+      Import
+    *********************************************************************** -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Themes/GenericDialog.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- **********************************************************************
       InsertPositionStyle
     *********************************************************************** -->
     <Style x:Key="InsertPositionStyle" TargetType="{x:Type TextBox}">
@@ -40,7 +47,7 @@
             x:Name="PART_Border"
             BorderBrush="Transparent"
             BorderThickness="1"
-            Padding="3"
+            Padding="0,3"
             Background="{TemplateBinding Background}">
             <GridViewRowPresenter
                 HorizontalAlignment="Stretch"
@@ -77,6 +84,13 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="BorderBrush" Value="{StaticResource LightBorderBrush}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource InsertItemStyle}" />
+    </Style>
+
+    <!-- **********************************************************************
+      OperationButtonStyle
+    *********************************************************************** -->
+    <Style x:Key="OperationButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DialogButtonStyle}">
+        <Setter Property="Width" Value="100" />
     </Style>
 
     <!-- **********************************************************************

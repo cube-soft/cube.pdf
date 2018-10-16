@@ -100,11 +100,4 @@
         <Setter Property="Margin" Value="12,3,3,3" />
         <Setter Property="IsCancel" Value="True" />
     </Style>
-
-    <!-- **********************************************************************
-      TopButton
-    *********************************************************************** -->
-    <Style x:Key="TopButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DialogButtonStyle}">
-        <Setter Property="Margin" Value="3,0,3,3" />
-    </Style>
 </ResourceDictionary>
