@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -98,6 +99,45 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Add(string src) => Bindable.Files.Add(new FileItem(src, IO));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        ///
+        /// <summary>
+        /// Clears all files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Clear() => Bindable.Files.Clear();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Removes selected files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove()
+        {
+            foreach (var item in Bindable.Selection.ToList()) Bindable.Files.Remove(item);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectClear
+        ///
+        /// <summary>
+        /// Sets the IsSelected property of all files to false.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void SelectClear()
+        {
+            foreach (var item in Bindable.Selection.ToList()) item.IsSelected = false;
+        }
 
         #endregion
     }

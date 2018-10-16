@@ -22,6 +22,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -228,6 +229,21 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
+        #region Commands
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectClear
+        ///
+        /// <summary>
+        /// Gets the SelectClear command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand SelectClear { get; private set; }
+
+        #endregion
+
         #region Implementations
 
         /* ----------------------------------------------------------------- */
@@ -241,14 +257,36 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetCommands(Action<int, IEnumerable<FileItem>> callback)
         {
-            Add.Command = new BindableCommand(() => PostOpen(e => Model.Add(e)), () => true);
             OK.Command = new BindableCommand(() =>
             {
                 Send<CloseMessage>();
                 callback?.Invoke(Data.Index.Value, Data.Files);
             },
-            () => true);
+            () => Data.Files.Count > 0,
+            Data.Files);
+
+            SelectClear    = Any(() => Send(() => Model.SelectClear()));
+            Add.Command    = Any(() => PostOpen(e => Model.Add(e)));
+            Remove.Command = Any(() => Send(() => Model.Remove()));
+            Clear.Command  = Any(() => Send(() => Model.Clear()));
         }
+
+        #region Factory
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Any
+        ///
+        /// <summary>
+        /// Creates a command that can execute at any time.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand Any(Action action) => new BindableCommand(action, () => true);
+
+        #endregion
+
+        #region Send or Post
 
         /* ----------------------------------------------------------------- */
         ///
@@ -264,6 +302,8 @@ namespace Cube.Pdf.App.Editor
         private void PostOpen(Action<string> action) => Send(Factory.OpenMessage(e =>
             Post(() => { if (e.Result) action(e.FileName); })
         ));
+
+        #endregion
 
         #endregion
     }

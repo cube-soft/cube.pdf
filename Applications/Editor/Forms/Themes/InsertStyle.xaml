@@ -86,7 +86,6 @@
             Background="{TemplateBinding Background}">
             <GridViewRowPresenter
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                 Width="Auto"
                 Margin="0"
                 Content="{TemplateBinding Content}" />
@@ -107,6 +106,7 @@
       InsertItemStyle
     *********************************************************************** -->
     <Style x:Key="InsertItemStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWay}" />
         <Setter Property="Foreground" Value="{StaticResource LightForegroundBrush}" />
         <Setter Property="Template" Value="{StaticResource InsertItemTemplate}" />
     </Style>

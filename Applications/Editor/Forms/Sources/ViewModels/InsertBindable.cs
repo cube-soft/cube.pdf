@@ -18,6 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -73,6 +75,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public BindableCollection<FileItem> Files { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Selection
+        ///
+        /// <summary>
+        /// Gets the collection of selected items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<FileItem> Selection => Files.Where(e => e.IsSelected);
 
         /* ----------------------------------------------------------------- */
         ///
