@@ -130,6 +130,26 @@ namespace Cube.Pdf.Tests.Editor.Interactions
 
         #endregion
 
+        #region ByteConverterLite
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ByteConverter
+        ///
+        /// <summary>
+        /// Executes the test of the ByteConverter class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(100,     "en", ExpectedResult = "1 KB")]
+        [TestCase(101309,  "en", ExpectedResult = "98.9 KB")]
+        [TestCase(200,     "ja", ExpectedResult = "1 KB")]
+        [TestCase(7654321, "ja", ExpectedResult = "7.3 MB")]
+        public string ByteConverterLite(long n, string culture) =>
+            Convert<string>(new ByteConverterLite(), n, culture);
+
+        #endregion
+
         #region EncryptionMethodConverter
 
         /* ----------------------------------------------------------------- */
