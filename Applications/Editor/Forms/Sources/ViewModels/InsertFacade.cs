@@ -16,7 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections.Mixin;
 using Cube.FileSystem;
+using System;
 using System.Linq;
 using System.Threading;
 
@@ -123,6 +125,32 @@ namespace Cube.Pdf.App.Editor
         public void Remove()
         {
             foreach (var item in Bindable.Selection.ToList()) Bindable.Files.Remove(item);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// Moves selected items at the specfied distance.
+        /// </summary>
+        ///
+        /// <param name="delta">Moving distance.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Move(int delta)
+        {
+            if (delta == 0) return;
+
+            var n   = Bindable.Files.Count;
+            var mid = Bindable.Selection.Select(e => Bindable.Files.IndexOf(e)).Within(n);
+            var src = delta > 0 ? mid.OrderByDecending() : mid.OrderBy();
+
+            foreach (var index in src.ToList())
+            {
+                var inew = Math.Min(Math.Max(index + delta, 0), n - 1);
+                if (inew != index) Bindable.Files.Move(index, inew);
+            }
         }
 
         /* ----------------------------------------------------------------- */

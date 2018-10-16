@@ -61,7 +61,6 @@ namespace Cube.Pdf.App.Editor
         {
             Model    = new InsertFacade(i, n, io, context);
             Position = new InsertPosition(Data);
-
             SetCommands(callback);
         }
 
@@ -269,6 +268,8 @@ namespace Cube.Pdf.App.Editor
             Add.Command    = Any(() => PostOpen(e => Model.Add(e)));
             Remove.Command = Any(() => Send(() => Model.Remove()));
             Clear.Command  = Any(() => Send(() => Model.Clear()));
+            Up.Command     = Any(() => Send(() => Model.Move(-1)));
+            Down.Command   = Any(() => Send(() => Model.Move(1)));
         }
 
         #region Factory
