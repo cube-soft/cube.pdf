@@ -23,14 +23,14 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PositionElement
+    /// InsertPosition
     ///
     /// <summary>
     /// Represents insert position menus of the InsertWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PositionElement : BindableElement
+    public class InsertPosition : BindableElement
     {
         #region Constructors
 
@@ -44,7 +44,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PositionElement(InsertBindable data) :
+        public InsertPosition(InsertBindable data) :
             base(() => Properties.Resources.MenuInsertPosition)
         {
             Command = new RelayCommand<int>(e => data.Index.Value = e);

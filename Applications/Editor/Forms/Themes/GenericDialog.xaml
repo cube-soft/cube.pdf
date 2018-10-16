@@ -60,6 +60,7 @@
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Padding" Value="8,4" />
+        <Setter Property="BorderBrush" Value="{StaticResource LightBorderBrush}" />
     </Style>
 
     <!-- **********************************************************************

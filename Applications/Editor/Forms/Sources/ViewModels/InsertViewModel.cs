@@ -54,7 +54,7 @@ namespace Cube.Pdf.App.Editor
             base(() => Properties.Resources.TitleInsert, new Messenger(), context)
         {
             Model    = new InsertFacade(i, n, context);
-            Position = new PositionElement(Data);
+            Position = new InsertPosition(Data);
             OK.Command = new RelayCommand(() => Send<CloseMessage>());
         }
 
@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PositionElement Position { get; }
+        public InsertPosition Position { get; }
 
         #region Buttons
 
@@ -160,6 +160,62 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement Down { get; } = new BindableElement(
             () => Properties.Resources.MenuDown
+        );
+
+        #endregion
+
+        #region Contents
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileName
+        ///
+        /// <summary>
+        /// Gets the menu that represents the FileName column.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement FileName { get; } = new BindableElement(
+            () => Properties.Resources.MenuFilename
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileType
+        ///
+        /// <summary>
+        /// Gets the menu that represents the FileType column.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement FileType { get; } = new BindableElement(
+            () => Properties.Resources.MenuFiletype
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileLength
+        ///
+        /// <summary>
+        /// Gets the menu that represents the FileLength column.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement FileLength { get; } = new BindableElement(
+            () => Properties.Resources.MenuFilesize
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LastWriteTime
+        ///
+        /// <summary>
+        /// Gets the menu that represents the LastWriteTime column.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement LastWriteTime { get; } = new BindableElement(
+            () => Properties.Resources.MenuLastWriteTime
         );
 
         #endregion

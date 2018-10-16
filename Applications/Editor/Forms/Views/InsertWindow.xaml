@@ -27,8 +27,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
-    Height="380"
-    Width="680"
+    Height="400"
+    Width="700"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
@@ -81,7 +81,24 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ListView Style="{StaticResource InsertFilesStyle}" />
+            <ListView Style="{StaticResource InsertFilesStyle}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="200">
+                            <GridViewColumnHeader Content="{Binding FileName.Text}" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="80">
+                            <GridViewColumnHeader Content="{Binding FileType.Text}" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="110">
+                            <GridViewColumnHeader Content="{Binding LastWriteTime.Text}" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="100">
+                            <GridViewColumnHeader Content="{Binding FileLength.Text}" />
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <Button
