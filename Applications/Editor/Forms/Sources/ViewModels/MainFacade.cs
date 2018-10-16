@@ -35,7 +35,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainFacade : IDisposable
+    public class MainFacade : DisposableBase
     {
         #region Constructors
 
@@ -55,7 +55,6 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public MainFacade(SettingsFolder settings, IQuery<string> password, SynchronizationContext context)
         {
-            _dispose = new OnceAction<bool>(Dispose);
             _core    = new DocumentCollection(password);
             Bindable = new MainBindable(new ImageCollection(e => _core?.GetOrAdd(e), context), settings);
 
@@ -367,33 +366,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Refresh() => Invoke(() => Bindable.Images.Refresh(), "");
 
-        #region IDisposable
+        #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~MainFacade
-        ///
-        /// <summary>
-        /// Finalizes the MainFacade.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~MainFacade() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the MainFacade.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -410,18 +385,12 @@ namespace Cube.Pdf.App.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             Interlocked.Exchange(ref _core, null)?.Clear();
             Bindable.Close();
             if (disposing) Bindable.Images.Dispose();
         }
-
-        #endregion
-
-        #endregion
-
-        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -462,21 +431,19 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Update(string name)
         {
-            switch (name)
+            var src = Settings.Value;
+            var dic = new Dictionary<string, Action>
             {
-                case nameof(Settings.Value.ItemSize):
-                    this.Zoom();
-                    break;
-                case nameof(Settings.Value.FrameOnly):
-                    Bindable.Images.Preferences.FrameOnly = Settings.Value.FrameOnly;
-                    break;
-            }
+                { nameof(src.ItemSize),  () => this.Zoom() },
+                { nameof(src.FrameOnly), () => Bindable.Images.Preferences.FrameOnly = src.FrameOnly },
+            };
+
+            if (dic.TryGetValue(name, out var action)) action();
         }
 
         #endregion
 
         #region Fields
-        private readonly OnceAction<bool> _dispose;
         private DocumentCollection _core;
         #endregion
     }
