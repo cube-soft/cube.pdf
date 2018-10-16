@@ -18,9 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Xui;
-using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -47,19 +47,21 @@ namespace Cube.Pdf.App.Editor
         /// specified argumetns.
         /// </summary>
         ///
+        /// <param name="callback">Callback function.</param>
         /// <param name="i">Selected index.</param>
         /// <param name="n">Number of pages.</param>
         /// <param name="io">I/O handler.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertViewModel(int i, int n, IO io, SynchronizationContext context) :
+        public InsertViewModel(Action<int, IEnumerable<FileItem>> callback,
+            int i, int n, IO io, SynchronizationContext context) :
             base(() => Properties.Resources.TitleInsert, new Messenger(), context)
         {
             Model    = new InsertFacade(i, n, io, context);
             Position = new InsertPosition(Data);
-            OK.Command = new RelayCommand(() => Send<CloseMessage>());
-            Add.Command = new RelayCommand(() => PostOpen(e => Model.Add(e)));
+
+            SetCommands(callback);
         }
 
         #endregion
@@ -227,6 +229,26 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetCommands
+        ///
+        /// <summary>
+        /// Sets commands of the InsertWindow.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetCommands(Action<int, IEnumerable<FileItem>> callback)
+        {
+            Add.Command = new BindableCommand(() => PostOpen(e => Model.Add(e)), () => true);
+            OK.Command = new BindableCommand(() =>
+            {
+                Send<CloseMessage>();
+                callback?.Invoke(Data.Index.Value, Data.Files);
+            },
+            () => true);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

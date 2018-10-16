@@ -23,6 +23,7 @@ using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -447,8 +448,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void PostInsert() => Post(new InsertViewModel(
-            Data.Selection.First, Data.Count.Value,
-            Model.Settings.IO, Context
+            (i, v) => Post(() => Model.Insert(i + 1, v.Select(e => e.FullName))),
+            Data.Selection.First, Data.Count.Value, Model.Settings.IO, Context
         ));
 
         /* ----------------------------------------------------------------- */

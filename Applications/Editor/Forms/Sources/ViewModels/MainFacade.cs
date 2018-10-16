@@ -20,6 +20,7 @@ using Cube.Collections.Mixin;
 using Cube.Generics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -210,19 +211,22 @@ namespace Cube.Pdf.App.Editor
         /// Insert
         ///
         /// <summary>
-        /// Inserts the page objects at the specified index.
+        /// Inserts the specified files at the specified index.
         /// </summary>
         ///
         /// <param name="index">Insertion index.</param>
-        /// <param name="src">File path.</param>
+        /// <param name="src">Inserting files.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, string src) => Invoke(() =>
-        {
-            Bindable.SetMessage(Properties.Resources.MessageLoading, src);
-            var n = Math.Min(Math.Max(index, 0), Bindable.Images.Count);
-            Insert(n, _core.GetOrAdd(src).Pages);
-        }, "");
+        public void Insert(int index, IEnumerable<string> src) => Invoke(() =>
+            Bindable.Images.InsertAt(
+                Math.Min(Math.Max(index, 0), Bindable.Images.Count),
+                src.SelectMany(e =>
+                {
+                    Bindable.SetMessage(Properties.Resources.MessageLoading, e);
+                    return _core.GetOrAdd(e).Pages;
+                })
+            ), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -233,11 +237,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="index">Insertion index.</param>
-        /// <param name="pages">Collection of pages.</param>
+        /// <param name="src">Collection of pages.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, IEnumerable<Page> pages) =>
-            Invoke(() => Bindable.Images.InsertAt(index, pages), "");
+        public void Insert(int index, IEnumerable<Page> src) =>
+            Invoke(() => Bindable.Images.InsertAt(index, src), "");
 
         /* ----------------------------------------------------------------- */
         ///
