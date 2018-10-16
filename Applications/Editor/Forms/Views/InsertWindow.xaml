@@ -81,19 +81,21 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ListView Style="{StaticResource InsertFilesStyle}">
+            <ListView
+                ItemsSource="{Binding Data.Files}"
+                Style="{StaticResource InsertCollectionStyle}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="200">
+                        <GridViewColumn Width="200" DisplayMemberBinding="{Binding Name}">
                             <GridViewColumnHeader Content="{Binding FileName.Text}" />
                         </GridViewColumn>
                         <GridViewColumn Width="80">
                             <GridViewColumnHeader Content="{Binding FileType.Text}" />
                         </GridViewColumn>
-                        <GridViewColumn Width="110">
+                        <GridViewColumn Width="110" DisplayMemberBinding="{Binding LastWriteTime}">
                             <GridViewColumnHeader Content="{Binding LastWriteTime.Text}" />
                         </GridViewColumn>
-                        <GridViewColumn Width="100">
+                        <GridViewColumn Width="100" DisplayMemberBinding="{Binding Length}">
                             <GridViewColumnHeader Content="{Binding FileLength.Text}" />
                         </GridViewColumn>
                     </GridView>

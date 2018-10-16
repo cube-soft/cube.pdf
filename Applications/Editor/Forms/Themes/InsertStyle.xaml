@@ -33,12 +33,50 @@
     </Style>
 
     <!-- **********************************************************************
-      InsertFilesStyle
+      InsertItemTemplate
     *********************************************************************** -->
-    <Style x:Key="InsertFilesStyle" TargetType="{x:Type ListView}">
+    <ControlTemplate x:Key="InsertItemTemplate" TargetType="{x:Type ListViewItem}">
+        <Border
+            x:Name="PART_Border"
+            BorderBrush="Transparent"
+            BorderThickness="1"
+            Padding="3"
+            Background="{TemplateBinding Background}">
+            <GridViewRowPresenter
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                Width="Auto"
+                Margin="0"
+                Content="{TemplateBinding Content}" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" TargetName="PART_Border" Value="{StaticResource HighlightBackgroundBrush}" />
+                <Setter Property="BorderBrush" TargetName="PART_Border" Value="{StaticResource HighlightBorderBrush}" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" TargetName="PART_Border" Value="{StaticResource HighlightBackgroundBrush}" />
+                <Setter Property="BorderBrush" TargetName="PART_Border" Value="{StaticResource HighlightBorderBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- **********************************************************************
+      InsertItemStyle
+    *********************************************************************** -->
+    <Style x:Key="InsertItemStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Foreground" Value="{StaticResource LightForegroundBrush}" />
+        <Setter Property="Template" Value="{StaticResource InsertItemTemplate}" />
+    </Style>
+
+    <!-- **********************************************************************
+      InsertCollectionStyle
+    *********************************************************************** -->
+    <Style x:Key="InsertCollectionStyle" TargetType="{x:Type ListView}">
         <Setter Property="Margin" Value="0,0,8,0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="BorderBrush" Value="{StaticResource LightBorderBrush}" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource InsertItemStyle}" />
     </Style>
 
     <!-- **********************************************************************
@@ -47,6 +85,7 @@
     <ControlTemplate x:Key="ColumnHeaderTemplate" TargetType="{x:Type GridViewColumnHeader}">
         <Border
             Padding="8,2"
+            Margin="0,0,0,2"
             BorderThickness="0,0,1,0"
             BorderBrush="{StaticResource LightBorderBrush}">
             <TextBlock Text="{TemplateBinding Content}" />
