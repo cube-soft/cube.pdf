@@ -80,7 +80,7 @@
     <DataTemplate x:Key="HeroRecentItemTemplate" DataType="{x:Type fs:Information}">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="17" />
                 <ColumnDefinition Width="6"  />
                 <ColumnDefinition Width="*"  />
             </Grid.ColumnDefinitions>
