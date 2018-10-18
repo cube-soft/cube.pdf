@@ -198,7 +198,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~ImageEntry
+        /// ~ImageItem
         ///
         /// <summary>
         /// Finalizes the ImageEntry.
@@ -212,7 +212,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases all resources used by the ImageEntry.
+        /// Releases all resources used by the ImageItem.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -227,7 +227,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the ImageEntry
+        /// Releases the unmanaged resources used by the ImageItem
         /// and optionally releases the managed resources.
         /// </summary>
         ///

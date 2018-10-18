@@ -19,6 +19,7 @@
 using Cube.Collections.Mixin;
 using Cube.FileSystem;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -151,8 +152,7 @@ namespace Cube.Pdf.App.Editor
             if (delta == 0) return;
 
             var n   = Bindable.Files.Count;
-            var mid = Bindable.Selection.Select(e => Bindable.Files.IndexOf(e)).Within(n);
-            var src = delta > 0 ? mid.OrderByDecending() : mid.OrderBy();
+            var src = GetSelectedIndices(delta, n);
 
             foreach (var index in src.ToList())
             {
@@ -173,6 +173,25 @@ namespace Cube.Pdf.App.Editor
         public void SelectClear()
         {
             foreach (var item in Bindable.Selection.ToList()) item.IsSelected = false;
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetSelectedIndices
+        ///
+        /// <summary>
+        /// Gets the collection of selected items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<int> GetSelectedIndices(int delta, int n)
+        {
+            var dest = Bindable.Selection.Select(e => Bindable.Files.IndexOf(e)).Within(n);
+            return delta > 0 ? dest.OrderByDescending() : dest.OrderBy();
         }
 
         #endregion

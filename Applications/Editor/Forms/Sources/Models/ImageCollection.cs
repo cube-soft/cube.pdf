@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
+using Cube.Collections.Mixin;
 using Cube.Log;
 using Cube.Tasks;
 using System;
@@ -41,7 +42,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCollection : IReadOnlyList<ImageItem>, INotifyCollectionChanged, IDisposable
+    public class ImageCollection : DisposableBase, IReadOnlyList<ImageItem>, INotifyCollectionChanged
     {
         #region Constructors
 
@@ -63,7 +64,6 @@ namespace Cube.Pdf.App.Editor
             ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName)?.Create(e);
             void update(string s) { if (s == nameof(Preferences.VisibleLast)) Reschedule(null); };
 
-            _dispose = new OnceAction<bool>(Dispose);
             _inner   = new ObservableCollection<ImageItem>();
             _cache   = new CacheCollection<ImageItem, ImageSource>(create);
 
@@ -199,54 +199,6 @@ namespace Cube.Pdf.App.Editor
 
         #region Methods
 
-        #region IDisposable
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~ImageCollection
-        ///
-        /// <summary>
-        /// Finalizes the ImageCollection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~ImageCollection() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the ImageCollection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the
-        /// ImageCollection and optionally releases the managed
-        /// resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing) { if (disposing) Clear(); }
-
-        #endregion
-
         #region IEnumerable
 
         /* ----------------------------------------------------------------- */
@@ -351,20 +303,20 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Move(IEnumerable<int> indices, int delta) => SetIndex(() =>
         {
+            var tmp = indices.Within(Count);
+            var src = delta < 0 ? tmp.OrderBy() : tmp.OrderByDescending();
             var min = int.MaxValue;
             var max = 0;
-            var src = delta < 0 ?
-                      indices.Within(Count).OrderBy(i => i) :
-                      indices.Within(Count).OrderByDescending(i => i);
 
             foreach (var index in src)
             {
                 var inew = Math.Min(Math.Max(index + delta, 0), Count - 1);
-                if (inew == index) continue;
-
-                _inner.Move(index, inew);
-                min = Math.Min(Math.Min(min, index), inew);
-                max = Math.Max(Math.Max(max, index), inew);
+                if (inew != index)
+                {
+                    _inner.Move(index, inew);
+                    min = Math.Min(Math.Min(min, index), inew);
+                    max = Math.Max(Math.Max(max, index), inew);
+                }
             }
             return KeyValuePair.Create(min, max + 1);
         });
@@ -382,16 +334,14 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Remove(IEnumerable<int> indices) => SetIndex(() =>
         {
-            var src = indices.Within(Count).OrderByDescending(i => i).ToList();
-            var pos = src.Count > 0 ? src.Last() : int.MaxValue;
-
+            var src = indices.Within(Count).OrderByDescending().ToList();
             foreach (var item in src.Select(i => _inner[i]))
             {
                 _cache.Remove(item);
                 _inner.Remove(item);
                 item.Dispose();
             }
-            return KeyValuePair.Create(pos, Count);
+            return KeyValuePair.Create(src.LastOrDefault(), Count);
         });
 
         /* ----------------------------------------------------------------- */
@@ -445,6 +395,24 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the
+        /// ImageCollection and optionally releases the managed
+        /// resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { if (disposing) Clear(); }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SetIndex
         ///
         /// <summary>
@@ -454,10 +422,10 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetIndex(Func<KeyValuePair<int, int>> before)
         {
-            var pos   = before();
-            var begin = Math.Max(pos.Key, 0);
-            var end   = Math.Min(pos.Value, Count);
-            for (var i = begin; i < end; ++i) _inner[i].Index = i;
+            var pos = before();
+            var min = Math.Max(pos.Key, 0);
+            var max = Math.Min(pos.Value, Count);
+            for (var i = min; i < max; ++i) _inner[i].Index = i;
         }
 
         /* ----------------------------------------------------------------- */
@@ -471,20 +439,20 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Reschedule(Action before)
         {
-            if (_dispose.Invoked) return;
+            if (Disposed) return;
 
             var cts = new CancellationTokenSource();
             Interlocked.Exchange(ref _task, cts)?.Cancel();
             before?.Invoke();
 
-            var begin = Math.Max(Preferences.VisibleFirst, 0);
-            var end   = Math.Min(Preferences.VisibleLast, Count);
+            var min = Math.Max(Preferences.VisibleFirst, 0);
+            var max = Math.Min(Preferences.VisibleLast, Count);
 
             Task.Run(() =>
             {
-                for (var i = begin; i < end; ++i)
+                for (var i = min; i < max; ++i)
                 {
-                    if (cts.Token.IsCancellationRequested || _dispose.Invoked) return;
+                    if (Disposed || cts.Token.IsCancellationRequested) return;
                     _cache.GetOrCreate(_inner[i]);
                 }
             }).Forget();
@@ -493,7 +461,6 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
-        private readonly OnceAction<bool> _dispose;
         private readonly ObservableCollection<ImageItem> _inner;
         private readonly CacheCollection<ImageItem, ImageSource> _cache;
         private CancellationTokenSource _task;
