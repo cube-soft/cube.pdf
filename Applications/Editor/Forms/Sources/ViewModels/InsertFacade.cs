@@ -100,7 +100,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">File path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(string src) => Bindable.Files.Add(new FileItem(src, IO));
+        public void Add(string src) => Bindable.Files.Add(new FileItem(src, Bindable.Selection, IO));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -111,7 +111,11 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Bindable.Files.Clear();
+        public void Clear()
+        {
+            foreach (var item in Bindable.Files) item.Dispose();
+            Bindable.Files.Clear();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -124,7 +128,11 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Remove()
         {
-            foreach (var item in Bindable.Selection.ToList()) Bindable.Files.Remove(item);
+            foreach (var item in Bindable.Selection.ToList())
+            {
+                Bindable.Files.Remove(item);
+                item.Dispose();
+            }
         }
 
         /* ----------------------------------------------------------------- */

@@ -18,8 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -54,6 +52,7 @@ namespace Cube.Pdf.App.Editor
         public InsertBindable(int i, int n, SynchronizationContext context)
         {
             Files              = new BindableCollection<FileItem> { Context = context };
+            Selection          = new Selection<FileItem> { Context = context };
             Count              = n;
             SelectedIndex      = i;
             Index              = new Bindable<int>(Math.Max(i, 0)) { Context = context };
@@ -85,7 +84,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<FileItem> Selection => Files.Where(e => e.IsSelected);
+        public Selection<FileItem> Selection { get; }
 
         /* ----------------------------------------------------------------- */
         ///

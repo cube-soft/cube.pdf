@@ -266,10 +266,10 @@ namespace Cube.Pdf.App.Editor
 
             SelectClear    = Any(() => Send(() => Model.SelectClear()));
             Add.Command    = Any(() => PostOpen(e => Model.Add(e)));
-            Remove.Command = Any(() => Send(() => Model.Remove()));
             Clear.Command  = Any(() => Send(() => Model.Clear()));
-            Up.Command     = Any(() => Send(() => Model.Move(-1)));
-            Down.Command   = Any(() => Send(() => Model.Move(1)));
+            Remove.Command = IsItem(() => Send(() => Model.Remove()));
+            Up.Command     = IsItem(() => Send(() => Model.Move(-1)));
+            Down.Command   = IsItem(() => Send(() => Model.Move(1)));
         }
 
         #region Factory
@@ -284,6 +284,21 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand Any(Action action) => new BindableCommand(action, () => true);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsItem
+        ///
+        /// <summary>
+        /// Creates a command that can execute when any items are
+        /// selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsItem(Action action) => new BindableCommand(action,
+            () => Data.Selection.Count > 0,
+            Data.Selection
+        );
 
         #endregion
 

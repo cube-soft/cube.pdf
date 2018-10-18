@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileItem : ObservableProperty, IListItem
+    public class FileItem : ObservableProperty, IListItem, IDisposable
     {
         #region Constructors
 
@@ -47,11 +47,15 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="src">Path of the source file.</param>
+        /// <param name="selection">Shared object for selection.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileItem(string src, IO io)
+        public FileItem(string src, Selection<FileItem> selection, IO io)
         {
+            _dispose   = new OnceAction<bool>(Dispose);
+            _selection = selection;
+
             var info = io.Get(src);
             Name          = info.Name;
             FullName      = info.FullName;
@@ -131,12 +135,73 @@ namespace Cube.Pdf.App.Editor
         public bool IsSelected
         {
             get => _selected;
-            set => SetProperty(ref _selected, value);
+            set
+            {
+                if (!SetProperty(ref _selected, value)) return;
+                if (value) _selection.Add(this);
+                else _selection.Remove(this);
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~FileItem
+        ///
+        /// <summary>
+        /// Finalizes the FileItem.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~FileItem() { _dispose.Invoke(false); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases all resources used by the FileItem.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the FileItem
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                IsSelected = false;
+                _selection = null;
+            }
         }
 
         #endregion
 
         #region Fields
+        private readonly OnceAction<bool> _dispose;
+        private Selection<FileItem> _selection;
         private bool _selected = false;
         #endregion
     }
