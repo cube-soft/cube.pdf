@@ -195,7 +195,7 @@
     <Compile Include="Sources\Models\ImageItem.cs" />
     <Compile Include="Sources\Models\ImageExtension.cs" />
     <Compile Include="Sources\Models\ImagePreferences.cs" />
-    <Compile Include="Sources\Models\ImageSelection.cs" />
+    <Compile Include="Sources\Models\Selection.cs" />
     <Compile Include="Sources\Interactions\RibbonElement.cs" />
     <Compile Include="Sources\Models\Factory.cs" />
     <Compile Include="Sources\ViewModels\MainBindable.cs" />

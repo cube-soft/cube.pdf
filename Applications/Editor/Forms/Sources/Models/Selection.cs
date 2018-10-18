@@ -16,22 +16,24 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageSelection
+    /// Selection(T)
     ///
     /// <summary>
-    /// Represents the selection of images.
+    /// Represents the selection of items.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageSelection : ObservableProperty
+    public class Selection<T> : ObservableProperty, IEnumerable<T>
     {
         #region Properties
 
@@ -40,57 +42,22 @@ namespace Cube.Pdf.App.Editor
         /// Count
         ///
         /// <summary>
-        /// Gets the number of selected images.
+        /// Gets the number of selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count => _selection.Count;
+        public int Count => RawObject.Count;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// First
+        /// RawObject
         ///
         /// <summary>
-        /// Gets the first index that is maximum value in the selected
-        /// images.
+        /// Gets the raw object of the collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int First => _selection.Keys.OrderBy(i => i.Index).FirstOrDefault()?.Index ?? -1;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Last
-        ///
-        /// <summary>
-        /// Gets the last index that is maximum value in the selected
-        /// images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Last => _selection.Keys.OrderByDescending(i => i.Index).FirstOrDefault()?.Index ?? -1;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Indices
-        ///
-        /// <summary>
-        /// Gets the indices of the selected images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<int> Indices => _selection.Keys.Select(e => e.Index);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Items
-        ///
-        /// <summary>
-        /// Gets the selection of images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<ImageItem> Items => _selection.Keys;
+        protected ConcurrentDictionary<T, byte> RawObject { get; } = new ConcurrentDictionary<T, byte>();
 
         #endregion
 
@@ -107,9 +74,9 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">Image entry.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(ImageItem src)
+        public void Add(T src)
         {
-            if (_selection.TryAdd(src, 0)) RaiseEvents();
+            if (RawObject.TryAdd(src, 0)) RaisePropertyChanged(nameof(Count));
         }
 
         /* ----------------------------------------------------------------- */
@@ -123,10 +90,91 @@ namespace Cube.Pdf.App.Editor
         /// <param name="src">Image entry.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(ImageItem src)
+        public void Remove(T src)
         {
-            if (_selection.TryRemove(src, out var _)) RaiseEvents();
+            if (RawObject.TryRemove(src, out var _)) RaisePropertyChanged(nameof(Count));
         }
+
+        #region IEnumerable<T>
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEnumerator
+        ///
+        /// <summary>
+        /// Returns an enumerator that iterates through this collection.
+        /// </summary>
+        ///
+        /// <returns>
+        /// An IEnumerator(T) object for this collection.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerator<T> GetEnumerator() => RawObject.Keys.GetEnumerator();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IEnumerable.GetEnumerator
+        ///
+        /// <summary>
+        /// Returns an enumerator that iterates through this collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        #endregion
+
+        #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ImageSelection
+    ///
+    /// <summary>
+    /// Represents the selection of images.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class ImageSelection : Selection<ImageItem>
+    {
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// First
+        ///
+        /// <summary>
+        /// Gets the first index that is maximum value in the selected
+        /// images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int First => RawObject.Keys.OrderBy(i => i.Index).FirstOrDefault()?.Index ?? -1;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Last
+        ///
+        /// <summary>
+        /// Gets the last index that is maximum value in the selected
+        /// images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Last => RawObject.Keys.OrderByDescending(i => i.Index).FirstOrDefault()?.Index ?? -1;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Indices
+        ///
+        /// <summary>
+        /// Gets the indices of the selected images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<int> Indices => RawObject.Keys.Select(e => e.Index);
 
         #endregion
 
@@ -134,25 +182,22 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RaiseEvents
+        /// OnPropertyChanged
         ///
         /// <summary>
-        /// Raises some events.
+        /// Occurs when a property is changed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void RaiseEvents()
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            RaisePropertyChanged(nameof(Count));
+            base.OnPropertyChanged(e);
+
+            if (e.PropertyName != nameof(Count)) return;
             RaisePropertyChanged(nameof(Last));
             RaisePropertyChanged(nameof(Indices));
-            RaisePropertyChanged(nameof(Items));
         }
 
-        #endregion
-
-        #region Fields
-        private readonly ConcurrentDictionary<ImageItem, byte> _selection = new ConcurrentDictionary<ImageItem, byte>();
         #endregion
     }
 }

@@ -89,7 +89,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         {
             var dest = vm.Data.Selection;
             Assert.That(dest.Count,   Is.EqualTo(0));
-            Assert.That(dest.Items,   Is.Not.Null);
             Assert.That(dest.Indices, Is.Not.Null);
             Assert.That(dest.Last,    Is.EqualTo(-1));
 
