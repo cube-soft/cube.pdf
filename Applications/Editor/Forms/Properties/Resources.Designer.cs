@@ -1069,6 +1069,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
+        ///   Add new files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TooltipAdd {
+            get {
+                return ResourceManager.GetString("TooltipAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Extract the selected pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TooltipExtract {

@@ -41,7 +41,7 @@
     <r:RibbonWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Views/Components/ContextControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Views/Components/MainContextMenu.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Themes/PageStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

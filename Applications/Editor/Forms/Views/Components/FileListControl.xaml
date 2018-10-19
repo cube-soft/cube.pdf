@@ -36,6 +36,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Views/Components/InsertContextMenu.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Themes/GenericDialog.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Themes/InsertStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -46,6 +47,7 @@
       Main
     *********************************************************************** -->
     <ListView
+        ContextMenu="{StaticResource InsertContextMenu}"
         ItemsSource="{Binding Data.Files}"
         Style="{StaticResource InsertCollectionStyle}"
         dd:DragDrop.IsDragSource="True"

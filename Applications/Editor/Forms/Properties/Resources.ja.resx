@@ -453,6 +453,9 @@
   <data name="TitleSettings" xml:space="preserve">
     <value>CubePDF Utility 設定</value>
   </data>
+  <data name="TooltipAdd" xml:space="preserve">
+    <value>新しいファイルを追加</value>
+  </data>
   <data name="TooltipExtract" xml:space="preserve">
     <value>選択ページを抽出</value>
   </data>

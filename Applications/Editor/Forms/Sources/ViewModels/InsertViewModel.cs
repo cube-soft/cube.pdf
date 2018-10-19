@@ -123,8 +123,13 @@ namespace Cube.Pdf.App.Editor
         /// Gets the menu that represents the add button.
         /// </summary>
         ///
+        /// <remarks>
+        /// Value にツールチップ用の文字列を設定しています。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Add { get; } = new BindableElement(
+        public BindableElement<string> Add { get; } = new BindableElement<string>(
+            () => Properties.Resources.TooltipAdd,
             () => Properties.Resources.MenuAdd
         );
 
