@@ -54,6 +54,38 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Width
+        ///
+        /// <summary>
+        /// Gets or sets the width of main window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int Width
+        {
+            get => _width;
+            set => SetProperty(ref _width, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Height
+        ///
+        /// <summary>
+        /// Gets or sets the height of main window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int Height
+        {
+            get => _height;
+            set => SetProperty(ref _height, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ItemSize
         ///
         /// <summary>
@@ -157,6 +189,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Reset()
         {
+            _width    = 800;
+            _height   = 600;
             _itemSize = 250;
             _language = Language.Auto;
             _update   = true;
@@ -165,6 +199,8 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
+        private int _width;
+        private int _height;
         private int _itemSize;
         private bool _frameOnly;
         private Language _language;

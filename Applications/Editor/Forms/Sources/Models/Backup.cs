@@ -52,7 +52,7 @@ namespace Cube.Pdf.App.Editor
             var app = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
             IO        = io;
-            Directory = IO.Combine(app, "CubeSoft", "CubePdfUtility2", "Backup");
+            Directory = io.Combine(app, "CubeSoft", "CubePdfUtility2", "Backup");
             KeepDays  = 5;
         }
 
