@@ -176,6 +176,7 @@ namespace Cube.Pdf.App.Editor
             foreach (var ps in src.Settings.GetSplashProcesses()) ps.Kill();
             var path = src.GetFirst(args);
             if (path.HasValue()) src.Open(path);
+            src.Backup.Cleanup();
         }
 
         /* ----------------------------------------------------------------- */
@@ -326,6 +327,7 @@ namespace Cube.Pdf.App.Editor
                 }
 
                 close();
+                src.Backup.Invoke(dest);
                 io.Copy(tmp, dest.FullName, true);
             }
             finally { io.TryDelete(tmp); }

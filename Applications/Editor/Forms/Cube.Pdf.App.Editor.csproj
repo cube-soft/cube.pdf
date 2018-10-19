@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sources\Interactions\InsertDropTarget.cs" />
+    <Compile Include="Sources\Models\Backup.cs" />
     <Compile Include="Sources\Models\FileItem.cs" />
     <Compile Include="Views\Components\FileListControl.xaml.cs">
       <DependentUpon>FileListControl.xaml</DependentUpon>
