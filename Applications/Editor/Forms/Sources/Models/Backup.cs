@@ -110,6 +110,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Invoke(Information src)
         {
+            if (!src.Exists) return;
+
             var date = DateTime.Today.ToString("yyyyMMdd");
             var dest = IO.Combine(Directory, date, src.Name);
 
