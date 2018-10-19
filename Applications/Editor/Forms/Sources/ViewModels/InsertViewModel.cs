@@ -277,7 +277,7 @@ namespace Cube.Pdf.App.Editor
             Data.Files);
 
             SelectClear    = Any(() => Send(() => Model.SelectClear()));
-            Add.Command    = Any(() => PostOpen());
+            Add.Command    = Any(() => SendOpen());
             Clear.Command  = Any(() => Send(() => Model.Clear()));
             Remove.Command = IsItem(() => Send(() => Model.Remove()));
             Up.Command     = IsItem(() => Send(() => Model.Move(-1)));
@@ -318,7 +318,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PostOpen
+        /// SendOpen
         ///
         /// <summary>
         /// Posts the message to show a dialog of the OpenFileDialog
@@ -326,11 +326,16 @@ namespace Cube.Pdf.App.Editor
         /// operation.
         /// </summary>
         ///
+        /// <remarks>
+        /// 複数ファイルを非同期で追加した際にエラーが発生する場合が確認
+        /// されているため、暫定的に同期的に追加しています。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        private void PostOpen() => Send(Factory.InsertMessage(e => Post(() =>
+        private void SendOpen() => Send(Factory.InsertMessage(e => Send(() =>
         {
             if (e.Result) Model.Add(e.FileNames);
-        })));
+        }), true));
 
         #endregion
 
