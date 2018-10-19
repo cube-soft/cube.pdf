@@ -65,6 +65,39 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// InsertMessage
+        ///
+        /// <summary>
+        /// Creates a message to show the OpenFileDialog.
+        /// </summary>
+        ///
+        /// <param name="callback">
+        /// Callback action when terminating the user operation.
+        /// </param>
+        ///
+        /// <returns>OpenFileMessage object.</returns>
+        ///
+        /// <remarks>
+        /// TODO: Multiselect を true にして複数の項目を同時に挿入する際に
+        /// エラーが発生する事があるため要調査。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static OpenFileMessage InsertMessage(OpenFileCallback callback) =>
+            new OpenFileMessage(callback)
+        {
+            Title           = Properties.Resources.TitleOpen,
+            CheckPathExists = true,
+            Multiselect     = false,
+            Filter          = new []
+            {
+                new ExtensionFilter(Properties.Resources.FilterPdf, true, ".pdf"),
+                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
+            }.GetFilter(),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SaveMessage
         ///
         /// <summary>

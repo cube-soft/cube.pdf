@@ -61,6 +61,7 @@ namespace Cube.Pdf.App.Editor
         {
             Model    = new InsertFacade(i, n, io, context);
             Position = new InsertPosition(Data);
+            Drop     = new InsertDropTarget((f, t) => Model.Move(f, t));
             SetCommands(callback);
         }
 
@@ -100,6 +101,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public InsertPosition Position { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Drop
+        ///
+        /// <summary>
+        /// Gets the Drag&amp;Drop behavior.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public InsertDropTarget Drop { get; }
 
         #region Buttons
 
@@ -265,7 +277,7 @@ namespace Cube.Pdf.App.Editor
             Data.Files);
 
             SelectClear    = Any(() => Send(() => Model.SelectClear()));
-            Add.Command    = Any(() => PostOpen(e => Model.Add(e)));
+            Add.Command    = Any(() => PostOpen());
             Clear.Command  = Any(() => Send(() => Model.Clear()));
             Remove.Command = IsItem(() => Send(() => Model.Remove()));
             Up.Command     = IsItem(() => Send(() => Model.Move(-1)));
@@ -315,9 +327,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostOpen(Action<string> action) => Send(Factory.OpenMessage(e =>
-            Post(() => { if (e.Result) action(e.FileName); })
-        ));
+        private void PostOpen() => Send(Factory.InsertMessage(e => Post(() =>
+        {
+            if (e.Result) Model.Add(e.FileNames);
+        })));
 
         #endregion
 

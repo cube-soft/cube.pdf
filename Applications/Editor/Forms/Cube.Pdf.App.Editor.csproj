@@ -115,6 +115,9 @@
     <Reference Include="GalaSoft.MvvmLight.Platform">
       <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>..\..\..\..\packages\gong-wpf-dragdrop.1.1.0\lib\net45\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -134,6 +137,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sources\Interactions\InsertDropTarget.cs" />
     <Compile Include="Sources\Models\FileItem.cs" />
     <Compile Include="Views\Components\FileListControl.xaml.cs">
       <DependentUpon>FileListControl.xaml</DependentUpon>

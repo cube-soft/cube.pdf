@@ -95,13 +95,19 @@ namespace Cube.Pdf.App.Editor
         /// Add
         ///
         /// <summary>
-        /// Adds a new file.
+        /// Adds new files.
         /// </summary>
         ///
-        /// <param name="src">File path.</param>
+        /// <param name="src">Collection of files.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(string src) => Bindable.Files.Add(new FileItem(src, Bindable.Selection, IO));
+        public void Add(IEnumerable<string> src)
+        {
+            foreach (var item in src)
+            {
+                Bindable.Files.Add(new FileItem(item, Bindable.Selection, IO));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -149,16 +155,26 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Move(int delta)
         {
-            if (delta == 0) return;
+            if (delta != 0) Move(GetSelection(delta).ToList(), delta);
+        }
 
-            var n   = Bindable.Files.Count;
-            var src = GetSelectedIndices(delta, n);
-
-            foreach (var index in src.ToList())
-            {
-                var inew = Math.Min(Math.Max(index + delta, 0), n - 1);
-                if (inew != index) Bindable.Files.Move(index, inew);
-            }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// Moves selected items according to specified indices.
+        /// </summary>
+        ///
+        /// <param name="from">Source index.</param>
+        /// <param name="to">Target index.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Move(int from, int to)
+        {
+            if (from == to) return;
+            if (from > to) MovePrevious(from, to);
+            else MoveNext(from, to);
         }
 
         /* ----------------------------------------------------------------- */
@@ -181,15 +197,68 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetSelectedIndices
+        /// Move
+        ///
+        /// <summary>
+        /// Moves specified items at the specfied distance.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Move(IEnumerable<int> src, int delta)
+        {
+            foreach (var index in src)
+            {
+                var inew = Math.Min(Math.Max(index + delta, 0), Bindable.Files.Count - 1);
+                if (inew != index) Bindable.Files.Move(index, inew);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MovePrevious
+        ///
+        /// <summary>
+        /// Moves selected items according to specified indices.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void MovePrevious(int from, int to)
+        {
+            var delta = to - from;
+            var src   = GetSelection(delta);
+            var n     = src.Where(i => i < from && i >= to).Count();
+            Move(src, delta + n);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MoveNext
+        ///
+        /// <summary>
+        /// Moves selected items according to specified indices.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void MoveNext(int from, int to)
+        {
+            var delta = to - from;
+            var src   = GetSelection(delta);
+            var n     = src.Where(i => i > from && i <= to).Count();
+            Move(src, delta - n);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetSelection
         ///
         /// <summary>
         /// Gets the collection of selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<int> GetSelectedIndices(int delta, int n)
+        private IEnumerable<int> GetSelection(int delta)
         {
+            var n    = Bindable.Files.Count;
             var dest = Bindable.Selection.Select(e => Bindable.Files.IndexOf(e)).Within(n);
             return delta > 0 ? dest.OrderByDescending() : dest.OrderBy();
         }

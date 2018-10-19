@@ -22,6 +22,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:dd="urn:gong-wpf-dragdrop"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
     xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -46,7 +47,10 @@
     *********************************************************************** -->
     <ListView
         ItemsSource="{Binding Data.Files}"
-        Style="{StaticResource InsertCollectionStyle}">
+        Style="{StaticResource InsertCollectionStyle}"
+        dd:DragDrop.IsDragSource="True"
+        dd:DragDrop.IsDropTarget="True"
+        dd:DragDrop.DropHandler="{Binding Drop}">
         <ListView.View>
             <GridView>
                 <!-- **********************************************************
