@@ -241,9 +241,11 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void MoveNext(int from, int to)
         {
-            var delta = to - from;
-            var src   = GetSelection(delta);
-            var n     = src.Where(i => i > from && i <= to).Count();
+            var delta = to - from - 1;
+            if (delta == 0) return;
+
+            var src = GetSelection(delta);
+            var n   = src.Where(i => i > from && i <= to).Count();
             Move(src, delta - n);
         }
 
