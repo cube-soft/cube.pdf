@@ -456,9 +456,6 @@
   <data name="TitleSettings" xml:space="preserve">
     <value>CubePDF Utility settings</value>
   </data>
-  <data name="TooltipAdd" xml:space="preserve">
-    <value>Add new files</value>
-  </data>
   <data name="TooltipExtract" xml:space="preserve">
     <value>Extract the selected pages</value>
   </data>

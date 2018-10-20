@@ -140,19 +140,27 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Preview
+        ///
+        /// <summary>
+        /// Gets the menu that represents the preview button.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement Preview { get; } = new BindableElement(
+            () => Properties.Resources.MenuPreview
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Add
         ///
         /// <summary>
         /// Gets the menu that represents the add button.
         /// </summary>
         ///
-        /// <remarks>
-        /// Value にツールチップ用の文字列を設定しています。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Add { get; } = new BindableElement<string>(
-            () => Properties.Resources.TooltipAdd,
+        public BindableElement Add { get; } = new BindableElement(
             () => Properties.Resources.MenuAdd
         );
 
@@ -293,12 +301,13 @@ namespace Cube.Pdf.App.Editor
             () => Data.Files.Count > 0,
             Data.Files);
 
-            SelectClear    = Any(() => Send(() => Model.SelectClear()));
-            Add.Command    = Any(() => SendOpen());
-            Clear.Command  = Any(() => Send(() => Model.Clear()));
-            Remove.Command = IsItem(() => Send(() => Model.Remove()));
-            Up.Command     = IsItem(() => Send(() => Model.Move(-1)));
-            Down.Command   = IsItem(() => Send(() => Model.Move(1)));
+            SelectClear     = Any(() => Send(() => Model.SelectClear()));
+            Preview.Command = IsItem(() => Post(() => Model.Preview()));
+            Add.Command     = Any(() => SendOpen());
+            Clear.Command   = Any(() => Send(() => Model.Clear()));
+            Remove.Command  = IsItem(() => Send(() => Model.Remove()));
+            Up.Command      = IsItem(() => Send(() => Model.Move(-1)));
+            Down.Command    = IsItem(() => Send(() => Model.Move(1)));
         }
 
         #region Factory

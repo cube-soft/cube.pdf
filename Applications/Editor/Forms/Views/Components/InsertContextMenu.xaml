@@ -22,11 +22,11 @@
 
     <ContextMenu x:Key="InsertContextMenu">
         <!-- ******************************************************************
-          Add
+          Preview
         ******************************************************************* -->
         <MenuItem
-            Command="{Binding Add.Command}"
-            Header="{Binding Add.Value}" />
+            Command="{Binding Preview.Command}"
+            Header="{Binding Preview.Text}" />
 
         <Separator />
 

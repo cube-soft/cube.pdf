@@ -20,6 +20,7 @@ using Cube.Collections.Mixin;
 using Cube.FileSystem;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -89,6 +90,17 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Preview
+        ///
+        /// <summary>
+        /// Previews the selected file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Preview() => Process.Start(Bindable.Selection.First().FullName);
 
         /* ----------------------------------------------------------------- */
         ///
