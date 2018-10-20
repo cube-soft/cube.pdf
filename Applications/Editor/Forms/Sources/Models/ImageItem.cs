@@ -267,14 +267,14 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void UpdateSize()
         {
-            var magic = 10; // TODO: how to calc?
+            var h_magic = 22; // how to calc?
+            var v_magic = 12;
 
             var src   = RawObject.GetViewSize().Value;
             var size  = _preferences.ItemSize;
-            var space = _preferences.ItemMargin * 2;
 
-            var h = (size - space * 2 - magic) / src.Width;
-            var v = (size - space * 2 - _preferences.TextHeight) / src.Height;
+            var h = (size - h_magic) / src.Width;
+            var v = (size - v_magic - _preferences.TextHeight) / src.Height;
 
             var scale = Math.Min(h, v);
 
@@ -296,8 +296,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPreferencesChanged(object s, PropertyChangedEventArgs e)
         {
-            var fire = e.PropertyName == nameof(_preferences.ItemMargin)    ||
-                       e.PropertyName == nameof(_preferences.ItemSizeIndex) ||
+            var fire = e.PropertyName == nameof(_preferences.ItemSizeIndex) ||
                        e.PropertyName == nameof(_preferences.TextHeight);
             if (fire) UpdateSize();
         }

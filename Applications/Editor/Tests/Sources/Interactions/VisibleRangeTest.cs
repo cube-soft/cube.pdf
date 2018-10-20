@@ -54,10 +54,9 @@ namespace Cube.Pdf.Tests.Editor.Interactions
             var src  = new VisibleRange();
 
             src.Attach(view);
-            Assert.That(src.First,      Is.EqualTo(0));
-            Assert.That(src.Last,       Is.EqualTo(0));
-            Assert.That(src.ItemSize,   Is.EqualTo(0));
-            Assert.That(src.ItemMargin, Is.EqualTo(0));
+            Assert.That(src.First, Is.EqualTo(0));
+            Assert.That(src.Last,  Is.EqualTo(0));
+            Assert.That(src.Unit,  Is.EqualTo(0));
             src.Detach();
         });
 

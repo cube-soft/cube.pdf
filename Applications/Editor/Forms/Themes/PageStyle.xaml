@@ -89,8 +89,7 @@
                 <my:VisibleRange
                     First="{Binding Data.Preferences.VisibleFirst, Mode=TwoWay}"
                     Last="{Binding Data.Preferences.VisibleLast, Mode=TwoWay}"
-                    ItemSize="{Binding Data.Preferences.ItemSize}"
-                    ItemMargin="{Binding Data.Preferences.ItemMargin}" />
+                    Unit="{Binding Data.Preferences.ItemSize}" />
             </i:Interaction.Behaviors>
         </ScrollViewer>
     </ControlTemplate>

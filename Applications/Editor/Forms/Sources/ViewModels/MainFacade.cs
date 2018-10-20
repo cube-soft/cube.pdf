@@ -68,7 +68,6 @@ namespace Cube.Pdf.App.Editor
             var index = sizes.LastIndexOf(e => e <= Bindable.ItemSize.Value);
 
             Bindable.Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
-            Bindable.Images.Preferences.ItemMargin    = 3;
             Bindable.Images.Preferences.FrameOnly     = settings.Value.FrameOnly;
             Bindable.Images.Preferences.TextHeight    = 25;
         }
