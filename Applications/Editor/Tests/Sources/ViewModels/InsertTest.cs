@@ -137,6 +137,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                 Assert.That(e.Title.Text,     Is.EqualTo("Insertion details"));
                 Assert.That(e.Data,           Is.Not.Null);
                 Assert.That(e.Add.Text,       Is.EqualTo("Add ..."));
+                Assert.That(e.Preview.Text,   Is.EqualTo("Preview"));
                 Assert.That(e.Up.Text,        Is.EqualTo("Up"));
                 Assert.That(e.Down.Text,      Is.EqualTo("Down"));
                 Assert.That(e.Remove.Text,    Is.EqualTo("Remove"));
@@ -145,6 +146,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                 Assert.That(e.OK.Command,     Is.Not.Null);
                 Assert.That(e.Cancel.Text,    Is.EqualTo("Cancel"));
                 Assert.That(e.Cancel.Command, Is.Not.Null);
+                Assert.That(e.DragAdd,        Is.Not.Null);
+                Assert.That(e.DragMove,       Is.Not.Null);
 
                 var pos = e.Position;
                 Assert.That(pos.Text,                     Is.EqualTo("Insert position"));
