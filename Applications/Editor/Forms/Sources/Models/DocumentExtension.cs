@@ -16,8 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Images;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
+using System;
 using System.Drawing;
 using System.Windows.Media;
 
@@ -46,18 +48,13 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="src">Renderer object.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="ratio">Scale ratio.</param>
+        /// <param name="entry">Information of the creating image.</param>
         ///
         /// <returns>ImageSource object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageSource Create(this IDocumentRenderer src, Page page, double ratio)
-        {
-            if (src == null || page == null) return null;
-            var size = page.GetViewSize(ratio).Value;
-            return src.Render(page, ratio).ToBitmapImage();
-        }
+        public static ImageSource Create(this IDocumentRenderer src, ImageItem entry) =>
+            src.Create(entry.RawObject, new SizeF(entry.Width, entry.Height));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -69,13 +66,57 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="src">Renderer object.</param>
-        /// <param name="entry">Information of the creating image.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="ratio">Scaling ratio.</param>
         ///
         /// <returns>ImageSource object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageSource Create(this IDocumentRenderer src, ImageItem entry) =>
-            src?.Render(entry.RawObject, new SizeF(entry.Width, entry.Height)).ToBitmapImage();
+        public static ImageSource Create(this IDocumentRenderer src, Page page, double ratio) =>
+            src.Create(page, page.GetViewSize(ratio).Value);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Create a new instance of the ImageSource class with the
+        /// specified parameters.
+        /// </summary>
+        ///
+        /// <param name="src">Renderer object.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="size">Image size.</param>
+        ///
+        /// <returns>ImageSource object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static ImageSource Create(this IDocumentRenderer src, Page page, SizeF size) =>
+            page.File is ImageFile f ? Create(f, size) : src?.Render(page, size).ToBitmapImage();
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Create a new instance of the ImageSource class with the
+        /// specified parameters.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static ImageSource Create(ImageFile src, SizeF size)
+        {
+            using (var obj = new ImageResizer(src.FullName)
+            {
+                ResizeMode          = ImageResizeMode.HighSpeed,
+                PreserveAspectRatio = true,
+                LongSide            = (int)Math.Max(size.Width, size.Height),
+            }) return obj.Resized.ToBitmapImage(false);
+        }
 
         #endregion
     }
