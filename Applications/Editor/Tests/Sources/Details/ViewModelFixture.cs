@@ -367,8 +367,9 @@ namespace Cube.Pdf.Tests.Editor
 
             void open(OpenFileMessage e)
             {
-                e.FileName = Source;
-                e.Result   = true;
+                e.FileName  = Source;
+                e.FileNames = new[] { Source };
+                e.Result    = true;
                 e.Callback.Invoke(e);
             }
 
