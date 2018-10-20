@@ -54,7 +54,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(vm.Recent.Items,  Is.Not.Null);
             Assert.That(pf.ItemSize,      Is.EqualTo(250));
             Assert.That(pf.ItemSizeIndex, Is.EqualTo(3));
-            Assert.That(pf.ItemMargin,    Is.EqualTo(3));
             Assert.That(pf.TextHeight,    Is.EqualTo(25));
         });
 
