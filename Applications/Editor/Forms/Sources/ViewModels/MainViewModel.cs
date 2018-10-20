@@ -22,6 +22,7 @@ using Cube.Pdf.Mixin;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -414,8 +415,8 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostInsert(Action<string> action) => Send(Factory.InsertMessage(e =>
-            Post(() => { if (e.Result) action(e.FileName); }), false
+        private void PostInsert(Action<IEnumerable<string>> action) => Send(Factory.InsertMessage(e =>
+            Post(() => { if (e.Result) action(e.FileNames); })
         ));
 
         /* ----------------------------------------------------------------- */

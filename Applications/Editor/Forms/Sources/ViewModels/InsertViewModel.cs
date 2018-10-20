@@ -352,7 +352,7 @@ namespace Cube.Pdf.App.Editor
         private void SendOpen() => Send(Factory.InsertMessage(e => Send(() =>
         {
             if (e.Result) Model.Add(e.FileNames);
-        }), true));
+        })));
 
         #endregion
 
