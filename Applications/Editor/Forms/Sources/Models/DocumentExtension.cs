@@ -55,8 +55,8 @@ namespace Cube.Pdf.App.Editor
         public static ImageSource Create(this IDocumentRenderer src, Page page, double ratio)
         {
             if (src == null || page == null) return null;
-            var size = page.GetDisplaySize(ratio).Value;
-            return src.Create(new Bitmap((int)size.Width, (int)size.Height), page);
+            var size = page.GetViewSize(ratio).Value;
+            return src.Render(page, ratio).ToBitmapImage();
         }
 
         /* ----------------------------------------------------------------- */
@@ -75,33 +75,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static ImageSource Create(this IDocumentRenderer src, ImageItem entry) =>
-            src?.Create(new Bitmap(entry.Width, entry.Height), entry.RawObject);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Create a new instance of the ImageSource class with the
-        /// specified parameters.
-        /// </summary>
-        ///
-        /// <param name="src">Renderer object.</param>
-        /// <param name="dest">Image object.</param>
-        /// <param name="page">Page object.</param>
-        ///
-        /// <returns>ImageSource object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static ImageSource Create(this IDocumentRenderer src, Image dest, Page page)
-        {
-            using (var gs = Graphics.FromImage(dest))
-            {
-                gs.Clear(System.Drawing.Color.White);
-                src.Render(gs, page);
-            }
-            return dest.ToBitmapImage(true);
-        }
+            src?.Render(entry.RawObject, new SizeF(entry.Width, entry.Height)).ToBitmapImage();
 
         #endregion
     }

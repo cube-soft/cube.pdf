@@ -135,7 +135,7 @@ namespace Cube.Pdf.Tests
                 new PointF(72, 72)         // Resolution
             ) { Delta = new Angle(degree) };
 
-            var dest = src.GetDisplaySize();
+            var dest = src.GetViewSize();
             Assert.That(dest.Value.Width,  Is.EqualTo(w).Within(1.0));
             Assert.That(dest.Value.Height, Is.EqualTo(h).Within(1.0));
         }

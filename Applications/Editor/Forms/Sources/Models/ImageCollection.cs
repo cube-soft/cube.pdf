@@ -64,8 +64,8 @@ namespace Cube.Pdf.App.Editor
             ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName)?.Create(e);
             void update(string s) { if (s == nameof(Preferences.VisibleLast)) Reschedule(null); };
 
-            _inner   = new ObservableCollection<ImageItem>();
-            _cache   = new CacheCollection<ImageItem, ImageSource>(create);
+            _inner = new ObservableCollection<ImageItem>();
+            _cache = new CacheCollection<ImageItem, ImageSource>(create);
 
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
             _cache.Created += (s, e) => e.Key.Refresh();

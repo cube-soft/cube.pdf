@@ -269,7 +269,7 @@ namespace Cube.Pdf.App.Editor
         {
             var magic = 10; // TODO: how to calc?
 
-            var src   = RawObject.GetDisplaySize().Value;
+            var src   = RawObject.GetViewSize().Value;
             var size  = _preferences.ItemSize;
             var space = _preferences.ItemMargin * 2;
 
