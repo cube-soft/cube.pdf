@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using GongSolutions.Wpf.DragDrop;
 using System;
 using System.Windows;
@@ -69,7 +70,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void DragOver(IDropInfo e)
         {
-            if (e.Data == e.TargetItem) return;
+            e.NotHandled = (e.Data == e.TargetItem || !(e.TargetItem is Information));
+            if (e.NotHandled) return;
+
             e.Effects           = DragDropEffects.Move;
             e.DropTargetAdorner = DropTargetAdorners.Insert;
         }

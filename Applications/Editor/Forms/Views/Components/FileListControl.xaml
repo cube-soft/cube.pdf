@@ -52,7 +52,7 @@
         Style="{StaticResource InsertCollectionStyle}"
         dd:DragDrop.IsDragSource="True"
         dd:DragDrop.IsDropTarget="True"
-        dd:DragDrop.DropHandler="{Binding Drop}">
+        dd:DragDrop.DropHandler="{Binding DragMove}">
         <ListView.View>
             <GridView>
                 <!-- **********************************************************

@@ -61,7 +61,8 @@ namespace Cube.Pdf.App.Editor
         {
             Model    = new InsertFacade(i, n, io, context);
             Position = new InsertPosition(Data);
-            Drop     = new InsertDropTarget((f, t) => Model.Move(f, t));
+            DragMove = new InsertDropTarget((f, t) => Model.Move(f, t));
+            DragAdd  = new BindableCommand<string[]>(e => Model.Add(e), e => true);
             SetCommands(callback);
         }
 
@@ -104,14 +105,36 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Drop
+        /// DragMove
         ///
         /// <summary>
         /// Gets the Drag&amp;Drop behavior.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertDropTarget Drop { get; }
+        public InsertDropTarget DragMove { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DragAdd
+        ///
+        /// <summary>
+        /// Gets the command when files are Drag&amp;Drop.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand DragAdd { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectClear
+        ///
+        /// <summary>
+        /// Gets the SelectClear command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand SelectClear { get; private set; }
 
         #region Buttons
 
@@ -246,17 +269,6 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Commands
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SelectClear
-        ///
-        /// <summary>
-        /// Gets the SelectClear command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICommand SelectClear { get; private set; }
 
         #endregion
 
