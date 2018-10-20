@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections.Mixin;
 using Cube.Generics;
+using Cube.Pdf.Mixin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -235,7 +236,9 @@ namespace Cube.Pdf.App.Editor
                 src.SelectMany(e =>
                 {
                     Bindable.SetMessage(Properties.Resources.MessageLoading, e);
-                    return _core.GetOrAdd(e).Pages;
+                    if (!this.IsInsertable(e)) return new Page[0];
+                    else if (e.IsPdf()) return _core.GetOrAdd(e).Pages;
+                    else return Settings.IO.GetImagePages(e);
                 })
             ), "");
 

@@ -252,11 +252,8 @@ namespace Cube.Pdf.App.Editor
         /// <param name="files">File collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetFirst(this MainFacade src, IEnumerable<string> files)
-        {
-            var opt = StringComparison.InvariantCultureIgnoreCase;
-            return files.FirstOrDefault(e => e.EndsWith(".pdf", opt));
-        }
+        public static string GetFirst(this MainFacade src, IEnumerable<string> files) =>
+            files.FirstOrDefault(e => e.IsPdf());
 
         #endregion
 
@@ -359,6 +356,31 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IsInsertable
+        ///
+        /// <summary>
+        /// Gets the value indicating whether the specified file is
+        /// insertable.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="path">File path.</param>
+        ///
+        /// <remarks>
+        /// TODO: 現在は拡張子で判断しているが、ファイル内容の Signature を
+        /// 用いて判断するように修正する。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsInsertable(this MainFacade src, string path)
+        {
+            var ext = src.Settings.IO.Get(path).Extension.ToLowerInvariant();
+            var cmp = new List<string> { ".pdf", ".png", ".jpg", ".jpeg", ".bmp" };
+            return cmp.Contains(ext);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Insert
         ///
         /// <summary>
@@ -424,7 +446,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="obj">Drag&amp;Drop result.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void MovePrevious(this MainFacade src, DragDropObject obj)
+        private static void MovePrevious(this MainFacade src, DragDropObject obj)
         {
             var delta = obj.DropIndex - obj.DragIndex;
             var n     = src.Bindable.Selection.Indices
@@ -444,7 +466,7 @@ namespace Cube.Pdf.App.Editor
         /// <param name="obj">Drag&amp;Drop result.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void MoveNext(this MainFacade src, DragDropObject obj)
+        private static void MoveNext(this MainFacade src, DragDropObject obj)
         {
             var delta = obj.DropIndex - obj.DragIndex;
             var n     = src.Bindable.Selection.Indices

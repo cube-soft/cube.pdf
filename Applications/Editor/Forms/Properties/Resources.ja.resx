@@ -120,6 +120,9 @@
   <data name="FilterAll" xml:space="preserve">
     <value>すべてのファイル</value>
   </data>
+  <data name="FilterInsertable" xml:space="preserve">
+    <value>挿入可能なファイル</value>
+  </data>
   <data name="FilterPdf" xml:space="preserve">
     <value>PDF ファイル</value>
   </data>

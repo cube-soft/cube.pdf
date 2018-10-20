@@ -208,9 +208,9 @@ namespace Cube.Pdf.App.Editor
             Ribbon.SelectAll.Command     = IsOpen(() => Send(() => Model.Select(true)));
             Ribbon.SelectFlip.Command    = IsOpen(() => Send(() => Model.Flip()));
             Ribbon.SelectClear.Command   = IsOpen(() => Send(() => Model.Select(false)));
-            Ribbon.Insert.Command        = IsItem(() => PostOpen(e => Model.Insert(e)));
-            Ribbon.InsertFront.Command   = IsOpen(() => PostOpen(e => Model.Insert(0, e)));
-            Ribbon.InsertBack.Command    = IsOpen(() => PostOpen(e => Model.Insert(int.MaxValue, e)));
+            Ribbon.Insert.Command        = IsItem(() => PostInsert(e => Model.Insert(e)));
+            Ribbon.InsertFront.Command   = IsOpen(() => PostInsert(e => Model.Insert(0, e)));
+            Ribbon.InsertBack.Command    = IsOpen(() => PostInsert(e => Model.Insert(int.MaxValue, e)));
             Ribbon.InsertOthers.Command  = IsOpen(() => PostInsert());
             Ribbon.Extract.Command       = IsItem(() => PostSave(e => Model.Extract(e)));
             Ribbon.Remove.Command        = IsItem(() => Send(() => Model.Remove()));
@@ -378,7 +378,7 @@ namespace Cube.Pdf.App.Editor
         /// PostOpen
         ///
         /// <summary>
-        /// Posts the message to show a dialog of the OpenFileDialog
+        /// Sends the message to show a dialog of the OpenFileDialog
         /// class, and executes the specified action as an asynchronous
         /// operation.
         /// </summary>
@@ -393,7 +393,7 @@ namespace Cube.Pdf.App.Editor
         /// PostSave
         ///
         /// <summary>
-        /// Posts the message to show a dialog of the SaveFileDialog
+        /// Sends the message to show a dialog of the SaveFileDialog
         /// class, and executes the specified action as an asynchronous
         /// operation.
         /// </summary>
@@ -401,6 +401,21 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void PostSave(Action<string> action) => Send(Factory.SaveMessage(e =>
             Post(() => { if (e.Result) action(e.FileName); })
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PostInsert
+        ///
+        /// <summary>
+        /// Sends the message to show a dialog of the OpenFileDialog
+        /// class, and executes the specified action as an asynchronous
+        /// operation.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PostInsert(Action<string> action) => Send(Factory.InsertMessage(e =>
+            Post(() => { if (e.Result) action(e.FileName); }), false
         ));
 
         /* ----------------------------------------------------------------- */

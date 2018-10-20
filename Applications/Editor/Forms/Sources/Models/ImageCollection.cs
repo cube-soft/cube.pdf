@@ -61,7 +61,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ImageCollection(Func<string, IDocumentRenderer> getter, SynchronizationContext context)
         {
-            ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName)?.Create(e);
+            ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName).Create(e);
             void update(string s) { if (s == nameof(Preferences.VisibleLast)) Reschedule(null); };
 
             _inner = new ObservableCollection<ImageItem>();
@@ -78,7 +78,7 @@ namespace Cube.Pdf.App.Editor
             {
                 if (i < 0 || i >= Count) return null;
                 var src = _inner[i].RawObject;
-                return getter(src.File.FullName)?.Create(src, r);
+                return getter(src.File.FullName).Create(src, r);
             };
 
             Convert = (e) => Preferences.FrameOnly ? null :

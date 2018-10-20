@@ -47,7 +47,7 @@ namespace Cube.Pdf.App.Editor.Properties {
         }
         
         /// <summary>
-        ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
+        ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -66,6 +66,15 @@ namespace Cube.Pdf.App.Editor.Properties {
         internal static string FilterAll {
             get {
                 return ResourceManager.GetString("FilterAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Insertable files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterInsertable {
+            get {
+                return ResourceManager.GetString("FilterInsertable", resourceCulture);
             }
         }
         

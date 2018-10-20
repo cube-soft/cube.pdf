@@ -40,6 +40,20 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IsPdf
+        ///
+        /// <summary>
+        /// Gets the value indicating whether the specified file is PDF.
+        /// </summary>
+        ///
+        /// <param name="src">File path.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsPdf(this string src) =>
+            src.EndsWith(".pdf", StringComparison.InvariantCultureIgnoreCase);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Create
         ///
         /// <summary>

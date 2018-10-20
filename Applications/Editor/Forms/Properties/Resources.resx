@@ -120,6 +120,9 @@
   <data name="FilterAll" xml:space="preserve">
     <value>All files</value>
   </data>
+  <data name="FilterInsertable" xml:space="preserve">
+    <value>Insertable files</value>
+  </data>
   <data name="FilterPdf" xml:space="preserve">
     <value>PDF files</value>
   </data>

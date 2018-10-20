@@ -89,7 +89,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public DocumentReader GetOrAdd(string src, string password)
         {
+            if (!src.IsPdf()) return null;
             if (_core.TryGetValue(src, out var value)) return value;
+
             var dest = _core.GetOrAdd(src, e =>
                 password.HasValue() ?
                 new DocumentReader(e, password) :
