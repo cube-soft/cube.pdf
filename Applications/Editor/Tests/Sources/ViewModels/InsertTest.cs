@@ -19,6 +19,7 @@
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
 using Cube.Pdf.Pdfium;
+using Cube.Xui;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -119,6 +120,34 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         });
 
         #region InsertWindow
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertOthers
+        ///
+        /// <summary>
+        /// Executes the test to insert files through the InsertWindow.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void InsertOthers() => Create("SampleRotation.pdf", "", 9, vm =>
+        {
+            vm.Register<InsertViewModel>(this, ivm =>
+            {
+                ivm.Register<OpenFileMessage>(this, e => {
+                    e.FileNames = new[] { GetExamplesWith("Sample.pdf") };
+                    e.Result    = true;
+                    e.Callback.Invoke(e);
+                });
+                ivm.Add.Command.Execute();
+                ivm.OK.Command.Execute();
+            });
+
+            Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute(), Is.True);
+            vm.Ribbon.InsertOthers.Command.Execute();
+            Assert.That(Wait.For(() => vm.Data.Count.Value == 11), "Timeout");
+        });
 
         /* ----------------------------------------------------------------- */
         ///
