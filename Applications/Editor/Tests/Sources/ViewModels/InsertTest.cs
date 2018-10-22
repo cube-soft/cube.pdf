@@ -55,6 +55,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf",  11)]
         [TestCase("Loading.png", 10)]
+        [TestCase("Sample.jpg",  10)]
         public void Insert(string filename, int n) => Create("SampleRotation.pdf", "", 9, vm =>
         {
             vm.Data.Images.Skip(2).First().IsSelected = true;
@@ -64,13 +65,15 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Insert)");
 
             var dest = vm.Data.Images.ToList();
-
-            Assert.That(dest[ 0].RawObject.Number, Is.EqualTo(1));
-            Assert.That(dest[ 1].RawObject.Number, Is.EqualTo(2));
-            Assert.That(dest[ 2].RawObject.Number, Is.EqualTo(3));
-            Assert.That(dest[ 3].RawObject.Number, Is.EqualTo(1)); // Insert
-
+            Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
+            Assert.That(dest[1].RawObject.Number, Is.EqualTo(2));
+            Assert.That(dest[2].RawObject.Number, Is.EqualTo(3));
+            Assert.That(dest[3].RawObject.Number, Is.EqualTo(1)); // Insert
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
+
+            Destination = Path(Args(filename.Replace('.', '_')));
+            vm.Ribbon.SaveAs.Command.Execute();
+            Assert.That(Wait.For(() => IO.Exists(Destination)), "Timeout (Save)");
         });
 
         /* ----------------------------------------------------------------- */
@@ -155,7 +158,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_Properties() => CreateInsert("SampleRotation.pdf", "", 9, ivm =>
+        public void Ivm_Properties() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
         {
             Assert.That(ivm.Data,               Is.Not.Null);
             Assert.That(ivm.Data.Count,         Is.EqualTo(9));
@@ -209,7 +212,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_SelectClear() => CreateInsert("SampleRotation.pdf", "", 9, ivm =>
+        public void Ivm_SelectClear() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
         {
             Assert.That(ivm.Data.Selection.Count, Is.EqualTo(0));
             ivm.Data.Files[0].IsSelected = true;
@@ -228,7 +231,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_Clear() => CreateInsert("SampleRotation.pdf", "", 9, ivm =>
+        public void Ivm_Clear() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
         {
             Assert.That(ivm.Clear.Command.CanExecute(), Is.True);
             ivm.Clear.Command.Execute();
@@ -247,7 +250,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_Remove() => CreateInsert("SampleRotation.pdf", "", 9, ivm =>
+        public void Ivm_Remove() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
         {
             Assert.That(ivm.Remove.Command.CanExecute(), Is.False);
             ivm.Data.Files[0].IsSelected = true;
@@ -267,7 +270,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_Move() => CreateInsert("SampleRotation.pdf", "", 9, ivm =>
+        public void Ivm_Move() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
         {
             Assert.That(ivm.Down.Command.CanExecute(), Is.False);
             ivm.Data.Files[0].IsSelected = true;
@@ -286,7 +289,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// CreateIvm
         ///
         /// <summary>
         /// Gets a new instance of the InsertViewModel class and runs the
@@ -294,7 +297,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void CreateInsert(string filename, string password, int n,
+        private void CreateIvm(string filename, string password, int n,
             Action<InsertViewModel> action) => Create(filename, password, n, vm =>
         {
             var cts = new CancellationTokenSource();

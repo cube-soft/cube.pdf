@@ -143,6 +143,9 @@
     <None Include="Examples\Loading.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\Sample.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\Sample.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
