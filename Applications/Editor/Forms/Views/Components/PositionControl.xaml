@@ -50,7 +50,7 @@
                 <i:Interaction.Behaviors>
                     <my:InsertPositionBehavior
                         Command="{Binding Position.Command}"
-                        CommandParameter="{StaticResource Zero}" />
+                        CommandParameter="{StaticResource NegativeOne}" />
                 </i:Interaction.Behaviors>
             </RadioButton>
 
