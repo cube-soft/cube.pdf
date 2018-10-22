@@ -106,7 +106,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
-            Assert.That(vm.Data.Encryption.Value.OwnerPassword, Is.Not.EqualTo("dummy"));
+            Assert.That(vm.Data.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
         });
 
         #endregion

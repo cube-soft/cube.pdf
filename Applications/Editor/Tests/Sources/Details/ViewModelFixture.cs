@@ -317,9 +317,9 @@ namespace Cube.Pdf.Tests.Editor
             var src   = new SettingsFolder(asm, fmt, path, IO) { AutoSave = false };
             var dest  = new MainViewModel(src);
 
-            dest.Data.Preferences.Dummy = dummy;
-            dest.Data.Preferences.VisibleFirst = 0;
-            dest.Data.Preferences.VisibleLast = 10;
+            dest.Data.Images.Preferences.Dummy = dummy;
+            dest.Data.Images.Preferences.VisibleFirst = 0;
+            dest.Data.Images.Preferences.VisibleLast = 10;
 
             return dest;
         }

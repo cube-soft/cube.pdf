@@ -41,122 +41,6 @@ namespace Cube.Pdf.App.Editor
     {
         #region Methods
 
-        #region Metadata
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetMetadata
-        ///
-        /// <summary>
-        /// Gets the current Metadata object.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        ///
-        /// <returns>Metadata object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Metadata GetMetadata(this MainFacade src)
-        {
-            Debug.Assert(src.Bindable.IsOpen());
-            if (src.Bindable.Metadata.Value == null) src.LoadMetadata();
-            return src.Bindable.Metadata.Value;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetMetadata
-        ///
-        /// <summary>
-        /// Sets the Metadata object.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        /// <param name="value">Metadata object.</param>
-        ///
-        /// <returns>
-        /// History item to execute undo and redo actions.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static HistoryItem SetMetadata(this MainFacade src, Metadata value)
-        {
-            var prev = src.Bindable.Metadata.Value;
-            return Invoke(
-                () => src.Bindable.Metadata.Value = value,
-                () => src.Bindable.Metadata.Value = prev
-            );
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEncryption
-        ///
-        /// <summary>
-        /// Gets the current Encryption object.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        ///
-        /// <returns>Metadata object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Encryption GetEncryption(this MainFacade src)
-        {
-            Debug.Assert(src.Bindable.IsOpen());
-            if (src.Bindable.Encryption.Value == null) src.LoadMetadata();
-            return src.Bindable.Encryption.Value;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetEncryption
-        ///
-        /// <summary>
-        /// Sets the Encryption object.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        /// <param name="value">Encryption object.</param>
-        ///
-        /// <returns>
-        /// History item to execute undo and redo actions.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static HistoryItem SetEncryption(this MainFacade src, Encryption value)
-        {
-            var prev = src.Bindable.Encryption.Value;
-            return Invoke(
-                () => src.Bindable.Encryption.Value = value,
-                () => src.Bindable.Encryption.Value = prev
-            );
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LoadMetadata
-        ///
-        /// <summary>
-        /// Loads metadata of the current PDF document.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void LoadMetadata(this MainFacade src)
-        {
-            var data = src.Bindable;
-            data.SetMessage(Properties.Resources.MessageLoadingMetadata);
-            using (var r = src.GetReader())
-            {
-                if (data.Metadata.Value   == null) data.Metadata.Value   = r.Metadata;
-                if (data.Encryption.Value == null) data.Encryption.Value = r.Encryption;
-            }
-        }
-
-        #endregion
-
         #region Open
 
         /* ----------------------------------------------------------------- */
@@ -216,7 +100,7 @@ namespace Cube.Pdf.App.Editor
             {
                 var cancel = e is OperationCanceledException ||
                              e is TwiceException;
-                if (!cancel) src.Settings.IO.TryDelete(link?.FullName);
+                if (!cancel) src.Bindable.IO.TryDelete(link?.FullName);
                 throw;
             }
         }
@@ -304,30 +188,28 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static void Save(this MainFacade src, Information dest, Action close)
         {
-            var io  = src.Settings.IO;
-            var tmp = io.Combine(dest.DirectoryName, Guid.NewGuid().ToString("D"));
+            var data = src.Bindable;
+            var tmp  = data.IO.Combine(dest.DirectoryName, Guid.NewGuid().ToString("D"));
 
             try
             {
-                var data   = src.Bindable;
-                var reader = src.GetReader();
-
-                if (data.Metadata.Value   == null) data.Metadata.Value   = reader.Metadata;
-                if (data.Encryption.Value == null) data.Encryption.Value = reader.Encryption;
+                var reader = data.Source.Value.GetItexReader(data.Query, data.IO);
+                data.Set(reader.Metadata, reader.Encryption);
 
                 using (var writer = new DocumentWriter())
                 {
+                    writer.Add(reader.Attachments);
                     writer.Add(data.Images.Select(e => e.RawObject), reader);
-                    writer.Set(data.Metadata.Value);
-                    writer.Set(data.Encryption.Value);
+                    writer.Set(data.Metadata);
+                    writer.Set(data.Encryption);
                     writer.Save(tmp);
                 }
 
                 close();
                 src.Backup.Invoke(dest);
-                io.Copy(tmp, dest.FullName, true);
+                data.IO.Copy(tmp, dest.FullName, true);
             }
-            finally { io.TryDelete(tmp); }
+            finally { data.IO.TryDelete(tmp); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -374,7 +256,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static bool IsInsertable(this MainFacade src, string path)
         {
-            var ext = src.Settings.IO.Get(path).Extension.ToLowerInvariant();
+            var ext = src.Bindable.IO.Get(path).Extension.ToLowerInvariant();
             var cmp = new List<string> { ".pdf", ".png", ".jpg", ".jpeg", ".bmp" };
             return cmp.Contains(ext);
         }
@@ -392,7 +274,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static void Insert(this MainFacade src, IEnumerable<string> files) =>
-            src.Insert(src.Bindable.Selection.Last + 1, files);
+            src.Insert(src.Bindable.Images.Selection.Last + 1, files);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -433,7 +315,7 @@ namespace Cube.Pdf.App.Editor
         private static void MovePrevious(this MainFacade src, DragDropObject obj)
         {
             var delta = obj.DropIndex - obj.DragIndex;
-            var n     = src.Bindable.Selection.Indices
+            var n     = src.Bindable.Images.Selection.Indices
                            .Where(i => i < obj.DragIndex && i >= obj.DropIndex).Count();
             src.Move(delta + n);
         }
@@ -453,9 +335,63 @@ namespace Cube.Pdf.App.Editor
         private static void MoveNext(this MainFacade src, DragDropObject obj)
         {
             var delta = obj.DropIndex - obj.DragIndex;
-            var n     = src.Bindable.Selection.Indices
+            var n     = src.Bindable.Images.Selection.Indices
                            .Where(i => i > obj.DragIndex && i <= obj.DropIndex).Count();
             src.Move(delta - n);
+        }
+
+        #endregion
+
+        #region Metadata
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetMetadata
+        ///
+        /// <summary>
+        /// Sets the Metadata object.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="value">Metadata object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static HistoryItem SetMetadata(this MainFacade src, Metadata value)
+        {
+            var prev = src.Bindable.Metadata;
+            return Invoke(
+                () => src.Bindable.Metadata = value,
+                () => src.Bindable.Metadata = prev
+            );
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetEncryption
+        ///
+        /// <summary>
+        /// Sets the Encryption object.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="value">Encryption object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static HistoryItem SetEncryption(this MainFacade src, Encryption value)
+        {
+            var prev = src.Bindable.Encryption;
+            return Invoke(
+                () => src.Bindable.Encryption = value,
+                () => src.Bindable.Encryption = prev
+            );
         }
 
         #endregion
@@ -473,7 +409,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static void Select(this MainFacade src) =>
-            src.Select(src.Bindable.Selection.Count < src.Bindable.Images.Count);
+            src.Select(src.Bindable.Images.Selection.Count < src.Bindable.Images.Count);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -497,31 +433,6 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetReader
-        ///
-        /// <summary>
-        /// Gets the DocumentReader of the specified file.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Partial モードは必ず無効にする必要があります。有効にした場合、
-        /// ページ回転情報が正常に適用されない可能性があります。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static DocumentReader GetReader(this MainFacade src)
-        {
-            var io = src.Settings.IO;
-            var fi = src.Bindable.Source.Value;
-            var pw = (fi as PdfFile)?.Password;
-
-            return pw.HasValue() ?
-                   new DocumentReader(fi.FullName, pw, false, io) :
-                   new DocumentReader(fi.FullName, src.Query, true, false, io);
-        }
 
         /* ----------------------------------------------------------------- */
         ///

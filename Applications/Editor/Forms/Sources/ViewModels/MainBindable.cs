@@ -20,6 +20,7 @@ using Cube.FileSystem;
 using Cube.Xui;
 using Cube.Xui.Mixin;
 using System;
+using System.Diagnostics;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -47,12 +48,14 @@ namespace Cube.Pdf.App.Editor
         ///
         /// <param name="images">Image collection.</param>
         /// <param name="settings">Settings object.</param>
+        /// <param name="query">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable(ImageCollection images, SettingsFolder settings)
+        public MainBindable(ImageCollection images, SettingsFolder settings, IQuery<string> query)
         {
             _settings = settings;
             Images    = images;
+            Query     = query;
             Busy      = new Bindable<bool>(() => _busy);
             Modified  = new Bindable<bool>(() => History.Undoable);
             Count     = new Bindable<int>(() => Images.Count);
@@ -84,28 +87,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Selection
-        ///
-        /// <summary>
-        /// Gets the selection of thumbnails.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageSelection Selection => Images.Selection;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Preferences
-        ///
-        /// <summary>
-        /// Gets the preferences for thumbnails.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImagePreferences Preferences => Images.Preferences;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Settings
         ///
         /// <summary>
@@ -114,6 +95,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Settings Settings => _settings.Value;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO => _settings.IO;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -128,14 +120,14 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Source
+        /// Query
         ///
         /// <summary>
-        /// Gets a file path of the PDF file.
+        /// Gets the password query.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<Information> Source { get; } = new Bindable<Information>();
+        public IQuery<string> Query { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -146,18 +138,47 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<Metadata> Metadata { get; } = new Bindable<Metadata>();
+        public Metadata Metadata
+        {
+            get
+            {
+                if (_metadata == null) LazyLoad();
+                return _metadata;
+            }
+            set => _metadata = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Source
+        /// Encryption
         ///
         /// <summary>
         /// Gets the encryption information of the PDF file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<Encryption> Encryption { get; } = new Bindable<Encryption>();
+        public Encryption Encryption
+        {
+            get
+            {
+                if (_encryption == null) LazyLoad();
+                return _encryption;
+            }
+            set => _encryption = value;
+        }
+
+        #region Bindable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Source
+        ///
+        /// <summary>
+        /// Gets a file path of the PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Bindable<Information> Source { get; } = new Bindable<Information>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -221,6 +242,8 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -256,7 +279,7 @@ namespace Cube.Pdf.App.Editor
         public void Open(IDocumentReader src)
         {
             Source.Value = src.File;
-            if (!src.Encryption.Enabled) Encryption.Value = src.Encryption;
+            if (!src.Encryption.Enabled) Encryption = src.Encryption;
             Images.Add(src.Pages);
         }
 
@@ -271,9 +294,10 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Close()
         {
-            Source.Value     = null;
-            Metadata.Value   = null;
-            Encryption.Value = null;
+            Source.Value = null;
+            Metadata     = null;
+            Encryption   = null;
+
             History.Clear();
             Images.Clear();
         }
@@ -308,6 +332,24 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Set
+        ///
+        /// <summary>
+        /// Sets the metadata and encryption if needed.
+        /// </summary>
+        ///
+        /// <param name="metadata">Metadata object.</param>
+        /// <param name="encryption">Encryption object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Set(Metadata metadata, Encryption encryption)
+        {
+            if (_metadata   == null) _metadata   = metadata;
+            if (_encryption == null) _encryption = encryption;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SetMessage
         ///
         /// <summary>
@@ -323,8 +365,30 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// LazyLoad
+        ///
+        /// <summary>
+        /// Loads metadata and encryption.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void LazyLoad()
+        {
+            var src = Source.Value;
+            Debug.Assert(src != null);
+            using (var r = src.GetItexReader(Query, IO)) Set(r.Metadata, r.Encryption);
+        }
+
+        #endregion
+
         #region Fields
         private SettingsFolder _settings;
+        private Metadata _metadata;
+        private Encryption _encryption;
         private bool _busy = false;
         #endregion
     }

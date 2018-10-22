@@ -290,8 +290,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsItem(Action action) => new BindableCommand(action,
-            () => !Data.Busy.Value && Data.IsOpen() && Data.Selection.Count > 0,
-            Data.Busy, Data.Source, Data.Selection
+            () => !Data.Busy.Value && Data.IsOpen() && Data.Images.Selection.Count > 0,
+            Data.Busy, Data.Source, Data.Images.Selection
         );
 
         /* ----------------------------------------------------------------- */
@@ -465,7 +465,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void PostInsert() => Post(new InsertViewModel(
             (i, v) => Post(() => Model.Insert(i + 1, v.Select(e => e.FullName))),
-            Data.Selection.First, Data.Count.Value, Model.Settings.IO, Context
+            Data.Images.Selection.First, Data.Count.Value, Data.IO, Context
         ));
 
         /* ----------------------------------------------------------------- */
@@ -494,7 +494,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void PostMetadata() => Post(() =>
         {
-            var m = Model.GetMetadata().Copy();
+            var m = Data.Metadata.Copy();
             Post(new MetadataViewModel(e => Model.Update(e), m, Data.Source.Value, Context));
         });
 
@@ -510,7 +510,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void PostEncryption() => Post(() =>
         {
-            var m = Model.GetEncryption().Copy();
+            var m = Data.Encryption.Copy();
             Post(new EncryptionViewModel(e => Model.Update(e), m, Context));
         });
 

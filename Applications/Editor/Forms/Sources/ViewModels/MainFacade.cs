@@ -49,19 +49,18 @@ namespace Cube.Pdf.App.Editor
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
-        /// <param name="password">Password query.</param>
+        /// <param name="src">User settings.</param>
+        /// <param name="query">Password query.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingsFolder settings, IQuery<string> password, SynchronizationContext context)
+        public MainFacade(SettingsFolder src, IQuery<string> query, SynchronizationContext context)
         {
-            _core    = new DocumentCollection(password, settings.IO);
-            Query    = password;
-            Backup   = new Backup(settings.IO);
-            Bindable = new MainBindable(new ImageCollection(e => _core?.GetOrAdd(e), context), settings);
+            _core    = new DocumentCollection(query, src.IO);
+            Backup   = new Backup(src.IO);
+            Bindable = new MainBindable(new ImageCollection(e => _core?.GetOrAdd(e), context), src, query);
 
-            Settings = settings;
+            Settings = src;
             Settings.Load();
             Settings.PropertyChanged += (s, e) => Update(e.PropertyName);
 
@@ -69,13 +68,24 @@ namespace Cube.Pdf.App.Editor
             var index = sizes.LastIndexOf(e => e <= Bindable.ItemSize.Value);
 
             Bindable.Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
-            Bindable.Images.Preferences.FrameOnly     = settings.Value.FrameOnly;
+            Bindable.Images.Preferences.FrameOnly     = src.Value.FrameOnly;
             Bindable.Images.Preferences.TextHeight    = 25;
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Bindable
+        ///
+        /// <summary>
+        /// Gets bindable data related with PDF docuemnts.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainBindable Bindable { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -90,17 +100,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Query
-        ///
-        /// <summary>
-        /// Gets the password query.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IQuery<string> Query { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Backup
         ///
         /// <summary>
@@ -109,17 +108,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Backup Backup { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Bindable
-        ///
-        /// <summary>
-        /// Gets bindable data related with PDF docuemnts.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public MainBindable Bindable { get; }
 
         #endregion
 
@@ -187,7 +175,7 @@ namespace Cube.Pdf.App.Editor
         {
             Bindable.SetMessage(Properties.Resources.MessageSaving, dest);
             this.Save(Settings.IO.Get(dest), () => _core.Clear());
-            if (reopen) this.Restruct(_core.GetOrAdd(dest, Bindable.Encryption.Value.OwnerPassword));
+            if (reopen) this.Restruct(_core.GetOrAdd(dest, Bindable.Encryption.OwnerPassword));
         }, "");
 
         /* ----------------------------------------------------------------- */

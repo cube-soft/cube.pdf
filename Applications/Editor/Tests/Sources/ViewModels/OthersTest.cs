@@ -50,7 +50,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         [Test]
         public void Properties() => Create(vm =>
         {
-            var pf = vm.Data.Preferences;
+            var pf = vm.Data.Images.Preferences;
             Assert.That(vm.Recent.Items,  Is.Not.Null);
             Assert.That(pf.ItemSize,      Is.EqualTo(250));
             Assert.That(pf.ItemSizeIndex, Is.EqualTo(3));
@@ -123,7 +123,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         {
             var images = vm.Data.Images.ToList();
             var dest   = images[0];
-            var dummy  = vm.Data.Preferences.Dummy;
+            var dummy  = vm.Data.Images.Preferences.Dummy;
             Assert.That(Wait.For(() => dest.Image != dummy), "Timeout");
 
             Assert.That(vm.Ribbon.RotateLeft.Command.CanExecute(),  Is.False);

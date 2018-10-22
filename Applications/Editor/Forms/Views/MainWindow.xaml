@@ -144,7 +144,7 @@
                 <my:MousePreviewBehavior Command="{Binding Ribbon.Preview.Command}" />
                 <my:MouseMoveBehavior
                     Command="{Binding InsertOrMove}"
-                    Selection="{Binding Data.Selection}" />
+                    Selection="{Binding Data.Images.Selection}" />
             </i:Interaction.Behaviors>
         </ListView>
 

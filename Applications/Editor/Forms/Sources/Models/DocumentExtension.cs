@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
+using Cube.Generics;
 using Cube.Images;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
@@ -107,6 +109,28 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static ImageSource Create(this IDocumentRenderer src, Page page, SizeF size) =>
             page.File is ImageFile f ? Create(f, size) : src?.Render(page, size).ToBitmapImage();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetItextReader
+        ///
+        /// <summary>
+        /// Gets the DocumentReader of the specified file.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Partial モードは必ず無効にする必要があります。有効にした場合、
+        /// ページ回転情報が正常に適用されない可能性があります。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Itext.DocumentReader GetItexReader(this Information src, IQuery<string> query, IO io)
+        {
+            var pass = (src as PdfFile)?.Password;
+            return pass.HasValue() ?
+                   new Itext.DocumentReader(src.FullName, pass, false, io) :
+                   new Itext.DocumentReader(src.FullName, query, true, false, io);
+        }
 
         #endregion
 

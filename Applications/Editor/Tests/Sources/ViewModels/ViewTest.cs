@@ -87,7 +87,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         [Test]
         public void Select() => Create("SampleRotation.pdf", "", 9, vm =>
         {
-            var dest = vm.Data.Selection;
+            var dest = vm.Data.Images.Selection;
             Assert.That(dest.Count,   Is.EqualTo(0));
             Assert.That(dest.Indices, Is.Not.Null);
             Assert.That(dest.Last,    Is.EqualTo(-1));
