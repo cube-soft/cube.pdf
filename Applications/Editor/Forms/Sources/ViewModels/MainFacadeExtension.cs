@@ -148,7 +148,7 @@ namespace Cube.Pdf.App.Editor
         {
             var data = src.Bindable;
             data.SetMessage(Properties.Resources.MessageLoadingMetadata);
-            using (var r = GetReader(data.Source.Value, src.Settings.IO))
+            using (var r = src.GetReader())
             {
                 if (data.Metadata.Value   == null) data.Metadata.Value   = r.Metadata;
                 if (data.Encryption.Value == null) data.Encryption.Value = r.Encryption;
@@ -310,7 +310,7 @@ namespace Cube.Pdf.App.Editor
             try
             {
                 var data   = src.Bindable;
-                var reader = GetReader(data.Source.Value, io);
+                var reader = src.GetReader();
 
                 if (data.Metadata.Value   == null) data.Metadata.Value   = reader.Metadata;
                 if (data.Encryption.Value == null) data.Encryption.Value = reader.Encryption;
@@ -512,8 +512,16 @@ namespace Cube.Pdf.App.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private static DocumentReader GetReader(Information src, IO io) =>
-            new DocumentReader(src.FullName, src is PdfFile f ? f.Password : "", false, io);
+        private static DocumentReader GetReader(this MainFacade src)
+        {
+            var io = src.Settings.IO;
+            var fi = src.Bindable.Source.Value;
+            var pw = (fi as PdfFile)?.Password;
+
+            return pw.HasValue() ?
+                   new DocumentReader(fi.FullName, pw, false, io) :
+                   new DocumentReader(fi.FullName, src.Query, true, false, io);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

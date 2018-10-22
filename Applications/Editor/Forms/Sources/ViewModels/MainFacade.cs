@@ -57,6 +57,7 @@ namespace Cube.Pdf.App.Editor
         public MainFacade(SettingsFolder settings, IQuery<string> password, SynchronizationContext context)
         {
             _core    = new DocumentCollection(password, settings.IO);
+            Query    = password;
             Backup   = new Backup(settings.IO);
             Bindable = new MainBindable(new ImageCollection(e => _core?.GetOrAdd(e), context), settings);
 
@@ -86,6 +87,17 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder Settings { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Query
+        ///
+        /// <summary>
+        /// Gets the password query.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IQuery<string> Query { get; }
 
         /* ----------------------------------------------------------------- */
         ///
