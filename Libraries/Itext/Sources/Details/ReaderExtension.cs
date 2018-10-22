@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 using System;
@@ -115,7 +116,7 @@ namespace Cube.Pdf.Itext
                 Permission       = new Permission(src.Permissions),
                 OwnerPassword    = file.FullAccess ? file.Password : string.Empty,
                 UserPassword     = password,
-                OpenWithPassword = !string.IsNullOrEmpty(password),
+                OpenWithPassword = password.HasValue(),
             };
         }
 

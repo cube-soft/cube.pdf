@@ -95,7 +95,7 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password, IO io) :
-            this(src, new OnceQuery<string>(password), io) { }
+            this(src, new QueryValue<string>(password), io) { }
 
         /* ----------------------------------------------------------------- */
         ///

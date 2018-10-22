@@ -156,6 +156,12 @@
     <None Include="Examples\SampleAes128.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\SampleRc40.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleRc40Open.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\SampleRotation.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

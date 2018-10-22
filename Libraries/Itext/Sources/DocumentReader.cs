@@ -136,7 +136,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password, bool partial, IO io) :
-            this(src, new OnceQuery<string>(password), false, partial, io) { }
+            this(src, new QueryValue<string>(password), false, partial, io) { }
 
         /* ----------------------------------------------------------------- */
         ///

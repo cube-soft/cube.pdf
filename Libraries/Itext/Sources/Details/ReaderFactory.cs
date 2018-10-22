@@ -77,7 +77,7 @@ namespace Cube.Pdf.Itext
         public static PdfReader Create(string src, IQuery<string> query,
             bool fullaccess, bool partial, out string password)
         {
-            password = string.Empty;
+            password = (query as QueryValue<string>)?.Value ?? string.Empty;
 
             while (true)
             {
@@ -93,10 +93,11 @@ namespace Cube.Pdf.Itext
                     }
                     else return dest;
                 }
-                catch (BadPasswordException)
+                catch (BadPasswordException e)
                 {
-                    var e = query.RequestPassword(src);
-                    if (!e.Cancel) password = e.Result;
+                    if (query is QueryValue<string>) throw new EncryptionException(e.Message, e);
+                    var args = query.RequestPassword(src);
+                    if (!args.Cancel) password = args.Result;
                     else throw new OperationCanceledException();
                 }
             }

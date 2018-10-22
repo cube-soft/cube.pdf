@@ -172,6 +172,8 @@ namespace Cube.Pdf.Tests
                 foreach (var klass in GetClassIds())
                 {
                     yield return new TestCaseData(klass, "SampleRotation.pdf", "",         true );
+                    yield return new TestCaseData(klass, "SampleRc40Open.pdf", "password", true );
+                    yield return new TestCaseData(klass, "SampleRc40Open.pdf", "",         false);
                     yield return new TestCaseData(klass, "SampleAes128.pdf",   "password", true );
                     yield return new TestCaseData(klass, "SampleAes128.pdf",   "view",     false);
                     yield return new TestCaseData(klass, "SampleAes256.pdf",   "password", true );

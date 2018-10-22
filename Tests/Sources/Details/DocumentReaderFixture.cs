@@ -84,7 +84,7 @@ namespace Cube.Pdf.Tests
         ///
         /* ----------------------------------------------------------------- */
         protected IDocumentReader Create(string klass, string src, string password) =>
-            Create(klass, src, new OnceQuery<string>(password));
+            Create(klass, src, new QueryValue<string>(password));
 
         /* ----------------------------------------------------------------- */
         ///

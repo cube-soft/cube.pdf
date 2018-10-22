@@ -47,8 +47,10 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf",       "",         2)]
-        [TestCase("SampleAes128.pdf", "password", 2)]
+        [TestCase("Sample.pdf",         "",         2)]
+        [TestCase("SampleAes128.pdf",   "password", 2)]
+        [TestCase("SampleRc40.pdf",     "password", 2)]
+        [TestCase("SampleRc40Open.pdf", "password", 2)]
         public void SaveAs(string filename, string password, int n) =>
             Create(filename, password, n, vm =>
         {

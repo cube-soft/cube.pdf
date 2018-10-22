@@ -150,23 +150,24 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public static PdfiumReader Create(string src, IQuery<string> query, bool fullaccess, IO io)
         {
-            var dest     = new PdfiumReader(src, io);
-            var password = string.Empty;
+            var dest = new PdfiumReader(src, io);
+            var pass = (query as QueryValue<string>)?.Value ?? string.Empty;
 
             while (true)
             {
                 try
                 {
-                    dest.Load(password);
+                    dest.Load(pass);
                     var denied = fullaccess && dest.File is PdfFile pf && !pf.FullAccess;
                     if (denied) throw new LoadException(LoadStatus.PasswordError);
                     return dest;
                 }
-                catch (LoadException err)
+                catch (LoadException e)
                 {
-                    if (err.Status != LoadStatus.PasswordError) throw;
-                    var e = query.RequestPassword(src);
-                    if (!e.Cancel) password = e.Result;
+                    if (e.Status != LoadStatus.PasswordError) throw;
+                    if (query is QueryValue<string>) throw new EncryptionException(e.Message, e);
+                    var args = query.RequestPassword(src);
+                    if (!args.Cancel) pass = args.Result;
                     else throw new OperationCanceledException();
                 }
             }
