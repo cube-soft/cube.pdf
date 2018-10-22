@@ -21,11 +21,13 @@ using Cube.Pdf.App.Editor;
 using Cube.Pdf.Pdfium;
 using Cube.Xui;
 using Cube.Xui.Mixin;
+using GongSolutions.Wpf.DragDrop;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Windows;
 
 namespace Cube.Pdf.Tests.Editor.ViewModels
 {
@@ -179,7 +181,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(ivm.DragMove,           Is.Not.Null);
 
             var src = ivm.Data.Files[0];
-            Assert.That(ivm.Data.Files.Count,   Is.EqualTo(3));
+            Assert.That(ivm.Data.Files.Count,   Is.EqualTo(4));
             Assert.That(src.Name,               Is.EqualTo("Sample.pdf"));
             Assert.That(src.FullName,           Does.EndWith("Sample.pdf"));
             Assert.That(src.Length,             Is.AtLeast(60000));
@@ -256,7 +258,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             ivm.Data.Files[0].IsSelected = true;
             Assert.That(ivm.Remove.Command.CanExecute(), Is.True);
             ivm.Remove.Command.Execute();
-            Assert.That(ivm.Data.Files.Count, Is.EqualTo(2));
+            Assert.That(ivm.Data.Files.Count, Is.EqualTo(3));
             ivm.Cancel.Command.Execute();
         });
 
@@ -279,6 +281,65 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(ivm.Data.Files[0].Name, Is.EqualTo("SampleAes128.pdf"));
             Assert.That(ivm.Data.Files[1].Name, Is.EqualTo("Sample.pdf"));
             ivm.Cancel.Command.Execute();
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Ivm_DragUp
+        ///
+        /// <summary>
+        /// Executes the test to move the selected items through the
+        /// Drag&amp;Drop operation in the InsertWindow.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Ivm_DragUp() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        {
+            ivm.Data.Files[2].IsSelected = true;
+            ivm.Data.Files[3].IsSelected = true;
+
+            var obj = new MockDropInfo
+            {
+                DragInfo    = new MockDragInfo(3),
+                Data        = ivm.Data.Files[3],
+                TargetItem  = ivm.Data.Files[1],
+                InsertIndex = 1,
+            };
+
+            ivm.DragMove.DragOver(obj);
+            Assert.That(obj.NotHandled,        Is.False);
+            Assert.That(obj.Effects,           Is.EqualTo(DragDropEffects.Move));
+            Assert.That(obj.DropTargetAdorner, Is.EqualTo(DropTargetAdorners.Insert));
+            ivm.DragMove.Drop(obj);
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Ivm_DragDown
+        ///
+        /// <summary>
+        /// Executes the test to move the selected items through the
+        /// Drag&amp;Drop operation in the InsertWindow.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Ivm_DragDown() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        {
+            ivm.Data.Files[0].IsSelected = true;
+            ivm.Data.Files[2].IsSelected = true;
+
+            var obj = new MockDropInfo
+            {
+                DragInfo    = new MockDragInfo(0),
+                Data        = ivm.Data.Files[0],
+                TargetItem  = ivm.Data.Files[2],
+                InsertIndex = 2,
+            };
+
+            ivm.DragMove.DragOver(obj);
+            ivm.DragMove.Drop(obj);
         });
 
         #endregion
@@ -309,6 +370,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                     {
                         GetExamplesWith("Sample.pdf"),
                         GetExamplesWith("SampleAes128.pdf"),
+                        GetExamplesWith("Sample.jpg"),
                         GetExamplesWith("Loading.png"),
                     };
                     e.Callback.Invoke(e);
