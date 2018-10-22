@@ -159,6 +159,9 @@
     <None Include="Examples\SampleRc40.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\SampleRc40All.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\SampleRc40Open.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
