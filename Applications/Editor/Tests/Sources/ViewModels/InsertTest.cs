@@ -301,7 +301,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             var obj = new MockDropInfo
             {
-                DragInfo    = new MockDragInfo(3),
+                DragInfo    = new MockDragInfo(ivm.Data.Files[3], 3),
                 Data        = ivm.Data.Files[3],
                 TargetItem  = ivm.Data.Files[1],
                 InsertIndex = 1,
@@ -311,6 +311,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(obj.NotHandled,        Is.False);
             Assert.That(obj.Effects,           Is.EqualTo(DragDropEffects.Move));
             Assert.That(obj.DropTargetAdorner, Is.EqualTo(DropTargetAdorners.Insert));
+            Assert.That(obj.Data,              Is.EqualTo(obj.DragInfo.Data));
+            Assert.That(obj.DragInfo.Data,     Is.EqualTo(obj.DragInfo.SourceItem));
             ivm.DragMove.Drop(obj);
         });
 
@@ -332,13 +334,46 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             var obj = new MockDropInfo
             {
-                DragInfo    = new MockDragInfo(0),
+                DragInfo    = new MockDragInfo(ivm.Data.Files[0], 0),
                 Data        = ivm.Data.Files[0],
                 TargetItem  = ivm.Data.Files[2],
                 InsertIndex = 2,
             };
 
             ivm.DragMove.DragOver(obj);
+            ivm.DragMove.Drop(obj);
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Ivm_DragCancel
+        ///
+        /// <summary>
+        /// Confirms the behavior when the dragged index equals to the
+        /// dropped index.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Ivm_DragCancel() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        {
+            ivm.Data.Files[2].IsSelected = true;
+
+            var obj = new MockDropInfo
+            {
+                DragInfo    = new MockDragInfo(ivm.Data.Files[2], 2),
+                Data        = ivm.Data.Files[2],
+                TargetItem  = ivm.Data.Files[2],
+                InsertIndex = 2,
+            };
+
+            ivm.DragMove.DragOver(obj);
+            Assert.That(obj.NotHandled,            Is.True);
+            Assert.That(obj.Effects,               Is.EqualTo(DragDropEffects.None));
+            Assert.That(obj.DragInfo.Effects,      Is.EqualTo(DragDropEffects.Move));
+            Assert.That(obj.DropTargetAdorner,     Is.Null);
+            Assert.That(obj.UnfilteredInsertIndex, Is.EqualTo(2));
+            Assert.That(obj.DestinationText,       Is.Empty);
             ivm.DragMove.Drop(obj);
         });
 

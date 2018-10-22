@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using GongSolutions.Wpf.DragDrop;
+using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Windows;
@@ -51,11 +52,37 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MockDragInfo(int index) { SourceIndex = index; }
+        public MockDragInfo(object data, int index)
+        {
+            Data        = data;
+            SourceIndex = index;
+        }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Data
+        ///
+        /// <summary>
+        /// Gets or sets the dragged data.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public object Data { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SourceItem
+        ///
+        /// <summary>
+        /// Gets or sets the dragged data.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public object SourceItem => Data;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -68,16 +95,24 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         public int SourceIndex { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Effects
+        ///
+        /// <summary>
+        /// Gets or sets the available effects.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DragDropEffects Effects { get; set; } = DragDropEffects.Move;
+
         #endregion
 
         #region NotImplemented
-        public object Data { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Point DragStartPosition => throw new NotImplementedException();
         public Point PositionInDraggedItem => throw new NotImplementedException();
-        public DragDropEffects Effects { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public MouseButton MouseButton => throw new NotImplementedException();
         public IEnumerable SourceCollection => throw new NotImplementedException();
-        public object SourceItem => throw new NotImplementedException();
         public IEnumerable SourceItems => throw new NotImplementedException();
         public CollectionViewGroup SourceGroup => throw new NotImplementedException();
         public UIElement VisualSource => throw new NotImplementedException();
@@ -162,6 +197,17 @@ namespace Cube.Pdf.Tests.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// UnfilteredInsertIndex
+        ///
+        /// <summary>
+        /// Gets the index of dropped item.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int UnfilteredInsertIndex => InsertIndex;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// TargetItem
         ///
         /// <summary>
@@ -170,6 +216,17 @@ namespace Cube.Pdf.Tests.Editor
         ///
         /* ----------------------------------------------------------------- */
         public object TargetItem { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DestinationText
+        ///
+        /// <summary>
+        /// Gets or sets the destination text.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string DestinationText { get; set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -187,17 +244,87 @@ namespace Cube.Pdf.Tests.Editor
 
         #region NotImplemented
         public Point DropPosition => throw new NotImplementedException();
-        public int UnfilteredInsertIndex => throw new NotImplementedException();
         public IEnumerable TargetCollection => throw new NotImplementedException();
         public CollectionViewGroup TargetGroup => throw new NotImplementedException();
         public UIElement VisualTarget => throw new NotImplementedException();
         public UIElement VisualTargetItem => throw new NotImplementedException();
         public Orientation VisualTargetOrientation => throw new NotImplementedException();
         public FlowDirection VisualTargetFlowDirection => throw new NotImplementedException();
-        public string DestinationText { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public RelativeInsertPosition InsertPosition => throw new NotImplementedException();
         public DragDropKeyStates KeyStates => throw new NotImplementedException();
         public bool IsSameDragDropContextAsSource => throw new NotImplementedException();
+        #endregion
+    }
+
+    #endregion
+
+    #region MockDragDropTest
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// MockDragDropTest
+    ///
+    /// <summary>
+    /// Tests for MockDragInfo and MockDropInfo classes.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    class MockDragDropTest
+    {
+        #region Tests
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Drag
+        ///
+        /// <summary>
+        /// Confirms unimplemented properties.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Drag()
+        {
+            var obj = new MockDragInfo(new object(), 0);
+            Assert.That(() => obj.DragStartPosition,         Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.PositionInDraggedItem,     Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.MouseButton,               Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.SourceCollection,          Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.SourceItems,               Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.SourceGroup,               Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.VisualSource,              Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.VisualSourceItem,          Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.VisualSourceFlowDirection, Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.DragDropCopyKeyState,      Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.DataObject,                Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.DataObject = null,         Throws.TypeOf<NotImplementedException>());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Drop
+        ///
+        /// <summary>
+        /// Confirms unimplemented properties.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Drop()
+        {
+            var obj = new MockDropInfo();
+            Assert.That(() => obj.DropPosition,                  Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.TargetCollection,              Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.TargetGroup,                   Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.VisualTarget,                  Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.VisualTargetItem,              Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.VisualTargetOrientation,       Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.VisualTargetFlowDirection,     Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.InsertPosition,                Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.KeyStates,                     Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.IsSameDragDropContextAsSource, Throws.TypeOf<NotImplementedException>());
+        }
+
         #endregion
     }
 
