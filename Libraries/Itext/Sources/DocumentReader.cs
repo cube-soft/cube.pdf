@@ -49,7 +49,7 @@ namespace Cube.Pdf.Itext
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
+        /// <param name="src">Path of the PDF file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src) : this(src, string.Empty) { }
@@ -63,7 +63,7 @@ namespace Cube.Pdf.Itext
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
+        /// <param name="src">Path of the PDF file.</param>
         /// <param name="password">Password string.</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -79,12 +79,12 @@ namespace Cube.Pdf.Itext
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
-        /// <param name="query">Password query.</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query) :
-            this(src, query, true, new IO()) { }
+        public DocumentReader(string src, IQuery<string> password) :
+            this(src, password, false, true, new IO()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -95,14 +95,48 @@ namespace Cube.Pdf.Itext
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
+        /// <param name="src">Path of the PDF file.</param>
         /// <param name="password">Password string.</param>
-        /// <param name="partial">true for partial reading mode.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(string src, string password, IO io) :
+            this(src, password, true, io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password query.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(string src, IQuery<string> password, IO io) :
+            this(src, password, false, true, io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password string.</param>
+        /// <param name="partial">Partial reading mode.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password, bool partial, IO io) :
-            this(src, new OnceQuery<string>(password), partial, io) { }
+            this(src, new OnceQuery<string>(password), false, partial, io) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -113,19 +147,21 @@ namespace Cube.Pdf.Itext
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
-        /// <param name="query">Password query.</param>
-        /// <param name="partial">true for partial reading mode.</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password query.</param>
+        /// <param name="fullaccess">Requires full access.</param>
+        /// <param name="partial">Partial reading mode.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query, bool partial, IO io) : base(io)
+        public DocumentReader(string src, IQuery<string> password,
+            bool fullaccess, bool partial, IO io) : base(io)
         {
             Debug.Assert(io != null);
-            _core = ReaderFactory.Create(src, query, partial, out string password);
+            _core = ReaderFactory.Create(src, password, fullaccess, partial, out string result);
             Debug.Assert(_core != null);
 
-            var f = io.GetPdfFile(src, password);
+            var f = io.GetPdfFile(src, result);
             f.Count      = _core.NumberOfPages;
             f.FullAccess = _core.IsOpenedWithFullPermissions;
 

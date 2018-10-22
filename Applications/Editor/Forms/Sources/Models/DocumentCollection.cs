@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Pdf.Pdfium;
 using System.Collections.Concurrent;
@@ -45,12 +46,29 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /// <param name="password">Password query.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentCollection(IQuery<string> password)
+        public DocumentCollection(IQuery<string> password, IO io)
         {
-            _password = password;
+            IO     = io;
+            _query = password;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
 
         #endregion
 
@@ -94,8 +112,8 @@ namespace Cube.Pdf.App.Editor
 
             var dest = _core.GetOrAdd(src, e =>
                 password.HasValue() ?
-                new DocumentReader(e, password) :
-                new DocumentReader(e, _password)
+                new DocumentReader(e, password, IO) :
+                new DocumentReader(e, _query, true, IO)
             );
             return dest;
         }
@@ -119,7 +137,7 @@ namespace Cube.Pdf.App.Editor
 
         #region Fields
         private readonly ConcurrentDictionary<string, DocumentReader> _core = new ConcurrentDictionary<string, DocumentReader>();
-        private readonly IQuery<string> _password;
+        private readonly IQuery<string> _query;
         #endregion
     }
 }

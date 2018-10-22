@@ -251,7 +251,7 @@ namespace Cube.Pdf.App.Pages
         private void AddDocument(string path)
         {
             var query = new Query<string>(e => OnPasswordRequired(e));
-            using (var reader = new Cube.Pdf.Itext.DocumentReader(path, query, true, IO))
+            using (var reader = new Cube.Pdf.Itext.DocumentReader(path, query, true, true, IO))
             {
                 lock (_lock) Add(reader.File);
             }
@@ -269,7 +269,7 @@ namespace Cube.Pdf.App.Pages
         private void AddDocument(PdfFile src, IDocumentWriter dest)
         {
             var query = new Query<string>(e => e.Cancel = true);
-            using (var reader = new Cube.Pdf.Itext.DocumentReader(src.FullName, query, true, IO))
+            using (var reader = new Cube.Pdf.Itext.DocumentReader(src.FullName, query, true, true, IO))
             {
                 dest.Add(reader.Pages);
             }

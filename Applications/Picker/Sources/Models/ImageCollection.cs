@@ -310,7 +310,7 @@ namespace Cube.Pdf.App.Picker
         private KeyValuePair<int, int> ExtractImages(IProgress<ProgressEventArgs<string>> progress)
         {
             var query = new Query<string>(e => WhenPasswordRequired(e));
-            using (var reader = new DocumentReader(Path, query, true, IO))
+            using (var reader = new DocumentReader(Path, query, true, true, IO))
             {
                 ExtractImages(reader, progress);
                 return KeyValuePair.Create(reader.Pages.Count(), Items.Count);

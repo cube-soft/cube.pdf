@@ -136,17 +136,19 @@ namespace Cube.Pdf.Pdfium
         /// Create
         ///
         /// <summary>
-        /// PdfiumReader オブジェクトを生成します。
+        /// Creates a new instance of the PdfiumReader class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF ファイルのパス</param>
-        /// <param name="query">パスワード用オブジェクト</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="query">Password query.</param>
+        /// <param name="fullaccess">Requires full access.</param>
+        /// <param name="io">I/O handler.</param>
         ///
-        /// <returns>PdfiumReader</returns>
+        /// <returns>PdfiumReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfiumReader Create(string src, IQuery<string> query, IO io)
+        public static PdfiumReader Create(string src, IQuery<string> query, bool fullaccess, IO io)
         {
             var dest     = new PdfiumReader(src, io);
             var password = string.Empty;
@@ -156,6 +158,8 @@ namespace Cube.Pdf.Pdfium
                 try
                 {
                     dest.Load(password);
+                    var denied = fullaccess && dest.File is PdfFile pf && !pf.FullAccess;
+                    if (denied) throw new LoadException(LoadStatus.PasswordError);
                     return dest;
                 }
                 catch (LoadException err)

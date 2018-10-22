@@ -102,18 +102,37 @@ namespace Cube.Pdf.Pdfium
         /// DocumentReader
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentReader class with
+        /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF ファイルのパス</param>
-        /// <param name="query">パスワード用オブジェクト</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="query">Password query.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query, IO io) : base(io)
+        public DocumentReader(string src, IQuery<string> query, IO io) :
+            this(src, query, false, io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentReader class with
+        /// the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="query">Password query.</param>
+        /// <param name="fullaccess">Requires full access.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(string src, IQuery<string> query, bool fullaccess, IO io) : base(io)
         {
             Debug.Assert(io != null);
-            _core = PdfiumReader.Create(src, query, io);
+            _core = PdfiumReader.Create(src, query, fullaccess, io);
             Debug.Assert(_core != null);
 
             File        = _core.File;
