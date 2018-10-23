@@ -84,8 +84,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public ImageSelection Selection
         {
-            get => GetValue(SelectionProperty) as ImageSelection;
-            set => SetValue(SelectionProperty, value);
+            get;// => GetValue(SelectionProperty) as ImageSelection;
+            set;// => SetValue(SelectionProperty, value);
         }
 
         /* ----------------------------------------------------------------- */
