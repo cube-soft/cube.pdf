@@ -140,12 +140,6 @@
     <Compile Include="Sources\Interactions\InsertDropTarget.cs" />
     <Compile Include="Sources\Models\Backup.cs" />
     <Compile Include="Sources\Models\FileItem.cs" />
-    <Compile Include="Views\Components\FileListControl.xaml.cs">
-      <DependentUpon>FileListControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Components\PositionControl.xaml.cs">
-      <DependentUpon>PositionControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Sources\Interactions\DragDropObject.cs" />
     <Compile Include="Sources\Interactions\MouseClearBehavior.cs" />
     <Compile Include="Sources\Interactions\MouseExtension.cs" />
@@ -156,9 +150,6 @@
     <Compile Include="Sources\ViewModels\InsertFacade.cs" />
     <Compile Include="Sources\ViewModels\InsertPosition.cs" />
     <Compile Include="Sources\ViewModels\PasswordViewModel.cs" />
-    <Compile Include="Views\PasswordWindow.xaml.cs">
-      <DependentUpon>PasswordWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Sources\ViewModels\MainFacadeExtension.cs" />
     <Compile Include="Sources\Models\Language.cs" />
     <Compile Include="Sources\Models\Range.cs" />
@@ -166,27 +157,9 @@
     <Compile Include="Sources\ViewModels\PreviewFacade.cs" />
     <Compile Include="Sources\ViewModels\PreviewViewModel.cs" />
     <Compile Include="Sources\ViewModels\ViewModelExtension.cs" />
-    <Compile Include="Views\PreviewWindow.xaml.cs">
-      <DependentUpon>PreviewWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sources\Models\History.cs" />
-    <Compile Include="Views\SettingsWindow.xaml.cs">
-      <DependentUpon>SettingsWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Sources\Interactions\OtherBehaviors.cs" />
     <Compile Include="Sources\ViewModels\EncryptionViewModel.cs" />
     <Compile Include="Sources\ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Views\EncryptionWindow.xaml.cs">
-      <DependentUpon>EncryptionWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sources\ViewModels\MetadataViewModel.cs" />
-    <Compile Include="Views\MetadataWindow.xaml.cs">
-      <DependentUpon>MetadataWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sources\ViewModels\InsertViewModel.cs" />
-    <Compile Include="Views\InsertWindow.xaml.cs">
-      <DependentUpon>InsertWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Sources\ViewModels\DialogViewModel.cs" />
     <Compile Include="Sources\ViewModels\RemoveViewModel.cs" />
     <Compile Include="Sources\Interactions\SelectionBehavior.cs" />
@@ -208,6 +181,9 @@
     <Compile Include="Sources\ViewModels\MainViewModel.cs" />
     <Compile Include="Sources\ViewModels\RecentViewModel.cs" />
     <Compile Include="Sources\ViewModels\RibbonViewModel.cs" />
+    <Compile Include="Sources\Models\History.cs" />
+    <Compile Include="Sources\ViewModels\InsertViewModel.cs" />
+    <Compile Include="Sources\ViewModels\MetadataViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App.ico" />
@@ -325,14 +301,56 @@
     <Resource Include="Assets\Hero.png" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Compile Include="Views\Components\FileListControl.xaml.cs">
+      <DependentUpon>FileListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Components\FooterControl.xaml.cs">
+      <DependentUpon>FooterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Components\HeroControl.xaml.cs">
+      <DependentUpon>HeroControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Components\PositionControl.xaml.cs">
+      <DependentUpon>PositionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Components\RibbonControl.xaml.cs">
+      <DependentUpon>RibbonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EncryptionWindow.xaml.cs">
+      <DependentUpon>EncryptionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InsertWindow.xaml.cs">
+      <DependentUpon>InsertWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MetadataWindow.xaml.cs">
+      <DependentUpon>MetadataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PasswordWindow.xaml.cs">
+      <DependentUpon>PasswordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PreviewWindow.xaml.cs">
+      <DependentUpon>PreviewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RemoveWindow.xaml.cs">
+      <DependentUpon>RemoveWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Components\FileListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </ApplicationDefinition>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\Components\FileListControl.xaml">
+    </Page>
+    <Page Include="Views\Components\FooterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Components\HeroControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -340,7 +358,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Components\MainContextMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Components\PositionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Components\RibbonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EncryptionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InsertWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MetadataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -352,11 +394,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\InsertStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Components\MainContextMenu.xaml">
+    <Page Include="Views\RemoveWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -364,53 +402,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EncryptionWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MetadataWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\InsertWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Components\FooterControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="Views\Components\FooterControl.xaml.cs">
-      <DependentUpon>FooterControl.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\Components\HeroControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="Views\Components\HeroControl.xaml.cs">
-      <DependentUpon>HeroControl.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\Components\RibbonControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="Views\Components\RibbonControl.xaml.cs">
-      <DependentUpon>RibbonControl.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\RemoveWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="Views\RemoveWindow.xaml.cs">
-      <DependentUpon>RemoveWindow.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">
@@ -426,6 +417,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\HeroStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\InsertStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -447,6 +442,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

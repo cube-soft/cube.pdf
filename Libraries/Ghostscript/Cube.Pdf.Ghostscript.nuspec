@@ -7,7 +7,7 @@
         <copyright>$copyright$</copyright>
         <authors>CubeSoft</authors>
         <owners>CubeSoft</owners>
-        <description>Ghostscript based PDF library for CubeSoft applications.</description>
+        <description>Library to wwap Ghostscript in .NET Framework.</description>
         <tags>Cube PDF Ghostscript</tags>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>

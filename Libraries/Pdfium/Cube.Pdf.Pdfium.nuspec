@@ -7,7 +7,7 @@
         <copyright>$copyright$</copyright>
         <authors>CubeSoft</authors>
         <owners>CubeSoft</owners>
-        <description>PDFium based PDF library for CubeSoft applications.</description>
+        <description>PDF Library to wrap PDFium in .NET Framework.</description>
         <tags>Cube PDF PDFium</tags>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>

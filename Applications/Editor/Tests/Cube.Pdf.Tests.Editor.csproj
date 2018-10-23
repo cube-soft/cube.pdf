@@ -124,22 +124,22 @@
     <Compile Include="Sources\Interactions\MouseMoveBehaviorTest.cs" />
     <Compile Include="Sources\Interactions\MouseOpenBehaviorTest.cs" />
     <Compile Include="Sources\Interactions\MousePreviewBehaviorTest.cs" />
+    <Compile Include="Sources\Interactions\SimplexConverterTest.cs" />
     <Compile Include="Sources\Interactions\VisibleRangeTest.cs" />
     <Compile Include="Sources\ViewModels\EncryptionTest.cs" />
     <Compile Include="Sources\ViewModels\InsertTest.cs" />
-    <Compile Include="Sources\ViewModels\OthersTest.cs" />
     <Compile Include="Sources\ViewModels\MetadataTest.cs" />
     <Compile Include="Sources\ViewModels\MoveTest.cs" />
     <Compile Include="Sources\ViewModels\OpenTest.cs" />
+    <Compile Include="Sources\ViewModels\OthersTest.cs" />
     <Compile Include="Sources\ViewModels\RemoveTest.cs" />
     <Compile Include="Sources\ViewModels\RibbonTest.cs" />
-    <Compile Include="Sources\HistoryTest.cs" />
-    <Compile Include="Sources\RangeTest.cs" />
-    <Compile Include="Sources\RibbonElementTest.cs" />
-    <Compile Include="Sources\Interactions\SimplexConverterTest.cs" />
     <Compile Include="Sources\ViewModels\SaveTest.cs" />
     <Compile Include="Sources\ViewModels\SettingsTest.cs" />
     <Compile Include="Sources\ViewModels\ViewTest.cs" />
+    <Compile Include="Sources\HistoryTest.cs" />
+    <Compile Include="Sources\RangeTest.cs" />
+    <Compile Include="Sources\RibbonElementTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

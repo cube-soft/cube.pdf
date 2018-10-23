@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("2.12.0.0")]
 [assembly: AssemblyFileVersion("2.12.0.0")]
 [assembly: AssemblyTitle("Cube.Pdf")]
-[assembly: AssemblyDescription("PDF library for CubeSoft applications.")]
+[assembly: AssemblyDescription("Basic data structures and interfaces for CubePDF libraries.")]
 [assembly: AssemblyCompany("CubeSoft")]
 [assembly: AssemblyProduct("Cube.Pdf")]
 [assembly: AssemblyCopyright("Copyright © 2010 CubeSoft, Inc.")]

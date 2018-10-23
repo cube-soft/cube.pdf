@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("2.12.0.0")]
 [assembly: AssemblyFileVersion("2.12.0.0")]
 [assembly: AssemblyTitle("Cube.Pdf.Ghostscript")]
-[assembly: AssemblyDescription("Ghostscript based PDF library for CubeSoft applications.")]
+[assembly: AssemblyDescription("Library to wwap Ghostscript in .NET Framework.")]
 [assembly: AssemblyCompany("CubeSoft")]
 [assembly: AssemblyProduct("Cube.Pdf.Ghostscript")]
 [assembly: AssemblyCopyright("Copyright © 2010 CubeSoft, Inc.")]

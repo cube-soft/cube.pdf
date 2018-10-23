@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("2.12.0.0")]
 [assembly: AssemblyFileVersion("2.12.0.0")]
 [assembly: AssemblyTitle("Cube.Pdf.Pdfium")]
-[assembly: AssemblyDescription("PDFium based PDF library for CubeSoft applications.")]
+[assembly: AssemblyDescription("PDF Library to wrap PDFium in .NET Framework.")]
 [assembly: AssemblyCompany("CubeSoft")]
 [assembly: AssemblyProduct("Cube.Pdf.Pdfium")]
 [assembly: AssemblyCopyright("Copyright © 2010 CubeSoft, Inc.")]

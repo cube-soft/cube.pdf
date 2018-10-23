@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("2.12.0.0")]
 [assembly: AssemblyFileVersion("2.12.0.0")]
 [assembly: AssemblyTitle("Cube.Pdf.Itext")]
-[assembly: AssemblyDescription("iTextSharp based PDF library for CubeSoft applications.")]
+[assembly: AssemblyDescription("PDF Library to wrap iTextSharp.")]
 [assembly: AssemblyCompany("CubeSoft")]
 [assembly: AssemblyProduct("Cube.Pdf.Itext")]
 [assembly: AssemblyCopyright("Copyright © 2010 CubeSoft, Inc.")]
