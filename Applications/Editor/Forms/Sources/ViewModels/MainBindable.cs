@@ -316,7 +316,7 @@ namespace Cube.Pdf.App.Editor
             try
             {
                 _busy = true;
-                Busy.Raise();
+                Busy.RaiseValueChanged();
                 action();
             }
             catch (OperationCanceledException) { /* ignore user cancel */ }
@@ -324,9 +324,9 @@ namespace Cube.Pdf.App.Editor
             finally
             {
                 _busy = false;
-                Busy.Raise();
-                Modified.Raise();
-                Count.Raise();
+                Busy.RaiseValueChanged();
+                Modified.RaiseValueChanged();
+                Count.RaiseValueChanged();
             }
         }
 
