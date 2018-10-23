@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Generics;
-using Cube.Log;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
@@ -31,7 +30,8 @@ namespace Cube.Pdf.Itext
     /// DocumentWriterBase
     ///
     /// <summary>
-    /// DocumentWriter の基底クラスです。
+    /// Provides an implementation of the "IDocumentWriter" interface by
+    /// using the iTextSharp library.
     /// </summary>
     ///
     /// <remarks>
@@ -50,10 +50,11 @@ namespace Cube.Pdf.Itext
         /// DocumentWriterBase
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentWriterBase class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         protected DocumentWriterBase(IO io)
@@ -68,22 +69,11 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
-        ///
-        /// <summary>
-        /// I/O オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// UseSmartCopy
         ///
         /// <summary>
-        /// ファイルサイズを抑えるための結合方法を使用するかどうかを取得、
-        /// または設定します。
+        /// Gets or sets the value indicating whether the smart copy
+        /// algorithm is enabled.
         /// </summary>
         ///
         /// <remarks>
@@ -104,10 +94,21 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Pages
         ///
         /// <summary>
-        /// PDF ファイルの各ページ情報を取得します。
+        /// Gets the collection of pages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -118,18 +119,18 @@ namespace Cube.Pdf.Itext
         /// Attachments
         ///
         /// <summary>
-        /// 添付ファイル一覧の情報を取得します。
+        /// Gets the collection of attached files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IEnumerable<Attachment> Attachments => _attach;
+        protected IEnumerable<Attachment> Attachments => _attachments;
 
         /* ----------------------------------------------------------------- */
         ///
         /// Metadata
         ///
         /// <summary>
-        /// PDF ファイルのメタデータを取得または設定します。
+        /// Gets the PDF metadata.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -140,7 +141,7 @@ namespace Cube.Pdf.Itext
         /// Encryption
         ///
         /// <summary>
-        /// 暗号化に関する情報をを取得または設定します。
+        /// Gets the encryption settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -157,7 +158,7 @@ namespace Cube.Pdf.Itext
         /// ~DocumentWriterBase
         ///
         /// <summary>
-        /// オブジェクトを破棄します。
+        /// Finalizes the DocumentWriterBase.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -168,7 +169,7 @@ namespace Cube.Pdf.Itext
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases all resources used by the DocumentWriterBase.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -183,11 +184,13 @@ namespace Cube.Pdf.Itext
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases the unmanaged resources used by the DocumentWriterBase
+        /// and optionally releases the managed resources.
         /// </summary>
         ///
         /// <param name="disposing">
-        /// マネージオブジェクトを開放するかどうか
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
@@ -205,7 +208,7 @@ namespace Cube.Pdf.Itext
         /// Reset
         ///
         /// <summary>
-        /// 初期状態にリセットします。
+        /// Resets values.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -216,12 +219,10 @@ namespace Cube.Pdf.Itext
         /// Save
         ///
         /// <summary>
-        /// プロパティが現在保持している、メタ情報、暗号化に関する情報、
-        /// ページ情報に基づいた PDF ファイルを生成し、指定されたパスに
-        /// 保存します。
+        /// Saves the document to the specified path.
         /// </summary>
         ///
-        /// <param name="path">保存パス</param>
+        /// <param name="path">Path to save.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Save(string path) => OnSave(path);
@@ -231,10 +232,10 @@ namespace Cube.Pdf.Itext
         /// Add
         ///
         /// <summary>
-        /// ページを追加します。
+        /// Adds pages to the document.
         /// </summary>
         ///
-        /// <param name="pages">ページ情報一覧</param>
+        /// <param name="pages">Collection of pages.</param>
         ///
         /// <remarks>
         /// DocumentReader.Pages オブジェクトを指定する場合
@@ -252,11 +253,14 @@ namespace Cube.Pdf.Itext
         /// Add
         ///
         /// <summary>
-        /// ページを追加します。
+        /// Adds pages to the document.
         /// </summary>
         ///
-        /// <param name="pages">ページ情報一覧</param>
-        /// <param name="hint">IDocumentReader オブジェクト</param>
+        /// <param name="pages">Collection of pages.</param>
+        /// <param name="hint">
+        /// Document reader object to get more detailed information about
+        /// the specified pages.
+        /// </param>
         ///
         /// <remarks>
         /// IDocumentReader オブジェクトの所有権がこのクラスに移譲に
@@ -272,26 +276,26 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Attach
+        /// Add
         ///
         /// <summary>
-        /// ファイルを添付します。
+        /// Adds attached objects to the document.
         /// </summary>
         ///
-        /// <param name="files">添付ファイル一覧</param>
+        /// <param name="files">Collection of attached files.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach(IEnumerable<Attachment> files) => _attach.AddRange(files);
+        public void Add(IEnumerable<Attachment> files) => _attachments.AddRange(files);
 
         /* ----------------------------------------------------------------- */
         ///
         /// Set
         ///
         /// <summary>
-        /// メタ情報を設定します。
+        /// Sets the PDF metadata.
         /// </summary>
         ///
-        /// <param name="src">メタ情報</param>
+        /// <param name="src">PDF metadata.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Set(Metadata src) => Metadata = src;
@@ -301,10 +305,10 @@ namespace Cube.Pdf.Itext
         /// Set
         ///
         /// <summary>
-        /// 暗号化情報を設定します。
+        /// Sets the encryption settings.
         /// </summary>
         ///
-        /// <param name="src">暗号化情報</param>
+        /// <param name="src">Encryption settings.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Set(Encryption src) => Encryption = src;
@@ -313,28 +317,10 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnReset
-        ///
-        /// <summary>
-        /// 初期状態にリセットします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnReset()
-        {
-            _pages.Clear();
-            _attach.Clear();
-            Set(new Metadata());
-            Set(new Encryption());
-            Release();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// OnSave
         ///
         /// <summary>
-        /// 保存処理を実行します。
+        /// Executes the save operation.
         /// </summary>
         ///
         /// <remarks>
@@ -346,13 +332,31 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OnReset
+        ///
+        /// <summary>
+        /// Executes the reset operation.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual void OnReset()
+        {
+            _pages.Clear();
+            _attachments.Clear();
+            Set(new Metadata());
+            Set(new Encryption());
+            Release();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Bind
         ///
         /// <summary>
-        /// DocumentReader オブジェクトを束縛します。
+        /// Binds the specified document reader to the class.
         /// </summary>
         ///
-        /// <param name="src">DocumentReader オブジェクト</param>
+        /// <param name="src">Document reader.</param>
         ///
         /// <remarks>
         /// 指定された DocumentReader オブジェクトは DocumentWriter
@@ -363,76 +367,32 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected void Bind(IDocumentReader src)
         {
-            var key = src.File.FullName;
+            if (_resources.Contains(src)) return;
+            _resources.Add(src);
 
-            if (_bounds.ContainsKey(key))
+            if (src is DocumentReader itext)
             {
-                if (_bounds[key] != src)
-                {
-                    _bounds[key].Dispose();
-                    _bounds[key] = src;
-                    this.LogWarn($"{key}:Other instance has already bound.");
-                }
+                var k = itext.File.FullName;
+                var v = itext.RawObject.TryCast<PdfReader>();
+
+                if (v != null && !_hints.ContainsKey(k)) _hints.Add(k, v);
             }
-            else _bounds.Add(key, src);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsBound
-        ///
-        /// <summary>
-        /// 指定されたパスを指す DocumentReader オブジェクトが束縛されて
-        /// いるかどうかを判別します。
-        /// </summary>
-        ///
-        /// <param name="src">PDF ファイルのパス</param>
-        ///
-        /// <returns>束縛されているかどうかを示す値</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected bool IsBound(string src) => _bounds.ContainsKey(src);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsBound
-        ///
-        /// <summary>
-        /// 指定された DocumentReader オブジェクトが束縛されているか
-        /// どうかを判別します。
-        /// </summary>
-        ///
-        /// <param name="src">DocumentReader オブジェクト</param>
-        ///
-        /// <returns>束縛されているかどうかを示す値</returns>
-        ///
-        /// <remarks>
-        /// このメソッドは、引数に指定されたオブジェクトと完全に等しい
-        /// オブジェクトが束縛されているかどうかを判別します。そのため、
-        /// このメソッドが false を返した場合でも、同じパスの別の
-        /// IDocumentReader オブジェクトが束縛されている可能性があります。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected bool IsBound(IDocumentReader src) =>
-            _bounds.TryGetValue(src.File.FullName, out IDocumentReader dest) && src == dest;
 
         /* ----------------------------------------------------------------- */
         ///
         /// Release
         ///
         /// <summary>
-        /// 束縛されている DocumentReader オブジェクトを開放します。
+        /// Releases all bound objects.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         protected void Release()
         {
-            foreach (var kv in _bounds) kv.Value?.Dispose();
-            _bounds.Clear();
-
-            foreach (var kv in _images) kv.Value?.Dispose();
-            _images.Clear();
+            _hints.Clear();
+            foreach (var obj in _resources) obj.Dispose();
+            _resources.Clear();
         }
 
         /* ----------------------------------------------------------------- */
@@ -440,17 +400,13 @@ namespace Cube.Pdf.Itext
         /// GetRawReader
         ///
         /// <summary>
-        /// PdfReader オブジェクトを生成します。
+        /// Gets the PdfReader corresponding to the specified Page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PdfReader GetRawReader(Page src)
-        {
-            Debug.Assert(src != null);
-            if (src.File is PdfFile pdf) return GetRawReader(src, pdf);
-            if (src.File is ImageFile img) return GetRawReader(src, img);
-            return null;
-        }
+        protected PdfReader GetRawReader(Page src) =>
+            src.File is PdfFile   pdf ? GetRawReader(pdf) :
+            src.File is ImageFile img ? GetRawReader(img) : null;
 
         #endregion
 
@@ -461,18 +417,23 @@ namespace Cube.Pdf.Itext
         /// GetRawReader
         ///
         /// <summary>
-        /// PdfReader オブジェクトを取得します。
+        /// Gets the PdfReader corresponding to the specified PDF file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfReader GetRawReader(Page src, PdfFile file)
+        private PdfReader GetRawReader(PdfFile file)
         {
-            var path = src.File.FullName;
-            if (!IsBound(path)) Bind(new DocumentReader(path, file.Password, false, IO));
+            var key = file.FullName;
+            if (_hints.TryGetValue(key, out var hit)) return hit;
 
-            return _bounds[path] is DocumentReader dest ?
-                   dest.RawObject.TryCast<PdfReader>() :
-                   null;
+            var reader = new DocumentReader(key, file.Password, false, IO);
+            _resources.Add(reader);
+
+            var dest = reader.RawObject.TryCast<PdfReader>();
+            Debug.Assert(dest != null);
+            _hints.Add(key, dest);
+
+            return dest;
         }
 
         /* ----------------------------------------------------------------- */
@@ -480,18 +441,20 @@ namespace Cube.Pdf.Itext
         /// GetRawReader
         ///
         /// <summary>
-        /// PdfReader オブジェクトを取得します。
+        /// Gets the PdfReader corresponding to the specified information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfReader GetRawReader(Page src, ImageFile file)
+        private PdfReader GetRawReader(ImageFile file)
         {
-            var path = src.File.FullName;
-            if (!_images.ContainsKey(path))
-            {
-                _images.Add(path, ReaderFactory.CreateFromImage(path, IO));
-            }
-            return _images[path];
+            var key = file.FullName;
+            if (_hints.TryGetValue(key, out var hit)) return hit;
+
+            var dest = ReaderFactory.CreateFromImage(key, IO);
+            _resources.Add(dest);
+            _hints.Add(key, dest);
+
+            return dest;
         }
 
         #endregion
@@ -499,9 +462,9 @@ namespace Cube.Pdf.Itext
         #region Fields
         private readonly OnceAction<bool> _dispose;
         private readonly List<Page> _pages = new List<Page>();
-        private readonly List<Attachment> _attach = new List<Attachment>();
-        private readonly IDictionary<string, IDocumentReader> _bounds = new Dictionary<string, IDocumentReader>();
-        private readonly IDictionary<string, PdfReader> _images = new Dictionary<string, PdfReader>();
+        private readonly List<Attachment> _attachments = new List<Attachment>();
+        private readonly List<IDisposable> _resources = new List<IDisposable>();
+        private readonly Dictionary<string, PdfReader> _hints = new Dictionary<string, PdfReader>();
         #endregion
     }
 }

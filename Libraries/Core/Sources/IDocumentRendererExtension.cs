@@ -32,14 +32,12 @@ namespace Cube.Pdf.Mixin
     {
         #region Methods
 
-        #region Render
-
         /* ----------------------------------------------------------------- */
         ///
         /// Render
         ///
         /// <summary>
-        /// Render the Page content to the Graphics object.
+        /// Renders the Page content to the Graphics object.
         /// </summary>
         ///
         /// <param name="src">Renderer object.</param>
@@ -50,16 +48,12 @@ namespace Cube.Pdf.Mixin
         public static void Render(this IDocumentRenderer src, Graphics dest, Page page) =>
             src.Render(dest, page, new PointF(0, 0), dest.VisibleClipBounds.Size);
 
-        #endregion
-
-        #region GetImage
-
         /* ----------------------------------------------------------------- */
         ///
-        /// GetImage
+        /// Render
         ///
         /// <summary>
-        /// Get an Image object in which the Page content is rendered.
+        /// Gets an Image object in which the Page content is rendered.
         /// </summary>
         ///
         /// <param name="src">Renderer object.</param>
@@ -68,15 +62,15 @@ namespace Cube.Pdf.Mixin
         /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src, Page page) =>
-            src.GetImage(page, 1.0);
+        public static Image Render(this IDocumentRenderer src, Page page) =>
+            src.Render(page, 1.0);
 
         /* ----------------------------------------------------------------- */
         ///
         /// GetImage
         ///
         /// <summary>
-        /// Get an Image object in which the Page content is rendered.
+        /// Gets an Image object in which the Page content is rendered.
         /// </summary>
         ///
         /// <param name="src">Renderer object.</param>
@@ -86,32 +80,8 @@ namespace Cube.Pdf.Mixin
         /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src, Page page, double scale) =>
-            src.GetImage(page, page.GetDisplaySize(scale).Value);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImage
-        ///
-        /// <summary>
-        /// Get an Image object in which the Page content is rendered.
-        /// </summary>
-        ///
-        /// <param name="src">Renderer object.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="size">Rendering size.</param>
-        ///
-        /// <returns>Image object</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Image GetImage(this IDocumentRenderer src, Page page, SizeF size)
-        {
-            var dest = new Bitmap((int)size.Width, (int)size.Height);
-            using (var gs = Graphics.FromImage(dest)) src.Render(gs, page);
-            return dest;
-        }
-
-        #endregion
+        public static Image Render(this IDocumentRenderer src, Page page, double scale) =>
+            src.Render(page, page.GetViewSize(scale).Value);
 
         #endregion
     }

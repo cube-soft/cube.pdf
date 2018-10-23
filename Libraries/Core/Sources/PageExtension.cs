@@ -44,7 +44,7 @@ namespace Cube.Pdf.Mixin
         /// GetImagePage
         ///
         /// <summary>
-        /// Get a Page collection from the specified file.
+        /// Gets a Page collection from the specified file.
         /// </summary>
         ///
         /// <param name="io">I/O object.</param>
@@ -67,7 +67,7 @@ namespace Cube.Pdf.Mixin
         /// GetImagePage
         ///
         /// <summary>
-        /// Get a Page collection from the specified Image.
+        /// Gets a Page collection from the specified Image.
         /// </summary>
         ///
         /// <param name="io">I/O object.</param>
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Mixin
         /// GetImagePage
         ///
         /// <summary>
-        /// Get a Page object from the specified file.
+        /// Gets a Page object from the specified file.
         /// </summary>
         ///
         /// <param name="io">I/O object.</param>
@@ -123,7 +123,7 @@ namespace Cube.Pdf.Mixin
         /// GetImagePage
         ///
         /// <summary>
-        /// Get a Page object from the specified image.
+        /// Gets a Page object from the specified image.
         /// </summary>
         ///
         /// <param name="io">I/O object.</param>
@@ -149,7 +149,7 @@ namespace Cube.Pdf.Mixin
         /// GetImagePage
         ///
         /// <summary>
-        /// Get a Page object from the specified values.
+        /// Gets a Page object from the specified values.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -175,10 +175,10 @@ namespace Cube.Pdf.Mixin
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetDisplaySize
+        /// GetViewSize
         ///
         /// <summary>
-        /// Get the display size of this Page.
+        /// Gets the display size of this Page.
         /// </summary>
         ///
         /// <param name="src">Page object.</param>
@@ -186,14 +186,14 @@ namespace Cube.Pdf.Mixin
         /// <remarks>Display size.</remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static SizeF? GetDisplaySize(this Page src) => src.GetDisplaySize(1.0);
+        public static SizeF? GetViewSize(this Page src) => src.GetViewSize(1.0);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetDisplaySize
+        /// GetViewSize
         ///
         /// <summary>
-        /// Get the display size of this Page from the specified values.
+        /// Gets the display size of this Page from the specified values.
         /// </summary>
         ///
         /// <param name="src">Page object.</param>
@@ -202,7 +202,7 @@ namespace Cube.Pdf.Mixin
         /// <remarks>Display size.</remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static SizeF? GetDisplaySize(this Page src, double scale)
+        public static SizeF? GetViewSize(this Page src, double scale)
         {
             if (src == null) return null;
 

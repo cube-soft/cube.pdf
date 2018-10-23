@@ -23,6 +23,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title.Text}"
@@ -49,7 +50,10 @@
       Interaction
     *********************************************************************** -->
     <i:Interaction.Behaviors>
+        <xb:DialogBehavior />
+        <xb:OpenFileDialogBehavior />
         <xb:CloseBehavior />
+        <my:MouseOpenBehavior Command="{Binding DragAdd}" />
     </i:Interaction.Behaviors>
 
     <!-- **********************************************************************
@@ -65,30 +69,7 @@
         <!-- ******************************************************************
           Position
         ******************************************************************* -->
-        <GroupBox
-            Header="{Binding Position.Text}"
-            Margin="{StaticResource VerticalFirst}"
-            Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <RadioButton
-                    Content="{Binding Selected.Text}" />
-                <RadioButton
-                    Content="{Binding First.Text}" />
-                <RadioButton
-                    Content="{Binding Last.Text}" />
-                <RadioButton
-                    Content="{Binding Specified.Text}" />
-
-                <TextBox
-                    Width="50" />
-                <TextBlock
-                    Text="/"
-                    Margin="4,0,0,1" />
-                <TextBlock
-                    Text="{Binding PageCount.Value}"
-                    Margin="0,0,0,1" />
-            </StackPanel>
-        </GroupBox>
+        <my:PositionControl Grid.Row="0" />
 
         <!-- ******************************************************************
           Contents
@@ -101,29 +82,36 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ListView Style="{StaticResource InsertFilesStyle}" />
+            <!-- **************************************************************
+              FileList
+            *************************************************************** -->
+            <my:FileListControl Grid.Column="0" />
 
+            <!-- **************************************************************
+              Operations
+            *************************************************************** -->
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <Button
                     Content="{Binding Add.Text}"
                     Command="{Binding Add.Command}"
-                    Style="{StaticResource TopButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}"
+                    Margin="3,0,3,3" />
                 <Button
                     Content="{Binding Up.Text}"
                     Command="{Binding Up.Command}"
-                    Style="{StaticResource DialogButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}" />
                 <Button
                     Content="{Binding Down.Text}"
                     Command="{Binding Down.Command}"
-                    Style="{StaticResource DialogButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}" />
                 <Button
                     Content="{Binding Remove.Text}"
                     Command="{Binding Remove.Command}"
-                    Style="{StaticResource DialogButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}" />
                 <Button
                     Content="{Binding Clear.Text}"
                     Command="{Binding Clear.Command}"
-                    Style="{StaticResource DialogButtonStyle}" />
+                    Style="{StaticResource OperationButtonStyle}" />
             </StackPanel>
         </Grid>
 

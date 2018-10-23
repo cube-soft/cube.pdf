@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Drawing;
 
 namespace Cube.Pdf
@@ -28,6 +29,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public class Page : ObservableProperty
     {
         #region Constructors

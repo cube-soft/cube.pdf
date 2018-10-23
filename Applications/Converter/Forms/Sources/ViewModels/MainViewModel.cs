@@ -74,9 +74,9 @@ namespace Cube.Pdf.App.Converter
             base(new Messenger(), context)
         {
             Model      = new MainFacade(settings);
-            Settings   = new SettingsViewModel(settings.Value, Messenger, SynchronizationContext);
-            Metadata   = new MetadataViewModel(settings.Value.Metadata, Messenger, SynchronizationContext);
-            Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger, SynchronizationContext);
+            Settings   = new SettingsViewModel(settings.Value, Messenger, Context);
+            Metadata   = new MetadataViewModel(settings.Value.Metadata, Messenger, Context);
+            Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger, Context);
 
             settings.PropertyChanged += WhenPropertyChanged;
         }
@@ -130,7 +130,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Product => Model.Settings.Product;
+        public string Product => Model.Settings.Assembly.Product;
 
         /* ----------------------------------------------------------------- */
         ///

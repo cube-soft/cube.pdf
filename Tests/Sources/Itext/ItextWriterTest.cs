@@ -46,7 +46,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Save
         ///
         /// <summary>
-        /// Executes the test to save the PDF document as a new file.
+        /// Executes the test for saving the PDF document as a new file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -78,7 +78,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Overwrite
         ///
         /// <summary>
-        /// Executes the test to overwrite the PDF document.
+        /// Executes the test for overwriting the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -106,11 +106,12 @@ namespace Cube.Pdf.Tests.Itext
         /// Merge
         ///
         /// <summary>
-        /// Executes the test to merge PDF documents.
+        /// Executes the test for merging PDF documents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", "SampleBookmark.pdf", 90, ExpectedResult = 11)]
+        [TestCase("Sample.pdf", "Sample.pdf",          0, ExpectedResult =  4)]
         public int Merge(string f0, string f1, int degree)
         {
             var r0   = new DocumentReader(GetExamplesWith(f0), "", false, IO);
@@ -119,7 +120,7 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var w = new DocumentWriter(IO))
             {
-                w.Add(Rotate(r0.Pages, degree), r0);
+                foreach (var p in r0.Pages) w.Add(Rotate(p, degree), r0);
                 w.Add(Rotate(r1.Pages, degree), r1);
                 w.Save(dest);
             }
@@ -131,7 +132,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Merge_Image
         ///
         /// <summary>
-        /// Executes the test to merge a PDF document and an image file.
+        /// Executes the test for merging a PDF document and an image file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -144,7 +145,7 @@ namespace Cube.Pdf.Tests.Itext
             using (var w = new DocumentWriter(IO))
             using (var r = new DocumentReader(GetExamplesWith(doc), "", false, IO))
             {
-                w.Add(Rotate(r0.Pages, degree), r0);
+                foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
                 w.Add(Rotate(IO.GetImagePages(GetExamplesWith(image)), degree));
                 w.Save(dest);
             }
@@ -156,7 +157,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Split
         ///
         /// <summary>
-        /// Executes the test to split a PDF document in page by page.
+        /// Executes the test for spliting a PDF document in page by page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -194,13 +195,13 @@ namespace Cube.Pdf.Tests.Itext
         /// Attach
         ///
         /// <summary>
-        /// Executes the test to attach a file to a PDF document.
+        /// Executes the test for attaching a file to a PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("SampleRotation.pdf",   "SampleImage01.png",   ExpectedResult = 1)]
-        [TestCase("SampleAttachment.pdf", "SampleImage02.png",   ExpectedResult = 4)]
-        [TestCase("SampleAttachment.pdf", "日本語のサンプル.md", ExpectedResult = 4)]
+        [TestCase("SampleAttachment.pdf", "SampleImage02.png",   ExpectedResult = 3)]
+        [TestCase("SampleAttachment.pdf", "日本語のサンプル.md", ExpectedResult = 3)]
         public int Attach(string doc, string file)
         {
             var src  = GetExamplesWith(doc);
@@ -211,16 +212,18 @@ namespace Cube.Pdf.Tests.Itext
             using (var w = new DocumentWriter())
             {
                 w.Add(r0);
-                w.Attach(r0.Attachments);
+                w.Add(r0.Attachments);
                 w.Attach(new Attachment(r1.FullName, IO));
+                w.Attach(new Attachment(r1.FullName, IO)); // Skip duplicated object.
                 w.Save(dest);
             }
 
             using (var r = new DocumentReader(dest, "", false, IO))
             {
-                var items  = r.Attachments;
-                var option = StringComparison.InvariantCultureIgnoreCase;
-                Assert.That(items.Any(x => x.Name.Equals(file, option)), Is.True);
+                var items = r.Attachments;
+                var opt   = StringComparison.InvariantCultureIgnoreCase;
+                Assert.That(items.Any(x => x.Name.Equals(file, opt)), Is.True);
+                foreach (var obj in items) Assert.That(obj.Length, Is.AtLeast(1));
                 return items.Count();
             }
         }
@@ -230,7 +233,7 @@ namespace Cube.Pdf.Tests.Itext
         /// SetMetadata
         ///
         /// <summary>
-        /// Executes the test to set metadata.
+        /// Executes the test for setting PDF metadata.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -279,7 +282,7 @@ namespace Cube.Pdf.Tests.Itext
         /// SetEncryption
         ///
         /// <summary>
-        /// Executes the test to set the encryption information.
+        /// Executes the test for setting the encryption settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -362,7 +365,7 @@ namespace Cube.Pdf.Tests.Itext
 
         #endregion
 
-        #region Helper methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

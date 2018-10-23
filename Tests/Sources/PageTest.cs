@@ -19,6 +19,7 @@ using Cube.Pdf.Mixin;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.Tests
 {
@@ -27,7 +28,7 @@ namespace Cube.Pdf.Tests
     /// PageTest
     ///
     /// <summary>
-    /// Page のテスト用クラスです。
+    /// Tests for Page and its inherited classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,7 +42,8 @@ namespace Cube.Pdf.Tests
         /// Get
         ///
         /// <summary>
-        /// 各ページの情報を確認します。
+        /// Executes the test for getting page information of the
+        /// specified file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -59,15 +61,59 @@ namespace Cube.Pdf.Tests
                 Assert.That(dest.Size.Width,      Is.EqualTo(w));
                 Assert.That(dest.Size.Height,     Is.EqualTo(h));
                 Assert.That(dest.Rotation.Degree, Is.EqualTo(degree));
+
+                dest.Delta = new Angle(90);
+                dest.Reset();
+                Assert.That(dest.Delta.Degree, Is.EqualTo(0));
             }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Get_Image
+        ///
+        /// <summary>
+        /// Executes the test for getting page information of the
+        /// specified image file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Get_Image()
+        {
+            var src  = GetExamplesWith("SampleImage02.png");
+            var dest = IO.GetImagePage(src, 0);
+
+            Assert.That(dest.Resolution.X,    Is.EqualTo(96.0f));
+            Assert.That(dest.Resolution.Y,    Is.EqualTo(96.0f));
+            Assert.That(dest.Size.Width,      Is.EqualTo(137));
+            Assert.That(dest.Size.Height,     Is.EqualTo(157));
+            Assert.That(dest.Rotation.Degree, Is.EqualTo(0));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Get_Image_Throws
+        ///
+        /// <summary>
+        /// Executes the test for confirming the result when the specified
+        /// index is wrong.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Get_Image_Throws() => Assert.That(
+            () => IO.GetImagePage(GetExamplesWith("SampleImage02.png"), 10),
+            Throws.TypeOf<ExternalException>()
+        );
 
         /* ----------------------------------------------------------------- */
         ///
         /// GetViewSize
         ///
         /// <summary>
-        /// ViewSize の計算結果を確認します。
+        /// Executes the test for calculating the displayed size from
+        /// the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -89,7 +135,7 @@ namespace Cube.Pdf.Tests
                 new PointF(72, 72)         // Resolution
             ) { Delta = new Angle(degree) };
 
-            var dest = src.GetDisplaySize();
+            var dest = src.GetViewSize();
             Assert.That(dest.Value.Width,  Is.EqualTo(w).Within(1.0));
             Assert.That(dest.Value.Height, Is.EqualTo(h).Within(1.0));
         }
@@ -103,7 +149,7 @@ namespace Cube.Pdf.Tests
         /// TestCases
         ///
         /// <summary>
-        /// テストケース一覧を取得します。
+        /// Gets test cases.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

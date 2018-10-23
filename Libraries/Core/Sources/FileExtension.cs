@@ -27,7 +27,7 @@ namespace Cube.Pdf.Mixin
     /// FileExtension
     ///
     /// <summary>
-    /// File の拡張用クラスです。
+    /// Provides extended methods about File and its inherited classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -37,16 +37,34 @@ namespace Cube.Pdf.Mixin
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetPdfFile
+        ///
+        /// <summary>
+        /// Gets the File object that represents the specified PDF document.
+        /// </summary>
+        ///
+        /// <param name="io">I/O handler.</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password to open the PDF file.</param>
+        ///
+        /// <returns>PdfFile object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PdfFile GetPdfFile(this IO io, string src, string password) =>
+            new PdfFile(src, password, io.GetRefreshable());
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetImageFile
         ///
         /// <summary>
-        /// 画像ファイルを表す File オブジェクトを取得します。
+        /// Gets the File object that represents the specified image.
         /// </summary>
         ///
-        /// <param name="io">入出力用オブジェクト</param>
-        /// <param name="src">画像ファイルのパス</param>
+        /// <param name="io">I/O handler.</param>
+        /// <param name="src">Path of the image file.</param>
         ///
-        /// <returns>ImageFile オブジェクト</returns>
+        /// <returns>ImageFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static ImageFile GetImageFile(this IO io, string src)
@@ -63,14 +81,14 @@ namespace Cube.Pdf.Mixin
         /// GetImageFile
         ///
         /// <summary>
-        /// 画像ファイルを表す File オブジェクトを取得します。
+        /// Gets the File object that represents the specified image.
         /// </summary>
         ///
-        /// <param name="io">入出力用オブジェクト</param>
-        /// <param name="src">画像ファイルのパス</param>
-        /// <param name="image">画像オブジェクト</param>
+        /// <param name="io">I/O handler.</param>
+        /// <param name="src">Path of the image file.</param>
+        /// <param name="image">Image object.</param>
         ///
-        /// <returns>ImageFile オブジェクト</returns>
+        /// <returns>ImageFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static ImageFile GetImageFile(this IO io, string src, Image image)

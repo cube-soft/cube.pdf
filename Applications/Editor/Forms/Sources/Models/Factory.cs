@@ -58,8 +58,36 @@ namespace Cube.Pdf.App.Editor
             Multiselect     = false,
             Filter          = new []
             {
-                new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
-                new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
+                new ExtensionFilter(Properties.Resources.FilterPdf, true, ".pdf"),
+                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
+            }.GetFilter(),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertMessage
+        ///
+        /// <summary>
+        /// Creates a message to show the OpenFileDialog.
+        /// </summary>
+        ///
+        /// <param name="callback">
+        /// Callback action when terminating the user operation.
+        /// </param>
+        ///
+        /// <returns>OpenFileMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static OpenFileMessage InsertMessage(OpenFileCallback callback) =>
+            new OpenFileMessage(callback)
+        {
+            Title           = Properties.Resources.TitleOpen,
+            CheckPathExists = true,
+            Multiselect     = true,
+            Filter          = new []
+            {
+                new ExtensionFilter(Properties.Resources.FilterInsertable, true, ".pdf", ".png", ".jpg", ".jpeg", ".bmp"),
+                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
 
@@ -86,8 +114,8 @@ namespace Cube.Pdf.App.Editor
             CheckPathExists = false,
             Filter          = new[]
             {
-                new DisplayFilter(Properties.Resources.FilterPdf, true, ".pdf"),
-                new DisplayFilter(Properties.Resources.FilterAll, true, ".*"),
+                new ExtensionFilter(Properties.Resources.FilterPdf, true, ".pdf"),
+                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
 

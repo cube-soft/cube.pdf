@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -114,8 +115,7 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected void Create(Action<MainViewModel> callback)
         {
-            //using (var src = Create())
-            var src = Create();
+            using (var src = Create())
             {
                 var dps = Register(src);
                 callback(src);
@@ -163,8 +163,7 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected async Task CreateAsync(Func<MainViewModel, Task> callback)
         {
-            //using (var src = Create())
-            var src = Create();
+            using (var src = Create())
             {
                 var dps = Register(src);
                 await callback(src);
@@ -193,9 +192,12 @@ namespace Cube.Pdf.Tests.Editor
         {
             Source   = GetExamplesWith(filename);
             Password = password;
-            await ExecuteAsync(vm, vm.Ribbon.Open).ConfigureAwait(false);
-            var open = await Wait.ForAsync(() => vm.Data.Images.Count == n).ConfigureAwait(false);
-            Assert.That(open, "Timeout (Open)");
+
+            Assert.That(vm.Ribbon.Open.Command.CanExecute(), Is.True);
+            vm.Ribbon.Open.Command.Execute();
+            var done = await Wait.ForAsync(() => vm.Data.Images.Count == n).ConfigureAwait(false);
+            Assert.That(done, "Timeout (Open)");
+
             await callback(vm).ConfigureAwait(false);
         });
 
@@ -232,15 +234,20 @@ namespace Cube.Pdf.Tests.Editor
         /* ----------------------------------------------------------------- */
         protected async Task ExecuteAsync(MainViewModel vm, BindableElement src)
         {
-            var data  = vm.Data;
-            var ready = await Wait.ForAsync(() => !data.Busy.Value).ConfigureAwait(false);
-            Assert.That(ready, $"NotReady ({src.Text})");
+            var cts = new CancellationTokenSource();
+            void action(object s, EventArgs e)
+            {
+                if (!vm.Data.Busy.Value) return;
+                vm.Data.Busy.PropertyChanged -= action;
+                cts.Cancel();
+            }
 
-            data.SetMessage(string.Empty);
-            Assert.That(src.Command.CanExecute(), nameof(src.Command.CanExecute));
+            Assert.That(vm.Data.Busy.Value, Is.False);
+            vm.Data.Busy.PropertyChanged += action;
+            Assert.That(src.Command.CanExecute(), Is.True);
             src.Command.Execute();
 
-            var done = await Wait.ForAsync(() => !data.Busy.Value).ConfigureAwait(false);
+            var done = await Wait.ForAsync(cts.Token).ConfigureAwait(false);
             Assert.That(done, $"Timeout ({src.Text})");
         }
 
@@ -304,12 +311,15 @@ namespace Cube.Pdf.Tests.Editor
         private MainViewModel Create()
         {
             var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
-            var src   = new SettingsFolder(Assembly.GetExecutingAssembly(), IO) { AutoSave = false };
+            var asm   = Assembly.GetExecutingAssembly();
+            var fmt   = DataContract.Format.Registry;
+            var path  = @"CubeSoft\Cube.Pdf.Tests.Editor";
+            var src   = new SettingsFolder(asm, fmt, path, IO) { AutoSave = false };
             var dest  = new MainViewModel(src);
 
-            dest.Data.Preferences.Dummy = dummy;
-            dest.Data.Preferences.VisibleFirst = 0;
-            dest.Data.Preferences.VisibleLast = 10;
+            dest.Data.Images.Preferences.Dummy = dummy;
+            dest.Data.Images.Preferences.VisibleFirst = 0;
+            dest.Data.Images.Preferences.VisibleLast = 10;
 
             return dest;
         }
@@ -351,15 +361,15 @@ namespace Cube.Pdf.Tests.Editor
         {
             void dialog(DialogMessage e)
             {
-                Assert.That(e.Image, Is.Not.EqualTo(MessageBoxImage.Error), e.Content);
                 e.Result = Select(e.Button);
                 e.Callback?.Invoke(e);
             }
 
             void open(OpenFileMessage e)
             {
-                e.FileName = Source;
-                e.Result   = true;
+                e.FileName  = Source;
+                e.FileNames = new[] { Source };
+                e.Result    = true;
                 e.Callback.Invoke(e);
             }
 

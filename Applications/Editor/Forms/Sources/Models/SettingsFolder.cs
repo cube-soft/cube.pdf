@@ -97,18 +97,10 @@ namespace Cube.Pdf.App.Editor
         public SettingsFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
             base(assembly, format, location, io)
         {
-            var asm = assembly.GetReader();
-            Title          = asm.Title;
+            Title          = Assembly.Title;
             AutoSave       = false;
             Version.Digit  = 3;
             Version.Suffix = Properties.Resources.VersionSuffix;
-
-            var dir  = IO.Get(asm.Location).DirectoryName;
-            var exec = IO.Combine(dir, $"UpdateChecker.exe");
-            var sk   = "CubePDF Utility2";
-
-            Startup.Name    = $"{Title} UpdateChecker";
-            Startup.Command = $"{exec.Quote()} {Product.Quote()} /subkey {sk.Quote()}";
         }
 
         #endregion
@@ -172,8 +164,21 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnSaved(KeyValueEventArgs<Cube.DataContract.Format, string> e)
         {
-            if (Value != null) Startup.Enabled = Value.CheckUpdate;
-            base.OnSaved(e);
+            try
+            {
+                if (Value == null) return;
+
+                var dir = IO.Get(Assembly.Location).DirectoryName;
+                var exe = IO.Combine(dir, $"UpdateChecker.exe");
+                var sk  = "CubePDF Utility2";
+
+                new Startup($"{Title} UpdateChecker")
+                {
+                    Command = $"{exe.Quote()} {Assembly.Product.Quote()} /subkey {sk.Quote()}",
+                    Enabled = Value.CheckUpdate,
+                }.Save();
+            }
+            finally { base.OnSaved(e); }
         }
 
         /* ----------------------------------------------------------------- */

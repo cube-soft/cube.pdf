@@ -88,21 +88,6 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemMargin
-        ///
-        /// <summary>
-        /// Gets or sets the margin of each item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int ItemMargin
-        {
-            get => _itemMargin;
-            set => SetProperty(ref _itemMargin, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// FrameOnly
         ///
         /// <summary>
@@ -199,7 +184,6 @@ namespace Cube.Pdf.App.Editor
         private int _first;
         private int _last;
         private int _itemSizeIndex;
-        private int _itemMargin;
         private int _textHeight;
         private bool _frameOnly;
         private ImageSource _dummy;

@@ -17,10 +17,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Pdf.Mixin;
 using iTextSharp.text.pdf;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 
 namespace Cube.Pdf.Itext
 {
@@ -29,7 +28,7 @@ namespace Cube.Pdf.Itext
     /// DocumentReader
     ///
     /// <summary>
-    /// PDF ファイルを読み込んで各種情報を保持するためのクラスです。
+    /// Provides functionality to read a PDF document.
     /// </summary>
     ///
     /// <remarks>
@@ -47,10 +46,10 @@ namespace Cube.Pdf.Itext
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentReader class
-        /// with the specified arguments..
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
+        /// <param name="src">Path of the PDF file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src) : this(src, string.Empty) { }
@@ -61,10 +60,10 @@ namespace Cube.Pdf.Itext
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentReader class
-        /// with the specified arguments..
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
+        /// <param name="src">Path of the PDF file.</param>
         /// <param name="password">Password string.</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -80,12 +79,12 @@ namespace Cube.Pdf.Itext
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
-        /// <param name="query">Password query.</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query) :
-            this(src, query, true, new IO()) { }
+        public DocumentReader(string src, IQuery<string> password) :
+            this(src, password, false, true, new IO()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -96,14 +95,48 @@ namespace Cube.Pdf.Itext
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
+        /// <param name="src">Path of the PDF file.</param>
         /// <param name="password">Password string.</param>
-        /// <param name="partial">true for partial reading mode.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(string src, string password, IO io) :
+            this(src, password, true, io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password query.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(string src, IQuery<string> password, IO io) :
+            this(src, password, false, true, io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password string.</param>
+        /// <param name="partial">Partial reading mode.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password, bool partial, IO io) :
-            this(src, new OnceQuery<string>(password), partial, io) { }
+            this(src, new QueryValue<string>(password), false, partial, io) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,29 +147,29 @@ namespace Cube.Pdf.Itext
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
-        /// <param name="query">Password query.</param>
-        /// <param name="partial">true for partial reading mode.</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password query.</param>
+        /// <param name="fullaccess">Requires full access.</param>
+        /// <param name="partial">Partial reading mode.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query, bool partial, IO io) : base(io)
+        public DocumentReader(string src, IQuery<string> password,
+            bool fullaccess, bool partial, IO io) : base(io)
         {
             Debug.Assert(io != null);
-            _core = ReaderFactory.Create(src, query, partial, out string password);
+            _core = ReaderFactory.Create(src, password, fullaccess, partial, out string result);
             Debug.Assert(_core != null);
 
-            var f = new PdfFile(src, password, io.GetRefreshable())
-            {
-                FullAccess = _core.IsOpenedWithFullPermissions,
-                Count      = _core.NumberOfPages
-            };
+            var f = io.GetPdfFile(src, result);
+            f.Count      = _core.NumberOfPages;
+            f.FullAccess = _core.IsOpenedWithFullPermissions;
 
             File        = f;
             Metadata    = _core.GetMetadata();
             Encryption  = _core.GetEncryption(f);
             Pages       = new ReadOnlyPageList(_core, f);
-            Attachments = new ReadOnlyAttachmentList(_core, f, IO);
+            Attachments = new AttachmentCollection(_core, f, IO);
         }
 
         #endregion
@@ -148,7 +181,7 @@ namespace Cube.Pdf.Itext
         /// RawObject
         ///
         /// <summary>
-        /// 内部実装オブジェクトを取得します。
+        /// Gets the raw object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -160,31 +193,17 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ExtractImages
-        ///
-        /// <summary>
-        /// 指定されたページ中に存在する画像を抽出します。
-        /// </summary>
-        ///
-        /// <param name="pagenum">ページ番号</param>
-        ///
-        /// <returns>抽出された Image オブジェクトのリスト</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<Image> ExtractImages(int pagenum)
-        {
-            var dest = new EmbeddedImageCollection();
-            _core.GetContentParser().ProcessContent(pagenum, dest);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases the unmanaged resources used by the DocumentReader
+        /// and optionally releases the managed resources.
         /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)

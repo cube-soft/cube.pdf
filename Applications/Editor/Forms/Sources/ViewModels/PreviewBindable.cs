@@ -51,7 +51,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public PreviewBindable(Information file, Page page)
         {
-            var size = page.GetDisplaySize();
+            var size = page.GetViewSize();
 
             File   = new Bindable<Information>(file);
             Width  = new Bindable<int>((int)size.Value.Width);

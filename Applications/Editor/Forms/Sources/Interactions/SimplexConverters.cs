@@ -153,6 +153,33 @@ namespace Cube.Pdf.App.Editor
 
     #endregion
 
+    #region ByteConverterLite
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ByteConverterLite
+    ///
+    /// <summary>
+    /// Provides functionality to convert a string.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class ByteConverterLite : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ByteConverterLite
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ByteConverterLite class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ByteConverterLite() : base(e => e.TryCast<long>().ToRoughBytes()) { }
+    }
+
+    #endregion
+
     #region EncryptionMethodConverter
 
     /* --------------------------------------------------------------------- */

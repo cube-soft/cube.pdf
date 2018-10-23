@@ -16,43 +16,40 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using iTextSharp.text.pdf;
-using System.Security.Cryptography;
+using GongSolutions.Wpf.DragDrop;
+using System;
+using System.Windows;
 
-namespace Cube.Pdf.Itext
+namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// EmbeddedAttachment
+    /// InsertDropTarget
     ///
     /// <summary>
-    /// PDF ファイルに添付済のファイルを表すクラスです。
+    /// Represents Drag&amp;Drop behavior in the InsertWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class EmbeddedAttachment : Attachment
+    public class InsertDropTarget : IDropTarget
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Attachment
+        /// InsertDropTarget
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the InsertDropTarget class
+        /// with the specified callback.
         /// </summary>
         ///
-        /// <param name="io">I/O オブジェクト</param>
-        /// <param name="name">添付ファイル名</param>
-        /// <param name="src">添付元 PDF ファイルのパス</param>
-        /// <param name="core">添付ストリーム</param>
+        /// <param name="callback">Callback action when dropped.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EmbeddedAttachment(string name, string src, IO io, PRStream core) :
-            base(name, src, io)
+        public InsertDropTarget(Action<int, int> callback)
         {
-            _core = core;
+            _callback = callback;
         }
 
         #endregion
@@ -61,45 +58,41 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetLength
+        /// DragOver
         ///
         /// <summary>
-        /// 添付ファイルのサイズを取得します。
+        /// Invokes the dragover action.
         /// </summary>
         ///
+        /// <param name="e">Dropped information.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        protected override long GetLength() =>
-            _core?.GetAsDict(PdfName.PARAMS)
-                 ?.GetAsNumber(PdfName.SIZE)
-                 ?.LongValue ?? 0;
+        public void DragOver(IDropInfo e)
+        {
+            e.NotHandled = !(e.Data != e.TargetItem && e.TargetItem is FileItem);
+            if (e.NotHandled) return;
+
+            e.Effects           = DragDropEffects.Move;
+            e.DropTargetAdorner = DropTargetAdorners.Insert;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetBytes
+        /// Drop
         ///
         /// <summary>
-        /// 添付ファイルの内容をバイト配列で取得します。
+        /// Invokes the drop action.
         /// </summary>
         ///
-        /* ----------------------------------------------------------------- */
-        protected override byte[] GetData() => PdfReader.GetStreamBytes(_core);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetChecksum
-        ///
-        /// <summary>
-        /// 添付ファイルのチェックサムを取得します。
-        /// </summary>
+        /// <param name="e">Dropped information.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override byte[] GetChecksum() =>
-            new SHA256CryptoServiceProvider().ComputeHash(Data);
+        public void Drop(IDropInfo e) => _callback(e.DragInfo.SourceIndex, e.InsertIndex);
 
         #endregion
 
         #region Fields
-        private readonly PRStream _core;
+        private readonly Action<int, int> _callback;
         #endregion
     }
 }

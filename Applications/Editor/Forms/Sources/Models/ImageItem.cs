@@ -29,7 +29,7 @@ namespace Cube.Pdf.App.Editor
     /// ImageItem
     ///
     /// <summary>
-    /// Stores an image and related information.
+    /// Represents information of an image.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,7 +42,8 @@ namespace Cube.Pdf.App.Editor
         /// ImageEntry
         ///
         /// <summary>
-        /// Initializes a new instance with the specified arguments.
+        /// Initializes a new instance of the ImageItem class with the
+        /// specified arguments.
         /// </summary>
         ///
         /// <param name="image">Delegation to get an image.</param>
@@ -197,7 +198,7 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~ImageEntry
+        /// ~ImageItem
         ///
         /// <summary>
         /// Finalizes the ImageEntry.
@@ -211,7 +212,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases all resources used by the ImageEntry.
+        /// Releases all resources used by the ImageItem.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -226,7 +227,7 @@ namespace Cube.Pdf.App.Editor
         /// Dispose
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the ImageEntry
+        /// Releases the unmanaged resources used by the ImageItem
         /// and optionally releases the managed resources.
         /// </summary>
         ///
@@ -266,14 +267,14 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void UpdateSize()
         {
-            var magic = 10; // TODO: how to calc?
+            var h_magic = 22; // how to calc?
+            var v_magic = 12;
 
-            var src   = RawObject.GetDisplaySize().Value;
+            var src   = RawObject.GetViewSize().Value;
             var size  = _preferences.ItemSize;
-            var space = _preferences.ItemMargin * 2;
 
-            var h = (size - space * 2 - magic) / src.Width;
-            var v = (size - space * 2 - _preferences.TextHeight) / src.Height;
+            var h = (size - h_magic) / src.Width;
+            var v = (size - v_magic - _preferences.TextHeight) / src.Height;
 
             var scale = Math.Min(h, v);
 
@@ -295,8 +296,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPreferencesChanged(object s, PropertyChangedEventArgs e)
         {
-            var fire = e.PropertyName == nameof(_preferences.ItemMargin)    ||
-                       e.PropertyName == nameof(_preferences.ItemSizeIndex) ||
+            var fire = e.PropertyName == nameof(_preferences.ItemSizeIndex) ||
                        e.PropertyName == nameof(_preferences.TextHeight);
             if (fire) UpdateSize();
         }

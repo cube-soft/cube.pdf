@@ -30,55 +30,6 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- **********************************************************************
-      ListView (Template)
-    *********************************************************************** -->
-    <ControlTemplate x:Key="PageCollectionTemplate" TargetType="{x:Type ListView}">
-        <ScrollViewer
-            Background="{StaticResource DarkBackgroundBrush}"
-            Template="{StaticResource ScrollViewerTemplate}"
-            HorizontalScrollBarVisibility="Disabled">
-            <WrapPanel
-                ItemWidth="{Binding Data.Preferences.ItemSize}"
-                ItemHeight="{Binding Data.Preferences.ItemSize}"
-                MinWidth="{Binding Data.Preferences.ItemSize}"
-                Width="{Binding FrameworkElement.ActualWidth,
-                RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
-                IsItemsHost="True" />
-
-            <i:Interaction.Behaviors>
-                <my:VisibleRange
-                    First="{Binding Data.Preferences.VisibleFirst, Mode=TwoWay}"
-                    Last="{Binding Data.Preferences.VisibleLast, Mode=TwoWay}"
-                    ItemSize="{Binding Data.Preferences.ItemSize}"
-                    ItemMargin="{Binding Data.Preferences.ItemMargin}" />
-                <my:PreviewBehavior
-                    PreCommand="{Binding Ribbon.SelectClear.Command}"
-                    Command="{Binding Ribbon.Preview.Command}" />
-            </i:Interaction.Behaviors>
-        </ScrollViewer>
-    </ControlTemplate>
-
-    <!-- **********************************************************************
-      ListView
-    *********************************************************************** -->
-    <Style x:Key="PageCollectionStyle" TargetType="{x:Type ListView}">
-        <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="SelectionMode" Value="Extended" />
-        <Setter Property="Template" Value="{StaticResource PageCollectionTemplate}" />
-    </Style>
-
-    <!-- **********************************************************************
-      ListViewItem
-    *********************************************************************** -->
-    <Style x:Key="PageStyle" TargetType="{x:Type ListViewItem}">
-        <Setter Property="Margin" Value="3" />
-        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWay}" />
-    </Style>
-
-    <!-- **********************************************************************
       ListViewItem (DataTemplate)
     *********************************************************************** -->
     <DataTemplate x:Key="PageTemplate" DataType="{x:Type my:ImageItem}">
@@ -109,4 +60,53 @@
                 Foreground="{StaticResource DarkForegroundBrush}" />
         </Grid>
     </DataTemplate>
+
+    <!-- **********************************************************************
+      ListViewItem
+    *********************************************************************** -->
+    <Style x:Key="PageStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWay}" />
+    </Style>
+
+    <!-- **********************************************************************
+      ListView (Template)
+    *********************************************************************** -->
+    <ControlTemplate x:Key="PageCollectionTemplate" TargetType="{x:Type ListView}">
+        <ScrollViewer
+            Background="{StaticResource DarkBackgroundBrush}"
+            Template="{StaticResource ScrollViewerTemplate}"
+            HorizontalScrollBarVisibility="Disabled">
+            <WrapPanel
+                ItemWidth="{Binding Data.Images.Preferences.ItemSize}"
+                ItemHeight="{Binding Data.Images.Preferences.ItemSize}"
+                MinWidth="{Binding Data.Images.Preferences.ItemSize}"
+                Width="{Binding FrameworkElement.ActualWidth,
+                RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                IsItemsHost="True" />
+
+            <i:Interaction.Behaviors>
+                <my:VisibleRange
+                    First="{Binding Data.Images.Preferences.VisibleFirst, Mode=TwoWay}"
+                    Last="{Binding Data.Images.Preferences.VisibleLast, Mode=TwoWay}"
+                    Unit="{Binding Data.Images.Preferences.ItemSize}" />
+            </i:Interaction.Behaviors>
+        </ScrollViewer>
+    </ControlTemplate>
+
+    <!-- **********************************************************************
+      ListView
+    *********************************************************************** -->
+    <Style x:Key="PageCollectionStyle" TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SelectionMode" Value="Extended" />
+        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource PageStyle}" />
+        <Setter Property="ItemTemplate" Value="{StaticResource PageTemplate}" />
+        <Setter Property="Template" Value="{StaticResource PageCollectionTemplate}" />
+    </Style>
 </ResourceDictionary>

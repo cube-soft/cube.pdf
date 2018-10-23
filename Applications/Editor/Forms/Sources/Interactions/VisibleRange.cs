@@ -71,37 +71,22 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ItemSize
+        /// Unit
         ///
         /// <summary>
         /// Gets or sets the size of each item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int ItemSize
+        public int Unit
         {
-            get => _itemSize;
-            set => Set(ref _itemSize, value, () => Update());
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ItemMargin
-        ///
-        /// <summary>
-        /// Gets or sets the margin of each item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int ItemMargin
-        {
-            get => _itemMargin;
-            set => Set(ref _itemMargin, value, () => Update());
+            get => _unit;
+            set => Set(ref _unit, value, () => Update());
         }
 
         #endregion
 
-        #region DependencyProperty
+        #region Dependencies
 
         /* ----------------------------------------------------------------- */
         ///
@@ -137,19 +122,7 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static readonly DependencyProperty ItemSizeProperty =
-            Create<int>(nameof(ItemSize), (s, e) => s.ItemSize = e);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ItemMarginProperty
-        ///
-        /// <summary>
-        /// DependencyProperty object for the ItemMargin property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static readonly DependencyProperty ItemMarginProperty =
-            Create<int>(nameof(ItemMargin), (s, e) => s.ItemMargin = e);
+            Create<int>(nameof(Unit), (s, e) => s.Unit = e);
 
         #endregion
 
@@ -167,11 +140,8 @@ namespace Cube.Pdf.App.Editor
         protected override void OnAttached()
         {
             base.OnAttached();
-
-            AssociatedObject.SizeChanged   -= WhenSizeChanged;
-            AssociatedObject.SizeChanged   += WhenSizeChanged;
-            AssociatedObject.ScrollChanged -= WhenScrollChanged;
-            AssociatedObject.ScrollChanged += WhenScrollChanged;
+            AssociatedObject.SizeChanged   += WhenChanged;
+            AssociatedObject.ScrollChanged += WhenChanged;
         }
 
         /* ----------------------------------------------------------------- */
@@ -186,9 +156,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.SizeChanged   -= WhenSizeChanged;
-            AssociatedObject.ScrollChanged -= WhenScrollChanged;
-
+            AssociatedObject.SizeChanged   -= WhenChanged;
+            AssociatedObject.ScrollChanged -= WhenChanged;
             base.OnDetaching();
         }
 
@@ -205,15 +174,13 @@ namespace Cube.Pdf.App.Editor
         {
             if (AssociatedObject == null) return;
 
-            var size   = Math.Max(ItemSize, 1.0);
-            var margin = Math.Max(ItemMargin * 2, 0.0);
-
-            var column = Math.Max((int)(AssociatedObject.ActualWidth / (size + margin)), 1);
-            var row    = Math.Max((int)(AssociatedObject.ActualHeight / (size + margin)), 1);
+            var size   = Math.Max(Unit, 1.0);
+            var column = Math.Max((int)(AssociatedObject.ActualWidth / size), 1);
+            var row    = Math.Max((int)(AssociatedObject.ActualHeight / size), 1);
 
             var index  = (int)(AssociatedObject.VerticalOffset / size + 0.5) * column;
             var first  = Math.Max(index - column, 0);
-            var last   = index + column * (row + 3);
+            var last   = index + column * (row + 2);
 
             First = first;
             Last  = last;
@@ -251,32 +218,19 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenSizeChanged
+        /// WhenChanged
         ///
         /// <summary>
-        /// Called after the size of the AssociatedObject is changed.
+        /// Occurs when some condition of the AssociatedObject is changed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenSizeChanged(object sender, SizeChangedEventArgs e) => Update();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenScrollChanged
-        ///
-        /// <summary>
-        /// Called after the scroll condition of the AssociatedObject
-        /// is changed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenScrollChanged(object sender, ScrollChangedEventArgs e) => Update();
+        private void WhenChanged(object s, EventArgs e) => Update();
 
         #endregion
 
         #region Fields
-        private int _itemSize;
-        private int _itemMargin;
+        private int _unit;
         #endregion
     }
 }

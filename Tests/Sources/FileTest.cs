@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Pdf.Mixin;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Cube.Pdf.Tests
     /// FileTest
     ///
     /// <summary>
-    /// File のテスト用クラスです。
+    /// Tests for File and its inherited classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,7 +41,7 @@ namespace Cube.Pdf.Tests
         /// Get
         ///
         /// <summary>
-        /// ファイル情報を確認します。
+        /// Executes the test for getting information of the specified file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -66,11 +67,33 @@ namespace Cube.Pdf.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Get
+        ///
+        /// <summary>
+        /// Executes the test for getting information of the image file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Get_Image()
+        {
+            var src  = GetExamplesWith("SampleImage02.png");
+            var dest = IO.GetImageFile(src);
+
+            Assert.That(dest.FullName,     Is.EqualTo(src));
+            Assert.That(dest.Length,       Is.EqualTo(3765));
+            Assert.That(dest.Resolution.X, Is.EqualTo(96.0f));
+            Assert.That(dest.Resolution.Y, Is.EqualTo(96.0f));
+            Assert.That(dest.Count,        Is.EqualTo(1));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Open_BadPassword_Throws
         ///
         /// <summary>
-        /// 間違ったパスワードを入力して PDF ファイルを開こうとするテストを
-        /// 実行します。
+        /// Executes the test for confirming the result when the input
+        /// password is wrong.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -89,7 +112,8 @@ namespace Cube.Pdf.Tests
         /// Open_PasswordCancel_Throws
         ///
         /// <summary>
-        /// パスワードの入力をキャンセルした時の挙動を確認します。
+        /// Executes the test for confirming the result of canceling
+        /// password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -112,7 +136,7 @@ namespace Cube.Pdf.Tests
         /// TestClasses
         ///
         /// <summary>
-        /// テストクラス一覧を取得します。
+        /// Gets classes to execute tests.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -129,7 +153,7 @@ namespace Cube.Pdf.Tests
         /// TestCases
         ///
         /// <summary>
-        /// テストケース一覧を取得します。
+        /// Gets test cases.
         /// </summary>
         ///
         /// <remarks>
@@ -148,6 +172,8 @@ namespace Cube.Pdf.Tests
                 foreach (var klass in GetClassIds())
                 {
                     yield return new TestCaseData(klass, "SampleRotation.pdf", "",         true );
+                    yield return new TestCaseData(klass, "SampleRc40Open.pdf", "password", true );
+                    yield return new TestCaseData(klass, "SampleRc40Open.pdf", "",         false);
                     yield return new TestCaseData(klass, "SampleAes128.pdf",   "password", true );
                     yield return new TestCaseData(klass, "SampleAes128.pdf",   "view",     false);
                     yield return new TestCaseData(klass, "SampleAes256.pdf",   "password", true );

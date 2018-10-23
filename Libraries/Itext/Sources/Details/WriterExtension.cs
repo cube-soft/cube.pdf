@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using iTextSharp.text.pdf;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Cube.Pdf.Itext
     /// WriterExtension
     ///
     /// <summary>
-    /// PdfWriter の拡張用クラスです。
+    /// Provides extended methods of PdfWriter and its inherited classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,23 +41,23 @@ namespace Cube.Pdf.Itext
         /// Set
         ///
         /// <summary>
-        /// メタ情報を設定します。
+        /// Sets the PDF metadata to the specified writer.
         /// </summary>
         ///
-        /// <param name="src">PdfStamper オブジェクト</param>
-        /// <param name="data">メタ情報</param>
-        /// <param name="original">オリジナルのメタ情報</param>
+        /// <param name="src">PdfStamper object.</param>
+        /// <param name="data">PDf metadata.</param>
+        /// <param name="info">Original PDF metadata.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Set(this PdfStamper src, Metadata data, IDictionary<string, string> original)
+        public static void Set(this PdfStamper src, Metadata data, IDictionary<string, string> info)
         {
-            original.Update("Title",    data.Title);
-            original.Update("Subject",  data.Subject);
-            original.Update("Keywords", data.Keywords);
-            original.Update("Creator",  data.Creator);
-            original.Update("Author",   data.Author);
+            info.Update("Title",    data.Title);
+            info.Update("Subject",  data.Subject);
+            info.Update("Keywords", data.Keywords);
+            info.Update("Creator",  data.Creator);
+            info.Update("Author",   data.Author);
 
-            src.MoreInfo = original;
+            src.MoreInfo = info;
         }
 
         /* ----------------------------------------------------------------- */
@@ -64,24 +65,23 @@ namespace Cube.Pdf.Itext
         /// Set
         ///
         /// <summary>
-        /// 暗号化情報を設定します。
+        /// Sets the encryption settings to the specified writer.
         /// </summary>
         ///
-        /// <param name="src">PdfWriter オブジェクト</param>
-        /// <param name="data">暗号化情報</param>
+        /// <param name="src">PdfWriter object.</param>
+        /// <param name="data">Encryption settings.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Set(this PdfWriter src, Encryption data)
         {
-            if (data == null || !data.Enabled ||
-                string.IsNullOrEmpty(data.OwnerPassword)) return;
+            if (data == null || !data.Enabled || !data.OwnerPassword.HasValue()) return;
 
             var m = GetMethod(data.Method);
             var p = (int)data.Permission.Value;
 
             var owner = data.OwnerPassword;
             var user  = !data.OpenWithPassword ? string.Empty :
-                        !string.IsNullOrEmpty(data.UserPassword) ? data.UserPassword :
+                        data.UserPassword.HasValue() ? data.UserPassword :
                         owner;
 
             src.SetEncryption(m, user, owner, p);
@@ -92,11 +92,11 @@ namespace Cube.Pdf.Itext
         /// Set
         ///
         /// <summary>
-        /// 添付ファイルを設定します。
+        /// Sets attachments to the specified writer.
         /// </summary>
         ///
-        /// <param name="src">PdfCopy オブジェクト</param>
-        /// <param name="data">添付ファイル一覧</param>
+        /// <param name="src">PdfCopy object.</param>
+        /// <param name="data">Collection of attachments.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Set(this PdfCopy src, IEnumerable<Attachment> data)
@@ -105,11 +105,13 @@ namespace Cube.Pdf.Itext
 
             foreach (var item in data)
             {
-                if (done.Any(e =>
+                var dup = done.Any(e =>
                     e.Name.ToLower() == item.Name.ToLower() &&
                     e.Length == item.Length &&
                     e.Checksum.SequenceEqual(item.Checksum)
-                )) continue;
+                );
+
+                if (dup) continue;
 
                 var fs = item is EmbeddedAttachment ?
                          PdfFileSpecification.FileEmbedded(src, null, item.Name, item.Data) :
@@ -130,7 +132,7 @@ namespace Cube.Pdf.Itext
         /// Update
         ///
         /// <summary>
-        /// Dictionary オブジェクトの内容を更新します。
+        /// Updates the specified Dictionary object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -145,20 +147,27 @@ namespace Cube.Pdf.Itext
         /// GetMethod
         ///
         /// <summary>
-        /// 暗号化方式を取得します。
+        /// Gets the value corresponding to the specified method.
         /// </summary>
+        ///
+        /// <remarks>
+        /// iTextSharp は AES256 Revision 6 に対応していないため、
+        /// 暫定的に AES256 を割り当てています。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private static int GetMethod(EncryptionMethod src)
         {
-            switch (src)
+            var dic = new Dictionary<EncryptionMethod, int>
             {
-                case EncryptionMethod.Standard40:  return PdfWriter.STANDARD_ENCRYPTION_40;
-                case EncryptionMethod.Standard128: return PdfWriter.STANDARD_ENCRYPTION_128;
-                case EncryptionMethod.Aes128:      return PdfWriter.ENCRYPTION_AES_128;
-                case EncryptionMethod.Aes256:      return PdfWriter.ENCRYPTION_AES_256;
-                default: return PdfWriter.STANDARD_ENCRYPTION_40;
-            }
+                { EncryptionMethod.Standard40,  PdfWriter.STANDARD_ENCRYPTION_40  },
+                { EncryptionMethod.Standard128, PdfWriter.STANDARD_ENCRYPTION_128 },
+                { EncryptionMethod.Aes128,      PdfWriter.ENCRYPTION_AES_128      },
+                { EncryptionMethod.Aes256,      PdfWriter.ENCRYPTION_AES_256      },
+                { EncryptionMethod.Aes256r6,    PdfWriter.ENCRYPTION_AES_256      },
+            };
+
+            return dic.TryGetValue(src, out var dest) ? dest : PdfWriter.STANDARD_ENCRYPTION_40;
         }
 
         #endregion

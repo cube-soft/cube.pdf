@@ -152,6 +152,10 @@
                     <r:MenuItem
                         Header="{Binding Ribbon.InsertBack.Tooltip}"
                         Command="{Binding Ribbon.InsertBack.Command}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.InsertOthers.Tooltip}"
+                        Icon="{Binding Ribbon.InsertOthers.SmallIcon}"
+                        Command="{Binding Ribbon.InsertOthers.Command}" />
                 </r:SplitButton>
 
                 <!-- **********************************************************

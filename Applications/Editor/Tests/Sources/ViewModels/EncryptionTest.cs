@@ -48,7 +48,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Set
         ///
         /// <summary>
-        /// Executes the test to set the encryption information.
+        /// Executes the test for setting the encryption settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -83,7 +83,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test to cancel the EncryptionWindow.
+        /// Executes the test for selecting the cancel button in the
+        /// EncryptionWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -105,7 +106,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
-            Assert.That(vm.Data.Encryption.Value.OwnerPassword, Is.Not.EqualTo("dummy"));
+            Assert.That(vm.Data.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
         });
 
         #endregion

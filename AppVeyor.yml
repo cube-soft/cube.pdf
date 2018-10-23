@@ -1,4 +1,4 @@
-version: 2.11.0.{build}
+version: 2.12.0.{build}
 branches:
     only:
         - master
@@ -25,21 +25,12 @@ build:
     publish_nuget: true
     verbosity: minimal
 after_build:
-    - xcopy /q /Y /I Applications\Converter\Forms\bin\Release CubePdf
-    - xcopy /q /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
-    - xcopy /q /Y /I Applications\Editor\Forms\bin\Release CubePdf.Utility
-    - xcopy /q /Y /I Applications\Editor\Proxy\bin\Release CubePdf.Utility.Proxy
     - xcopy /q /Y /I ..\native\x64\bin\gsdll32.dll Tests\bin\Release
     - xcopy /q /Y /I ..\native\x64\lib\*.* Tests\bin\Release\lib
     - xcopy /q /Y /I ..\native\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
     - xcopy /q /Y /I ..\native\x64\lib\*.* Applications\Converter\Tests\bin\Release\lib
     - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.no_v8-no_xfa.2018.4.8.256\Build\x64\pdfium.dll Tests\bin\Release
     - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.no_v8-no_xfa.2018.4.8.256\Build\x64\pdfium.dll Applications\Editor\Tests\bin\Release
-artifacts:
-    - path: CubePdf
-    - path: CubePdf.Proxy
-    - path: CubePdf.Utility
-    - path: CubePdf.Utility.Proxy
 test_script:
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
@@ -50,33 +41,47 @@ test_script:
       -targetdir:Tests\bin\Release
       -returntargetcode
       -hideskipped:All
-      -output:CoverResult.xml
-      -filter:"+[*]* -[*]*NativeMethods -[*]*Properties.*"
+      -output:CoverResults.xml
+      -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.*"
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
       -log:Error
       -register:user
       -target:nunit3-console.exe
-      -targetargs:Cube.Pdf.Tests.Converter.dll
+      -targetargs:"Cube.Pdf.Tests.Converter.dll --workers=1"
       -targetdir:Applications\Converter\Tests\bin\Release
       -returntargetcode
       -hideskipped:All
       -mergeoutput
-      -output:CoverResult.xml
-      -filter:"+[*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program"
+      -output:CoverResults.xml
+      -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program"
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
       -log:Error
       -register:user
       -target:nunit3-console.exe
-      -targetargs:Cube.Pdf.Tests.Editor.dll
+      -targetargs:"Cube.Pdf.Tests.Editor.dll --workers=1"
       -targetdir:Applications\Editor\Tests\bin\Release
       -returntargetcode
       -hideskipped:All
       -mergeoutput
-      -output:CoverResult.xml
-      -filter:"+[*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Window -[*]*Control -[*]*.App"
+      -output:CoverResults.xml
+      -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Window -[*]*Control -[*]*.App"
 after_test:
+    - xcopy /q /Y /I CoverResults.xml Tests\
+    - xcopy /q /Y /I Tests\bin\Release\Cube.Pdf.Tests.log Tests\
+    - xcopy /q /Y /I Applications\Converter\Tests\bin\Release\Cube.Pdf.Tests.Converter.log Tests\
+    - xcopy /q /Y /I Applications\Editor\Tests\bin\Release\Cube.Pdf.Tests.Editor.log Tests\
+    - xcopy /q /Y /I Applications\Converter\Forms\bin\Release CubePdf
+    - xcopy /q /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
+    - xcopy /q /Y /I Applications\Editor\Forms\bin\Release CubePdf.Utility
+    - xcopy /q /Y /I Applications\Editor\Proxy\bin\Release CubePdf.Utility.Proxy
     - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
-    - codecov -f "CoverResult.xml"
+    - codecov -f "CoverResults.xml"
+artifacts:
+    - path: CubePdf
+    - path: CubePdf.Proxy
+    - path: CubePdf.Utility
+    - path: CubePdf.Utility.Proxy
+    - path: Tests

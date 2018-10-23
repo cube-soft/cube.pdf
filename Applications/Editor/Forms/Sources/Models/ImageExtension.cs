@@ -40,6 +40,43 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Within
+        ///
+        /// <summary>
+        /// Gets the collection that each item is in [0, n).
+        /// </summary>
+        ///
+        /// <param name="src">Source collection.</param>
+        /// <param name="n">Maximum value.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<int> Within(this IEnumerable<int> src, int n) =>
+            src.Where(i => i >= 0 && i < n);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateEntry
+        ///
+        /// <summary>
+        /// Creats a new ImageEntry object.
+        /// </summary>
+        ///
+        /// <param name="src">Source collection.</param>
+        /// <param name="index">Index to be created.</param>
+        /// <param name="item">Page information.</param>
+        ///
+        /// <returns>ImageItem object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static ImageItem CreateEntry(this ImageCollection src, int index, Page item) =>
+            new ImageItem(src.Convert, src.Selection, src.Preferences)
+        {
+            Index     = index,
+            RawObject = item,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Select
         ///
         /// <summary>

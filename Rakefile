@@ -3,7 +3,7 @@ require 'rake/clean'
 
 # Configuration
 SOLUTION = 'Cube.Pdf'
-PROJECTS = [ 'Core', 'Ghostscript', 'Itext' ]
+PROJECTS = [ 'Core', 'Ghostscript', 'Itext', 'Pdfium' ]
 BRANCHES = [ 'master', 'net35' ]
 COPY     = 'cp -pf'
 CHECKOUT = 'git checkout'

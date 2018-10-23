@@ -19,6 +19,7 @@
 using Cube.FileSystem.TestService;
 using Cube.Pdf.Itext;
 using NUnit.Framework;
+using System.Drawing.Imaging;
 using System.Linq;
 
 namespace Cube.Pdf.Tests.Itext
@@ -28,7 +29,7 @@ namespace Cube.Pdf.Tests.Itext
     /// ItextReaderTest
     ///
     /// <summary>
-    /// DocumentReader のテスト用クラスです。
+    /// Tests for the DocumentReader class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -48,11 +49,20 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("SampleRotation.pdf",   ExpectedResult = 0)]
-        [TestCase("SampleAttachment.pdf", ExpectedResult = 3)]
+        [TestCase("SampleRotation.pdf",        ExpectedResult = 0)]
+        [TestCase("SampleAttachment.pdf",      ExpectedResult = 2)]
+        [TestCase("SampleAttachmentEmpty.pdf", ExpectedResult = 3)]
         public int Open_Attachments_Count(string filename)
         {
-            using (var reader = Create(filename)) return reader.Attachments.Count();
+            using (var reader = Create(filename))
+            {
+                foreach (var obj in reader.Attachments)
+                {
+                    Assert.That(obj.Data,            Is.Not.Null);
+                    Assert.That(obj.Checksum.Length, Is.EqualTo(32));
+                }
+                return reader.Attachments.Count();
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -64,15 +74,18 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("SampleAttachment.pdf",    "CubePDF.png",         ExpectedResult =   3765L)]
-        [TestCase("SampleAttachment.pdf",    "CubeICE.png",         ExpectedResult = 165524L)]
-        [TestCase("SampleAttachment.pdf",    "Empty",               ExpectedResult =      0L)]
-        [TestCase("SampleAttachmentCjk.pdf", "日本語のサンプル.md", ExpectedResult =  12843L)]
+        [TestCase("SampleAttachment.pdf",      "CubePDF.png",         ExpectedResult =   3765L)]
+        [TestCase("SampleAttachment.pdf",      "CubeICE.png",         ExpectedResult = 165524L)]
+        [TestCase("SampleAttachmentEmpty.pdf", "Empty",               ExpectedResult =      0L)]
+        [TestCase("SampleAttachmentCjk.pdf",   "日本語のサンプル.md", ExpectedResult =  12843L)]
         public long Open_Attachments_Length(string filename, string key)
         {
             using (var reader = Create(filename))
             {
-                return reader.Attachments.First(x => x.Name == key).Length;
+                var dest = reader.Attachments.First(x => x.Name == key);
+                Assert.That(dest.Data,            Is.Not.Null);
+                Assert.That(dest.Checksum.Length, Is.EqualTo(32));
+                return dest.Length;
             }
         }
 
@@ -80,23 +93,35 @@ namespace Cube.Pdf.Tests.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ExtractImages
+        /// GetEmbeddedImages
         ///
         /// <summary>
-        /// ページ内に存在する画像の抽出テストを実行します。
+        /// Executes the test for getting embedded images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [TestCase("SampleAlpha.pdf", 1, ExpectedResult = 2)]
         [TestCase("SampleImage.pdf", 1, ExpectedResult = 2)]
         [TestCase("SampleImage.pdf", 2, ExpectedResult = 0)]
-        public int ExtractImages(string filename, int n)
+        public int GetEmbeddedImages(string filename, int n)
         {
-            using (var reader = Create(filename)) return reader.ExtractImages(n).Count();
+            using (var reader = Create(filename))
+            {
+                var name = IO.Get(filename).NameWithoutExtension;
+                var dest = reader.GetEmbeddedImages(n).ToList();
+
+                for (var i = 0; i < dest.Count; ++i)
+                {
+                    var path = GetResultsWith($"{name}-{n}-{i}.png");
+                    dest[i].Save(path, ImageFormat.Png);
+                }
+                return dest.Count;
+            }
         }
 
         #endregion
 
-        #region Helper methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

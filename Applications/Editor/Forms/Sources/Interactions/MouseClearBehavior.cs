@@ -16,24 +16,23 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
 using Cube.Xui.Behaviors;
-using System;
-using System.Linq;
-using System.Windows;
+using Cube.Xui.Mixin;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DragFileBehavior
+    /// MouseClearBehavior
     ///
     /// <summary>
-    /// Represents the behavior when files are dropped.
+    /// Represents the action to clear selection through the mouse event.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DragFileBehavior : CommandBehavior<Window>
+    public class MouseClearBehavior : CommandBehavior<ListView>
     {
         #region Implementations
 
@@ -42,17 +41,14 @@ namespace Cube.Pdf.App.Editor
         /// OnAttached
         ///
         /// <summary>
-        /// Called after the action is attached to an AssociatedObject.
+        /// Called when the action is attached to an AssociatedObject.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         protected override void OnAttached()
         {
             base.OnAttached();
-            AssociatedObject.PreviewDragOver -= WhenDragOver;
-            AssociatedObject.PreviewDragOver += WhenDragOver;
-            AssociatedObject.PreviewDrop     -= WhenDrop;
-            AssociatedObject.PreviewDrop     += WhenDrop;
+            AssociatedObject.PreviewMouseLeftButtonDown += WhenMouseDown;
         }
 
         /* ----------------------------------------------------------------- */
@@ -67,59 +63,52 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.PreviewDragOver -= WhenDragOver;
-            AssociatedObject.PreviewDrop     -= WhenDrop;
+            AssociatedObject.PreviewMouseLeftButtonDown -= WhenMouseDown;
             base.OnDetaching();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenDrop
+        /// WhenMouseDown
         ///
         /// <summary>
-        /// Occurs when the PreviewDrop event is fired.
+        /// Occurs when the MouseDown event is fired.
         /// </summary>
         ///
+        /// <remarks>
+        /// TODO: 右端のスクロールバー領域を適当な値で判定しているので
+        /// 修正方法を要検討。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        private void WhenDrop(object s, DragEventArgs e)
+        private void WhenMouseDown(object s, MouseButtonEventArgs e)
         {
-            var dest = GetFirst(e.Data);
-            e.Handled = dest.HasValue() && (Command?.CanExecute(dest) ?? false);
-            if (e.Handled) Command.Execute(dest);
+            if (IsKeyPressed()) return;
+
+            var pt = e.GetPosition(AssociatedObject);
+            if (pt.X >= AssociatedObject.ActualWidth - 16) return;
+
+            var obj = AssociatedObject.GetObject<ListViewItem>(pt);
+            if (obj != null && obj.IsSelected) return;
+
+            if (Command?.CanExecute() ?? false) Command?.Execute();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenDragOver
+        /// IsKeyPressed
         ///
         /// <summary>
-        /// Occurs when the PreviewDragOver event is fired.
+        /// Gets a value indicating whether the Ctrl or Shift key is
+        /// pressed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenDragOver(object s, DragEventArgs e)
-        {
-            e.Handled = e.Data.GetDataPresent(DataFormats.FileDrop);
-            if (!e.Handled) return;
-
-            var dest = GetFirst(e.Data);
-            var ok   = dest.HasValue() && (Command?.CanExecute(dest) ?? false);
-            e.Effects = ok ? DragDropEffects.Copy : DragDropEffects.None;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetFirst
-        ///
-        /// <summary>
-        /// Gets the first item that represents the path of PDF file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetFirst(IDataObject src) =>
-            src.GetData(DataFormats.FileDrop)
-               .TryCast<string[]>()?
-               .First(e => e.EndsWith(".pdf", StringComparison.InvariantCultureIgnoreCase));
+        private bool IsKeyPressed() =>
+            (Keyboard.GetKeyStates(Key.LeftShift)  & KeyStates.Down) == KeyStates.Down ||
+            (Keyboard.GetKeyStates(Key.RightShift) & KeyStates.Down) == KeyStates.Down ||
+            (Keyboard.GetKeyStates(Key.LeftCtrl)   & KeyStates.Down) == KeyStates.Down ||
+            (Keyboard.GetKeyStates(Key.RightCtrl)  & KeyStates.Down) == KeyStates.Down;
 
         #endregion
     }

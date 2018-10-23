@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Mixin;
+using System;
 using System.Runtime.CompilerServices;
 
 namespace Cube.Pdf
@@ -30,6 +31,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public class Permission : ObservableProperty
     {
         #region Constructors
@@ -199,6 +201,19 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Get
+        ///
+        /// <summary>
+        /// Gets the permission for the specified operations.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private PermissionValue Get(PermissionFlags primary, PermissionFlags secondary) =>
+            _flags.HasFlag(primary)   ? PermissionValue.Allow    :
+            _flags.HasFlag(secondary) ? PermissionValue.Restrict : PermissionValue.Deny;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetPrintPermission
         ///
         /// <summary>
@@ -207,9 +222,7 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         private PermissionValue GetPrintPermission() =>
-            _flags.HasFlag(PermissionFlags.PrintHighQuality) ? PermissionValue.Allow :
-            _flags.HasFlag(PermissionFlags.Print)            ? PermissionValue.Restrict :
-                                                               PermissionValue.Deny;
+            Get(PermissionFlags.PrintHighQuality, PermissionFlags.Print);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -221,9 +234,7 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         private PermissionValue GetModifyContentsPermission() =>
-            _flags.HasFlag(PermissionFlags.ModifyContents) ? PermissionValue.Allow :
-            _flags.HasFlag(PermissionFlags.Assemble)       ? PermissionValue.Restrict :
-                                                             PermissionValue.Deny;
+            Get(PermissionFlags.ModifyContents, PermissionFlags.Assemble);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -272,7 +283,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         private bool SetPrintPermission(PermissionValue value)
         {
-            var both = PermissionFlags.PrintHighQuality;
+            var both = PermissionFlags.Print | PermissionFlags.PrintHighQuality;
             var dest = value.IsAllowed() ? (_flags | both) : (_flags & ~both);
             if (value == PermissionValue.Restrict) dest |= PermissionFlags.Print;
             return Set(ref _flags, dest, nameof(Print));

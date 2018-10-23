@@ -16,82 +16,45 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.FileSystem.TestService;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System.Linq;
-using System.Threading;
 
 namespace Cube.Pdf.Tests.Editor.ViewModels
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainTest
+    /// OthersTest
     ///
     /// <summary>
-    /// Tests for editing operations of the MainViewModel class.
+    /// Uncategoriezed tests of the MainViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class MainTest : ViewModelFixture
+    class OthersTest : ViewModelFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// Properties
         ///
         /// <summary>
-        /// Executes the test to open a PDF document and create images
-        /// as an asynchronous operation.
+        /// Confirms default values of properties.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf",       "",         2)]
-        [TestCase("SampleAes128.pdf", "password", 2)]
-        public void Open(string filename, string password, int n) =>
-            Create(filename, password, n, vm =>
+        [Test]
+        public void Properties() => Create(vm =>
         {
-            var pref = vm.Data.Preferences;
-            Assert.That(pref.ItemSize,      Is.EqualTo(250));
-            Assert.That(pref.ItemSizeIndex, Is.EqualTo(3));
-            Assert.That(pref.ItemMargin,    Is.EqualTo(3));
-            Assert.That(pref.TextHeight,    Is.EqualTo(25));
-
-            var images = vm.Data.Images.ToList();
-            foreach (var item in images) Assert.That(item.Image, Is.Not.Null);
-
-            var dest = images[0];
-            var cts  = new CancellationTokenSource();
-            dest.PropertyChanged += (s, e) => cts.Cancel();
-            Execute(vm, vm.Ribbon.Refresh);
-            Assert.That(Wait.For(cts.Token), nameof(vm.Ribbon.Refresh));
-            Assert.That(dest.Image, Is.Not.EqualTo(pref.Dummy));
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Save
-        ///
-        /// <summary>
-        /// Executes the test to save the PDF document as a new file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf",       "",         2)]
-        [TestCase("SampleAes128.pdf", "password", 2)]
-        public void Save(string filename, string password, int n) =>
-            Create(filename, password, n, vm =>
-        {
-            var fi = IO.Get(Source);
-            Destination = Path(Args(fi.NameWithoutExtension));
-            Password    = string.Empty;
-            Assert.That(IO.Exists(Destination), Is.False);
-
-            Execute(vm, vm.Ribbon.SaveAs);
-            Assert.That(Wait.For(() => IO.Exists(Destination)));
-            Assert.That(vm.Data.Source.Value.FullName, Is.EqualTo(Destination));
+            var pf = vm.Data.Images.Preferences;
+            Assert.That(vm.Recent.Items,  Is.Not.Null);
+            Assert.That(pf.ItemSize,      Is.EqualTo(250));
+            Assert.That(pf.ItemSizeIndex, Is.EqualTo(3));
+            Assert.That(pf.TextHeight,    Is.EqualTo(25));
         });
 
         /* ----------------------------------------------------------------- */
@@ -99,30 +62,27 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Close
         ///
         /// <summary>
-        /// Executes the test to close the PDF document.
+        /// Executes the test for closing the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf", true )]
-        [TestCase("Sample.pdf", false)]
-        public void Close(string filename, bool modify) => Create(vm =>
+        [TestCase("Sample.pdf", 2, true )]
+        [TestCase("Sample.pdf", 2, false)]
+        public void Close(string filename, int n, bool modify) => Create(vm =>
         {
             var fi = IO.Get(GetExamplesWith(filename));
             Source = Path(Args(fi.NameWithoutExtension, modify));
             IO.Copy(fi.FullName, Source, true);
-
-            Execute(vm, vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.Images.Count == 2), $"Timeout (Open)");
+            vm.Ribbon.Open.Command.Execute();
+            Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Open)");
 
             if (modify)
             {
                 Execute(vm, vm.Ribbon.Select);
                 Execute(vm, vm.Ribbon.RotateLeft);
             }
-
             Execute(vm, vm.Ribbon.Close);
-            Assert.That(Wait.For(() => !vm.Data.IsOpen()), $"Timeout (Close)");
-            Assert.That(IO.TryDelete(Source), Is.True);
+            Assert.That(Wait.For(() => !vm.Data.IsOpen()), "Timeout (Close)");
         });
 
         /* ----------------------------------------------------------------- */
@@ -130,7 +90,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Extract
         ///
         /// <summary>
-        /// Executes the test to extract selected items as a new PDF
+        /// Executes the test for extracting selected items as a new PDF
         /// document.
         /// </summary>
         ///
@@ -143,55 +103,10 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.False);
             vm.Data.Images.First().IsSelected = true;
-            Wait.For(() => !vm.Data.Busy.Value);
-            Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.True);
+            Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
 
             Execute(vm, vm.Ribbon.Extract);
-            Assert.That(Wait.For(() => IO.Exists(Destination)));
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Insert
-        ///
-        /// <summary>
-        /// Executes the test to insert a new PDF document behind the
-        /// selected index.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Insert() => Create("SampleRotation.pdf", "", 9, vm =>
-        {
-            vm.Data.Images.Skip(2).First().IsSelected = true;
-            Source = GetExamplesWith("Sample.pdf");
-            Execute(vm, vm.Ribbon.Insert);
-
-            var dest = vm.Data.Images.ToList();
-            Assert.That(dest.Count, Is.EqualTo(9));
-            for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Move
-        ///
-        /// <summary>
-        /// Executes the test to move selected items.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Move() => Create("SampleRotation.pdf", "", 9, vm =>
-        {
-            var src = vm.Data.Images.ToList();
-            src[2].IsSelected = true;
-            src[4].IsSelected = true;
-            Execute(vm, vm.Ribbon.MoveNext);
-
-            var dest = vm.Data.Images.ToList();
-            Assert.That(dest.Count, Is.EqualTo(9));
-            for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
+            Assert.That(Wait.For(() => IO.Exists(Destination)), "Timeout (Extract)");
         });
 
         /* ----------------------------------------------------------------- */
@@ -199,7 +114,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Rotate
         ///
         /// <summary>
-        /// Executes the test to rotate selected items.
+        /// Executes the test for rotating selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -208,7 +123,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         {
             var images = vm.Data.Images.ToList();
             var dest   = images[0];
-            var dummy  = vm.Data.Preferences.Dummy;
+            var dummy  = vm.Data.Images.Preferences.Dummy;
             Assert.That(Wait.For(() => dest.Image != dummy), "Timeout");
 
             Assert.That(vm.Ribbon.RotateLeft.Command.CanExecute(),  Is.False);
@@ -239,7 +154,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Undo
         ///
         /// <summary>
-        /// Executes the test to undo the last action.
+        /// Executes the test for canceling the last action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

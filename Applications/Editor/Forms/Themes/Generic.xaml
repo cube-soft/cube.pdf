@@ -18,12 +18,19 @@
 *************************************************************************** -->
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:s="clr-namespace:System;assembly=mscorlib"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- **********************************************************************
+      System
+    *********************************************************************** -->
+    <s:Int32 x:Key="NegativeOne">-1</s:Int32>
 
     <!-- **********************************************************************
       Colors
     *********************************************************************** -->
     <Color x:Key="AccentColor">#FFFFB700</Color>
+    <Color x:Key="HighlightColor">#FF70C0E7</Color>
 
     <Color x:Key="DarkBackgroundColor">#FF555555</Color>
     <Color x:Key="DarkForegroundColor">#FFE0E0E0</Color>
@@ -57,6 +64,12 @@
     <!-- **********************************************************************
       Brushes
     *********************************************************************** -->
+    <SolidColorBrush x:Key="AccentBackgroundBrush" Color="{StaticResource AccentColor}" Opacity="0.2" />
+    <SolidColorBrush x:Key="AccentBorderBrush" Color="{StaticResource AccentColor}" />
+
+    <SolidColorBrush x:Key="HighlightBackgroundBrush" Color="{StaticResource HighlightColor}" Opacity="0.2" />
+    <SolidColorBrush x:Key="HighlightBorderBrush" Color="{StaticResource HighlightColor}" />
+
     <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}" />
     <SolidColorBrush x:Key="DarkForegroundBrush" Color="{StaticResource DarkForegroundColor}" />
     <SolidColorBrush x:Key="DarkBorderBrush" Color="{StaticResource DarkBorderColor}" />
@@ -86,7 +99,6 @@
     <SolidColorBrush x:Key="TabForegroundBrush" Color="{StaticResource TabForegroundColor}" />
     <SolidColorBrush x:Key="TabForegroundInactivateBrush" Color="{StaticResource TabForegroundInactivateColor}" />
     <SolidColorBrush x:Key="TabBorderBrush" Color="{StaticResource TabBorderColor}" />
-    <SolidColorBrush x:Key="TabAccentBrush" Color="{StaticResource AccentColor}" Opacity="0.2" />
 
     <SolidColorBrush x:Key="ScrollBarBrush" Color="{StaticResource ScrollBarColor}" />
     <SolidColorBrush x:Key="ScrollBarHoverBrush" Color="{StaticResource ScrollBarHoverColor}" />

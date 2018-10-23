@@ -41,7 +41,7 @@ namespace Cube.Pdf.Tests.Editor
         /// Parse
         ///
         /// <summary>
-        /// Tests to parse the string.
+        /// Executes the test for parsing the string.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -58,8 +58,8 @@ namespace Cube.Pdf.Tests.Editor
         /// Parse_Throws
         ///
         /// <summary>
-        /// Tests to confirm the result when an invalid string is
-        /// specified.
+        /// Executes the test for confirming the result when the specified
+        /// string is wrong.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

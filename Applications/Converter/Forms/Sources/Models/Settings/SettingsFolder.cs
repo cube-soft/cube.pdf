@@ -26,7 +26,6 @@ using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 
 namespace Cube.Pdf.App.Converter
 {
@@ -72,22 +71,17 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder(Cube.DataContract.Format format, string path, IO io) :
-            base(Assembly.GetExecutingAssembly(), format, path, io)
+            base(System.Reflection.Assembly.GetExecutingAssembly(), format, path, io)
         {
-            AutoSave      = false;
-            MachineName   = Environment.MachineName;
-            UserName      = Environment.UserName;
-            DocumentName  = new DocumentName(string.Empty, Product, IO);
-            WorkDirectory = GetWorkDirectory();
-
-            var asm = new AssemblyReader(Assembly.GetExecutingAssembly());
+            AutoSave       = false;
+            MachineName    = Environment.MachineName;
+            UserName       = Environment.UserName;
+            DocumentName   = new DocumentName(string.Empty, Assembly.Product, IO);
+            WorkDirectory  = GetWorkDirectory();
             Version.Digit  = 3;
-            Version.Suffix = $"RC{asm.Version.Revision}";
+            Version.Suffix = $"RC{Assembly.Version.Revision}";
+            UpdateProgram  = IO.Combine(IO.Get(Assembly.Location).DirectoryName, "cubepdf-checker.exe");
 
-            var dir = IO.Get(asm.Location).DirectoryName;
-            UpdateProgram   = IO.Combine(dir, "cubepdf-checker.exe");
-            Startup.Command = $"{UpdateProgram.Quote()} {Product}";
-            Startup.Name    = "cubepdf-checker";
         }
 
         #endregion
@@ -204,7 +198,7 @@ namespace Cube.Pdf.App.Converter
 
             if (opt.TryGetValue(nameof(MachineName), out var pc)) MachineName = pc;
             if (opt.TryGetValue(nameof(UserName), out var user)) UserName = user;
-            if (opt.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Product, IO);
+            if (opt.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.Product, IO);
             if (opt.TryGetValue(nameof(Digest), out var digest)) Digest = digest;
             if (opt.TryGetValue("InputFile", out var input)) Value.Source = input;
 
@@ -232,7 +226,7 @@ namespace Cube.Pdf.App.Converter
                 if (!Value.CheckUpdate) return;
                 var time = GetLastCheckUpdate();
                 this.LogDebug($"LastCheckUpdate:{time}");
-                if (time.AddDays(1) < DateTime.Now) Process.Start(UpdateProgram, Product);
+                if (time.AddDays(1) < DateTime.Now) Process.Start(UpdateProgram, Assembly.Product);
             }
             catch (Exception err) { this.LogWarn($"{nameof(CheckUpdate)}:{err}", err); }
         }
@@ -262,7 +256,7 @@ namespace Cube.Pdf.App.Converter
             e.NewValue.Resolution = NormalizeResolution(e.NewValue);
             e.NewValue.Orientation = NormalizeOrientation(e.NewValue);
             e.NewValue.Destination = NormalizeDestination(e.NewValue);
-            e.NewValue.Metadata.Creator = Product;
+            e.NewValue.Metadata.Creator = Assembly.Product;
             e.NewValue.Metadata.Viewer = ViewerPreferences.OneColumn;
             e.NewValue.Encryption.Deny();
             e.NewValue.Encryption.Permission.Accessibility = PermissionValue.Allow;
@@ -281,8 +275,17 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         protected override void OnSaved(KeyValueEventArgs<Cube.DataContract.Format, string> e)
         {
-            if (Value != null) Startup.Enabled = Value.CheckUpdate;
-            base.OnSaved(e);
+            try
+            {
+                if (Value == null) return;
+
+                new Startup(IO.Get(UpdateProgram).NameWithoutExtension)
+                {
+                    Command = $"{UpdateProgram.Quote()} {Assembly.Product}",
+                    Enabled = Value.CheckUpdate,
+                }.Save();
+            }
+            finally { base.OnSaved(e); }
         }
 
         #region Get
@@ -303,7 +306,7 @@ namespace Cube.Pdf.App.Converter
                         str :
                         IO.Combine(
                             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                            Company, Product
+                            Assembly.Company, Assembly.Product
                         );
             return IO.Combine(root, Guid.NewGuid().ToString("D"));
         }
@@ -336,10 +339,8 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private string GetString(RegistryKey root, string name)
         {
-            using (var key = root.OpenSubKey($@"Software\{Company}\{Product}", false))
-            {
-                return key?.GetValue(name) as string;
-            }
+            var keyname = $@"Software\{Assembly.Company}\{Assembly.Product}";
+            using (var key = root.OpenSubKey(keyname, false)) return key?.GetValue(name) as string;
         }
 
         #endregion
