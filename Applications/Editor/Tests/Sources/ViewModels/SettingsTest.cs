@@ -47,7 +47,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test to confirm properties and invoke the
+        /// Executes the test for confirming properties and invoking the
         /// Cancel command.
         /// </summary>
         ///
@@ -60,7 +60,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             {
                 Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Value,     Is.Not.Null.And.No.Empty);
+                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Tests.Editor 0.5.1β "));
                 Assert.That(e.Windows.Text,      Does.StartWith("Microsoft Windows"));
                 Assert.That(e.Framework.Text,    Does.StartWith("Microsoft .NET Framework"));
                 Assert.That(e.Link.Text,         Is.EqualTo("Copyright © 2010 CubeSoft, Inc."));

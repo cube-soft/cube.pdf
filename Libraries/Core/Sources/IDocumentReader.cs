@@ -25,7 +25,7 @@ namespace Cube.Pdf
     /// IDocumentReader
     ///
     /// <summary>
-    /// PDF ファイルを読み込むためのインターフェースです。
+    /// Represents properties and methods to read a document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -36,7 +36,7 @@ namespace Cube.Pdf
         /// File
         ///
         /// <summary>
-        /// ファイルオブジェクトを取得します。
+        /// Gets a file information of the document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -47,7 +47,7 @@ namespace Cube.Pdf
         /// Metadata
         ///
         /// <summary>
-        /// PDF ファイルに関するメタ情報を取得します。
+        /// Gets a PDF metadata of the document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -58,7 +58,7 @@ namespace Cube.Pdf
         /// Encryption
         ///
         /// <summary>
-        /// PDF ファイルに関する暗号化情報を取得します。
+        /// Gets an encryption settings of the document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -69,8 +69,7 @@ namespace Cube.Pdf
         /// Pages
         ///
         /// <summary>
-        /// PDF ファイルの各ページ情報へアクセスするための反復子を
-        /// 取得します。
+        /// Gets a collection of pages in the document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -81,7 +80,7 @@ namespace Cube.Pdf
         /// Attachments
         ///
         /// <summary>
-        /// 添付ファイルの情報へアクセスするための反復子を取得します。
+        /// Gets a collection of attached files to the document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

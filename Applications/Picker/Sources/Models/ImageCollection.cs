@@ -250,7 +250,7 @@ namespace Cube.Pdf.App.Picker
         private void WhenPasswordRequired(QueryEventArgs<string> e)
         {
             e.Cancel = true;
-            throw new EncryptionException(string.Format(
+            throw new ArgumentException(string.Format(
                 Properties.Resources.MessagePassword,
                 IO.Get(e.Query).Name
             ));
@@ -310,7 +310,7 @@ namespace Cube.Pdf.App.Picker
         private KeyValuePair<int, int> ExtractImages(IProgress<ProgressEventArgs<string>> progress)
         {
             var query = new Query<string>(e => WhenPasswordRequired(e));
-            using (var reader = new DocumentReader(Path, query, true, IO))
+            using (var reader = new DocumentReader(Path, query, true, true, IO))
             {
                 ExtractImages(reader, progress);
                 return KeyValuePair.Create(reader.Pages.Count(), Items.Count);
@@ -341,7 +341,7 @@ namespace Cube.Pdf.App.Picker
                    string.Format(Properties.Resources.MessageProcess, name, pagenum, count)
                 ));
 
-                var images = src.ExtractImages(pagenum);
+                var images = src.GetEmbeddedImages(pagenum);
                 _source.Token.ThrowIfCancellationRequested();
 
                 lock (_lock)

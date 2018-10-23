@@ -25,7 +25,7 @@ namespace Cube.Pdf.App.Editor
     /// MainWindow
     ///
     /// <summary>
-    /// メイン画面を表すクラスです。
+    /// Represents the code behind of the MainWindow.xaml
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -36,13 +36,10 @@ namespace Cube.Pdf.App.Editor
         /// MainWindow
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the MainWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        public MainWindow() { InitializeComponent(); }
     }
 }

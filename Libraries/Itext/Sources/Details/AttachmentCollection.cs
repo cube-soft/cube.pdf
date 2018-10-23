@@ -20,37 +20,37 @@ using Cube.FileSystem;
 using iTextSharp.text.pdf;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ReadOnlyAttachmentList
+    /// AttachmentCollection
     ///
     /// <summary>
-    /// 読み取り専用で添付ファイル一覧へアクセスするためのクラスです。
+    /// Represents the collection of attached files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ReadOnlyAttachmentList : IReadOnlyList<Attachment>
+    internal class AttachmentCollection : IEnumerable<Attachment>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReadOnlyAttachmentList
+        /// AttachmentCollection
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the AttachmentCollection class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="core">内部処理用のオブジェクト</param>
-        /// <param name="file">PDF ファイル情報</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="core">PdfReader object.</param>
+        /// <param name="file">Information of the PDF file.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyAttachmentList(PdfReader core, PdfFile file, IO io)
+        public AttachmentCollection(PdfReader core, PdfFile file, IO io)
         {
             File  = file;
             IO    = io;
@@ -68,44 +68,22 @@ namespace Cube.Pdf.Itext
         /// File
         ///
         /// <summary>
-        /// ファイル情報を取得します。
+        /// Gets the file information of the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PdfFile File { get; }
+        protected PdfFile File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// IO
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します。
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IO IO { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Count
-        ///
-        /// <summary>
-        /// 添付ファイルの数を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Count => _values.Count();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Item[int]
-        ///
-        /// <summary>
-        /// Attachment オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Attachment this[int index] => _values[index];
+        protected IO IO { get; }
 
         #endregion
 
@@ -116,19 +94,27 @@ namespace Cube.Pdf.Itext
         /// GetEnumerator
         ///
         /// <summary>
-        /// 各ページオブジェクトへアクセスするための反復子を取得します。
+        /// Returns an enumerator that iterates through this collection.
         /// </summary>
         ///
+        /// <returns>
+        /// An IEnumerator(Attachment) object for this collection.
+        /// </returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<Attachment> GetEnumerator() => _values.GetEnumerator();
+        public IEnumerator<Attachment> GetEnumerator() => _inner.GetEnumerator();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetEnumerator
+        /// IEnumerable.GetEnumerator
         ///
         /// <summary>
-        /// 各ページオブジェクトへアクセスするための反復子を取得します。
+        /// Returns an enumerator that iterates through this collection.
         /// </summary>
+        ///
+        /// <returns>
+        /// An IEnumerator object for this collection.
+        /// </returns>
         ///
         /* ----------------------------------------------------------------- */
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -139,10 +125,10 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ParseAttachments
+        /// Parse
         ///
         /// <summary>
-        /// 添付ファイルを解析します。
+        /// Gets the attachment objects from the PdfReader.
         /// </summary>
         ///
         /// <remarks>
@@ -159,28 +145,23 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void Parse()
         {
-            if (_core == null) return;
-
             if (!(PdfReader.GetPdfObject(_core.Catalog.Get(PdfName.NAMES)) is PdfDictionary c)) return;
             if (!(PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) is PdfDictionary e)) return;
 
-            var files = e.GetAsArray(PdfName.NAMES);
-            if (files == null) return;
+            var items = e.GetAsArray(PdfName.NAMES);
+            if (items == null) return;
 
-            for (var i = 1; i < files.Size; i += 2) // see remarks
+            for (var i = 1; i < items.Size; i += 2) // see remarks
             {
-                var item = files.GetAsDict(i);
-                var name = item.GetAsString(PdfName.UF)?.ToUnicodeString();
-                if (string.IsNullOrEmpty(name)) name = item.GetAsString(PdfName.F)?.ToString();
-                if (string.IsNullOrEmpty(name)) continue;
+                var cur  = items.GetAsDict(i);
+                var name = cur.GetAsString(PdfName.UF) ?? cur.GetAsString(PdfName.F);
+                var dic  = cur.GetAsDict(PdfName.EF);
+                if (name == null || dic == null) continue;
 
-                var ef = item.GetAsDict(PdfName.EF);
-                if (ef == null) continue;
-
-                foreach (var key in ef.Keys)
+                foreach (var key in dic.Keys)
                 {
-                    if (!(PdfReader.GetPdfObject(ef.GetAsIndirectObject(key)) is PRStream stream)) continue;
-                    _values.Add(new EmbeddedAttachment(name, File.FullName, IO, stream));
+                    if (!(PdfReader.GetPdfObject(dic.GetAsIndirectObject(key)) is PRStream stream)) continue;
+                    _inner.Add(new EmbeddedAttachment(name.ToUnicodeString(), File.FullName, IO, stream));
                     break;
                 }
             }
@@ -190,7 +171,7 @@ namespace Cube.Pdf.Itext
 
         #region Fields
         private readonly PdfReader _core;
-        private readonly IList<Attachment> _values = new List<Attachment>();
+        private readonly IList<Attachment> _inner = new List<Attachment>();
         #endregion
     }
 }

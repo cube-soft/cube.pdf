@@ -48,7 +48,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Set
         ///
         /// <summary>
-        /// Executes the test to set the metadata.
+        /// Executes the test for setting the PDF metadata.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -58,7 +58,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             await CreateAsync("Sample.pdf", "", 2, async (vm) =>
             {
                 var cts = new CancellationTokenSource();
-                using (var _ = Register(vm, cmp, cts))
+                using (Register(vm, cmp, cts))
                 {
                     Assert.That(vm.Ribbon.Metadata.Command.CanExecute(), Is.True);
                     vm.Ribbon.Metadata.Command.Execute();
@@ -83,7 +83,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test to cancel the MetadataWindow.
+        /// Executes the test for selecting the cancel button in the
+        /// MetadataWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -105,7 +106,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
 
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
-            Assert.That(vm.Data.Metadata.Value.Title, Is.Not.EqualTo("dummy"));
+            Assert.That(vm.Data.Metadata.Title, Is.Not.EqualTo("dummy"));
         });
 
         #endregion

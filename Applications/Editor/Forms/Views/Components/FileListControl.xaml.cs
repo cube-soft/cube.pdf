@@ -22,24 +22,24 @@ namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PagesControl
+    /// FileListControl
     ///
     /// <summary>
-    /// PDF のページ一覧を表示するクラスです。
+    /// Represents the code behind of the FileListControl.xaml.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class PagesControl : UserControl
+    public partial class FileListControl : UserControl
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// PagesControl
+        /// FileListControl
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the FileListControl class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PagesControl() { InitializeComponent(); }
+        public FileListControl() { InitializeComponent(); }
     }
 }

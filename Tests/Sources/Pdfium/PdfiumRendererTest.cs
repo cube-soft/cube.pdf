@@ -34,12 +34,14 @@ namespace Cube.Pdf.Tests.Pdfium
     [TestFixture]
     class PdfiumRendererTest : DocumentReaderFixture
     {
+        #region Tests
+
         /* ----------------------------------------------------------------- */
         ///
         /// Render
         ///
         /// <summary>
-        /// PDF の描画テストを実行します。
+        /// Executes the test to render the specified page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -55,7 +57,7 @@ namespace Cube.Pdf.Tests.Pdfium
             using (var reader = new DocumentReader(src))
             {
                 var page = reader.GetPage(pagenum);
-                using (var image = reader.GetImage(page, ratio))
+                using (var image = reader.Render(page, ratio))
                 {
                     Assert.That(image.Width,  Is.EqualTo(width));
                     Assert.That(image.Height, Is.EqualTo(height));
@@ -65,5 +67,7 @@ namespace Cube.Pdf.Tests.Pdfium
 
             Assert.That(IO.Exists(dest), Is.True);
         }
+
+        #endregion
     }
 }

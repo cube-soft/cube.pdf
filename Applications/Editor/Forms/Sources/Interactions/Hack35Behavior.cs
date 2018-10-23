@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
@@ -49,10 +48,6 @@ namespace Cube.Pdf.App.Editor
         protected override void OnAttached()
         {
             base.OnAttached();
-
-            AssociatedObject.Closing -= WhenClosing;
-            AssociatedObject.Closing += WhenClosing;
-
             SetKeys();
         }
 
@@ -68,24 +63,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.Closing -= WhenClosing;
-
             base.OnDetaching();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenClosing
-        ///
-        /// <summary>
-        /// Occurs when the Closing event is fired.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenClosing(object s, CancelEventArgs e)
-        {
-            if (!(AssociatedObject.DataContext is MainViewModel vm)) return;
-            if (vm.Exit?.CanExecute(e) ?? false) vm.Exit.Execute(e);
         }
 
         /* ----------------------------------------------------------------- */

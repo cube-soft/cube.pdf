@@ -25,7 +25,7 @@ namespace Cube.Pdf.App.Editor
     /// FooterControl
     ///
     /// <summary>
-    /// Represents the logic for FooterControl.xaml.
+    /// Represents the code behind of the FooterControl.xaml.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

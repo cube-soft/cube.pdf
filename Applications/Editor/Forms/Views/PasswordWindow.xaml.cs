@@ -40,9 +40,6 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PasswordWindow()
-        {
-            InitializeComponent();
-        }
+        public PasswordWindow() { InitializeComponent(); }
     }
 }

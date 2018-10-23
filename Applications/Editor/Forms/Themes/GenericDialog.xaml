@@ -60,6 +60,7 @@
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Padding" Value="8,4" />
+        <Setter Property="BorderBrush" Value="{StaticResource LightBorderBrush}" />
     </Style>
 
     <!-- **********************************************************************
@@ -98,12 +99,5 @@
         <Setter Property="Width" Value="100" />
         <Setter Property="Margin" Value="12,3,3,3" />
         <Setter Property="IsCancel" Value="True" />
-    </Style>
-
-    <!-- **********************************************************************
-      TopButton
-    *********************************************************************** -->
-    <Style x:Key="TopButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DialogButtonStyle}">
-        <Setter Property="Margin" Value="3,0,3,3" />
     </Style>
 </ResourceDictionary>

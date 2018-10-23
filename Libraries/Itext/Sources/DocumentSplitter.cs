@@ -29,7 +29,7 @@ namespace Cube.Pdf.Itext
     /// DocumentSplitter
     ///
     /// <summary>
-    /// PDF ファイルを全て 1 ページの PDF ファイルに分割するクラスです。
+    /// Provides functionality to save the PDF document in page by page.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,7 +42,7 @@ namespace Cube.Pdf.Itext
         /// DocumentSplitter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentSplitter class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -53,10 +53,11 @@ namespace Cube.Pdf.Itext
         /// DocumentSplitter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentSplitter class with
+        /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentSplitter(IO io) : base(io) { }
@@ -70,7 +71,7 @@ namespace Cube.Pdf.Itext
         /// Results
         ///
         /// <summary>
-        /// 作成した PDF ファイルのパス一覧を取得します。
+        /// Gets the collection of saved paths.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -85,7 +86,7 @@ namespace Cube.Pdf.Itext
         /// OnReset
         ///
         /// <summary>
-        /// 初期状態にリセットします。
+        /// Executes the reset operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -100,7 +101,7 @@ namespace Cube.Pdf.Itext
         /// OnSave
         ///
         /// <summary>
-        /// PDF ファイルを指定フォルダ下に保存します。
+        /// Executes the save operation.
         /// </summary>
         ///
         /// <remarks>
@@ -129,16 +130,17 @@ namespace Cube.Pdf.Itext
         /// SaveCore
         ///
         /// <summary>
-        /// PDF ファイルを分割して保存します。
+        /// Splits pages and saves them to the specified directory in
+        /// page by page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveCore(Page src, string folder)
+        private void SaveCore(Page src, string directory)
         {
             var reader = GetRawReader(src);
             reader.Rotate(src);
 
-            var dest = Unique(folder, src.File, src.Number);
+            var dest = Unique(directory, src.File, src.Number);
             SaveOne(reader, src.Number, dest);
             Results.Add(dest);
         }
@@ -148,7 +150,7 @@ namespace Cube.Pdf.Itext
         /// SaveOne
         ///
         /// <summary>
-        /// 1 ページの PDF ファイルを保存します。
+        /// Saves the specified page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -168,7 +170,7 @@ namespace Cube.Pdf.Itext
         /// Unique
         ///
         /// <summary>
-        /// 一意のパス名を取得します。
+        /// Gets a unique path.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

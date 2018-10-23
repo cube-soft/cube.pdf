@@ -40,7 +40,7 @@ namespace Cube.Pdf.Tests
         /// Get
         ///
         /// <summary>
-        /// Executes the test to get encryption information.
+        /// Executes the test for getting the encryption settings.
         /// </summary>
         ///
         /// <remarks>

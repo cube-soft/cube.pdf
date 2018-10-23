@@ -1,38 +1,38 @@
 <?xml version="1.0"?>
 <package>
-  <metadata>
-    <id>Cube.Pdf.Itext</id>
-    <version>2.11.0</version>
-    <title>Cube.Pdf.Itext</title>
-    <authors>CubeSoft</authors>
-    <owners>CubeSoft</owners>
-    <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
-    <description>iTextSharp based PDF library for CubeSoft applications.</description>
-    <tags>Cube PDF iText</tags>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Itext/License.txt</licenseUrl>
-    <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
-    <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
-    <dependencies>
-      <group targetFramework="net45">
-        <dependency id="Cube.Core" version="1.11.0" />
-        <dependency id="Cube.FileSystem" version="1.11.0" />
-        <dependency id="Cube.Images" version="1.11.0" />
-        <dependency id="iTextSharp" version="5.5.13" />
-      </group>
-      <group targetFramework="net35">
-        <dependency id="Cube.Backwards" version="1.5.0" />
-        <dependency id="Cube.Core" version="1.11.0" />
-        <dependency id="Cube.FileSystem" version="1.11.0" />
-        <dependency id="Cube.Images" version="1.11.0" />
-        <dependency id="iTextSharp" version="5.5.13" />
-      </group>
-    </dependencies>
-  </metadata>
-  <files>
-    <file src="bin\Release\Cube.Pdf.Itext.dll" target="lib\net45" />
-    <file src="bin\Release\Cube.Pdf.Itext.xml" target="lib\net45" />
-    <file src="bin\net35\Release\Cube.Pdf.Itext.dll" target="lib\net35" />
-    <file src="bin\net35\Release\Cube.Pdf.Itext.xml" target="lib\net35" />
-  </files>
+    <metadata>
+        <version>2.12.0</version>
+        <id>Cube.Pdf.Itext</id>
+        <title>Cube.Pdf.Itext</title>
+        <authors>CubeSoft</authors>
+        <owners>CubeSoft</owners>
+        <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
+        <description>PDF Library to wrap iTextSharp.</description>
+        <tags>Cube PDF iText</tags>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <licenseUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Itext/License.txt</licenseUrl>
+        <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
+        <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
+        <dependencies>
+            <group targetFramework="net45">
+                <dependency id="Cube.Core" version="1.12.0" />
+                <dependency id="Cube.FileSystem" version="1.12.0" />
+                <dependency id="Cube.Images" version="1.12.0" />
+                <dependency id="iTextSharp" version="5.5.13" />
+            </group>
+            <group targetFramework="net35">
+                <dependency id="Cube.Backwards" version="1.5.0" />
+                <dependency id="Cube.Core" version="1.12.0" />
+                <dependency id="Cube.FileSystem" version="1.12.0" />
+                <dependency id="Cube.Images" version="1.12.0" />
+                <dependency id="iTextSharp" version="5.5.13" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\Cube.Pdf.Itext.dll" target="lib\net45" />
+        <file src="bin\Release\Cube.Pdf.Itext.xml" target="lib\net45" />
+        <file src="bin\net35\Release\Cube.Pdf.Itext.dll" target="lib\net35" />
+        <file src="bin\net35\Release\Cube.Pdf.Itext.xml" target="lib\net35" />
+    </files>
 </package>

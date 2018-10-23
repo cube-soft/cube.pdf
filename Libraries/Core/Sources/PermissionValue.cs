@@ -28,13 +28,14 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public enum PermissionValue
     {
-        /// <summary>禁止</summary>
+        /// <summary>Operation is denied.</summary>
         Deny,
-        /// <summary>一部制限</summary>
+        /// <summary>Part of the operation is allowed.</summary>
         Restrict,
-        /// <summary>許可</summary>
+        /// <summary>Operation is allowed.</summary>
         Allow,
     }
 
@@ -71,7 +72,7 @@ namespace Cube.Pdf
         /// <summary>
         /// Print the document at the highest quality level.
         /// </summary>
-        PrintHighQuality = 0x00000800 | Print,
+        PrintHighQuality = 0x00000800,
 
         /// <summary>
         /// Modify the contents of the document by operations other than

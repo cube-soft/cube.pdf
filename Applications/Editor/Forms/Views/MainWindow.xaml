@@ -29,8 +29,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 
-    Height="600"
-    Width="800"
+    Height="{Binding Data.Settings.Height, Mode=TwoWay}"
+    Width="{Binding Data.Settings.Width, Mode=TwoWay}"
     FontFamily="Meiryo UI"
     AllowDrop="True"
     Cursor="{Binding Data.Busy.Value, Converter={my:BooleanToCursor}}">
@@ -39,7 +39,12 @@
       Resources
     *********************************************************************** -->
     <r:RibbonWindow.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Views/Components/ContextControl.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Views/Components/MainContextMenu.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/PageStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </r:RibbonWindow.Resources>
 
     <r:RibbonWindow.DataContext>
@@ -98,6 +103,7 @@
         <xb:SaveFileDialogBehavior />
         <xb:UriBehavior />
         <xb:CloseBehavior />
+        <xb:ClosingBehavior Command="{Binding Ribbon.Close.Command}" />
         <my:PasswordWindowBehavior />
         <my:PreviewWindowBehavior />
         <my:InsertWindowBehavior />
@@ -105,7 +111,7 @@
         <my:MetadataWindowBehavior />
         <my:EncryptionWindowBehavior />
         <my:SettingsWindowBehavior />
-        <my:DragFileBehavior />
+        <my:MouseOpenBehavior Command="{Binding Open}" />
         <my:Hack35Behavior />
     </i:Interaction.Behaviors>
 
@@ -126,13 +132,32 @@
         </Grid.RowDefinitions>
 
         <my:RibbonControl Grid.Row="0" />
-        <my:PagesControl
+        <my:FooterControl Grid.Row="2" />
+
+        <!-- ******************************************************************
+          Thumbnail list of the PDF document
+        ******************************************************************* -->
+        <ListView
             ContextMenu="{StaticResource MainContextMenu}"
+            ItemsSource="{Binding Data.Images}"
             Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibility}}"
-            Grid.Row="1" />
+            Style="{StaticResource PageCollectionStyle}"
+            Grid.Row="1">
+            <i:Interaction.Behaviors>
+                <xb:SelectionBehavior />
+                <my:MouseClearBehavior Command="{Binding Ribbon.SelectClear.Command}" />
+                <my:MousePreviewBehavior Command="{Binding Ribbon.Preview.Command}" />
+                <my:MouseMoveBehavior
+                    Command="{Binding InsertOrMove}"
+                    Selection="{Binding Data.Images.Selection}" />
+            </i:Interaction.Behaviors>
+        </ListView>
+
+        <!-- ******************************************************************
+          Recent files (when not open)
+        ******************************************************************* -->
         <my:HeroControl
             Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibilityInverse}}"
             Grid.Row="1" />
-        <my:FooterControl Grid.Row="2" />
     </Grid>
 </r:RibbonWindow>

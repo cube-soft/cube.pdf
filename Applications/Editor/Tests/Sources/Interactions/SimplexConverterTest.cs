@@ -29,7 +29,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Cube.Pdf.Tests.Editor
+namespace Cube.Pdf.Tests.Editor.Interactions
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -127,6 +127,26 @@ namespace Cube.Pdf.Tests.Editor
         [TestCase(7654321, "ja", ExpectedResult = "7.3 MB (7,654,321 バイト)")]
         public string ByteConverter(long n, string culture) =>
             Convert<string>(new ByteConverter(), n, culture);
+
+        #endregion
+
+        #region ByteConverterLite
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ByteConverter
+        ///
+        /// <summary>
+        /// Executes the test of the ByteConverter class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(100,     "en", ExpectedResult = "1 KB")]
+        [TestCase(101309,  "en", ExpectedResult = "98.9 KB")]
+        [TestCase(200,     "ja", ExpectedResult = "1 KB")]
+        [TestCase(7654321, "ja", ExpectedResult = "7.3 MB")]
+        public string ByteConverterLite(long n, string culture) =>
+            Convert<string>(new ByteConverterLite(), n, culture);
 
         #endregion
 
@@ -322,7 +342,7 @@ namespace Cube.Pdf.Tests.Editor
 
         #endregion
 
-        #region Helper methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

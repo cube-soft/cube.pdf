@@ -83,10 +83,10 @@
       <HintPath>..\..\packages\Cube.Backwards.1.5.0\lib\net35\Cube.Backwards.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\packages\Cube.Core.1.11.0\lib\net35\Cube.Core.dll</HintPath>
+      <HintPath>..\..\packages\Cube.Core.1.12.0\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\packages\Cube.FileSystem.1.11.0\lib\net35\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\packages\Cube.FileSystem.1.12.0\lib\net35\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
@@ -121,6 +121,7 @@
     <Compile Include="Sources\Itext\ItextWriterTest.cs" />
     <Compile Include="Sources\Pdfium\PdfiumRendererTest.cs" />
     <Compile Include="Sources\AngleTest.cs" />
+    <Compile Include="Sources\AttachmentTest.cs" />
     <Compile Include="Sources\EncryptionTest.cs" />
     <Compile Include="Sources\FileTest.cs" />
     <Compile Include="Sources\MetadataTest.cs" />
@@ -144,6 +145,9 @@
     <None Include="Examples\Sample.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\SampleAlpha.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\SampleAnnotation.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -151,6 +155,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\SampleAttachmentCjk.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleAttachmentEmpty.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\SampleBookmark.pdf">
@@ -163,6 +170,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\SampleRc40.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleRc40Open.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\SampleRc128.pdf">

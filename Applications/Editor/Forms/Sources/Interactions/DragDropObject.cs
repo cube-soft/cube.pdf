@@ -16,143 +16,119 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Concurrent;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 
 namespace Cube.Pdf.App.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageSelection
+    /// DragDropObject
     ///
     /// <summary>
-    /// Represents the selection of images.
+    /// Represents information for the Drag&amp;Drop behavior.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageSelection : ObservableProperty
+    [Serializable]
+    public class DragDropObject
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DragDropObject
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DragDropObject class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="index">Index of the dragged item.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DragDropObject(int index) : this(Process.GetCurrentProcess().Id, index) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DragDropObject
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DragDropObject class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="pid">Process ID.</param>
+        /// <param name="index">Index of the dragged item.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DragDropObject(int pid, int index)
+        {
+            Pid       = pid;
+            DragIndex = index;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Count
+        /// Pid
         ///
         /// <summary>
-        /// Gets the number of selected images.
+        /// Gets the process ID of the dragged application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count => _selection.Count;
+        public int Pid { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// First
+        /// IsCurrentProcess
         ///
         /// <summary>
-        /// Gets the first index that is maximum value in the selected
-        /// images.
+        /// Gets the value indicating whether the process ID of the
+        /// created object is equal to the that of current process.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int First => _selection.Keys.OrderBy(i => i.Index).FirstOrDefault()?.Index ?? -1;
+        public bool IsCurrentProcess => (Pid == Process.GetCurrentProcess().Id);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Last
+        /// DragIndex
         ///
         /// <summary>
-        /// Gets the last index that is maximum value in the selected
-        /// images.
+        /// Gets the index of the dragged item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Last => _selection.Keys.OrderByDescending(i => i.Index).FirstOrDefault()?.Index ?? -1;
+        public int DragIndex { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Indices
+        /// DropIndex
         ///
         /// <summary>
-        /// Gets the indices of the selected images.
+        /// Gets or sets the index of the dropped item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<int> Indices => _selection.Keys.Select(e => e.Index);
+        public int DropIndex { get; set; } = -1;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Items
+        /// Pages
         ///
         /// <summary>
-        /// Gets the selection of images.
+        /// Gets or sets the collection of selected pages when dragging.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<ImageItem> Items => _selection.Keys;
+        public IEnumerable<Page> Pages { get; set; }
 
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds the specified image to the selection list.
-        /// </summary>
-        ///
-        /// <param name="src">Image entry.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Add(ImageItem src)
-        {
-            if (_selection.TryAdd(src, 0)) RaiseEvents();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Remove
-        ///
-        /// <summary>
-        /// Removes the specified image from the selection list.
-        /// </summary>
-        ///
-        /// <param name="src">Image entry.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Remove(ImageItem src)
-        {
-            if (_selection.TryRemove(src, out var _)) RaiseEvents();
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RaiseEvents
-        ///
-        /// <summary>
-        /// Raises some events.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void RaiseEvents()
-        {
-            RaisePropertyChanged(nameof(Count));
-            RaisePropertyChanged(nameof(Last));
-            RaisePropertyChanged(nameof(Indices));
-            RaisePropertyChanged(nameof(Items));
-        }
-
-        #endregion
-
-        #region Fields
-        private readonly ConcurrentDictionary<ImageItem, byte> _selection = new ConcurrentDictionary<ImageItem, byte>();
         #endregion
     }
 }

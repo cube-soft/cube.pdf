@@ -17,9 +17,12 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui.Behaviors;
+using System.Windows;
 
 namespace Cube.Pdf.App.Editor
 {
+    #region ShowDialog
+
     /* --------------------------------------------------------------------- */
     ///
     /// PasswordWindowBehavior
@@ -103,4 +106,32 @@ namespace Cube.Pdf.App.Editor
     /* --------------------------------------------------------------------- */
     public class SettingsWindowBehavior :
         ShowDialogBehavior<SettingsWindow, SettingsViewModel> { }
+
+    #endregion
+
+    #region Others
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// MouseOpenBehavior
+    ///
+    /// <summary>
+    /// Represents the behavior when files are dropped.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class MouseOpenBehavior : FileDropBehavior<Window> { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// InsertPositionBehavior
+    ///
+    /// <summary>
+    /// Represents the behavior when a RadioButton is checked.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class InsertPositionBehavior : CheckedBehavior<int> { }
+
+    #endregion
 }

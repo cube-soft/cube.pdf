@@ -46,5 +46,21 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         void Render(Graphics dest, Page page, PointF point, SizeF size);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Render
+        ///
+        /// <summary>
+        /// Gets an Image object in which the Page content is rendered.
+        /// </summary>
+        ///
+        /// <param name="page">Page object.</param>
+        /// <param name="size">Rendering size.</param>
+        ///
+        /// <returns>Image object</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        Image Render(Page page, SizeF size);
     }
 }

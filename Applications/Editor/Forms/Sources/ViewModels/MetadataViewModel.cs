@@ -22,6 +22,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.App.Editor
@@ -68,7 +69,7 @@ namespace Cube.Pdf.App.Editor
             Subject  = this.Create(() => src.Subject,  e => src.Subject  = e, () => Properties.Resources.MenuSubject );
             Keywords = this.Create(() => src.Keywords, e => src.Keywords = e, () => Properties.Resources.MenuKeywords);
             Creator  = this.Create(() => src.Creator,  e => src.Creator  = e, () => Properties.Resources.MenuCreator );
-            Version  = this.Create(() => src.Version,  e => src.Version  = e, () => Properties.Resources.MenuVersion );
+            Version  = CreateVersion(src);
             Viewer   = CreateViewerPreferences(src);
 
             OK.Command = new RelayCommand(() => { Send<CloseMessage>(); callback(src); });
@@ -291,6 +292,22 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateVersion
+        ///
+        /// <summary>
+        /// Creates a new menu for the Version property.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private BindableElement<Version> CreateVersion(Metadata src)
+        {
+            src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
+                          Versions.First();
+            return this.Create(() => src.Version, e => src.Version = e, () => Properties.Resources.MenuVersion);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

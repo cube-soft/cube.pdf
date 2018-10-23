@@ -56,16 +56,13 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(dest.Location,           Is.EqualTo(@"CubeSoft\CubePDF\v2"));
             Assert.That(dest.WorkDirectory,      Does.Contain("CubePDF"));
             Assert.That(dest.AutoSave,           Is.False);
-            Assert.That(dest.Company,            Is.EqualTo("CubeSoft"));
-            Assert.That(dest.Product,            Is.EqualTo("CubePDF"));
+            Assert.That(dest.Assembly.Company,   Is.EqualTo("CubeSoft"));
+            Assert.That(dest.Assembly.Product,   Is.EqualTo("CubePDF"));
             Assert.That(dest.MachineName,        Is.EqualTo(Environment.MachineName));
             Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));
             Assert.That(dest.DocumentName.Value, Is.Empty);
             Assert.That(dest.DocumentName.Name,  Is.EqualTo("CubePDF"));
-            Assert.That(dest.Version.ToString(), Is.EqualTo("1.0.0RC14"));
-            Assert.That(dest.Startup.Name,       Is.EqualTo("cubepdf-checker"));
-            Assert.That(dest.Startup.Command,    Does.Contain("cubepdf-checker.exe\""));
-            Assert.That(dest.Startup.Command,    Does.EndWith("CubePDF"));
+            Assert.That(dest.Version.ToString(), Is.EqualTo("1.0.0RC15"));
             Assert.That(dest.Value,              Is.Not.Null);
         }
 

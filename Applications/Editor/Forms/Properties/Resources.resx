@@ -120,6 +120,9 @@
   <data name="FilterAll" xml:space="preserve">
     <value>All files</value>
   </data>
+  <data name="FilterInsertable" xml:space="preserve">
+    <value>Insertable files</value>
+  </data>
   <data name="FilterPdf" xml:space="preserve">
     <value>PDF files</value>
   </data>
@@ -200,6 +203,9 @@
   </data>
   <data name="MenuFilesize" xml:space="preserve">
     <value>Filesize</value>
+  </data>
+  <data name="MenuFiletype" xml:space="preserve">
+    <value>Type</value>
   </data>
   <data name="MenuFrameOnly" xml:space="preserve">
     <value>Frame only</value>
@@ -389,9 +395,6 @@
   </data>
   <data name="MessageLoading" xml:space="preserve">
     <value>Loading {0} ...</value>
-  </data>
-  <data name="MessageLoadingMetadata" xml:space="preserve">
-    <value>Loading metadata ...</value>
   </data>
   <data name="MessageOverwrite" xml:space="preserve">
     <value>PDF is modified. Do you want to overwrite?</value>

@@ -31,22 +31,6 @@ namespace Cube.Pdf
     [Serializable]
     public class EncryptionException : Exception
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// EncryptionException
-        ///
-        /// <summary>
-        /// Initializes a new instance of the EncryptionException class
-        /// with the specified message.
-        /// </summary>
-        ///
-        /// <param name="message">Message.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EncryptionException(string message) : base(message) { }
-
         /* ----------------------------------------------------------------- */
         ///
         /// EncryptionException
@@ -61,7 +45,5 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         public EncryptionException(string message, Exception inner) : base(message, inner) { }
-
-        #endregion
     }
 }

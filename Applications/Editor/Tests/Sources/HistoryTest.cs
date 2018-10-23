@@ -125,7 +125,7 @@ namespace Cube.Pdf.Tests.Editor
 
         #endregion
 
-        #region Helper classes and methods
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///

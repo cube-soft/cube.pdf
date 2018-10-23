@@ -17,11 +17,14 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Generics;
 using Cube.Pdf.Mixin;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -135,14 +138,25 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Drop
+        /// Open
         ///
         /// <summary>
-        /// Gets the command for Drag&amp;Drop.
+        /// Gets the Drag&amp;Drop command to open a new PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand Drop { get; private set; }
+        public ICommand Open { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InsertOrMove
+        ///
+        /// <summary>
+        /// Gets the Drag&amp;Drop command to insert or move items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand InsertOrMove { get; private set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -194,7 +208,8 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void SetCommands()
         {
-            Drop                         = IsDrop();
+            Open                         = IsDrop();
+            InsertOrMove                 = IsDragMove();
             Recent.Open                  = IsLink();
             Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
             Ribbon.Close.Command         = Close();
@@ -205,9 +220,9 @@ namespace Cube.Pdf.App.Editor
             Ribbon.SelectAll.Command     = IsOpen(() => Send(() => Model.Select(true)));
             Ribbon.SelectFlip.Command    = IsOpen(() => Send(() => Model.Flip()));
             Ribbon.SelectClear.Command   = IsOpen(() => Send(() => Model.Select(false)));
-            Ribbon.Insert.Command        = IsItem(() => PostOpen(e => Model.Insert(e)));
-            Ribbon.InsertFront.Command   = IsOpen(() => PostOpen(e => Model.Insert(0, e)));
-            Ribbon.InsertBack.Command    = IsOpen(() => PostOpen(e => Model.Insert(int.MaxValue, e)));
+            Ribbon.Insert.Command        = IsItem(() => PostInsert(e => Model.Insert(e)));
+            Ribbon.InsertFront.Command   = IsOpen(() => PostInsert(e => Model.Insert(0, e)));
+            Ribbon.InsertBack.Command    = IsOpen(() => PostInsert(e => Model.Insert(int.MaxValue, e)));
             Ribbon.InsertOthers.Command  = IsOpen(() => PostInsert());
             Ribbon.Extract.Command       = IsItem(() => PostSave(e => Model.Extract(e)));
             Ribbon.Remove.Command        = IsItem(() => Send(() => Model.Remove()));
@@ -293,8 +308,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsItem(Action action) => new BindableCommand(action,
-            () => !Data.Busy.Value && Data.IsOpen() && Data.Selection.Count > 0,
-            Data.Busy, Data.Source, Data.Selection
+            () => !Data.Busy.Value && Data.IsOpen() && Data.Images.Selection.Count > 0,
+            Data.Busy, Data.Source, Data.Images.Selection
         );
 
         /* ----------------------------------------------------------------- */
@@ -344,6 +359,22 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IsDragMove
+        ///
+        /// <summary>
+        /// Creates a Drag&amp;Drop command to move items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsDragMove() => new BindableCommand<DragDropObject>(
+            e => Post(() => Model.InsertOrMove(e)),
+            e => !Data.Busy.Value && Data.IsOpen() &&
+                 (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0),
+            Data.Busy, Data.Source
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// IsDrop
         ///
         /// <summary>
@@ -351,9 +382,9 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsDrop() => new BindableCommand<string>(
+        private ICommand IsDrop() => new BindableCommand<string[]>(
             e => Post(() => Model.Open(e)),
-            e => !Data.Busy.Value,
+            e => !Data.Busy.Value && Model.GetFirst(e).HasValue(),
             Data.Busy
         );
 
@@ -366,7 +397,7 @@ namespace Cube.Pdf.App.Editor
         /// PostOpen
         ///
         /// <summary>
-        /// Posts the message to show a dialog of the OpenFileDialog
+        /// Sends the message to show a dialog of the OpenFileDialog
         /// class, and executes the specified action as an asynchronous
         /// operation.
         /// </summary>
@@ -381,7 +412,7 @@ namespace Cube.Pdf.App.Editor
         /// PostSave
         ///
         /// <summary>
-        /// Posts the message to show a dialog of the SaveFileDialog
+        /// Sends the message to show a dialog of the SaveFileDialog
         /// class, and executes the specified action as an asynchronous
         /// operation.
         /// </summary>
@@ -389,6 +420,21 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void PostSave(Action<string> action) => Send(Factory.SaveMessage(e =>
             Post(() => { if (e.Result) action(e.FileName); })
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PostInsert
+        ///
+        /// <summary>
+        /// Sends the message to show a dialog of the OpenFileDialog
+        /// class, and executes the specified action as an asynchronous
+        /// operation.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void PostInsert(Action<IEnumerable<string>> action) => Send(Factory.InsertMessage(e =>
+            Post(() => { if (e.Result) action(e.FileNames); })
         ));
 
         /* ----------------------------------------------------------------- */
@@ -436,7 +482,8 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void PostInsert() => Post(new InsertViewModel(
-            Data.Count.Value, Context
+            (i, v) => Post(() => Model.Insert(i + 1, v.Select(e => e.FullName))),
+            Data.Images.Selection.First, Data.Count.Value, Data.IO, Context
         ));
 
         /* ----------------------------------------------------------------- */
@@ -465,7 +512,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void PostMetadata() => Post(() =>
         {
-            var m = Model.GetMetadata().Copy();
+            var m = Data.Metadata.Copy();
             Post(new MetadataViewModel(e => Model.Update(e), m, Data.Source.Value, Context));
         });
 
@@ -481,7 +528,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void PostEncryption() => Post(() =>
         {
-            var m = Model.GetEncryption().Copy();
+            var m = Data.Encryption.Copy();
             Post(new EncryptionViewModel(e => Model.Update(e), m, Context));
         });
 

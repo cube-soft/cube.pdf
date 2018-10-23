@@ -25,7 +25,7 @@ namespace Cube.Pdf.Mixin
     /// IDocumentReaderExtension
     ///
     /// <summary>
-    /// IDocumentReader の拡張用クラスです。
+    /// Provides extended methods of the IDocumentReader class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,13 +38,15 @@ namespace Cube.Pdf.Mixin
         /// GetPage
         ///
         /// <summary>
-        /// 指定されたページ番号に対応するページ情報を取得します。
+        /// Gets information corresponding to the specified page number.
         /// </summary>
         ///
-        /// <param name="src">IDocumentReader オブジェクト</param>
-        /// <param name="pagenum">1 から始まるページ番号</param>
+        /// <param name="src">IDocumentReader object.</param>
+        /// <param name="pagenum">
+        /// Page number; 1 for the first page.
+        /// </param>
         ///
-        /// <returns>Page オブジェクト</returns>
+        /// <returns>Page object.</returns>
         ///
         /// <remarks>
         /// IDocumentReader.Pages が IList(Page) または IReadOnlyList(Page)

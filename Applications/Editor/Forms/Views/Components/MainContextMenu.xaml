@@ -20,9 +20,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- **********************************************************************
-      MainContextMenu
-    *********************************************************************** -->
     <ContextMenu x:Key="MainContextMenu">
         <!-- ******************************************************************
           Preview
@@ -46,6 +43,9 @@
             <MenuItem
                 Command="{Binding Ribbon.InsertBack.Command}"
                 Header="{Binding Ribbon.InsertBack.Tooltip}" />
+            <MenuItem
+                Command="{Binding Ribbon.InsertOthers.Command}"
+                Header="{Binding Ribbon.InsertOthers.Tooltip}" />
         </MenuItem>
 
         <!-- ******************************************************************

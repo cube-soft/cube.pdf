@@ -15,6 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
@@ -26,6 +28,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Serializable]
     public class Encryption : ObservableProperty
     {
         #region Properties

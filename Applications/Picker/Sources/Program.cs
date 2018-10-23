@@ -52,7 +52,7 @@ namespace Cube.Pdf.App.Picker
 
             try
             {
-                using (var m = new Cube.Processes.Messenger<IEnumerable<string>>(name))
+                using (var m = new Cube.Ipc.Messenger<IEnumerable<string>>(name))
                 {
                     if (!m.IsServer) m.Publish(args);
                     else

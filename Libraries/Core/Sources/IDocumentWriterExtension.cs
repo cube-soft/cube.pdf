@@ -22,7 +22,7 @@ namespace Cube.Pdf.Mixin
     /// IDocumentWriterExtension
     ///
     /// <summary>
-    /// IDocumentWriter の拡張用クラスです。
+    /// Provides extended methods of the IDocumentWriter class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -35,11 +35,11 @@ namespace Cube.Pdf.Mixin
         /// Add
         ///
         /// <summary>
-        /// ページを追加します。
+        /// Adds a new page.
         /// </summary>
         ///
-        /// <param name="src">IDocumentWriter オブジェクト</param>
-        /// <param name="page">ページ情報</param>
+        /// <param name="src">IDocumentWriter object.</param>
+        /// <param name="page">Page information.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Add(this IDocumentWriter src, Page page) =>
@@ -50,11 +50,30 @@ namespace Cube.Pdf.Mixin
         /// Add
         ///
         /// <summary>
-        /// IDocumentReader オブジェクト中の全てのページを追加します。
+        /// Adds a new page.
         /// </summary>
         ///
-        /// <param name="src">IDocumentWriter オブジェクト</param>
-        /// <param name="reader">IDocumentReader オブジェクト</param>
+        /// <param name="src">IDocumentWriter object.</param>
+        /// <param name="page">Page information.</param>
+        /// <param name="hint">
+        /// Document reader object to get more detailed information about
+        /// the specified pages.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Add(this IDocumentWriter src, Page page, IDocumentReader hint) =>
+            src.Add(new[] { page }, hint);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        ///
+        /// <summary>
+        /// Adds all pages of the specified document.
+        /// </summary>
+        ///
+        /// <param name="src">IDocumentWriter object.</param>
+        /// <param name="reader">IDocumentReader object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Add(this IDocumentWriter src, IDocumentReader reader) =>
@@ -65,15 +84,15 @@ namespace Cube.Pdf.Mixin
         /// Attach
         ///
         /// <summary>
-        /// ファイルを添付します。
+        /// Adds a new attached file.
         /// </summary>
         ///
-        /// <param name="src">IDocumentWriter オブジェクト</param>
-        /// <param name="file">添付ファイル</param>
+        /// <param name="src">IDocumentWriter object.</param>
+        /// <param name="file">Attached file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Attach(this IDocumentWriter src, Attachment file) =>
-            src.Attach(new[] { file });
+            src.Add(new[] { file });
 
         #endregion
     }

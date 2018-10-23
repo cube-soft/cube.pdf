@@ -95,25 +95,44 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password, IO io) :
-            this(src, new OnceQuery<string>(password), io) { }
+            this(src, new QueryValue<string>(password), io) { }
 
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentReader class with
+        /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF ファイルのパス</param>
-        /// <param name="query">パスワード用オブジェクト</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="query">Password query.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query, IO io) : base(io)
+        public DocumentReader(string src, IQuery<string> query, IO io) :
+            this(src, query, false, io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentReader class with
+        /// the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="query">Password query.</param>
+        /// <param name="fullaccess">Requires full access.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentReader(string src, IQuery<string> query, bool fullaccess, IO io) : base(io)
         {
             Debug.Assert(io != null);
-            _core = PdfiumReader.Create(src, query, io);
+            _core = PdfiumReader.Create(src, query, fullaccess, io);
             Debug.Assert(_core != null);
 
             File        = _core.File;
@@ -132,17 +151,43 @@ namespace Cube.Pdf.Pdfium
         /// Render
         ///
         /// <summary>
-        /// ページ内容を描画します。
+        /// Render the Page content to the Graphics object with the
+        /// specified parameters
         /// </summary>
         ///
-        /// <param name="dest">出力先オブジェクト</param>
-        /// <param name="page">ページ情報</param>
-        /// <param name="point">描画開始座標</param>
-        /// <param name="size">描画サイズ</param>
+        /// <param name="dest">Graphics object.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="point">Start point to render.</param>
+        /// <param name="size">Rendering size.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Render(Graphics dest, Page page, PointF point, SizeF size) =>
             _core.Render(dest, page, point, size, 0);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Render
+        ///
+        /// <summary>
+        /// Get an Image object in which the Page content is rendered.
+        /// </summary>
+        ///
+        /// <param name="page">Page object.</param>
+        /// <param name="size">Rendering size.</param>
+        ///
+        /// <returns>Image object</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Image Render(Page page, SizeF size)
+        {
+            var dest = new Bitmap((int)size.Width, (int)size.Height);
+            using (var gs = Graphics.FromImage(dest))
+            {
+                gs.Clear(Color.White);
+                Render(gs, page, new PointF(0, 0), size);
+            }
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///

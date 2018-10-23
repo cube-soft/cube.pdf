@@ -120,6 +120,9 @@
   <data name="FilterAll" xml:space="preserve">
     <value>すべてのファイル</value>
   </data>
+  <data name="FilterInsertable" xml:space="preserve">
+    <value>挿入可能なファイル</value>
+  </data>
   <data name="FilterPdf" xml:space="preserve">
     <value>PDF ファイル</value>
   </data>
@@ -200,6 +203,9 @@
   </data>
   <data name="MenuFilesize" xml:space="preserve">
     <value>ファイルサイズ</value>
+  </data>
+  <data name="MenuFiletype" xml:space="preserve">
+    <value>種類</value>
   </data>
   <data name="MenuFrameOnly" xml:space="preserve">
     <value>枠線のみ</value>
@@ -389,9 +395,6 @@
   </data>
   <data name="MessageLoading" xml:space="preserve">
     <value>{0} を開いています ...</value>
-  </data>
-  <data name="MessageLoadingMetadata" xml:space="preserve">
-    <value>メタ情報を読み込んでいます ...</value>
   </data>
   <data name="MessageOverwrite" xml:space="preserve">
     <value>PDF の内容が編集されています。上書き保存しますか？</value>

@@ -19,6 +19,7 @@
 using Cube.FileSystem;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
@@ -28,7 +29,7 @@ namespace Cube.Pdf.Itext
     /// DocumentWriter
     ///
     /// <summary>
-    /// PDF ファイルを生成するためのクラスです。
+    /// Provides functionality to create or modify a PDF document.
     /// </summary>
     ///
     /// <remarks>
@@ -50,7 +51,7 @@ namespace Cube.Pdf.Itext
         /// DocumentWriter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentWriter class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -61,10 +62,11 @@ namespace Cube.Pdf.Itext
         /// DocumentWriter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentWriter class with
+        /// the specified arguments..
         /// </summary>
         ///
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentWriter(IO io) : base(io) { }
@@ -78,7 +80,7 @@ namespace Cube.Pdf.Itext
         /// Bookmarks
         ///
         /// <summary>
-        /// しおり情報を取得します。
+        /// Gets the collection of bookmarks.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -94,16 +96,14 @@ namespace Cube.Pdf.Itext
         /// OnSave
         ///
         /// <summary>
-        /// メンバ変数が保持している、メタデータ、暗号化に関する情報、
-        /// 各ページ情報に基づいた PDF ファイルを指定されたパスに保存
-        /// します。
+        /// Executes the save operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         protected override void OnSave(string path)
         {
-            var tmp = System.IO.Path.GetTempFileName();
-            IO.TryDelete(tmp);
+            var dir = IO.Get(path).DirectoryName;
+            var tmp = IO.Combine(dir, Guid.NewGuid().ToString("D"));
 
             try
             {
@@ -124,7 +124,7 @@ namespace Cube.Pdf.Itext
         /// OnReset
         ///
         /// <summary>
-        /// 初期状態にリセットします。
+        /// Executes the reset operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -143,7 +143,7 @@ namespace Cube.Pdf.Itext
         /// Merge
         ///
         /// <summary>
-        /// ページを結合し、新たな PDF ファイルを生成します。
+        /// Merges pages and save the document to the specified path.
         /// </summary>
         ///
         /// <remarks>
@@ -172,8 +172,7 @@ namespace Cube.Pdf.Itext
         /// Finalize
         ///
         /// <summary>
-        /// 一時的に生成された PDF ファイルに対して、各種メタ情報を追加
-        /// して保存します。
+        /// Adds some additional metadata to the merged document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -194,7 +193,7 @@ namespace Cube.Pdf.Itext
         /// AddPage
         ///
         /// <summary>
-        /// PDF ページを追加します。
+        /// Adds the specified page to the specified writer.
         /// </summary>
         ///
         /// <remarks>

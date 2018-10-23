@@ -83,19 +83,22 @@
       <HintPath>..\..\..\..\packages\Cube.Backwards.1.5.0\lib\net35\Cube.Backwards.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.11.0\lib\net35\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.12.0\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.11.0\lib\net35\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.12.0\lib\net35\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Xui">
-      <HintPath>..\..\..\..\packages\Cube.Xui.1.11.0\lib\net35\Cube.Xui.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Xui.1.12.0\lib\net35\Cube.Xui.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight">
       <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net35\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras">
       <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net35\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop">
+      <HintPath>..\..\..\..\packages\gong-wpf-dragdrop.1.1.0\lib\net35\GongSolutions.Wpf.DragDrop.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>
@@ -120,18 +123,29 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\Details\GlobalSetup.cs" />
+    <Compile Include="Sources\Details\MockDragDrop.cs" />
     <Compile Include="Sources\Details\ViewModelFixture.cs" />
+    <Compile Include="Sources\Interactions\DialogBehaviorTest.cs" />
+    <Compile Include="Sources\Interactions\MouseClearBehaviorTest.cs" />
+    <Compile Include="Sources\Interactions\MouseMoveBehaviorTest.cs" />
+    <Compile Include="Sources\Interactions\MouseOpenBehaviorTest.cs" />
+    <Compile Include="Sources\Interactions\MousePreviewBehaviorTest.cs" />
+    <Compile Include="Sources\Interactions\SimplexConverterTest.cs" />
+    <Compile Include="Sources\Interactions\VisibleRangeTest.cs" />
     <Compile Include="Sources\ViewModels\EncryptionTest.cs" />
-    <Compile Include="Sources\ViewModels\MainTest.cs" />
+    <Compile Include="Sources\ViewModels\InsertTest.cs" />
     <Compile Include="Sources\ViewModels\MetadataTest.cs" />
+    <Compile Include="Sources\ViewModels\MoveTest.cs" />
+    <Compile Include="Sources\ViewModels\OpenTest.cs" />
+    <Compile Include="Sources\ViewModels\OthersTest.cs" />
     <Compile Include="Sources\ViewModels\RemoveTest.cs" />
     <Compile Include="Sources\ViewModels\RibbonTest.cs" />
+    <Compile Include="Sources\ViewModels\SaveTest.cs" />
+    <Compile Include="Sources\ViewModels\SettingsTest.cs" />
+    <Compile Include="Sources\ViewModels\ViewTest.cs" />
     <Compile Include="Sources\HistoryTest.cs" />
     <Compile Include="Sources\RangeTest.cs" />
     <Compile Include="Sources\RibbonElementTest.cs" />
-    <Compile Include="Sources\SimplexConverterTest.cs" />
-    <Compile Include="Sources\ViewModels\SettingsTest.cs" />
-    <Compile Include="Sources\ViewModels\ViewTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -139,10 +153,22 @@
     <None Include="Examples\Loading.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Examples\Sample.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Examples\Sample.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\SampleAes128.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleRc40.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleRc40All.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Examples\SampleRc40Open.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\SampleRotation.pdf">
@@ -166,6 +192,9 @@
       <Project>{ca46007a-4f0f-4304-bb57-d0e22d7c936e}</Project>
       <Name>Cube.Pdf.App.Editor</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sources\Interactions\SelectionBehaviorTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
