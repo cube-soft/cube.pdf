@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.Pdf.Itext;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -123,13 +122,15 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static void Extract(this ImageCollection src, string dest)
         {
-            var items = GetCopiedIndices(src).OrderBy(i => i).Select(i => src[i].RawObject);
+            var pages = GetCopiedIndices(src).OrderBy(i => i).Select(i => src[i].RawObject);
             using (var writer = new DocumentWriter())
             {
-                writer.Add(items);
+                writer.Add(pages);
                 writer.Save(dest);
             }
         }
+
+        #region Undoable
 
         /* ----------------------------------------------------------------- */
         ///
@@ -171,8 +172,7 @@ namespace Cube.Pdf.App.Editor
         {
             var copy    = items.ToList();
             var indices = Enumerable.Range(index, copy.Count);
-
-            return Invoke(
+            return HistoryItem.CreateInvoke(
                 () => src.Insert(index, copy),
                 () => src.Remove(indices)
             );
@@ -214,15 +214,11 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public static HistoryItem RemoveAt(this ImageCollection src, IEnumerable<int> indices)
         {
-            var preserve = GetPair(src, indices.OrderBy(i => i));
-
-            void forward() => src.Remove(indices);
-            void reverse()
-            {
-                foreach (var kv in preserve) src.Insert(kv.Key, new[] { kv.Value });
-            }
-
-            return Invoke(forward, reverse);
+            var items = GetPair(src, indices.OrderBy(i => i));
+            return HistoryItem.CreateInvoke(
+                () => src.Remove(indices),
+                () => { foreach (var kv in items) src.Insert(kv.Key, new[] { kv.Value }); }
+            );
         }
 
         /* ----------------------------------------------------------------- */
@@ -244,8 +240,8 @@ namespace Cube.Pdf.App.Editor
         public static HistoryItem Rotate(this ImageCollection src, int degree)
         {
             var indices = GetCopiedIndices(src);
-            return Invoke(
-                () => src.Rotate(indices, degree),
+            return HistoryItem.CreateInvoke(
+                () => src.Rotate(indices,  degree),
                 () => src.Rotate(indices, -degree)
             );
         }
@@ -270,11 +266,13 @@ namespace Cube.Pdf.App.Editor
         {
             var indices = GetCopiedIndices(src);
             var cvt     = indices.Select(i => i + delta).ToList();
-            return Invoke(
+            return HistoryItem.CreateInvoke(
                 () => src.Move(indices, delta),
                 () => src.Move(cvt,    -delta)
             );
         }
+
+        #endregion
 
         #endregion
 
@@ -285,8 +283,8 @@ namespace Cube.Pdf.App.Editor
         /// GetPair
         ///
         /// <summary>
-        /// Gets the collection each element contains a pair of index
-        /// and Page object.
+        /// Gets the collection each element is a pair of index and Page
+        /// object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -306,21 +304,6 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private static IList<int> GetCopiedIndices(ImageCollection src) =>
             src.Selection.Indices.Where(i => i >= 0 && i < src.Count).ToList();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invokes
-        ///
-        /// <summary>
-        /// Invokes the specified action and creates a history item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static HistoryItem Invoke(Action forward, Action reverse)
-        {
-            forward(); // do
-            return new HistoryItem { Undo = reverse, Redo = forward };
-        }
 
         #endregion
     }
