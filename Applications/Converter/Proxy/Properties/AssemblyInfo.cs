@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("2.12.0.0")]
-[assembly: AssemblyFileVersion("2.12.0.0")]
+[assembly: AssemblyVersion("2.12.1.0")]
+[assembly: AssemblyFileVersion("2.12.1.0")]
 [assembly: AssemblyTitle("CubeProxy")]
 [assembly: AssemblyDescription("Launches the program as a user process.")]
 [assembly: AssemblyCompany("CubeSoft")]
