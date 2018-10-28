@@ -24,7 +24,6 @@ using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using NUnit.Framework;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -257,8 +256,8 @@ namespace Cube.Pdf.Tests.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void SetUiCulture(string name) =>
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(name);
+        protected void SetUiCulture(Language value) =>
+            Thread.CurrentThread.CurrentUICulture = value.ToCultureInfo();
 
         /* ----------------------------------------------------------------- */
         ///

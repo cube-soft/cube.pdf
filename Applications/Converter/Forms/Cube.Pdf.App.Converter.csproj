@@ -107,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sources\Models\Settings\FormatOption.cs" />
-    <Compile Include="Sources\Models\Settings\Language.cs" />
     <Compile Include="Sources\Models\Settings\Parameters.cs" />
     <Compile Include="Sources\Models\Settings\Settings.cs" />
     <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />

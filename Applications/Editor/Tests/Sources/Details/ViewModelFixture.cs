@@ -357,7 +357,7 @@ namespace Cube.Pdf.Tests.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<IDisposable> Register(IMessengerViewModel src)
+        private IEnumerable<IDisposable> Register(IMessengerRegistrar src)
         {
             void dialog(DialogMessage e)
             {

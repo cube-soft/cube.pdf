@@ -160,7 +160,6 @@
     <Compile Include="Sources\Models\ImageExtension.cs" />
     <Compile Include="Sources\Models\ImageItem.cs" />
     <Compile Include="Sources\Models\ImagePreferences.cs" />
-    <Compile Include="Sources\Models\Language.cs" />
     <Compile Include="Sources\Models\Range.cs" />
     <Compile Include="Sources\Models\Selection.cs" />
     <Compile Include="Sources\Models\Settings.cs" />

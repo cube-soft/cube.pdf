@@ -20,7 +20,6 @@ using Cube.FileSystem;
 using Cube.FileSystem.TestService;
 using Cube.Generics;
 using Cube.Pdf.App.Editor;
-using Cube.Xui;
 using Cube.Xui.Converters;
 using NUnit.Framework;
 using System;
@@ -102,11 +101,11 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(Language.Auto,     "en", ExpectedResult = "Auto")]
-        [TestCase(Language.English,  "en", ExpectedResult = "English")]
-        [TestCase(Language.Japanese, "ja", ExpectedResult = "日本語")]
-        public string LanguageConverter(Language src, string culture) =>
-            Convert<string>(new LanguageConverter(), src, culture);
+        [TestCase(Language.Auto,     Language.English,  ExpectedResult = "Auto")]
+        [TestCase(Language.English,  Language.English,  ExpectedResult = "English")]
+        [TestCase(Language.Japanese, Language.Japanese, ExpectedResult = "日本語")]
+        public string LanguageConverter(Language src, Language lang) =>
+            Convert<string>(new LanguageConverter(), src, lang);
 
         #endregion
 
@@ -121,12 +120,12 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(100,     "en", ExpectedResult = "1 KB (100 Bytes)")]
-        [TestCase(101309,  "en", ExpectedResult = "98.9 KB (101,309 Bytes)")]
-        [TestCase(200,     "ja", ExpectedResult = "1 KB (200 バイト)")]
-        [TestCase(7654321, "ja", ExpectedResult = "7.3 MB (7,654,321 バイト)")]
-        public string ByteConverter(long n, string culture) =>
-            Convert<string>(new ByteConverter(), n, culture);
+        [TestCase(100,     Language.English,  ExpectedResult = "1 KB (100 Bytes)")]
+        [TestCase(101309,  Language.English,  ExpectedResult = "98.9 KB (101,309 Bytes)")]
+        [TestCase(200,     Language.Japanese, ExpectedResult = "1 KB (200 バイト)")]
+        [TestCase(7654321, Language.Japanese, ExpectedResult = "7.3 MB (7,654,321 バイト)")]
+        public string ByteConverter(long n, Language lang) =>
+            Convert<string>(new ByteConverter(), n, lang);
 
         #endregion
 
@@ -141,12 +140,12 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(100,     "en", ExpectedResult = "1 KB")]
-        [TestCase(101309,  "en", ExpectedResult = "98.9 KB")]
-        [TestCase(200,     "ja", ExpectedResult = "1 KB")]
-        [TestCase(7654321, "ja", ExpectedResult = "7.3 MB")]
-        public string ByteConverterLite(long n, string culture) =>
-            Convert<string>(new ByteConverterLite(), n, culture);
+        [TestCase(100,     Language.English,  ExpectedResult = "1 KB")]
+        [TestCase(101309,  Language.English,  ExpectedResult = "98.9 KB")]
+        [TestCase(200,     Language.Japanese, ExpectedResult = "1 KB")]
+        [TestCase(7654321, Language.Japanese, ExpectedResult = "7.3 MB")]
+        public string ByteConverterLite(long n, Language lang) =>
+            Convert<string>(new ByteConverterLite(), n, lang);
 
         #endregion
 
@@ -161,15 +160,15 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(EncryptionMethod.Standard40,  "en", ExpectedResult = "40-bit RC4")]
-        [TestCase(EncryptionMethod.Standard128, "en", ExpectedResult = "128-bit RC4")]
-        [TestCase(EncryptionMethod.Aes128,      "en", ExpectedResult = "128-bit AES")]
-        [TestCase(EncryptionMethod.Aes256,      "en", ExpectedResult = "256-bit AES")]
-        [TestCase(EncryptionMethod.Aes256r6,    "en", ExpectedResult = "256-bit AES (Revision 6)")]
-        [TestCase(EncryptionMethod.Unknown,     "en", ExpectedResult = "Unknown")]
-        [TestCase(EncryptionMethod.Unknown,     "ja", ExpectedResult = "Unknown")]
-        public string EncryptionMethodConverter(EncryptionMethod src, string culture) =>
-            Convert<string>(new EncryptionMethodConverter(), src, culture);
+        [TestCase(EncryptionMethod.Standard40,  Language.English,  ExpectedResult = "40-bit RC4")]
+        [TestCase(EncryptionMethod.Standard128, Language.English,  ExpectedResult = "128-bit RC4")]
+        [TestCase(EncryptionMethod.Aes128,      Language.English,  ExpectedResult = "128-bit AES")]
+        [TestCase(EncryptionMethod.Aes256,      Language.English,  ExpectedResult = "256-bit AES")]
+        [TestCase(EncryptionMethod.Aes256r6,    Language.English,  ExpectedResult = "256-bit AES (Revision 6)")]
+        [TestCase(EncryptionMethod.Unknown,     Language.English,  ExpectedResult = "Unknown")]
+        [TestCase(EncryptionMethod.Unknown,     Language.Japanese, ExpectedResult = "Unknown")]
+        public string EncryptionMethodConverter(EncryptionMethod src, Language lang) =>
+            Convert<string>(new EncryptionMethodConverter(), src, lang);
 
         #endregion
 
@@ -184,14 +183,14 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(ViewerPreferences.SinglePage,     "en", ExpectedResult = "Single page")]
-        [TestCase(ViewerPreferences.OneColumn,      "ja", ExpectedResult = "連続ページ")]
-        [TestCase(ViewerPreferences.TwoPageLeft,    "en", ExpectedResult = "Two page (left)")]
-        [TestCase(ViewerPreferences.TwoPageRight,   "ja", ExpectedResult = "見開きページ (右綴じ)")]
-        [TestCase(ViewerPreferences.TwoColumnLeft,  "en", ExpectedResult = "Two column (left)")]
-        [TestCase(ViewerPreferences.TwoColumnRight, "ja", ExpectedResult = "連続見開きページ (右綴じ)")]
-        public string ViewerPreferencesConverter(ViewerPreferences src, string culture) =>
-            Convert<string>(new ViewerPreferencesConverter(), src, culture);
+        [TestCase(ViewerPreferences.SinglePage,     Language.English,  ExpectedResult = "Single page")]
+        [TestCase(ViewerPreferences.OneColumn,      Language.Japanese, ExpectedResult = "連続ページ")]
+        [TestCase(ViewerPreferences.TwoPageLeft,    Language.English,  ExpectedResult = "Two page (left)")]
+        [TestCase(ViewerPreferences.TwoPageRight,   Language.Japanese, ExpectedResult = "見開きページ (右綴じ)")]
+        [TestCase(ViewerPreferences.TwoColumnLeft,  Language.English,  ExpectedResult = "Two column (left)")]
+        [TestCase(ViewerPreferences.TwoColumnRight, Language.Japanese, ExpectedResult = "連続見開きページ (右綴じ)")]
+        public string ViewerPreferencesConverter(ViewerPreferences src, Language lang) =>
+            Convert<string>(new ViewerPreferencesConverter(), src, lang);
 
         #endregion
 
@@ -240,10 +239,10 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(10, "en", ExpectedResult = "10 pages")]
-        [TestCase(20, "ja", ExpectedResult = "全 20 ページ")]
-        public string CountToText(int n, string culture) =>
-            Convert<string>(new CountToText(), n, culture);
+        [TestCase(10, Language.English,  ExpectedResult = "10 pages")]
+        [TestCase(20, Language.Japanese, ExpectedResult = "全 20 ページ")]
+        public string CountToText(int n, Language lang) =>
+            Convert<string>(new CountToText(), n, lang);
 
         #endregion
 
@@ -258,10 +257,10 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(0, "en", ExpectedResult = "1")]
-        [TestCase(9, "ja", ExpectedResult = "10")]
-        public string IndexToText(int index, string culture) =>
-            Convert<string>(new IndexToText(), index, culture);
+        [TestCase(0, Language.English,  ExpectedResult = "1")]
+        [TestCase(9, Language.Japanese, ExpectedResult = "10")]
+        public string IndexToText(int index, Language lang) =>
+            Convert<string>(new IndexToText(), index, lang);
 
         #endregion
 
@@ -276,10 +275,10 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(5, "en", ExpectedResult = "5 pages selected")]
-        [TestCase(8, "ja", ExpectedResult = "8 個の項目を選択")]
-        public string SelectionToText(int n, string culture) =>
-            Convert<string>(new SelectionToText(), n, culture);
+        [TestCase(5, Language.English,  ExpectedResult = "5 pages selected")]
+        [TestCase(8, Language.Japanese, ExpectedResult = "8 個の項目を選択")]
+        public string SelectionToText(int n, Language lang) =>
+            Convert<string>(new SelectionToText(), n, lang);
 
         #endregion
 
@@ -376,9 +375,9 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private T Convert<T>(SimplexConverter src, object value, string culture)
+        private T Convert<T>(SimplexConverter src, object value, Language lang)
         {
-            ResourceCulture.Set(culture);
+            Locale.Set(lang);
             return Convert<T>(src, value);
         }
 

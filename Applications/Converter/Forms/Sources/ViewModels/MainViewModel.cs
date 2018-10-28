@@ -285,8 +285,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SetCulture() =>
-            Messenger.SetCulture.Publish(Settings.Language.GetName());
+        public void SetCulture() => Messenger.SetCulture.Publish(Settings.Language);
 
 
         #endregion

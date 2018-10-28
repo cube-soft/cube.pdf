@@ -40,7 +40,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<string> SetCulture { get; } = new RelayEvent<string>();
+        public RelayEvent<Language> SetCulture { get; } = new RelayEvent<Language>();
 
         #endregion
     }
