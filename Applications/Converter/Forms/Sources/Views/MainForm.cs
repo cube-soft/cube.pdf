@@ -58,8 +58,7 @@ namespace Cube.Pdf.App.Converter
             new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox);
             new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox);
 
-            Locale.Subscribe(_ => UpdateString());
-            UpdateString();
+            Locale.Subscribe(e => UpdateString(e));
             SettingsPanel.ApplyButton = ApplyButton;
         }
 
@@ -171,8 +170,10 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void UpdateString()
+        private void UpdateString(Language value)
         {
+            this.UpdateCulture(value);
+
             PathToolTip.ToolTipTitle = Properties.Resources.MessageInvalidChars;
             MainToolTip.SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
             MainToolTip.SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));
