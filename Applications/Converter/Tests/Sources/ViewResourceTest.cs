@@ -400,9 +400,10 @@ namespace Cube.Pdf.Tests.Converter
         private void Create(Action<MainViewModel> action)
         {
             var src = Create(Combine(CreateArgs(nameof(ViewResourceTest)), "Sample.ps"));
+
+            using (Locale.Subscribe(SetUiCulture))
             using (var vm = new MainViewModel(src))
             {
-                vm.Messenger.SetCulture.Subscribe(SetUiCulture);
                 vm.Settings.Language = Language.Auto;
                 action(vm);
             }

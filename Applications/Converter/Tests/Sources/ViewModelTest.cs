@@ -340,9 +340,10 @@ namespace Cube.Pdf.Tests.Converter
         {
             var args = CreateArgs(name);
             var dest = Create(Combine(args, "Sample.ps"));
+
+            using (Locale.Subscribe(SetUiCulture))
             using (var vm = new MainViewModel(dest, new SynchronizationContext()))
             {
-                vm.Messenger.SetCulture.Subscribe(SetUiCulture);
                 vm.Messenger.MessageBox.Subscribe(SetMessage);
                 action(vm);
             }

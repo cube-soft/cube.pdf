@@ -92,7 +92,7 @@ namespace Cube.Pdf.App.Editor
             Name = name;
             _getTooltip = tooltip;
             _getEnabled = enabled;
-            _locale     = Locale.Subscribe(() => RaisePropertyChanged(nameof(Tooltip)));
+            _locale     = Locale.Subscribe(_ => RaisePropertyChanged(nameof(Tooltip)));
         }
 
         #endregion

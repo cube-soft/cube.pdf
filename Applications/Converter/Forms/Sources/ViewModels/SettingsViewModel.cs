@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Forms;
 using Cube.Pdf.Ghostscript;
 using System.Threading;
 
@@ -30,7 +31,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsViewModel : Cube.Forms.ViewModelBase<Messenger>
+    public class SettingsViewModel : ViewModelBase<Messenger>
     {
         #region Constructors
 

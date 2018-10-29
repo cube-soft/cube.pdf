@@ -58,6 +58,7 @@ namespace Cube.Pdf.App.Converter
             new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox);
             new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox);
 
+            Locale.Subscribe(_ => UpdateString());
             UpdateString();
             SettingsPanel.ApplyButton = ApplyButton;
         }
@@ -135,12 +136,9 @@ namespace Cube.Pdf.App.Converter
             SettingsPanel.Apply     += (s, e) => vm.Save();
 
             vm.Messenger.Close.Subscribe(() => Close());
-            vm.Messenger.SetCulture.Subscribe(e => { this.UpdateCulture(e); UpdateString(); });
             vm.Messenger.MessageBox.Subscribe(e => new MessageBoxBehavior().Invoke(e));
             vm.Messenger.OpenFileDialog.Subscribe(e => new OpenFileBehavior().Invoke(e));
             vm.Messenger.SaveFileDialog.Subscribe(e => new SaveFileBehavior().Invoke(e));
-
-            vm.SetCulture();
         }
 
         #endregion

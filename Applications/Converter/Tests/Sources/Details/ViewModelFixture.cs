@@ -302,6 +302,18 @@ namespace Cube.Pdf.Tests.Converter
             return Wait.For(() => Message.HasValue());
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Setup
+        ///
+        /// <summary>
+        /// Executes in each test.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [SetUp]
+        protected void Setup() => Locale.Set(Language.Auto);
+
         #endregion
 
         #region Implementations

@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Forms;
 using Cube.Generics;
 using Cube.Tasks;
 using System;
@@ -40,7 +41,7 @@ namespace Cube.Pdf.App.Converter
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainViewModel : Cube.Forms.ViewModelBase<Messenger>
+    public class MainViewModel : ViewModelBase<Messenger>
     {
         #region Constructors
 
@@ -276,18 +277,6 @@ namespace Cube.Pdf.App.Converter
             Model.UpdateUserProgram(e);
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetCulture
-        ///
-        /// <summary>
-        /// 表示言語を設定するコマンドです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void SetCulture() => Messenger.SetCulture.Publish(Settings.Language);
-
-
         #endregion
 
         #region Implementations
@@ -327,7 +316,7 @@ namespace Cube.Pdf.App.Converter
                     if (Settings.PostProcess == PostProcess.Others) BrowseUserProgram();
                     break;
                 case nameof(Settings.Language):
-                    SetCulture();
+                    Locale.Set(Settings.Language);
                     break;
                 default:
                     OnPropertyChanged(e);
