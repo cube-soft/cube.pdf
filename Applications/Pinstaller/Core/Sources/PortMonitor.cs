@@ -44,6 +44,8 @@ namespace Cube.Pdf.App.Pinstaller
         /// specified name.
         /// </summary>
         ///
+        /// <param name="name">Name of the port monitor.</param>
+        ///
         /* ----------------------------------------------------------------- */
         public PortMonitor(string name)
         {
@@ -66,7 +68,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Name { get; }
+        public string Name
+        {
+            get => _core.pName;
+            private set => _core.pName = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,7 +83,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string FileName { get; set; }
+        public string FileName
+        {
+            get => _core.pDLLName;
+            set => _core.pDLLName = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,6 +151,10 @@ namespace Cube.Pdf.App.Pinstaller
             return default(T);
         }
 
+        #endregion
+
+        #region Fields
+        private MonitorInfo2 _core = new MonitorInfo2();
         #endregion
     }
 }

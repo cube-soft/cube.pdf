@@ -28,6 +28,29 @@ namespace Cube.Pdf.App.Pinstaller
     /* --------------------------------------------------------------------- */
     public class PrinterDriver : IInstaller
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PrinterDriver
+        ///
+        /// <summary>
+        /// Initializes a new instance of the PrinterDriver class with
+        /// the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="name">Name of the printer driver.</param>
+        /// <param name="monitor">Name of the port monitor.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PrinterDriver(string name, string monitor)
+        {
+            Name        = name;
+            MonitorName = monitor;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -39,7 +62,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Name { get; }
+        public string Name
+        {
+            get => _core.pName;
+            private set => _core.pName = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -50,7 +77,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string MonitorName { get; }
+        public string MonitorName
+        {
+            get => _core.pMonitorName;
+            private set => _core.pMonitorName = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -90,6 +121,10 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall() { }
 
+        #endregion
+
+        #region Fields
+        private DriverInfo3 _core = new DriverInfo3();
         #endregion
     }
 }

@@ -40,12 +40,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Printer(string name, string driver, string port, string monitor)
+        public Printer(string name, string driver, string port)
         {
             Name        = name;
             DriverName  = driver;
             PortName    = port;
-            MonitorName = monitor;
         }
 
         #endregion
@@ -61,29 +60,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Name { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MonitorName
-        ///
-        /// <summary>
-        /// Gets the name of the port monitor.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string MonitorName { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PortName
-        ///
-        /// <summary>
-        /// Gets the port name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string PortName { get; }
+        public string Name
+        {
+            get => _core.pPrinterName;
+            private set => _core.pPrinterName = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -94,7 +75,26 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string DriverName { get; }
+        public string DriverName
+        {
+            get => _core.pDriverName;
+            private set => _core.pDriverName = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PortName
+        ///
+        /// <summary>
+        /// Gets the port name.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string PortName
+        {
+            get => _core.pPortName;
+            private set => _core.pPortName = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -134,6 +134,10 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall() { }
 
+        #endregion
+
+        #region Fields
+        private PrinterInfo2 _core = new PrinterInfo2();
         #endregion
     }
 }
