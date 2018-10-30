@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests.Converter", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests.Editor", "Applications\Editor\Tests\Cube.Pdf.Tests.Editor.csproj", "{741CADAB-88E7-41B3-8250-D75A85580667}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cube.Pdf.Tests.Pinstaller", "Applications\Pinstaller\Tests\Cube.Pdf.Tests.Pinstaller.csproj", "{01E714D7-990C-4C0C-A9C1-5433D028209D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -229,6 +231,18 @@ Global
 		{741CADAB-88E7-41B3-8250-D75A85580667}.Release|x64.Build.0 = Release|x64
 		{741CADAB-88E7-41B3-8250-D75A85580667}.Release|x86.ActiveCfg = Release|x86
 		{741CADAB-88E7-41B3-8250-D75A85580667}.Release|x86.Build.0 = Release|x86
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Debug|x64.Build.0 = Debug|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Debug|x86.Build.0 = Debug|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Release|x64.ActiveCfg = Release|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Release|x64.Build.0 = Release|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Release|x86.ActiveCfg = Release|Any CPU
+		{01E714D7-990C-4C0C-A9C1-5433D028209D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,6 +263,7 @@ Global
 		{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31} = {E5978864-9204-446D-B21E-D125814CD999}
 		{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2} = {E5978864-9204-446D-B21E-D125814CD999}
 		{741CADAB-88E7-41B3-8250-D75A85580667} = {E5978864-9204-446D-B21E-D125814CD999}
+		{01E714D7-990C-4C0C-A9C1-5433D028209D} = {E5978864-9204-446D-B21E-D125814CD999}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49D46FFB-75E0-44E6-8981-01A054376873}
