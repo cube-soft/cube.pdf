@@ -51,8 +51,9 @@ namespace Cube.Pdf.App.Pinstaller
         {
             var opt = StringComparison.InvariantCultureIgnoreCase;
 
-            Name   = name;
-            Exists = GetOrDefault(k => k.GetSubKeyNames().Any(s => s.Equals(name, opt)));
+            Name        = name;
+            Environment = this.GetEnvironment();
+            Exists      = GetOrDefault(k => k.GetSubKeyNames().Any(s => s.Equals(name, opt)));
         }
 
         #endregion
@@ -91,6 +92,21 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Environment
+        ///
+        /// <summary>
+        /// Gets the name of architecture (Windows NT x86 or Windows x64).
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Environment
+        {
+            get => _core.pEnvironment;
+            private set => _core.pEnvironment = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Exists
         ///
         /// <summary>
@@ -114,7 +130,12 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Install() { }
+        public void Install() => this.Invoke(() =>
+        {
+            var status = WinSpool.NativeMethods.AddMonitor(Name, 2u, ref _core);
+            if (status != 0) Exists = true;
+            return status;
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -125,7 +146,12 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Uninstall() { }
+        public void Uninstall() => this.Invoke(() =>
+        {
+            var status = WinSpool.NativeMethods.DeleteMonitor("", "", Name);
+            if (status != 0) Exists = false;
+            return status;
+        });
 
         #endregion
 
