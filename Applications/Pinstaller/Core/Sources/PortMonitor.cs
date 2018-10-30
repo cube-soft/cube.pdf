@@ -148,17 +148,17 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PortMonitor> GetElements()
         {
-            var need = 0u;
-            var size = 0u;
+            var bytes = 0u;
+            var count = 0u;
 
-            bool f(IntPtr p, uint n) => NativeMethods.EnumMonitors(null, 2, p, n, ref need, ref size);
+            bool f(IntPtr p, uint n) => NativeMethods.EnumMonitors(null, 2, p, n, ref bytes, ref count);
             if (f(IntPtr.Zero, 0)) return new PortMonitor[0];
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
-            var buffer = Marshal.AllocHGlobal((int)need);
+            var buffer = Marshal.AllocHGlobal((int)bytes);
             try
             {
-                if (f(buffer, need)) return Convert(buffer, size);
+                if (f(buffer, bytes)) return Convert(buffer, count);
                 else throw new Win32Exception();
             }
             finally { Marshal.FreeHGlobal(buffer); }
