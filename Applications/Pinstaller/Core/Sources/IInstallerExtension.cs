@@ -16,8 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -49,24 +47,6 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static string GetEnvironment(this IInstaller src) =>
             (IntPtr.Size == 4) ? "Windows NT x86" : "Windows x64";
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the specified function and throws an exception if
-        /// error occurs.
-        /// </summary>
-        ///
-        /// <param name="src">IInstaller implementation.</param>
-        /// <param name="func">Callback function.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Invoke(this IInstaller src, Func<int> func)
-        {
-            if (func() == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
-        }
 
         #endregion
     }

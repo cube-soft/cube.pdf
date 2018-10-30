@@ -15,13 +15,14 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Runtime.InteropServices;
 
-namespace Cube.Pdf.App.Pinstaller.WinSpool
+namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// WinSpool.NativeMethods
+    /// NativeMethods
     ///
     /// <summary>
     /// Represents declarations in the winspool.drv.
@@ -39,12 +40,31 @@ namespace Cube.Pdf.App.Pinstaller.WinSpool
         /// AddMonitor
         ///
         /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/enummonitors
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool EnumMonitors(
+            string pName,
+            uint level,
+            IntPtr pMonitors,
+            uint cbBuf,
+            ref uint pcbNeeded,
+            ref uint pcReturned
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddMonitor
+        ///
+        /// <summary>
         /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/addmonitor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern int AddMonitor(
+        public static extern bool AddMonitor(
             string pName,
             uint Level,
             ref MonitorInfo2 pMonitors
@@ -60,7 +80,7 @@ namespace Cube.Pdf.App.Pinstaller.WinSpool
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern int DeleteMonitor(
+        public static extern bool DeleteMonitor(
             string pName,
             string pEnvironment,
             string pMonitorName

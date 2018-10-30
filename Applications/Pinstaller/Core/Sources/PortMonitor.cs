@@ -15,10 +15,11 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
-using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -50,11 +51,24 @@ namespace Cube.Pdf.App.Pinstaller
         public PortMonitor(string name)
         {
             var opt = StringComparison.InvariantCultureIgnoreCase;
+            var hit = GetElements().FirstOrDefault(e => e.Name.Equals(name, opt));
 
             Name        = name;
-            Environment = this.GetEnvironment();
-            Exists      = GetOrDefault(k => k.GetSubKeyNames().Any(s => s.Equals(name, opt)));
+            Exists      = (hit != null);
+            Environment = Exists ? hit.Environment : this.GetEnvironment();
+            FileName    = Exists ? hit.FileName : string.Empty;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PortMonitor
+        ///
+        /// <summary>
+        /// Initializes a new instance of the PortMonitor class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private PortMonitor() { }
 
         #endregion
 
@@ -123,6 +137,35 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetElements
+        ///
+        /// <summary>
+        /// Gets the collection of currently installed port monitors.
+        /// </summary>
+        ///
+        /// <returns>Collection of port monitors.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<PortMonitor> GetElements()
+        {
+            var need = 0u;
+            var size = 0u;
+
+            bool f(IntPtr p, uint n) => NativeMethods.EnumMonitors(null, 2, p, n, ref need, ref size);
+            if (f(IntPtr.Zero, 0)) return new PortMonitor[0];
+            if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
+
+            var buffer = Marshal.AllocHGlobal((int)need);
+            try
+            {
+                if (f(buffer, need)) return Convert(buffer, size);
+                else throw new Win32Exception();
+            }
+            finally { Marshal.FreeHGlobal(buffer); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Install
         ///
         /// <summary>
@@ -130,12 +173,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Install() => this.Invoke(() =>
+        public void Install()
         {
-            var status = WinSpool.NativeMethods.AddMonitor(Name, 2u, ref _core);
-            if (status != 0) Exists = true;
-            return status;
-        });
+            if (!NativeMethods.AddMonitor(Name, 2u, ref _core)) throw new Win32Exception();
+            Exists = true;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -146,12 +188,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Uninstall() => this.Invoke(() =>
+        public void Uninstall()
         {
-            var status = WinSpool.NativeMethods.DeleteMonitor("", "", Name);
-            if (status != 0) Exists = false;
-            return status;
-        });
+            if (!NativeMethods.DeleteMonitor("", "", Name)) throw new Win32Exception();
+            Exists = false;
+        }
 
         #endregion
 
@@ -159,22 +200,32 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// Convert
         ///
         /// <summary>
-        /// Gets the root RegistryKey object of port monitors and executes
-        /// the specified callback function.
+        /// Converts unmanaged resources to the PortMonitor collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private T GetOrDefault<T>(Func<RegistryKey, T> callback)
+        private static IEnumerable<PortMonitor> Convert(IntPtr src, uint n)
         {
-            var s = @"System\CurrentControlSet\Control\Print\Monitors";
+            var dest = new List<PortMonitor>();
+            var ptr  = src;
 
-            try { using (var sk = Registry.LocalMachine.OpenSubKey(s, false)) return callback(sk); }
-            catch (Exception err) { this.LogWarn(err.ToString(), err); }
+            for (var i = 0; i < n; ++i)
+            {
+                var e = (MonitorInfo2)Marshal.PtrToStructure(ptr, typeof(MonitorInfo2));
+                dest.Add(new PortMonitor
+                {
+                    Name = e.pName,
+                    Environment = e.pEnvironment,
+                    FileName = e.pDLLName,
+                    Exists = true,
+                });
+                ptr = IntPtr.Add(ptr, Marshal.SizeOf(typeof(MonitorInfo2)));
+            }
 
-            return default(T);
+            return dest;
         }
 
         #endregion
