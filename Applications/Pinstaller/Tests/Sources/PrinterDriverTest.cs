@@ -25,40 +25,17 @@ namespace Cube.Pdf.Tests.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PortMonitorTest
+    /// PrinterDriverTest
     ///
     /// <summary>
-    /// Represents tests of the PortMonitor class.
+    /// Represents tests of the PrinterDriver class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class PortMonitorTest
+    class PrinterDriverTest
     {
         #region Tests
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Executes the test to create a new instance of the PortMonitor
-        /// class with the specified name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("Dummy Port", "",             ExpectedResult = false)]
-        [TestCase("Local Port", "localspl.dll", ExpectedResult = true )]
-        public bool Create(string name, string filename)
-        {
-            var src = new PortMonitor(name);
-
-            Assert.That(src.Name,        Is.EqualTo(name));
-            Assert.That(src.FileName,    Is.EqualTo(filename));
-            Assert.That(src.Environment, Is.Not.Null.And.Not.Empty);
-
-            return src.Exists;
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -72,16 +49,17 @@ namespace Cube.Pdf.Tests.Pinstaller
         [Test]
         public void GetElements()
         {
-            var src = PortMonitor.GetElements();
+            var src = PrinterDriver.GetElements();
             foreach (var e in src)
             {
-                this.LogDebug(string.Format("{0}:{1} (2)",
+                this.LogDebug(string.Format("({0},{1}):{2} ({3})",
                     e.Name.Quote(),
+                    e.MonitorName.Quote(),
                     e.FileName.Quote(),
                     e.Environment
                 ));
             }
-            Assert.That(src.Count(), Is.AtLeast(2));
+            Assert.That(src.Count(), Is.AtLeast(1));
         }
 
         #endregion

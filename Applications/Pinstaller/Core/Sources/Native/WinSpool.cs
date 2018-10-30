@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// AddMonitor
+        /// EnumMonitors
         ///
         /// <summary>
         /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/enummonitors
@@ -47,7 +47,7 @@ namespace Cube.Pdf.App.Pinstaller
         [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
         public static extern bool EnumMonitors(
             string pName,
-            uint level,
+            uint Level,
             IntPtr pMonitors,
             uint cbBuf,
             ref uint pcbNeeded,
@@ -84,6 +84,62 @@ namespace Cube.Pdf.App.Pinstaller
             string pName,
             string pEnvironment,
             string pMonitorName
+        );
+
+        #endregion
+
+        #region PrinterDriver
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EnumPrinterDrivers
+        ///
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/enumprinterdrivers
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool EnumPrinterDrivers(
+            string pName,
+            string pEnvironment,
+            uint Level,
+            IntPtr pDriverInfo,
+            uint cbBuf,
+            ref uint pcbNeeded,
+            ref uint pcReturned
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddPrinterDriver
+        ///
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/addprinterdriver
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool AddPrinterDriver(
+            string pName,
+            uint Level,
+            ref DriverInfo3 pDriverInfo
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DeletePrinterDriver
+        ///
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/deleteprinterdriver
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool DeletePrinterDriver(
+            string pName,
+            string pEnvironment,
+            string pDriverName
         );
 
         #endregion
