@@ -15,73 +15,59 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+
 namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IInstaller
+    /// IInstallerExtension
     ///
     /// <summary>
-    /// Represents the interface of installers.
+    /// Provides extended methods for IInstaller implemented classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IInstaller
+    internal static class IInstallerExtension
     {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Name
-        ///
-        /// <summary>
-        /// Gets the target name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        string Name { get; }
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Environment
+        /// GetEnvironment
         ///
         /// <summary>
-        /// Gets the name of architecture (Windows NT x86 or Windows x64).
+        /// Gets the name of current architecture.
         /// </summary>
         ///
+        /// <param name="src">IInstaller implementation.</param>
+        ///
+        /// <returns>Name of architecture.</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        string Environment { get; }
+        public static string GetEnvironment(this IInstaller src) =>
+            (IntPtr.Size == 4) ? "Windows NT x86" : "Windows x64";
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Exists
+        /// Invoke
         ///
         /// <summary>
-        /// Gets the value indicating whether the target has been already
-        /// installed.
+        /// Invokes the specified function and throws an exception if
+        /// error occurs.
         /// </summary>
         ///
+        /// <param name="src">IInstaller implementation.</param>
+        /// <param name="func">Callback function.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        bool Exists { get; }
+        public static void Invoke(this IInstaller src, Func<int> func)
+        {
+            if (func() == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
+        }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Install
-        ///
-        /// <summary>
-        /// Installs the target.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Install();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Uninstall
-        ///
-        /// <summary>
-        /// Uninstalls the target.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Uninstall();
+        #endregion
     }
 }

@@ -49,7 +49,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\Native\Structures.cs" />
+    <Compile Include="Sources\Native\WinSpool.cs" />
     <Compile Include="Sources\IInstaller.cs" />
+    <Compile Include="Sources\IInstallerExtension.cs" />
     <Compile Include="Sources\Port.cs" />
     <Compile Include="Sources\PortMonitor.cs" />
     <Compile Include="Sources\Printer.cs" />

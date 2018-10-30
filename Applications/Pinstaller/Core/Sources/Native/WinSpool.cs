@@ -15,73 +15,63 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.App.Pinstaller
+using System.Runtime.InteropServices;
+
+namespace Cube.Pdf.App.Pinstaller.WinSpool
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IInstaller
+    /// WinSpool.NativeMethods
     ///
     /// <summary>
-    /// Represents the interface of installers.
+    /// Represents declarations in the winspool.drv.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IInstaller
+    internal static class NativeMethods
     {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Name
-        ///
-        /// <summary>
-        /// Gets the target name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        string Name { get; }
+        #region Methods
+
+        #region PortMonitor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Environment
+        /// AddMonitor
         ///
         /// <summary>
-        /// Gets the name of architecture (Windows NT x86 or Windows x64).
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/addmonitor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        string Environment { get; }
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern int AddMonitor(
+            string pName,
+            uint Level,
+            ref MonitorInfo2 pMonitors
+        );
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Exists
+        /// DeleteMonitor
         ///
         /// <summary>
-        /// Gets the value indicating whether the target has been already
-        /// installed.
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/deletemonitor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        bool Exists { get; }
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern int DeleteMonitor(
+            string pName,
+            string pEnvironment,
+            string pMonitorName
+        );
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Install
-        ///
-        /// <summary>
-        /// Installs the target.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Install();
+        #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Uninstall
-        ///
-        /// <summary>
-        /// Uninstalls the target.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Uninstall();
+        #endregion
+
+        #region Fields
+        private const string LibName = "winspool.drv";
+        #endregion
     }
 }
