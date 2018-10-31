@@ -44,6 +44,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             Name        = name;
             MonitorName = monitor;
+            Environment = this.GetEnvironment();
         }
 
         #endregion
@@ -71,6 +72,17 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public string MonitorName { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Environment
+        ///
+        /// <summary>
+        /// Gets the name of architecture (Windows NT x86 or Windows x64).
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Environment { get; }
 
         /* ----------------------------------------------------------------- */
         ///

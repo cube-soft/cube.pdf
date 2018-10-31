@@ -36,16 +36,30 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /// <summary>
         /// Initializes a new instance of the Printer class with the
+        /// specified name.
+        /// </summary>
+        ///
+        /// <param name="name">Printer name.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Printer(string name)
+        {
+            Name        = name;
+            ShareName   = name;
+            Environment = this.GetEnvironment();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Printer
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Printer class with the
         /// specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Printer(string name, string driver, string port)
-        {
-            Name        = name;
-            DriverName  = driver;
-            PortName    = port;
-        }
+        private Printer(PrinterInfo2 core) { _core = core; }
 
         #endregion
 
@@ -68,6 +82,22 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ShareName
+        ///
+        /// <summary>
+        /// Gets or sets the name that identifies the share point for the
+        /// printer.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string ShareName
+        {
+            get => _core.pShareName;
+            set => _core.pShareName = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// DriverName
         ///
         /// <summary>
@@ -78,7 +108,7 @@ namespace Cube.Pdf.App.Pinstaller
         public string DriverName
         {
             get => _core.pDriverName;
-            private set => _core.pDriverName = value;
+            set => _core.pDriverName = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -93,8 +123,19 @@ namespace Cube.Pdf.App.Pinstaller
         public string PortName
         {
             get => _core.pPortName;
-            private set => _core.pPortName = value;
+            set => _core.pPortName = value;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Environment
+        ///
+        /// <summary>
+        /// Gets the name of architecture (Windows NT x86 or Windows x64).
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Environment { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -137,7 +178,7 @@ namespace Cube.Pdf.App.Pinstaller
         #endregion
 
         #region Fields
-        private PrinterInfo2 _core = new PrinterInfo2();
+        private PrinterInfo2 _core;
         #endregion
     }
 }
