@@ -39,6 +39,26 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Create
+        ///
+        /// <summary>
+        /// Executes the test to create a new instance of the PrinterDriver
+        /// class with the specified name.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Dummy Driver",                ExpectedResult = false)]
+        [TestCase("Microsoft Shared Fax Driver", ExpectedResult = true )]
+        public bool Create(string name)
+        {
+            var src = new PrinterDriver(name);
+            Assert.That(src.Name.Unify(),           Is.EqualTo(name));
+            Assert.That(src.Environment.HasValue(), Is.True);
+            return src.Exists;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetElements
         ///
         /// <summary>
@@ -50,16 +70,21 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void GetElements()
         {
             var src = PrinterDriver.GetElements();
+            Assert.That(src.Count(), Is.AtLeast(1));
+
             foreach (var e in src)
             {
-                this.LogDebug(string.Format("({0},{1}):{2} ({3})",
+                this.LogDebug(string.Join("\t",
                     e.Name.Quote(),
                     e.MonitorName.Quote(),
                     e.FileName.Quote(),
-                    e.Environment
+                    e.Environment.Quote()
                 ));
+
+                Assert.That(e.Name.HasValue(),         Is.True, nameof(e.Name));
+                Assert.That(e.FileName.HasValue(),     Is.True, nameof(e.FileName));
+                Assert.That(e.Environment.HasValue(),  Is.True, nameof(e.Environment));
             }
-            Assert.That(src.Count(), Is.AtLeast(1));
         }
 
         #endregion

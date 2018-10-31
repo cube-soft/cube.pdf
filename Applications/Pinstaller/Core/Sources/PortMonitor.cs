@@ -48,15 +48,18 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="name">Name of the port monitor.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PortMonitor(string name)
+        public PortMonitor(string name) : this(new MonitorInfo2())
         {
             var opt = StringComparison.InvariantCultureIgnoreCase;
-            var hit = GetElements().FirstOrDefault(e => e.Name.Equals(name, opt));
+            var obj = GetElements().FirstOrDefault(e => e.Name.Equals(name, opt));
 
-            Name        = name;
-            Exists      = (hit != null);
-            Environment = Exists ? hit.Environment : this.GetEnvironment();
-            FileName    = Exists ? hit.FileName : string.Empty;
+            Exists = (obj != null);
+            if (Exists) _core = obj._core;
+            else
+            {
+                Name = name;
+                Environment = this.GetEnvironment();
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -68,7 +71,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PortMonitor() { }
+        private PortMonitor(MonitorInfo2 core) { _core = core; }
 
         #endregion
 
@@ -215,13 +218,7 @@ namespace Cube.Pdf.App.Pinstaller
             for (var i = 0; i < n; ++i)
             {
                 var e = (MonitorInfo2)Marshal.PtrToStructure(ptr, typeof(MonitorInfo2));
-                dest.Add(new PortMonitor
-                {
-                    Name = e.pName,
-                    Environment = e.pEnvironment,
-                    FileName = e.pDLLName,
-                    Exists = true,
-                });
+                dest.Add(new PortMonitor(e) { Exists = true });
                 ptr = IntPtr.Add(ptr, Marshal.SizeOf(typeof(MonitorInfo2)));
             }
 
@@ -231,7 +228,7 @@ namespace Cube.Pdf.App.Pinstaller
         #endregion
 
         #region Fields
-        private MonitorInfo2 _core = new MonitorInfo2();
+        private MonitorInfo2 _core;
         #endregion
     }
 }

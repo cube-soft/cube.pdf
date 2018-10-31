@@ -42,26 +42,25 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /// <summary>
         /// Initializes a new instance of the PrinterDriver class with
-        /// the specified arguments.
+        /// the specified name.
         /// </summary>
         ///
         /// <param name="name">Name of the printer driver.</param>
-        /// <param name="monitor">Name of the port monitor.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PrinterDriver(string name, string monitor) : this()
+        public PrinterDriver(string name) :
+            this(new DriverInfo3 { cVersion = 3, pDefaultDataType = "RAW" })
         {
             var opt = StringComparison.InvariantCultureIgnoreCase;
-            var hit = GetElements().FirstOrDefault(e => e.Name.Equals(name, opt));
+            var obj = GetElements().FirstOrDefault(e => e.Name.Equals(name, opt));
 
-            Name        = name;
-            MonitorName = monitor;
-            Exists      = (hit != null);
-            Environment = Exists ? hit.Environment : this.GetEnvironment();
-            FileName    = Exists ? hit.FileName : string.Empty;
-            Config      = Exists ? hit.Config : string.Empty;
-            Data        = Exists ? hit.Data : string.Empty;
-            Help        = Exists ? hit.Help : string.Empty;
+            Exists = (obj != null);
+            if (Exists) _core = obj._core;
+            else
+            {
+                Name = name;
+                Environment = this.GetEnvironment();
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -73,11 +72,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PrinterDriver()
-        {
-            _core.cVersion         = 3;
-            _core.pDefaultDataType = "RAW";
-        }
+        private PrinterDriver(DriverInfo3 core) { _core = core; }
 
         #endregion
 
@@ -118,14 +113,14 @@ namespace Cube.Pdf.App.Pinstaller
         /// MonitorName
         ///
         /// <summary>
-        /// Gets the name of the port monitor.
+        /// Gets or set the name of the port monitor.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public string MonitorName
         {
             get => _core.pMonitorName;
-            private set => _core.pMonitorName = value;
+            set => _core.pMonitorName = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -190,14 +185,18 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Dependents
+        /// Dependencies
         ///
         /// <summary>
-        /// Gets the collection of dependent files.
+        /// Gets the name of dependency files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICollection<string> Dependents { get; } = new List<string>();
+        public string Dependencies
+        {
+            get => _core.pDependentFiles;
+            set => _core.pDependentFiles = value;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -295,17 +294,7 @@ namespace Cube.Pdf.App.Pinstaller
             for (var i = 0; i < n; ++i)
             {
                 var e = (DriverInfo3)Marshal.PtrToStructure(ptr, typeof(DriverInfo3));
-                dest.Add(new PrinterDriver
-                {
-                    Name        = e.pName,
-                    MonitorName = e.pMonitorName,
-                    Environment = e.pEnvironment,
-                    FileName    = e.pDriverPath,
-                    Config      = e.pConfigFile,
-                    Data        = e.pDataFile,
-                    Help        = e.pHelpFile,
-                    Exists      = true,
-                });
+                dest.Add(new PrinterDriver(e) { Exists = true });
                 ptr = IntPtr.Add(ptr, Marshal.SizeOf(typeof(DriverInfo3)));
             }
 
@@ -315,7 +304,7 @@ namespace Cube.Pdf.App.Pinstaller
         #endregion
 
         #region Fields
-        private DriverInfo3 _core = new DriverInfo3();
+        private DriverInfo3 _core;
         #endregion
     }
 }
