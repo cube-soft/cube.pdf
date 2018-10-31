@@ -15,6 +15,12 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.DataContract;
+using Cube.Log;
+using Microsoft.Win32;
+using System;
+using System.Runtime.Serialization;
+
 namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
@@ -40,11 +46,24 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Port(string name, string monitor)
+        public Port(string name, string monitor) : this(name, monitor, Get(name, monitor)) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Port
+        ///
+        /// <summary>
+        /// Initializes a new instance of the PortMonitor class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Port(string name, string monitor, Core core)
         {
             Name        = name;
             MonitorName = monitor;
             Environment = this.GetEnvironment();
+            _core       = core;
         }
 
         #endregion
@@ -122,6 +141,55 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall() { }
 
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Port.Core
+        ///
+        /// <summary>
+        /// Represents core information of the Port class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataContract]
+        private class Core
+        {
+            [DataMember] public string AppPath { get; set; }
+            [DataMember] public string AppArgs { get; set; }
+            [DataMember] public string TempDir { get; set; }
+            [DataMember] public bool WaitForExit { get; set; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Get
+        ///
+        /// <summary>
+        /// Gets a Core object from the registry.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static Core Get(string name, string monitor)
+        {
+            var key = $@"System\CurrentControlSet\Control\Print\Monitors\{monitor}\Ports\{name}";
+            try
+            {
+                using (var obj = Registry.LocalMachine.OpenSubKey(key, false))
+                {
+                    return obj.Deserialize<Core>();
+                }
+            }
+            catch (Exception err) { Logger.Warn(typeof(Port), err.ToString(), err); }
+            return new Core();
+        }
+
+        #endregion
+
+        #region Fields
+        private readonly Core _core;
         #endregion
     }
 }
