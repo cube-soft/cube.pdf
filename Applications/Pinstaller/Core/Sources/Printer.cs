@@ -15,6 +15,12 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.InteropServices;
+
 namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
@@ -42,11 +48,18 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="name">Printer name.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Printer(string name)
+        public Printer(string name) : this(CreateCore())
         {
-            Name        = name;
-            ShareName   = name;
-            Environment = this.GetEnvironment();
+            var opt = StringComparison.InvariantCultureIgnoreCase;
+            var obj = GetElements().FirstOrDefault(e => e.Name.Equals(name, opt));
+
+            Exists = (obj != null);
+            if (Exists) _core = obj._core;
+            else
+            {
+                Name      = name;
+                ShareName = name;
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -59,7 +72,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Printer(PrinterInfo2 core) { _core = core; }
+        private Printer(PrinterInfo2 core)
+        {
+            Environment = this.GetEnvironment();
+            _core = core;
+        }
 
         #endregion
 
@@ -155,6 +172,35 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetElements
+        ///
+        /// <summary>
+        /// Gets the collection of currently installed printers.
+        /// </summary>
+        ///
+        /// <returns>Collection of printers.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<Printer> GetElements()
+        {
+            var bytes = 0u;
+            var count = 0u;
+
+            bool f(IntPtr p, uint n) => NativeMethods.EnumPrinters(2, null, 2, p, n, ref bytes, ref count);
+            if (f(IntPtr.Zero, 0)) return new Printer[0];
+            if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
+
+            var buffer = Marshal.AllocHGlobal((int)bytes);
+            try
+            {
+                if (f(buffer, bytes)) return Convert(buffer, count);
+                else throw new Win32Exception();
+            }
+            finally { Marshal.FreeHGlobal(buffer); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Install
         ///
         /// <summary>
@@ -162,7 +208,13 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Install() { }
+        public void Install()
+        {
+            var dest = NativeMethods.AddPrinter(Name, 2, ref _core);
+            if (dest == IntPtr.Zero) throw new Win32Exception();
+            NativeMethods.ClosePrinter(dest);
+            Exists = true;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -173,7 +225,61 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Uninstall() { }
+        public void Uninstall()
+        {
+            if (!NativeMethods.OpenPrinter(Name, out var src, IntPtr.Zero)) throw new Win32Exception();
+            try
+            {
+                if (!NativeMethods.DeletePrinter(src)) throw new Win32Exception();
+                Exists = false;
+            }
+            finally { NativeMethods.ClosePrinter(src); }
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateCore
+        ///
+        /// <summary>
+        /// Initializes a new instance of the PrinterInfo2 class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static PrinterInfo2 CreateCore() => new PrinterInfo2
+        {
+            pPrintProcessor = "winprint",
+            pDatatype       = "RAW",
+            Priority        = 1,
+            DefaultPriority = 1,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Converts unmanaged resources to the Printer collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static IEnumerable<Printer> Convert(IntPtr src, uint n)
+        {
+            var dest = new List<Printer>();
+            var ptr  = src;
+
+            for (var i = 0; i < n; ++i)
+            {
+                var e = (PrinterInfo2)Marshal.PtrToStructure(ptr, typeof(PrinterInfo2));
+                dest.Add(new Printer(e) { Exists = true });
+                ptr = IntPtr.Add(ptr, Marshal.SizeOf(typeof(PrinterInfo2)));
+            }
+
+            return dest;
+        }
 
         #endregion
 

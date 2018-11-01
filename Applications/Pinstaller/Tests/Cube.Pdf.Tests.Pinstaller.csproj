@@ -52,6 +52,7 @@
     <Compile Include="Sources\Details\GlobalSetup.cs" />
     <Compile Include="Sources\PortMonitorTest.cs" />
     <Compile Include="Sources\PrinterDriverTest.cs" />
+    <Compile Include="Sources\PrinterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

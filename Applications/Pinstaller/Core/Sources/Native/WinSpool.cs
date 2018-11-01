@@ -144,6 +144,86 @@ namespace Cube.Pdf.App.Pinstaller
 
         #endregion
 
+        #region Printer
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// EnumPrinters
+        ///
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/enumprinters
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool EnumPrinters(
+            uint Flags,
+            string Name,
+            uint Level,
+            IntPtr pPrinterEnum,
+            uint cbBuf,
+            ref uint pcbNeeded,
+            ref uint pcReturned
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AddPrinter
+        ///
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/addprinter
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr AddPrinter(
+            string pName,
+            uint Level,
+            ref PrinterInfo2 pPrinter
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OpenPrinter
+        ///
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/openprinter
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool OpenPrinter(
+            string pName,
+            out IntPtr phPrinter,
+            IntPtr pDefault
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ClosePrinter
+        ///
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/closeprinter
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true)]
+        public static extern bool ClosePrinter(IntPtr hPrinter);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DeletePrinter
+        ///
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/deleteprinter
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true)]
+        public static extern bool DeletePrinter(IntPtr hPrinter);
+
+        #endregion
+
         #endregion
 
         #region Fields
