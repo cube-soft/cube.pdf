@@ -62,7 +62,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         /// GetElements
         ///
         /// <summary>
-        /// Executes the test to get the collection of port monitors.
+        /// Executes the test to get the collection of printer drivers.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -78,12 +78,17 @@ namespace Cube.Pdf.Tests.Pinstaller
                     e.Name.Quote(),
                     e.MonitorName.Quote(),
                     e.FileName.Quote(),
+                    e.Config.Quote(),
+                    e.Data.Quote(),
+                    e.Help.Quote(),
+                    e.Dependencies.Quote(),
                     e.Environment.Quote()
                 ));
 
                 Assert.That(e.Name.HasValue(),         Is.True, nameof(e.Name));
                 Assert.That(e.FileName.HasValue(),     Is.True, nameof(e.FileName));
                 Assert.That(e.Environment.HasValue(),  Is.True, nameof(e.Environment));
+                Assert.That(e.Exists,                  Is.True, nameof(e.Exists));
             }
         }
 
