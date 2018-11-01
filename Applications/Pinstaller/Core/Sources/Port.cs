@@ -16,9 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
-using Cube.Log;
 using Microsoft.Win32;
-using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -63,7 +62,8 @@ namespace Cube.Pdf.App.Pinstaller
             Name        = name;
             MonitorName = monitor;
             Environment = this.GetEnvironment();
-            _core       = core;
+            Exists      = core != null;
+            _core       = core ?? new Core();
         }
 
         #endregion
@@ -94,6 +94,67 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// FileName
+        ///
+        /// <summary>
+        /// Gets or sets the filename that the port executes.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string FileName
+        {
+            get => _core.AppPath;
+            set => _core.AppPath = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Arguments
+        ///
+        /// <summary>
+        /// Gets or sets the arguments for the program.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Arguments
+        {
+            get => _core.AppArgs;
+            set => _core.AppArgs = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WorkingDirectory
+        ///
+        /// <summary>
+        /// Gets or sets the working directory of the port.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string WorkingDirectory
+        {
+            get => _core.TempDir;
+            set => _core.TempDir = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsSynchronous
+        ///
+        /// <summary>
+        /// Gets or sets the value indicating whether the port wait for
+        /// the termination of the executing program.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool IsSynchronous
+        {
+            get => _core.WaitForExit;
+            set => _core.WaitForExit = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Environment
         ///
         /// <summary>
@@ -121,6 +182,37 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetElements
+        ///
+        /// <summary>
+        /// Gets the collection of currently installed ports from the
+        /// specified port monitor name.
+        /// </summary>
+        ///
+        /// <param name="monitor">Name of port monitor.</param>
+        ///
+        /// <returns>Collection of ports.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<Port> GetElements(string monitor)
+        {
+            var dest = new List<Port>();
+
+            using (var k = Open(GetName(monitor, "Ports"), false))
+            {
+                foreach (var name in k?.GetSubKeyNames() ?? new string[0])
+                using (var kk = k.OpenSubKey(name, false))
+                {
+                    var core = kk.Deserialize<Core>();
+                    dest.Add(new Port(name, monitor, core));
+                }
+            }
+
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Install
         ///
         /// <summary>
@@ -128,7 +220,13 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Install() { }
+        public void Install()
+        {
+            using (var k = Open(GetName(MonitorName, "Ports", Name), true))
+            {
+                k.Serialize(_core);
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -139,7 +237,10 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Uninstall() { }
+        public void Uninstall()
+        {
+            using (var k = Open(GetName(MonitorName), true)) k.DeleteSubKeyTree("Ports");
+        }
 
         #endregion
 
@@ -174,17 +275,37 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static Core Get(string name, string monitor)
         {
-            var key = $@"System\CurrentControlSet\Control\Print\Monitors\{monitor}\Ports\{name}";
-            try
-            {
-                using (var obj = Registry.LocalMachine.OpenSubKey(key, false))
-                {
-                    return obj.Deserialize<Core>();
-                }
-            }
-            catch (Exception err) { Logger.Warn(typeof(Port), err.ToString(), err); }
-            return new Core();
+            var key = GetName(monitor, "Ports", name);
+            using (var k = Open(key, false)) return k?.Deserialize<Core>();
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetName
+        ///
+        /// <summary>
+        /// Gets the name of registry subkey from the specified names.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetName(params string[] subkeys)
+        {
+            var root = @"System\CurrentControlSet\Control\Print\Monitors";
+            return subkeys.Length > 0 ? $@"{root}\{string.Join("\\", subkeys)}" : root;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// Opens the registry from the specified name.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static RegistryKey Open(string name, bool writable) => writable ?
+            Registry.LocalMachine.CreateSubKey(name) :
+            Registry.LocalMachine.OpenSubKey(name, false);
 
         #endregion
 
