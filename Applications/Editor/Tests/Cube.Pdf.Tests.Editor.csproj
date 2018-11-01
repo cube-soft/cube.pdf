@@ -124,6 +124,7 @@
     <Compile Include="Sources\Interactions\MouseMoveBehaviorTest.cs" />
     <Compile Include="Sources\Interactions\MouseOpenBehaviorTest.cs" />
     <Compile Include="Sources\Interactions\MousePreviewBehaviorTest.cs" />
+    <Compile Include="Sources\Interactions\SelectionBehaviorTest.cs" />
     <Compile Include="Sources\Interactions\SimplexConverterTest.cs" />
     <Compile Include="Sources\Interactions\VisibleRangeTest.cs" />
     <Compile Include="Sources\ViewModels\EncryptionTest.cs" />
@@ -186,9 +187,6 @@
       <Project>{ca46007a-4f0f-4304-bb57-d0e22d7c936e}</Project>
       <Name>Cube.Pdf.App.Editor</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Sources\Interactions\SelectionBehaviorTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
