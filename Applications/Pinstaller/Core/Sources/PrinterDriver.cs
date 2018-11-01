@@ -219,10 +219,10 @@ namespace Cube.Pdf.App.Pinstaller
         /// GetElements
         ///
         /// <summary>
-        /// Gets the collection of currently installed port monitors.
+        /// Gets the collection of currently installed printer drivers.
         /// </summary>
         ///
-        /// <returns>Collection of port monitors.</returns>
+        /// <returns>Collection of printer drivers.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PrinterDriver> GetElements()
