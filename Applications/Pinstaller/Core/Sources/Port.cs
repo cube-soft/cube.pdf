@@ -139,7 +139,7 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsSynchronous
+        /// WaitForExit
         ///
         /// <summary>
         /// Gets or sets the value indicating whether the port wait for
@@ -147,7 +147,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsSynchronous
+        public bool WaitForExit
         {
             get => _core.WaitForExit;
             set => _core.WaitForExit = value;

@@ -87,7 +87,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// Name
         ///
         /// <summary>
-        /// Gets the name of the printer drvier.
+        /// Gets the name of the printer.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

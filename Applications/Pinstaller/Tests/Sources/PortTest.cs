@@ -72,7 +72,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                     e.FileName.Quote(),
                     e.Arguments,
                     e.WorkingDirectory.Quote(),
-                    e.IsSynchronous,
+                    e.WaitForExit,
                     e.Environment.Quote()
                 ));
 
