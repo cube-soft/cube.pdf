@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
+using Cube.Log;
 using NUnit.Framework;
 using System;
 using System.ComponentModel;
@@ -48,7 +49,12 @@ namespace Cube.Pdf.Tests.Pinstaller
         protected T Invoke<T>(Func<T> test)
         {
             try { return test(); }
-            catch (Win32Exception err) { Assert.Ignore($"{err.Message} ({err.ErrorCode})"); }
+            catch (Win32Exception e)
+            {
+                var message = $"{e.Message} ({e.ErrorCode})";
+                this.LogWarn(message, e);
+                Assert.Ignore(message);
+            }
             return default(T);
         }
 

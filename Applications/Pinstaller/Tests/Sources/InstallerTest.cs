@@ -49,8 +49,11 @@ namespace Cube.Pdf.Tests.Pinstaller
         [TestCaseSource(nameof(TestCases))]
         public void Create(Format format, string filename, DeviceConfig cmp) => Invoke(() =>
         {
-            var dest = new Installer(format, GetExamplesWith(filename), IO);
-            Assert.That(dest, Is.Not.Null);
+            var src  = GetExamplesWith(filename);
+            var dest = new Installer(format, src);
+            Assert.That(dest,          Is.Not.Null);
+            Assert.That(dest.Location, Is.EqualTo(src));
+            Assert.That(dest.IO,       Is.Not.Null);
 
             var x0 = dest.Config.PortMonitor;
             var y0 = cmp.PortMonitor;
