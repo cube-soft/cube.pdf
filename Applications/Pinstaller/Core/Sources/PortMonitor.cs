@@ -151,20 +151,16 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PortMonitor> GetElements()
         {
-            var bytes = 0u;
-            var count = 0u;
-
-            bool f(IntPtr p, uint n) => NativeMethods.EnumMonitors(null, 2, p, n, ref bytes, ref count);
-            if (f(IntPtr.Zero, 0)) return new PortMonitor[0];
+            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out var _)) return null;
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
-            var buffer = Marshal.AllocHGlobal((int)bytes);
+            var ptr = Marshal.AllocHGlobal((int)bytes);
             try
             {
-                if (f(buffer, bytes)) return Convert(buffer, count);
+                if (GetEnumApi(ptr, bytes, out var __, out var n)) return Convert(ptr, n);
                 else throw new Win32Exception();
             }
-            finally { Marshal.FreeHGlobal(buffer); }
+            finally { Marshal.FreeHGlobal(ptr); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -200,6 +196,19 @@ namespace Cube.Pdf.App.Pinstaller
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEnumApi
+        ///
+        /// <summary>
+        /// Executes the API of gettings currently installed port
+        /// monitors.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static bool GetEnumApi(IntPtr src, uint n, out uint bytes, out uint count) =>
+            NativeMethods.EnumMonitors("", 2, src, n, out bytes, out count);
 
         /* ----------------------------------------------------------------- */
         ///

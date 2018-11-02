@@ -239,20 +239,16 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PrinterDriver> GetElements()
         {
-            var bytes = 0u;
-            var count = 0u;
-
-            bool f(IntPtr p, uint n) => NativeMethods.EnumPrinterDrivers(null, "", 3, p, n, ref bytes, ref count);
-            if (f(IntPtr.Zero, 0)) return new PrinterDriver[0];
+            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out var _)) return null;
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
-            var buffer = Marshal.AllocHGlobal((int)bytes);
+            var ptr = Marshal.AllocHGlobal((int)bytes);
             try
             {
-                if (f(buffer, bytes)) return Convert(buffer, count);
+                if (GetEnumApi(ptr, bytes, out var __, out var n)) return Convert(ptr, n);
                 else throw new Win32Exception();
             }
-            finally { Marshal.FreeHGlobal(buffer); }
+            finally { Marshal.FreeHGlobal(ptr); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -300,25 +296,38 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static string GetDirectory()
         {
-            if (GetDirectoryCore(null, 0, out var bytes)) return string.Empty;
+            if (GetDirectoryApi(null, 0, out var bytes)) return string.Empty;
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var sb = new StringBuilder((int)bytes);
-            if (GetDirectoryCore(sb, bytes, out var _)) return sb.ToString();
+            if (GetDirectoryApi(sb, bytes, out var _)) return sb.ToString();
             else throw new Win32Exception();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetDirectoryCore
+        /// GetDirectoryApi
         ///
         /// <summary>
         /// Executes the API of getting the driver directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static bool GetDirectoryCore(StringBuilder src, uint n, out uint result) =>
-            NativeMethods.GetPrinterDriverDirectory("", "", 1, src, n, out result);
+        private static bool GetDirectoryApi(StringBuilder src, uint n, out uint bytes) =>
+            NativeMethods.GetPrinterDriverDirectory("", "", 1, src, n, out bytes);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEnumApi
+        ///
+        /// <summary>
+        /// Executes the API of getting currently installed printer
+        /// drivers.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static bool GetEnumApi(IntPtr src, uint n, out uint bytes, out uint count) =>
+            NativeMethods.EnumPrinterDrivers("", "", 3, src, n, out bytes, out count);
 
         /* ----------------------------------------------------------------- */
         ///

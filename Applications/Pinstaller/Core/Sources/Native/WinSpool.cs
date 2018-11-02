@@ -51,8 +51,8 @@ namespace Cube.Pdf.App.Pinstaller
             uint Level,
             IntPtr pMonitors,
             uint cbBuf,
-            ref uint pcbNeeded,
-            ref uint pcReturned
+            out uint pcbNeeded,
+            out uint pcReturned
         );
 
         /* ----------------------------------------------------------------- */
@@ -107,8 +107,8 @@ namespace Cube.Pdf.App.Pinstaller
             uint Level,
             IntPtr pDriverInfo,
             uint cbBuf,
-            ref uint pcbNeeded,
-            ref uint pcReturned
+            out uint pcbNeeded,
+            out uint pcReturned
         );
 
         /* ----------------------------------------------------------------- */
@@ -182,8 +182,8 @@ namespace Cube.Pdf.App.Pinstaller
             uint Level,
             IntPtr pPrinterEnum,
             uint cbBuf,
-            ref uint pcbNeeded,
-            ref uint pcReturned
+            out uint pcbNeeded,
+            out uint pcReturned
         );
 
         /* ----------------------------------------------------------------- */
