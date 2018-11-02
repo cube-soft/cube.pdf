@@ -33,7 +33,7 @@ namespace Cube.Pdf.Tests.Pinstaller
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class PortMonitorTest
+    class PortMonitorTest : DeviceFixture
     {
         #region Tests
 
@@ -49,14 +49,14 @@ namespace Cube.Pdf.Tests.Pinstaller
         /* ----------------------------------------------------------------- */
         [TestCase("Dummy Port", "",             ExpectedResult = false)]
         [TestCase("Local Port", "localspl.dll", ExpectedResult = true )]
-        public bool Create(string name, string filename)
+        public bool Create(string name, string filename) => Invoke(() =>
         {
             var src = new PortMonitor(name);
             Assert.That(src.Name.Unify(),           Is.EqualTo(name));
             Assert.That(src.FileName.Unify(),       Is.EqualTo(filename));
             Assert.That(src.Environment.HasValue(), Is.True);
             return src.Exists;
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -68,7 +68,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetElements()
+        public void GetElements() => Invoke(() =>
         {
             var src = PortMonitor.GetElements();
             Assert.That(src.Count(), Is.AtLeast(2));
@@ -85,7 +85,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                 Assert.That(e.FileName.HasValue(),    Is.True, nameof(e.FileName));
                 Assert.That(e.Environment.HasValue(), Is.True, nameof(e.Environment));
             }
-        }
+        });
 
         #endregion
     }

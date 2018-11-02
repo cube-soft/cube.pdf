@@ -15,70 +15,61 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
-using Cube.Log;
-using Cube.Pdf.App.Pinstaller;
+using Cube.FileSystem.TestService;
 using NUnit.Framework;
+using System;
+using System.ComponentModel;
 
 namespace Cube.Pdf.Tests.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PortTest
+    /// DeviceFixture
     ///
     /// <summary>
-    /// Represents tests of the Port class.
+    /// Provides functionality to test device installing.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class PortTest : DeviceFixture
+    class DeviceFixture : FileFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Invoke
         ///
         /// <summary>
-        /// Executes the test to create a new instance of the Port
-        /// class with the specified name.
+        /// Invokes the specified test. When the RPC server is not
+        /// available, the test result is ignored.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Dummy Port", "Dummy PortMonitor", ExpectedResult = false)]
-        public bool Create(string name, string monitor) =>
-            Invoke(() => new Port(name, monitor).Exists);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetElements
-        ///
-        /// <summary>
-        /// Executes the test to get the collection of port monitors.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("CubeMon")]
-        [TestCase("Dummy Monitor")]
-        public void GetElements(string monitor) => Invoke(() =>
+        protected T Invoke<T>(Func<T> test)
         {
-            var src = Port.GetElements(monitor);
-
-            foreach (var e in src)
+            try { return test(); }
+            catch (Win32Exception err)
             {
-                this.LogDebug(string.Join("\t",
-                    e.Name.Quote(),
-                    e.FileName.Quote(),
-                    e.Arguments,
-                    e.WorkingDirectory.Quote(),
-                    e.WaitForExit,
-                    e.Environment.Quote()
-                ));
-
-                Assert.That(e.Name.HasValue(),        Is.True, nameof(e.Name));
-                Assert.That(e.Environment.HasValue(), Is.True, nameof(e.Environment));
+                if (err.ErrorCode == 1722) Assert.Ignore(err.Message);
+                else throw;
             }
+            return default(T);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified test. When the RPC server is not
+        /// available, the test result is ignored.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Invoke(Action test) => Invoke(() =>
+        {
+            test();
+            return true;
         });
 
         #endregion

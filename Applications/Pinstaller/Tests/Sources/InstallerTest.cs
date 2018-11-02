@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
-using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Pinstaller;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -33,7 +32,7 @@ namespace Cube.Pdf.Tests.Pinstaller
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class InstallerTest : FileFixture
+    class InstallerTest : DeviceFixture
     {
         #region Tests
 
@@ -48,7 +47,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Create(Format format, string filename, DeviceConfig cmp)
+        public void Create(Format format, string filename, DeviceConfig cmp) => Invoke(() =>
         {
             var dest = new Installer(format, GetExamplesWith(filename), IO);
             Assert.That(dest, Is.Not.Null);
@@ -85,7 +84,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(x3.ShareName,  Is.EqualTo(y3.ShareName),  $"{m3}.{nameof(x3.ShareName)}");
             Assert.That(x3.DriverName, Is.EqualTo(y3.DriverName), $"{m3}.{nameof(x3.DriverName)}");
             Assert.That(x3.PortName,   Is.EqualTo(y3.PortName),   $"{m3}.{nameof(x3.PortName)}");
-        }
+        });
 
         #endregion
 

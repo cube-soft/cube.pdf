@@ -33,7 +33,7 @@ namespace Cube.Pdf.Tests.Pinstaller
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class PrinterDriverTest
+    class PrinterDriverTest : DeviceFixture
     {
         #region Tests
 
@@ -49,13 +49,13 @@ namespace Cube.Pdf.Tests.Pinstaller
         /* ----------------------------------------------------------------- */
         [TestCase("Dummy Driver",                ExpectedResult = false)]
         [TestCase("Microsoft Shared Fax Driver", ExpectedResult = true )]
-        public bool Create(string name)
+        public bool Create(string name) => Invoke(() =>
         {
             var src = new PrinterDriver(name);
             Assert.That(src.Name.Unify(),           Is.EqualTo(name));
             Assert.That(src.Environment.HasValue(), Is.True);
             return src.Exists;
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -67,7 +67,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetElements()
+        public void GetElements() => Invoke(() =>
         {
             var src = PrinterDriver.GetElements();
             Assert.That(src.Count(), Is.AtLeast(1));
@@ -90,7 +90,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                 Assert.That(e.Environment.HasValue(),  Is.True, nameof(e.Environment));
                 Assert.That(e.Exists,                  Is.True, nameof(e.Exists));
             }
-        }
+        });
 
         #endregion
     }
