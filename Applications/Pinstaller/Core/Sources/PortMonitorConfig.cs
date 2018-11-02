@@ -57,6 +57,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Name
         {
             get => _name;
@@ -72,6 +73,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string FileName
         {
             get => _fileName;

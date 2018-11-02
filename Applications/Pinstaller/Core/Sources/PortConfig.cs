@@ -57,6 +57,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Name
         {
             get => _name;
@@ -72,6 +73,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string MonitorName
         {
             get => _monitorName;
@@ -87,6 +89,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string FileName
         {
             get => _fileName;
@@ -102,6 +105,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Arguments
         {
             get => _arguments;
@@ -117,6 +121,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string WorkingDirectory
         {
             get => _work;
@@ -133,6 +138,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public bool WaitForExit
         {
             get => _wait;

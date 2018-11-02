@@ -57,6 +57,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public PortMonitorConfig PortMonitor
         {
             get => _portMonitor;
@@ -72,6 +73,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public PortConfig Port
         {
             get => _port;
@@ -88,6 +90,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public PrinterDriverConfig PrinterDriver
         {
             get => _printerDriver;
@@ -103,6 +106,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public PrinterConfig Printer
         {
             get => _printer;

@@ -57,6 +57,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Name
         {
             get => _name;
@@ -73,6 +74,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string ShareName
         {
             get => _shareName;
@@ -88,6 +90,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string DriverName
         {
             get => _driverName;
@@ -103,6 +106,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string PortName
         {
             get => _portName;
