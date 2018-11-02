@@ -1,13 +1,9 @@
 {
     "Printer" : {
-        "Name"              : "CubePDF",
-        "ShareName"         : "CubePDF",
-        "DriverName"        : "CubePDF",
-        "PortName"          : "CubePDF:"
+        "Name"              : "CubePDF"
     },
     "PrinterDriver" : {
         "Name"              : "CubePDF",
-        "MonitorName"       : "CubeMon",
         "FileName"          : "cubeps5.dll",
         "Config"            : "cubeps5ui.dll",
         "Data"              : "cubepdf.ppd",
