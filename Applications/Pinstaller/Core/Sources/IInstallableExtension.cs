@@ -21,14 +21,14 @@ namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IInstallerExtension
+    /// IInstallableExtension
     ///
     /// <summary>
-    /// Provides extended methods for IInstaller implemented classes.
+    /// Provides extended methods for IInstallable implemented classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class IInstallerExtension
+    internal static class IInstallableExtension
     {
         #region Methods
 
@@ -45,7 +45,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Name of architecture.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetEnvironment(this IInstaller src) =>
+        public static string GetEnvironment(this IInstallable src) =>
             (IntPtr.Size == 4) ? "Windows NT x86" : "Windows x64";
 
         #endregion

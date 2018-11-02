@@ -32,7 +32,7 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PortMonitor : IInstaller
+    public class PortMonitor : IInstallable
     {
         #region Constructors
 

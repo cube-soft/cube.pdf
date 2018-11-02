@@ -19,14 +19,14 @@ namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IInstaller
+    /// IInstallable
     ///
     /// <summary>
-    /// Represents the interface of installers.
+    /// Represents the interface of installable devices.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IInstaller
+    public interface IInstallable
     {
         /* ----------------------------------------------------------------- */
         ///

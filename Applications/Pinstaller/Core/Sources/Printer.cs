@@ -32,7 +32,7 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Printer : IInstaller
+    public class Printer : IInstallable
     {
         #region Constructors
 

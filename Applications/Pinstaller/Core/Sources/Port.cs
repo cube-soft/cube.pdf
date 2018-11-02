@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Port : IInstaller
+    public class Port : IInstallable
     {
         #region Constructors
 
