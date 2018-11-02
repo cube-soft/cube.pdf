@@ -48,11 +48,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         protected T Invoke<T>(Func<T> test)
         {
             try { return test(); }
-            catch (Win32Exception err)
-            {
-                if (err.ErrorCode == 1722) Assert.Ignore(err.Message);
-                else throw;
-            }
+            catch (Win32Exception err) { Assert.Ignore($"{err.Message} ({err.ErrorCode})"); }
             return default(T);
         }
 
