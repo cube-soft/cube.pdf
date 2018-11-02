@@ -116,6 +116,42 @@ namespace Cube.Pdf.Tests.Pinstaller
                     Port = new PortConfig
                     {
                         Name             = "CubePDF:",
+                        MonitorName      = "CubeMon",
+                        FileName         = @"C:\Program Files\CubePDF\CubeProxy.exe",
+                        Arguments        = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
+                        WorkingDirectory = @"C:\ProgramData\CubeSoft\CubePDF",
+                        WaitForExit      = false,
+                    },
+                    PrinterDriver = new PrinterDriverConfig
+                    {
+                        Name             = "CubePDF",
+                        MonitorName      = "CubeMon",
+                        FileName         = "cubeps5.dll",
+                        Config           = "cubeps5ui.dll",
+                        Data             = "cubepdf.ppd",
+                        Help             = "cubeps.hlp",
+                        Dependencies     = "cubeps.ntf",
+                    },
+                    Printer = new PrinterConfig
+                    {
+                        Name             = "CubePDF",
+                        ShareName        = "CubePDF",
+                        DriverName       = "CubePDF",
+                        PortName         = "CubePDF:",
+                    }
+                });
+
+                yield return new TestCaseData(Format.Json, "SampleLite.json", new DeviceConfig
+                {
+                    PortMonitor = new PortMonitorConfig
+                    {
+                        Name             = "CubeMon",
+                        FileName         = "cubemon.dll",
+                    },
+                    Port = new PortConfig
+                    {
+                        Name             = "CubePDF:",
+                        MonitorName      = "CubeMon",
                         FileName         = @"C:\Program Files\CubePDF\CubeProxy.exe",
                         Arguments        = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
                         WorkingDirectory = @"C:\ProgramData\CubeSoft\CubePDF",

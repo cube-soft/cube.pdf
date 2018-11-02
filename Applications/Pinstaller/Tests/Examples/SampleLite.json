@@ -16,7 +16,6 @@
     },
     "Port" : {
         "Name"              : "CubePDF:",
-        "MonitorName"       : "CubeMon",
         "FileName"          : "C:\\Program Files\\CubePDF\\CubeProxy.exe",
         "Arguments"         : "/Exec \"C:\\Program Files\\CubePDF\\cubepdf.exe\"",
         "WorkingDirectory"  : "C:\\ProgramData\\CubeSoft\\CubePDF",
