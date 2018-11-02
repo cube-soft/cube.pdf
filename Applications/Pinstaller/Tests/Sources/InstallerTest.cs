@@ -175,6 +175,41 @@ namespace Cube.Pdf.Tests.Pinstaller
                         PortName         = "CubePDF:",
                     }
                 });
+
+                yield return new TestCaseData(Format.Json, "SampleEmpty.json", new DeviceConfig
+                {
+                    PortMonitor = new PortMonitorConfig
+                    {
+                        Name             = "",
+                        FileName         = "",
+                    },
+                    Port = new PortConfig
+                    {
+                        Name             = "",
+                        MonitorName      = "",
+                        FileName         = "",
+                        Arguments        = "",
+                        WorkingDirectory = "",
+                        WaitForExit      = false,
+                    },
+                    PrinterDriver = new PrinterDriverConfig
+                    {
+                        Name             = "",
+                        MonitorName      = "",
+                        FileName         = "",
+                        Config           = "",
+                        Data             = "",
+                        Help             = "",
+                        Dependencies     = "",
+                    },
+                    Printer = new PrinterConfig
+                    {
+                        Name             = "",
+                        ShareName        = "",
+                        DriverName       = "",
+                        PortName         = "",
+                    }
+                });
             }
         }
 
