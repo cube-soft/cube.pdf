@@ -170,7 +170,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                     Printer = new PrinterConfig
                     {
                         Name             = "CubePDF",
-                        ShareName        = "CubePDF",
+                        ShareName        = "",
                         DriverName       = "CubePDF",
                         PortName         = "CubePDF:",
                     }
