@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -140,6 +141,25 @@ namespace Cube.Pdf.App.Pinstaller
             string pName,
             string pEnvironment,
             string pDriverName
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetPrinterDriverDirectory
+        ///
+        /// <summary>
+        /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/getprinterdriverdirectory
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool GetPrinterDriverDirectory(
+            string pName,
+            string pEnvironment,
+            uint Level,
+            StringBuilder pDriverDirectory,
+            uint cbBuf,
+            out uint pcbNeeded
         );
 
         #endregion

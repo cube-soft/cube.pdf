@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -210,6 +211,17 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public bool Exists { get; private set; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DirectoryName
+        ///
+        /// <summary>
+        /// Gets the default path that driver resources are installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string DirectoryName => _directory ?? (_directory = GetDirectory());
+
         #endregion
 
         #region Methods
@@ -279,6 +291,37 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetDirectory
+        ///
+        /// <summary>
+        /// Gets the default path that driver resources are installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetDirectory()
+        {
+            if (GetDirectoryCore(null, 0, out var bytes)) return string.Empty;
+            if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
+
+            var sb = new StringBuilder((int)bytes);
+            if (GetDirectoryCore(sb, bytes, out var _)) return sb.ToString();
+            else throw new Win32Exception();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetDirectoryCore
+        ///
+        /// <summary>
+        /// Executes the API of getting the driver directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static bool GetDirectoryCore(StringBuilder src, uint n, out uint result) =>
+            NativeMethods.GetPrinterDriverDirectory("", "", 1, src, n, out result);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Convert
         ///
         /// <summary>
@@ -305,6 +348,7 @@ namespace Cube.Pdf.App.Pinstaller
 
         #region Fields
         private DriverInfo3 _core;
+        private string _directory;
         #endregion
     }
 }

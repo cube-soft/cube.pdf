@@ -52,8 +52,9 @@ namespace Cube.Pdf.Tests.Pinstaller
         public bool Create(string name) => Invoke(() =>
         {
             var src = new PrinterDriver(name);
-            Assert.That(src.Name.Unify(),           Is.EqualTo(name));
-            Assert.That(src.Environment.HasValue(), Is.True);
+            Assert.That(src.Name.Unify(),             Is.EqualTo(name));
+            Assert.That(src.Environment.HasValue(),   Is.True);
+            Assert.That(src.DirectoryName.HasValue(), Is.True);
             return src.Exists;
         });
 
@@ -82,13 +83,15 @@ namespace Cube.Pdf.Tests.Pinstaller
                     e.Data.Quote(),
                     e.Help.Quote(),
                     e.Dependencies.Quote(),
+                    e.DirectoryName.Quote(),
                     e.Environment.Quote()
                 ));
 
-                Assert.That(e.Name.HasValue(),         Is.True, nameof(e.Name));
-                Assert.That(e.FileName.HasValue(),     Is.True, nameof(e.FileName));
-                Assert.That(e.Environment.HasValue(),  Is.True, nameof(e.Environment));
-                Assert.That(e.Exists,                  Is.True, nameof(e.Exists));
+                Assert.That(e.Name.HasValue(),          Is.True, nameof(e.Name));
+                Assert.That(e.FileName.HasValue(),      Is.True, nameof(e.FileName));
+                Assert.That(e.Environment.HasValue(),   Is.True, nameof(e.Environment));
+                Assert.That(e.DirectoryName.HasValue(), Is.True, nameof(e.DirectoryName));
+                Assert.That(e.Exists,                   Is.True, nameof(e.Exists));
             }
         });
 
