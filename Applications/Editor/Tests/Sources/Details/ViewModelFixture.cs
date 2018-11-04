@@ -361,7 +361,7 @@ namespace Cube.Pdf.Tests.Editor
         {
             void dialog(DialogMessage e)
             {
-                e.Result = Select(e.Button);
+                e.Result = Select(e.Buttons);
                 e.Callback?.Invoke(e);
             }
 

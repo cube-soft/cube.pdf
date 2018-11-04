@@ -139,8 +139,8 @@ namespace Cube.Pdf.App.Editor
             new DialogMessage(Properties.Resources.MessageOverwrite,
             Assembly.GetExecutingAssembly(), callback)
         {
-            Button = System.Windows.MessageBoxButton.YesNoCancel,
-            Image  = System.Windows.MessageBoxImage.Information,
+            Buttons = System.Windows.MessageBoxButton.YesNoCancel,
+            Image   = System.Windows.MessageBoxImage.Information,
         };
 
         #endregion
