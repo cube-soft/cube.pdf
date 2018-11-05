@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Tasks;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DirectoryMonitor : IEnumerable<Information>, INotifyCollectionChanged
+    public class DirectoryMonitor : EnumerableBase<Information>, INotifyCollectionChanged
     {
         #region Constructors
 
@@ -180,22 +180,7 @@ namespace Cube.Pdf.App.Editor
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<Information> GetEnumerator() => _items.GetEnumerator();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IEnumerable.GetEnumerator
-        ///
-        /// <summary>
-        /// Returns an enumerator that iterates through this collection.
-        /// </summary>
-        ///
-        /// <returns>
-        /// An IEnumerator object for this collection.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public override IEnumerator<Information> GetEnumerator() => _items.GetEnumerator();
 
         #endregion
 

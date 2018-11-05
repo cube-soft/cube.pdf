@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using iTextSharp.text.pdf;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
@@ -31,7 +31,7 @@ namespace Cube.Pdf.Itext
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class ReadOnlyPageList : IReadOnlyList<Page>
+    internal class ReadOnlyPageList : EnumerableBase<Page>, IReadOnlyList<Page>
     {
         #region Constructors
 
@@ -105,23 +105,10 @@ namespace Cube.Pdf.Itext
         /// <returns>反復子</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<Page> GetEnumerator()
+        public override IEnumerator<Page> GetEnumerator()
         {
             for (var i = 0; i < Count; ++i) yield return this[i];
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEnumerator
-        ///
-        /// <summary>
-        /// 各ページオブジェクトへアクセスするための反復子を取得します。
-        /// </summary>
-        ///
-        /// <returns>反復子</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         #endregion
 
