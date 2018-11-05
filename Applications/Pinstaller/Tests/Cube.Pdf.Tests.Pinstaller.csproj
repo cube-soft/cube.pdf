@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +57,7 @@
     <Compile Include="Sources\PortTest.cs" />
     <Compile Include="Sources\PrinterDriverTest.cs" />
     <Compile Include="Sources\PrinterTest.cs" />
+    <Compile Include="Sources\SpoolerServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +67,7 @@
     <Compile Include="Sources\PrinterDriver.cs" />
     <Compile Include="Sources\PrinterDriverConfig.cs" />
     <Compile Include="Sources\PrinterDriverExtension.cs" />
+    <Compile Include="Sources\SpoolerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Cube.snk" />

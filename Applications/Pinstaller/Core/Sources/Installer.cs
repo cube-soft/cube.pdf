@@ -127,6 +127,32 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Install
+        ///
+        /// <summary>
+        /// Installs devices according to the Config property.
+        /// </summary>
+        ///
+        /// <param name="resource">Resource directory.</param>
+        /// <param name="reinstall">
+        /// Value indicating whether re-installing devices when provided
+        /// devices have already been installed.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Install(string resource, bool reinstall)
+        {
+            var mon     = Config.PortMonitor.Create();
+            var port    = Config.Port.Create();
+            var drv     = Config.PrinterDriver.Create();
+            var printer = Config.Printer.Create();
+
+            if (reinstall) Uninstall(printer, drv, port, mon);
+
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Uninstall
         ///
         /// <summary>
