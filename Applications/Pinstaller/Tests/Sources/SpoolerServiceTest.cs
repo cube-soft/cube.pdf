@@ -51,7 +51,8 @@ namespace Cube.Pdf.Tests.Pinstaller
         {
             var src = new SpoolerService();
             Assert.That(src.Name,    Is.EqualTo("Spooler"));
-            Assert.That(src.Status,  Is.EqualTo(ServiceControllerStatus.Running));
+            Assert.That(src.Status,  Is.EqualTo(ServiceControllerStatus.Running).Or
+                                       .EqualTo(ServiceControllerStatus.Stopped));
             Assert.That(src.Timeout, Is.EqualTo(TimeSpan.FromSeconds(10)));
         }
 
