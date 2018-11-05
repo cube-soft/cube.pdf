@@ -52,9 +52,10 @@ namespace Cube.Pdf.Tests.Pinstaller
         public bool Create(string name, string filename) => Invoke(() =>
         {
             var src = new PortMonitor(name);
-            Assert.That(src.Name.Unify(),           Is.EqualTo(name));
-            Assert.That(src.FileName.Unify(),       Is.EqualTo(filename));
-            Assert.That(src.Environment.HasValue(), Is.True);
+            Assert.That(src.Name.Unify(),             Is.EqualTo(name));
+            Assert.That(src.FileName.Unify(),         Is.EqualTo(filename));
+            Assert.That(src.Environment.HasValue(),   Is.True);
+            Assert.That(src.DirectoryName.HasValue(), Is.True);
             return src.Exists;
         });
 

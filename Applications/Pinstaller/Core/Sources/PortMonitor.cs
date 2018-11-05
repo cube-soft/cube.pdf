@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -71,7 +72,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PortMonitor(MonitorInfo2 core) { _core = core; }
+        private PortMonitor(MonitorInfo2 core)
+        {
+            _core = core;
+            DirectoryName = System.Environment.SpecialFolder.System.GetName();
+        }
 
         #endregion
 
@@ -133,6 +138,17 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public bool Exists { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DirectoryName
+        ///
+        /// <summary>
+        /// Gets the default path that monitor resources are installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string DirectoryName { get; }
 
         #endregion
 
