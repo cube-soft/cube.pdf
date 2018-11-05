@@ -206,6 +206,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install()
         {
+            if (Exists) return;
             var dest = NativeMethods.AddPrinter(Name, 2, ref _core);
             if (dest == IntPtr.Zero) throw new Win32Exception();
             NativeMethods.ClosePrinter(dest);
@@ -223,6 +224,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall()
         {
+            if (!Exists) return;
             if (!NativeMethods.OpenPrinter(Name, out var src, IntPtr.Zero)) throw new Win32Exception();
             try
             {

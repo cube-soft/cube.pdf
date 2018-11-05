@@ -222,9 +222,11 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install()
         {
+            if (Exists) return;
             using (var k = Open(GetName(MonitorName, "Ports", Name), true))
             {
                 k.Serialize(_core);
+                Exists = true;
             }
         }
 
@@ -239,7 +241,12 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall()
         {
-            using (var k = Open(GetName(MonitorName), true)) k.DeleteSubKeyTree("Ports");
+            if (!Exists) return;
+            using (var k = Open(GetName(MonitorName), true))
+            {
+                k.DeleteSubKeyTree("Ports");
+                Exists = false;
+            }
         }
 
         #endregion

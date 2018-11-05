@@ -190,6 +190,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install()
         {
+            if (Exists) return;
             if (!NativeMethods.AddMonitor(Name, 2u, ref _core)) throw new Win32Exception();
             Exists = true;
         }
@@ -205,6 +206,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall()
         {
+            if (!Exists) return;
             if (!NativeMethods.DeleteMonitor("", "", Name)) throw new Win32Exception();
             Exists = false;
         }

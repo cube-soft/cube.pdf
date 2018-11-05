@@ -262,6 +262,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install()
         {
+            if (Exists) return;
             if (!NativeMethods.AddPrinterDriver(Name, 3, ref _core)) throw new Win32Exception();
             Exists = true;
         }
@@ -277,6 +278,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall()
         {
+            if (!Exists) return;
             if (!NativeMethods.DeletePrinterDriver("", Environment, Name)) throw new Win32Exception();
             Exists = false;
         }
