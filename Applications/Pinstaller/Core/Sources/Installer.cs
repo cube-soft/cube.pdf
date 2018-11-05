@@ -149,6 +149,19 @@ namespace Cube.Pdf.App.Pinstaller
 
             if (reinstall) Uninstall(printer, drv, port, mon);
 
+            // Copy
+            var service = new SpoolerService();
+            service.Stop();
+            mon.Copy(resource, IO);
+            drv.Copy(resource, IO);
+            service.Start();
+
+            // Install
+            mon.Install();
+            port.Install();
+            drv.Normalize(IO);
+            drv.Install();
+            printer.Install();
         }
 
         /* ----------------------------------------------------------------- */

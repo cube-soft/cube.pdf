@@ -87,6 +87,26 @@ namespace Cube.Pdf.App.Pinstaller
             io.Copy(src.Dependencies, from, to); // see remarks
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Normalize
+        ///
+        /// <summary>
+        /// Normalizes paths of resources.
+        /// </summary>
+        ///
+        /// <param name="src">Printer driver object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Normalize(this PrinterDriver src, IO io)
+        {
+            src.FileName     = io.Combine(src.DirectoryName, src.FileName);
+            src.Config       = io.Combine(src.DirectoryName, src.Config);
+            src.Data         = io.Combine(src.DirectoryName, src.Data);
+            src.Help         = io.Combine(src.DirectoryName, src.Help);
+            src.Dependencies = io.Combine(src.DirectoryName, src.Dependencies);
+        }
+
         #endregion
     }
 }
