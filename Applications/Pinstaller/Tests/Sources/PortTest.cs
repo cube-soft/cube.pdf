@@ -47,8 +47,40 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Dummy Port", "Dummy PortMonitor", ExpectedResult = false)]
-        public bool Create(string name, string monitor) =>
-            Invoke(() => new Port(name, monitor).Exists);
+        public bool Create(string name, string monitor) => Invoke(() =>
+        {
+            var src = new Port(name, monitor);
+            Assert.That(src.Name,        Is.EqualTo(name));
+            Assert.That(src.MonitorName, Is.EqualTo(monitor));
+            Assert.That(src.WaitForExit, Is.False, nameof(src.WaitForExit));
+            Assert.That(src.Environment.HasValue(),      Is.True, nameof(src.Environment));
+            Assert.That(src.FileName.HasValue(),         Is.EqualTo(src.Exists), nameof(src.FileName));
+            Assert.That(src.Arguments.HasValue(),        Is.EqualTo(src.Exists), nameof(src.Arguments));
+            Assert.That(src.WorkingDirectory.HasValue(), Is.EqualTo(src.Exists), nameof(src.WorkingDirectory));
+            return src.Exists;
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uninstall_Ignore
+        ///
+        /// <summary>
+        /// Confirms the behavior to uninstall the inexistent port.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Uninstall_Ignore() => Invoke(() =>
+        {
+            var src = new Port("Dummy", "Dummy");
+            Assert.That(src.Exists, Is.False);
+
+            src.FileName         = "Dummy";
+            src.Arguments        = "Dummy";
+            src.WorkingDirectory = @"Dummy\Path\To";
+            src.WaitForExit      = true;
+            src.Uninstall();
+        });
 
         /* ----------------------------------------------------------------- */
         ///
