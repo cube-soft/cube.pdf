@@ -89,6 +89,20 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(x3.PortName,   Is.EqualTo(y3.PortName),   $"{m3}.{nameof(x3.PortName)}");
         });
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uninstall
+        ///
+        /// <summary>
+        /// Executes the test to uninstall devices.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("SampleDummy.json")]
+        public void Uninstall(string filename) => Invoke(() =>
+            new Installer(Format.Json, GetExamplesWith(filename)).Uninstall()
+        );
+
         #endregion
 
         #region TestCases

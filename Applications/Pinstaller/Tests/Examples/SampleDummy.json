@@ -1,0 +1,23 @@
+{
+    "Printer" : {
+        "Name"              : "DummyPrinter"
+    },
+    "PrinterDriver" : {
+        "Name"              : "DummyDriver",
+        "MonitorName"       : "DummyMonitor",
+        "FileName"          : "dummy5.dll",
+        "Config"            : "dummy5ui.dll",
+        "Data"              : "dummy.ppd",
+        "Help"              : "dummy.hlp",
+        "Dependencies"      : "dummy.ntf"
+    },
+    "Port" : {
+        "Name"              : "DummyPort:",
+        "MonitorName"       : "DummyMonitor"
+    },
+    "PortMonitor" : {
+        "Name"              : "DummyMonitor",
+        "FileName"          : "dummy.dll",
+        "Config"            : "dummyui.dll"
+    }
+}
