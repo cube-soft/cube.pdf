@@ -114,6 +114,17 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Config
+        ///
+        /// <summary>
+        /// Gets or sets the name of UI config file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Config { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Environment
         ///
         /// <summary>

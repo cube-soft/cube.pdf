@@ -123,6 +123,26 @@ namespace Cube.Pdf.App.Pinstaller
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uninstall
+        ///
+        /// <summary>
+        /// Uninstalls devices according to the Config property.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Uninstall() => Uninstall(
+            Config.Printer.Create(),
+            Config.PrinterDriver.Create(),
+            Config.Port.Create(),
+            Config.PortMonitor.Create()
+        );
+
+        #endregion
+
         #region Implementations
 
         /* ----------------------------------------------------------------- */
@@ -154,6 +174,20 @@ namespace Cube.Pdf.App.Pinstaller
             if (print != null && !print.DriverName.HasValue()) print.DriverName = drv?.Name;
 
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uninstall
+        ///
+        /// <summary>
+        /// Uninstalls all of the specified devices.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Uninstall(params IInstallable[] devices)
+        {
+            foreach (var src in devices) src.Uninstall();
         }
 
         #endregion

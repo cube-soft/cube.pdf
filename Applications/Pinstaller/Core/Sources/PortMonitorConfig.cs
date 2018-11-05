@@ -80,6 +80,22 @@ namespace Cube.Pdf.App.Pinstaller
             set => SetProperty(ref _fileName, value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Config
+        ///
+        /// <summary>
+        /// Gets or sets the name of UI config file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Config
+        {
+            get => _config;
+            set => SetProperty(ref _config, value);
+        }
+
         #endregion
 
         #region Implementations
@@ -109,6 +125,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             _name     = string.Empty;
             _fileName = string.Empty;
+            _config   = string.Empty;
         }
 
         #endregion
@@ -116,6 +133,7 @@ namespace Cube.Pdf.App.Pinstaller
         #region Fields
         private string _name;
         private string _fileName;
+        private string _config;
         #endregion
     }
 }

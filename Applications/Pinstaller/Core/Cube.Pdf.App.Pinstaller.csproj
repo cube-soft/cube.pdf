@@ -47,21 +47,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sources\DeviceConfig.cs" />
-    <Compile Include="Sources\Installer.cs" />
-    <Compile Include="Sources\PortConfig.cs" />
-    <Compile Include="Sources\PortMonitorConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\Native\Structures.cs" />
     <Compile Include="Sources\Native\WinSpool.cs" />
+    <Compile Include="Sources\DeviceConfig.cs" />
     <Compile Include="Sources\IInstallable.cs" />
     <Compile Include="Sources\IInstallableExtension.cs" />
+    <Compile Include="Sources\Installer.cs" />
     <Compile Include="Sources\Port.cs" />
+    <Compile Include="Sources\PortConfig.cs" />
+    <Compile Include="Sources\PortExtension.cs" />
     <Compile Include="Sources\PortMonitor.cs" />
+    <Compile Include="Sources\PortMonitorConfig.cs" />
+    <Compile Include="Sources\PortMonitorExtension.cs" />
     <Compile Include="Sources\Printer.cs" />
     <Compile Include="Sources\PrinterConfig.cs" />
+    <Compile Include="Sources\PrinterExtension.cs" />
     <Compile Include="Sources\PrinterDriver.cs" />
     <Compile Include="Sources\PrinterDriverConfig.cs" />
+    <Compile Include="Sources\PrinterDriverExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Cube.snk" />

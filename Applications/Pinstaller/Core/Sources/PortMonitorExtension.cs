@@ -16,55 +16,64 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using System;
 
 namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IInstallableExtension
+    /// PortMonitorExtension
     ///
     /// <summary>
-    /// Provides extended methods for IInstallable implemented classes.
+    /// Represents extended methods of PortMonitor and PortMonitorConfig
+    /// classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class IInstallableExtension
+    internal static class PortMonitorExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetEnvironment
+        /// Create
         ///
         /// <summary>
-        /// Gets the name of current architecture.
+        /// Creates a new instance of the PortMonitor class from the
+        /// specified configuration.
         /// </summary>
         ///
-        /// <param name="src">IInstaller implementation.</param>
+        /// <param name="src">Port monitor configuration.</param>
         ///
-        /// <returns>Name of architecture.</returns>
+        /// <returns>Port monitor object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetEnvironment(this IInstallable src) =>
-            (IntPtr.Size == 4) ? "Windows NT x86" : "Windows x64";
+        public static PortMonitor Create(this PortMonitorConfig src) =>
+            new PortMonitor(src.Name)
+            {
+                FileName = src.FileName,
+                Config   = src.Config,
+            };
 
         /* ----------------------------------------------------------------- */
         ///
         /// Copy
         ///
         /// <summary>
-        /// Copies the specified file.
+        /// Copies resources from the specified directory.
         /// </summary>
         ///
+        /// <param name="src">Port monitor object.</param>
+        /// <param name="from">Resource directory.</param>
         /// <param name="io">I/O handler.</param>
-        /// <param name="filename">Filename to be copied.</param>
-        /// <param name="from">Source directory.</param>
-        /// <param name="to">Destination directory.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Copy(this IO io, string filename, string from, string to) =>
-            io.Copy(io.Combine(from, filename), io.Combine(to, filename), true);
+        public static void Copy(this PortMonitor src, string from, IO io)
+        {
+            var to = src.DirectoryName;
+
+            io.Copy(src.FileName, from, to);
+            io.Copy(src.Config,   from, to);
+        }
 
         #endregion
     }

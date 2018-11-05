@@ -101,7 +101,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// Config
         ///
         /// <summary>
-        /// Gets the name of config file.
+        /// Gets or sets the name of UI config file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -117,7 +117,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// Data
         ///
         /// <summary>
-        /// Gets the name of data file.
+        /// Gets or sets the name of data file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -133,7 +133,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// Help
         ///
         /// <summary>
-        /// Gets the name of help file.
+        /// Gets or sets the name of help file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -149,7 +149,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// Dependencies
         ///
         /// <summary>
-        /// Gets the name of dependency files.
+        /// Gets or sets the name of dependency files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

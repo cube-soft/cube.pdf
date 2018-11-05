@@ -16,55 +16,76 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using System;
 
 namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IInstallableExtension
+    /// PrinterDriverExtension
     ///
     /// <summary>
-    /// Provides extended methods for IInstallable implemented classes.
+    /// Represents extended methods of PrinterDriver and PrinterDriverConfig
+    /// classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class IInstallableExtension
+    internal static class PrinterDriverExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetEnvironment
+        /// Create
         ///
         /// <summary>
-        /// Gets the name of current architecture.
+        /// Creates a new instance of the PrinterDriver class from the
+        /// specified configuration.
         /// </summary>
         ///
-        /// <param name="src">IInstaller implementation.</param>
+        /// <param name="src">Printer driver configuration.</param>
         ///
-        /// <returns>Name of architecture.</returns>
+        /// <returns>Printer driver object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetEnvironment(this IInstallable src) =>
-            (IntPtr.Size == 4) ? "Windows NT x86" : "Windows x64";
+        public static PrinterDriver Create(this PrinterDriverConfig src) =>
+            new PrinterDriver(src.Name)
+            {
+                MonitorName  = src.MonitorName,
+                FileName     = src.FileName,
+                Config       = src.Config,
+                Data         = src.Data,
+                Help         = src.Help,
+                Dependencies = src.Dependencies,
+            };
 
         /* ----------------------------------------------------------------- */
         ///
         /// Copy
         ///
         /// <summary>
-        /// Copies the specified file.
+        /// Copies resources from the specified directory.
         /// </summary>
         ///
+        /// <param name="src">Printer driver object.</param>
+        /// <param name="from">Resource directory.</param>
         /// <param name="io">I/O handler.</param>
-        /// <param name="filename">Filename to be copied.</param>
-        /// <param name="from">Source directory.</param>
-        /// <param name="to">Destination directory.</param>
+        ///
+        /// <remarks>
+        /// Dependencies には複数のファイルが指定される可能性がある。
+        /// その場合の処理方法を要検討。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Copy(this IO io, string filename, string from, string to) =>
-            io.Copy(io.Combine(from, filename), io.Combine(to, filename), true);
+        public static void Copy(this PrinterDriver src, string from, IO io)
+        {
+            var to = src.DirectoryName;
+
+            io.Copy(src.FileName,     from, to);
+            io.Copy(src.Config,       from, to);
+            io.Copy(src.Data,         from, to);
+            io.Copy(src.Help,         from, to);
+            io.Copy(src.Dependencies, from, to); // see remarks
+        }
 
         #endregion
     }

@@ -24,6 +24,7 @@
     },
     "PortMonitor" : {
         "Name"              : "CubeMon",
-        "FileName"          : "cubemon.dll"
+        "FileName"          : "cubemon.dll",
+        "Config"            : "cubemonui.dll"
     }
 }

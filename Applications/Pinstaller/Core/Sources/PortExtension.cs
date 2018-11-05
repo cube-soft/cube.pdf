@@ -15,56 +15,43 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using System;
-
 namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IInstallableExtension
+    /// PortExtension
     ///
     /// <summary>
-    /// Provides extended methods for IInstallable implemented classes.
+    /// Represents extended methods of Port and PortConfig classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class IInstallableExtension
+    internal static class PortExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetEnvironment
+        /// Create
         ///
         /// <summary>
-        /// Gets the name of current architecture.
+        /// Creates a new instance of the Port class from the specified
+        /// configuration.
         /// </summary>
         ///
-        /// <param name="src">IInstaller implementation.</param>
+        /// <param name="src">Port configuration.</param>
         ///
-        /// <returns>Name of architecture.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static string GetEnvironment(this IInstallable src) =>
-            (IntPtr.Size == 4) ? "Windows NT x86" : "Windows x64";
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Copy
-        ///
-        /// <summary>
-        /// Copies the specified file.
-        /// </summary>
-        ///
-        /// <param name="io">I/O handler.</param>
-        /// <param name="filename">Filename to be copied.</param>
-        /// <param name="from">Source directory.</param>
-        /// <param name="to">Destination directory.</param>
+        /// <returns>Port object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Copy(this IO io, string filename, string from, string to) =>
-            io.Copy(io.Combine(from, filename), io.Combine(to, filename), true);
+        public static Port Create(this PortConfig src) =>
+            new Port(src.Name, src.MonitorName)
+            {
+                FileName         = src.FileName,
+                Arguments        = src.Arguments,
+                WorkingDirectory = src.WorkingDirectory,
+                WaitForExit      = src.WaitForExit
+            };
 
         #endregion
     }

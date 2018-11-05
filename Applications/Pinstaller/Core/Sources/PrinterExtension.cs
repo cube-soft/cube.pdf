@@ -15,56 +15,42 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using System;
-
 namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IInstallableExtension
+    /// PrinterExtension
     ///
     /// <summary>
-    /// Provides extended methods for IInstallable implemented classes.
+    /// Represents extended methods of Printer and PrinterConfig classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class IInstallableExtension
+    internal static class PrinterExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetEnvironment
+        /// Create
         ///
         /// <summary>
-        /// Gets the name of current architecture.
+        /// Creates a new instance of the Printer class from the specified
+        /// configuration.
         /// </summary>
         ///
-        /// <param name="src">IInstaller implementation.</param>
+        /// <param name="src">Printer configuration.</param>
         ///
-        /// <returns>Name of architecture.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static string GetEnvironment(this IInstallable src) =>
-            (IntPtr.Size == 4) ? "Windows NT x86" : "Windows x64";
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Copy
-        ///
-        /// <summary>
-        /// Copies the specified file.
-        /// </summary>
-        ///
-        /// <param name="io">I/O handler.</param>
-        /// <param name="filename">Filename to be copied.</param>
-        /// <param name="from">Source directory.</param>
-        /// <param name="to">Destination directory.</param>
+        /// <returns>Printer object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Copy(this IO io, string filename, string from, string to) =>
-            io.Copy(io.Combine(from, filename), io.Combine(to, filename), true);
+        public static Printer Create(this PrinterConfig src) =>
+            new Printer(src.Name)
+            {
+                ShareName  = src.ShareName,
+                DriverName = src.DriverName,
+                PortName   = src.PortName,
+            };
 
         #endregion
     }
