@@ -15,6 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
+using Cube.DataContract;
 using Cube.Log;
 using System;
 using System.Reflection;
@@ -52,6 +54,10 @@ namespace Cube.Pdf.App.Pinstaller
                 Logger.ObserveTaskException();
                 Logger.Info(type, Assembly.GetExecutingAssembly());
                 Logger.Info(type, $"Arguments:{string.Join(" ", args)}");
+
+                var ac  = new ArgumentCollection(args, '/');
+                var src = new Installer(Format.Json, ac[0]);
+                src.Install(ac.Options["Resource"], true);
             }
             catch (Exception err) { Logger.Error(type, err.ToString()); }
         }

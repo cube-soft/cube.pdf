@@ -9,7 +9,7 @@
                 <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
                 <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
                 -->
-                <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+                <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
             </requestedPrivileges>
         </security>
     </trustInfo>
