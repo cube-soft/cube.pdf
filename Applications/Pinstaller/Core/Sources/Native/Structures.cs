@@ -96,4 +96,21 @@ namespace Cube.Pdf.App.Pinstaller
         public uint cJobs;
         public uint AveragePPM;
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// PrinterDefaults
+    ///
+    /// <summary>
+    /// https://docs.microsoft.com/en-us/windows/desktop/printdocs/printer-defaults
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    internal struct PrinterDefaults
+    {
+        public IntPtr pDatatype;
+        public IntPtr pDevMode;
+        public uint DesiredAccess;
+    }
 }

@@ -215,7 +215,7 @@ namespace Cube.Pdf.App.Pinstaller
         public static extern bool OpenPrinter(
             string pName,
             out IntPtr phPrinter,
-            IntPtr pDefault
+            ref PrinterDefaults pDefault
         );
 
         /* ----------------------------------------------------------------- */

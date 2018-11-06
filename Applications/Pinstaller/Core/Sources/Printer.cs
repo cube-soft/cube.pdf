@@ -225,7 +225,15 @@ namespace Cube.Pdf.App.Pinstaller
         public void Uninstall()
         {
             if (!Exists) return;
-            if (!NativeMethods.OpenPrinter(Name, out var src, IntPtr.Zero)) throw new Win32Exception();
+
+            var access = new PrinterDefaults
+            {
+                pDatatype     = IntPtr.Zero,
+                pDevMode      = IntPtr.Zero,
+                DesiredAccess = 0xf0000 | 0x04 | 0x08,
+            };
+
+            if (!NativeMethods.OpenPrinter(Name, out var src, ref access)) throw new Win32Exception();
             try
             {
                 if (!NativeMethods.DeletePrinter(src)) throw new Win32Exception();
