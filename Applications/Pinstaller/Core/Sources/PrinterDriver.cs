@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -49,12 +48,28 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="name">Name of the printer driver.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PrinterDriver(string name) :
+        public PrinterDriver(string name) : this(name, false) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PrinterDriver
+        ///
+        /// <summary>
+        /// Initializes a new instance of the PrinterDriver class with
+        /// the specified name.
+        /// </summary>
+        ///
+        /// <param name="name">Name of the printer driver.</param>
+        /// <param name="force">
+        /// Value indicating whether to forcibly create an object
+        /// ignoring any exceptions.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PrinterDriver(string name, bool force) :
             this(new DriverInfo3 { cVersion = 3, pDefaultDataType = "RAW" })
         {
-            var opt = StringComparison.InvariantCultureIgnoreCase;
-            var obj = GetElements().FirstOrDefault(e => e.Name.Equals(name, opt));
-
+            var obj = this.GetOrDefault(GetElements, name, force);
             Exists = (obj != null);
             if (Exists) _core = obj._core;
             else

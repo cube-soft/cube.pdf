@@ -54,11 +54,34 @@ namespace Cube.Pdf.Tests.Pinstaller
             var src = new PortMonitor(name);
             Assert.That(src.Name.Unify(),             Is.EqualTo(name));
             Assert.That(src.FileName.Unify(),         Is.EqualTo(filename));
-            Assert.That(src.Config.HasValue(),        Is.False);
-            Assert.That(src.Environment.HasValue(),   Is.True);
-            Assert.That(src.DirectoryName.HasValue(), Is.True);
+            Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
+            Assert.That(src.Environment.HasValue(),   Is.True,  nameof(src.Environment));
+            Assert.That(src.DirectoryName.HasValue(), Is.True,  nameof(src.DirectoryName));
             return src.Exists;
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateForce
+        ///
+        /// <summary>
+        /// Executes the test to create a new instance of the PortMonitor
+        /// class with a force option.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void CreateForce()
+        {
+            var name = "Dummy Port";
+            var src  = new PortMonitor(name, true);
+            Assert.That(src.Name,                     Is.EqualTo(name));
+            Assert.That(src.Exists,                   Is.False, nameof(src.Exists));
+            Assert.That(src.FileName.HasValue(),      Is.False, nameof(src.FileName));
+            Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
+            Assert.That(src.Environment.HasValue(),   Is.True,  nameof(src.Environment));
+            Assert.That(src.DirectoryName.HasValue(), Is.True,  nameof(src.DirectoryName));
+        }
 
         /* ----------------------------------------------------------------- */
         ///

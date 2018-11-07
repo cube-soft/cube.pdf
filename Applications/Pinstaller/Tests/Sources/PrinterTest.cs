@@ -59,6 +59,29 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CreateForce
+        ///
+        /// <summary>
+        /// Executes the test to create a new instance of the Printer
+        /// class with a force option.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void CreateForce()
+        {
+            var name = "Dummy Printer";
+            var src  = new Printer(name, true);
+            Assert.That(src.Name,                   Is.EqualTo(name));
+            Assert.That(src.ShareName,              Is.EqualTo(name));
+            Assert.That(src.Exists,                 Is.False, nameof(src.Exists));
+            Assert.That(src.PortName.HasValue(),    Is.False, nameof(src.PortName));
+            Assert.That(src.DriverName.HasValue(),  Is.False, nameof(src.DriverName));
+            Assert.That(src.Environment.HasValue(), Is.True,  nameof(src.Environment));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetElements
         ///
         /// <summary>

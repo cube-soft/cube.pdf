@@ -53,10 +53,37 @@ namespace Cube.Pdf.Tests.Pinstaller
         {
             var src = new PrinterDriver(name);
             Assert.That(src.Name.Unify(),             Is.EqualTo(name));
-            Assert.That(src.Environment.HasValue(),   Is.True);
-            Assert.That(src.DirectoryName.HasValue(), Is.True);
+            Assert.That(src.Environment.HasValue(),   Is.True, nameof(src.Environment));
+            Assert.That(src.DirectoryName.HasValue(), Is.True, nameof(src.DirectoryName));
             return src.Exists;
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateForce
+        ///
+        /// <summary>
+        /// Executes the test to create a new instance of the PrinterDriver
+        /// class with a force option.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void CreateForce()
+        {
+            var name = "Dummy Driver";
+            var src  = new PrinterDriver(name, true);
+            Assert.That(src.Name,                     Is.EqualTo(name));
+            Assert.That(src.Exists,                   Is.False, nameof(src.Exists));
+            Assert.That(src.MonitorName.HasValue(),   Is.False, nameof(src.MonitorName));
+            Assert.That(src.FileName.HasValue(),      Is.False, nameof(src.FileName));
+            Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
+            Assert.That(src.Data.HasValue(),          Is.False, nameof(src.Data));
+            Assert.That(src.Help.HasValue(),          Is.False, nameof(src.Help));
+            Assert.That(src.Dependencies.HasValue(),  Is.False, nameof(src.Dependencies));
+            Assert.That(src.Environment.HasValue(),   Is.True, nameof(src.Environment));
+            Assert.That(src.DirectoryName.HasValue(), Is.True, nameof(src.DirectoryName));
+        }
 
         /* ----------------------------------------------------------------- */
         ///

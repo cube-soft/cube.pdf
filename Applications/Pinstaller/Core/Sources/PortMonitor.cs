@@ -19,7 +19,6 @@ using Cube.Generics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -49,11 +48,27 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="name">Name of the port monitor.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PortMonitor(string name) : this(new MonitorInfo2())
-        {
-            var opt = StringComparison.InvariantCultureIgnoreCase;
-            var obj = GetElements().FirstOrDefault(e => e.Name.Equals(name, opt));
+        public PortMonitor(string name) : this(name, false) { }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PortMonitor
+        ///
+        /// <summary>
+        /// Initializes a new instance of the PortMonitor class with the
+        /// specified name.
+        /// </summary>
+        ///
+        /// <param name="name">Name of the port monitor.</param>
+        /// <param name="force">
+        /// Value indicating whether to forcibly create an object
+        /// ignoring any exceptions.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PortMonitor(string name, bool force) : this(new MonitorInfo2())
+        {
+            var obj = this.GetOrDefault(GetElements, name, force);
             Exists = (obj != null);
             if (Exists) _core = obj._core;
             else

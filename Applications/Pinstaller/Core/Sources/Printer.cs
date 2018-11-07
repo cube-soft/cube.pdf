@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -48,11 +47,27 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="name">Printer name.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Printer(string name) : this(CreateCore())
-        {
-            var opt = StringComparison.InvariantCultureIgnoreCase;
-            var obj = GetElements().FirstOrDefault(e => e.Name.Equals(name, opt));
+        public Printer(string name) : this(name, false) { }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Printer
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Printer class with the
+        /// specified name.
+        /// </summary>
+        ///
+        /// <param name="name">Printer name.</param>
+        /// <param name="force">
+        /// Value indicating whether to forcibly create an object
+        /// ignoring any exceptions.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Printer(string name, bool force) : this(CreateCore())
+        {
+            var obj = this.GetOrDefault(GetElements, name, force);
             Exists = (obj != null);
             if (Exists) _core = obj._core;
             else
