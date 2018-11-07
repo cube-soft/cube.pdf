@@ -35,6 +35,22 @@ using (var reader = new Cube.Pdf.Itext.DocumentReader(path, password))
 }
 ```
 
+When you merge, extract, or remove existing PDF documents, the simplest sample is as follow.
+Note that if you specify a IDocumentReader object to the Add method of a IDocumentWriter object, the IDocumentWriter automatically dispose the specified object before saving.
+
+```cs
+// using Cube.Pdf.Itext;
+using (var writer = new DocumentWriter())
+{
+    var src0 = new DocumentReader("first.pdf", "password");
+    var src1 = new DocumentReader("second.pdf", "password");
+
+    writer.Add(src0.Pages[0], src0);
+    writer.Add(src1.Pages[0], src1);
+    writer.Save(@"path/to/dest.pdf");
+}
+```
+
 ### CubePDF
 
 ![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Overview.png?raw=true)
