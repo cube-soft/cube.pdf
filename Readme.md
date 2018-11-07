@@ -16,6 +16,7 @@ Note that some projects are licensed under the GNU AGPLv3. See the License secti
 
 ### Libraries
 
+You can install Cube.Pdf libraries from the Install-Package command or NuGet packages UI on Visual Studio.
 Cube.Pdf Libraries provide functionality to treat third-party libraries as the same interface as possible (except for Cube.Pdf.Ghostscript). Interfaces of the Cube.Pdf are as follows:
 
 * [IDocumentReader](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentReader.cs)
