@@ -85,6 +85,26 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Uninstall_Ignore
+        ///
+        /// <summary>
+        /// Confirms the behavior to uninstall the inexistent port monitor.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Uninstall_Ignore()
+        {
+            var src = new PortMonitor("Dummy Monitor", true);
+            Assert.That(src.Exists, Is.False);
+
+            src.FileName = "DummyMon.dll";
+            src.Config   = "DummyMonUi.dll";
+            Assert.DoesNotThrow(() => src.Uninstall());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetElements
         ///
         /// <summary>

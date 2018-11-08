@@ -82,6 +82,27 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Uninstall_Ignore
+        ///
+        /// <summary>
+        /// Confirms the behavior to uninstall the inexistent printer.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Uninstall_Ignore()
+        {
+            var src = new Printer("Dummy Printer", true);
+            Assert.That(src.Exists, Is.False);
+
+            src.ShareName  = "Dummy SharePrinter";
+            src.DriverName = "Dummy Driver";
+            src.PortName   = "Dummy Port";
+            Assert.DoesNotThrow(() => src.Uninstall());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetElements
         ///
         /// <summary>

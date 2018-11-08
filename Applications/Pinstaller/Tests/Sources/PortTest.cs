@@ -70,7 +70,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Uninstall_Ignore() => Invoke(() =>
+        public void Uninstall_Ignore()
         {
             var src = new Port("Dummy", "Dummy");
             Assert.That(src.Exists, Is.False);
@@ -79,8 +79,8 @@ namespace Cube.Pdf.Tests.Pinstaller
             src.Arguments        = "Dummy";
             src.WorkingDirectory = @"Dummy\Path\To";
             src.WaitForExit      = true;
-            src.Uninstall();
-        });
+            Assert.DoesNotThrow(() => src.Uninstall());
+        }
 
         /* ----------------------------------------------------------------- */
         ///
