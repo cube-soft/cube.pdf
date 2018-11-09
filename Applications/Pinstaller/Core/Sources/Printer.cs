@@ -224,7 +224,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
             if (Exists) return;
-            var dest = NativeMethods.AddPrinter(Name, 2, ref _core);
+            var dest = NativeMethods.AddPrinter("", 2, ref _core);
             if (dest == IntPtr.Zero) throw new Win32Exception();
             NativeMethods.ClosePrinter(dest);
             Exists = true;
