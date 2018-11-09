@@ -17,27 +17,34 @@ Note that some projects are licensed under the GNU AGPLv3. See the License secti
 ### Libraries
 
 You can install Cube.Pdf libraries from the Install-Package command or NuGet packages UI on Visual Studio.
-Cube.Pdf Libraries provide functionality to treat third-party libraries as the same interface as possible (except for Cube.Pdf.Ghostscript). Interfaces of the Cube.Pdf are as follows:
+The Libraries provide functionality to treat third-party libraries as the same interface (except for the Cube.Pdf.Ghostscript project).
+Basic interfaces of the Cube.Pdf are as follows:
 
 * [IDocumentReader](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentReader.cs)
 * [IDocumentRenderer](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentRenderer.cs)
 * [IDocumentWriter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentWriter.cs)
 
 For example, the following code accesses a PDF document by using the iTextSharp library.
-And when you want to use the PDFium library, you only modify the description of "Cube.Pdf.Itext.DocumentReader" to "Cube.Pdf.Pdfium.DocumentReader".
+And when you want to use the PDFium library, you only modify the description of "using Cube.Pdf.Itext" to "using Cube.Pdf.Pdfium".
 
 ```cs
+// using Cube.Pdf.Itext;
+
 // Set password directly or using Query<string>
-var password = new Cube.Query<string>(e => e.Result = "password");
-var path = @"path/to/sample.pdf";
-using (var reader = new Cube.Pdf.Itext.DocumentReader(path, password))
+var password = new Cube.Query<string>(e =>
 {
-    // Do something.
+    e.Result = "password";
+    e.Cancel = false;
+});
+
+using (var reader = new DocumentReader(@"path/to/sample.pdf", password))
+{
+    // Do something with Pages, Metadata, Encryption, and more properties.
 }
 ```
 
 When you merge, extract, or remove existing PDF documents, the simplest sample is as follow.
-Note that if you specify a IDocumentReader object to the Add method of a IDocumentWriter object, the IDocumentWriter automatically dispose the specified object before saving.
+Note that if you specify an IDocumentReader object to the Add method of an IDocumentWriter implementation class, the IDocumentWriter object automatically disposes of the specified object before saving.
 
 ```cs
 // using Cube.Pdf.Itext;
