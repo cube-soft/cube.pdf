@@ -49,8 +49,8 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         public static void Log(this PortMonitor src,
             [CallerMemberName] string name = null) => src.Put(
             $"Method:{name.Quote()}",
-            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
+            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
             $"{nameof(src.FileName)}:{src.FileName.Quote()}",
             $"{nameof(src.Config)}:{src.Config.Quote()}",
@@ -72,9 +72,9 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         public static void Log(this Port src,
             [CallerMemberName] string name = null) => src.Put(
             $"Method:{name.Quote()}",
+            $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.MonitorName)}:{src.MonitorName.Quote()}",
-            $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
             $"{nameof(src.FileName)}:{src.FileName.Quote()}",
             $"{nameof(src.Arguments)}:[ {src.Arguments} ]",
@@ -97,9 +97,9 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         public static void Log(this PrinterDriver src,
             [CallerMemberName] string name = null) => src.Put(
             $"Method:{name.Quote()}",
+            $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.MonitorName)}:{src.MonitorName.Quote()}",
-            $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
             $"{nameof(src.FileName)}:{src.FileName.Quote()}",
             $"{nameof(src.Config)}:{src.Config.Quote()}",
@@ -124,11 +124,11 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         public static void Log(this Printer src,
             [CallerMemberName] string name = null) => src.Put(
             $"Method:{name.Quote()}",
+            $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.ShareName)}:{src.ShareName.Quote()}",
             $"{nameof(src.DriverName)}:{src.DriverName.Quote()}",
             $"{nameof(src.PortName)}:{src.PortName.Quote()}",
-            $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}"
         );
 
@@ -147,8 +147,8 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         public static void Log(this SpoolerService src,
             [CallerMemberName] string name = null) => src.Put(
             $"Method:{name.Quote()}",
-            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Status)}:{src.Status}",
+            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.DisplayName)}:{src.DisplayName.Quote()}",
             $"{nameof(src.MachineName)}:{src.MachineName.Quote()}",
             $"{nameof(src.CanStop)}:{src.CanStop}",
