@@ -159,7 +159,6 @@ namespace Cube.Pdf.App.Pinstaller
             // Install
             mon.Install();
             port.Install();
-            drv.Normalize(IO);
             drv.Install();
             printer.Install();
         }
