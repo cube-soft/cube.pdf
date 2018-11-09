@@ -55,6 +55,7 @@
     <Compile Include="Sources\IInstallable.cs" />
     <Compile Include="Sources\IInstallableExtension.cs" />
     <Compile Include="Sources\Installer.cs" />
+    <Compile Include="Sources\Logger.cs" />
     <Compile Include="Sources\Port.cs" />
     <Compile Include="Sources\PortConfig.cs" />
     <Compile Include="Sources\PortExtension.cs" />
