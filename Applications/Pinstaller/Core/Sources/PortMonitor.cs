@@ -16,7 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
-using Cube.Pdf.App.Pinstaller.Log;
+using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -217,8 +217,8 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install()
         {
+            this.Log();
             if (Exists) return;
-            this.Debug();
             if (!NativeMethods.AddMonitor("", 2u, ref _core)) throw new Win32Exception();
             Exists = true;
         }
@@ -234,8 +234,8 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall()
         {
+            this.Log();
             if (!Exists) return;
-            this.Debug();
             if (!NativeMethods.DeleteMonitor("", "", Name)) throw new Win32Exception();
             Exists = false;
         }

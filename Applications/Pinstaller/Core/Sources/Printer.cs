@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -221,6 +222,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install()
         {
+            this.Log();
             if (Exists) return;
             var dest = NativeMethods.AddPrinter(Name, 2, ref _core);
             if (dest == IntPtr.Zero) throw new Win32Exception();
@@ -239,6 +241,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall()
         {
+            this.Log();
             if (!Exists) return;
 
             var access = new PrinterDefaults

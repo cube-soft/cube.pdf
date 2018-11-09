@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
+using Cube.Pdf.App.Pinstaller.Debug;
 using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -222,6 +223,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install()
         {
+            this.Log();
             if (Exists) return;
             using (var k = Open(GetName(MonitorName, "Ports", Name), true))
             {
@@ -241,6 +243,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall()
         {
+            this.Log();
             if (!Exists) return;
             using (var k = Open(GetName(MonitorName), true))
             {

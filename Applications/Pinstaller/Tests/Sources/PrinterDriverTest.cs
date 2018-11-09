@@ -16,8 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
-using Cube.Log;
 using Cube.Pdf.App.Pinstaller;
+using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
 using System.Linq;
 
@@ -127,18 +127,7 @@ namespace Cube.Pdf.Tests.Pinstaller
 
             foreach (var e in src)
             {
-                this.LogDebug(string.Join("\t",
-                    e.Name.Quote(),
-                    e.MonitorName.Quote(),
-                    e.FileName.Quote(),
-                    e.Config.Quote(),
-                    e.Data.Quote(),
-                    e.Help.Quote(),
-                    e.Dependencies.Quote(),
-                    e.DirectoryName.Quote(),
-                    e.Environment.Quote()
-                ));
-
+                e.Log();
                 Assert.That(e.Name.HasValue(),          Is.True, nameof(e.Name));
                 Assert.That(e.FileName.HasValue(),      Is.True, nameof(e.FileName));
                 Assert.That(e.Environment.HasValue(),   Is.True, nameof(e.Environment));

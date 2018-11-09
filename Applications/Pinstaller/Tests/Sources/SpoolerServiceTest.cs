@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Pinstaller;
+using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
 using System;
 using System.ServiceProcess;
@@ -50,6 +51,8 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void Create()
         {
             var src = new SpoolerService();
+            src.Log();
+
             Assert.That(src.Name,    Is.EqualTo("Spooler"));
             Assert.That(src.Status,  Is.EqualTo(ServiceControllerStatus.Running).Or
                                        .EqualTo(ServiceControllerStatus.Stopped));

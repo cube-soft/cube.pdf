@@ -15,8 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
-using Cube.Log;
+using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.ServiceProcess;
 
@@ -48,16 +47,6 @@ namespace Cube.Pdf.App.Pinstaller
         {
             Timeout = TimeSpan.FromSeconds(10);
             _core = new ServiceController("Spooler");
-
-            this.LogDebug(string.Join("\t",
-                _core.ServiceName.Quote(),
-                _core.DisplayName.Quote(),
-                _core.MachineName.Quote(),
-                $"{nameof(Status)}:{Status}",
-                $"{nameof(_core.CanStop)}:{_core.CanStop}",
-                $"{nameof(_core.CanShutdown)}:{_core.CanShutdown}",
-                $"{nameof(_core.CanPauseAndContinue)}:{_core.CanPauseAndContinue}"
-            ));
         }
 
         #endregion
@@ -74,6 +63,28 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public string Name => _core.ServiceName;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DisplayName
+        ///
+        /// <summary>
+        /// Gets the display name of the service.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string DisplayName => _core.DisplayName;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MachineName
+        ///
+        /// <summary>
+        /// Gets the machine name.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string MachineName => _core.MachineName;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -98,6 +109,17 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public ServiceControllerStatus Status => _core.Status;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CanStop
+        ///
+        /// <summary>
+        /// Gets the value indicating whether the service can be stopping.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanStop => _core.CanStop;
+
         #endregion
 
         #region Methods
@@ -113,6 +135,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Start()
         {
+            this.Log();
             if (Status == ServiceControllerStatus.Running) return;
             _core.Start();
             _core.WaitForStatus(ServiceControllerStatus.Running, Timeout);
@@ -129,6 +152,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Stop()
         {
+            this.Log();
             if (Status == ServiceControllerStatus.Stopped) return;
             if (!_core.CanStop) throw new InvalidOperationException($"{Name} cannot stop");
             _core.Stop();
