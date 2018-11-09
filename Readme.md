@@ -44,7 +44,7 @@ using (var reader = new DocumentReader(@"path/to/sample.pdf", password))
 ```
 
 When you merge, extract, or remove existing PDF documents, the simplest sample is as follow.
-Note that if you specify an IDocumentReader object to the Add method of an IDocumentWriter implementation class, the IDocumentWriter object automatically disposes of the specified object before saving.
+Note that if you specify an IDocumentReader object to the Add method of an IDocumentWriter implementation class, the IDocumentWriter object automatically disposes the specified object before saving.
 
 ```cs
 // using Cube.Pdf.Itext;
