@@ -280,7 +280,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
             if (Exists) return;
-            if (!NativeMethods.AddPrinterDriver(Name, 3, ref _core)) throw new Win32Exception();
+            if (!NativeMethods.AddPrinterDriver("", 3, ref _core)) throw new Win32Exception();
             Exists = true;
         }
 
