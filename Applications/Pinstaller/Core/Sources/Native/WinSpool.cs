@@ -89,6 +89,32 @@ namespace Cube.Pdf.App.Pinstaller
 
         #endregion
 
+        #region Port
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// XcvData
+        ///
+        /// <summary>
+        /// https://msdn.microsoft.com/en-us/library/ff564255.aspx
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        static extern bool XcvData(
+            IntPtr hXcv,
+            string pszDataName,
+            IntPtr InputData,
+            uint cbInputData,
+            IntPtr OutputData,
+            uint cbOutputData,
+            out uint cbOutputNeeded,
+            out uint dwStatus
+        );
+
+
+        #endregion
+
         #region PrinterDriver
 
         /* ----------------------------------------------------------------- */
