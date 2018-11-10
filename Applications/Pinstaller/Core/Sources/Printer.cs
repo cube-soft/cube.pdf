@@ -244,14 +244,9 @@ namespace Cube.Pdf.App.Pinstaller
             this.Log();
             if (!Exists) return;
 
-            var access = new PrinterDefaults
-            {
-                pDatatype     = IntPtr.Zero,
-                pDevMode      = IntPtr.Zero,
-                DesiredAccess = 0xf0000 | 0x04 | 0x08,
-            };
-
+            var access = AccessMask.PrinterAccessAll.Create();
             if (!NativeMethods.OpenPrinter(Name, out var src, ref access)) throw new Win32Exception();
+
             try
             {
                 if (!NativeMethods.DeletePrinter(src)) throw new Win32Exception();

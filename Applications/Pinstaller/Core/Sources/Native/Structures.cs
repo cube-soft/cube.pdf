@@ -113,4 +113,57 @@ namespace Cube.Pdf.App.Pinstaller
         public IntPtr pDevMode;
         public uint DesiredAccess;
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// PrinterDefaults
+    ///
+    /// <summary>
+    /// https://docs.microsoft.com/en-us/windows/desktop/secauthz/access-mask
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [Flags]
+    internal enum AccessMask
+    {
+        StandardRightsRequired  = 0xf0000,
+        ServerAccessAdminister  = 0x00001,
+        PrinterAccessAdminister = 0x00004,
+        PrinterAccessUse        = 0x00008,
+        PrinterAccessAll        = StandardRightsRequired | PrinterAccessAdminister | PrinterAccessUse,
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// AccessMaskExtension
+    ///
+    /// <summary>
+    /// Provides extended methods of the AccessMask enum.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    internal static class AccessMaskExtension
+    {
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new instance of the PrinterDefaults class with the
+        /// specified AccessMask object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PrinterDefaults Create(this AccessMask src) =>
+            new PrinterDefaults
+            {
+                pDatatype     = IntPtr.Zero,
+                pDevMode      = IntPtr.Zero,
+                DesiredAccess = (uint)src,
+            };
+
+        #endregion
+    }
 }
