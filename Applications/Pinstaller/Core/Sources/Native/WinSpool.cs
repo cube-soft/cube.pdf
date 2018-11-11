@@ -100,10 +100,10 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
-        static extern bool XcvData(
+        [DllImport(LibName, EntryPoint = "XcvDataW", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool XcvData(
             IntPtr hXcv,
-            string pszDataName,
+            [MarshalAs(UnmanagedType.LPWStr)] string pszDataName,
             IntPtr InputData,
             uint cbInputData,
             IntPtr OutputData,
