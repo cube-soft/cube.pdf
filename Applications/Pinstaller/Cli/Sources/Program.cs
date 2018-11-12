@@ -87,8 +87,21 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static void Install(ArgumentCollection args)
         {
-            var src = new Installer(Format.Json, args[0]);
-            var dir = args.GetResourceDirectory();
+            var src   = new Installer(Format.Json, args[0]);
+            var dir   = args.GetResourceDirectory();
+            var app   = args.GetApplication();
+            var proxy = args.GetProxy();
+
+            if (app.HasValue())
+            {
+                if (proxy.HasValue())
+                {
+                    src.Application = proxy;
+                    src.Arguments   = $"/Exec {app.Quote()}";
+                }
+                else src.Application = app;
+            }
+
             Invoke(args.GetRetryCount(), () => src.Install(dir, true));
         }
 
