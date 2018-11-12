@@ -147,10 +147,12 @@ namespace Cube.Pdf.App.Pinstaller
             var drv     = Config.PrinterDriver.Create();
             var printer = Config.Printer.Create();
 
+            var service = new SpoolerService();
+            service.Clear();
+
             if (reinstall) Uninstall(printer, drv, port, mon);
 
             // Copy
-            var service = new SpoolerService();
             service.Stop();
             mon.Copy(resource, IO);
             drv.Copy(resource, IO);

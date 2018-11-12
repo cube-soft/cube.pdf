@@ -67,7 +67,11 @@ namespace Cube.Pdf.App.Pinstaller
                 else if (cmd == "uninstall") Uninstall(src);
                 else Logger.Warn(type, $"{cmd}:Unexpected command");
             }
-            catch (Exception err) { Logger.Error(type, err.ToString()); }
+            catch (Exception err)
+            {
+                Environment.ExitCode = -1;
+                Logger.Error(type, err.ToString());
+            }
         }
 
         #endregion
