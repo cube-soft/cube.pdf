@@ -59,6 +59,39 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Timeout, Is.EqualTo(TimeSpan.FromSeconds(10)));
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        ///
+        /// <summary>
+        /// Executes the test to clear printer jobs.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Clear() => Assert.DoesNotThrow(() => new SpoolerService().Clear());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Restart
+        ///
+        /// <summary>
+        /// Restarts the spooler service.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Restart()
+        {
+            try
+            {
+                var src = new SpoolerService();
+                src.Stop();
+                src.Start();
+            }
+            catch (Exception e) { Assert.Ignore($"{e.Message} ({e.GetType().Name})"); }
+        }
+
         #endregion
     }
 }

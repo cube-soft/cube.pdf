@@ -15,8 +15,11 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
+using Cube.Log;
 using Cube.Pdf.App.Pinstaller.Debug;
 using System;
+using System.IO;
 using System.ServiceProcess;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -157,6 +160,54 @@ namespace Cube.Pdf.App.Pinstaller
             if (!_core.CanStop) throw new InvalidOperationException($"{Name} cannot stop");
             _core.Stop();
             _core.WaitForStatus(ServiceControllerStatus.Stopped, Timeout);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        ///
+        /// <summary>
+        /// Clears all of the printing jobs.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Clear()
+        {
+            var dir = Path.Combine(Environment.SpecialFolder.System.GetName(), @"spool\printers");
+            var src = Directory.GetFiles(dir);
+            var n   = src.Length;
+
+            this.LogDebug($"Job:{n}");
+
+            if (n > 0) Invoke(() =>
+            {
+                foreach (var f in src)
+                {
+                    try { File.Delete(f); }
+                    catch (Exception err) { this.LogWarn($"{f}:{err}", err); }
+                }
+            });
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Action action)
+        {
+            var running = (Status == ServiceControllerStatus.Running);
+            if (running) Stop();
+            try { action(); }
+            finally { if (running) Start(); }
         }
 
         #endregion
