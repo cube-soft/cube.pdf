@@ -78,7 +78,7 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
             $"{nameof(src.Application)}:{src.Application.Quote()}",
             $"{nameof(src.Arguments)}:[ {src.Arguments} ]",
-            $"{nameof(src.WorkingDirectory)}:{src.WorkingDirectory.Quote()}",
+            $"{nameof(src.Temp)}:{src.Temp.Quote()}",
             $"{nameof(src.WaitForExit)}:{src.WaitForExit}"
         );
 

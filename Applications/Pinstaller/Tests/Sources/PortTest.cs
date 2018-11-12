@@ -54,10 +54,10 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Name,        Is.EqualTo(name));
             Assert.That(src.MonitorName, Is.EqualTo(monitor));
             Assert.That(src.WaitForExit, Is.False, nameof(src.WaitForExit));
-            Assert.That(src.Environment.HasValue(),      Is.True, nameof(src.Environment));
-            Assert.That(src.Application.HasValue(),      Is.EqualTo(src.Exists), nameof(src.Application));
-            Assert.That(src.Arguments.HasValue(),        Is.EqualTo(src.Exists), nameof(src.Arguments));
-            Assert.That(src.WorkingDirectory.HasValue(), Is.EqualTo(src.Exists), nameof(src.WorkingDirectory));
+            Assert.That(src.Environment.HasValue(), Is.True, nameof(src.Environment));
+            Assert.That(src.Application.HasValue(), Is.EqualTo(src.Exists), nameof(src.Application));
+            Assert.That(src.Arguments.HasValue(),   Is.EqualTo(src.Exists), nameof(src.Arguments));
+            Assert.That(src.Temp.HasValue(),        Is.EqualTo(src.Exists), nameof(src.Temp));
             return src.Exists;
         });
 
@@ -76,10 +76,10 @@ namespace Cube.Pdf.Tests.Pinstaller
             var src = new Port("Dummy", "Dummy");
             Assert.That(src.Exists, Is.False);
 
-            src.Application      = "Dummy";
-            src.Arguments        = "Dummy";
-            src.WorkingDirectory = @"Dummy\Path\To";
-            src.WaitForExit      = true;
+            src.Application = "Dummy";
+            src.Arguments   = "Dummy";
+            src.Temp        = @"Dummy\Path\To";
+            src.WaitForExit = true;
             Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
         }
 
@@ -98,10 +98,10 @@ namespace Cube.Pdf.Tests.Pinstaller
             var src = new Port("Dummy", "Dummy");
             Assert.That(src.Exists, Is.False);
 
-            src.Application      = "Dummy";
-            src.Arguments        = "Dummy";
-            src.WorkingDirectory = @"Dummy\Path\To";
-            src.WaitForExit      = true;
+            src.Application = "Dummy";
+            src.Arguments   = "Dummy";
+            src.Temp        = @"Dummy\Path\To";
+            src.WaitForExit = true;
             Assert.DoesNotThrow(() => src.Uninstall());
         }
 

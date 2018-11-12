@@ -128,14 +128,14 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WorkingDirectory
+        /// Temp
         ///
         /// <summary>
-        /// Gets or sets the working directory of the port.
+        /// Gets or sets the temporary directory of the port.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string WorkingDirectory
+        public string Temp
         {
             get => _core.TempDir;
             set => _core.TempDir = value;

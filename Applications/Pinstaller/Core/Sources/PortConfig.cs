@@ -114,18 +114,18 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WorkingDirectory
+        /// Temp
         ///
         /// <summary>
-        /// Gets or sets the working directory of the port.
+        /// Gets or sets the temporary directory of the port.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public string WorkingDirectory
+        public string Temp
         {
-            get => _work;
-            set => SetProperty(ref _work, value);
+            get => _temp;
+            set => SetProperty(ref _temp, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -176,7 +176,7 @@ namespace Cube.Pdf.App.Pinstaller
             _monitorName = string.Empty;
             _application = string.Empty;
             _arguments   = string.Empty;
-            _work        = string.Empty;
+            _temp        = string.Empty;
             _wait        = false;
         }
 
@@ -187,7 +187,7 @@ namespace Cube.Pdf.App.Pinstaller
         private string _monitorName;
         private string _application;
         private string _arguments;
-        private string _work;
+        private string _temp;
         private bool _wait;
         #endregion
     }

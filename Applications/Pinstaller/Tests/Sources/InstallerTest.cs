@@ -67,11 +67,11 @@ namespace Cube.Pdf.Tests.Pinstaller
             var x1 = dest.Config.Port;
             var y1 = cmp.Port;
             var m1 = nameof(dest.Config.Port);
-            Assert.That(x1.Name,             Is.EqualTo(y1.Name),             $"{m1}.{nameof(x1.Name)}");
-            Assert.That(x1.Application,      Is.EqualTo(y1.Application),      $"{m1}.{nameof(x1.Application)}");
-            Assert.That(x1.Arguments,        Is.EqualTo(y1.Arguments),        $"{m1}.{nameof(x1.Arguments)}");
-            Assert.That(x1.WorkingDirectory, Is.EqualTo(y1.WorkingDirectory), $"{m1}.{nameof(x1.WorkingDirectory)}");
-            Assert.That(x1.WaitForExit,      Is.EqualTo(y1.WaitForExit),      $"{m1}.{nameof(x1.WaitForExit)}");
+            Assert.That(x1.Name,        Is.EqualTo(y1.Name),        $"{m1}.{nameof(x1.Name)}");
+            Assert.That(x1.Application, Is.EqualTo(y1.Application), $"{m1}.{nameof(x1.Application)}");
+            Assert.That(x1.Arguments,   Is.EqualTo(y1.Arguments),   $"{m1}.{nameof(x1.Arguments)}");
+            Assert.That(x1.Temp,        Is.EqualTo(y1.Temp),        $"{m1}.{nameof(x1.Temp)}");
+            Assert.That(x1.WaitForExit, Is.EqualTo(y1.WaitForExit), $"{m1}.{nameof(x1.WaitForExit)}");
 
             var x2 = dest.Config.PrinterDriver;
             var y2 = cmp.PrinterDriver;
@@ -149,34 +149,34 @@ namespace Cube.Pdf.Tests.Pinstaller
                 {
                     PortMonitor = new PortMonitorConfig
                     {
-                        Name             = "CubeMon",
-                        FileName         = "cubemon.dll",
+                        Name         = "CubeMon",
+                        FileName     = "cubemon.dll",
                     },
                     Port = new PortConfig
                     {
-                        Name             = "CubePDF:",
-                        MonitorName      = "CubeMon",
-                        Application      = @"C:\Program Files\CubePDF\CubeProxy.exe",
-                        Arguments        = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
-                        WorkingDirectory = @"CubeSoft\CubePDF",
-                        WaitForExit      = false,
+                        Name         = "CubePDF:",
+                        MonitorName  = "CubeMon",
+                        Application  = @"C:\Program Files\CubePDF\CubeProxy.exe",
+                        Arguments    = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
+                        Temp         = @"CubeSoft\CubePDF",
+                        WaitForExit  = false,
                     },
                     PrinterDriver = new PrinterDriverConfig
                     {
-                        Name             = "CubePDF",
-                        MonitorName      = "CubeMon",
-                        FileName         = "cubeps5.dll",
-                        Config           = "cubeps5ui.dll",
-                        Data             = "cubepdf.ppd",
-                        Help             = "cubeps.hlp",
-                        Dependencies     = "cubeps.ntf",
+                        Name         = "CubePDF",
+                        MonitorName  = "CubeMon",
+                        FileName     = "cubeps5.dll",
+                        Config       = "cubeps5ui.dll",
+                        Data         = "cubepdf.ppd",
+                        Help         = "cubeps.hlp",
+                        Dependencies = "cubeps.ntf",
                     },
                     Printer = new PrinterConfig
                     {
-                        Name             = "CubePDF",
-                        ShareName        = "CubePDF",
-                        DriverName       = "CubePDF",
-                        PortName         = "CubePDF:",
+                        Name         = "CubePDF",
+                        ShareName    = "CubePDF",
+                        DriverName   = "CubePDF",
+                        PortName     = "CubePDF:",
                     }
                 });
 
@@ -184,34 +184,34 @@ namespace Cube.Pdf.Tests.Pinstaller
                 {
                     PortMonitor = new PortMonitorConfig
                     {
-                        Name             = "CubeMon",
-                        FileName         = "cubemon.dll",
+                        Name         = "CubeMon",
+                        FileName     = "cubemon.dll",
                     },
                     Port = new PortConfig
                     {
-                        Name             = "CubePDF:",
-                        MonitorName      = "CubeMon",
-                        Application      = @"C:\Program Files\CubePDF\CubeProxy.exe",
-                        Arguments        = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
-                        WorkingDirectory = @"CubeSoft\CubePDF",
-                        WaitForExit      = false,
+                        Name         = "CubePDF:",
+                        MonitorName  = "CubeMon",
+                        Application  = @"C:\Program Files\CubePDF\CubeProxy.exe",
+                        Arguments    = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
+                        Temp         = @"CubeSoft\CubePDF",
+                        WaitForExit  = false,
                     },
                     PrinterDriver = new PrinterDriverConfig
                     {
-                        Name             = "CubePDF",
-                        MonitorName      = "CubeMon",
-                        FileName         = "cubeps5.dll",
-                        Config           = "cubeps5ui.dll",
-                        Data             = "cubepdf.ppd",
-                        Help             = "cubeps.hlp",
-                        Dependencies     = "cubeps.ntf",
+                        Name         = "CubePDF",
+                        MonitorName  = "CubeMon",
+                        FileName     = "cubeps5.dll",
+                        Config       = "cubeps5ui.dll",
+                        Data         = "cubepdf.ppd",
+                        Help         = "cubeps.hlp",
+                        Dependencies = "cubeps.ntf",
                     },
                     Printer = new PrinterConfig
                     {
-                        Name             = "CubePDF",
-                        ShareName        = "",
-                        DriverName       = "CubePDF",
-                        PortName         = "CubePDF:",
+                        Name         = "CubePDF",
+                        ShareName    = "",
+                        DriverName   = "CubePDF",
+                        PortName     = "CubePDF:",
                     }
                 });
 
@@ -219,34 +219,34 @@ namespace Cube.Pdf.Tests.Pinstaller
                 {
                     PortMonitor = new PortMonitorConfig
                     {
-                        Name             = "",
-                        FileName         = "",
+                        Name         = "",
+                        FileName     = "",
                     },
                     Port = new PortConfig
                     {
-                        Name             = "",
-                        MonitorName      = "",
-                        Application      = "",
-                        Arguments        = "",
-                        WorkingDirectory = "",
-                        WaitForExit      = false,
+                        Name         = "",
+                        MonitorName  = "",
+                        Application  = "",
+                        Arguments    = "",
+                        Temp         = "",
+                        WaitForExit  = false,
                     },
                     PrinterDriver = new PrinterDriverConfig
                     {
-                        Name             = "",
-                        MonitorName      = "",
-                        FileName         = "",
-                        Config           = "",
-                        Data             = "",
-                        Help             = "",
-                        Dependencies     = "",
+                        Name         = "",
+                        MonitorName  = "",
+                        FileName     = "",
+                        Config       = "",
+                        Data         = "",
+                        Help         = "",
+                        Dependencies = "",
                     },
                     Printer = new PrinterConfig
                     {
-                        Name             = "",
-                        ShareName        = "",
-                        DriverName       = "",
-                        PortName         = "",
+                        Name         = "",
+                        ShareName    = "",
+                        DriverName   = "",
+                        PortName     = "",
                     }
                 });
             }

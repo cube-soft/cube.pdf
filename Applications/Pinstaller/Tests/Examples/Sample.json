@@ -19,7 +19,7 @@
         "MonitorName"       : "CubeMon",
         "Application"       : "C:\\Program Files\\CubePDF\\CubeProxy.exe",
         "Arguments"         : "/Exec \"C:\\Program Files\\CubePDF\\cubepdf.exe\"",
-        "WorkingDirectory"  : "CubeSoft\\CubePDF",
+        "Temp"              : "CubeSoft\\CubePDF",
         "WaitForExit"       : false
     },
     "PortMonitor" : {

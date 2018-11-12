@@ -255,7 +255,7 @@ namespace Cube.Pdf.App.Pinstaller
             if (Arguments.HasValue()) src.Arguments = Arguments;
 
             var root = Environment.SpecialFolder.CommonApplicationData.GetName();
-            src.WorkingDirectory = IO.Combine(root, src.WorkingDirectory);
+            src.Temp = IO.Combine(root, src.Temp);
         }
 
         /* ----------------------------------------------------------------- */
