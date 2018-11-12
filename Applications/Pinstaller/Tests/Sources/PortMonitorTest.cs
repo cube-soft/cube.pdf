@@ -19,6 +19,7 @@ using Cube.Generics;
 using Cube.Pdf.App.Pinstaller;
 using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
+using System;
 using System.Linq;
 
 namespace Cube.Pdf.Tests.Pinstaller
@@ -81,6 +82,26 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
             Assert.That(src.Environment.HasValue(),   Is.True,  nameof(src.Environment));
             Assert.That(src.DirectoryName.HasValue(), Is.True,  nameof(src.DirectoryName));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Install_Throws
+        ///
+        /// <summary>
+        /// Confirms the behavior to install the invalid port monitor.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Install_Throws()
+        {
+            var src = new PortMonitor("Dummy Monitor", true);
+            Assert.That(src.Exists, Is.False);
+
+            src.FileName = "DummyMon.dll";
+            src.Config   = "DummyMonUi.dll";
+            Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
         }
 
         /* ----------------------------------------------------------------- */

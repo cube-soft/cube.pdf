@@ -19,6 +19,7 @@ using Cube.Generics;
 using Cube.Pdf.App.Pinstaller;
 using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
+using System;
 
 namespace Cube.Pdf.Tests.Pinstaller
 {
@@ -59,6 +60,28 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.WorkingDirectory.HasValue(), Is.EqualTo(src.Exists), nameof(src.WorkingDirectory));
             return src.Exists;
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Install_Throws
+        ///
+        /// <summary>
+        /// Confirms the behavior to install the invalid port.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Install_Throws()
+        {
+            var src = new Port("Dummy", "Dummy");
+            Assert.That(src.Exists, Is.False);
+
+            src.FileName         = "Dummy";
+            src.Arguments        = "Dummy";
+            src.WorkingDirectory = @"Dummy\Path\To";
+            src.WaitForExit      = true;
+            Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
+        }
 
         /* ----------------------------------------------------------------- */
         ///

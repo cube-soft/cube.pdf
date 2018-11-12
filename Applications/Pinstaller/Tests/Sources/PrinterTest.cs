@@ -19,6 +19,7 @@ using Cube.Generics;
 using Cube.Pdf.App.Pinstaller;
 using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
+using System;
 using System.Linq;
 
 namespace Cube.Pdf.Tests.Pinstaller
@@ -78,6 +79,27 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.PortName.HasValue(),    Is.False, nameof(src.PortName));
             Assert.That(src.DriverName.HasValue(),  Is.False, nameof(src.DriverName));
             Assert.That(src.Environment.HasValue(), Is.True,  nameof(src.Environment));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Install_Throws
+        ///
+        /// <summary>
+        /// Confirms the behavior to install the invalid printer.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Install_Throws()
+        {
+            var src = new Printer("Dummy Printer", true);
+            Assert.That(src.Exists, Is.False);
+
+            src.ShareName  = "Dummy SharePrinter";
+            src.DriverName = "Dummy Driver";
+            src.PortName   = "Dummy Port";
+            Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
         }
 
         /* ----------------------------------------------------------------- */

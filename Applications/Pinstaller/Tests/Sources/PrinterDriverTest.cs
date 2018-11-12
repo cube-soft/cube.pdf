@@ -19,6 +19,7 @@ using Cube.Generics;
 using Cube.Pdf.App.Pinstaller;
 using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
+using System;
 using System.Linq;
 
 namespace Cube.Pdf.Tests.Pinstaller
@@ -83,6 +84,30 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Dependencies.HasValue(),  Is.False, nameof(src.Dependencies));
             Assert.That(src.Environment.HasValue(),   Is.True, nameof(src.Environment));
             Assert.That(src.DirectoryName.HasValue(), Is.True, nameof(src.DirectoryName));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Install_Throws
+        ///
+        /// <summary>
+        /// Confirms the behavior to install the invalid printer driver.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Install_Throws()
+        {
+            var src = new PrinterDriver("Dummy Driver", true);
+            Assert.That(src.Exists, Is.False);
+
+            src.MonitorName  = "Dummy Monitor";
+            src.FileName     = "Dummy.dll";
+            src.Config       = "DummyUi.dll";
+            src.Data         = "Dummy.ppd";
+            src.Help         = "Dummy.hlp";
+            src.Dependencies = "Dummy.ntf";
+            Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
         }
 
         /* ----------------------------------------------------------------- */

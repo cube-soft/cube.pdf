@@ -18,6 +18,7 @@
 using Cube.DataContract;
 using Cube.Pdf.App.Pinstaller;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Tests.Pinstaller
@@ -91,17 +92,20 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Uninstall
+        /// Install_Throws
         ///
         /// <summary>
-        /// Executes the test to uninstall devices.
+        /// Confirms the behavior to install with the invalid settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("SampleDummy.json")]
-        public void Uninstall(string filename) => Invoke(() =>
-            new Installer(Format.Json, GetExamplesWith(filename)).Uninstall()
-        );
+        [Test]
+        public void Install_Throws()
+        {
+            var src  = GetExamplesWith("SampleDummy.json");
+            var dest = new Installer(Format.Json, src);
+            Assert.That(() => dest.Install(Examples, true), Throws.InstanceOf<Exception>());
+        }
 
         #endregion
 
