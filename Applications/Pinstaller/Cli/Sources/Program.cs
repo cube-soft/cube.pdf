@@ -47,7 +47,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             var type = typeof(Program);
 
@@ -66,12 +66,10 @@ namespace Cube.Pdf.App.Pinstaller
                 else if (cmd == "install") Install(src);
                 else if (cmd == "uninstall") Uninstall(src);
                 else Logger.Warn(type, $"{cmd}:Unexpected command");
+                return 0;
             }
-            catch (Exception err)
-            {
-                Environment.ExitCode = -1;
-                Logger.Error(type, err.ToString());
-            }
+            catch (Exception err) { Logger.Error(type, err.ToString()); }
+            return -1;
         }
 
         #endregion
@@ -91,7 +89,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             var src = new Installer(Format.Json, args[0]);
             var dir = args.GetResourceDirectory();
-            Try(args.GetRetryCount(), () => src.Install(dir, true));
+            Invoke(args.GetRetryCount(), () => src.Install(dir, true));
         }
 
         /* ----------------------------------------------------------------- */
@@ -106,25 +104,26 @@ namespace Cube.Pdf.App.Pinstaller
         private static void Uninstall(ArgumentCollection args)
         {
             var src = new Installer(Format.Json, args[0]);
-            Try(args.GetRetryCount(), () => src.Uninstall());
+            Invoke(args.GetRetryCount(), () => src.Uninstall());
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Try
+        /// Invoke
         ///
         /// <summary>
         /// Executes the specified action until it succeeds.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Try(int n, Action action)
+        private static void Invoke(int n, Action action)
         {
             for (var i = 0; i < n; ++i)
             {
-                try { action(); break; }
+                try { action(); return; }
                 catch (Exception e) { Logger.Warn(typeof(Program), e.ToString(), e); }
             }
+            throw new ArgumentException($"Try {n} times.");
         }
 
         #endregion
