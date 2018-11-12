@@ -18,11 +18,11 @@
 using Cube.DataContract;
 using Cube.Pdf.App.Pinstaller.Debug;
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
-using System;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -228,29 +228,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
             if (Exists) return;
-
-            var s = $",XcvMonitor {MonitorName}";
-            var f = AccessMask.ServerAccessAdminister.Create();
-            if (!NativeMethods.OpenPrinter(s, out var h, ref f)) throw new Win32Exception();
-
-            var name = Name + "\0";
-            var size = (uint)(name.Length * 2);
-            var ptr = Marshal.AllocHGlobal((int)size);
-
-            try
-            {
-                Marshal.Copy(name.ToCharArray(), 0, ptr, name.Length);
-                if (!NativeMethods.XcvData(h, "AddPort", ptr, size, IntPtr.Zero, 0, out var _, out var err))
-                {
-                    throw new Win32Exception((int)err);
-                }
-            }
-            finally
-            {
-                NativeMethods.ClosePrinter(h);
-                Marshal.FreeHGlobal(ptr);
-            }
-
+            Register(MonitorName, Name);
             using (var k = Open(GetName(MonitorName, "Ports", Name), true))
             {
                 k.Serialize(_core);
@@ -342,6 +320,40 @@ namespace Cube.Pdf.App.Pinstaller
         private static RegistryKey Open(string name, bool writable) => writable ?
             Registry.LocalMachine.CreateSubKey(name) :
             Registry.LocalMachine.OpenSubKey(name, false);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Register
+        ///
+        /// <summary>
+        /// Registers the specified port.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Register(string monitor, string port)
+        {
+            var xcv  = $",XcvMonitor {monitor}";
+            var mask = AccessMask.ServerAccessAdminister.Create();
+            if (!NativeMethods.OpenPrinter(xcv, out var h, ref mask)) throw new Win32Exception();
+
+            var cn     = port + "\0";
+            var size   = cn.Length * 2;
+            var buffer = Marshal.AllocHGlobal(size);
+
+            try
+            {
+                Marshal.Copy(cn.ToCharArray(), 0, buffer, cn.Length);
+                if (!NativeMethods.XcvData(h, "AddPort", buffer, (uint)size, IntPtr.Zero, 0, out var _, out var err))
+                {
+                    throw new Win32Exception((int)err);
+                }
+            }
+            finally
+            {
+                NativeMethods.ClosePrinter(h);
+                Marshal.FreeHGlobal(buffer);
+            }
+        }
 
         #endregion
 
