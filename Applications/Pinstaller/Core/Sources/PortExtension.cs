@@ -47,7 +47,7 @@ namespace Cube.Pdf.App.Pinstaller
         public static Port Create(this PortConfig src) =>
             new Port(src.Name, src.MonitorName)
             {
-                FileName         = src.FileName,
+                Application      = src.Application,
                 Arguments        = src.Arguments,
                 WorkingDirectory = src.WorkingDirectory,
                 WaitForExit      = src.WaitForExit

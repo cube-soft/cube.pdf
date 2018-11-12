@@ -58,13 +58,13 @@ namespace Cube.Pdf.App.Pinstaller
                 Logger.Info(type, Assembly.GetExecutingAssembly());
                 Logger.Info(type, $"Arguments:{string.Join(" ", args)}");
 
-                var src = new ArgumentCollection(args, '-');
+                var src = new ArgumentCollection(args, '/');
                 var cmd = src.GetCommand();
 
                 if (src.Count <= 0) Logger.Warn(type, "Configuration not found");
                 else if (!cmd.HasValue()) Logger.Warn(type, "Command not found");
-                else if (cmd == "install") Install(src);
-                else if (cmd == "uninstall") Uninstall(src);
+                else if (cmd == "Install") Install(src);
+                else if (cmd == "Uninstall") Uninstall(src);
                 else Logger.Warn(type, $"{cmd}:Unexpected command");
                 return 0;
             }

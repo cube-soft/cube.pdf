@@ -66,7 +66,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             var y1 = cmp.Port;
             var m1 = nameof(dest.Config.Port);
             Assert.That(x1.Name,             Is.EqualTo(y1.Name),             $"{m1}.{nameof(x1.Name)}");
-            Assert.That(x1.FileName,         Is.EqualTo(y1.FileName),         $"{m1}.{nameof(x1.FileName)}");
+            Assert.That(x1.Application,      Is.EqualTo(y1.Application),      $"{m1}.{nameof(x1.Application)}");
             Assert.That(x1.Arguments,        Is.EqualTo(y1.Arguments),        $"{m1}.{nameof(x1.Arguments)}");
             Assert.That(x1.WorkingDirectory, Is.EqualTo(y1.WorkingDirectory), $"{m1}.{nameof(x1.WorkingDirectory)}");
             Assert.That(x1.WaitForExit,      Is.EqualTo(y1.WaitForExit),      $"{m1}.{nameof(x1.WaitForExit)}");
@@ -149,9 +149,9 @@ namespace Cube.Pdf.Tests.Pinstaller
                     {
                         Name             = "CubePDF:",
                         MonitorName      = "CubeMon",
-                        FileName         = @"C:\Program Files\CubePDF\CubeProxy.exe",
+                        Application      = @"C:\Program Files\CubePDF\CubeProxy.exe",
                         Arguments        = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
-                        WorkingDirectory = @"C:\ProgramData\CubeSoft\CubePDF",
+                        WorkingDirectory = @"CubeSoft\CubePDF",
                         WaitForExit      = false,
                     },
                     PrinterDriver = new PrinterDriverConfig
@@ -184,9 +184,9 @@ namespace Cube.Pdf.Tests.Pinstaller
                     {
                         Name             = "CubePDF:",
                         MonitorName      = "CubeMon",
-                        FileName         = @"C:\Program Files\CubePDF\CubeProxy.exe",
+                        Application      = @"C:\Program Files\CubePDF\CubeProxy.exe",
                         Arguments        = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
-                        WorkingDirectory = @"C:\ProgramData\CubeSoft\CubePDF",
+                        WorkingDirectory = @"CubeSoft\CubePDF",
                         WaitForExit      = false,
                     },
                     PrinterDriver = new PrinterDriverConfig
@@ -219,7 +219,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                     {
                         Name             = "",
                         MonitorName      = "",
-                        FileName         = "",
+                        Application      = "",
                         Arguments        = "",
                         WorkingDirectory = "",
                         WaitForExit      = false,

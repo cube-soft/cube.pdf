@@ -55,7 +55,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.MonitorName, Is.EqualTo(monitor));
             Assert.That(src.WaitForExit, Is.False, nameof(src.WaitForExit));
             Assert.That(src.Environment.HasValue(),      Is.True, nameof(src.Environment));
-            Assert.That(src.FileName.HasValue(),         Is.EqualTo(src.Exists), nameof(src.FileName));
+            Assert.That(src.Application.HasValue(),      Is.EqualTo(src.Exists), nameof(src.Application));
             Assert.That(src.Arguments.HasValue(),        Is.EqualTo(src.Exists), nameof(src.Arguments));
             Assert.That(src.WorkingDirectory.HasValue(), Is.EqualTo(src.Exists), nameof(src.WorkingDirectory));
             return src.Exists;
@@ -76,7 +76,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             var src = new Port("Dummy", "Dummy");
             Assert.That(src.Exists, Is.False);
 
-            src.FileName         = "Dummy";
+            src.Application      = "Dummy";
             src.Arguments        = "Dummy";
             src.WorkingDirectory = @"Dummy\Path\To";
             src.WaitForExit      = true;
@@ -98,7 +98,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             var src = new Port("Dummy", "Dummy");
             Assert.That(src.Exists, Is.False);
 
-            src.FileName         = "Dummy";
+            src.Application      = "Dummy";
             src.Arguments        = "Dummy";
             src.WorkingDirectory = @"Dummy\Path\To";
             src.WaitForExit      = true;

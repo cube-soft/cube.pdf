@@ -82,18 +82,18 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileName
+        /// Application
         ///
         /// <summary>
-        /// Gets or sets the filename that the port executes.
+        /// Gets or sets the application path that the port executes.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public string FileName
+        public string Application
         {
-            get => _fileName;
-            set => SetProperty(ref _fileName, value);
+            get => _application;
+            set => SetProperty(ref _application, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -174,7 +174,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             _name        = string.Empty;
             _monitorName = string.Empty;
-            _fileName    = string.Empty;
+            _application = string.Empty;
             _arguments   = string.Empty;
             _work        = string.Empty;
             _wait        = false;
@@ -185,7 +185,7 @@ namespace Cube.Pdf.App.Pinstaller
         #region Fields
         private string _name;
         private string _monitorName;
-        private string _fileName;
+        private string _application;
         private string _arguments;
         private string _work;
         private bool _wait;

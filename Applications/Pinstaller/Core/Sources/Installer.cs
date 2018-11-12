@@ -19,6 +19,7 @@ using Cube.DataContract;
 using Cube.FileSystem;
 using Cube.FileSystem.Mixin;
 using Cube.Generics;
+using System;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -112,6 +113,28 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Application
+        ///
+        /// <summary>
+        /// Gets or sets the application path when the printer invokes.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Application { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Arguments
+        ///
+        /// <summary>
+        /// Gets or sets the arguments of the Application property.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Arguments { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// IO
         ///
         /// <summary>
@@ -146,9 +169,10 @@ namespace Cube.Pdf.App.Pinstaller
             var port    = Config.Port.Create();
             var drv     = Config.PrinterDriver.Create();
             var printer = Config.Printer.Create();
-
             var service = new SpoolerService();
+
             service.Clear();
+            Normalize(port);
 
             if (reinstall) Uninstall(printer, drv, port, mon);
 
@@ -214,6 +238,24 @@ namespace Cube.Pdf.App.Pinstaller
             if (print != null && !print.DriverName.HasValue()) print.DriverName = drv?.Name;
 
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Normalize
+        ///
+        /// <summary>
+        /// Normalizes some properties.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Normalize(Port src)
+        {
+            if (Application.HasValue()) src.Application = Application;
+            if (Arguments.HasValue()) src.Arguments = Arguments;
+
+            var root = Environment.SpecialFolder.CommonApplicationData.GetName();
+            src.WorkingDirectory = IO.Combine(root, src.WorkingDirectory);
         }
 
         /* ----------------------------------------------------------------- */

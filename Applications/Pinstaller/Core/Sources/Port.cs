@@ -87,7 +87,7 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Name
+        /// MonitorName
         ///
         /// <summary>
         /// Gets the name of the port monitor.
@@ -98,14 +98,14 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileName
+        /// Application
         ///
         /// <summary>
-        /// Gets or sets the filename that the port executes.
+        /// Gets or sets the application path that the port executes.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string FileName
+        public string Application
         {
             get => _core.AppPath;
             set => _core.AppPath = value;
