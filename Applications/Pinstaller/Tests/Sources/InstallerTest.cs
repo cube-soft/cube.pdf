@@ -52,9 +52,11 @@ namespace Cube.Pdf.Tests.Pinstaller
         {
             var src  = GetExamplesWith(filename);
             var dest = new Installer(format, src);
-            Assert.That(dest,          Is.Not.Null);
-            Assert.That(dest.Location, Is.EqualTo(src));
-            Assert.That(dest.IO,       Is.Not.Null);
+            Assert.That(dest,             Is.Not.Null);
+            Assert.That(dest.Location,    Is.EqualTo(src));
+            Assert.That(dest.Application, Is.Null);
+            Assert.That(dest.Arguments,   Is.Null);
+            Assert.That(dest.IO,          Is.Not.Null);
 
             var x0 = dest.Config.PortMonitor;
             var y0 = cmp.PortMonitor;
@@ -117,7 +119,12 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void Install_Throws()
         {
             var src  = GetExamplesWith("SampleDummy.json");
-            var dest = new Installer(Format.Json, src);
+            var dest = new Installer(Format.Json, src)
+            {
+                Application = "DirectDummy.exe",
+                Arguments   = "Direct dummy arguments",
+            };
+
             Assert.That(() => dest.Install(Examples, true), Throws.InstanceOf<Exception>());
         }
 
