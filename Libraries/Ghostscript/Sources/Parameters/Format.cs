@@ -26,7 +26,7 @@ namespace Cube.Pdf.Ghostscript
     /// Format
     ///
     /// <summary>
-    /// Ghostscript で変換可能なフォーマットを定義した列挙型です。
+    /// Specifies formats that Ghostscript can convert.
     /// </summary>
     ///
     /// <remarks>
@@ -112,7 +112,7 @@ namespace Cube.Pdf.Ghostscript
     /// FormatExtension
     ///
     /// <summary>
-    /// Format の拡張用クラスです。
+    /// Provides extended methods of the Format class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -125,12 +125,12 @@ namespace Cube.Pdf.Ghostscript
         /// GetArgument
         ///
         /// <summary>
-        /// Format を表す Argument オブジェクトを取得します。
+        /// Gets an Argument object corresponding to the specified format.
         /// </summary>
         ///
-        /// <param name="src">Format</param>
+        /// <param name="src">Format value.</param>
         ///
-        /// <returns>Argument オブジェクト</returns>
+        /// <returns>Argument that represents a format.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Argument GetArgument(this Format src)
@@ -145,12 +145,12 @@ namespace Cube.Pdf.Ghostscript
         /// GetExtension
         ///
         /// <summary>
-        /// Format を表す拡張子を取得します。
+        /// Gets an extension string corresponding to the specified format.
         /// </summary>
         ///
-        /// <param name="src">Format</param>
+        /// <param name="src">Format value.</param>
         ///
-        /// <returns>拡張子</returns>
+        /// <returns>Extension string.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static string GetExtension(this Format src)
@@ -169,7 +169,7 @@ namespace Cube.Pdf.Ghostscript
         /// GetFormatMap
         ///
         /// <summary>
-        /// Format と関連情報の対応一覧を取得します。
+        /// Gets the collection of formats and related information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -218,7 +218,7 @@ namespace Cube.Pdf.Ghostscript
         /// FormatInfo
         ///
         /// <summary>
-        /// Format の関連情報を保持するための内部クラスです。
+        /// Represents information related with a Format value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

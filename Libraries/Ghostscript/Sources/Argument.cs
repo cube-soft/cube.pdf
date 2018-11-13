@@ -26,7 +26,7 @@ namespace Cube.Pdf.Ghostscript
     /// Argument
     ///
     /// <summary>
-    /// Ghostscript の引数を表すクラスです。
+    /// Represents an element of Ghostscript command arguments.
     /// </summary>
     ///
     /// <see href="https://www.ghostscript.com/doc/current/Use.htm" />
@@ -41,11 +41,12 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified name and value.
         /// </summary>
         ///
-        /// <param name="name">名前</param>
-        /// <param name="value">値</param>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Value of the argument.</param>
         ///
         /// <remarks>
         /// このコンストラクタのみ、値をリテラルオブジェクトと見なします。
@@ -62,10 +63,11 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified type.
         /// </summary>
         ///
-        /// <param name="type">引数の種類</param>
+        /// <param name="type">Type of the argument.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Argument(char type) : this(type, string.Empty, string.Empty) { }
@@ -75,11 +77,12 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified type and value.
         /// </summary>
         ///
-        /// <param name="type">引数の種類</param>
-        /// <param name="value">値</param>
+        /// <param name="type">Type of the argument.</param>
+        /// <param name="value">Value of the argument.</param>
         ///
         /// <remarks>
         /// 主に d オプション以外で利用されます (e.g, -r72)。
@@ -93,11 +96,12 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified type and name.
         /// </summary>
         ///
-        /// <param name="type">引数の種類</param>
-        /// <param name="name">名前</param>
+        /// <param name="type">Type of the argument.</param>
+        /// <param name="name">Name of the argument.</param>
         ///
         /// <remarks>
         /// 主に d オプションで利用されます (e.g, -dBATCH)。
@@ -111,11 +115,12 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified name and value.
         /// </summary>
         ///
-        /// <param name="name">名前</param>
-        /// <param name="value">値</param>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Value of the argument.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Argument(string name, bool value) : this('d', name, value) { }
@@ -125,11 +130,12 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified name and value.
         /// </summary>
         ///
-        /// <param name="name">名前</param>
-        /// <param name="value">値</param>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Value of the argument.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Argument(string name, int value) : this('d', name, value) { }
@@ -139,12 +145,13 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified type, name, and value.
         /// </summary>
         ///
-        /// <param name="type">引数の種類</param>
-        /// <param name="name">名前</param>
-        /// <param name="value">値</param>
+        /// <param name="type">Type of the argument.</param>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Value of the argument.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Argument(char type, string name, bool value) :
@@ -155,12 +162,13 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified type, name, and value.
         /// </summary>
         ///
-        /// <param name="type">引数の種類</param>
-        /// <param name="name">名前</param>
-        /// <param name="value">値</param>
+        /// <param name="type">Type of the argument.</param>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Value of the argument.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Argument(char type, string name, int value) :
@@ -171,12 +179,13 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified type, name, and value.
         /// </summary>
         ///
-        /// <param name="type">引数の種類</param>
-        /// <param name="name">名前</param>
-        /// <param name="value">値</param>
+        /// <param name="type">Type of the argument.</param>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Value of the argument.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Argument(char type, string name, string value) :
@@ -187,13 +196,18 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified type, name, and value.
         /// </summary>
         ///
-        /// <param name="type">引数の種類</param>
-        /// <param name="name">名前</param>
-        /// <param name="value">値</param>
-        /// <param name="literal">値がリテラルオブジェクトかどうか</param>
+        /// <param name="type">Type of the argument.</param>
+        /// <param name="name">Name of the argument.</param>
+        /// <param name="value">Value of the argument.</param>
+        /// <param name="literal">Value is literal or not.</param>
+        ///
+        /// <remarks>
+        /// リテラル値の場合、値に "/" の接頭辞が付与されます。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         public Argument(char type, string name, string value, bool literal)
@@ -209,10 +223,11 @@ namespace Cube.Pdf.Ghostscript
         /// Argument
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Argument class with the
+        /// specified description.
         /// </summary>
         ///
-        /// <param name="description">コード内容</param>
+        /// <param name="description">Code description.</param>
         ///
         /// <remarks>
         /// 主に PostScript コードを保持する際に利用されます。
@@ -231,7 +246,7 @@ namespace Cube.Pdf.Ghostscript
         /// Dummy
         ///
         /// <summary>
-        /// ダミー用 Argument オブジェクトを取得します。
+        /// Gets the dummy instance of the Argument class.
         /// </summary>
         ///
         /// <remarks>
@@ -247,7 +262,7 @@ namespace Cube.Pdf.Ghostscript
         /// Type
         ///
         /// <summary>
-        /// 引数の種類を表す文字を取得します。
+        /// Gets the type of the argument.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -258,7 +273,7 @@ namespace Cube.Pdf.Ghostscript
         /// Name
         ///
         /// <summary>
-        /// 名前を取得します。
+        /// Gets the name of the argument.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -269,7 +284,7 @@ namespace Cube.Pdf.Ghostscript
         /// Value
         ///
         /// <summary>
-        /// 値を取得します。
+        /// Gets the value of the argument.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -280,7 +295,7 @@ namespace Cube.Pdf.Ghostscript
         /// IsLiteral
         ///
         /// <summary>
-        /// 値がリテラルオブジェクトかどうかを示す値を取得します。
+        /// Gets the value indicating whether the value is literal.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -295,10 +310,10 @@ namespace Cube.Pdf.Ghostscript
         /// ToString
         ///
         /// <summary>
-        /// 引数を表す文字列を取得します。
+        /// Returns a string that represents the argument.
         /// </summary>
         ///
-        /// <returns>文字列</returns>
+        /// <returns>String that represents the argument.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public override string ToString()
@@ -325,7 +340,7 @@ namespace Cube.Pdf.Ghostscript
     /// Code
     ///
     /// <summary>
-    /// Ghostscript で実行される PostScript コードを表すクラスです。
+    /// Represents a PostScript code that is executed in the Ghostscript.
     /// </summary>
     ///
     /// <remarks>
@@ -342,10 +357,11 @@ namespace Cube.Pdf.Ghostscript
         /// Code
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Code class with the
+        /// specified description.
         /// </summary>
         ///
-        /// <param name="description">コード内容</param>
+        /// <param name="description">Code description.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Code(string description) : base(description) { }
