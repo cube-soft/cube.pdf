@@ -14,7 +14,7 @@ Note that some projects are licensed under the GNU AGPLv3. See the License secti
 
 ## Summary
 
-### Libraries
+### Cube.Pdf and related libraries
 
 You can install Cube.Pdf libraries from the Install-Package command or NuGet packages UI on Visual Studio.
 The Libraries provide functionality to treat third-party libraries as the same interface (except for the Cube.Pdf.Ghostscript project).
@@ -33,8 +33,8 @@ And when you want to use the PDFium library, you only modify the description of 
 // Set password directly or using Query<string>
 var password = new Cube.Query<string>(e =>
 {
-    e.Result = "password";
-    e.Cancel = false;
+    e.Result = "password",
+    e.Cancel = false,
 });
 
 using (var reader = new DocumentReader(@"path/to/sample.pdf", password))
@@ -59,6 +59,8 @@ using (var writer = new DocumentWriter())
 }
 ```
 
+### Cube.Pdf.Ghostscript
+
 When you convert from PostScript to any other formats, you can use the Cube.Pdf.Ghostscript library.
 The following sample converts to the PDF file.
 
@@ -78,7 +80,7 @@ converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 
 If you want to know other support formats or options, see the following links.
 
-* [Formats](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/Parameters/Format.cs)
+* [Format](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/Parameters/Format.cs)
 * [DocumentConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/DocumentConverter.cs)
 * [ImageConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/ImageConverter.cs)
 
