@@ -24,7 +24,7 @@ Basic interfaces of the Cube.Pdf are as follows:
 * [IDocumentRenderer](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentRenderer.cs)
 * [IDocumentWriter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentWriter.cs)
 
-For example, the following code accesses a PDF document by using the iTextSharp library.
+For example, the following sample accesses a PDF document by using the iTextSharp library.
 And when you want to use the PDFium library, you only modify the description of "using Cube.Pdf.Itext" to "using Cube.Pdf.Pdfium".
 
 ```cs
@@ -58,6 +58,29 @@ using (var writer = new DocumentWriter())
     writer.Save(@"path/to/dest.pdf");
 }
 ```
+
+When you convert from PostScript to any other formats, you can use the Cube.Pdf.Ghostscript library.
+The following sample converts to the PDF file.
+
+```cs
+// using Cube.Pdf.Ghostscript;
+var converter = new DocumentConverter(Format.Pdf)
+{
+    Paper        = Paper.Auto,
+    Orientation  = Orientation.Auto,
+    ColorMode    = ColorMode.Rgb,
+    Resolution   = 600,
+    Compression  = Encoding.Jpeg,
+    Downsampling = Downsampling.None,
+}
+converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
+```
+
+If you want to know other support formats or options, see the following links.
+
+* [Formats](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/Parameters/Format.cs)
+* [DocumentConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/DocumentConverter.cs)
+* [ImageConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/ImageConverter.cs)
 
 ### CubePDF
 
