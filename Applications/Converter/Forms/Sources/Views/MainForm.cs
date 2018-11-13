@@ -138,6 +138,8 @@ namespace Cube.Pdf.App.Converter
             vm.Messenger.MessageBox.Subscribe(e => new MessageBoxBehavior().Invoke(e));
             vm.Messenger.OpenFileDialog.Subscribe(e => new OpenFileBehavior().Invoke(e));
             vm.Messenger.SaveFileDialog.Subscribe(e => new SaveFileBehavior().Invoke(e));
+
+            UpdateString(vm.Settings.Language);
         }
 
         #endregion
