@@ -8,7 +8,7 @@ Cube.Pdf
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
 
-Cube.Pdf projects wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. We will move [CubePdfViewer](https://github.com/cube-soft/CubePdfViewer) to the repository.
+Cube.Pdf libraries wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. We will move [CubePdfViewer](https://github.com/cube-soft/CubePdfViewer) to the repository.
 Libraries and applications are available for .NET Framework 3.5, 4.5 or more.
 Note that some projects are licensed under the GNU AGPLv3. See the License section for details.
 
@@ -17,7 +17,7 @@ Note that some projects are licensed under the GNU AGPLv3. See the License secti
 ### Cube.Pdf and related libraries
 
 You can install Cube.Pdf libraries from the Install-Package command or NuGet packages UI on Visual Studio.
-The Libraries provide functionality to treat third-party libraries as the same interface (except for the Cube.Pdf.Ghostscript project).
+The Libraries provide functionality to treat third-party libraries as the same interface (except for the Cube.Pdf.Ghostscript).
 Basic interfaces of the Cube.Pdf are as follows:
 
 * [IDocumentReader](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentReader.cs)
@@ -43,7 +43,7 @@ using (var reader = new DocumentReader(@"path/to/sample.pdf", password))
 }
 ```
 
-When you merge, extract, or remove existing PDF documents, the simplest sample is as follow.
+When you merge, extract, or remove existing PDF pages, the simplest code is as follow.
 Note that if you specify an IDocumentReader object to the Add method of an IDocumentWriter implementation class, the IDocumentWriter object automatically disposes the specified object before saving.
 
 ```cs
@@ -62,7 +62,7 @@ using (var writer = new DocumentWriter())
 ### Cube.Pdf.Ghostscript
 
 When you convert from PostScript to any other formats, you can use the Cube.Pdf.Ghostscript library.
-The following sample converts to the PDF file.
+The following code converts to the PDF file.
 
 ```cs
 // using Cube.Pdf.Ghostscript;
