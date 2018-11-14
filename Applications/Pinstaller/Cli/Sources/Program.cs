@@ -49,27 +49,24 @@ namespace Cube.Pdf.App.Pinstaller
         [STAThread]
         static int Main(string[] args)
         {
-            var type = typeof(Program);
-
             try
             {
                 Logger.Configure();
-                Logger.ObserveTaskException();
-                Logger.Info(type, Assembly.GetExecutingAssembly());
-                Logger.Info(type, $"Arguments:{string.Join(" ", args)}");
+                Logger.Info(LogType, Assembly.GetExecutingAssembly());
+                Logger.Info(LogType, $"Arguments:{string.Join(" ", args)}");
 
                 var src = new ArgumentCollection(args, '/', true);
                 var cmd = src.GetCommand();
                 var sop = StringComparison.InvariantCultureIgnoreCase;
 
-                if (src.Count <= 0) Logger.Warn(type, "Configuration not found");
-                else if (!cmd.HasValue()) Logger.Warn(type, "Command not found");
+                if (src.Count <= 0) Logger.Warn(LogType, "Configuration not found");
+                else if (!cmd.HasValue()) Logger.Warn(LogType, "Command not found");
                 else if (cmd.Equals("install", sop)) Install(src);
                 else if (cmd.Equals("uninstall", sop)) Uninstall(src);
-                else Logger.Warn(type, $"{cmd}:Unexpected command");
+                else Logger.Warn(LogType, $"{cmd}:Unexpected command");
                 return 0;
             }
-            catch (Exception err) { Logger.Error(type, err.ToString()); }
+            catch (Exception err) { Logger.Error(LogType, err.ToString()); }
             return -1;
         }
 
@@ -102,6 +99,10 @@ namespace Cube.Pdf.App.Pinstaller
                 }
                 else src.Application = app;
             }
+
+            Logger.Debug(LogType, $"{nameof(src.Application)}:{src.Application}");
+            Logger.Debug(LogType, $"{nameof(src.Arguments)}:{src.Arguments}");
+            Logger.Debug(LogType, $"Resource:{dir}");
 
             Invoke(args.GetRetryCount(), () => src.Install(dir, true));
         }
@@ -140,6 +141,10 @@ namespace Cube.Pdf.App.Pinstaller
             throw new ArgumentException($"Try {n} times.");
         }
 
+        #endregion
+
+        #region Fields
+        private static readonly Type LogType = typeof(Program);
         #endregion
     }
 }

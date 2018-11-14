@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
+using Cube.Generics;
 using System.Reflection;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -61,7 +62,8 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Application path.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetApplication(this ArgumentCollection src) => src.GetValue("app");
+        public static string GetApplication(this ArgumentCollection src) =>
+            src.GetPath(src.GetValue("app"));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,7 +78,8 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Path of proxy program.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetProxy(this ArgumentCollection src) => src.GetValue("proxy");
+        public static string GetProxy(this ArgumentCollection src) =>
+            src.GetPath(src.GetValue("proxy"));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -93,8 +96,8 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static string GetResourceDirectory(this ArgumentCollection src) =>
             src.Options.TryGetValue("resource", out var dest) ?
-            dest :
-            new AssemblyReader(Assembly.GetExecutingAssembly()).DirectoryName;
+            src.GetPath(dest) :
+            GetCurrentDirectory();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -133,6 +136,32 @@ namespace Cube.Pdf.App.Pinstaller
             src.Options.TryGetValue(name, out var dest) ?
             dest :
             string.Empty;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetPath
+        ///
+        /// <summary>
+        /// Gets the path from the specified parameters.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetPath(this ArgumentCollection src, string path) =>
+            path.HasValue() && src.Options.ContainsKey("relative") ?
+            System.IO.Path.Combine(GetCurrentDirectory(), path) :
+            path;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetCurrentDirectory
+        ///
+        /// <summary>
+        /// Gets the directory name of the executing assembly.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetCurrentDirectory() =>
+            new AssemblyReader(Assembly.GetExecutingAssembly()).DirectoryName;
 
         #endregion
     }
