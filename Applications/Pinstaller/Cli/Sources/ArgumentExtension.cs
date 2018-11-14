@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.Generics;
+using System.Linq;
 using System.Reflection;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -48,6 +49,22 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public static string GetCommand(this ArgumentCollection src) => src.GetValue("command");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetConfiguration
+        ///
+        /// <summary>
+        /// Gets the configuration path.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        ///
+        /// <returns>Configuration path.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string GetConfiguration(this ArgumentCollection src) =>
+            src.GetPath(src.FirstOrDefault());
 
         /* ----------------------------------------------------------------- */
         ///
