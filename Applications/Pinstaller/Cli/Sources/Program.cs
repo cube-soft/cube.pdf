@@ -53,7 +53,7 @@ namespace Cube.Pdf.App.Pinstaller
             {
                 Logger.Configure();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
-                Logger.Info(LogType, $"Arguments:{string.Join(" ", args)}");
+                Logger.Info(LogType, $"Arguments:[ {string.Join(" ", args)} ]");
 
                 var src = new ArgumentCollection(args, '/', true);
                 var cmd = src.GetCommand();
@@ -101,11 +101,11 @@ namespace Cube.Pdf.App.Pinstaller
                 else src.Application = app;
             }
 
-            Logger.Debug(LogType, $"Method:{nameof(Install)}");
-            Logger.Debug(LogType, $"Configuration:{config}");
-            Logger.Debug(LogType, $"Resource:{dir}");
-            Logger.Debug(LogType, $"{nameof(src.Application)}:{src.Application}");
-            Logger.Debug(LogType, $"{nameof(src.Arguments)}:{src.Arguments}");
+            Logger.Debug(LogType, $"Method:{nameof(Install).Quote()}");
+            Logger.Debug(LogType, $"Configuration:{config.Quote()}");
+            Logger.Debug(LogType, $"Resource:{dir.Quote()}");
+            Logger.Debug(LogType, $"{nameof(src.Application)}:{src.Application.Quote()}");
+            Logger.Debug(LogType, $"{nameof(src.Arguments)}:[ {src.Arguments} ]");
 
             Invoke(args.GetRetryCount(), () => src.Install(dir, true));
         }
@@ -124,8 +124,8 @@ namespace Cube.Pdf.App.Pinstaller
             var config = args.GetConfiguration();
             var src    = new Installer(Format.Json, config);
 
-            Logger.Debug(LogType, $"Method:{nameof(Uninstall)}");
-            Logger.Debug(LogType, $"Configuration:{config}");
+            Logger.Debug(LogType, $"Method:{nameof(Uninstall).Quote()}");
+            Logger.Debug(LogType, $"Configuration:{config.Quote()}");
 
             Invoke(args.GetRetryCount(), () => src.Uninstall());
         }
@@ -144,7 +144,7 @@ namespace Cube.Pdf.App.Pinstaller
             for (var i = 0; i < n; ++i)
             {
                 try { action(); return; }
-                catch (Exception e) { Logger.Warn(typeof(Program), e.ToString(), e); }
+                catch (Exception e) { Logger.Warn(LogType, e.ToString(), e); }
             }
             throw new ArgumentException($"Try {n} times.");
         }

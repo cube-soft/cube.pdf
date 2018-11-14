@@ -16,6 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Generics;
+using Cube.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,8 +98,14 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="to">Destination directory.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Copy(this IO io, string filename, string from, string to) =>
-            io.Copy(io.Combine(from, filename), io.Combine(to, filename), true);
+        public static void Copy(this IO io, string filename, string from, string to)
+        {
+            var src  = io.Combine(from, filename);
+            var dest = io.Combine(to, filename);
+
+            io.LogDebug(string.Join("\t", nameof(Copy), src.Quote(), dest.Quote()));
+            io.Copy(src, dest, true);
+        }
 
         #endregion
     }
