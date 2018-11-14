@@ -46,7 +46,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Command name.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetCommand(this ArgumentCollection src) => src.GetValue("Command");
+        public static string GetCommand(this ArgumentCollection src) => src.GetValue("command");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -61,7 +61,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Application path.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetApplication(this ArgumentCollection src) => src.GetValue("App");
+        public static string GetApplication(this ArgumentCollection src) => src.GetValue("app");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,7 +76,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Path of proxy program.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetProxy(this ArgumentCollection src) => src.GetValue("Proxy");
+        public static string GetProxy(this ArgumentCollection src) => src.GetValue("proxy");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -92,7 +92,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public static string GetResourceDirectory(this ArgumentCollection src) =>
-            src.Options.TryGetValue("Resource", out var dest) ?
+            src.Options.TryGetValue("resource", out var dest) ?
             dest :
             new AssemblyReader(Assembly.GetExecutingAssembly()).DirectoryName;
 
@@ -111,7 +111,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static int GetRetryCount(this ArgumentCollection src)
         {
-            if (!src.Options.TryGetValue("Retry", out var str)) return 1;
+            if (!src.Options.TryGetValue("retry", out var str)) return 1;
             if (int.TryParse(str, out var dest)) return dest;
             else return 1;
         }
