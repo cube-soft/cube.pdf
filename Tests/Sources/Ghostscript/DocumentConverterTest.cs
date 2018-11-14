@@ -178,6 +178,121 @@ namespace Cube.Pdf.Tests.Ghostscript
                 {
                     Downsampling = Downsampling.Subsample,
                 }, "SampleMix.ps", Downsampling.Subsample);
+
+                /* --------------------------------------------------------- */
+                // Mixed
+                /* --------------------------------------------------------- */
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Jpeg,
+                    Downsampling = Downsampling.None,
+                    Resolution   = 900,
+                }, "SampleResolution600.ps", "Jpeg_None_600_900");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Jpeg,
+                    Downsampling = Downsampling.None,
+                    Resolution   = 600,
+                }, "SampleResolution600.ps", "Jpeg_None_600_600");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Jpeg,
+                    Downsampling = Downsampling.None,
+                    Resolution   = 300,
+                }, "SampleResolution600.ps", "Jpeg_None_600_300");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Jpeg,
+                    Downsampling = Downsampling.None,
+                    Resolution   = 150,
+                }, "SampleResolution600.ps", "Jpeg_None_600_150");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Jpeg,
+                    Downsampling = Downsampling.Bicubic,
+                    Resolution   = 900,
+                }, "SampleResolution600.ps", "Jpeg_Bicubic_600_900");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Jpeg,
+                    Downsampling = Downsampling.Bicubic,
+                    Resolution   = 600,
+                }, "SampleResolution600.ps", "Jpeg_Bicubic_600_600");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Jpeg,
+                    Downsampling = Downsampling.Bicubic,
+                    Resolution   = 300,
+                }, "SampleResolution600.ps", "Jpeg_Bicubic_600_300");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Jpeg,
+                    Downsampling = Downsampling.Bicubic,
+                    Resolution   = 150,
+                }, "SampleResolution600.ps", "Jpeg_Bicubic_600_150");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Flate,
+                    Downsampling = Downsampling.None,
+                    Resolution   = 900,
+                }, "SampleResolution600.ps", "Flate_None_600_900");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Flate,
+                    Downsampling = Downsampling.None,
+                    Resolution   = 600,
+                }, "SampleResolution600.ps", "Flate_None_600_600");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Flate,
+                    Downsampling = Downsampling.None,
+                    Resolution   = 300,
+                }, "SampleResolution600.ps", "Flate_None_600_300");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Flate,
+                    Downsampling = Downsampling.None,
+                    Resolution   = 150,
+                }, "SampleResolution600.ps", "Flate_None_600_150");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Flate,
+                    Downsampling = Downsampling.Bicubic,
+                    Resolution   = 900,
+                }, "SampleResolution600.ps", "Flate_Bicubic_600_900");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Flate,
+                    Downsampling = Downsampling.Bicubic,
+                    Resolution   = 600,
+                }, "SampleResolution600.ps", "Flate_Bicubic_600_600");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Flate,
+                    Downsampling = Downsampling.Bicubic,
+                    Resolution   = 300,
+                }, "SampleResolution600.ps", "Flate_Bicubic_600_300");
+
+                yield return TestCase(new DocumentConverter(Format.Pdf)
+                {
+                    Compression  = Encoding.Flate,
+                    Downsampling = Downsampling.Bicubic,
+                    Resolution   = 150,
+                }, "SampleResolution600.ps", "Flate_Bicubic_600_150");
             }
         }
 
