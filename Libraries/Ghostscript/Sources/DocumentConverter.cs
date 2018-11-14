@@ -222,15 +222,21 @@ namespace Cube.Pdf.Ghostscript
         /// 埋め込まれた画像に関する Argument を生成します。
         /// </summary>
         ///
+        /// <remarks>
+        /// DownsampleXxxImages を false に設定すると Resolution 等の
+        /// 設定も無視されるため、Downsampling の内容に関わらず true に
+        /// 設定します。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<Argument> CreateImageArguments() => Trim(new[]
         {
             new Argument("ColorImageResolution",  Resolution),
             new Argument("GrayImageResolution",   Resolution),
             new Argument("MonoImageResolution",   GetMonoResolution()),
-            new Argument("DownsampleColorImages", Downsampling != Downsampling.None),
-            new Argument("DownsampleGrayImages",  Downsampling != Downsampling.None),
-            new Argument("DownsampleMonoImages",  Downsampling != Downsampling.None),
+            new Argument("DownsampleColorImages", true),
+            new Argument("DownsampleGrayImages",  true),
+            new Argument("DownsampleMonoImages",  true),
             new Argument("EncodeColorImages",     Compression != Encoding.None),
             new Argument("EncodeGrayImages",      Compression != Encoding.None),
             new Argument("EncodeMonoImages",      Compression != Encoding.None),
