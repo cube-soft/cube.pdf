@@ -97,7 +97,7 @@ namespace Cube.Pdf.App.Pinstaller
         public static string GetResourceDirectory(this ArgumentCollection src) =>
             src.Options.TryGetValue("resource", out var dest) ?
             src.GetPath(dest) :
-            GetCurrentDirectory();
+            CurrentDirectory;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -148,21 +148,13 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static string GetPath(this ArgumentCollection src, string path) =>
             path.HasValue() && src.Options.ContainsKey("relative") ?
-            System.IO.Path.Combine(GetCurrentDirectory(), path) :
+            System.IO.Path.Combine(CurrentDirectory, path) :
             path;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetCurrentDirectory
-        ///
-        /// <summary>
-        /// Gets the directory name of the executing assembly.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static string GetCurrentDirectory() =>
-            new AssemblyReader(Assembly.GetExecutingAssembly()).DirectoryName;
+        #endregion
 
+        #region Fields
+        private static readonly string CurrentDirectory = new AssemblyReader(Assembly.GetExecutingAssembly()).DirectoryName;
         #endregion
     }
 }
