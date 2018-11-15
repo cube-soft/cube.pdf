@@ -93,7 +93,9 @@ namespace Cube.Pdf.Tests.Pinstaller
                 var src = new SpoolerService();
                 src.Start();
                 src.Stop();
+                src.Stop();  // ignore
                 src.Start();
+                src.Start(); // ignore
             }
             catch (InvalidOperationException e) { this.LogWarn($"{e.Message} ({e.GetType().Name})"); }
         }
