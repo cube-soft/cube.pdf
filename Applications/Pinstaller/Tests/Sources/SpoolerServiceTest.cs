@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Log;
 using Cube.Pdf.App.Pinstaller;
 using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
@@ -79,6 +80,10 @@ namespace Cube.Pdf.Tests.Pinstaller
         /// Restarts the spooler service.
         /// </summary>
         ///
+        /// <remarks>
+        /// 実行権限がない場合のテスト結果は無視します。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         [Test]
         public void Restart()
@@ -86,10 +91,11 @@ namespace Cube.Pdf.Tests.Pinstaller
             try
             {
                 var src = new SpoolerService();
+                src.Start();
                 src.Stop();
                 src.Start();
             }
-            catch (Exception e) { Assert.Ignore($"{e.Message} ({e.GetType().Name})"); }
+            catch (InvalidOperationException e) { this.LogWarn($"{e.Message} ({e.GetType().Name})"); }
         }
 
         #endregion
