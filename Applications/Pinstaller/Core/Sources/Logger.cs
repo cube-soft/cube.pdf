@@ -43,15 +43,15 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         /// </summary>
         ///
         /// <param name="src">Port monitor object.</param>
-        /// <param name="name">Method name.</param>
+        /// <param name="method">Method name.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this PortMonitor src,
-            [CallerMemberName] string name = null) => src.Put(
-            $"Method:{name.Quote()}",
+            [CallerMemberName] string method = null) => src.Put(
+            $"[{method}]",
+            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.CanInstall)}:{src.CanInstall()}",
-            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
             $"{nameof(src.FileName)}:{src.FileName.Quote()}",
             $"{nameof(src.Config)}:{src.Config.Quote()}",
@@ -67,15 +67,15 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         /// </summary>
         ///
         /// <param name="src">Port object.</param>
-        /// <param name="name">Method name.</param>
+        /// <param name="method">Method name.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this Port src,
-            [CallerMemberName] string name = null) => src.Put(
-            $"Method:{name.Quote()}",
+            [CallerMemberName] string method = null) => src.Put(
+            $"[{method}]",
+            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.CanInstall)}:{src.CanInstall()}",
-            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.MonitorName)}:{src.MonitorName.Quote()}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
             $"{nameof(src.Application)}:{src.Application.Quote()}",
@@ -93,15 +93,15 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         /// </summary>
         ///
         /// <param name="src">Printer driver object.</param>
-        /// <param name="name">Method name.</param>
+        /// <param name="method">Method name.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this PrinterDriver src,
-            [CallerMemberName] string name = null) => src.Put(
-            $"Method:{name.Quote()}",
+            [CallerMemberName] string method = null) => src.Put(
+            $"[{method}]",
+            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.CanInstall)}:{src.CanInstall()}",
-            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.MonitorName)}:{src.MonitorName.Quote()}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
             $"{nameof(src.FileName)}:{src.FileName.Quote()}",
@@ -121,15 +121,15 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         /// </summary>
         ///
         /// <param name="src">Printer object.</param>
-        /// <param name="name">Method name.</param>
+        /// <param name="method">Method name.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this Printer src,
-            [CallerMemberName] string name = null) => src.Put(
-            $"Method:{name.Quote()}",
+            [CallerMemberName] string method = null) => src.Put(
+            $"[{method}]",
+            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
             $"{nameof(src.CanInstall)}:{src.CanInstall()}",
-            $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.ShareName)}:{src.ShareName.Quote()}",
             $"{nameof(src.DriverName)}:{src.DriverName.Quote()}",
             $"{nameof(src.PortName)}:{src.PortName.Quote()}",
@@ -145,14 +145,14 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         /// </summary>
         ///
         /// <param name="src">Service object.</param>
-        /// <param name="name">Method name.</param>
+        /// <param name="method">Method name.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this SpoolerService src,
-            [CallerMemberName] string name = null) => src.Put(
-            $"Method:{name.Quote()}",
-            $"{nameof(src.Status)}:{src.Status}",
+            [CallerMemberName] string method = null) => src.Put(
+            $"[{method}]",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
+            $"{nameof(src.Status)}:{src.Status}",
             $"{nameof(src.DisplayName)}:{src.DisplayName.Quote()}",
             $"{nameof(src.MachineName)}:{src.MachineName.Quote()}",
             $"{nameof(src.CanStop)}:{src.CanStop}",

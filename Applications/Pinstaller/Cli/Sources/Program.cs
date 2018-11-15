@@ -53,7 +53,7 @@ namespace Cube.Pdf.App.Pinstaller
             {
                 Logger.Configure();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
-                Logger.Info(LogType, $"Arguments:[ {string.Join(" ", args)} ]");
+                Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
 
                 var src = new ArgumentCollection(args, '/', true);
                 var cmd = src.GetCommand();
