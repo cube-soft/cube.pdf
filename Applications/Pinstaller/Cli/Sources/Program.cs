@@ -83,31 +83,22 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Install(ArgumentCollection args)
+        private static void Install(ArgumentCollection src)
         {
-            var config = args.GetConfiguration();
-            var src    = new Installer(Format.Json, config);
-            var dir    = args.GetResourceDirectory();
-            var app    = args.GetApplication();
-            var proxy  = args.GetProxy();
-
-            if (app.HasValue())
-            {
-                if (proxy.HasValue())
-                {
-                    src.Application = proxy;
-                    src.Arguments   = $"/Exec {app.Quote()}";
-                }
-                else src.Application = app;
-            }
+            var config = src.GetConfiguration();
+            var engine = new Installer(Format.Json, config);
+            var dir    = src.GetResourceDirectory();
+            var app    = src.GetApplication();
+            var args   = src.GetArguments();
 
             Logger.Debug(LogType, $"Method:{nameof(Install).Quote()}");
             Logger.Debug(LogType, $"Configuration:{config.Quote()}");
             Logger.Debug(LogType, $"Resource:{dir.Quote()}");
-            Logger.Debug(LogType, $"{nameof(src.Application)}:{src.Application.Quote()}");
-            Logger.Debug(LogType, $"{nameof(src.Arguments)}:[ {src.Arguments} ]");
+            Logger.Debug(LogType, $"Application:{app.Quote()}");
+            Logger.Debug(LogType, $"Arguments:[ {args} ]");
 
-            Invoke(args.GetRetryCount(), () => src.Install(dir, true));
+            Normalize(engine.Config, app, args);
+            Invoke(src.GetRetryCount(), () => engine.Install(dir, true));
         }
 
         /* ----------------------------------------------------------------- */
@@ -119,15 +110,34 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Uninstall(ArgumentCollection args)
+        private static void Uninstall(ArgumentCollection src)
         {
-            var config = args.GetConfiguration();
-            var src    = new Installer(Format.Json, config);
+            var config = src.GetConfiguration();
+            var engine = new Installer(Format.Json, config);
 
             Logger.Debug(LogType, $"Method:{nameof(Uninstall).Quote()}");
             Logger.Debug(LogType, $"Configuration:{config.Quote()}");
 
-            Invoke(args.GetRetryCount(), () => src.Uninstall());
+            Invoke(src.GetRetryCount(), () => engine.Uninstall());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Normalize
+        ///
+        /// <summary>
+        /// Normalizes some information.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Normalize(DeviceConfig src, string app, string args)
+        {
+            var root = Environment.SpecialFolder.CommonApplicationData.GetName();
+            foreach (var e in src.Ports) e.Temp = System.IO.Path.Combine(root, e.Temp);
+            if (src.Ports.Count != 1 || !app.HasValue()) return;
+
+            src.Ports[0].Application = app;
+            src.Ports[0].Arguments   = args;
         }
 
         /* ----------------------------------------------------------------- */

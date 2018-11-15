@@ -79,24 +79,34 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Application path.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetApplication(this ArgumentCollection src) =>
-            src.GetPath(src.GetValue("app"));
+        public static string GetApplication(this ArgumentCollection src)
+        {
+            var app   = src.GetPath(src.GetValue("app"));
+            var proxy = src.GetPath(src.GetValue("proxy"));
+
+            if (app.HasValue()) return proxy.HasValue() ? proxy : app;
+            else return string.Empty;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetProxy
+        /// GetArguments
         ///
         /// <summary>
-        /// Gets the path of the proxy program from the specified arguments.
+        /// Gets the arguments from the specified arguments.
         /// </summary>
         ///
         /// <param name="src">Source arguments.</param>
         ///
-        /// <returns>Path of proxy program.</returns>
+        /// <returns>Application path.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetProxy(this ArgumentCollection src) =>
-            src.GetPath(src.GetValue("proxy"));
+        public static string GetArguments(this ArgumentCollection src)
+        {
+            var app   = src.GetPath(src.GetValue("app"));
+            var proxy = src.GetPath(src.GetValue("proxy"));
+            return app.HasValue() && proxy.HasValue() ? $"/Exec {app.Quote()}" : string.Empty;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
