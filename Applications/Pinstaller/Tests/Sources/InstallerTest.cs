@@ -66,6 +66,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                 var m = $"{nameof(dest.PortMonitors)}[{i}]";
                 Assert.That(x.Name,     Is.EqualTo(y.Name),     $"{m}.{nameof(x.Name)}");
                 Assert.That(x.FileName, Is.EqualTo(y.FileName), $"{m}.{nameof(x.FileName)}");
+                Assert.That(x.Config,   Is.EqualTo(y.Config),   $"{m}.{nameof(x.Config)}");
             }
 
             // Ports
@@ -76,6 +77,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                 var y =  cmp.Ports[i];
                 var m = $"{nameof(dest.Ports)}[{i}]";
                 Assert.That(x.Name,        Is.EqualTo(y.Name),        $"{m}.{nameof(x.Name)}");
+                Assert.That(x.MonitorName, Is.EqualTo(y.MonitorName), $"{m}.{nameof(x.MonitorName)}");
                 Assert.That(x.Application, Is.EqualTo(y.Application), $"{m}.{nameof(x.Application)}");
                 Assert.That(x.Arguments,   Is.EqualTo(y.Arguments),   $"{m}.{nameof(x.Arguments)}");
                 Assert.That(x.Temp,        Is.EqualTo(y.Temp),        $"{m}.{nameof(x.Temp)}");
@@ -91,6 +93,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                 var m = $"{nameof(dest.PrinterDrivers)}[{i}]";
                 Assert.That(x.Name,         Is.EqualTo(y.Name),         $"{m}.{nameof(x.Name)}");
                 Assert.That(x.MonitorName,  Is.EqualTo(y.MonitorName),  $"{m}.{nameof(x.MonitorName)}");
+                Assert.That(x.FileName,     Is.EqualTo(y.FileName),     $"{m}.{nameof(x.FileName)}");
                 Assert.That(x.Config,       Is.EqualTo(y.Config),       $"{m}.{nameof(x.Config)}");
                 Assert.That(x.Data,         Is.EqualTo(y.Data),         $"{m}.{nameof(x.Data)}");
                 Assert.That(x.Help,         Is.EqualTo(y.Help),         $"{m}.{nameof(x.Help)}");
@@ -167,6 +170,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                     {
                         Name         = "CubeMon",
                         FileName     = "cubemon.dll",
+                        Config       = "cubemonui.dll",
                     }},
                     Ports = new[] { new PortConfig
                     {
