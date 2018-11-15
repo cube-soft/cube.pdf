@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
@@ -269,6 +270,23 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CanInstall
+        ///
+        /// <summary>
+        /// Determines that the printer driver can be installed.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// TODO: Help および Dependencies はインストールに必須かどうか
+        /// 要調査。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanInstall() => Name.HasValue() && FileName.HasValue() &&
+            Config.HasValue() && Data.HasValue();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Install
         ///
         /// <summary>
@@ -279,7 +297,7 @@ namespace Cube.Pdf.App.Pinstaller
         public void Install()
         {
             this.Log();
-            if (Exists) return;
+            if (Exists || !CanInstall()) return;
             if (!NativeMethods.AddPrinterDriver("", 3, ref _core)) throw new Win32Exception();
             Exists = true;
         }

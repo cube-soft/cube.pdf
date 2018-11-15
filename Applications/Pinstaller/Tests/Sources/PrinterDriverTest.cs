@@ -76,6 +76,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             var src  = new PrinterDriver(name, true);
             Assert.That(src.Name,                     Is.EqualTo(name));
             Assert.That(src.Exists,                   Is.False, nameof(src.Exists));
+            Assert.That(src.CanInstall(),             Is.False, nameof(src.CanInstall));
             Assert.That(src.MonitorName.HasValue(),   Is.False, nameof(src.MonitorName));
             Assert.That(src.FileName.HasValue(),      Is.False, nameof(src.FileName));
             Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
@@ -107,6 +108,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             src.Data         = "Dummy.ppd";
             src.Help         = "Dummy.hlp";
             src.Dependencies = "Dummy.ntf";
+            Assert.That(src.CanInstall(), Is.True);
             Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
         }
 

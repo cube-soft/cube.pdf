@@ -208,6 +208,17 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CanInstall
+        ///
+        /// <summary>
+        /// Determines that the port monitor can be installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanInstall() => Name.HasValue() && FileName.HasValue();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Install
         ///
         /// <summary>
@@ -218,7 +229,7 @@ namespace Cube.Pdf.App.Pinstaller
         public void Install()
         {
             this.Log();
-            if (Exists) return;
+            if (Exists || !CanInstall()) return;
             if (!NativeMethods.AddMonitor("", 2u, ref _core)) throw new Win32Exception();
             Exists = true;
         }

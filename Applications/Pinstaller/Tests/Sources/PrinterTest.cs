@@ -76,6 +76,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Name,                   Is.EqualTo(name));
             Assert.That(src.ShareName,              Is.EqualTo(name));
             Assert.That(src.Exists,                 Is.False, nameof(src.Exists));
+            Assert.That(src.CanInstall(),           Is.False, nameof(src.CanInstall));
             Assert.That(src.PortName.HasValue(),    Is.False, nameof(src.PortName));
             Assert.That(src.DriverName.HasValue(),  Is.False, nameof(src.DriverName));
             Assert.That(src.Environment.HasValue(), Is.True,  nameof(src.Environment));
@@ -99,6 +100,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             src.ShareName  = "Dummy SharePrinter";
             src.DriverName = "Dummy Driver";
             src.PortName   = "Dummy Port";
+            Assert.That(src.CanInstall(), Is.True);
             Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
         }
 

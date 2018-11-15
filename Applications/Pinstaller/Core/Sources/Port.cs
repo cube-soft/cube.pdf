@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
+using Cube.Generics;
 using Cube.Pdf.App.Pinstaller.Debug;
 using Microsoft.Win32;
 using System;
@@ -217,6 +218,17 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CanInstall
+        ///
+        /// <summary>
+        /// Determines that the port can be installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanInstall() => Name.HasValue() && MonitorName.HasValue();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Install
         ///
         /// <summary>
@@ -227,7 +239,7 @@ namespace Cube.Pdf.App.Pinstaller
         public void Install()
         {
             this.Log();
-            if (Exists) return;
+            if (Exists || !CanInstall()) return;
             Register(MonitorName, Name);
             using (var k = Open(GetName(MonitorName, "Ports", Name), true))
             {

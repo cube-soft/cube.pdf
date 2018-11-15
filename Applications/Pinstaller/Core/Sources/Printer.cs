@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
@@ -210,6 +211,17 @@ namespace Cube.Pdf.App.Pinstaller
             }
             finally { Marshal.FreeHGlobal(ptr); }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CanInstall
+        ///
+        /// <summary>
+        /// Determines that the printer can be installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool CanInstall() => Name.HasValue() && DriverName.HasValue() && PortName.HasValue();
 
         /* ----------------------------------------------------------------- */
         ///

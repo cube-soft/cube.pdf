@@ -47,13 +47,15 @@ namespace Cube.Pdf.Tests.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Dummy Port", "Dummy PortMonitor", ExpectedResult = false)]
-        public bool Create(string name, string monitor) => Invoke(() =>
+        [TestCase("Dummy Port", "Dummy PortMonitor", true,  ExpectedResult = false)]
+        [TestCase("Dummy Port", "",                  false, ExpectedResult = false)]
+        public bool Create(string name, string monitor, bool canInstall) => Invoke(() =>
         {
             var src = new Port(name, monitor);
-            Assert.That(src.Name,        Is.EqualTo(name));
-            Assert.That(src.MonitorName, Is.EqualTo(monitor));
-            Assert.That(src.WaitForExit, Is.False, nameof(src.WaitForExit));
+            Assert.That(src.Name,         Is.EqualTo(name));
+            Assert.That(src.MonitorName,  Is.EqualTo(monitor));
+            Assert.That(src.CanInstall(), Is.EqualTo(canInstall));
+            Assert.That(src.WaitForExit,  Is.False, nameof(src.WaitForExit));
             Assert.That(src.Environment.HasValue(), Is.True, nameof(src.Environment));
             Assert.That(src.Application.HasValue(), Is.EqualTo(src.Exists), nameof(src.Application));
             Assert.That(src.Arguments.HasValue(),   Is.EqualTo(src.Exists), nameof(src.Arguments));
@@ -80,6 +82,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             src.Arguments   = "Dummy";
             src.Temp        = @"Dummy\Path\To";
             src.WaitForExit = true;
+            Assert.That(src.CanInstall(), Is.True);
             Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
         }
 

@@ -50,6 +50,7 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             [CallerMemberName] string name = null) => src.Put(
             $"Method:{name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
+            $"{nameof(src.CanInstall)}:{src.CanInstall()}",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
             $"{nameof(src.FileName)}:{src.FileName.Quote()}",
@@ -73,6 +74,7 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             [CallerMemberName] string name = null) => src.Put(
             $"Method:{name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
+            $"{nameof(src.CanInstall)}:{src.CanInstall()}",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.MonitorName)}:{src.MonitorName.Quote()}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
@@ -98,6 +100,7 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             [CallerMemberName] string name = null) => src.Put(
             $"Method:{name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
+            $"{nameof(src.CanInstall)}:{src.CanInstall()}",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.MonitorName)}:{src.MonitorName.Quote()}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
@@ -125,6 +128,7 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             [CallerMemberName] string name = null) => src.Put(
             $"Method:{name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
+            $"{nameof(src.CanInstall)}:{src.CanInstall()}",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.ShareName)}:{src.ShareName.Quote()}",
             $"{nameof(src.DriverName)}:{src.DriverName.Quote()}",

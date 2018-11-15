@@ -78,6 +78,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             var src  = new PortMonitor(name, true);
             Assert.That(src.Name,                     Is.EqualTo(name));
             Assert.That(src.Exists,                   Is.False, nameof(src.Exists));
+            Assert.That(src.CanInstall(),             Is.False, nameof(src.CanInstall));
             Assert.That(src.FileName.HasValue(),      Is.False, nameof(src.FileName));
             Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
             Assert.That(src.Environment.HasValue(),   Is.True,  nameof(src.Environment));
@@ -97,10 +98,14 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void Install_Throws()
         {
             var src = new PortMonitor("Dummy Monitor", true);
-            Assert.That(src.Exists, Is.False);
+            Assert.That(src.Exists,       Is.False);
+            Assert.That(src.CanInstall(), Is.False);
 
             src.FileName = "DummyMon.dll";
-            src.Config   = "DummyMonUi.dll";
+            Assert.That(src.CanInstall(), Is.True);
+
+            src.Config = "DummyMonUi.dll";
+            Assert.That(src.CanInstall(), Is.True);
             Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
         }
 
