@@ -23,21 +23,21 @@ namespace Cube.Pdf.Ghostscript
     /// Orientation
     ///
     /// <summary>
-    /// ページの向きを定義した列挙型です。
+    /// Specifies page orientation.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     public enum Orientation
     {
-        /// <summary>自動</summary>
+        /// <summary>Auto</summary>
         Auto = 10,
-        /// <summary>縦向き</summary>
+        /// <summary>Portrait</summary>
         Portrait = 0,
-        /// <summary>縦向き（180 度回転）</summary>
+        /// <summary>Upside down (Rotates to 180 degrees from the portrait orientation)</summary>
         UpsideDown = 2,
-        /// <summary>横向き</summary>
+        /// <summary>Landscape</summary>
         Landscape = 3,
-        /// <summary>横向き（180 度回転）</summary>
+        /// <summary>Seaspace (Rotates to 180 degrees from the landscape orientation)</summary>
         Seascape = 1,
     }
 

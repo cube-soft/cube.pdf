@@ -25,7 +25,7 @@ namespace Cube.Pdf.Ghostscript
     /// Encoding
     ///
     /// <summary>
-    /// エンコード方法に関する列挙型です。
+    /// Specifies encoding methods.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

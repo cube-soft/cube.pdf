@@ -23,7 +23,7 @@ namespace Cube.Pdf.Ghostscript
     /// Downsampling
     ///
     /// <summary>
-    /// ダウンサンプリング方法に関する列挙型です。
+    /// Specifies methods of the downsampling.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

@@ -28,10 +28,10 @@ namespace Cube.Pdf.Ghostscript
     /// DocumentConverter
     ///
     /// <summary>
-    /// PDF などのドキュメント形式に変換するためのクラスです。
+    /// Provides functionality to convert to document format such as PDF.
     /// </summary>
     ///
-    /// <see href="https://www.ghostscript.com/doc/9.23/VectorDevices.htm" />
+    /// <see href="https://www.ghostscript.com/doc/9.25/VectorDevices.htm" />
     ///
     /* --------------------------------------------------------------------- */
     public class DocumentConverter : Converter
@@ -43,10 +43,11 @@ namespace Cube.Pdf.Ghostscript
         /// DocumentConverter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentConverter class with
+        /// the specified format.
         /// </summary>
         ///
-        /// <param name="format">変換後のフォーマット</param>
+        /// <param name="format">Target format.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentConverter(Format format) : this(format, new IO()) { }
@@ -56,11 +57,12 @@ namespace Cube.Pdf.Ghostscript
         /// DocumentConverter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentConverter class with
+        /// the specified format.
         /// </summary>
         ///
-        /// <param name="format">変換後のフォーマット</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="format">Target format.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentConverter(Format format, IO io) : base(format, io)
@@ -77,7 +79,7 @@ namespace Cube.Pdf.Ghostscript
         /// SupportedFormats
         ///
         /// <summary>
-        /// サポートする形式一覧を取得します。
+        /// Gets the collection of supported formats.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -94,7 +96,7 @@ namespace Cube.Pdf.Ghostscript
         /// Version
         ///
         /// <summary>
-        /// バージョンを取得または設定します。
+        /// Gets or sets the version number of the converted document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -105,7 +107,8 @@ namespace Cube.Pdf.Ghostscript
         /// EmbedFonts
         ///
         /// <summary>
-        /// フォントを埋め込むかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether all used fonts are
+        /// embedded in the converted document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -116,7 +119,7 @@ namespace Cube.Pdf.Ghostscript
         /// ColorMode
         ///
         /// <summary>
-        /// カラーモードを取得または設定します。
+        /// Gets or sets the color mode.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -127,7 +130,7 @@ namespace Cube.Pdf.Ghostscript
         /// Compression
         ///
         /// <summary>
-        /// 埋め込まれた画像データの圧縮方法を取得または設定します。
+        /// Gets or sets the compression method of embedded images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -138,8 +141,7 @@ namespace Cube.Pdf.Ghostscript
         /// Downsampling
         ///
         /// <summary>
-        /// 埋め込まれた画像データのダウンサンプリング方法を取得または
-        /// 設定します。
+        /// Gets or sets the downsampling method of embedded images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -154,10 +156,10 @@ namespace Cube.Pdf.Ghostscript
         /// OnCreateArguments
         ///
         /// <summary>
-        /// Ghostscript API で実行するための引数一覧を生成します。
+        /// Occurs when creating Ghostscript API arguments.
         /// </summary>
         ///
-        /// <returns>引数一覧</returns>
+        /// <returns>Collection of arguments.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Argument> OnCreateArguments() =>
@@ -175,11 +177,11 @@ namespace Cube.Pdf.Ghostscript
         /// OnCreateCodes
         ///
         /// <summary>
-        /// Ghostscript API で実行するための PostScript コードを表す
-        /// 引数一覧を生成します。
+        /// Occurs when creating code to be executed with the Ghostscript
+        /// API.
         /// </summary>
         ///
-        /// <returns>引数一覧</returns>
+        /// <returns>Collection of arguments.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Code> OnCreateCodes() =>
@@ -191,7 +193,8 @@ namespace Cube.Pdf.Ghostscript
         /// CreateVersion
         ///
         /// <summary>
-        /// バージョン番号を表す Argument を生成します。
+        /// Creates a new instance of the Argument class representing
+        /// version number.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -203,7 +206,8 @@ namespace Cube.Pdf.Ghostscript
         /// CreateFontArguments
         ///
         /// <summary>
-        /// フォントに関する Argument を生成します。
+        /// Creates a new instance of the Argument class representing
+        /// information related to the fonts.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -219,7 +223,8 @@ namespace Cube.Pdf.Ghostscript
         /// CreateImageArguments
         ///
         /// <summary>
-        /// 埋め込まれた画像に関する Argument を生成します。
+        /// Creates the collection of arguments representing information
+        /// related to the images.
         /// </summary>
         ///
         /// <remarks>
@@ -256,7 +261,7 @@ namespace Cube.Pdf.Ghostscript
         /// CreateEmbedFontsCode
         ///
         /// <summary>
-        /// フォントの埋め込み設定に関する PostScript コードを生成します。
+        /// Creates the code representing related to the fonts.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -270,7 +275,7 @@ namespace Cube.Pdf.Ghostscript
         /// GetMonoResolution
         ///
         /// <summary>
-        /// モノクロ画像に適用する解像度を取得します。
+        /// Gets the resolution of monochrome images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -284,7 +289,7 @@ namespace Cube.Pdf.Ghostscript
         /// Trim
         ///
         /// <summary>
-        /// null オブジェクトを除去します。
+        /// Removes null objects from the specified collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

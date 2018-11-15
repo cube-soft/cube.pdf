@@ -28,7 +28,8 @@ namespace Cube.Pdf.Ghostscript
     /// ImageConverter
     ///
     /// <summary>
-    /// PNG などのビットマップ画像形式に変換するためのクラスです。
+    /// Provides functionality to convert to raster image format such as
+    /// PNG.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,10 +42,11 @@ namespace Cube.Pdf.Ghostscript
         /// ImageConverter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ImageConverter class with the
+        /// specified format.
         /// </summary>
         ///
-        /// <param name="format">変換後のフォーマット</param>
+        /// <param name="format">Target format.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ImageConverter(Format format) : this(format, new IO()) { }
@@ -54,11 +56,12 @@ namespace Cube.Pdf.Ghostscript
         /// ImageConverter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ImageConverter class with the
+        /// specified format.
         /// </summary>
         ///
-        /// <param name="format">変換後のフォーマット</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="format">Target format.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ImageConverter(Format format, IO io) : base(format, io)
@@ -75,7 +78,7 @@ namespace Cube.Pdf.Ghostscript
         /// SupportedFormats
         ///
         /// <summary>
-        /// サポートする形式一覧を取得します。
+        /// Gets the collection of supported formats.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -118,7 +121,8 @@ namespace Cube.Pdf.Ghostscript
         /// AntiAlias
         ///
         /// <summary>
-        /// アンチエイリアスが有効かどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether anti-aliasing is
+        /// enabled.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -133,10 +137,10 @@ namespace Cube.Pdf.Ghostscript
         /// OnCreateArguments
         ///
         /// <summary>
-        /// Ghostscript API で実行するための引数一覧を生成します。
+        /// Occurs when creating Ghostscript API arguments.
         /// </summary>
         ///
-        /// <returns>引数一覧</returns>
+        /// <returns>Collection of arguments.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Argument> OnCreateArguments() =>
@@ -148,7 +152,7 @@ namespace Cube.Pdf.Ghostscript
         /// CreateAntiAlias
         ///
         /// <summary>
-        /// AntiAlias を表す Argument を生成します。
+        /// Creates the collection of arguments representing anti-aliasing.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
