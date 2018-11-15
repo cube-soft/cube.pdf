@@ -180,41 +180,6 @@ namespace Cube.Pdf.Tests.Pinstaller
                     }
                 });
 
-                yield return new TestCaseData(Format.Json, "SampleLite.json", new DeviceConfig
-                {
-                    PortMonitor = new PortMonitorConfig
-                    {
-                        Name         = "CubeMon",
-                        FileName     = "cubemon.dll",
-                    },
-                    Port = new PortConfig
-                    {
-                        Name         = "CubePDF:",
-                        MonitorName  = "CubeMon",
-                        Application  = @"C:\Program Files\CubePDF\CubeProxy.exe",
-                        Arguments    = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
-                        Temp         = @"CubeSoft\CubePDF",
-                        WaitForExit  = false,
-                    },
-                    PrinterDriver = new PrinterDriverConfig
-                    {
-                        Name         = "CubePDF",
-                        MonitorName  = "CubeMon",
-                        FileName     = "cubeps5.dll",
-                        Config       = "cubeps5ui.dll",
-                        Data         = "cubepdf.ppd",
-                        Help         = "cubeps.hlp",
-                        Dependencies = "cubeps.ntf",
-                    },
-                    Printer = new PrinterConfig
-                    {
-                        Name         = "CubePDF",
-                        ShareName    = "",
-                        DriverName   = "CubePDF",
-                        PortName     = "CubePDF:",
-                    }
-                });
-
                 yield return new TestCaseData(Format.Json, "SampleEmpty.json", new DeviceConfig
                 {
                     PortMonitor = new PortMonitorConfig

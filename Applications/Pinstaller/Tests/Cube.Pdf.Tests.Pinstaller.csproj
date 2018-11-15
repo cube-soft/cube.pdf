@@ -110,9 +110,6 @@
     <None Include="Examples\SampleEmpty.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\SampleLite.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Cube.Pdf.App.Pinstaller.csproj">

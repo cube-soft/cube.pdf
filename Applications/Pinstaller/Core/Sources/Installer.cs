@@ -219,26 +219,10 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static DeviceConfig Create(Format format, string src, IO io)
-        {
-            var dest = format == Format.Registry ?
-                       format.Deserialize<DeviceConfig>(src) :
-                       io.Load(src, e => format.Deserialize<DeviceConfig>(e));
-
-            if (dest == null) return dest;
-
-            var mon   = dest.PortMonitor;
-            var port  = dest.Port;
-            var drv   = dest.PrinterDriver;
-            var print = dest.Printer;
-
-            if (port  != null && !port.MonitorName.HasValue()) port.MonitorName = mon?.Name;
-            if (drv   != null && !drv.MonitorName.HasValue())  drv.MonitorName  = mon?.Name;
-            if (print != null && !print.PortName.HasValue())   print.PortName   = port?.Name;
-            if (print != null && !print.DriverName.HasValue()) print.DriverName = drv?.Name;
-
-            return dest;
-        }
+        private static DeviceConfig Create(Format format, string src, IO io) =>
+            format == Format.Registry ?
+            format.Deserialize<DeviceConfig>(src) :
+            io.Load(src, e => format.Deserialize<DeviceConfig>(e));
 
         /* ----------------------------------------------------------------- */
         ///
