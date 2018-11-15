@@ -18,6 +18,7 @@
 using Cube.DataContract;
 using Cube.FileSystem;
 using Cube.FileSystem.Mixin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -141,13 +142,12 @@ namespace Cube.Pdf.App.Pinstaller
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Install(string resource, bool reinstall)
+        public void Install(string resource, bool reinstall) => Invoke(service =>
         {
-            var monitors = Config.PortMonitors.Select(e => e.Create());
-            var ports    = Config.Ports.Select(e => e.Create());
-            var drivers  = Config.PrinterDrivers.Select(e => e.Create());
-            var printers = Config.Printers.Select(e => e.Create());
-            var service  = new SpoolerService();
+            var monitors = Config.PortMonitors.Select(e => e.Create()).ToList();
+            var ports    = Config.Ports.Select(e => e.Create()).ToList();
+            var drivers  = Config.PrinterDrivers.Select(e => e.Create()).ToList();
+            var printers = Config.Printers.Select(e => e.Create()).ToList();
 
             // Uninstall
             service.Clear();
@@ -164,7 +164,7 @@ namespace Cube.Pdf.App.Pinstaller
             foreach (var e in ports)    e.Install();
             foreach (var e in drivers)  e.Install();
             foreach (var e in printers) e.Install();
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -175,12 +175,12 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Uninstall() => Uninstall(
+        public void Uninstall() => Invoke(_ => Uninstall(
             Config.Printers.Select(e => e.Create()),
             Config.PrinterDrivers.Select(e => e.Create()),
             Config.Ports.Select(e => e.Create()),
             Config.PortMonitors.Select(e => e.Create())
-        );
+        ));
 
         #endregion
 
@@ -216,6 +216,23 @@ namespace Cube.Pdf.App.Pinstaller
             {
                 foreach (var e in inner) e.Uninstall();
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Action<SpoolerService> action)
+        {
+            var service = new SpoolerService();
+            service.Start();
+            try { action(service); }
+            finally { service.Start(); }
         }
 
         #endregion
