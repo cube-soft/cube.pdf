@@ -50,46 +50,65 @@ namespace Cube.Pdf.Tests.Pinstaller
         [TestCaseSource(nameof(TestCases))]
         public void Create(Format format, string filename, DeviceConfig cmp) => Invoke(() =>
         {
-            var src  = GetExamplesWith(filename);
-            var dest = new Installer(format, src);
-            Assert.That(dest,             Is.Not.Null);
-            Assert.That(dest.Location,    Is.EqualTo(src));
-            Assert.That(dest.Application, Is.Null);
-            Assert.That(dest.Arguments,   Is.Null);
-            Assert.That(dest.IO,          Is.Not.Null);
+            var src    = GetExamplesWith(filename);
+            var engine = new Installer(format, src);
+            var dest   = engine.Config;
+            Assert.That(engine,          Is.Not.Null);
+            Assert.That(engine.Location, Is.EqualTo(src));
+            Assert.That(engine.IO,       Is.Not.Null);
 
-            var x0 = dest.Config.PortMonitor;
-            var y0 = cmp.PortMonitor;
-            var m0 = nameof(dest.Config.PortMonitor);
-            Assert.That(x0.Name,     Is.EqualTo(y0.Name),     $"{m0}.{nameof(x0.Name)}");
-            Assert.That(x0.FileName, Is.EqualTo(y0.FileName), $"{m0}.{nameof(x0.FileName)}");
+            // PortMonitors
+            Assert.That(dest.PortMonitors.Count, Is.EqualTo(cmp.PortMonitors.Count));
+            for (var i = 0; i < dest.PortMonitors.Count; ++i)
+            {
+                var x = dest.PortMonitors[i];
+                var y =  cmp.PortMonitors[i];
+                var m = $"{nameof(dest.PortMonitors)}[{i}]";
+                Assert.That(x.Name,     Is.EqualTo(y.Name),     $"{m}.{nameof(x.Name)}");
+                Assert.That(x.FileName, Is.EqualTo(y.FileName), $"{m}.{nameof(x.FileName)}");
+            }
 
-            var x1 = dest.Config.Port;
-            var y1 = cmp.Port;
-            var m1 = nameof(dest.Config.Port);
-            Assert.That(x1.Name,        Is.EqualTo(y1.Name),        $"{m1}.{nameof(x1.Name)}");
-            Assert.That(x1.Application, Is.EqualTo(y1.Application), $"{m1}.{nameof(x1.Application)}");
-            Assert.That(x1.Arguments,   Is.EqualTo(y1.Arguments),   $"{m1}.{nameof(x1.Arguments)}");
-            Assert.That(x1.Temp,        Is.EqualTo(y1.Temp),        $"{m1}.{nameof(x1.Temp)}");
-            Assert.That(x1.WaitForExit, Is.EqualTo(y1.WaitForExit), $"{m1}.{nameof(x1.WaitForExit)}");
+            // Ports
+            Assert.That(dest.Ports.Count, Is.EqualTo(cmp.Ports.Count));
+            for (var i = 0; i < dest.Ports.Count; ++i)
+            {
+                var x = dest.Ports[i];
+                var y =  cmp.Ports[i];
+                var m = $"{nameof(dest.Ports)}[{i}]";
+                Assert.That(x.Name,        Is.EqualTo(y.Name),        $"{m}.{nameof(x.Name)}");
+                Assert.That(x.Application, Is.EqualTo(y.Application), $"{m}.{nameof(x.Application)}");
+                Assert.That(x.Arguments,   Is.EqualTo(y.Arguments),   $"{m}.{nameof(x.Arguments)}");
+                Assert.That(x.Temp,        Is.EqualTo(y.Temp),        $"{m}.{nameof(x.Temp)}");
+                Assert.That(x.WaitForExit, Is.EqualTo(y.WaitForExit), $"{m}.{nameof(x.WaitForExit)}");
+            }
 
-            var x2 = dest.Config.PrinterDriver;
-            var y2 = cmp.PrinterDriver;
-            var m2 = nameof(dest.Config.PrinterDriver);
-            Assert.That(x2.Name,         Is.EqualTo(y2.Name),         $"{m2}.{nameof(x2.Name)}");
-            Assert.That(x2.MonitorName,  Is.EqualTo(y2.MonitorName),  $"{m2}.{nameof(x2.MonitorName)}");
-            Assert.That(x2.Config,       Is.EqualTo(y2.Config),       $"{m2}.{nameof(x2.Config)}");
-            Assert.That(x2.Data,         Is.EqualTo(y2.Data),         $"{m2}.{nameof(x2.Data)}");
-            Assert.That(x2.Help,         Is.EqualTo(y2.Help),         $"{m2}.{nameof(x2.Help)}");
-            Assert.That(x2.Dependencies, Is.EqualTo(y2.Dependencies), $"{m2}.{nameof(x2.Dependencies)}");
+            // PrinterDrivers
+            Assert.That(dest.PrinterDrivers.Count, Is.EqualTo(cmp.PrinterDrivers.Count));
+            for (var i = 0; i < dest.PrinterDrivers.Count; ++i)
+            {
+                var x = dest.PrinterDrivers[i];
+                var y =  cmp.PrinterDrivers[i];
+                var m = $"{nameof(dest.PrinterDrivers)}[{i}]";
+                Assert.That(x.Name,         Is.EqualTo(y.Name),         $"{m}.{nameof(x.Name)}");
+                Assert.That(x.MonitorName,  Is.EqualTo(y.MonitorName),  $"{m}.{nameof(x.MonitorName)}");
+                Assert.That(x.Config,       Is.EqualTo(y.Config),       $"{m}.{nameof(x.Config)}");
+                Assert.That(x.Data,         Is.EqualTo(y.Data),         $"{m}.{nameof(x.Data)}");
+                Assert.That(x.Help,         Is.EqualTo(y.Help),         $"{m}.{nameof(x.Help)}");
+                Assert.That(x.Dependencies, Is.EqualTo(y.Dependencies), $"{m}.{nameof(x.Dependencies)}");
+            }
 
-            var x3 = dest.Config.Printer;
-            var y3 = cmp.Printer;
-            var m3 = nameof(dest.Config.Printer);
-            Assert.That(x3.Name,       Is.EqualTo(y3.Name),       $"{m3}.{nameof(x3.Name)}");
-            Assert.That(x3.ShareName,  Is.EqualTo(y3.ShareName),  $"{m3}.{nameof(x3.ShareName)}");
-            Assert.That(x3.DriverName, Is.EqualTo(y3.DriverName), $"{m3}.{nameof(x3.DriverName)}");
-            Assert.That(x3.PortName,   Is.EqualTo(y3.PortName),   $"{m3}.{nameof(x3.PortName)}");
+            // Printers
+            Assert.That(dest.Printers.Count, Is.EqualTo(cmp.Printers.Count));
+            for (var i = 0; i < dest.Printers.Count; ++i)
+            {
+                var x = dest.Printers[i];
+                var y =  cmp.Printers[i];
+                var m = $"{nameof(dest.Printers)}[{i}]";
+                Assert.That(x.Name,       Is.EqualTo(y.Name),       $"{m}.{nameof(x.Name)}");
+                Assert.That(x.ShareName,  Is.EqualTo(y.ShareName),  $"{m}.{nameof(x.ShareName)}");
+                Assert.That(x.DriverName, Is.EqualTo(y.DriverName), $"{m}.{nameof(x.DriverName)}");
+                Assert.That(x.PortName,   Is.EqualTo(y.PortName),   $"{m}.{nameof(x.PortName)}");
+            }
         });
 
         /* ----------------------------------------------------------------- */
@@ -119,11 +138,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void Install_Throws()
         {
             var src  = GetExamplesWith("SampleDummy.json");
-            var dest = new Installer(Format.Json, src)
-            {
-                Application = "DirectDummy.exe",
-                Arguments   = "Direct dummy arguments",
-            };
+            var dest = new Installer(Format.Json, src);
 
             Assert.That(() => dest.Install(Examples, true), Throws.InstanceOf<Exception>());
         }
@@ -145,14 +160,15 @@ namespace Cube.Pdf.Tests.Pinstaller
         {
             get
             {
+                yield return new TestCaseData(Format.Json, "SampleEmpty.json", new DeviceConfig());
                 yield return new TestCaseData(Format.Json, "Sample.json", new DeviceConfig
                 {
-                    PortMonitor = new PortMonitorConfig
+                    PortMonitors = new[] { new PortMonitorConfig
                     {
                         Name         = "CubeMon",
                         FileName     = "cubemon.dll",
-                    },
-                    Port = new PortConfig
+                    }},
+                    Ports = new[] { new PortConfig
                     {
                         Name         = "CubePDF:",
                         MonitorName  = "CubeMon",
@@ -160,8 +176,8 @@ namespace Cube.Pdf.Tests.Pinstaller
                         Arguments    = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
                         Temp         = @"CubeSoft\CubePDF",
                         WaitForExit  = false,
-                    },
-                    PrinterDriver = new PrinterDriverConfig
+                    }},
+                    PrinterDrivers = new[] { new PrinterDriverConfig
                     {
                         Name         = "CubePDF",
                         MonitorName  = "CubeMon",
@@ -170,49 +186,14 @@ namespace Cube.Pdf.Tests.Pinstaller
                         Data         = "cubepdf.ppd",
                         Help         = "cubeps.hlp",
                         Dependencies = "cubeps.ntf",
-                    },
-                    Printer = new PrinterConfig
+                    }},
+                    Printers = new[] { new PrinterConfig
                     {
                         Name         = "CubePDF",
                         ShareName    = "CubePDF",
                         DriverName   = "CubePDF",
                         PortName     = "CubePDF:",
-                    }
-                });
-
-                yield return new TestCaseData(Format.Json, "SampleEmpty.json", new DeviceConfig
-                {
-                    PortMonitor = new PortMonitorConfig
-                    {
-                        Name         = "",
-                        FileName     = "",
-                    },
-                    Port = new PortConfig
-                    {
-                        Name         = "",
-                        MonitorName  = "",
-                        Application  = "",
-                        Arguments    = "",
-                        Temp         = "",
-                        WaitForExit  = false,
-                    },
-                    PrinterDriver = new PrinterDriverConfig
-                    {
-                        Name         = "",
-                        MonitorName  = "",
-                        FileName     = "",
-                        Config       = "",
-                        Data         = "",
-                        Help         = "",
-                        Dependencies = "",
-                    },
-                    Printer = new PrinterConfig
-                    {
-                        Name         = "",
-                        ShareName    = "",
-                        DriverName   = "",
-                        PortName     = "",
-                    }
+                    }}
                 });
             }
         }
