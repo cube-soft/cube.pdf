@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -50,67 +51,67 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PortMonitor
+        /// PortMonitors
         ///
         /// <summary>
-        /// Gets or sets the configuration of the installing port monitor.
+        /// Gets or sets the configuration of the installing port monitors.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public PortMonitorConfig PortMonitor
+        public IList<PortMonitorConfig> PortMonitors
         {
-            get => _portMonitor;
-            set => SetProperty(ref _portMonitor, value);
+            get => _portMonitors;
+            set => SetProperty(ref _portMonitors, value);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Port
+        /// Ports
         ///
         /// <summary>
-        /// Gets or sets the configuration of the installing port.
+        /// Gets or sets the configuration of the installing ports.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public PortConfig Port
+        public IList<PortConfig> Ports
         {
-            get => _port;
-            set => SetProperty(ref _port, value);
+            get => _ports;
+            set => SetProperty(ref _ports, value);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PrinterDriver
+        /// PrinterDrivers
         ///
         /// <summary>
         /// Gets or sets the configuration of the installing printer
-        /// driver.
+        /// drivers.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public PrinterDriverConfig PrinterDriver
+        public IList<PrinterDriverConfig> PrinterDrivers
         {
-            get => _printerDriver;
-            set => SetProperty(ref _printerDriver, value);
+            get => _printerDrivers;
+            set => SetProperty(ref _printerDrivers, value);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Printer
+        /// Printers
         ///
         /// <summary>
-        /// Gets or sets the configuration of the installing printer.
+        /// Gets or sets the configuration of the installing printers.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public PrinterConfig Printer
+        public IList<PrinterConfig> Printers
         {
-            get => _printer;
-            set => SetProperty(ref _printer, value);
+            get => _printers;
+            set => SetProperty(ref _printers, value);
         }
 
         #endregion
@@ -140,19 +141,19 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private void Reset()
         {
-            _portMonitor   = new PortMonitorConfig();
-            _port          = new PortConfig();
-            _printerDriver = new PrinterDriverConfig();
-            _printer       = new PrinterConfig();
+            _portMonitors   = new List<PortMonitorConfig>();
+            _ports          = new List<PortConfig>();
+            _printerDrivers = new List<PrinterDriverConfig>();
+            _printers       = new List<PrinterConfig>();
         }
 
         #endregion
 
         #region Fields
-        private PortMonitorConfig _portMonitor;
-        private PortConfig _port;
-        private PrinterDriverConfig _printerDriver;
-        private PrinterConfig _printer;
+        private IList<PortMonitorConfig> _portMonitors;
+        private IList<PortConfig> _ports;
+        private IList<PrinterDriverConfig> _printerDrivers;
+        private IList<PrinterConfig> _printers;
         #endregion
     }
 }

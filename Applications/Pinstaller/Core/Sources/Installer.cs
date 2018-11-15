@@ -18,8 +18,8 @@
 using Cube.DataContract;
 using Cube.FileSystem;
 using Cube.FileSystem.Mixin;
-using Cube.Generics;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -113,28 +113,6 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Application
-        ///
-        /// <summary>
-        /// Gets or sets the application path when the printer invokes.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Application { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Arguments
-        ///
-        /// <summary>
-        /// Gets or sets the arguments of the Application property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Arguments { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// IO
         ///
         /// <summary>
@@ -165,28 +143,27 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install(string resource, bool reinstall)
         {
-            var mon     = Config.PortMonitor.Create();
-            var port    = Config.Port.Create();
-            var drv     = Config.PrinterDriver.Create();
-            var printer = Config.Printer.Create();
-            var service = new SpoolerService();
+            var monitors = Config.PortMonitors.Select(e => e.Create());
+            var ports    = Config.Ports.Select(e => e.Create());
+            var drivers  = Config.PrinterDrivers.Select(e => e.Create());
+            var printers = Config.Printers.Select(e => e.Create());
+            var service  = new SpoolerService();
 
+            // Uninstall
             service.Clear();
-            Normalize(port);
-
-            if (reinstall) Uninstall(printer, drv, port, mon);
+            if (reinstall) Uninstall(printers, drivers, ports, monitors);
 
             // Copy
             service.Stop();
-            mon.Copy(resource, IO);
-            drv.Copy(resource, IO);
+            foreach (var e in monitors) e.Copy(resource, IO);
+            foreach (var e in drivers)  e.Copy(resource, IO);
             service.Start();
 
             // Install
-            mon.Install();
-            port.Install();
-            drv.Install();
-            printer.Install();
+            foreach (var e in monitors) e.Install();
+            foreach (var e in ports)    e.Install();
+            foreach (var e in drivers)  e.Install();
+            foreach (var e in printers) e.Install();
         }
 
         /* ----------------------------------------------------------------- */
@@ -199,10 +176,10 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public void Uninstall() => Uninstall(
-            Config.Printer.Create(),
-            Config.PrinterDriver.Create(),
-            Config.Port.Create(),
-            Config.PortMonitor.Create()
+            Config.Printers.Select(e => e.Create()),
+            Config.PrinterDrivers.Select(e => e.Create()),
+            Config.Ports.Select(e => e.Create()),
+            Config.PortMonitors.Select(e => e.Create())
         );
 
         #endregion
@@ -226,24 +203,6 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Normalize
-        ///
-        /// <summary>
-        /// Normalizes some properties.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Normalize(Port src)
-        {
-            if (Application.HasValue()) src.Application = Application;
-            if (Arguments.HasValue()) src.Arguments = Arguments;
-
-            var root = Environment.SpecialFolder.CommonApplicationData.GetName();
-            src.Temp = IO.Combine(root, src.Temp);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Uninstall
         ///
         /// <summary>
@@ -251,9 +210,12 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Uninstall(params IInstallable[] devices)
+        private void Uninstall(params IEnumerable<IInstallable>[] devices)
         {
-            foreach (var src in devices) src.Uninstall();
+            foreach (var inner in devices)
+            {
+                foreach (var e in inner) e.Uninstall();
+            }
         }
 
         #endregion
