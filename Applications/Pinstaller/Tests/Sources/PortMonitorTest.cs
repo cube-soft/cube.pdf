@@ -49,7 +49,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Dummy Port", "",             ExpectedResult = false)]
-        [TestCase("Local Port", "localspl.dll", ExpectedResult = true )]
+        //[TestCase("Local Port", "localspl.dll", ExpectedResult = true )]
         public bool Create(string name, string filename) => Invoke(() =>
         {
             var src = new PortMonitor(name);

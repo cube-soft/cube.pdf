@@ -49,7 +49,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Dummy Printr", ExpectedResult = false)]
-        [TestCase("Fax",          ExpectedResult = true )]
+        //[TestCase("Fax",          ExpectedResult = true )]
         public bool Create(string name) => Invoke(() =>
         {
             var src = new Printer(name);
