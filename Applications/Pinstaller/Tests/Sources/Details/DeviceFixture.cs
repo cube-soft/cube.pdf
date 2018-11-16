@@ -16,10 +16,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
-using Cube.Log;
+using Cube.Pdf.App.Pinstaller;
 using NUnit.Framework;
-using System;
-using System.ComponentModel;
+using System.ServiceProcess;
 
 namespace Cube.Pdf.Tests.Pinstaller
 {
@@ -34,45 +33,23 @@ namespace Cube.Pdf.Tests.Pinstaller
     /* --------------------------------------------------------------------- */
     class DeviceFixture : FileFixture
     {
-        #region Tests
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Setup
         ///
         /// <summary>
-        /// Invokes the specified test. When the RPC server is not
-        /// available, the test result is ignored.
+        /// Executes in each test.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected T Invoke<T>(Func<T> test)
+        [SetUp]
+        public virtual void Setup()
         {
-            try { return test(); }
-            catch (Win32Exception e)
-            {
-                var message = $"{e.Message} ({e.ErrorCode})";
-                this.LogWarn(message, e);
-                Assert.Ignore(message);
-            }
-            return default(T);
+            var service = new SpoolerService();
+            if (service.Status != ServiceControllerStatus.Running) service.Start();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the specified test. When the RPC server is not
-        /// available, the test result is ignored.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void Invoke(Action test) => Invoke(() =>
-        {
-            test();
-            return true;
-        });
 
         #endregion
     }

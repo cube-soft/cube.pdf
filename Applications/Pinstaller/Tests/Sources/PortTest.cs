@@ -49,7 +49,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         /* ----------------------------------------------------------------- */
         [TestCase("Dummy Port", "Dummy PortMonitor", true,  ExpectedResult = false)]
         [TestCase("Dummy Port", "",                  false, ExpectedResult = false)]
-        public bool Create(string name, string monitor, bool canInstall) => Invoke(() =>
+        public bool Create(string name, string monitor, bool canInstall)
         {
             var src = new Port(name, monitor);
             Assert.That(src.Name,         Is.EqualTo(name));
@@ -61,7 +61,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Arguments.HasValue(),   Is.EqualTo(src.Exists), nameof(src.Arguments));
             Assert.That(src.Temp.HasValue(),        Is.EqualTo(src.Exists), nameof(src.Temp));
             return src.Exists;
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -119,7 +119,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         /* ----------------------------------------------------------------- */
         [TestCase("CubeMon")]
         [TestCase("Dummy Monitor")]
-        public void GetElements(string monitor) => Invoke(() =>
+        public void GetElements(string monitor)
         {
             var src = Port.GetElements(monitor);
 
@@ -129,7 +129,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                 Assert.That(e.Name.HasValue(),        Is.True, nameof(e.Name));
                 Assert.That(e.Environment.HasValue(), Is.True, nameof(e.Environment));
             }
-        });
+        }
 
         #endregion
     }

@@ -34,7 +34,7 @@ namespace Cube.Pdf.Tests.Pinstaller
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SpoolerServiceTest
+    class SpoolerServiceTest : DeviceFixture
     {
         #region Tests
 
@@ -91,7 +91,6 @@ namespace Cube.Pdf.Tests.Pinstaller
             try
             {
                 var src = new SpoolerService();
-                src.Start();
                 src.Stop();
                 src.Stop();  // ignore
                 src.Start();

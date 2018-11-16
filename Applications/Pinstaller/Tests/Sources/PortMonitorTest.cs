@@ -51,7 +51,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         [TestCase("Dummy Port",           "",             ExpectedResult = false)]
         [TestCase("Local Port",           "localspl.dll", ExpectedResult = true )]
         [TestCase("Standard TCP/IP Port", "tcpmon.dll",   ExpectedResult = true )]
-        public bool Create(string name, string filename) => Invoke(() =>
+        public bool Create(string name, string filename)
         {
             var src = new PortMonitor(name);
             Assert.That(src.Name.Unify(),             Is.EqualTo(name));
@@ -60,7 +60,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Environment.HasValue(),   Is.True,  nameof(src.Environment));
             Assert.That(src.DirectoryName.HasValue(), Is.True,  nameof(src.DirectoryName));
             return src.Exists;
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -140,7 +140,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetElements() => Invoke(() =>
+        public void GetElements()
         {
             var src = PortMonitor.GetElements();
             Assert.That(src.Count(), Is.AtLeast(2));
@@ -152,7 +152,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                 Assert.That(e.FileName.HasValue(),    Is.True, nameof(e.FileName));
                 Assert.That(e.Environment.HasValue(), Is.True, nameof(e.Environment));
             }
-        });
+        }
 
         #endregion
     }

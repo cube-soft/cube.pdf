@@ -48,7 +48,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Create(Format format, string filename, DeviceConfig cmp) => Invoke(() =>
+        public void Create(Format format, string filename, DeviceConfig cmp)
         {
             var src    = GetExamplesWith(filename);
             var engine = new Installer(format, src);
@@ -112,7 +112,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                 Assert.That(x.DriverName, Is.EqualTo(y.DriverName), $"{m}.{nameof(x.DriverName)}");
                 Assert.That(x.PortName,   Is.EqualTo(y.PortName),   $"{m}.{nameof(x.PortName)}");
             }
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -124,7 +124,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("SampleDummy.json")]
-        public void Uninstall(string filename) => Invoke(() =>
+        public void Uninstall(string filename) => Assert.DoesNotThrow(() =>
             new Installer(Format.Json, GetExamplesWith(filename)).Uninstall()
         );
 
