@@ -80,11 +80,11 @@ test_script:
       -output:CoverResults.xml
       -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.*"
 after_test:
-    - xcopy /q /Y /I CoverResults.xml Tests\
-    - xcopy /q /Y /I Tests\bin\Release\Cube.Pdf.Tests.log Tests\
-    - xcopy /q /Y /I Applications\Converter\Tests\bin\Release\Cube.Pdf.Tests.Converter.log Tests\
-    - xcopy /q /Y /I Applications\Editor\Tests\bin\Release\Cube.Pdf.Tests.Editor.log Tests\
-    - xcopy /q /Y /I Applications\Pinstaller\Tests\bin\Release\Cube.Pdf.Tests.Pinstaller.log Tests\
+    - xcopy /q /Y /I CoverResults.xml TestLog\
+    - xcopy /q /Y /I Tests\bin\Release\Cube.Pdf.Tests.log TestLog\
+    - xcopy /q /Y /I Applications\Converter\Tests\bin\Release\Cube.Pdf.Tests.Converter.log TestLog\
+    - xcopy /q /Y /I Applications\Editor\Tests\bin\Release\Cube.Pdf.Tests.Editor.log TestLog\
+    - xcopy /q /Y /I Applications\Pinstaller\Tests\bin\Release\Cube.Pdf.Tests.Pinstaller.log TestLog\
     - xcopy /q /Y /I Applications\Converter\Forms\bin\Release CubePdf
     - xcopy /q /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
     - xcopy /q /Y /I Applications\Editor\Forms\bin\Release CubePdf.Utility
@@ -97,4 +97,4 @@ artifacts:
     - path: CubePdf.Proxy
     - path: CubePdf.Utility
     - path: CubePdf.Utility.Proxy
-    - path: Tests
+    - path: TestLog
