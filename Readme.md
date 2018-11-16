@@ -55,6 +55,8 @@ using (var writer = new DocumentWriter())
 
     writer.Add(src0.Pages[0], src0);
     writer.Add(src1.Pages[0], src1);
+
+    // Disposes src0 and src1 before saving.
     writer.Save(@"path/to/dest.pdf");
 }
 ```
