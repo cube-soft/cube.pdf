@@ -71,6 +71,12 @@ namespace Cube.Pdf.Tests.Ghostscript
             get
             {
                 /* --------------------------------------------------------- */
+                // Format
+                /* --------------------------------------------------------- */
+                yield return TestCase(new DocumentConverter(Format.Ps  ), "Sample.ps", Format.Ps);
+                yield return TestCase(new DocumentConverter(Format.Eps ), "Sample.ps", Format.Eps);
+
+                /* --------------------------------------------------------- */
                 // Version
                 /* --------------------------------------------------------- */
                 yield return TestCase(new DocumentConverter(Format.Pdf)

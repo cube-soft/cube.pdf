@@ -85,7 +85,6 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public static IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
         {
-            Format.Text,
             Format.Ps,
             Format.Eps,
             Format.Pdf,
