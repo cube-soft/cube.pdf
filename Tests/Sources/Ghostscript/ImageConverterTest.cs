@@ -85,6 +85,9 @@ namespace Cube.Pdf.Tests.Ghostscript
         {
             get
             {
+                /* --------------------------------------------------------- */
+                // AntiAlias
+                /* --------------------------------------------------------- */
                 yield return TestCase(new ImageConverter(Format.Png)
                 {
                     AntiAlias  = true,
@@ -96,6 +99,34 @@ namespace Cube.Pdf.Tests.Ghostscript
                     AntiAlias  = false,
                     Resolution = 72,
                 }, "Sample.ps", "AntiAlias_False");
+
+                /* --------------------------------------------------------- */
+                // Quality
+                /* --------------------------------------------------------- */
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 1,
+                }, "SampleResolution600.ps", "Quality_1");
+
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 25,
+                }, "SampleResolution600.ps", "Quality_25");
+
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 50,
+                }, "SampleResolution600.ps", "Quality_50");
+
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 75,
+                }, "SampleResolution600.ps", "Quality_75");
+
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 100,
+                }, "SampleResolution600.ps", "Quality_100");
             }
         }
 
