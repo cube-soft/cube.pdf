@@ -19,6 +19,7 @@
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.Tests.Ghostscript
 {
@@ -35,6 +36,21 @@ namespace Cube.Pdf.Tests.Ghostscript
     class ImageConverterTest : ConverterFixture
     {
         #region Tests
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SupportedFormats
+        ///
+        /// <summary>
+        /// Confirms the number of supported formats.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void SupportedFormats() => Assert.That(
+            new ImageConverter(Format.Png).SupportedFormats.Count(),
+            Is.EqualTo(30)
+        );
 
         /* ----------------------------------------------------------------- */
         ///

@@ -65,10 +65,29 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Converter(Format format, IO io)
+        public Converter(Format format, IO io) : this(format, io, GetSupportedFormats()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Converter
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Converter class with the
+        /// specified format.
+        /// </summary>
+        ///
+        /// <param name="format">Target format.</param>
+        /// <param name="io">I/O handler.</param>
+        /// <param name="supported">Collection of supported formats.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected Converter(Format format, IO io, IEnumerable<Format> supported)
         {
+            if (!supported.Contains(format)) throw new NotSupportedException(format.ToString());
+
             IO = io;
             Format = format;
+            SupportedFormats = supported;
             Fonts.Add(Environment.GetFolderPath(Environment.SpecialFolder.Fonts));
         }
 
@@ -97,6 +116,17 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         public Format Format { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SupportedFormats
+        ///
+        /// <summary>
+        /// Gets the collection of supported formats.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Format> SupportedFormats { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -457,6 +487,18 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private void SetVariable(string key, string value) =>
             Environment.SetEnvironmentVariable(key, value, EnvironmentVariableTarget.Process);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetSupportedFormats
+        ///
+        /// <summary>
+        /// Gets the collection of supported formats.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static IEnumerable<Format> GetSupportedFormats() =>
+            new HashSet<Format>(Enum.GetValues(typeof(Format)).Cast<Format>());
 
         #endregion
     }

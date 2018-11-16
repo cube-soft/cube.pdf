@@ -59,7 +59,7 @@ namespace Cube.Pdf.App.Converter
         {
             var asm  = Assembly.GetExecutingAssembly();
             var dir  = src.IO.Get(asm.Location).DirectoryName;
-            var dest = DocumentConverter.SupportedFormats.Contains(src.Value.Format) ?
+            var dest = GetDocumentFormats().Contains(src.Value.Format) ?
                        CreateDocumentConverter(src) :
                        CreateImageConverter(src);
 
@@ -72,6 +72,20 @@ namespace Cube.Pdf.App.Converter
 
             return dest;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetDocumentFormats
+        ///
+        /// <summary>
+        /// Gets the collection of document formats.
+        /// </summary>
+        ///
+        /// <returns>Collection of formats.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<Format> GetDocumentFormats() =>
+            new DocumentConverter(Format.Pdf).SupportedFormats;
 
         /* ----------------------------------------------------------------- */
         ///

@@ -65,30 +65,28 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentConverter(Format format, IO io) : base(format, io)
-        {
-            if (!SupportedFormats.Contains(format)) throw new NotSupportedException();
-        }
+        public DocumentConverter(Format format, IO io) : this(format, io, GetSupportedFormats()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentConverter
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentConverter class with
+        /// the specified format.
+        /// </summary>
+        ///
+        /// <param name="format">Target format.</param>
+        /// <param name="io">I/O handler.</param>
+        /// <param name="supported">Collection of supported formats.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected DocumentConverter(Format format, IO io, IEnumerable<Format> supported) :
+            base(format, io, supported) { }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SupportedFormats
-        ///
-        /// <summary>
-        /// Gets the collection of supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
-        {
-            Format.Ps,
-            Format.Eps,
-            Format.Pdf,
-        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -293,6 +291,22 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<T> Trim<T>(IEnumerable<T> src) => src.OfType<T>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetSupportedFormats
+        ///
+        /// <summary>
+        /// Gets the collection of supported formats.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static IEnumerable<Format> GetSupportedFormats() => new HashSet<Format>
+        {
+            Format.Ps,
+            Format.Eps,
+            Format.Pdf,
+        };
 
         #endregion
     }

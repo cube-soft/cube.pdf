@@ -21,6 +21,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Cube.Pdf.Tests.Ghostscript
 {
@@ -37,6 +38,21 @@ namespace Cube.Pdf.Tests.Ghostscript
     class ConverterTest : ConverterFixture
     {
         #region Tests
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SupportedFormats
+        ///
+        /// <summary>
+        /// Confirms the number of supported formats.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void SupportedFormats() => Assert.That(
+            new Converter(Format.Pdf).SupportedFormats.Count(),
+            Is.EqualTo(34)
+        );
 
         /* ----------------------------------------------------------------- */
         ///
