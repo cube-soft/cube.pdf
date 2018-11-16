@@ -3,7 +3,7 @@
 Copyright (c) 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
-http://www.cube-soft.jp/cubepdf/
+https://www.cube-soft.jp/cubepdf/
 
 ## はじめに
 
@@ -12,9 +12,9 @@ PDF 形式などの文書を作成する事のできる、とても便利なソ�
 印刷と同じ操作でサッと作成する事ができるので、操作に戸惑うこともありません。
 詳細な利用方法については、同梱した「CubePDF ユーザーズマニュアル.pdf」を参照下さい。
 
-CubePDF を使用するためには、Microsoft .NET Framework 3.5 以上がインストールされている
+CubePDF を使用するためには、Microsoft .NET Framework 3.5 以降がインストールされている
 必要があります。Microsoft .NET Framework 3.5 は、以下の URL からダウンロードして下さい。  
-http://www.microsoft.com/ja-jp/download/details.aspx?id=22
+https://www.microsoft.com/ja-jp/download/details.aspx?id=22
 
 ## 問題が発生した場合
 
@@ -22,7 +22,7 @@ CubePDF は、以下のファイルに実行ログを出力しています。
 問題が発生した時は、以下のファイルを添付して
 サポート ( support@cube-soft.jp ) までご連絡お願いいたします。
 
-* C:\Program Files\CubePDF\install.log (*1)
+* C:\ProgramData\CubeSoft\CubePdf\Log\CubePinstaller.log
 * C:\ProgramData\CubeSoft\CubePdf\Log\CubePdf.log
 * C:\ProgramData\CubeSoft\CubePdf\Log\CubeProxy.log
 
@@ -51,6 +51,11 @@ CubePDF は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2018/11/22 version 1.0.0RC16
+    - PDF に埋め込まれた画像に対して解像度の設定が適用されない不都合を修正
+    - 名前を付けて保存ダイアログにおける初期表示フォルダの挙動を修正
+    - CubePDF プリンタのインストール処理を改善
+    - インストーラの英語表示に対応
 * 2018/10/01 version 1.0.0RC15
     - Ghostscript 9.25 のバージョンアップに対応
 * 2018/09/12 version 1.0.0RC14
