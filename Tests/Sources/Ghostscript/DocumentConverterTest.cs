@@ -29,7 +29,7 @@ namespace Cube.Pdf.Tests.Ghostscript
     /// DocumentConverterTest
     ///
     /// <summary>
-    /// DocumentConverter のテスト用クラスです。
+    /// Represents tests of the DocumentConverter class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -55,10 +55,25 @@ namespace Cube.Pdf.Tests.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Create_Throws
+        ///
+        /// <summary>
+        /// Confirms the behavior when an unsupported format is set.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Create_Throws() => Assert.That(
+            () => new DocumentConverter(Format.Bmp),
+            Throws.TypeOf<NotSupportedException>()
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Invoke
         ///
         /// <summary>
-        /// 変換処理テストを実行します。
+        /// Executes the test to convert.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -78,7 +93,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// TestCases
         ///
         /// <summary>
-        /// テストケース一覧を取得します。
+        /// Gets test cases.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,7 +29,7 @@ namespace Cube.Pdf.Tests.Ghostscript
     /// ImageConverterTest
     ///
     /// <summary>
-    /// ImageConverter のテスト用クラスです。
+    /// Represents tests of the ImageConverter class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -47,17 +48,37 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void SupportedFormats() => Assert.That(
-            new ImageConverter(Format.Png).SupportedFormats.Count(),
-            Is.EqualTo(30)
-        );
+        public void SupportedFormats()
+        {
+            var c0 = new ImageConverter(Format.Png).SupportedFormats.Count();
+            Assert.That(c0, Is.EqualTo(30), nameof(ImageConverter));
+
+            var c1 = new JpegConverter(Format.Jpeg).SupportedFormats.Count();
+            Assert.That(c1, Is.EqualTo(4), nameof(JpegConverter));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create_Throws
+        ///
+        /// <summary>
+        /// Confirms the behavior when an unsupported format is set.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Create_Throws()
+        {
+            Assert.That(() => new ImageConverter(Format.Pdf), Throws.TypeOf<NotSupportedException>());
+            Assert.That(() => new JpegConverter(Format.Png),  Throws.TypeOf<NotSupportedException>());
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Invoke
         ///
         /// <summary>
-        /// 変換処理テストを実行します。
+        /// Exexutes the test to convert.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -77,7 +98,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// TestCases
         ///
         /// <summary>
-        /// テストケース一覧を取得します。
+        /// Gets test cases.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
