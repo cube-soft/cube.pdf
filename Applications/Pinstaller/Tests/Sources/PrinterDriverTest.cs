@@ -49,7 +49,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Dummy Driver",                ExpectedResult = false)]
-        //[TestCase("Microsoft Shared Fax Driver", ExpectedResult = true )]
+        [TestCase("Microsoft Shared Fax Driver", ExpectedResult = true )]
         public bool Create(string name) => Invoke(() =>
         {
             var src = new PrinterDriver(name);
