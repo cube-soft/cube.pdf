@@ -65,7 +65,7 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentConverter(Format format, IO io) : this(format, io, GetSupportedFormats()) { }
+        public DocumentConverter(Format format, IO io) : this(format, io, SupportedFormats) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -87,6 +87,17 @@ namespace Cube.Pdf.Ghostscript
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SupportedFormats
+        ///
+        /// <summary>
+        /// Gets the collection of supported formats.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static new IEnumerable<Format> SupportedFormats { get; } = GetSupportedFormats();
 
         /* ----------------------------------------------------------------- */
         ///

@@ -50,11 +50,8 @@ namespace Cube.Pdf.Tests.Ghostscript
         [Test]
         public void SupportedFormats()
         {
-            var c0 = new ImageConverter(Format.Png).SupportedFormats.Count();
-            Assert.That(c0, Is.EqualTo(30), nameof(ImageConverter));
-
-            var c1 = new JpegConverter(Format.Jpeg).SupportedFormats.Count();
-            Assert.That(c1, Is.EqualTo(4), nameof(JpegConverter));
+            Assert.That(ImageConverter.SupportedFormats.Count(), Is.EqualTo(30));
+            Assert.That(JpegConverter.SupportedFormats.Count(),  Is.EqualTo(4));
         }
 
         /* ----------------------------------------------------------------- */

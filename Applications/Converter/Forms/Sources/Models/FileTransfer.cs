@@ -239,7 +239,7 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         private string GetName() =>
-            GhostscriptFactory.GetDocumentFormats().Contains(Format) ?
+            DocumentConverter.SupportedFormats.Contains(Format) ?
             $"tmp{Information.Extension}" :
             $"tmp-%08d{Information.Extension}";
 

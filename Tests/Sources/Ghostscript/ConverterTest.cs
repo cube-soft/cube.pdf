@@ -49,7 +49,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /* ----------------------------------------------------------------- */
         [Test]
         public void SupportedFormats() => Assert.That(
-            new Converter(Format.Pdf).SupportedFormats.Count(),
+            Converter.SupportedFormats.Count(),
             Is.EqualTo(34)
         );
 

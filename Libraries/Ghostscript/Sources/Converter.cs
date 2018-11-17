@@ -65,7 +65,7 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Converter(Format format, IO io) : this(format, io, GetSupportedFormats()) { }
+        public Converter(Format format, IO io) : this(format, io, SupportedFormats) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -87,7 +87,6 @@ namespace Cube.Pdf.Ghostscript
 
             IO = io;
             Format = format;
-            SupportedFormats = supported;
             Fonts.Add(Environment.GetFolderPath(Environment.SpecialFolder.Fonts));
         }
 
@@ -97,14 +96,14 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
+        /// SupportedFormats
         ///
         /// <summary>
-        /// Gets the I/O handler.
+        /// Gets the collection of supported formats.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IO IO { get; }
+        public static IEnumerable<Format> SupportedFormats { get; } = GetSupportedFormats();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -119,14 +118,14 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SupportedFormats
+        /// IO
         ///
         /// <summary>
-        /// Gets the collection of supported formats.
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Format> SupportedFormats { get; }
+        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
