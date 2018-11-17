@@ -97,7 +97,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static new IEnumerable<Format> SupportedFormats { get; } = GetSupportedFormats();
+        public static new IEnumerable<Format> SupportedFormats { get; } =
+            new HashSet<Format> { Format.Ps, Format.Eps, Format.Pdf };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -302,22 +303,6 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<T> Trim<T>(IEnumerable<T> src) => src.OfType<T>();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetSupportedFormats
-        ///
-        /// <summary>
-        /// Gets the collection of supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static IEnumerable<Format> GetSupportedFormats() => new HashSet<Format>
-        {
-            Format.Ps,
-            Format.Eps,
-            Format.Pdf,
-        };
 
         #endregion
     }

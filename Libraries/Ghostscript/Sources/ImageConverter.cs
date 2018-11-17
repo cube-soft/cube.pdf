@@ -95,7 +95,39 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static new IEnumerable<Format> SupportedFormats { get; } = GetSupportedFormats();
+        public static new IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
+        {
+            Format.Psd,
+            Format.PsdRgb,
+            Format.PsdCmyk,
+            Format.PsdCmykog,
+            Format.Jpeg,
+            Format.Jpeg24bppRgb,
+            Format.Jpeg32bppCmyk,
+            Format.Jpeg8bppGrayscale,
+            Format.Png,
+            Format.Png24bppRgb,
+            Format.Png32bppArgb,
+            Format.Png4bppIndexed,
+            Format.Png8bppIndexed,
+            Format.Png8bppGrayscale,
+            Format.Png1bppMonochrome,
+            Format.Bmp,
+            Format.Bmp24bppRgb,
+            Format.Bmp32bppArgb,
+            Format.Bmp4bppIndexed,
+            Format.Bmp8bppIndexed,
+            Format.Bmp8bppGrayscale,
+            Format.Bmp1bppMonochrome,
+            Format.Tiff,
+            Format.Tiff12bppRgb,
+            Format.Tiff24bppRgb,
+            Format.Tiff48bppRgb,
+            Format.Tiff32bppCmyk,
+            Format.Tiff64bppCmyk,
+            Format.Tiff8bppGrayscale,
+            Format.Tiff1bppMonochrome,
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -145,49 +177,6 @@ namespace Cube.Pdf.Ghostscript
                 new Argument("TextAlphaBits", 4),
             } :
             new Argument[0];
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetSupportedFormats
-        ///
-        /// <summary>
-        /// Gets the collection of supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static IEnumerable<Format> GetSupportedFormats() => new HashSet<Format>
-        {
-            Format.Psd,
-            Format.PsdRgb,
-            Format.PsdCmyk,
-            Format.PsdCmykog,
-            Format.Jpeg,
-            Format.Jpeg24bppRgb,
-            Format.Jpeg32bppCmyk,
-            Format.Jpeg8bppGrayscale,
-            Format.Png,
-            Format.Png24bppRgb,
-            Format.Png32bppArgb,
-            Format.Png4bppIndexed,
-            Format.Png8bppIndexed,
-            Format.Png8bppGrayscale,
-            Format.Png1bppMonochrome,
-            Format.Bmp,
-            Format.Bmp24bppRgb,
-            Format.Bmp32bppArgb,
-            Format.Bmp4bppIndexed,
-            Format.Bmp8bppIndexed,
-            Format.Bmp8bppGrayscale,
-            Format.Bmp1bppMonochrome,
-            Format.Tiff,
-            Format.Tiff12bppRgb,
-            Format.Tiff24bppRgb,
-            Format.Tiff48bppRgb,
-            Format.Tiff32bppCmyk,
-            Format.Tiff64bppCmyk,
-            Format.Tiff8bppGrayscale,
-            Format.Tiff1bppMonochrome,
-        };
 
         #endregion
     }

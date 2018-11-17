@@ -95,7 +95,13 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static new IEnumerable<Format> SupportedFormats { get; } = GetSupportedFormats();
+        public static new IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
+        {
+            Format.Jpeg,
+            Format.Jpeg24bppRgb,
+            Format.Jpeg32bppCmyk,
+            Format.Jpeg8bppGrayscale,
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -126,23 +132,6 @@ namespace Cube.Pdf.Ghostscript
         protected override IEnumerable<Argument> OnCreateArguments() =>
             base.OnCreateArguments()
             .Concat(new[] { new Argument("JPEGQ", Math.Min(Math.Max(Quality, 1), 100)) });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetSupportedFormats
-        ///
-        /// <summary>
-        /// Gets the collection of supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static IEnumerable<Format> GetSupportedFormats() => new HashSet<Format>
-        {
-            Format.Jpeg,
-            Format.Jpeg24bppRgb,
-            Format.Jpeg32bppCmyk,
-            Format.Jpeg8bppGrayscale,
-        };
 
         #endregion
     }

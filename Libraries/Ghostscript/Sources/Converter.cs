@@ -103,7 +103,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Format> SupportedFormats { get; } = GetSupportedFormats();
+        public static IEnumerable<Format> SupportedFormats { get; } =
+            new HashSet<Format>(Enum.GetValues(typeof(Format)).Cast<Format>());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -486,18 +487,6 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private void SetVariable(string key, string value) =>
             Environment.SetEnvironmentVariable(key, value, EnvironmentVariableTarget.Process);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetSupportedFormats
-        ///
-        /// <summary>
-        /// Gets the collection of supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static IEnumerable<Format> GetSupportedFormats() =>
-            new HashSet<Format>(Enum.GetValues(typeof(Format)).Cast<Format>());
 
         #endregion
     }
