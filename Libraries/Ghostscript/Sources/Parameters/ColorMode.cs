@@ -26,7 +26,7 @@ namespace Cube.Pdf.Ghostscript
     /// ColorMode
     ///
     /// <summary>
-    /// 色の変換方法に関する列挙型です。
+    /// Specifies color mode.
     /// </summary>
     ///
     /// <remarks>
@@ -42,9 +42,9 @@ namespace Cube.Pdf.Ghostscript
         Cmyk,
         /// <summary>Grayscale</summary>
         Grayscale,
-        /// <summary>入力ファイルと同じカラーモード</summary>
+        /// <summary>Same as the source file</summary>
         SameAsSource,
-        /// <summary>デバイスに依存しないカラーモード</summary>
+        /// <summary>Device independent color mode</summary>
         DeviceIndependent,
     }
 
@@ -53,11 +53,11 @@ namespace Cube.Pdf.Ghostscript
     /// ColorModeExtension
     ///
     /// <summary>
-    /// ColorMode の拡張用クラスです。
+    /// Provides extended methods of the ColorMode enum.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class ColorModeExtension
+    internal static class ColorModeExtension
     {
         #region Methods
 
@@ -66,12 +66,12 @@ namespace Cube.Pdf.Ghostscript
         /// GetArgument
         ///
         /// <summary>
-        /// ColorMode を表す Argument オブジェクトを取得します。
+        /// Gets the argument representing the color mode.
         /// </summary>
         ///
-        /// <param name="src">ColorMode</param>
+        /// <param name="src">Color mode value.</param>
         ///
-        /// <returns>Argument オブジェクト</returns>
+        /// <returns>Argument object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Argument GetArgument(this ColorMode src)
@@ -90,7 +90,7 @@ namespace Cube.Pdf.Ghostscript
         /// GetColorModeMap
         ///
         /// <summary>
-        /// ColorMode と関連情報の対応一覧を取得します。
+        /// Gets the collection of the color mode and related information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

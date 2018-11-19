@@ -18,12 +18,10 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Generics;
-using Cube.Xui;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
 
 namespace Cube.Pdf.App.Editor
@@ -52,13 +50,13 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         static SettingsFolder()
         {
-            ResourceCulture.Configure(e =>
+            Locale.Configure(e =>
             {
-                var src = e ?? string.Empty;
+                var src = e.ToCultureInfo();
                 var cmp = Properties.Resources.Culture?.Name;
                 var opt = StringComparison.InvariantCultureIgnoreCase;
-                if (cmp.HasValue() && cmp.Equals(src, opt)) return false;
-                Properties.Resources.Culture = new CultureInfo(src);
+                if (cmp.HasValue() && cmp.Equals(src.Name, opt)) return false;
+                Properties.Resources.Culture = src;
                 return true;
             });
         }
@@ -149,7 +147,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnLoaded(ValueChangedEventArgs<Settings> e)
         {
-            try { ResourceCulture.Set(e.NewValue.Language.GetName()); }
+            try { Locale.Set(e.NewValue.Language); }
             finally { base.OnLoaded(e); }
         }
 
@@ -195,7 +193,7 @@ namespace Cube.Pdf.App.Editor
             try
             {
                 if (e.PropertyName != nameof(Value.Language)) return;
-                ResourceCulture.Set(Value.Language.GetName());
+                Locale.Set(Value.Language);
             }
             finally { base.OnPropertyChanged(e); }
         }

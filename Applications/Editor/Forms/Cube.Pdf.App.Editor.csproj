@@ -96,22 +96,22 @@
       <HintPath>..\..\..\..\packages\Cube.Backwards.1.5.0\lib\net35\Cube.Backwards.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.12.0\lib\net35\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.13.0\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.12.0\lib\net35\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.13.0\lib\net35\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\..\packages\Cube.Images.1.12.0\lib\net35\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Images.1.13.0\lib\net35\Cube.Images.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Xui">
-      <HintPath>..\..\..\..\packages\Cube.Xui.1.12.0\lib\net35\Cube.Xui.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Xui.1.13.0\lib\net35\Cube.Xui.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight">
-      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net35\GalaSoft.MvvmLight.dll</HintPath>
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1.1\lib\net35\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras">
-      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net35\GalaSoft.MvvmLight.Extras.dll</HintPath>
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1.1\lib\net35\GalaSoft.MvvmLight.Extras.dll</HintPath>
     </Reference>
     <Reference Include="GongSolutions.Wpf.DragDrop">
       <HintPath>..\..\..\..\packages\gong-wpf-dragdrop.1.1.0\lib\net35\GongSolutions.Wpf.DragDrop.dll</HintPath>
@@ -120,7 +120,7 @@
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity">
-      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1\lib\net35\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1.1\lib\net35\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>..\..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
@@ -144,53 +144,53 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sources\Interactions\Hack35Behavior.cs" />
-    <Compile Include="Sources\Interactions\InsertDropTarget.cs" />
-    <Compile Include="Sources\Models\Backup.cs" />
-    <Compile Include="Sources\Models\FileItem.cs" />
     <Compile Include="Sources\Interactions\DragDropObject.cs" />
+    <Compile Include="Sources\Interactions\InsertDropTarget.cs" />
     <Compile Include="Sources\Interactions\MouseClearBehavior.cs" />
     <Compile Include="Sources\Interactions\MouseExtension.cs" />
     <Compile Include="Sources\Interactions\MouseMoveBehavior.cs" />
     <Compile Include="Sources\Interactions\MousePreviewBehavior.cs" />
-    <Compile Include="Sources\Models\DocumentExtension.cs" />
-    <Compile Include="Sources\ViewModels\InsertBindable.cs" />
-    <Compile Include="Sources\ViewModels\InsertFacade.cs" />
-    <Compile Include="Sources\ViewModels\InsertPosition.cs" />
-    <Compile Include="Sources\ViewModels\PasswordViewModel.cs" />
-    <Compile Include="Sources\ViewModels\MainFacadeExtension.cs" />
-    <Compile Include="Sources\Models\Language.cs" />
-    <Compile Include="Sources\Models\Range.cs" />
-    <Compile Include="Sources\ViewModels\PreviewBindable.cs" />
-    <Compile Include="Sources\ViewModels\PreviewFacade.cs" />
-    <Compile Include="Sources\ViewModels\PreviewViewModel.cs" />
-    <Compile Include="Sources\ViewModels\ViewModelExtension.cs" />
     <Compile Include="Sources\Interactions\OtherBehaviors.cs" />
-    <Compile Include="Sources\ViewModels\EncryptionViewModel.cs" />
-    <Compile Include="Sources\ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Sources\ViewModels\DialogViewModel.cs" />
-    <Compile Include="Sources\ViewModels\RemoveViewModel.cs" />
+    <Compile Include="Sources\Interactions\RibbonElement.cs" />
     <Compile Include="Sources\Interactions\SelectionBehavior.cs" />
     <Compile Include="Sources\Interactions\SimplexConverters.cs" />
     <Compile Include="Sources\Interactions\VisibleRange.cs" />
-    <Compile Include="Sources\Models\Settings.cs" />
-    <Compile Include="Sources\Models\SettingsFolder.cs" />
+    <Compile Include="Sources\Models\Backup.cs" />
     <Compile Include="Sources\Models\DirectoryMonitor.cs" />
     <Compile Include="Sources\Models\DocumentCollection.cs" />
-    <Compile Include="Sources\Models\ImageCollection.cs" />
-    <Compile Include="Sources\Models\ImageItem.cs" />
-    <Compile Include="Sources\Models\ImageExtension.cs" />
-    <Compile Include="Sources\Models\ImagePreferences.cs" />
-    <Compile Include="Sources\Models\Selection.cs" />
-    <Compile Include="Sources\Interactions\RibbonElement.cs" />
+    <Compile Include="Sources\Models\DocumentExtension.cs" />
     <Compile Include="Sources\Models\Factory.cs" />
+    <Compile Include="Sources\Models\FileItem.cs" />
+    <Compile Include="Sources\Models\History.cs" />
+    <Compile Include="Sources\Models\HistoryItem.cs" />
+    <Compile Include="Sources\Models\ImageCollection.cs" />
+    <Compile Include="Sources\Models\ImageExtension.cs" />
+    <Compile Include="Sources\Models\ImageItem.cs" />
+    <Compile Include="Sources\Models\ImagePreferences.cs" />
+    <Compile Include="Sources\Models\Range.cs" />
+    <Compile Include="Sources\Models\Selection.cs" />
+    <Compile Include="Sources\Models\Settings.cs" />
+    <Compile Include="Sources\Models\SettingsFolder.cs" />
+    <Compile Include="Sources\ViewModels\DialogViewModel.cs" />
+    <Compile Include="Sources\ViewModels\EncryptionViewModel.cs" />
+    <Compile Include="Sources\ViewModels\InsertBindable.cs" />
+    <Compile Include="Sources\ViewModels\InsertFacade.cs" />
+    <Compile Include="Sources\ViewModels\InsertPosition.cs" />
+    <Compile Include="Sources\ViewModels\InsertViewModel.cs" />
     <Compile Include="Sources\ViewModels\MainBindable.cs" />
     <Compile Include="Sources\ViewModels\MainFacade.cs" />
+    <Compile Include="Sources\ViewModels\MainFacadeExtension.cs" />
     <Compile Include="Sources\ViewModels\MainViewModel.cs" />
-    <Compile Include="Sources\ViewModels\RecentViewModel.cs" />
-    <Compile Include="Sources\ViewModels\RibbonViewModel.cs" />
-    <Compile Include="Sources\Models\History.cs" />
-    <Compile Include="Sources\ViewModels\InsertViewModel.cs" />
     <Compile Include="Sources\ViewModels\MetadataViewModel.cs" />
+    <Compile Include="Sources\ViewModels\PasswordViewModel.cs" />
+    <Compile Include="Sources\ViewModels\PreviewBindable.cs" />
+    <Compile Include="Sources\ViewModels\PreviewFacade.cs" />
+    <Compile Include="Sources\ViewModels\PreviewViewModel.cs" />
+    <Compile Include="Sources\ViewModels\RecentViewModel.cs" />
+    <Compile Include="Sources\ViewModels\RemoveViewModel.cs" />
+    <Compile Include="Sources\ViewModels\RibbonViewModel.cs" />
+    <Compile Include="Sources\ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Sources\ViewModels\ViewModelExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App.ico" />

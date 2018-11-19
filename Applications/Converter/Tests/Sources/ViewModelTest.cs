@@ -192,7 +192,7 @@ namespace Cube.Pdf.Tests.Converter
             vm.Messenger.OpenFileDialog.Subscribe(e =>
             {
                 Assert.That(e.Title,            Is.EqualTo("入力ファイルを選択"));
-                Assert.That(e.InitialDirectory, Is.EqualTo(IO.Get(vm.Settings.Source).DirectoryName));
+                Assert.That(e.InitialDirectory, Is.Null);
                 Assert.That(e.FileName,         Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
                 Assert.That(e.FilterIndex,      Is.EqualTo(0));
@@ -224,7 +224,7 @@ namespace Cube.Pdf.Tests.Converter
             vm.Messenger.SaveFileDialog.Subscribe(e =>
             {
                 Assert.That(e.Title,            Is.EqualTo("名前を付けて保存"));
-                Assert.That(e.InitialDirectory, Is.EqualTo(IO.Get(vm.Settings.Destination).DirectoryName));
+                Assert.That(e.InitialDirectory, Is.Null);
                 Assert.That(e.FileName,         Is.EqualTo(nameof(BrowseDestination)));
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
                 Assert.That(e.FilterIndex,      Is.EqualTo(1));
@@ -257,7 +257,7 @@ namespace Cube.Pdf.Tests.Converter
             vm.Messenger.OpenFileDialog.Subscribe(e =>
             {
                 Assert.That(e.Title,            Is.EqualTo("変換完了時に実行するプログラムを選択"));
-                Assert.That(e.InitialDirectory, Is.Empty);
+                Assert.That(e.InitialDirectory, Is.Null);
                 Assert.That(e.FileName,         Is.Empty);
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
                 Assert.That(e.FilterIndex,      Is.EqualTo(0));
@@ -340,9 +340,10 @@ namespace Cube.Pdf.Tests.Converter
         {
             var args = CreateArgs(name);
             var dest = Create(Combine(args, "Sample.ps"));
+
+            using (Locale.Subscribe(SetUiCulture))
             using (var vm = new MainViewModel(dest, new SynchronizationContext()))
             {
-                vm.Messenger.SetCulture.Subscribe(SetUiCulture);
                 vm.Messenger.MessageBox.Subscribe(SetMessage);
                 action(vm);
             }

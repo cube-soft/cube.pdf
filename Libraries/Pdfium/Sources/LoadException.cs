@@ -24,7 +24,7 @@ namespace Cube.Pdf.Pdfium
     /// LoadException
     ///
     /// <summary>
-    /// PDFium API 経由で PDF 読み込んだ時に発生した例外を表すクラスです。
+    /// Represents the exception through the PDFium API.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,10 +38,11 @@ namespace Cube.Pdf.Pdfium
         /// LoadException
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the LoadException class with the
+        /// specified status.
         /// </summary>
         ///
-        /// <param name="status">ステータスコード</param>
+        /// <param name="status">Status code.</param>
         ///
         /* ----------------------------------------------------------------- */
         public LoadException(uint status) : this((LoadStatus)status) { }
@@ -51,10 +52,11 @@ namespace Cube.Pdf.Pdfium
         /// LoadException
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the LoadException class with the
+        /// specified status.
         /// </summary>
         ///
-        /// <param name="status">ステータスコード</param>
+        /// <param name="status">Status code.</param>
         ///
         /* ----------------------------------------------------------------- */
         public LoadException(LoadStatus status)
@@ -71,7 +73,7 @@ namespace Cube.Pdf.Pdfium
         /// Status
         ///
         /// <summary>
-        /// ステータスコードを取得します。
+        /// Gets the status code.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -85,7 +87,7 @@ namespace Cube.Pdf.Pdfium
     /// LoadStatus
     ///
     /// <summary>
-    /// PDFium API 経由で PDF 読み込んだ結果を示す列挙型です。
+    /// Specifies the status code of PDFium API.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

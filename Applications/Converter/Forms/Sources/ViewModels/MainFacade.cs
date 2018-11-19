@@ -58,6 +58,7 @@ namespace Cube.Pdf.App.Converter
         public MainFacade(SettingsFolder settings)
         {
             Settings = settings;
+            Locale.Set(settings.Value.Language);
         }
 
         #endregion

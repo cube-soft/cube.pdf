@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("2.12.0.0")]
-[assembly: AssemblyFileVersion("2.12.0.0")]
+[assembly: AssemblyVersion("2.13.0.0")]
+[assembly: AssemblyFileVersion("2.13.0.0")]
 [assembly: AssemblyTitle("Cube.Pdf")]
 [assembly: AssemblyDescription("Basic data structures and interfaces for CubePDF libraries.")]
 [assembly: AssemblyCompany("CubeSoft")]

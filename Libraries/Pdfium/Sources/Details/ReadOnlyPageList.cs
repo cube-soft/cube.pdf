@@ -15,8 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -32,7 +32,7 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class ReadOnlyPageList : IReadOnlyList<Page>
+    internal class ReadOnlyPageList : EnumerableBase<Page>, IReadOnlyList<Page>
     {
         #region Constructors
 
@@ -109,23 +109,10 @@ namespace Cube.Pdf.Pdfium
         /// <returns>反復子</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<Page> GetEnumerator()
+        public override IEnumerator<Page> GetEnumerator()
         {
             for (var i = 0; i < Count; ++i) yield return this[i];
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEnumerator
-        ///
-        /// <summary>
-        /// 各ページオブジェクトへアクセスするための反復子を取得します。
-        /// </summary>
-        ///
-        /// <returns>反復子</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         #endregion
 

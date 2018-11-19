@@ -80,11 +80,11 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password query.</param>
+        /// <param name="query">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> password) :
-            this(src, password, false, true, new IO()) { }
+        public DocumentReader(string src, IQuery<string> query) :
+            this(src, query, false, true, new IO()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -113,12 +113,12 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password query.</param>
+        /// <param name="query">Password query.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> password, IO io) :
-            this(src, password, false, true, io) { }
+        public DocumentReader(string src, IQuery<string> query, IO io) :
+            this(src, query, false, true, io) { }
 
         /* ----------------------------------------------------------------- */
         ///

@@ -110,15 +110,19 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Ghostscript.Converter CreateDocumentConverter(SettingsFolder src) =>
-            new DocumentConverter(src.Value.Format, src.IO)
-            {
-                ColorMode    = src.Value.Grayscale ? ColorMode.Grayscale : ColorMode.Rgb,
-                Compression  = src.Value.ImageCompression ? Encoding.Jpeg : Encoding.Flate,
-                Downsampling = src.Value.Downsampling,
-                EmbedFonts   = src.Value.EmbedFonts,
-                Version      = src.Value.FormatOption.GetVersion(),
-            };
+        private static Ghostscript.Converter CreateDocumentConverter(SettingsFolder src)
+        {
+            var dest = PdfConverter.SupportedFormats.Contains(src.Value.Format) ?
+                       new PdfConverter(src.IO) { Version = src.Value.FormatOption.GetVersion() } :
+                       new DocumentConverter(src.Value.Format, src.IO);
+
+            dest.ColorMode    = src.Value.Grayscale ? ColorMode.Grayscale : ColorMode.Rgb;
+            dest.Compression  = src.Value.ImageCompression ? Encoding.Jpeg : Encoding.Flate;
+            dest.Downsampling = src.Value.Downsampling;
+            dest.EmbedFonts   = src.Value.EmbedFonts;
+
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///

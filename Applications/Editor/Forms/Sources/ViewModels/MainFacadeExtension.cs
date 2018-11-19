@@ -363,7 +363,7 @@ namespace Cube.Pdf.App.Editor
         public static HistoryItem SetMetadata(this MainFacade src, Metadata value)
         {
             var prev = src.Bindable.Metadata;
-            return Invoke(
+            return HistoryItem.CreateInvoke(
                 () => src.Bindable.Metadata = value,
                 () => src.Bindable.Metadata = prev
             );
@@ -388,7 +388,7 @@ namespace Cube.Pdf.App.Editor
         public static HistoryItem SetEncryption(this MainFacade src, Encryption value)
         {
             var prev = src.Bindable.Encryption;
-            return Invoke(
+            return HistoryItem.CreateInvoke(
                 () => src.Bindable.Encryption = value,
                 () => src.Bindable.Encryption = prev
             );
@@ -428,25 +428,6 @@ namespace Cube.Pdf.App.Editor
             var prev  = src.Bindable.Images.Preferences.ItemSizeIndex;
             var next  = items.LastIndexOf(x => x <= src.Settings.Value.ItemSize);
             src.Zoom(next - prev);
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the specified action and creates a history item.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static HistoryItem Invoke(Action forward, Action reverse)
-        {
-            forward(); // do
-            return new HistoryItem { Undo = reverse, Redo = forward };
         }
 
         #endregion

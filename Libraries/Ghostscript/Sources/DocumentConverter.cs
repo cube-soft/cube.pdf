@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,10 +27,10 @@ namespace Cube.Pdf.Ghostscript
     /// DocumentConverter
     ///
     /// <summary>
-    /// PDF などのドキュメント形式に変換するためのクラスです。
+    /// Provides functionality to convert to document format such as PDF.
     /// </summary>
     ///
-    /// <see href="https://www.ghostscript.com/doc/9.23/VectorDevices.htm" />
+    /// <see href="https://www.ghostscript.com/doc/9.25/VectorDevices.htm" />
     ///
     /* --------------------------------------------------------------------- */
     public class DocumentConverter : Converter
@@ -43,10 +42,11 @@ namespace Cube.Pdf.Ghostscript
         /// DocumentConverter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentConverter class with
+        /// the specified format.
         /// </summary>
         ///
-        /// <param name="format">変換後のフォーマット</param>
+        /// <param name="format">Target format.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentConverter(Format format) : this(format, new IO()) { }
@@ -56,17 +56,32 @@ namespace Cube.Pdf.Ghostscript
         /// DocumentConverter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentConverter class with
+        /// the specified parameters.
         /// </summary>
         ///
-        /// <param name="format">変換後のフォーマット</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="format">Target format.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentConverter(Format format, IO io) : base(format, io)
-        {
-            if (!SupportedFormats.Contains(format)) throw new NotSupportedException();
-        }
+        public DocumentConverter(Format format, IO io) : this(format, io, SupportedFormats) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentConverter
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentConverter class with
+        /// the specified parameters.
+        /// </summary>
+        ///
+        /// <param name="format">Target format.</param>
+        /// <param name="io">I/O handler.</param>
+        /// <param name="supported">Collection of supported formats.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected DocumentConverter(Format format, IO io, IEnumerable<Format> supported) :
+            base(format, io, supported) { }
 
         #endregion
 
@@ -77,35 +92,20 @@ namespace Cube.Pdf.Ghostscript
         /// SupportedFormats
         ///
         /// <summary>
-        /// サポートする形式一覧を取得します。
+        /// Gets the collection of supported formats.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
-        {
-            Format.Text,
-            Format.Ps,
-            Format.Eps,
-            Format.Pdf,
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Version
-        ///
-        /// <summary>
-        /// バージョンを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Version Version { get; set; } = new Version(1, 7);
+        public static new IEnumerable<Format> SupportedFormats { get; } =
+            new HashSet<Format> { Format.Ps, Format.Eps, Format.Pdf };
 
         /* ----------------------------------------------------------------- */
         ///
         /// EmbedFonts
         ///
         /// <summary>
-        /// フォントを埋め込むかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether all used fonts are
+        /// embedded in the converted document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Ghostscript
         /// ColorMode
         ///
         /// <summary>
-        /// カラーモードを取得または設定します。
+        /// Gets or sets the color mode.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -127,7 +127,7 @@ namespace Cube.Pdf.Ghostscript
         /// Compression
         ///
         /// <summary>
-        /// 埋め込まれた画像データの圧縮方法を取得または設定します。
+        /// Gets or sets the compression method of embedded images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -138,8 +138,7 @@ namespace Cube.Pdf.Ghostscript
         /// Downsampling
         ///
         /// <summary>
-        /// 埋め込まれた画像データのダウンサンプリング方法を取得または
-        /// 設定します。
+        /// Gets or sets the downsampling method of embedded images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -154,19 +153,15 @@ namespace Cube.Pdf.Ghostscript
         /// OnCreateArguments
         ///
         /// <summary>
-        /// Ghostscript API で実行するための引数一覧を生成します。
+        /// Occurs when creating Ghostscript API arguments.
         /// </summary>
         ///
-        /// <returns>引数一覧</returns>
+        /// <returns>Collection of arguments.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Argument> OnCreateArguments() =>
             base.OnCreateArguments()
-            .Concat(new[]
-            {
-                CreateVersion(),
-                ColorMode.GetArgument(),
-            })
+            .Concat(new[] { ColorMode.GetArgument() })
             .Concat(CreateFontArguments())
             .Concat(CreateImageArguments());
 
@@ -175,11 +170,11 @@ namespace Cube.Pdf.Ghostscript
         /// OnCreateCodes
         ///
         /// <summary>
-        /// Ghostscript API で実行するための PostScript コードを表す
-        /// 引数一覧を生成します。
+        /// Occurs when creating code to be executed with the Ghostscript
+        /// API.
         /// </summary>
         ///
-        /// <returns>引数一覧</returns>
+        /// <returns>Collection of arguments.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Code> OnCreateCodes() =>
@@ -188,22 +183,11 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateVersion
-        ///
-        /// <summary>
-        /// バージョン番号を表す Argument を生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Argument CreateVersion() =>
-            new Argument('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}");
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// CreateFontArguments
         ///
         /// <summary>
-        /// フォントに関する Argument を生成します。
+        /// Creates a new instance of the Argument class representing
+        /// information related to the fonts.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -219,8 +203,15 @@ namespace Cube.Pdf.Ghostscript
         /// CreateImageArguments
         ///
         /// <summary>
-        /// 埋め込まれた画像に関する Argument を生成します。
+        /// Creates the collection of arguments representing information
+        /// related to the images.
         /// </summary>
+        ///
+        /// <remarks>
+        /// DownsampleXxxImages を false に設定すると Resolution 等の
+        /// 設定も無視されるため、Downsampling の内容に関わらず true に
+        /// 設定します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<Argument> CreateImageArguments() => Trim(new[]
@@ -228,9 +219,9 @@ namespace Cube.Pdf.Ghostscript
             new Argument("ColorImageResolution",  Resolution),
             new Argument("GrayImageResolution",   Resolution),
             new Argument("MonoImageResolution",   GetMonoResolution()),
-            new Argument("DownsampleColorImages", Downsampling != Downsampling.None),
-            new Argument("DownsampleGrayImages",  Downsampling != Downsampling.None),
-            new Argument("DownsampleMonoImages",  Downsampling != Downsampling.None),
+            new Argument("DownsampleColorImages", true),
+            new Argument("DownsampleGrayImages",  true),
+            new Argument("DownsampleMonoImages",  true),
             new Argument("EncodeColorImages",     Compression != Encoding.None),
             new Argument("EncodeGrayImages",      Compression != Encoding.None),
             new Argument("EncodeMonoImages",      Compression != Encoding.None),
@@ -250,7 +241,7 @@ namespace Cube.Pdf.Ghostscript
         /// CreateEmbedFontsCode
         ///
         /// <summary>
-        /// フォントの埋め込み設定に関する PostScript コードを生成します。
+        /// Creates the code representing related to the fonts.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -264,7 +255,7 @@ namespace Cube.Pdf.Ghostscript
         /// GetMonoResolution
         ///
         /// <summary>
-        /// モノクロ画像に適用する解像度を取得します。
+        /// Gets the resolution of monochrome images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -278,7 +269,7 @@ namespace Cube.Pdf.Ghostscript
         /// Trim
         ///
         /// <summary>
-        /// null オブジェクトを除去します。
+        /// Removes null objects from the specified collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

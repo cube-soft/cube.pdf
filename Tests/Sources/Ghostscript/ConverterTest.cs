@@ -18,9 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Cube.Pdf.Tests.Ghostscript
 {
@@ -29,7 +29,7 @@ namespace Cube.Pdf.Tests.Ghostscript
     /// ConverterTest
     ///
     /// <summary>
-    /// Converter のテスト用クラスです。
+    /// Represents tests of the Converter class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,10 +40,25 @@ namespace Cube.Pdf.Tests.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SupportedFormats
+        ///
+        /// <summary>
+        /// Confirms the number of supported formats.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void SupportedFormats() => Assert.That(
+            Converter.SupportedFormats.Count(),
+            Is.EqualTo(34)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Invoke
         ///
         /// <summary>
-        /// 変換処理テストを実行します。
+        /// Executes the test to convert.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -56,7 +71,8 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// Invoke_Cjk_Failed
         ///
         /// <summary>
-        /// 出力ファイル名に日本語を指定した時の挙動を確認します。
+        /// Confirm the behavior when CJK characters are set as output
+        /// path.
         /// </summary>
         ///
         /// <remarks>
@@ -81,36 +97,6 @@ namespace Cube.Pdf.Tests.Ghostscript
                   .TypeOf<GsApiException>()
         );
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create_DocumentConverter_Throws
-        ///
-        /// <summary>
-        /// 無効な変換形式を指定した時の挙動を確認します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Create_DocumentConverter_Throws() => Assert.That(
-            () => new DocumentConverter(Format.Bmp),
-            Throws.TypeOf<NotSupportedException>()
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create_ImageConverter_Throws
-        ///
-        /// <summary>
-        /// 無効な変換形式を指定した時の挙動を確認します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Create_ImageConverter_Throws() => Assert.That(
-            () => new ImageConverter(Format.Pdf),
-            Throws.TypeOf<NotSupportedException>()
-        );
-
         #endregion
 
         #region TestCases
@@ -120,7 +106,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// TestCases
         ///
         /// <summary>
-        /// テストケース一覧を取得します。
+        /// Gets test cases.
         /// </summary>
         ///
         /// <remarks>
