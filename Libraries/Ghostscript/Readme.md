@@ -35,7 +35,7 @@ For example, the following code converts to the PDF format.
 
 ```cs
 // using Cube.Pdf.Ghostscript;
-var converter = new DocumentConverter(Format.Pdf)
+var converter = new PdfConverter
 {
     Paper        = Paper.Auto,
     Orientation  = Orientation.Auto,
@@ -43,6 +43,7 @@ var converter = new DocumentConverter(Format.Pdf)
     Resolution   = 600,
     Compression  = Encoding.Jpeg,
     Downsampling = Downsampling.None,
+    Version      = new Version(1, 7),
 };
 converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
