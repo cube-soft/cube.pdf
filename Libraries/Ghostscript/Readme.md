@@ -26,9 +26,9 @@ public class Converter
 }
 ```
 
-When you convert a PostScript file to any other formats, you specified the target format at the constructor of the Converter class, then add some options, and finally execute the Invoke method.
+When you convert a PostScript file to any other formats, you specify the target format at the constructor of the Converter class, then add some options, and finally execute the Invoke method.
 The Ghostscript API has two kinds of parameters, one is normal arguments and the other is PostScript codes.
-Options and code properties of the Converter class correspond respectively.
+Options and Codes properties of the Converter class correspond respectively.
 
 Instead of using the Converter class directly, you usually use some inherited classes according to your purpose.
 For example, the following code converts to the PDF format.
