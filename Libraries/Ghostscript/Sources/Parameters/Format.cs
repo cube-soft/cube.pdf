@@ -133,7 +133,7 @@ namespace Cube.Pdf.Ghostscript
         /// <returns>Argument that represents a format.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Argument GetArgument(this Format src)
+        internal static Argument GetArgument(this Format src)
         {
             var result = GetFormatMap().TryGetValue(src, out var value);
             Debug.Assert(result);

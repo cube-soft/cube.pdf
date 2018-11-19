@@ -60,7 +60,7 @@ namespace Cube.Pdf.Ghostscript
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class EncodingExtension
+    internal static class EncodingExtension
     {
         #region Methods
 

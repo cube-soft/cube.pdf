@@ -50,7 +50,7 @@ namespace Cube.Pdf.Ghostscript
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class OrientationExtension
+    internal static class OrientationExtension
     {
         #region Methods
 

@@ -106,7 +106,7 @@ namespace Cube.Pdf.Ghostscript
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class PaperExtension
+    internal static class PaperExtension
     {
         #region Methods
 

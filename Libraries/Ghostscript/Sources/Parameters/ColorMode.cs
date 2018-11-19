@@ -57,7 +57,7 @@ namespace Cube.Pdf.Ghostscript
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class ColorModeExtension
+    internal static class ColorModeExtension
     {
         #region Methods
 

@@ -48,7 +48,7 @@ namespace Cube.Pdf.Ghostscript
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class DownsamplingExtension
+    internal static class DownsamplingExtension
     {
         #region Methods
 
