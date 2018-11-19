@@ -102,7 +102,7 @@ namespace Cube.Pdf.Ghostscript
     /// PaperExtension
     ///
     /// <summary>
-    /// Paper の拡張用クラスです。
+    /// Provides extended methods of the Paper enum.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -115,12 +115,13 @@ namespace Cube.Pdf.Ghostscript
         /// GetArgument
         ///
         /// <summary>
-        /// Paper を表す Argument オブジェクトを取得します。
+        /// Gets a new instance of the Argument class from the specified
+        /// paper size.
         /// </summary>
         ///
-        /// <param name="src">Paper</param>
+        /// <param name="src">Paper value.</param>
         ///
-        /// <returns>Argument オブジェクト</returns>
+        /// <returns>Argument object.</returns>
         ///
         /// <remarks>
         /// Paper.Auto の場合、返り値は null になります。

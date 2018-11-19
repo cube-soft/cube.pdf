@@ -56,7 +56,7 @@ namespace Cube.Pdf.Ghostscript
     /// EncodingExtension
     ///
     /// <summary>
-    /// Encoding の拡張用クラスです。
+    /// Provides extended methods of the Encoding enum.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -69,13 +69,14 @@ namespace Cube.Pdf.Ghostscript
         /// GetArgument
         ///
         /// <summary>
-        /// Encoding を表す Argument オブジェクトを取得します。
+        /// Gets a new instance of the Argument class from the specified
+        /// parameters.
         /// </summary>
         ///
-        /// <param name="src">Encoding</param>
-        /// <param name="name">名前</param>
+        /// <param name="src">Encoding value.</param>
+        /// <param name="name">Name of the argument.</param>
         ///
-        /// <returns>Argument オブジェクト</returns>
+        /// <returns>Argument object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Argument GetArgument(this Encoding src, string name) =>
@@ -92,7 +93,7 @@ namespace Cube.Pdf.Ghostscript
         /// GetEncodingMap
         ///
         /// <summary>
-        /// Encoding と関連情報の対応一覧を取得します。
+        /// Gets the collection of Encoding values and related information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

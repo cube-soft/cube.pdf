@@ -46,7 +46,7 @@ namespace Cube.Pdf.Ghostscript
     /// OrientationExtension
     ///
     /// <summary>
-    /// Orientation の拡張用クラスです。
+    /// Provides extended methods of the Orientation enum.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -59,12 +59,13 @@ namespace Cube.Pdf.Ghostscript
         /// GetArgument
         ///
         /// <summary>
-        /// Orientation を表す Argument オブジェクトを取得します。
+        /// Gets a new instance of the Argument class from the specified
+        /// orientation.
         /// </summary>
         ///
-        /// <param name="src">Orientation</param>
+        /// <param name="src">Orientation value.</param>
         ///
-        /// <returns>Argument オブジェクト一覧</returns>
+        /// <returns>Argument object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Argument GetArgument(this Orientation src) =>
@@ -77,12 +78,13 @@ namespace Cube.Pdf.Ghostscript
         /// GetCode
         ///
         /// <summary>
-        /// Orientation を表す Code オブジェクトを取得します。
+        /// Gets a new instance of the Code class with the specified
+        /// orientation.
         /// </summary>
         ///
-        /// <param name="src">Orientation</param>
+        /// <param name="src">Orientation value.</param>
         ///
-        /// <returns>Code オブジェクト一覧</returns>
+        /// <returns>Code object.</returns>
         ///
         /// <remarks>
         /// Orientation に対応する内容を Ghostscript に指定する際、通常の
