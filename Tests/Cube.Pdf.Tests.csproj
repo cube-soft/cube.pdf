@@ -133,7 +133,7 @@
     <None Include="Examples\SampleMix.ps">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Examples\SampleResolution600.ps">
+    <None Include="Examples\Sample600dpi.ps">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Examples\Sample.pdf">

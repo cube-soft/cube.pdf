@@ -124,27 +124,27 @@ namespace Cube.Pdf.Tests.Ghostscript
                 yield return TestCase(new JpegConverter(Format.Jpeg)
                 {
                     Quality = 1,
-                }, "SampleResolution600.ps", "Quality_1");
+                }, "Sample600dpi.ps", "Quality_1");
 
                 yield return TestCase(new JpegConverter(Format.Jpeg)
                 {
                     Quality = 25,
-                }, "SampleResolution600.ps", "Quality_25");
+                }, "Sample600dpi.ps", "Quality_25");
 
                 yield return TestCase(new JpegConverter(Format.Jpeg)
                 {
                     Quality = 50,
-                }, "SampleResolution600.ps", "Quality_50");
+                }, "Sample600dpi.ps", "Quality_50");
 
                 yield return TestCase(new JpegConverter(Format.Jpeg)
                 {
                     Quality = 75,
-                }, "SampleResolution600.ps", "Quality_75");
+                }, "Sample600dpi.ps", "Quality_75");
 
                 yield return TestCase(new JpegConverter(Format.Jpeg)
                 {
                     Quality = 100,
-                }, "SampleResolution600.ps", "Quality_100");
+                }, "Sample600dpi.ps", "Quality_100");
             }
         }
 
