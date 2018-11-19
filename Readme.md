@@ -76,7 +76,7 @@ var converter = new DocumentConverter(Format.Pdf)
     Resolution   = 600,
     Compression  = Encoding.Jpeg,
     Downsampling = Downsampling.None,
-}
+};
 converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
 
