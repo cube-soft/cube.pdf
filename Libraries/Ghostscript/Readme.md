@@ -7,11 +7,10 @@ Cube.Pdf.Ghostscript
 
 Cube.Pdf.Ghostscript is a wrapper library of the [Ghostscript](https://www.ghostscript.com/).
 The library is available for .NET Framework 3.5, 4.5 or more.
-
-## Usage
-
 The Cube.Pdf.Ghostscript library is available for NuGet, but you need to copy the gsdll32.dll to the executing directory manually.
 You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or our [GitHub releases](https://github.com/cube-soft/Cube.Pdf/releases).
+
+## Usage
 
 Cube.Pdf.Ghostscript.Converter is the base class of other converter classes and a thin wrapper of the Ghostscript API.
 Basic interfaces of converters are as follows:
@@ -30,7 +29,7 @@ When you convert a PostScript file to any other formats, you specify the target 
 The Ghostscript API has two kinds of parameters, one is normal arguments and the other is PostScript codes.
 Options and Codes properties of the Converter class correspond respectively.
 
-Instead of using the Converter class directly, you usually use some inherited classes according to your purpose.
+Instead of using the Converter class directly, you can use some inherited classes according to your purpose.
 For example, the following code converts to the PDF format.
 
 ```cs
@@ -68,4 +67,4 @@ All available formats and other options are defined in the [Parameters](https://
 ## License
  
 Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.jp/)
-The Cube.Pdf.Ghostscript project is licensed under the [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/License.txt).
+The Cube.Pdf.Ghostscript library is licensed under the [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/License.txt).
