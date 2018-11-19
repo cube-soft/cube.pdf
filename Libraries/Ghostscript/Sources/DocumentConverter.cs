@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,7 +57,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentConverter class with
-        /// the specified format.
+        /// the specified parameters.
         /// </summary>
         ///
         /// <param name="format">Target format.</param>
@@ -73,7 +72,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentConverter class with
-        /// the specified format.
+        /// the specified parameters.
         /// </summary>
         ///
         /// <param name="format">Target format.</param>
@@ -99,17 +98,6 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public static new IEnumerable<Format> SupportedFormats { get; } =
             new HashSet<Format> { Format.Ps, Format.Eps, Format.Pdf };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Version
-        ///
-        /// <summary>
-        /// Gets or sets the version number of the converted document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Version Version { get; set; } = new Version(1, 7);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -173,11 +161,7 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Argument> OnCreateArguments() =>
             base.OnCreateArguments()
-            .Concat(new[]
-            {
-                CreateVersion(),
-                ColorMode.GetArgument(),
-            })
+            .Concat(new[] { ColorMode.GetArgument() })
             .Concat(CreateFontArguments())
             .Concat(CreateImageArguments());
 
@@ -196,19 +180,6 @@ namespace Cube.Pdf.Ghostscript
         protected override IEnumerable<Code> OnCreateCodes() =>
             base.OnCreateCodes()
             .Concat(Trim(new[] { CreateEmbedFontsCode() }));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateVersion
-        ///
-        /// <summary>
-        /// Creates a new instance of the Argument class representing
-        /// version number.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Argument CreateVersion() =>
-            new Argument('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}");
 
         /* ----------------------------------------------------------------- */
         ///

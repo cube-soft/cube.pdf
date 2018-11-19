@@ -102,6 +102,7 @@
     <Compile Include="Sources\DocumentConverter.cs" />
     <Compile Include="Sources\ImageConverter.cs" />
     <Compile Include="Sources\JpegConverter.cs" />
+    <Compile Include="Sources\PdfConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Cube.snk" />
