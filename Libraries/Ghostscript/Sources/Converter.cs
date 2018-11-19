@@ -237,6 +237,17 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public ICollection<Argument> Options { get; } = new List<Argument>();
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Codes
+        ///
+        /// <summary>
+        /// Gets the collection of optional codes.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICollection<Code> Codes { get; } = new List<Code>();
+
         #endregion
 
         #region Methods
@@ -359,8 +370,8 @@ namespace Cube.Pdf.Ghostscript
         private IEnumerable<Argument> CreateCodes()
         {
             var dest = OnCreateCodes();
-            return dest.Count() > 0 ?
-                   new[] { new Argument('c') }.Concat(dest) :
+            return dest.Count() > 0 || Codes.Count > 0 ?
+                   new[] { new Argument('c') }.Concat(dest).Concat(Codes) :
                    dest;
         }
 
