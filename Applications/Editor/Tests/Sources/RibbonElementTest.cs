@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Editor;
-using Cube.Xui;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Tests.Editor
@@ -59,12 +58,12 @@ namespace Cube.Pdf.Tests.Editor
                 Assert.That(dest.LargeIcon, Is.EqualTo($"pack://application:,,,/Assets/Large/{name}.png"));
                 Assert.That(dest.SmallIcon, Is.EqualTo($"pack://application:,,,/Assets/Small/{name}.png"));
 
-                ResourceCulture.Set("fr");
+                Locale.Set(Language.French);
                 Assert.That(dest.Text,      Is.EqualTo(text));
                 Assert.That(dest.Tooltip,   Is.EqualTo(text));
             }
 
-            ResourceCulture.Set("ja");
+            Locale.Set(Language.Japanese);
         }
 
         #endregion

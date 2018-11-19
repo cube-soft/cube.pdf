@@ -26,12 +26,8 @@ namespace Cube.Pdf.Pdfium
     /// DocumentReader
     ///
     /// <summary>
-    /// PDF ファイルを読み込んで各種情報を保持するためのクラスです。
+    /// Provides functionality to read a PDF document.
     /// </summary>
-    ///
-    /// <remarks>
-    /// PDFium を用いて PDF ファイルの解析を行います。
-    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     public class DocumentReader : DocumentReaderBase, IDocumentRenderer
@@ -43,10 +39,11 @@ namespace Cube.Pdf.Pdfium
         /// DocumentReader
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF ファイルのパス</param>
+        /// <param name="src">Path of the PDF file.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src) : this(src, string.Empty) { }
@@ -56,11 +53,12 @@ namespace Cube.Pdf.Pdfium
         /// DocumentReader
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF ファイルのパス</param>
-        /// <param name="password">パスワード</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password string.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password) :
@@ -71,11 +69,12 @@ namespace Cube.Pdf.Pdfium
         /// DocumentReader
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF ファイルのパス</param>
-        /// <param name="query">パスワード用オブジェクト</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="query">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, IQuery<string> query) :
@@ -86,12 +85,13 @@ namespace Cube.Pdf.Pdfium
         /// DocumentReader
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDF ファイルのパス</param>
-        /// <param name="password">パスワード</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password string.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password, IO io) :
@@ -194,11 +194,13 @@ namespace Cube.Pdf.Pdfium
         /// Dispose
         ///
         /// <summary>
-        /// リソースを開放します。
+        /// Releases the unmanaged resources used by the DocumentReader
+        /// and optionally releases the managed resources.
         /// </summary>
         ///
         /// <param name="disposing">
-        /// マネージオブジェクトを開放するかどうか
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */

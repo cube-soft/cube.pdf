@@ -77,16 +77,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\packages\Cube.Core.1.12.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Core.1.13.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\packages\Cube.FileSystem.1.12.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.FileSystem.1.13.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\Details\GsApi.cs" />
     <Compile Include="Sources\Details\GsApiStatus.cs" />
     <Compile Include="Sources\Details\GsApiException.cs" />
@@ -100,7 +101,8 @@
     <Compile Include="Sources\Converter.cs" />
     <Compile Include="Sources\DocumentConverter.cs" />
     <Compile Include="Sources\ImageConverter.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sources\JpegConverter.cs" />
+    <Compile Include="Sources\PdfConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Cube.snk" />

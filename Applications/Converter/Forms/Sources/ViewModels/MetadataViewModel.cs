@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Forms;
 using System.Threading;
 
 namespace Cube.Pdf.App.Converter

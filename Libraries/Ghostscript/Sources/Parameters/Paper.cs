@@ -23,13 +23,13 @@ namespace Cube.Pdf.Ghostscript
     /// Paper
     ///
     /// <summary>
-    /// Ghostscript で指定可能な用紙サイズを定義した列挙型です。
+    /// Specifies paper sizes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     public enum Paper
     {
-        /// <summary>自動（入力元と同じ用紙サイズ）</summary>
+        /// <summary>Auto</summary>
         Auto = 0,
         /// <summary>A0 (841x1189 mm)</summary>
         A0,
@@ -93,7 +93,7 @@ namespace Cube.Pdf.Ghostscript
         Legal,
         /// <summary>Letter (216x279 mm)</summary>
         Letter,
-        /// <summary>はがき (100x148 mm)</summary>
+        /// <summary>Hagaki, the Japanese postcard (100x148 mm)</summary>
         Hagaki,
     }
 
@@ -102,11 +102,11 @@ namespace Cube.Pdf.Ghostscript
     /// PaperExtension
     ///
     /// <summary>
-    /// Paper の拡張用クラスです。
+    /// Provides extended methods of the Paper enum.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class PaperExtension
+    internal static class PaperExtension
     {
         #region Methods
 
@@ -115,12 +115,13 @@ namespace Cube.Pdf.Ghostscript
         /// GetArgument
         ///
         /// <summary>
-        /// Paper を表す Argument オブジェクトを取得します。
+        /// Gets a new instance of the Argument class from the specified
+        /// paper size.
         /// </summary>
         ///
-        /// <param name="src">Paper</param>
+        /// <param name="src">Paper value.</param>
         ///
-        /// <returns>Argument オブジェクト</returns>
+        /// <returns>Argument object.</returns>
         ///
         /// <remarks>
         /// Paper.Auto の場合、返り値は null になります。

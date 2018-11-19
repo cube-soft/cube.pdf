@@ -154,9 +154,9 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public IEnumerable<Language> Languages { get; } = new[]
         {
-            Editor.Language.Auto,
-            Editor.Language.English,
-            Editor.Language.Japanese,
+            Cube.Language.Auto,
+            Cube.Language.English,
+            Cube.Language.Japanese,
         };
 
         #endregion

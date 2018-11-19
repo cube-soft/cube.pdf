@@ -80,7 +80,7 @@ namespace Cube.Pdf.App.Converter
             WorkDirectory  = GetWorkDirectory();
             Version.Digit  = 3;
             Version.Suffix = $"RC{Assembly.Version.Revision}";
-            UpdateProgram  = IO.Combine(IO.Get(Assembly.Location).DirectoryName, "cubepdf-checker.exe");
+            UpdateProgram  = IO.Combine(IO.Get(Assembly.Location).DirectoryName, "UpdateChecker.exe");
 
         }
 
@@ -279,7 +279,7 @@ namespace Cube.Pdf.App.Converter
             {
                 if (Value == null) return;
 
-                new Startup(IO.Get(UpdateProgram).NameWithoutExtension)
+                new Startup("cubepdf-checker")
                 {
                     Command = $"{UpdateProgram.Quote()} {Assembly.Product}",
                     Enabled = Value.CheckUpdate,

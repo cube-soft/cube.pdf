@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using Cube.Generics;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -64,7 +64,7 @@ namespace Cube.Pdf.App.Editor
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class Range : IEnumerable<int>
+    public class Range : EnumerableBase<int>
     {
         #region Constructors
 
@@ -103,22 +103,7 @@ namespace Cube.Pdf.App.Editor
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<int> GetEnumerator() => _inner.GetEnumerator();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IEnumerable.GetEnumerator
-        ///
-        /// <summary>
-        /// Returns an enumerator that iterates through this collection.
-        /// </summary>
-        ///
-        /// <returns>
-        /// An IEnumerator object for this collection.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public override IEnumerator<int> GetEnumerator() => _inner.GetEnumerator();
 
         #endregion
 

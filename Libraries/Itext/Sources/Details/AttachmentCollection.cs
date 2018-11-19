@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using Cube.FileSystem;
 using iTextSharp.text.pdf;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
@@ -32,7 +32,7 @@ namespace Cube.Pdf.Itext
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class AttachmentCollection : IEnumerable<Attachment>
+    internal class AttachmentCollection : EnumerableBase<Attachment>
     {
         #region Constructors
 
@@ -102,22 +102,7 @@ namespace Cube.Pdf.Itext
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<Attachment> GetEnumerator() => _inner.GetEnumerator();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IEnumerable.GetEnumerator
-        ///
-        /// <summary>
-        /// Returns an enumerator that iterates through this collection.
-        /// </summary>
-        ///
-        /// <returns>
-        /// An IEnumerator object for this collection.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public override IEnumerator<Attachment> GetEnumerator() => _inner.GetEnumerator();
 
         #endregion
 

@@ -30,7 +30,7 @@ namespace Cube.Pdf.Ghostscript
     /// Converter
     ///
     /// <summary>
-    /// Ghostscript 変換プログラムの基底クラスです。
+    /// Represents the base class that communicates with the Ghostscript API.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -43,10 +43,11 @@ namespace Cube.Pdf.Ghostscript
         /// Converter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Converter class with the
+        /// specified format.
         /// </summary>
         ///
-        /// <param name="format">変換後のフォーマット</param>
+        /// <param name="format">Target format.</param>
         ///
         /* ----------------------------------------------------------------- */
         public Converter(Format format) : this(format, new IO()) { }
@@ -56,15 +57,34 @@ namespace Cube.Pdf.Ghostscript
         /// Converter
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Converter class with the
+        /// specified format.
         /// </summary>
         ///
-        /// <param name="format">変換後のフォーマット</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="format">Target format.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Converter(Format format, IO io)
+        public Converter(Format format, IO io) : this(format, io, SupportedFormats) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Converter
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Converter class with the
+        /// specified format.
+        /// </summary>
+        ///
+        /// <param name="format">Target format.</param>
+        /// <param name="io">I/O handler.</param>
+        /// <param name="supported">Collection of supported formats.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected Converter(Format format, IO io, IEnumerable<Format> supported)
         {
+            if (!supported.Contains(format)) throw new NotSupportedException(format.ToString());
+
             IO = io;
             Format = format;
             Fonts.Add(Environment.GetFolderPath(Environment.SpecialFolder.Fonts));
@@ -76,21 +96,22 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
+        /// SupportedFormats
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します。
+        /// Gets the collection of supported formats.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IO IO { get; }
+        public static IEnumerable<Format> SupportedFormats { get; } =
+            new HashSet<Format>(Enum.GetValues(typeof(Format)).Cast<Format>());
 
         /* ----------------------------------------------------------------- */
         ///
         /// Format
         ///
         /// <summary>
-        /// 変換後のフォーマットを取得します。
+        /// Gets the target format.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -98,10 +119,21 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Paper
         ///
         /// <summary>
-        /// 用紙サイズを取得または設定します。
+        /// Gets or sets the paper size.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -112,7 +144,7 @@ namespace Cube.Pdf.Ghostscript
         /// Orientation
         ///
         /// <summary>
-        /// ページの向きを取得または設定します。
+        /// Gets or sets the orientation of the page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -123,7 +155,7 @@ namespace Cube.Pdf.Ghostscript
         /// Resolution
         ///
         /// <summary>
-        /// 画像データの変換時に適用する解像度を取得または設定します。
+        /// Gets or sets the resolution of images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -134,8 +166,8 @@ namespace Cube.Pdf.Ghostscript
         /// Quiet
         ///
         /// <summary>
-        /// いくつかのメッセージの出力を抑制するかどうかを示す値を取得
-        /// または設定します。
+        /// Gets or sets a value indicating whether to suppress some
+        /// messages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -146,7 +178,7 @@ namespace Cube.Pdf.Ghostscript
         /// Log
         ///
         /// <summary>
-        /// Ghostscript の出力ログを保存するパスを取得または設定します。
+        /// Gets or sets the path to store log of Ghostscript API.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -157,7 +189,7 @@ namespace Cube.Pdf.Ghostscript
         /// WorkDirectory
         ///
         /// <summary>
-        /// 作業ディレクトリのパスを取得または設定します。
+        /// Gets or sets the path of the working directory.
         /// </summary>
         ///
         /// <remarks>
@@ -173,8 +205,7 @@ namespace Cube.Pdf.Ghostscript
         /// Resources
         ///
         /// <summary>
-        /// リソースファイルが格納されているディレクトリ一覧を取得
-        /// または設定します。
+        /// Gets the collection of resource directories.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -185,7 +216,7 @@ namespace Cube.Pdf.Ghostscript
         /// Fonts
         ///
         /// <summary>
-        /// フォントが格納されているディレクトリ一覧を取得または設定します。
+        /// Gets the collection of font directories.
         /// </summary>
         ///
         /// <remarks>
@@ -200,11 +231,22 @@ namespace Cube.Pdf.Ghostscript
         /// Options
         ///
         /// <summary>
-        /// オプション引数一覧を取得または設定します。
+        /// Gets the collection of optional arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public ICollection<Argument> Options { get; } = new List<Argument>();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Codes
+        ///
+        /// <summary>
+        /// Gets the collection of optional codes.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICollection<Code> Codes { get; } = new List<Code>();
 
         #endregion
 
@@ -215,11 +257,11 @@ namespace Cube.Pdf.Ghostscript
         /// Invoke
         ///
         /// <summary>
-        /// 変換処理を実行します。
+        /// Executes to convert.
         /// </summary>
         ///
-        /// <param name="src">変換元ファイル</param>
-        /// <param name="dest">変換結果を保存するパス</param>
+        /// <param name="src">Source file.</param>
+        /// <param name="dest">Path to save the conversion result.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Invoke(string src, string dest) => Invoke(new[] { src }, dest);
@@ -229,11 +271,11 @@ namespace Cube.Pdf.Ghostscript
         /// Invoke
         ///
         /// <summary>
-        /// 変換処理を実行します。
+        /// Executes to convert.
         /// </summary>
         ///
-        /// <param name="sources">変換元ファイル一覧</param>
-        /// <param name="dest">変換結果を保存するパス</param>
+        /// <param name="sources">Collection of source files.</param>
+        /// <param name="dest">Path to save the conversion result.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> sources, string dest) =>
@@ -253,10 +295,10 @@ namespace Cube.Pdf.Ghostscript
         /// OnCreateArguments
         ///
         /// <summary>
-        /// Ghostscript API で実行するための引数一覧を生成します。
+        /// Occurs when creating Ghostscript API arguments.
         /// </summary>
         ///
-        /// <returns>引数一覧</returns>
+        /// <returns>Collection of arguments.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected virtual IEnumerable<Argument> OnCreateArguments()
@@ -285,11 +327,11 @@ namespace Cube.Pdf.Ghostscript
         /// OnCreateCodes
         ///
         /// <summary>
-        /// Ghostscript API で実行するための PostScript コードを表す
-        /// 引数一覧を生成します。
+        /// Occurs when creating code to be executed with the Ghostscript
+        /// API.
         /// </summary>
         ///
-        /// <returns>引数一覧</returns>
+        /// <returns>Collection of arguments.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected virtual IEnumerable<Code> OnCreateCodes() =>
@@ -304,7 +346,7 @@ namespace Cube.Pdf.Ghostscript
         /// Create
         ///
         /// <summary>
-        /// 引数一覧を表すコレクションを生成します。
+        /// Creates the collection of Ghostscript arguments.
         /// </summary>
         ///
         /// <remarks>
@@ -320,18 +362,16 @@ namespace Cube.Pdf.Ghostscript
         /// CreateCodes
         ///
         /// <summary>
-        /// Ghostscript API で実行するための PostScript コードを表す
-        /// 引数一覧を生成します。
+        /// Creates the collection of code to be executed with the
+        /// Ghostscript API.
         /// </summary>
-        ///
-        /// <returns>引数一覧</returns>
         ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<Argument> CreateCodes()
         {
             var dest = OnCreateCodes();
-            return dest.Count() > 0 ?
-                   new[] { new Argument('c') }.Concat(dest) :
+            return dest.Count() > 0 || Codes.Count > 0 ?
+                   new[] { new Argument('c') }.Concat(dest).Concat(Codes) :
                    dest;
         }
 
@@ -340,7 +380,8 @@ namespace Cube.Pdf.Ghostscript
         /// CreateResources
         ///
         /// <summary>
-        /// リソースディレクトリ一覧を表す Argument を生成します。
+        /// Creates a new instance of the Argument class representing
+        /// the resource directories.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -354,7 +395,8 @@ namespace Cube.Pdf.Ghostscript
         /// CreateFonts
         ///
         /// <summary>
-        /// フォントディレクトリ一覧を表す Argument を生成します。
+        /// Creates a new instance of the Argument class representing
+        /// the font directories.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -368,7 +410,8 @@ namespace Cube.Pdf.Ghostscript
         /// CreateLog
         ///
         /// <summary>
-        /// ログファイルを表す Argument を生成します。
+        /// Creates a new instance of the Argument class representing
+        /// the path of the log file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -380,7 +423,8 @@ namespace Cube.Pdf.Ghostscript
         /// CreateQuiet
         ///
         /// <summary>
-        /// Quiet を表す Argument を生成します。
+        /// Creates a new instance of the Argument class representing
+        /// the quiet mode.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -392,7 +436,8 @@ namespace Cube.Pdf.Ghostscript
         /// CreateResolution
         ///
         /// <summary>
-        /// Resolution を表す Argument を生成します。
+        /// Creates a new instance of the Argument class representing the
+        /// resolution.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -403,7 +448,7 @@ namespace Cube.Pdf.Ghostscript
         /// Trim
         ///
         /// <summary>
-        /// null オブジェクトを除去します。
+        /// Removes null objects from the specified collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -414,7 +459,7 @@ namespace Cube.Pdf.Ghostscript
         /// Invoke
         ///
         /// <summary>
-        /// 作業ディレクトリを設定した後 Action を実行します。
+        /// Sets the working directory and invokes the specified action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -443,7 +488,7 @@ namespace Cube.Pdf.Ghostscript
         /// SetVariable
         ///
         /// <summary>
-        /// 環境変数を設定します。
+        /// Sets the environment variable with the specified key and value.
         /// </summary>
         ///
         /// <remarks>

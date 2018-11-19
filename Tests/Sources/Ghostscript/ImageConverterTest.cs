@@ -18,7 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.Tests.Ghostscript
 {
@@ -27,7 +29,7 @@ namespace Cube.Pdf.Tests.Ghostscript
     /// ImageConverterTest
     ///
     /// <summary>
-    /// ImageConverter のテスト用クラスです。
+    /// Represents tests of the ImageConverter class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,10 +40,42 @@ namespace Cube.Pdf.Tests.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SupportedFormats
+        ///
+        /// <summary>
+        /// Confirms the number of supported formats.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void SupportedFormats()
+        {
+            Assert.That(ImageConverter.SupportedFormats.Count(), Is.EqualTo(30));
+            Assert.That(JpegConverter.SupportedFormats.Count(),  Is.EqualTo(4));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create_Throws
+        ///
+        /// <summary>
+        /// Confirms the behavior when an unsupported format is set.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Create_Throws()
+        {
+            Assert.That(() => new ImageConverter(Format.Pdf), Throws.TypeOf<NotSupportedException>());
+            Assert.That(() => new JpegConverter(Format.Png),  Throws.TypeOf<NotSupportedException>());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Invoke
         ///
         /// <summary>
-        /// 変換処理テストを実行します。
+        /// Exexutes the test to convert.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -61,7 +95,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// TestCases
         ///
         /// <summary>
-        /// テストケース一覧を取得します。
+        /// Gets test cases.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -69,6 +103,9 @@ namespace Cube.Pdf.Tests.Ghostscript
         {
             get
             {
+                /* --------------------------------------------------------- */
+                // AntiAlias
+                /* --------------------------------------------------------- */
                 yield return TestCase(new ImageConverter(Format.Png)
                 {
                     AntiAlias  = true,
@@ -80,6 +117,34 @@ namespace Cube.Pdf.Tests.Ghostscript
                     AntiAlias  = false,
                     Resolution = 72,
                 }, "Sample.ps", "AntiAlias_False");
+
+                /* --------------------------------------------------------- */
+                // Quality
+                /* --------------------------------------------------------- */
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 1,
+                }, "Sample600dpi.ps", "Quality_1");
+
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 25,
+                }, "Sample600dpi.ps", "Quality_25");
+
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 50,
+                }, "Sample600dpi.ps", "Quality_50");
+
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 75,
+                }, "Sample600dpi.ps", "Quality_75");
+
+                yield return TestCase(new JpegConverter(Format.Jpeg)
+                {
+                    Quality = 100,
+                }, "Sample600dpi.ps", "Quality_100");
             }
         }
 

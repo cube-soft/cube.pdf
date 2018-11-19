@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -34,7 +34,7 @@ namespace Cube.Pdf.Itext
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class EmbeddedImageCollection : IRenderListener, IEnumerable<Image>
+    internal class EmbeddedImageCollection : EnumerableBase<Image>, IRenderListener
     {
         #region Methods
 
@@ -49,20 +49,7 @@ namespace Cube.Pdf.Itext
         /// <returns>反復用オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerator<Image> GetEnumerator() => _inner.GetEnumerator();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IEnumerable.GetEnumerator
-        ///
-        /// <summary>
-        /// 反復用オブジェクトを取得します。
-        /// </summary>
-        ///
-        /// <returns>反復用オブジェクト</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public override IEnumerator<Image> GetEnumerator() => _inner.GetEnumerator();
 
         /* ----------------------------------------------------------------- */
         ///

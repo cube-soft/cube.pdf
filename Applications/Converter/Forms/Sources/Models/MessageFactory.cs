@@ -53,7 +53,6 @@ namespace Cube.Pdf.App.Converter
         {
             Title            = Properties.Resources.TitleBrowseSource,
             FileName         = GetFileName(src, io),
-            InitialDirectory = GetDirectoryName(src, io),
             Multiselect      = false,
             Filter           = ViewResource.SourceFilters.GetFilter(),
             FilterIndex      = ViewResource.SourceFilters.GetFilterIndex(src, io),
@@ -77,7 +76,6 @@ namespace Cube.Pdf.App.Converter
         {
             Title            = Properties.Resources.TitleBroseDestination,
             FileName         = GetFileName(src, io),
-            InitialDirectory = GetDirectoryName(src, io),
             OverwritePrompt  = false,
             Filter           = ViewResource.DestinationFilters.GetFilter(),
             FilterIndex      = ViewResource.DestinationFilters.GetFilterIndex(src, io),
@@ -101,7 +99,6 @@ namespace Cube.Pdf.App.Converter
         {
             Title            = Properties.Resources.TitleBroseUserProgram,
             FileName         = GetFileName(src, io),
-            InitialDirectory = GetDirectoryName(src, io),
             Multiselect      = false,
             Filter           = ViewResource.UserProgramFilters.GetFilter(),
         };

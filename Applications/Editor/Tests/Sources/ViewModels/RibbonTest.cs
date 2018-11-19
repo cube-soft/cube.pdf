@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.App.Editor;
-using Cube.Xui;
 using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 
@@ -50,7 +49,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         public void GetText_English()
         {
             var dest = Create();
-            ResourceCulture.Set("en");
+            Locale.Set(Language.English);
 
             Assert.That(dest.File.Text,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("Edit"));
@@ -96,7 +95,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         public void GetTooltip_English()
         {
             var dest = Create();
-            ResourceCulture.Set("en");
+            Locale.Set(Language.English);
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
@@ -142,7 +141,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         public void GetText_Japanese()
         {
             var dest = Create();
-            ResourceCulture.Set("ja");
+            Locale.Set(Language.Japanese);
 
             Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("編集"));
@@ -188,7 +187,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         public void GetTooltip_Japanese()
         {
             var dest = Create();
-            ResourceCulture.Set("ja");
+            Locale.Set(Language.Japanese);
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo(dest.File.Text));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
@@ -235,29 +234,21 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         {
             var dest = Create();
 
-            ResourceCulture.Set("en");
+            Locale.Set(Language.English);
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "en");
 
-            ResourceCulture.Set("ja");
+            Locale.Set(Language.Japanese);
             Assert.That(dest.Open.Text,    Is.EqualTo("開く"), "ja");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "ja");
 
-            ResourceCulture.Set("fr");
+            Locale.Set(Language.French);
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "fr");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "fr");
 
-            ResourceCulture.Set("ja-jp");
-            Assert.That(dest.Open.Text,    Is.EqualTo("開く"), "ja-jp");
-            Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "ja-jp");
-
-            ResourceCulture.Set(string.Empty);
+            Locale.Set(Language.Auto);
             Assert.That(dest.Open.Text,    Is.Not.Null.And.Not.Empty, "empty");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "empty");
-
-            ResourceCulture.Set(null);
-            Assert.That(dest.Open.Text,    Is.Not.Null.And.Not.Empty, "null");
-            Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "null");
         }
 
         #endregion

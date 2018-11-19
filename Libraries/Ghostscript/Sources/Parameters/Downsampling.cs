@@ -23,7 +23,7 @@ namespace Cube.Pdf.Ghostscript
     /// Downsampling
     ///
     /// <summary>
-    /// ダウンサンプリング方法に関する列挙型です。
+    /// Specifies methods of the downsampling.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -44,11 +44,11 @@ namespace Cube.Pdf.Ghostscript
     /// DownsamplingExtension
     ///
     /// <summary>
-    /// Downsampling の拡張用クラスです。
+    /// Provides extended methods of the Downsampling enum.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class DownsamplingExtension
+    internal static class DownsamplingExtension
     {
         #region Methods
 
@@ -57,13 +57,14 @@ namespace Cube.Pdf.Ghostscript
         /// GetArgument
         ///
         /// <summary>
-        /// Downsampling を表す Argument オブジェクトを取得します。
+        /// Gets a new instance of the Argument class from the specified
+        /// parameters.
         /// </summary>
         ///
-        /// <param name="src">Downsampling</param>
-        /// <param name="name">名前</param>
+        /// <param name="src">Downsampling value.</param>
+        /// <param name="name">Name of the argument.</param>
         ///
-        /// <returns>Argument オブジェクト</returns>
+        /// <returns>Argument object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Argument GetArgument(this Downsampling src, string name) =>
