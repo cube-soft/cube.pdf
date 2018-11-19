@@ -80,11 +80,7 @@ var converter = new DocumentConverter(Format.Pdf)
 converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
 
-If you want to know other support formats or options, see the following links.
-
-* [Format](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/Parameters/Format.cs)
-* [DocumentConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/DocumentConverter.cs)
-* [ImageConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/ImageConverter.cs)
+For details, see the [Readme](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Readme.md) in the Ghostscript directory.
 
 ### CubePDF
 
