@@ -50,7 +50,7 @@ Dependencies of the CubePDF is as follows.
 
 * 2018/11/22 version 1.0.0RC16
     - Fix to apply for the specified resolution to embedded PDF images.
-    - Fix the initial directory of the save file dialog.
+    - Fix the initial directory of the saving file dialog.
     - Fix to install and uninstall the CubePDF printer.
     - Fix to show messages of the installer in English or Japanese.
 * 2018/10/01 version 1.0.0RC15
