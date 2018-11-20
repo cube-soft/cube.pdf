@@ -14,12 +14,12 @@ The converter allows you to convert the files as easy as you can print the files
 as a matter of fact, you can do it in the same manner as you print files. 
 
 CubePDF requires Microsoft .NET Framework 3.5 or more.
-The download link of Microsoft .NET Framework 3.5 is as follows:  
+The download link is as follows:  
 https://www.microsoft.com/en-us/download/details.aspx?id=22
 
 ## Support
 
-CubePDF puts logs to the following files.
+CubePDF outputs the log to the following files.
 When you have some troubles, please contact support@cube-soft.jp along with these log files.
 
 * C:\ProgramData\CubeSoft\CubePdf\Log\CubePinstaller.log
