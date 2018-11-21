@@ -47,6 +47,28 @@ namespace Cube.Pdf.App.Converter
         /// SettingsFolder
         ///
         /// <summary>
+        /// Initializes static fields.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        static SettingsFolder()
+        {
+            Locale.Configure(e =>
+            {
+                var src = e.ToCultureInfo();
+                var cmp = Properties.Resources.Culture?.Name;
+                var opt = StringComparison.InvariantCultureIgnoreCase;
+                if (cmp.HasValue() && cmp.Equals(src.Name, opt)) return false;
+                Properties.Resources.Culture = src;
+                return true;
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsFolder
+        ///
+        /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
