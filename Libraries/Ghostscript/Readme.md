@@ -5,10 +5,7 @@ Cube.Pdf.Ghostscript
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
 
-Cube.Pdf.Ghostscript is a wrapper library of the [Ghostscript](https://www.ghostscript.com/).
-The library is available for .NET Framework 3.5, 4.5 or more.
-Note that the Cube.Pdf.Ghostscript library is available for NuGet, but you need to copy the gsdll32.dll to the executing directory manually.
-You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or our [GitHub releases](https://github.com/cube-soft/Cube.Pdf/releases).
+Cube.Pdf.Ghostscript is a wrapper library of the [Ghostscript](https://www.ghostscript.com/), which is available for .NET Framework 3.5, 4.5 or more. Note that the Cube.Pdf.Ghostscript library is available for NuGet, but you need to copy the gsdll32.dll to the executing directory manually. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or our [GitHub releases](https://github.com/cube-soft/Cube.Pdf/releases).
 
 ## Usage
 
