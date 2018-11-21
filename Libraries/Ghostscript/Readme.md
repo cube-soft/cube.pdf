@@ -7,7 +7,7 @@ Cube.Pdf.Ghostscript
 
 Cube.Pdf.Ghostscript is a wrapper library of the [Ghostscript](https://www.ghostscript.com/).
 The library is available for .NET Framework 3.5, 4.5 or more.
-The Cube.Pdf.Ghostscript library is available for NuGet, but you need to copy the gsdll32.dll to the executing directory manually.
+Note that the Cube.Pdf.Ghostscript library is available for NuGet, but you need to copy the gsdll32.dll to the executing directory manually.
 You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or our [GitHub releases](https://github.com/cube-soft/Cube.Pdf/releases).
 
 ## Usage
@@ -25,7 +25,7 @@ public class Converter
 }
 ```
 
-When you convert a PostScript file to any other formats, you specify the target format at the constructor of the Converter class, then add some options, and finally execute the Invoke method.
+When you convert a PostScript file to any other formats, you specify the target format at the constructor of the Converter class, add some options, and finally execute the Invoke method.
 The Ghostscript API has two kinds of parameters, one is normal arguments and the other is PostScript codes.
 Options and Codes properties of the Converter class correspond respectively.
 
@@ -47,8 +47,8 @@ var converter = new PdfConverter
 converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
 
-When you set values to the properties, Converter inherited classes automatically create and add the corresponding arguments or PostScript codes to the Ghostscript API.
-The library prepares the following variations.
+When you set values to the properties, Converter inherited classes automatically add the corresponding arguments or PostScript codes to the Ghostscript API.
+The library provides the following variations.
 
 * [DocumentConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/DocumentConverter.cs) ... PS/EPS/PDF
     * [PdfConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/PdfConverter.cs)
