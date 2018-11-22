@@ -19,12 +19,8 @@ https://www.microsoft.com/ja-jp/download/details.aspx?id=22
 
 ## 問題が発生した場合
 
-CubePDF は、以下のファイルに実行ログを出力しています。
-問題が発生した時は、以下のファイルを添付して support@cube-soft.jp までご連絡お願いいたします。
-
-* C:\ProgramData\CubeSoft\CubePdf\Log\CubePinstaller.log
-* C:\ProgramData\CubeSoft\CubePdf\Log\CubePdf.log
-* C:\ProgramData\CubeSoft\CubePdf\Log\CubeProxy.log
+CubePDF は、C:\ProgramData\CubeSoft\CubePdf\Log フォルダに実行ログを出力しています。
+問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡お願いいたします。
 
 ## 利用ライブラリ
 
