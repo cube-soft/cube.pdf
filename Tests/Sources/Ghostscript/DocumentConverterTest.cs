@@ -151,19 +151,19 @@ namespace Cube.Pdf.Tests.Ghostscript
                 {
                     ColorMode   = ColorMode.Rgb,
                     Orientation = Orientation.Portrait,
-                }, "Sample.eps", ColorMode.Rgb);
+                }, "SampleMix.ps", ColorMode.Rgb);
 
                 yield return TestCase(new PdfConverter
                 {
                     ColorMode   = ColorMode.Cmyk,
                     Orientation = Orientation.Portrait,
-                }, "Sample.eps", ColorMode.Cmyk);
+                }, "SampleMix.ps", ColorMode.Cmyk);
 
                 yield return TestCase(new PdfConverter
                 {
                     ColorMode   = ColorMode.Grayscale,
                     Orientation = Orientation.Portrait,
-                }, "Sample.eps", ColorMode.Grayscale);
+                }, "SampleMix.ps", ColorMode.Grayscale);
 
                 /* --------------------------------------------------------- */
                 // Compression

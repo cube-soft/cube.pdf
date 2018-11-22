@@ -119,6 +119,24 @@ namespace Cube.Pdf.Tests.Ghostscript
                 }, "Sample.ps", "AntiAlias_False");
 
                 /* --------------------------------------------------------- */
+                // ColorMode
+                /* --------------------------------------------------------- */
+                yield return TestCase(new ImageConverter(Format.Jpeg24bppRgb)
+                {
+                    Resolution = 300,
+                }, "SampleMix.ps", Format.Jpeg24bppRgb);
+
+                yield return TestCase(new ImageConverter(Format.Jpeg32bppCmyk)
+                {
+                    Resolution = 300,
+                }, "SampleMix.ps", Format.Jpeg32bppCmyk);
+
+                yield return TestCase(new ImageConverter(Format.Jpeg8bppGrayscale)
+                {
+                    Resolution = 300,
+                }, "SampleMix.ps", Format.Jpeg8bppGrayscale);
+
+                /* --------------------------------------------------------- */
                 // Quality
                 /* --------------------------------------------------------- */
                 yield return TestCase(new JpegConverter(Format.Jpeg)
