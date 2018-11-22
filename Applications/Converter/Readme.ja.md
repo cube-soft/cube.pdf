@@ -1,4 +1,5 @@
-# CubePDF
+CubePDF
+====
 
 Copyright © 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
