@@ -6,7 +6,7 @@ GNU Affero General Public License version 3 (AGPLv3)
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdf/
 
-## PDF への変換手順
+## CubePDF による変換手順
 
 CubePDF は **仮想プリンター** としてインストールされます。そのため、Web ブラウザや
 Microsoft Word, Excel, PowerPoint など **印刷** ボタンのあるアプリケーションであれば
