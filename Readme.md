@@ -68,7 +68,7 @@ The following code converts to the PDF file.
 
 ```cs
 // using Cube.Pdf.Ghostscript;
-var converter = new DocumentConverter(Format.Pdf)
+var converter = new PdfConverter
 {
     Paper        = Paper.Auto,
     Orientation  = Orientation.Auto,
@@ -76,15 +76,12 @@ var converter = new DocumentConverter(Format.Pdf)
     Resolution   = 600,
     Compression  = Encoding.Jpeg,
     Downsampling = Downsampling.None,
-}
+    Version      = new Version(1, 7),
+};
 converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
 
-If you want to know other support formats or options, see the following links.
-
-* [Format](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/Parameters/Format.cs)
-* [DocumentConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/DocumentConverter.cs)
-* [ImageConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/ImageConverter.cs)
+See the [Readme](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Readme.md) in the Ghostscript directory for details.
 
 ### CubePDF
 
@@ -93,7 +90,7 @@ If you want to know other support formats or options, see the following links.
 [CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application uses Ghostscript and iTextSharp.
 
 You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) (Japanese), or [directly download link](https://www.cube-soft.jp/cubepdf/dl.php).
-Note that the installer always shows menus and other messages only in Japanese. Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
+Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
 
 ### CubePDF Utility
 
