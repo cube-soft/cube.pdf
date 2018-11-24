@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("2.13.0.0")]
-[assembly: AssemblyFileVersion("2.13.0.0")]
+[assembly: AssemblyVersion("2.13.1.0")]
+[assembly: AssemblyFileVersion("2.13.1.0")]
 [assembly: AssemblyTitle("Cube.Pdf.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("CubeSoft")]
