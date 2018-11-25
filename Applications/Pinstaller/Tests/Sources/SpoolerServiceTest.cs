@@ -62,7 +62,7 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Clear
+        /// Reset
         ///
         /// <summary>
         /// Executes the test to clear printer jobs.
@@ -70,7 +70,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Clear() => Assert.DoesNotThrow(() => new SpoolerService().Clear());
+        public void Reset() => Assert.DoesNotThrow(() => new SpoolerService().Reset());
 
         /* ----------------------------------------------------------------- */
         ///

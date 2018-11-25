@@ -164,14 +164,15 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Clear
+        /// Reset
         ///
         /// <summary>
-        /// Clears all of the printing jobs.
+        /// Stops the spooler service, clears all of printing jobs, and
+        /// restarts the service.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear()
+        public void Reset()
         {
             var dir = Path.Combine(Environment.SpecialFolder.System.GetName(), @"spool\printers");
             var src = Directory.GetFiles(dir);
@@ -179,7 +180,7 @@ namespace Cube.Pdf.App.Pinstaller
 
             this.LogDebug($"Job:{n}");
 
-            if (n > 0) Invoke(() =>
+            Invoke(() =>
             {
                 foreach (var f in src)
                 {
@@ -204,7 +205,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action)
         {
-            var running = (Status == ServiceControllerStatus.Running);
+            var running = Status == ServiceControllerStatus.Running;
             if (running) Stop();
             try { action(); }
             finally { if (running) Start(); }

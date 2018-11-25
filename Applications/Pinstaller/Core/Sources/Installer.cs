@@ -150,7 +150,7 @@ namespace Cube.Pdf.App.Pinstaller
             var printers = Config.Printers.Select(e => e.Create()).ToList();
 
             // Uninstall
-            service.Clear();
+            service.Reset();
             if (reinstall) Uninstall(printers, drivers, ports, monitors);
 
             // Copy
