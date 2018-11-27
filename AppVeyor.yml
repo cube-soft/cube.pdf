@@ -78,7 +78,7 @@ test_script:
       -hideskipped:All
       -mergeoutput
       -output:CoverResults.xml
-      -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.*"
+      -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*.Program"
 after_test:
     - xcopy /q /Y /I CoverResults.xml TestLog\
     - xcopy /q /Y /I Tests\bin\Release\Cube.Pdf.Tests.log TestLog\
