@@ -70,7 +70,12 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Reset() => Assert.DoesNotThrow(() => new SpoolerService().Reset());
+        public void Reset() => Invoke(() =>
+        {
+            var src = new SpoolerService();
+            src.Reset();
+            Assert.That(src.Status, Is.EqualTo(ServiceControllerStatus.Running));
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -86,16 +91,39 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Restart()
+        public void Restart() => Invoke(() =>
         {
-            try
-            {
-                var src = new SpoolerService();
-                src.Stop();
-                src.Stop();  // ignore
-                src.Start();
-                src.Start(); // ignore
-            }
+            var src = new SpoolerService();
+
+            src.Stop();
+            src.Stop(); // ignore
+            Assert.That(src.Status, Is.EqualTo(ServiceControllerStatus.Stopped));
+
+            src.Start();
+            src.Start(); // ignore
+            Assert.That(src.Status, Is.EqualTo(ServiceControllerStatus.Running));
+        });
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 実行権限がない場合のテスト結果は無視します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Action action)
+        {
+            try { action(); }
             catch (InvalidOperationException e) { this.LogWarn($"{e.Message} ({e.GetType().Name})"); }
         }
 
