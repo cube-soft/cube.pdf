@@ -45,14 +45,30 @@ converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
 
 When you set values to the properties, Converter inherited classes automatically add the corresponding arguments or PostScript codes to the Ghostscript API.
-The library provides the following variations.
+The library provides the following variations. All available formats and other options are defined in the [Parameters](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Ghostscript/Sources/Parameters) directory.
 
 * [DocumentConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/DocumentConverter.cs) ... PS/EPS/PDF
     * [PdfConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/PdfConverter.cs)
 * [ImageConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/ImageConverter.cs) ... PNG/JPEG/BMP/TIFF
     * [JpegConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/JpegConverter.cs)
 
-All available formats and other options are defined in the [Parameters](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Ghostscript/Sources/Parameters) directory.
+When you need to add some options manually, you create a new instance of the [Argument](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Ghostscript/Sources/Argument.cs) class and add it to the Options property. Constructors of the Argument class are as follows:
+
+```cs
+public class Argument
+{
+    public Argument(string name, string value);
+    public Argument(string name, bool value);
+    public Argument(string name, int value);
+    public Argument(char type);
+    public Argument(char type, int value);
+    public Argument(char type, string name);
+    public Argument(char type, string name, bool value);
+    public Argument(char type, string name, int value);
+    public Argument(char type, string name, string value);
+    public Argument(char type, string name, string value, bool literal);
+}
+```
 
 ## Dependencies
 
