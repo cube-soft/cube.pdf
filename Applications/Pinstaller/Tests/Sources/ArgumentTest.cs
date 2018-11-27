@@ -20,6 +20,8 @@ using Cube.DataContract;
 using Cube.Pdf.App.Pinstaller;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace Cube.Pdf.Tests.Pinstaller
 {
@@ -55,6 +57,41 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.GetConfiguration(),     Is.Not.EqualTo("Sample.json").And.EndWith("Sample.json"));
             Assert.That(src.GetResourceDirectory(), Is.Not.EqualTo("Printers").And.EndWith("Printers"));
 
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Parse_Empty
+        ///
+        /// <summary>
+        /// Executes the test to parse an empty argument.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Parse_Empty()
+        {
+            var src = new ArgumentCollection(new string[0], '/', true);
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Assert.That(src.GetRetryCount(),        Is.EqualTo(1));
+            Assert.That(src.GetCommand(),           Is.Empty);
+            Assert.That(src.GetConfiguration(),     Is.Null);
+            Assert.That(src.GetResourceDirectory(), Is.EqualTo(dir));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Replace
+        ///
+        /// <summary>
+        /// Executes the test to replace some strings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Replace()
+        {
+            var src  = new ArgumentCollection(new string[0], '/', true);
             var dest = new Installer(Format.Json, GetExamplesWith("SampleSkeleton.json"));
 
             var s0 = dest.Config.Ports[0].Application;
