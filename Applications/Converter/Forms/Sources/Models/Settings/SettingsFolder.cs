@@ -24,6 +24,7 @@ using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -215,21 +216,21 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void Set(string[] args)
         {
-            var src = new ArgumentCollection(args, '/');
-            var opt = src.Options;
+            var src = new ArgumentCollection(args, '/', true);
+            var op  = src.Options;
 
-            if (opt.TryGetValue(nameof(MachineName), out var pc)) MachineName = pc;
-            if (opt.TryGetValue(nameof(UserName), out var user)) UserName = user;
-            if (opt.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.Product, IO);
-            if (opt.TryGetValue(nameof(Digest), out var digest)) Digest = digest;
-            if (opt.TryGetValue("InputFile", out var input)) Value.Source = input;
+            if (TryGet(op, nameof(MachineName), out var pc)) MachineName = pc;
+            if (TryGet(op, nameof(UserName), out var user)) UserName = user;
+            if (TryGet(op, nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.Product, IO);
+            if (TryGet(op, nameof(Digest), out var digest)) Digest = digest;
+            if (TryGet(op, "InputFile", out var input)) Value.Source = input;
 
             var dest = IO.Get(IO.Combine(Value.Destination, DocumentName.Name));
             var name = dest.NameWithoutExtension;
             var ext  = Value.Format.GetExtension();
 
             Value.Destination  = IO.Combine(dest.DirectoryName, $"{name}{ext}");
-            Value.DeleteSource = opt.ContainsKey("DeleteOnClose");
+            Value.DeleteSource = op.ContainsKey("deleteonclose");
         }
 
         /* ----------------------------------------------------------------- */
@@ -364,6 +365,18 @@ namespace Cube.Pdf.App.Converter
             var keyname = $@"Software\{Assembly.Company}\{Assembly.Product}";
             using (var key = root.OpenSubKey(keyname, false)) return key?.GetValue(name) as string;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TryGet
+        ///
+        /// <summary>
+        /// Tries to get the value corresponding to the specified name.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool TryGet(IReadOnlyDictionary<string, string> src, string name, out string dest) =>
+            src.TryGetValue(name.ToLowerInvariant(), out dest);
 
         #endregion
 
