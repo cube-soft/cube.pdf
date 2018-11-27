@@ -81,6 +81,38 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Parse_Absolute
+        ///
+        /// <summary>
+        /// Executes the test to parse arguments as absolute path.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Parse_Absolute()
+        {
+            var src = new ArgumentCollection(new[] { "Sample.json" }, '/', true);
+            Assert.That(src.GetConfiguration(), Is.EqualTo("Sample.json"));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Parse_RetryCount
+        ///
+        /// <summary>
+        /// Executes the test to parse arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Parse_RetryCount()
+        {
+            var src = new ArgumentCollection(new[] { "Sample.json", "/Retry", "Dummy" }, '/', true);
+            Assert.That(src.GetRetryCount(), Is.EqualTo(1));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Replace
         ///
         /// <summary>
