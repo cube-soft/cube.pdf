@@ -48,14 +48,12 @@ namespace Cube.Pdf.App.Converter
         [STAThread]
         static void Main(string[] args)
         {
-            var type = typeof(Program);
-
             try
             {
                 Logger.Configure();
                 Logger.ObserveTaskException();
-                Logger.Info(type, Assembly.GetExecutingAssembly());
-                Logger.Info(typeof(Program), $"Arguments:{string.Join(" ", args)}");
+                Logger.Info(LogType, Assembly.GetExecutingAssembly());
+                Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -67,7 +65,7 @@ namespace Cube.Pdf.App.Converter
 
                 Show(settings);
             }
-            catch (Exception err) { Logger.Error(type, err.ToString()); }
+            catch (Exception err) { Logger.Error(LogType, err.ToString()); }
         }
 
         #endregion
@@ -93,6 +91,10 @@ namespace Cube.Pdf.App.Converter
             }
         }
 
+        #endregion
+
+        #region Fields
+        private static readonly Type LogType = typeof(Program);
         #endregion
     }
 }
