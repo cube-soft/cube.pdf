@@ -28,18 +28,20 @@ namespace Cube.Pdf.App.Converter
     /// Program
     ///
     /// <summary>
-    /// メインプログラムを表すクラスです。
+    /// Represents the main program.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     static class Program
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// Main
         ///
         /// <summary>
-        /// アプリケーションのメイン エントリ ポイントです。
+        /// Executes the main program of the application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -63,14 +65,34 @@ namespace Cube.Pdf.App.Converter
                 settings.Set(args);
                 settings.CheckUpdate();
 
-                var view = new MainForm();
-                using (var vm = new MainViewModel(settings))
-                {
-                    view.Bind(vm);
-                    Application.Run(view);
-                }
+                Show(settings);
             }
             catch (Exception err) { Logger.Error(type, err.ToString()); }
         }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Show
+        ///
+        /// <summary>
+        /// Shows the main window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Show(SettingsFolder settings)
+        {
+            var view = new MainForm();
+            using (var vm = new MainViewModel(settings))
+            {
+                view.Bind(vm);
+                Application.Run(view);
+            }
+        }
+
+        #endregion
     }
 }
