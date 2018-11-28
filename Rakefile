@@ -1,5 +1,6 @@
 require 'rake'
 require 'rake/clean'
+require 'fileutils'
 
 # --------------------------------------------------------------------------- #
 # Configuration
@@ -16,11 +17,18 @@ PDFIUM         = [ 'PdfiumViewer.Native', 'no_v8-no_xfa', '2018.4.8.256' ]
 # --------------------------------------------------------------------------- #
 # Commands
 # --------------------------------------------------------------------------- #
-COPY     = 'cp -pfr'
 CHECKOUT = 'git checkout'
 BUILD    = 'msbuild /t:Clean,Build /m /verbosity:minimal /p:Configuration=Release;Platform="Any CPU";GeneratePackageOnBuild=false'
 RESTORE  = 'nuget restore'
 PACK     = 'nuget pack -Properties "Configuration=Release;Platform=AnyCPU"'
+
+# --------------------------------------------------------------------------- #
+# Functions
+# --------------------------------------------------------------------------- #
+def fs_copy(src, dest)
+    FileUtils.mkdir_p(dest)
+    FileUtils.cp_r(Dir.glob(src), dest)
+end
 
 # --------------------------------------------------------------------------- #
 # Tasks
@@ -63,8 +71,8 @@ task :copy do
         # Ghostscript
         [ 'Tests', 'Applications/Converter/Tests', 'Applications/Converter/Forms' ].each { |dest|
             src  = [ NATIVE, set[1], 'ghostscript', '*' ].join('/')
-            sh("#{COPY} #{src} #{dest}/#{x86_64}")
-            sh("#{COPY} #{src} #{dest}/#{any_cpu}") if (set[1] == 'x64')
+            fs_copy(src, "#{dest}/#{x86_64}")
+            fs_copy(src, "#{dest}/#{any_cpu}") if (set[1] == 'x64')
         }
 
         # PDFium
@@ -72,8 +80,8 @@ task :copy do
             arch = (set[1] == 'x86') ? 'x86' : 'x86_64'
             dir  = [ PDFIUM[0], arch, PDFIUM[1], PDFIUM[2] ].join('.')
             src  = [ PACKAGE, dir, 'Build', set[1], 'pdfium.dll' ].join('/')
-            sh("#{COPY} #{src} #{dest}/#{x86_64}")
-            sh("#{COPY} #{src} #{dest}/#{any_cpu}") if (set[1] == 'x64')
+            fs_copy(src, "#{dest}/#{x86_64}")
+            fs_copy(src, "#{dest}/#{any_cpu}") if (set[1] == 'x64')
         }
     }
 end
