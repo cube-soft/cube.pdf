@@ -19,6 +19,7 @@ using Cube.Collections;
 using Cube.DataContract;
 using Cube.Generics;
 using Cube.Log;
+using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Reflection;
 
@@ -54,6 +55,8 @@ namespace Cube.Pdf.App.Pinstaller
                 Logger.Configure();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
                 Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
+
+                foreach (var e in Printer.GetElements()) e.Log();
 
                 var src = new ArgumentCollection(args, '/', true);
                 var cmd = src.GetCommand();

@@ -23,14 +23,14 @@ namespace Cube.Pdf.App.Pinstaller.Debug
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Logger
+    /// DebugLogger
     ///
     /// <summary>
     /// Provides extended methods to put debug information.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class Logger
+    public static class DebugLogger
     {
         #region Methods
 

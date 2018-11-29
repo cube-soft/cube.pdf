@@ -140,8 +140,8 @@ namespace Cube.Pdf.App.Pinstaller
         public void Start()
         {
             Wait();
-            this.Log();
             if (Status == ServiceControllerStatus.Running) return;
+            this.Log();
 
             var ps = _pending.TryGetValue(Status, out var dest) &&
                      dest == ServiceControllerStatus.Running;
@@ -162,8 +162,8 @@ namespace Cube.Pdf.App.Pinstaller
         public void Stop()
         {
             Wait();
-            this.Log();
             if (Status == ServiceControllerStatus.Stopped) return;
+            this.Log();
             if (!_core.CanStop) throw new InvalidOperationException($"{Name} cannot stop");
 
             var ps = _pending.TryGetValue(Status, out var dest) &&
