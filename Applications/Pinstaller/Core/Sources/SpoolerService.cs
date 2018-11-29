@@ -19,6 +19,7 @@ using Cube.Generics;
 using Cube.Log;
 using Cube.Pdf.App.Pinstaller.Debug;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.ServiceProcess;
 
@@ -48,7 +49,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public SpoolerService()
         {
-            Timeout = TimeSpan.FromSeconds(10);
+            Timeout = TimeSpan.FromMinutes(1);
             _core = new ServiceController("Spooler");
         }
 
@@ -138,9 +139,14 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Start()
         {
+            Wait();
             this.Log();
             if (Status == ServiceControllerStatus.Running) return;
-            _core.Start();
+
+            var ps = _pending.TryGetValue(Status, out var dest) &&
+                     dest == ServiceControllerStatus.Running;
+            if (!ps) _core.Start();
+
             _core.WaitForStatus(ServiceControllerStatus.Running, Timeout);
         }
 
@@ -155,10 +161,15 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Stop()
         {
+            Wait();
             this.Log();
             if (Status == ServiceControllerStatus.Stopped) return;
             if (!_core.CanStop) throw new InvalidOperationException($"{Name} cannot stop");
-            _core.Stop();
+
+            var ps = _pending.TryGetValue(Status, out var dest) &&
+                     dest == ServiceControllerStatus.Stopped;
+            if (!ps) _core.Stop();
+
             _core.WaitForStatus(ServiceControllerStatus.Stopped, Timeout);
         }
 
@@ -205,16 +216,39 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action)
         {
-            var running = Status == ServiceControllerStatus.Running;
-            if (running) Stop();
+            if (Status == ServiceControllerStatus.Running) Stop();
             try { action(); }
-            finally { if (running) Start(); }
+            finally { Start(); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Wait
+        ///
+        /// <summary>
+        /// Waits until the pending status reaches the corresponding status.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Wait()
+        {
+            if (!_pending.TryGetValue(Status, out var dest)) return;
+            this.Log();
+            _core.WaitForStatus(dest, Timeout);
         }
 
         #endregion
 
         #region Fields
         private readonly ServiceController _core;
+        private readonly IDictionary<ServiceControllerStatus, ServiceControllerStatus> _pending =
+            new Dictionary<ServiceControllerStatus, ServiceControllerStatus>
+        {
+            { ServiceControllerStatus.StartPending,    ServiceControllerStatus.Running },
+            { ServiceControllerStatus.ContinuePending, ServiceControllerStatus.Running },
+            { ServiceControllerStatus.StopPending,     ServiceControllerStatus.Stopped },
+            { ServiceControllerStatus.PausePending,    ServiceControllerStatus.Paused  }
+        };
         #endregion
     }
 }
