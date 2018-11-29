@@ -25,9 +25,9 @@ PACK     = 'nuget pack -Properties "Configuration=Release;Platform=AnyCPU"'
 # --------------------------------------------------------------------------- #
 # Functions
 # --------------------------------------------------------------------------- #
-def fs_copy(src, dest)
+def do_copy(src, dest)
     FileUtils.mkdir_p(dest)
-    FileUtils.cp_r(Dir.glob(src), dest)
+    FileUtils.cp_r(src, dest)
 end
 
 # --------------------------------------------------------------------------- #
@@ -71,8 +71,8 @@ task :copy do
         # Ghostscript
         [ 'Tests', 'Applications/Converter/Tests', 'Applications/Converter/Forms' ].each { |dest|
             src  = [ NATIVE, set[1], 'ghostscript', 'gsdll32.dll' ].join('/')
-            fs_copy(src, "#{dest}/#{x86_64}")
-            fs_copy(src, "#{dest}/#{any_cpu}") if (set[1] == 'x64')
+            do_copy(src, "#{dest}/#{x86_64}")
+            do_copy(src, "#{dest}/#{any_cpu}") if (set[1] == 'x64')
         }
 
         # PDFium
@@ -80,8 +80,8 @@ task :copy do
             arch = (set[1] == 'x86') ? 'x86' : 'x86_64'
             dir  = [ PDFIUM[0], arch, PDFIUM[1], PDFIUM[2] ].join('.')
             src  = [ PACKAGE, dir, 'Build', set[1], 'pdfium.dll' ].join('/')
-            fs_copy(src, "#{dest}/#{x86_64}")
-            fs_copy(src, "#{dest}/#{any_cpu}") if (set[1] == 'x64')
+            do_copy(src, "#{dest}/#{x86_64}")
+            do_copy(src, "#{dest}/#{any_cpu}") if (set[1] == 'x64')
         }
     }
 end
