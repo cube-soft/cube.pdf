@@ -88,8 +88,9 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static void Install(ArgumentCollection src)
         {
+            var ts     = TimeSpan.FromSeconds(src.GetTimeout());
             var config = src.GetConfiguration();
-            var engine = new Installer(Format.Json, config);
+            var engine = new Installer(Format.Json, config) { Timeout = ts };
             var dir    = src.GetResourceDirectory();
 
             Logger.Debug(LogType, $"Method:{nameof(Install).Quote()}");
@@ -111,8 +112,9 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static void Uninstall(ArgumentCollection src)
         {
+            var ts     = TimeSpan.FromSeconds(src.GetTimeout());
             var config = src.GetConfiguration();
-            var engine = new Installer(Format.Json, config);
+            var engine = new Installer(Format.Json, config) { Timeout = ts };
 
             Logger.Debug(LogType, $"Method:{nameof(Uninstall).Quote()}");
             Logger.Debug(LogType, $"Configuration:{config.Quote()}");

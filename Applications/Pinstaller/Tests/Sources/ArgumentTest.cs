@@ -52,6 +52,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void Parse(IEnumerable<string> args, int id)
         {
             var src = new ArgumentCollection(args, '/', true);
+            Assert.That(src.GetTimeout(),           Is.EqualTo(300));
             Assert.That(src.GetRetryCount(),        Is.EqualTo(10));
             Assert.That(src.GetCommand(),           Is.Not.Null.And.Not.Empty);
             Assert.That(src.GetConfiguration(),     Is.Not.EqualTo("Sample.json").And.EndWith("Sample.json"));
@@ -73,6 +74,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         {
             var src = new ArgumentCollection(new string[0], '/', true);
             var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Assert.That(src.GetTimeout(),           Is.EqualTo(30));
             Assert.That(src.GetRetryCount(),        Is.EqualTo(1));
             Assert.That(src.GetCommand(),           Is.Empty);
             Assert.That(src.GetConfiguration(),     Is.Null);
@@ -97,17 +99,19 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Parse_RetryCount
+        /// Parse_Integer
         ///
         /// <summary>
-        /// Executes the test to parse arguments.
+        /// Confirms the behavior that invalid integer arguments are
+        /// specified.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Parse_RetryCount()
+        public void Parse_Integer()
         {
-            var src = new ArgumentCollection(new[] { "Sample.json", "/Retry", "Dummy" }, '/', true);
+            var src = new ArgumentCollection(new[] { "Sample.json", "/Timeout", "Dummy", "/Retry", "Dummy" }, '/', true);
+            Assert.That(src.GetTimeout(),    Is.EqualTo(30));
             Assert.That(src.GetRetryCount(), Is.EqualTo(1));
         }
 
@@ -177,6 +181,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                     "/Command", "Install",
                     "/Relative",
                     "/Resource", "Printers",
+                    "/Timeout", "300",
                     "/Retry", "10",
                 }, n++);
 
@@ -186,6 +191,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                     "/command", "install",
                     "/relative",
                     "/resource", "Printers",
+                    "/timeout", "300",
                     "/retry", "10",
                 }, n++);
 
@@ -195,6 +201,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                     "/COMMAND", "INSTALL",
                     "/RELATIVE",
                     "/RESOURCE", "Printers",
+                    "/TIMEOUT", "300",
                     "/RETRY", "10",
                 }, n++);
             }

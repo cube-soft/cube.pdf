@@ -86,6 +86,26 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetTimeout
+        ///
+        /// <summary>
+        /// Gets the timeout value in seconds.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        ///
+        /// <returns>Timeout value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static int GetTimeout(this ArgumentCollection src)
+        {
+            if (!src.Options.TryGetValue("timeout", out var str)) return 30;
+            if (int.TryParse(str, out var dest)) return dest;
+            else return 30;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetRetryCount
         ///
         /// <summary>
