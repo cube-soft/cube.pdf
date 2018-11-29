@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
 using Cube.Pdf.App.Pinstaller;
 using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
@@ -57,7 +56,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Name,    Is.EqualTo("Spooler"));
             Assert.That(src.Status,  Is.EqualTo(ServiceControllerStatus.Running).Or
                                        .EqualTo(ServiceControllerStatus.Stopped));
-            Assert.That(src.Timeout, Is.EqualTo(TimeSpan.FromSeconds(10)));
+            Assert.That(src.Timeout, Is.EqualTo(TimeSpan.FromMinutes(1)));
         }
 
         /* ----------------------------------------------------------------- */
@@ -103,29 +102,6 @@ namespace Cube.Pdf.Tests.Pinstaller
             src.Start(); // ignore
             Assert.That(src.Status, Is.EqualTo(ServiceControllerStatus.Running));
         });
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the specified action.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 実行権限がない場合のテスト結果は無視します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Invoke(Action action)
-        {
-            try { action(); }
-            catch (InvalidOperationException e) { this.LogWarn($"{e.Message} ({e.GetType().Name})"); }
-        }
 
         #endregion
     }
