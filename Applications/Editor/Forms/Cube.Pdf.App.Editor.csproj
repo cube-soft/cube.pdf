@@ -125,8 +125,8 @@
     <Reference Include="System.Threading">
       <HintPath>..\..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
     </Reference>
-    <Reference Include="System.Threading">
-      <HintPath>..\..\..\..\lib\net35\RibbonControlsLibrary.dll</HintPath>
+    <Reference Include="RibbonControlsLibrary">
+      <HintPath>..\..\..\..\resources\net35\RibbonControlsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="WPFToolkit">
       <HintPath>..\..\..\..\packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
