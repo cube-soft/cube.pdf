@@ -183,23 +183,19 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Reset()
+        public void Reset() => Invoke(() =>
         {
             var dir = Path.Combine(Environment.SpecialFolder.System.GetName(), @"spool\printers");
             var src = Directory.GetFiles(dir);
-            var n   = src.Length;
 
-            this.LogDebug($"Job:{n}");
+            this.LogDebug($"[Clear]\tJob:{src.Length}");
 
-            Invoke(() =>
+            foreach (var f in src)
             {
-                foreach (var f in src)
-                {
-                    try { File.Delete(f); }
-                    catch (Exception err) { this.LogWarn($"{f}:{err}", err); }
-                }
-            });
-        }
+                try { File.Delete(f); }
+                catch (Exception err) { this.LogWarn($"{f}:{err}", err); }
+            }
+        });
 
         #endregion
 
