@@ -19,6 +19,7 @@ using Cube.Collections;
 using Cube.DataContract;
 using Cube.Generics;
 using Cube.Log;
+using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Reflection;
 
@@ -55,6 +56,8 @@ namespace Cube.Pdf.App.Pinstaller
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
                 Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
 
+                foreach (var e in Printer.GetElements()) e.Log();
+
                 var src = new ArgumentCollection(args, '/', true);
                 var cmd = src.GetCommand();
                 var sop = StringComparison.InvariantCultureIgnoreCase;
@@ -88,16 +91,12 @@ namespace Cube.Pdf.App.Pinstaller
             var config = src.GetConfiguration();
             var engine = new Installer(Format.Json, config);
             var dir    = src.GetResourceDirectory();
-            var app    = src.GetApplication();
-            var args   = src.GetArguments();
 
             Logger.Debug(LogType, $"Method:{nameof(Install).Quote()}");
             Logger.Debug(LogType, $"Configuration:{config.Quote()}");
             Logger.Debug(LogType, $"Resource:{dir.Quote()}");
-            Logger.Debug(LogType, $"Application:{app.Quote()}");
-            Logger.Debug(LogType, $"Arguments:[ {args} ]");
 
-            Normalize(engine.Config, app, args);
+            Normalize(src, engine.Config);
             Invoke(src.GetRetryCount(), () => engine.Install(dir, true));
         }
 
@@ -130,14 +129,15 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Normalize(DeviceConfig src, string app, string args)
+        private static void Normalize(ArgumentCollection src, DeviceConfig config)
         {
-            var root = Environment.SpecialFolder.CommonApplicationData.GetName();
-            foreach (var e in src.Ports) e.Temp = System.IO.Path.Combine(root, e.Temp);
-            if (src.Ports.Count != 1 || !app.HasValue()) return;
-
-            src.Ports[0].Application = app;
-            src.Ports[0].Arguments   = args;
+            var ca = Environment.SpecialFolder.CommonApplicationData.GetName();
+            foreach (var e in config.Ports)
+            {
+                e.Temp        = System.IO.Path.Combine(ca, e.Temp);
+                e.Application = src.ReplaceDirectory(e.Application);
+                e.Arguments   = src.ReplaceDirectory(e.Arguments);
+            }
         }
 
         /* ----------------------------------------------------------------- */

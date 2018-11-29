@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
 using Cube.Pdf.App.Pinstaller;
 using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
@@ -57,12 +56,12 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Name,    Is.EqualTo("Spooler"));
             Assert.That(src.Status,  Is.EqualTo(ServiceControllerStatus.Running).Or
                                        .EqualTo(ServiceControllerStatus.Stopped));
-            Assert.That(src.Timeout, Is.EqualTo(TimeSpan.FromSeconds(10)));
+            Assert.That(src.Timeout, Is.EqualTo(TimeSpan.FromMinutes(1)));
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Clear
+        /// Reset
         ///
         /// <summary>
         /// Executes the test to clear printer jobs.
@@ -70,7 +69,12 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Clear() => Assert.DoesNotThrow(() => new SpoolerService().Clear());
+        public void Reset() => Invoke(() =>
+        {
+            var src = new SpoolerService();
+            src.Reset();
+            Assert.That(src.Status, Is.EqualTo(ServiceControllerStatus.Running));
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -86,18 +90,18 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Restart()
+        public void Restart() => Invoke(() =>
         {
-            try
-            {
-                var src = new SpoolerService();
-                src.Stop();
-                src.Stop();  // ignore
-                src.Start();
-                src.Start(); // ignore
-            }
-            catch (InvalidOperationException e) { this.LogWarn($"{e.Message} ({e.GetType().Name})"); }
-        }
+            var src = new SpoolerService();
+
+            src.Stop();
+            src.Stop(); // ignore
+            Assert.That(src.Status, Is.EqualTo(ServiceControllerStatus.Stopped));
+
+            src.Start();
+            src.Start(); // ignore
+            Assert.That(src.Status, Is.EqualTo(ServiceControllerStatus.Running));
+        });
 
         #endregion
     }

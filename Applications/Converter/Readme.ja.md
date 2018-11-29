@@ -19,12 +19,8 @@ https://www.microsoft.com/ja-jp/download/details.aspx?id=22
 
 ## 問題が発生した場合
 
-CubePDF は、以下のファイルに実行ログを出力しています。
-問題が発生した時は、以下のファイルを添付して support@cube-soft.jp までご連絡お願いいたします。
-
-* C:\ProgramData\CubeSoft\CubePdf\Log\CubePinstaller.log
-* C:\ProgramData\CubeSoft\CubePdf\Log\CubePdf.log
-* C:\ProgramData\CubeSoft\CubePdf\Log\CubeProxy.log
+CubePDF は、C:\ProgramData\CubeSoft\CubePdf\Log フォルダに実行ログを出力しています。
+問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡お願いいたします。
 
 ## 利用ライブラリ
 
@@ -49,6 +45,9 @@ CubePDF は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2018/12/04 version 1.0.0RC17
+    - CubePDF プリンタのインストール処理を改善
+    - Ghostscript 9.26 のバージョンアップに対応
 * 2018/11/22 version 1.0.0RC16
     - PDF に埋め込まれた画像に対して解像度の設定が適用されない不都合を修正
     - 名前を付けて保存ダイアログにおける初期表示フォルダの挙動を修正

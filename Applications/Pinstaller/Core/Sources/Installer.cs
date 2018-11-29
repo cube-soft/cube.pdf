@@ -150,7 +150,6 @@ namespace Cube.Pdf.App.Pinstaller
             var printers = Config.Printers.Select(e => e.Create()).ToList();
 
             // Uninstall
-            service.Clear();
             if (reinstall) Uninstall(printers.OfType<IInstallable>(), drivers.OfType<IInstallable>(), ports.OfType<IInstallable>(), monitors.OfType<IInstallable>());
 
             // Copy
@@ -230,7 +229,7 @@ namespace Cube.Pdf.App.Pinstaller
         private void Invoke(Action<SpoolerService> action)
         {
             var service = new SpoolerService();
-            service.Start();
+            service.Reset();
             try { action(service); }
             finally { service.Start(); }
         }
