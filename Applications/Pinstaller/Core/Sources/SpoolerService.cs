@@ -49,7 +49,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public SpoolerService()
         {
-            Timeout = TimeSpan.FromMinutes(1);
+            Timeout = TimeSpan.FromMinutes(10);
             _core = new ServiceController("Spooler");
         }
 
