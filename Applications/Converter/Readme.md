@@ -44,6 +44,9 @@ Dependencies of the CubePDF is as follows.
 
 ## History
 
+* 2018/12/04 version 1.0.0RC17
+    - Fix to install and uninstall the CubePDF printer.
+    - Update Ghostscript 9.26.
 * 2018/11/22 version 1.0.0RC16
     - Fix to apply for the specified resolution to embedded PDF images.
     - Fix the initial directory of the saving file dialog.
