@@ -100,7 +100,7 @@ namespace Cube.Pdf.App.Pinstaller
             Normalize(src, engine.Config);
             Invoke(src.GetRetryCount(), i =>
             {
-                engine.Timeout = TimeSpan.FromSeconds(sec * i);
+                engine.Timeout = TimeSpan.FromSeconds(sec * (i + 1));
                 engine.Install(dir, true);
             });
         }
@@ -125,7 +125,7 @@ namespace Cube.Pdf.App.Pinstaller
 
             Invoke(src.GetRetryCount(), i =>
             {
-                engine.Timeout = TimeSpan.FromSeconds(sec * i);
+                engine.Timeout = TimeSpan.FromSeconds(sec * (i + 1));
                 engine.Uninstall();
             });
         }
