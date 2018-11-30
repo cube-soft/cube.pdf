@@ -12,7 +12,7 @@ Cube.Pdf libraries wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghos
 Libraries and applications are available for .NET Framework 3.5, 4.5 or more.
 Note that some projects are licensed under the GNU AGPLv3. See the License section for details.
 
-## Summary
+## Libraries
 
 ### Cube.Pdf and related libraries
 
@@ -82,6 +82,8 @@ converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
 
 See the [Readme](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Readme.md) in the Ghostscript directory for details.
+
+## Applications
 
 ### CubePDF
 

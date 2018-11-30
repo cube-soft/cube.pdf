@@ -1,4 +1,4 @@
-version: 2.13.0.{build}
+version: 2.13.1.{build}
 branches:
     only:
         - master
@@ -11,8 +11,6 @@ nuget:
 platform: Any CPU
 configuration: Release
 before_build:
-    - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
-    - 7z x -o"..\native\x64" gs-x64.7z
     - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
     - nuget sources add -name Cube.FileSystem -source https://ci.appveyor.com/nuget/cube.filesystem
     - nuget sources add -name Cube.Images -source https://ci.appveyor.com/nuget/cube.images
@@ -25,12 +23,12 @@ build:
     publish_nuget: true
     verbosity: minimal
 after_build:
-    - xcopy /q /Y /I ..\native\x64\bin\gsdll32.dll Tests\bin\Release
-    - xcopy /q /Y /I ..\native\x64\lib\*.* Tests\bin\Release\lib
-    - xcopy /q /Y /I ..\native\x64\bin\gsdll32.dll Applications\Converter\Tests\bin\Release
-    - xcopy /q /Y /I ..\native\x64\lib\*.* Applications\Converter\Tests\bin\Release\lib
-    - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.no_v8-no_xfa.2018.4.8.256\Build\x64\pdfium.dll Tests\bin\Release
-    - xcopy /q /Y /I ..\packages\PdfiumViewer.Native.x86_64.no_v8-no_xfa.2018.4.8.256\Build\x64\pdfium.dll Applications\Editor\Tests\bin\Release
+    - "SET PATH=C:\\Ruby22\\bin;%PATH%"
+    - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x86.7z
+    - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
+    - 7z x -o"..\resources\native\x86\ghostscript" gs-x86.7z
+    - 7z x -o"..\resources\native\x64\ghostscript" gs-x64.7z
+    - rake copy
 test_script:
     - >
       ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
@@ -78,7 +76,7 @@ test_script:
       -hideskipped:All
       -mergeoutput
       -output:CoverResults.xml
-      -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.*"
+      -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*.Program"
 after_test:
     - xcopy /q /Y /I CoverResults.xml TestLog\
     - xcopy /q /Y /I Tests\bin\Release\Cube.Pdf.Tests.log TestLog\

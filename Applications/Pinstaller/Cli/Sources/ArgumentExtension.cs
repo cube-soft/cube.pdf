@@ -19,6 +19,7 @@ using Cube.Collections;
 using Cube.Generics;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -48,7 +49,8 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Command name.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetCommand(this ArgumentCollection src) => src.GetValue("command");
+        public static string GetCommand(this ArgumentCollection src) =>
+            src.Options.TryGetValue("command", out var dest) ? dest : string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -68,48 +70,6 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetApplication
-        ///
-        /// <summary>
-        /// Gets the application path from the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Source arguments.</param>
-        ///
-        /// <returns>Application path.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static string GetApplication(this ArgumentCollection src)
-        {
-            var app   = src.GetPath(src.GetValue("app"));
-            var proxy = src.GetPath(src.GetValue("proxy"));
-
-            if (app.HasValue()) return proxy.HasValue() ? proxy : app;
-            else return string.Empty;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetArguments
-        ///
-        /// <summary>
-        /// Gets the arguments from the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Source arguments.</param>
-        ///
-        /// <returns>Application path.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static string GetArguments(this ArgumentCollection src)
-        {
-            var app   = src.GetPath(src.GetValue("app"));
-            var proxy = src.GetPath(src.GetValue("proxy"));
-            return app.HasValue() && proxy.HasValue() ? $"/Exec {app.Quote()}" : string.Empty;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// GetResourceDirectory
         ///
         /// <summary>
@@ -122,9 +82,27 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public static string GetResourceDirectory(this ArgumentCollection src) =>
-            src.Options.TryGetValue("resource", out var dest) ?
-            src.GetPath(dest) :
-            CurrentDirectory;
+            src.Options.TryGetValue("resource", out var dest) ? src.GetPath(dest) : _current;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTimeout
+        ///
+        /// <summary>
+        /// Gets the timeout value in seconds.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        ///
+        /// <returns>Timeout value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static int GetTimeout(this ArgumentCollection src)
+        {
+            if (!src.Options.TryGetValue("timeout", out var str)) return 30;
+            if (int.TryParse(str, out var dest)) return dest;
+            else return 30;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -146,23 +124,28 @@ namespace Cube.Pdf.App.Pinstaller
             else return 1;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceDirectory
+        ///
+        /// <summary>
+        /// Replace all %%DIR%% strings with the current directory.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        /// <param name="input">Source string.</param>
+        ///
+        /// <returns>Replaced string.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string ReplaceDirectory(this ArgumentCollection src, string input) =>
+            input.HasValue() ?
+            Regex.Replace(input, "%%DIR%%", _current, RegexOptions.IgnoreCase) :
+            input;
+
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetValue
-        ///
-        /// <summary>
-        /// Gets the value from the specified name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static string GetValue(this ArgumentCollection src, string name) =>
-            src.Options.TryGetValue(name, out var dest) ?
-            dest :
-            string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -175,13 +158,13 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static string GetPath(this ArgumentCollection src, string path) =>
             path.HasValue() && src.Options.ContainsKey("relative") ?
-            System.IO.Path.Combine(CurrentDirectory, path) :
+            System.IO.Path.Combine(_current, path) :
             path;
 
         #endregion
 
         #region Fields
-        private static readonly string CurrentDirectory = new AssemblyReader(Assembly.GetExecutingAssembly()).DirectoryName;
+        private static readonly string _current = new AssemblyReader(Assembly.GetExecutingAssembly()).DirectoryName;
         #endregion
     }
 }

@@ -154,8 +154,8 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public bool WaitForExit
         {
-            get => _core.WaitForExit;
-            set => _core.WaitForExit = value;
+            get => _core.WaitForApp;
+            set => _core.WaitForApp = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -287,7 +287,7 @@ namespace Cube.Pdf.App.Pinstaller
             [DataMember] public string AppPath { get; set; }
             [DataMember] public string AppArgs { get; set; }
             [DataMember] public string TempDir { get; set; }
-            [DataMember] public bool WaitForExit { get; set; }
+            [DataMember] public bool WaitForApp { get; set; }
         }
 
         /* ----------------------------------------------------------------- */

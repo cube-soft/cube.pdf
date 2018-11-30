@@ -16,8 +16,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
+using Cube.Log;
 using Cube.Pdf.App.Pinstaller;
 using NUnit.Framework;
+using System;
 using System.ServiceProcess;
 
 namespace Cube.Pdf.Tests.Pinstaller
@@ -49,6 +51,25 @@ namespace Cube.Pdf.Tests.Pinstaller
         {
             var service = new SpoolerService();
             if (service.Status != ServiceControllerStatus.Running) service.Start();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 実行権限がない場合のテスト結果は無視します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Invoke(Action action)
+        {
+            try { action(); }
+            catch (InvalidOperationException e) { this.LogWarn($"{e.Message} ({e.GetType().Name})"); }
         }
 
         #endregion

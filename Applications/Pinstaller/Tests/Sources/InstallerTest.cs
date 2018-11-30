@@ -124,9 +124,11 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("SampleDummy.json")]
-        public void Uninstall(string filename) => Assert.DoesNotThrow(() =>
-            new Installer(Format.Json, GetExamplesWith(filename)).Uninstall()
-        );
+        public void Uninstall(string filename) => Invoke(() =>
+        {
+            var src = new Installer(Format.Json, GetExamplesWith(filename));
+            src.Uninstall();
+        });
 
         /* ----------------------------------------------------------------- */
         ///

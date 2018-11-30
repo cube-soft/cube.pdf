@@ -1,0 +1,40 @@
+{
+    "Printers" : [{
+        "Name"              : "CubePDF",
+        "ShareName"         : "CubePDF",
+        "DriverName"        : "CubePDF",
+        "PortName"          : "CubePDF:"
+    }],
+    "PrinterDrivers" : [{
+        "Name"              : "CubePDF",
+        "MonitorName"       : "CubeMon",
+        "FileName"          : "cubeps5.dll",
+        "Config"            : "cubeps5ui.dll",
+        "Data"              : "cubepdf.ppd",
+        "Help"              : "cubeps.hlp",
+        "Dependencies"      : "cubeps.ntf"
+    }],
+    "Ports" : [
+        {
+            "Name"          : "CubePDF:",
+            "MonitorName"   : "CubeMon",
+            "Application"   : "%%DIR%%\\CubeProxy.exe",
+            "Arguments"     : "/Exec \"%%dir%%\\CubePDF\\cubepdf.exe\"",
+            "Temp"          : "CubeSoft\\CubePDF",
+            "WaitForExit"   : false
+        },
+        {
+            "Name"          : "SkeletonTest:",
+            "MonitorName"   : "CubeMon",
+            "Application"   : "C:\\Program Files\\CubePDF\\CubeProxy.exe",
+            "Arguments"     : "",
+            "Temp"          : "CubeSoft\\CubePDF",
+            "WaitForExit"   : false
+        }
+    ],
+    "PortMonitors" : [{
+        "Name"              : "CubeMon",
+        "FileName"          : "cubemon.dll",
+        "Config"            : "cubemonui.dll"
+    }]
+}

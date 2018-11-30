@@ -73,6 +73,7 @@ namespace Cube.Pdf.App.Pinstaller
             Location = src;
             IO       = io;
             Config   = Create(format, src, io);
+            Timeout  = TimeSpan.FromSeconds(30);
         }
 
         #endregion
@@ -123,6 +124,18 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public IO IO { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Timeout
+        ///
+        /// <summary>
+        /// Gets or sets the timeout value of starting or stopping the
+        /// service.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public TimeSpan Timeout { get; set; }
+
         #endregion
 
         #region Methods
@@ -150,7 +163,6 @@ namespace Cube.Pdf.App.Pinstaller
             var printers = Config.Printers.Select(e => e.Create()).ToList();
 
             // Uninstall
-            service.Clear();
             if (reinstall) Uninstall(printers, drivers, ports, monitors);
 
             // Copy
@@ -229,8 +241,8 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private void Invoke(Action<SpoolerService> action)
         {
-            var service = new SpoolerService();
-            service.Start();
+            var service = new SpoolerService { Timeout = Timeout };
+            service.Reset();
             try { action(service); }
             finally { service.Start(); }
         }
