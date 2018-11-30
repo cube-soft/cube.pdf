@@ -22,6 +22,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
@@ -261,9 +262,10 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
             if (!Exists) return;
-            using (var k = Open(GetName(MonitorName), true))
+            using (var k = Open(GetName(MonitorName, "Ports"), true))
             {
-                k.DeleteSubKeyTree("Ports");
+                var sc = StringComparison.InvariantCultureIgnoreCase;
+                if (k.GetSubKeyNames().Any(e => e.Equals(Name, sc))) k.DeleteSubKeyTree(Name);
                 Exists = false;
             }
         }
@@ -355,7 +357,7 @@ namespace Cube.Pdf.App.Pinstaller
             try
             {
                 Marshal.Copy(cn.ToCharArray(), 0, buffer, cn.Length);
-                if (!NativeMethods.XcvData(h, "AddPort", buffer, (uint)size, IntPtr.Zero, 0, out var _, out var err))
+                if (!NativeMethods.XcvData(h, "AddPort", buffer, (uint)size, IntPtr.Zero, 0, out _, out var err))
                 {
                     throw new Win32Exception((int)err);
                 }
