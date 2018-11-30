@@ -88,6 +88,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static void Install(ArgumentCollection src)
         {
+            var sec    = src.GetTimeout();
             var config = src.GetConfiguration();
             var engine = new Installer(Format.Json, config);
             var dir    = src.GetResourceDirectory();
@@ -97,7 +98,11 @@ namespace Cube.Pdf.App.Pinstaller
             Logger.Debug(LogType, $"Resource:{dir.Quote()}");
 
             Normalize(src, engine.Config);
-            Invoke(src.GetRetryCount(), () => engine.Install(dir, true));
+            Invoke(src.GetRetryCount(), i =>
+            {
+                engine.Timeout = TimeSpan.FromSeconds(sec * (i + 1));
+                engine.Install(dir, true);
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -111,13 +116,18 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static void Uninstall(ArgumentCollection src)
         {
+            var sec    = src.GetTimeout();
             var config = src.GetConfiguration();
             var engine = new Installer(Format.Json, config);
 
             Logger.Debug(LogType, $"Method:{nameof(Uninstall).Quote()}");
             Logger.Debug(LogType, $"Configuration:{config.Quote()}");
 
-            Invoke(src.GetRetryCount(), () => engine.Uninstall());
+            Invoke(src.GetRetryCount(), i =>
+            {
+                engine.Timeout = TimeSpan.FromSeconds(sec * (i + 1));
+                engine.Uninstall();
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -149,11 +159,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Invoke(int n, Action action)
+        private static void Invoke(int n, Action<int> action)
         {
             for (var i = 0; i < n; ++i)
             {
-                try { action(); return; }
+                try { action(i); return; }
                 catch (Exception e) { Logger.Warn(LogType, e.ToString(), e); }
             }
             throw new ArgumentException($"Try {n} times.");
