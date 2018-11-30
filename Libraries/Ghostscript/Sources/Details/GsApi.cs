@@ -168,7 +168,7 @@ namespace Cube.Pdf.Ghostscript
     /// NativeMethods
     ///
     /// <summary>
-    /// Ghostscript API を定義したクラスです。
+    /// Represents the Ghostscript API.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Ghostscript
         /// NewInstance
         ///
         /// <summary>
-        /// Ghostscript API 用インスタンスを生成します。
+        /// Creates a new instance of the Ghostscript API.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -193,7 +193,7 @@ namespace Cube.Pdf.Ghostscript
         /// InitWithArgs
         ///
         /// <summary>
-        /// Ghostscript を実行します。
+        /// Executes the Ghostscript with the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -205,7 +205,7 @@ namespace Cube.Pdf.Ghostscript
         /// Exit
         ///
         /// <summary>
-        /// 処理を終了します。
+        /// Exits the Ghostscript operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -217,7 +217,7 @@ namespace Cube.Pdf.Ghostscript
         /// DeleteInstance
         ///
         /// <summary>
-        /// Ghostscript API 用インスタンスを削除します。
+        /// Deletes the instance of the Ghostscript API.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

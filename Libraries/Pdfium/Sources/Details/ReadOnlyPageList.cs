@@ -28,7 +28,7 @@ namespace Cube.Pdf.Pdfium
     /// ReadOnlyPageList
     ///
     /// <summary>
-    /// 読み取り専用で PDF ページ一覧へアクセスするためのクラスです。
+    /// Provides functionality to access PDF pages as read only.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,11 +41,12 @@ namespace Cube.Pdf.Pdfium
         /// ReadOnlyPageList
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ReadOnlyPageList class with
+        /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="core">PDFium を実行するためのオブジェクト</param>
-        /// <param name="file">PDF ファイル情報</param>
+        /// <param name="core">PDFium object.</param>
+        /// <param name="file">File information of the PDF document.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ReadOnlyPageList(PdfiumReader core, PdfFile file)
@@ -66,7 +67,7 @@ namespace Cube.Pdf.Pdfium
         /// File
         ///
         /// <summary>
-        /// PDF ファイル情報を取得します。
+        /// Gets the file information of the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -77,7 +78,7 @@ namespace Cube.Pdf.Pdfium
         /// Count
         ///
         /// <summary>
-        /// ページ数を取得します。
+        /// Gets the number of PDF pages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -88,7 +89,7 @@ namespace Cube.Pdf.Pdfium
         /// Item[int]
         ///
         /// <summary>
-        /// Page オブジェクトを取得します。
+        /// Gets the Page object corresponding to the specified index.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -103,10 +104,12 @@ namespace Cube.Pdf.Pdfium
         /// GetEnumerator
         ///
         /// <summary>
-        /// 各ページオブジェクトへアクセスするための反復子を取得します。
+        /// Returns an enumerator that iterates through this collection.
         /// </summary>
         ///
-        /// <returns>反復子</returns>
+        /// <returns>
+        /// An IEnumerator(Page) object for this collection.
+        /// </returns>
         ///
         /* ----------------------------------------------------------------- */
         public override IEnumerator<Page> GetEnumerator()
@@ -123,12 +126,10 @@ namespace Cube.Pdf.Pdfium
         /// GetPage
         ///
         /// <summary>
-        /// Page オブジェクトを取得します。
+        /// Gets the Page object.
         /// </summary>
         ///
-        /// <param name="index">
-        /// 最初のページを "ゼロ" とするインデックス
-        /// </param>
+        /// <param name="index">Zero for the first page.</param>
         ///
         /* ----------------------------------------------------------------- */
         private Page GetPage(int index)
@@ -157,7 +158,7 @@ namespace Cube.Pdf.Pdfium
         /// GetSize
         ///
         /// <summary>
-        /// ページサイズを取得します。
+        /// Gets the page size.
         /// </summary>
         ///
         /// <remarks>
@@ -180,7 +181,7 @@ namespace Cube.Pdf.Pdfium
         /// GetPageRotation
         ///
         /// <summary>
-        /// ページの回転角度を取得します。
+        /// Gets the degree of PDF page rotation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

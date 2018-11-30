@@ -28,7 +28,7 @@ namespace Cube.Pdf.Pdfium
     /// PdfiumApi
     ///
     /// <summary>
-    /// PDFium API のラッパクラスです。
+    /// Represents the facade of the PDFium API.
     /// </summary>
     ///
     /// <remarks>
@@ -451,7 +451,7 @@ namespace Cube.Pdf.Pdfium
     /// FileAccess
     ///
     /// <summary>
-    /// PDFium がファイルにアクセスするための構造体です。
+    /// Represents the data structure for PDFium to access files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

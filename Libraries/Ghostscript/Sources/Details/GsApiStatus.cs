@@ -23,7 +23,7 @@ namespace Cube.Pdf.Ghostscript
     /// GsApiStatus
     ///
     /// <summary>
-    /// Ghostscript API のステータスコードを表す列挙型です。
+    /// Specifies status code of the Ghostscript API.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

@@ -28,7 +28,7 @@ namespace Cube.Pdf.Pdfium
     /// PdfiumReader
     ///
     /// <summary>
-    /// PDFium の API をラップした Reader クラスです。
+    /// Provides functionality to read PDF documents via PDFium API.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,11 +41,12 @@ namespace Cube.Pdf.Pdfium
         /// PdfiumReader
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the PdfiumReader class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="src">入力ファイルのパス</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="src">Path of the source PDF file.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         private PdfiumReader(string src, IO io)
@@ -66,7 +67,7 @@ namespace Cube.Pdf.Pdfium
         /// Source
         ///
         /// <summary>
-        /// 対象となる PDF ファイルのパスを取得します。
+        /// Gets the path of the source PDF file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -77,7 +78,7 @@ namespace Cube.Pdf.Pdfium
         /// IO
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します。
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -88,7 +89,7 @@ namespace Cube.Pdf.Pdfium
         /// File
         ///
         /// <summary>
-        /// ファイル情報を取得します。
+        /// Gets information of the PDF file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -99,7 +100,7 @@ namespace Cube.Pdf.Pdfium
         /// Metadata
         ///
         /// <summary>
-        /// メタ情報を取得します。
+        /// Gets the metadata of the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -110,7 +111,7 @@ namespace Cube.Pdf.Pdfium
         /// Encryption
         ///
         /// <summary>
-        /// 暗号化情報を取得します。
+        /// Gets the encryption information of the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -121,7 +122,7 @@ namespace Cube.Pdf.Pdfium
         /// Pages
         ///
         /// <summary>
-        /// ページ一覧を取得します。
+        /// Gets the collection of pages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -269,10 +270,10 @@ namespace Cube.Pdf.Pdfium
         /// Load
         ///
         /// <summary>
-        /// PDF を読み込みます。
+        /// Loads the PDF document.
         /// </summary>
         ///
-        /// <param name="password">パスワード</param>
+        /// <param name="password">Password.</param>
         ///
         /* ----------------------------------------------------------------- */
         private void Load(string password)
@@ -318,7 +319,7 @@ namespace Cube.Pdf.Pdfium
         /// Read
         ///
         /// <summary>
-        /// ストリームからデータを読み込みます。
+        /// Reads data from the specified stream.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -342,7 +343,7 @@ namespace Cube.Pdf.Pdfium
         /// ReadDelegate
         ///
         /// <summary>
-        /// ストリームからデータを読み込むメソッドを表します。
+        /// Represents the delegate to read data from the specified stream.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

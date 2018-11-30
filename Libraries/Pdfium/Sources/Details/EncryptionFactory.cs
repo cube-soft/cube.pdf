@@ -24,7 +24,7 @@ namespace Cube.Pdf.Pdfium
     /// EncryptionFactory
     ///
     /// <summary>
-    /// Encryption の生成用クラスです。
+    /// Provides factory methods of the Encryption class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -37,13 +37,14 @@ namespace Cube.Pdf.Pdfium
         /// Create
         ///
         /// <summary>
-        /// 暗号化情報を取得します。
+        /// Creates a new instance of the Encryption class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="core">PDFium 用オブジェクト</param>
-        /// <param name="password">パスワード</param>
+        /// <param name="core">PDFium object.</param>
+        /// <param name="password">Password</param>
         ///
-        /// <returns>Encryption</returns>
+        /// <returns>Encryption object.</returns>
         ///
         /// <remarks>
         /// 現在 FPDF_GetDocPermissions の結果で諸々の判定を行っているが
@@ -81,7 +82,7 @@ namespace Cube.Pdf.Pdfium
         /// CreateMethod
         ///
         /// <summary>
-        /// 暗号化方式を取得します。
+        /// Gets the encryption method from the specified value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
