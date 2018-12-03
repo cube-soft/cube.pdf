@@ -31,6 +31,8 @@ namespace Cube.WtsApi32
     /* --------------------------------------------------------------------- */
     internal static class NativeMethods
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// WTSEnumerateSessions
@@ -90,6 +92,8 @@ namespace Cube.WtsApi32
         /* ----------------------------------------------------------------- */
         [DllImport(LibName, SetLastError = true)]
         public static extern void WTSFreeMemory(IntPtr pMemory);
+
+        #endregion
 
         #region Fields
         const string LibName = "wtsapi32.dll";

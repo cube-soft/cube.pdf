@@ -31,6 +31,8 @@ namespace Cube.Kernel32
     /* --------------------------------------------------------------------- */
     internal static class NativeMethods
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// OpenThread
@@ -58,6 +60,8 @@ namespace Cube.Kernel32
         /* ----------------------------------------------------------------- */
         [DllImport(LibName, SetLastError = true)]
         public static extern bool CloseHandle(IntPtr handle);
+
+        #endregion
 
         #region Fields
         const string LibName = "kernel32.dll";
