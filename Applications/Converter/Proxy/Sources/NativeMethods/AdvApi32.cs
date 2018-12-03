@@ -31,6 +31,8 @@ namespace Cube.AdvApi32
     /* --------------------------------------------------------------------- */
     internal static class NativeMethods
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// CreateProcessAsUser
@@ -40,7 +42,7 @@ namespace Cube.AdvApi32
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
         public static extern bool CreateProcessAsUser(
             IntPtr hToken,
             string lpApplicationName,
@@ -102,6 +104,8 @@ namespace Cube.AdvApi32
         /* ----------------------------------------------------------------- */
         [DllImport(LibName, SetLastError = true)]
         public static extern bool RevertToSelf();
+
+        #endregion
 
         #region Fields
         private const string LibName = "advapi32.dll";

@@ -1,7 +1,7 @@
 ﻿/* ------------------------------------------------------------------------- */
 ///
 /// Copyright (c) 2010 CubeSoft, Inc.
-/// 
+///
 /// Licensed under the Apache License, Version 2.0 (the "License");
 /// you may not use this file except in compliance with the License.
 /// You may obtain a copy of the License at
@@ -23,7 +23,7 @@ namespace Cube
     /* --------------------------------------------------------------------- */
     ///
     /// PROCESS_INFORMATION
-    /// 
+    ///
     /// <summary>
     /// https://msdn.microsoft.com/en-us/library/windows/desktop/ms684873.aspx
     /// </summary>
@@ -41,13 +41,13 @@ namespace Cube
     /* --------------------------------------------------------------------- */
     ///
     /// STARTUPINFO
-    /// 
+    ///
     /// <summary>
     /// https://msdn.microsoft.com/en-us/library/windows/desktop/ms686331.aspx
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     public struct STARTUPINFO
     {
         public uint cb;
@@ -73,7 +73,7 @@ namespace Cube
     /* --------------------------------------------------------------------- */
     ///
     /// SECURITY_ATTRIBUTES
-    /// 
+    ///
     /// <summary>
     /// https://msdn.microsoft.com/en-us/library/windows/desktop/aa379560.aspx
     /// </summary>
@@ -90,7 +90,7 @@ namespace Cube
     /* --------------------------------------------------------------------- */
     ///
     /// SECURITY_IMPERSONATION_LEVEL
-    /// 
+    ///
     /// <summary>
     /// https://msdn.microsoft.com/en-us/library/windows/desktop/aa379572.aspx
     /// </summary>
@@ -107,7 +107,7 @@ namespace Cube
     /* --------------------------------------------------------------------- */
     ///
     /// SECURITY_ATTRIBUTES
-    /// 
+    ///
     /// <summary>
     /// https://msdn.microsoft.com/en-us/library/windows/desktop/aa379633.aspx
     /// </summary>
@@ -122,7 +122,7 @@ namespace Cube
     /* --------------------------------------------------------------------- */
     ///
     /// TOKEN_INFORMATION_CLASS
-    /// 
+    ///
     /// <summary>
     /// https://msdn.microsoft.com/en-us/library/windows/desktop/aa379626.aspx
     /// </summary>
@@ -152,7 +152,7 @@ namespace Cube
     /* --------------------------------------------------------------------- */
     ///
     /// TOKEN_INFORMATION_CLASS
-    /// 
+    ///
     /// <summary>
     /// https://msdn.microsoft.com/en-us/library/windows/desktop/aa379601.aspx
     /// </summary>
