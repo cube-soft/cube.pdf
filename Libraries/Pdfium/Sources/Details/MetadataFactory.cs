@@ -26,7 +26,7 @@ namespace Cube.Pdf.Pdfium
     /// MetadataFactory
     ///
     /// <summary>
-    /// Metadata の生成用クラスです。
+    /// Provides factory methods of the Metadata class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -39,12 +39,13 @@ namespace Cube.Pdf.Pdfium
         /// Create
         ///
         /// <summary>
-        /// Metadata を生成します。
+        /// Creates a new instance of the Metadata class with the core
+        /// object.
         /// </summary>
         ///
-        /// <param name="core">PDFium API 用オブジェクト</param>
+        /// <param name="core">PDFium object.</param>
         ///
-        /// <returns>Metadata</returns>
+        /// <returns>Metadata object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Metadata Create(PdfiumReader core) => new Metadata
@@ -68,7 +69,7 @@ namespace Cube.Pdf.Pdfium
         /// GetText
         ///
         /// <summary>
-        /// 指定した名前に対応するメタ情報を取得します。
+        /// Gets the metadata corresponding to the specified name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -87,7 +88,7 @@ namespace Cube.Pdf.Pdfium
         /// GetVersion
         ///
         /// <summary>
-        /// PDF バージョンを取得します。
+        /// Gets the PDF version.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

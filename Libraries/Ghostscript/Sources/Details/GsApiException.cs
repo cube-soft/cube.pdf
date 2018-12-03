@@ -25,8 +25,7 @@ namespace Cube.Pdf.Ghostscript
     /// GsApiException
     ///
     /// <summary>
-    /// Ghostscript API 実行時にエラーが発生した時に送出される
-    /// 例外クラスです。
+    /// Represents the Ghostscript API error.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,8 +39,11 @@ namespace Cube.Pdf.Ghostscript
         /// GsApiException
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the GsApiException class with
+        /// the specified status.
         /// </summary>
+        ///
+        /// <param name="status">Status code.</param>
         ///
         /* ----------------------------------------------------------------- */
         public GsApiException(int status) :
@@ -52,10 +54,11 @@ namespace Cube.Pdf.Ghostscript
         /// GsApiException
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the GsApiException class with
+        /// the specified status.
         /// </summary>
         ///
-        /// <param name="status">ステータスコード</param>
+        /// <param name="status">Status code.</param>
         ///
         /* ----------------------------------------------------------------- */
         public GsApiException(GsApiStatus status) : this(status, status.ToString()) { }
@@ -65,11 +68,12 @@ namespace Cube.Pdf.Ghostscript
         /// GsApiException
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the GsApiException class with
+        /// the specified status and message.
         /// </summary>
         ///
-        /// <param name="status">ステータスコード</param>
-        /// <param name="message">メッセージ</param>
+        /// <param name="status">Status code.</param>
+        /// <param name="message">Message.</param>
         ///
         /* ----------------------------------------------------------------- */
         public GsApiException(GsApiStatus status, string message) : base(message)
@@ -86,7 +90,7 @@ namespace Cube.Pdf.Ghostscript
         /// Status
         ///
         /// <summary>
-        /// ステータスコードを取得します。
+        /// Gets the status code.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
