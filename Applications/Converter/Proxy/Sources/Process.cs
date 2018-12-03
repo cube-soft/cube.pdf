@@ -239,7 +239,7 @@ namespace Cube.Processes
                     1,
                     ref ptr,
                     ref count
-                )) throw Win32Error(nameof(WtsApi32.NativeMethods.WTSEnumerateSessions));
+                )) throw new Win32Exception();
 
                 var sessions = new List<WTS_SESSION_INFO>();
 
@@ -286,7 +286,7 @@ namespace Cube.Processes
                 try { return GetPrimaryToken(token, si); }
                 finally { CloseHandle(token); }
             }
-            else throw Win32Error(nameof(WtsApi32.NativeMethods.WTSQueryUserToken));
+            else throw new Win32Exception();
         }
 
         /* ----------------------------------------------------------------- */
@@ -304,7 +304,7 @@ namespace Cube.Processes
         {
             var token = IntPtr.Zero;
             var ht = Kernel32.NativeMethods.OpenThread(0x40 /* QUERY_INFORMATION */, false, tid);
-            if (ht == IntPtr.Zero) throw Win32Error(nameof(Kernel32.NativeMethods.OpenThread));
+            if (ht == IntPtr.Zero) throw new Win32Exception();
 
             try
             {
@@ -313,7 +313,7 @@ namespace Cube.Processes
                     0x02 /* TOKEN_DUPLICATE */,
                     true,
                     ref token
-                )) throw Win32Error(nameof(AdvApi32.NativeMethods.OpenThreadToken));
+                )) throw new Win32Exception();
 
                 return GetPrimaryToken(token, SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation);
             }
@@ -352,7 +352,7 @@ namespace Cube.Processes
 
             AdvApi32.NativeMethods.RevertToSelf();
 
-            if (!result) throw Win32Error(nameof(AdvApi32.NativeMethods.DuplicateTokenEx));
+            if (!result) throw new Win32Exception();
             return dest;
         }
 
@@ -397,7 +397,7 @@ namespace Cube.Processes
         {
             var dest = IntPtr.Zero;
             if (UserEnv.NativeMethods.CreateEnvironmentBlock(ref dest, token, false)) return dest;
-            else throw Win32Error(nameof(UserEnv.NativeMethods.CreateEnvironmentBlock));
+            else throw new Win32Exception();
         }
 
         /* ----------------------------------------------------------------- */
@@ -457,7 +457,7 @@ namespace Cube.Processes
                     ref si,
                     out pi
                 )) return System.Diagnostics.Process.GetProcessById((int)pi.dwProcessId);
-                else throw Win32Error(nameof(AdvApi32.NativeMethods.CreateProcessAsUser));
+                else throw new Win32Exception();
             }
             finally
             {
@@ -479,18 +479,6 @@ namespace Cube.Processes
             arguments == null ?
             program.Quote() :
             arguments.Aggregate(program.Quote(), (x, y) => $"{x} {y.Quote()}");
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Win32Error
-        ///
-        /// <summary>
-        /// Win32Exception オブジェクトを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static Win32Exception Win32Error(string message) =>
-            new Win32Exception(Marshal.GetLastWin32Error(), message);
 
         #endregion
     }
