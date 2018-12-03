@@ -8,12 +8,12 @@ https://www.cube-soft.jp/cubepdf/
 
 ## CubePDF による変換手順
 
-CubePDF は **仮想プリンタ** としてインストールされます。そのため、Google Chrome や
+CubePDF は **仮想プリンター** としてインストールされます。そのため、Google Chrome や
 Microsoft Edge などの Web ブラウザ、Microsoft Word, Excel, PowerPoint など **印刷**
 ボタンのあるアプリケーションであれば何でも、次の 3 ステップで PDF へ変換する事ができます。
 
 1. PDF 化したいものを適当なアプリケーションで表示し **印刷** を選択します。
-2. 利用できるプリンタの一覧から **CubePDF** を選択し **印刷** ボタンをクリックします。
+2. 利用できるプリンターの一覧から **CubePDF** を選択し **印刷** ボタンをクリックします。
 3. CubePDF のメイン画面が表示されるので、保存場所などを確認し **変換** ボタンをクリックします。
 
 ![PDF への変換手順](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Documents/01.ja.png?raw=true)
@@ -35,7 +35,7 @@ Microsoft Edge などの Web ブラウザ、Microsoft Word, Excel, PowerPoint �
 
 ### 注意
 
-CubePDF は「仮想プリンタ」と呼ばれるソフトウェアで、他のアプリケーションの
+CubePDF は「仮想プリンター」と呼ばれるソフトウェアで、他のアプリケーションの
 「印刷」を介して利用します。そのため、スタートメニュー等から直接 CubePDF を
 実行したり、PDF ファイル等に関連付けたりして利用する事はできません。
 
@@ -171,14 +171,72 @@ CubePDF のメイン画面において何らかの項目を変更した場合、
 ただし、文書プロパティとセキュリティの各種項目および、出力ファイルのファイル名部分は
 設定を保存機能の対象外です。
 
+## CubePDF プリンターの設定
+
+CubePDF は、これまでに説明したアプリケーションの設定以外に、**CubePDF プリンター**
+に対する設定も存在します。プリンターの設定を変更するためには、まず **コントロールパネル** の
+**デバイスとプリンターの表示** で表示される画面で CubePDF を右クリックし **印刷設定** を
+選択して下さい。
+
+![印刷設定（コントロールパネル）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Documents/08.ja.png?raw=true)
+
+また、Windows 8 以降の場合は **設定** からでも可能です。設定から、**デバイス**、
+**プリンターとスキャナー** で表示される画面で CubePDF を選択し、さらに **管理**、
+**印刷設定** の順で選択して下さい。
+
+![印刷設定（設定）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Documents/09.ja.png?raw=true)
+
+印刷設定では、まず **用紙/品質** タブで白黒またはカラーで印刷する設定を行う事ができます。
+それ以外の設定を行う場合、右下にある **詳細設定** ボタンをクリックします。
+
+![印刷の詳細オプション](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Documents/09.ja.png?raw=true)
+
+**用紙サイズ** は、変換後の各ページのサイズに反映されます。
+設定可能な値は、A0-A6、B0-B6、はがき、角形 1 号-角形 4 号など実際の用紙サイズに即した値が中心となります。
+尚、**Slide** は Microsoft PowerPoint の初期値 (4:3) に相当するサイズとなります。
+
+**印刷品質** は、主に画像データの変換後の品質に影響し、値が高いほど高品質になり、ファイルサイズも増大します。
+尚、CubePDF のアプリケーション側に存在する **解像度** の設定は、ここで設定した値が上限となります。
+
+**拡大縮小** は、変換元のコンテンツを拡大または縮小した状態で変換するための設定で、
+等倍で変換する場合は 100 となります。尚、一部の環境で、この初期値が非常に大きな値に
+設定されている事例が見られます。変換後の PDF などが異常に大きな状態となっている場合、
+この設定を確認して下さい。
+
+**PostScript オプション** 下にある **TrueType フォント ダウンロードオプション** は、
+文字の変換法に関する設定で、設定可能な項目は以下の通りです。
+
+* **Native TrueType**
+  フォント情報などを保ったまま、文字として、変換します。
+  ただし、Google Chrome や Microsoft Edge などの多くの Web ブラウザを始めとして、
+  アプリケーションの中には印刷処理で文字を図形として変換する **アウトライン化** を
+  実施するものもあります。この場合、プリンターの設定に関わらず、文字としての情報は
+  失われてしまうので注意して下さい。
+* **アウトライン**
+  印刷時に文字を図形として変換します。
+  この場合、フォント情報など文字としての情報は失われますが、変換後の位置ずれなどの
+  問題を軽減する効果があります。
+* **ビットマップ**
+  印刷時に文字をビットマップ画像として変換します。
+  こちらも位置ずれなどの問題を解決する事がありますが、印刷品質など他の設定内容に
+  よってはギザギザ感が目立つなどの問題が発生する事もあります。
+* **自動**
+  プリンターが、Native TrueType、アウトライン、ビットマップの設定のどれかを自動的に選択します。
+
+### 注意
+
+印刷を実行するアプリケーションによっては、独自の印刷設定画面を用意しているなどの関係で、
+CubePDF プリンターの設定が反映されない事があります。印刷設定に関しては、利用する
+アプリケーション側の設定も注意深く確認するようお願いします。
+
 ## CubePDF のアンインストール
 
 CubePDF をアンインストールするには、まず、コントロールパネルのプログラムのアンインストール
 または、設定のアプリと機能（Windows 8 以降）を選択します。そして、表示される画面で
 CubePDF のアイコンを選択してアンインストールの項目を実行して下さい。
 
-![コントロールパネル](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Documents/06.ja.png?raw=true)
-![設定](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Documents/07.ja.png?raw=true)
+![アンインストール（コントロールパネル）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Documents/06.ja.png?raw=true)
+![アンインストール（設定）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Documents/07.ja.png?raw=true)
 
 ## CubePDF で問題が発生した場合
 
