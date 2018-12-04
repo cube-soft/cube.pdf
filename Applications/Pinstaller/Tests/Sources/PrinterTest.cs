@@ -64,7 +64,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /// <summary>
         /// Executes the test to create a new instance of the Printer
-        /// class with a force option.
+        /// class with an empty collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -72,7 +72,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void CreateForce()
         {
             var name = "Dummy Printer";
-            var src  = new Printer(name, true);
+            var src  = new Printer(name, new Printer[0]);
             Assert.That(src.Name,                   Is.EqualTo(name));
             Assert.That(src.ShareName,              Is.EqualTo(name));
             Assert.That(src.Exists,                 Is.False, nameof(src.Exists));
@@ -94,7 +94,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         [Test]
         public void Install_Throws()
         {
-            var src = new Printer("Dummy Printer", true);
+            var src = new Printer("Dummy Printer");
             Assert.That(src.Exists, Is.False);
 
             src.ShareName  = "Dummy SharePrinter";
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         [Test]
         public void Uninstall_Ignore()
         {
-            var src = new Printer("Dummy Printer", true);
+            var src = new Printer("Dummy Printer");
             Assert.That(src.Exists, Is.False);
 
             src.ShareName  = "Dummy SharePrinter";
