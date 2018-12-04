@@ -16,6 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -38,25 +40,46 @@ namespace Cube.Pdf.App.Pinstaller
         /// Create
         ///
         /// <summary>
-        /// Creates a new instance of the PrinterDriver class from the
-        /// specified configuration.
+        /// Creates a collection of the printer drivers from the specified
+        /// configuration.
         /// </summary>
         ///
         /// <param name="src">Printer driver configuration.</param>
         ///
-        /// <returns>Printer driver object.</returns>
+        /// <returns>Collection of printer drivers.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PrinterDriver Create(this PrinterDriverConfig src) =>
-            new PrinterDriver(src.Name)
+        public static IEnumerable<PrinterDriver> Create(this IEnumerable<PrinterDriverConfig> src) =>
+            src.Create(PrinterDriver.GetElements());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a collection of the printer drivers from the specified
+        /// configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Printer driver configuration.</param>
+        /// <param name="elements">
+        /// Collection of installed printer drivers.
+        /// </param>
+        ///
+        /// <returns>Collection of printer drivers.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<PrinterDriver> Create(this IEnumerable<PrinterDriverConfig> src,
+            IEnumerable<PrinterDriver> elements) =>
+            src.Select(e => new PrinterDriver(e.Name, elements)
             {
-                MonitorName  = src.MonitorName,
-                FileName     = src.FileName,
-                Config       = src.Config,
-                Data         = src.Data,
-                Help         = src.Help,
-                Dependencies = src.Dependencies,
-            };
+                MonitorName  = e.MonitorName,
+                FileName     = e.FileName,
+                Config       = e.Config,
+                Data         = e.Data,
+                Help         = e.Help,
+                Dependencies = e.Dependencies,
+            });
 
         /* ----------------------------------------------------------------- */
         ///

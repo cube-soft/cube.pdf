@@ -16,6 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -38,21 +40,42 @@ namespace Cube.Pdf.App.Pinstaller
         /// Create
         ///
         /// <summary>
-        /// Creates a new instance of the PortMonitor class from the
-        /// specified configuration.
+        /// Creates a collection of port monitors from the specified
+        /// configuration.
         /// </summary>
         ///
         /// <param name="src">Port monitor configuration.</param>
         ///
-        /// <returns>Port monitor object.</returns>
+        /// <returns>Collection of port monitors.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PortMonitor Create(this PortMonitorConfig src) =>
-            new PortMonitor(src.Name)
+        public static IEnumerable<PortMonitor> Create(this IEnumerable<PortMonitorConfig> src) =>
+            src.Create(PortMonitor.GetElements());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a collection of port monitors from the specified
+        /// configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Port monitor configuration.</param>
+        /// <param name="elements">
+        /// Collection of installed port monitors.
+        /// </param>
+        ///
+        /// <returns>Collection of port monitors.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<PortMonitor> Create(this IEnumerable<PortMonitorConfig> src,
+            IEnumerable<PortMonitor> elements) =>
+            src.Select(e => new PortMonitor(e.Name, elements)
             {
-                FileName = src.FileName,
-                Config   = src.Config,
-            };
+                FileName = e.FileName,
+                Config   = e.Config,
+            });
 
         /* ----------------------------------------------------------------- */
         ///

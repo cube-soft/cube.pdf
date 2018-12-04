@@ -15,6 +15,9 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
@@ -35,22 +38,41 @@ namespace Cube.Pdf.App.Pinstaller
         /// Create
         ///
         /// <summary>
-        /// Creates a new instance of the Printer class from the specified
+        /// Creates a collection of printers from the specified
         /// configuration.
         /// </summary>
         ///
         /// <param name="src">Printer configuration.</param>
         ///
-        /// <returns>Printer object.</returns>
+        /// <returns>Collection of printers.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Printer Create(this PrinterConfig src) =>
-            new Printer(src.Name)
+        public static IEnumerable<Printer> Create(this IEnumerable<PrinterConfig> src) =>
+            src.Create(Printer.GetElements());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a collection of printers from the specified
+        /// configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Printer configuration.</param>
+        /// <param name="elements">Collection of printers.</param>
+        ///
+        /// <returns>Collection of printers.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<Printer> Create(this IEnumerable<PrinterConfig> src,
+            IEnumerable<Printer> elements) =>
+            src.Select(e => new Printer(e.Name, elements)
             {
-                ShareName  = src.ShareName,
-                DriverName = src.DriverName,
-                PortName   = src.PortName,
-            };
+                ShareName  = e.ShareName,
+                DriverName = e.DriverName,
+                PortName   = e.PortName,
+            });
 
         #endregion
     }

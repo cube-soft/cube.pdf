@@ -15,6 +15,9 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Cube.Pdf.App.Pinstaller
 {
     /* --------------------------------------------------------------------- */
@@ -35,23 +38,22 @@ namespace Cube.Pdf.App.Pinstaller
         /// Create
         ///
         /// <summary>
-        /// Creates a new instance of the Port class from the specified
-        /// configuration.
+        /// Creates a collection of ports from the specified configuration.
         /// </summary>
         ///
         /// <param name="src">Port configuration.</param>
         ///
-        /// <returns>Port object.</returns>
+        /// <returns>Collection of ports.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Port Create(this PortConfig src) =>
-            new Port(src.Name, src.MonitorName)
+        public static IEnumerable<Port> Create(this IEnumerable<PortConfig> src) =>
+            src.Select(e => new Port(e.Name, e.MonitorName)
             {
-                Application = src.Application,
-                Arguments   = src.Arguments,
-                Temp        = src.Temp,
-                WaitForExit = src.WaitForExit
-            };
+                Application = e.Application,
+                Arguments   = e.Arguments,
+                Temp        = e.Temp,
+                WaitForExit = e.WaitForExit
+            });
 
         #endregion
     }

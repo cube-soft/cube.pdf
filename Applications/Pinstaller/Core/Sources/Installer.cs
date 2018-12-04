@@ -157,10 +157,10 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install(string resource, bool reinstall) => Invoke(service =>
         {
-            var monitors = Config.PortMonitors.Select(e => e.Create()).ToList();
-            var ports    = Config.Ports.Select(e => e.Create()).ToList();
-            var drivers  = Config.PrinterDrivers.Select(e => e.Create()).ToList();
-            var printers = Config.Printers.Select(e => e.Create()).ToList();
+            var monitors = Config.PortMonitors.Create().ToList();
+            var ports    = Config.Ports.Create().ToList();
+            var drivers  = Config.PrinterDrivers.Create().ToList();
+            var printers = Config.Printers.Create().ToList();
 
             // Uninstall
             if (reinstall) Uninstall(printers, drivers, ports, monitors);
@@ -188,10 +188,10 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public void Uninstall() => Invoke(_ => Uninstall(
-            Config.Printers.Select(e => e.Create()),
-            Config.PrinterDrivers.Select(e => e.Create()),
-            Config.Ports.Select(e => e.Create()),
-            Config.PortMonitors.Select(e => e.Create())
+            Config.Printers.Create().ToList(),
+            Config.PrinterDrivers.Create().ToList(),
+            Config.Ports.Create().ToList(),
+            Config.PortMonitors.Create().ToList()
         ));
 
         #endregion
