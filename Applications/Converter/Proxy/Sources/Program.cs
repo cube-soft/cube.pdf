@@ -32,6 +32,8 @@ namespace Cube.Pdf.App.Proxy
     /* --------------------------------------------------------------------- */
     static class Program
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// Main
@@ -46,13 +48,11 @@ namespace Cube.Pdf.App.Proxy
         [STAThread]
         static void Main(string[] args)
         {
-            var type = typeof(Program);
-
             try
             {
                 Logger.Configure();
-                Logger.Info(type, System.Reflection.Assembly.GetExecutingAssembly());
-                Logger.Info(type, $"Arguments:{string.Join(" ", args)}");
+                Logger.Info(LogType, System.Reflection.Assembly.GetExecutingAssembly());
+                Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
 
                 var proc = StartAs(args);
                 proc.EnableRaisingEvents = true;
@@ -60,12 +60,12 @@ namespace Cube.Pdf.App.Proxy
                 {
                     if (s is System.Diagnostics.Process p)
                     {
-                        Logger.Info(type, $"ExitCode:{p.ExitCode}");
+                        Logger.Info(LogType, $"ExitCode:{(uint)p.ExitCode}");
                     }
                 };
                 proc.WaitForExit();
             }
-            catch (Exception err) { Logger.Error(type, err.Message, err); }
+            catch (Exception err) { Logger.Error(LogType, err.ToString(), err); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -85,24 +85,27 @@ namespace Cube.Pdf.App.Proxy
         /* ----------------------------------------------------------------- */
         static System.Diagnostics.Process StartAs(string[] args)
         {
-            var parser = new ArgumentCollection(args, '/');
-            if (!parser.Options.TryGetValue("Exec", out var exec)) throw new ArgumentException("Exec");
+            var src = new ArgumentCollection(args, '/');
+            if (!src.Options.TryGetValue("Exec", out var exec)) throw new ArgumentException("Exec");
 
             try
             {
-                parser.Options.TryGetValue("UserName", out var user);
+                src.Options.TryGetValue("UserName", out var user);
                 return Cube.Processes.Process.StartAs(user, exec, args);
             }
             catch (Exception e)
             {
-                if (!parser.Options.TryGetValue("ThreadID", out var id)) throw;
-                else
-                {
-                    Logger.Warn(typeof(Program), e.Message, e);
-                    Logger.Info(typeof(Program), $"Use ThreadID ({id})");
-                    return Cube.Processes.Process.StartAs(uint.Parse(id), exec, args);
-                }
+                if (!src.Options.TryGetValue("ThreadID", out var id)) throw;
+                Logger.Warn(LogType, e.Message, e);
+                Logger.Info(LogType, $"Use ThreadID ({id})");
+                return Cube.Processes.Process.StartAs(uint.Parse(id), exec, args);
             }
         }
+
+        #endregion
+
+        #region Fields
+        private static readonly Type LogType = typeof(Program);
+        #endregion
     }
 }

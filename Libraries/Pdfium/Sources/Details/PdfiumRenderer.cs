@@ -25,7 +25,7 @@ namespace Cube.Pdf.Pdfium
     /// PdfiumRenderer
     ///
     /// <summary>
-    /// PDFium の API をラップした描画クラスです。
+    /// Provides functionality to render PDF pages via PDFium API.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

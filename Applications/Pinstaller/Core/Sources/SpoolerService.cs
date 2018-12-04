@@ -147,7 +147,7 @@ namespace Cube.Pdf.App.Pinstaller
                      dest == ServiceControllerStatus.Running;
             if (!ps) _core.Start();
 
-            _core.WaitForStatus(ServiceControllerStatus.Running, Timeout);
+            this.Log(() => _core.WaitForStatus(ServiceControllerStatus.Running, Timeout));
         }
 
         /* ----------------------------------------------------------------- */
@@ -170,7 +170,7 @@ namespace Cube.Pdf.App.Pinstaller
                      dest == ServiceControllerStatus.Stopped;
             if (!ps) _core.Stop();
 
-            _core.WaitForStatus(ServiceControllerStatus.Stopped, Timeout);
+            this.Log(() => _core.WaitForStatus(ServiceControllerStatus.Stopped, Timeout));
         }
 
         /* ----------------------------------------------------------------- */

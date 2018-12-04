@@ -31,6 +31,8 @@ namespace Cube.UserEnv
     /* --------------------------------------------------------------------- */
     internal static class NativeMethods
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// CreateEnvironmentBlock
@@ -58,6 +60,8 @@ namespace Cube.UserEnv
         /* ----------------------------------------------------------------- */
         [DllImport(LibName, SetLastError = true)]
         public static extern bool DestroyEnvironmentBlock(IntPtr lpEnvironment);
+
+        #endregion
 
         #region Fields
         const string LibName = "userenv.dll";

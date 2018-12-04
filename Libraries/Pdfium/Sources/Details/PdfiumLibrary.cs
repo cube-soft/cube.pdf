@@ -22,7 +22,7 @@ namespace Cube.Pdf.Pdfium
     /// PdfiumLibrary
     ///
     /// <summary>
-    /// PDFium API を利用するための基底クラスです。
+    /// Represents the base class to access the PDFium API.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
