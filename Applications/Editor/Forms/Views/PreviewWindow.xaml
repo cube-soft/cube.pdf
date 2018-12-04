@@ -30,9 +30,16 @@
     WindowStartupLocation="CenterOwner"
     ShowInTaskbar="False"
     Title="{Binding Title.Text}"
-    Width="{Binding Data.Width.Value}"
-    Height="{Binding Data.Height.Value}"
+    Width="{Binding Data.Width.Value, Mode=TwoWay}"
+    Height="{Binding Data.Height.Value, Mode=TwoWay}"
     Cursor="{Binding Data.Busy.Value, Converter={my:BooleanToCursor}}">
+
+    <!-- **********************************************************************
+      Resources
+    *********************************************************************** -->
+    <Window.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Themes/ScrollStyle.xaml" />
+    </Window.Resources>
 
     <!-- **********************************************************************
       Interaction
@@ -44,12 +51,15 @@
     <!-- **********************************************************************
       Main
     *********************************************************************** -->
-    <ScrollViewer Background="{StaticResource DarkBackgroundBrush}">
+    <ScrollViewer
+        Background="{StaticResource DarkBackgroundBrush}"
+        Template="{StaticResource ScrollViewerTemplate}">
         <Button Command="{Binding Cancel.Command}">
             <Button.Template>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Image
                         Source="{Binding Data.Image.Value}"
+                        Margin="6"
                         Stretch="UniformToFill"
                         VerticalAlignment="Center" />
                 </ControlTemplate>

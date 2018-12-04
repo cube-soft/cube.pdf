@@ -20,6 +20,7 @@ using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -50,7 +51,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="name">Name of the printer driver.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PrinterDriver(string name) : this(name, false) { }
+        public PrinterDriver(string name) : this(name, GetElements()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -62,16 +63,16 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /// <param name="name">Name of the printer driver.</param>
-        /// <param name="force">
-        /// Value indicating whether to forcibly create an object
-        /// ignoring any exceptions.
+        /// <param name="elements">
+        /// Collection of installed printer drivers.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public PrinterDriver(string name, bool force) :
+        public PrinterDriver(string name, IEnumerable<PrinterDriver> elements) :
             this(new DriverInfo3 { cVersion = 3, pDefaultDataType = "RAW" })
         {
-            var obj = this.GetOrDefault(GetElements, name, force);
+            var sc  = StringComparison.InvariantCultureIgnoreCase;
+            var obj = elements.FirstOrDefault(e => e.Name.Equals(name, sc));
             Exists = (obj != null);
             if (Exists) _core = obj._core;
             else
@@ -256,13 +257,13 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PrinterDriver> GetElements()
         {
-            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out var _)) return null;
+            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return null;
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var ptr = Marshal.AllocHGlobal((int)bytes);
             try
             {
-                if (GetEnumApi(ptr, bytes, out var __, out var n)) return Convert(ptr, n);
+                if (GetEnumApi(ptr, bytes, out _, out var n)) return Convert(ptr, n);
                 else throw new Win32Exception();
             }
             finally { Marshal.FreeHGlobal(ptr); }
@@ -338,7 +339,7 @@ namespace Cube.Pdf.App.Pinstaller
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var sb = new StringBuilder((int)bytes);
-            if (GetDirectoryApi(sb, bytes, out var _)) return sb.ToString();
+            if (GetDirectoryApi(sb, bytes, out _)) return sb.ToString();
             else throw new Win32Exception();
         }
 

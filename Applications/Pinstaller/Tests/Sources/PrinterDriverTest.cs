@@ -65,7 +65,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /// <summary>
         /// Executes the test to create a new instance of the PrinterDriver
-        /// class with a force option.
+        /// class with an empty collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -73,7 +73,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void CreateForce()
         {
             var name = "Dummy Driver";
-            var src  = new PrinterDriver(name, true);
+            var src  = new PrinterDriver(name, new PrinterDriver[0]);
             Assert.That(src.Name,                     Is.EqualTo(name));
             Assert.That(src.Exists,                   Is.False, nameof(src.Exists));
             Assert.That(src.CanInstall(),             Is.False, nameof(src.CanInstall));
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         [Test]
         public void Install_Throws()
         {
-            var src = new PrinterDriver("Dummy Driver", true);
+            var src = new PrinterDriver("Dummy Driver");
             Assert.That(src.Exists, Is.False);
 
             src.MonitorName  = "Dummy Monitor";
@@ -125,7 +125,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         [Test]
         public void Uninstall_Ignore()
         {
-            var src = new PrinterDriver("Dummy Driver", true);
+            var src = new PrinterDriver("Dummy Driver");
             Assert.That(src.Exists, Is.False);
 
             src.MonitorName  = "Dummy Monitor";

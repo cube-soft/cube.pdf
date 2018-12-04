@@ -92,7 +92,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Remove(T src)
         {
-            if (RawObject.TryRemove(src, out var _)) RaisePropertyChanged(nameof(Count));
+            if (RawObject.TryRemove(src, out _)) RaisePropertyChanged(nameof(Count));
         }
 
         #region IEnumerable<T>
