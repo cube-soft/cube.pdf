@@ -17,6 +17,8 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
 using Cube.Log;
+using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Cube.Pdf.App.Pinstaller.Debug
@@ -158,6 +160,28 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             $"{nameof(src.CanStop)}:{src.CanStop}",
             $"{nameof(src.Timeout)}:{src.Timeout}"
         );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Log
+        ///
+        /// <summary>
+        /// Puts debug information to the log file.
+        /// </summary>
+        ///
+        /// <param name="src">Service object.</param>
+        /// <param name="action">User action.</param>
+        /// <param name="method">Method name.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Log(this SpoolerService src, Action action,
+            [CallerMemberName] string method = null)
+        {
+            var prev = src.Status;
+            var sw   = Stopwatch.StartNew();
+            action();
+            src.Put($"[{method}]", $"{prev} -> {src.Status}", $"({sw.Elapsed})");
+        }
 
         #endregion
 
