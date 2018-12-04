@@ -51,11 +51,14 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public PreviewBindable(Information file, Page page)
         {
-            var size = page.GetViewSize();
+            var size  = page.GetViewSize().Value;
+            var magic = 14.0; // Scrollbar width
+            var ratio = size.Width / size.Height;
+            var diff  = size.Width > size.Height ? magic * ratio : -(magic * ratio);
 
             File   = new Bindable<Information>(file);
-            Width  = new Bindable<int>((int)size.Value.Width);
-            Height = new Bindable<int>((int)size.Value.Height);
+            Width  = new Bindable<int>((int)size.Width);
+            Height = new Bindable<int>((int)(size.Height + diff));
         }
 
         #endregion
