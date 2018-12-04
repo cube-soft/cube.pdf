@@ -188,7 +188,7 @@ namespace Cube.Pdf.App.Pinstaller
             var dir = Path.Combine(Environment.SpecialFolder.System.GetName(), @"spool\printers");
             var src = Directory.GetFiles(dir);
 
-            this.LogDebug(string.Join("\t", $"[{nameof(Reset)}]", $"Job:{src.Length}"));
+            this.LogDebug(string.Join("\t", new[] { $"[{nameof(Reset)}]", $"Job:{src.Length}" }));
 
             foreach (var f in src)
             {

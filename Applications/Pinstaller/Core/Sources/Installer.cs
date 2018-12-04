@@ -165,9 +165,9 @@ namespace Cube.Pdf.App.Pinstaller
             // Uninstall
             if (reinstall)
             {
-                Uninstall(printers, drivers, ports);
+                Uninstall(printers.OfType<IInstallable>(), drivers.OfType<IInstallable>(), ports.OfType<IInstallable>());
                 service.Reset();
-                Uninstall(monitors);
+                Uninstall(monitors.OfType<IInstallable>());
             }
 
             // Copy
@@ -194,10 +194,10 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Uninstall() => Invoke(service =>
         {
-            var monitors = Config.PortMonitors.Create().ToList();
-            var ports    = Config.Ports.Create().ToList();
-            var drivers  = Config.PrinterDrivers.Create().ToList();
-            var printers = Config.Printers.Create().ToList();
+            var monitors = Config.PortMonitors.Create().OfType<IInstallable>().ToList();
+            var ports    = Config.Ports.Create().OfType<IInstallable>().ToList();
+            var drivers  = Config.PrinterDrivers.Create().OfType<IInstallable>().ToList();
+            var printers = Config.Printers.Create().OfType<IInstallable>().ToList();
 
             Uninstall(printers, drivers, ports);
             service.Reset();
