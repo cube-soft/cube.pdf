@@ -256,13 +256,13 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PrinterDriver> GetElements()
         {
-            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out var _)) return null;
+            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return null;
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var ptr = Marshal.AllocHGlobal((int)bytes);
             try
             {
-                if (GetEnumApi(ptr, bytes, out var __, out var n)) return Convert(ptr, n);
+                if (GetEnumApi(ptr, bytes, out _, out var n)) return Convert(ptr, n);
                 else throw new Win32Exception();
             }
             finally { Marshal.FreeHGlobal(ptr); }
@@ -338,7 +338,7 @@ namespace Cube.Pdf.App.Pinstaller
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var sb = new StringBuilder((int)bytes);
-            if (GetDirectoryApi(sb, bytes, out var _)) return sb.ToString();
+            if (GetDirectoryApi(sb, bytes, out _)) return sb.ToString();
             else throw new Win32Exception();
         }
 

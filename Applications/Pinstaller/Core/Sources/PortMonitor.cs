@@ -194,13 +194,13 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PortMonitor> GetElements()
         {
-            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out var _)) return null;
+            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return null;
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var ptr = Marshal.AllocHGlobal((int)bytes);
             try
             {
-                if (GetEnumApi(ptr, bytes, out var __, out var n)) return Convert(ptr, n);
+                if (GetEnumApi(ptr, bytes, out _, out var n)) return Convert(ptr, n);
                 else throw new Win32Exception();
             }
             finally { Marshal.FreeHGlobal(ptr); }
