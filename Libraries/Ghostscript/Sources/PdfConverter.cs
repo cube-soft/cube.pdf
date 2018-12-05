@@ -103,6 +103,18 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public Version Version { get; set; } = new Version(1, 7);
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Linearization
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to enable linearization
+        /// (a.k.a PDF Web optimization).
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Linearization { get; set; } = false;
+
         #endregion
 
         #region Implementations
@@ -120,7 +132,7 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Argument> OnCreateArguments() =>
             base.OnCreateArguments()
-            .Concat(new[] { CreateVersion() });
+            .Concat(Trim(new[] { CreateVersion(), CreateFastWebView() }));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -134,6 +146,30 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private Argument CreateVersion() =>
             new Argument('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateFastWebView
+        ///
+        /// <summary>
+        /// Creates a new instance of the Argument class representing
+        /// the Linearized option.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Argument CreateFastWebView() =>
+            Linearization ? new Argument('d', "FastWebView") : null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Trim
+        ///
+        /// <summary>
+        /// Removes null objects from the specified collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<T> Trim<T>(IEnumerable<T> src) => src.OfType<T>();
 
         #endregion
     }
