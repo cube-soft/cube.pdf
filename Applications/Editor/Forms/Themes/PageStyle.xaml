@@ -48,7 +48,7 @@
                 VerticalAlignment="Center">
                 <Image
                     Source="{Binding Image}"
-                    Stretch="None"
+                    Stretch="{Binding Stretch}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" />
             </Border>

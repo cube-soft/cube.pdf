@@ -141,6 +141,7 @@ namespace Cube.Pdf.App.Editor
             }
         }
 
+
         /* ----------------------------------------------------------------- */
         ///
         /// RawObject
@@ -154,6 +155,29 @@ namespace Cube.Pdf.App.Editor
         {
             get => _rawObject;
             set { if (SetProperty(ref _rawObject, value)) UpdateSize(); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Stretch
+        ///
+        /// <summary>
+        /// Gets a value indicating how to resize the image to fill the
+        /// allocated space.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Stretch Stretch
+        {
+            get
+            {
+                var w = Image?.Width  ?? 0.0;
+                var h = Image?.Height ?? 1.0;
+                var x = w / h;
+                var y = Width / (double)Math.Max(Height, 1);
+
+                return Math.Abs(x - y) < 0.05 ? Stretch.UniformToFill : Stretch.None;
+            }
         }
 
         #endregion
@@ -175,7 +199,11 @@ namespace Cube.Pdf.App.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public void Refresh() => RaisePropertyChanged(nameof(Image));
+        public void Refresh()
+        {
+            RaisePropertyChanged(nameof(Stretch));
+            RaisePropertyChanged(nameof(Image));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
