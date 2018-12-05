@@ -1,4 +1,5 @@
-# CubePDF
+CubePDF
+====
 
 Copyright © 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
@@ -24,7 +25,7 @@ When you have some troubles, please contact support@cube-soft.jp along with thes
 
 ## Dependencies
 
-Dependencies of the CubePDF is as follows.
+Dependencies of the CubePDF are as follows.
 
 * GPL Ghostscript
     - GNU Affero General Public License

@@ -1,10 +1,10 @@
 ﻿CubePDF Utility
 ====
 
-Copyright © 2013 CubeSoft Inc.  
+Copyright © 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
-https://www.cube-soft.jp/
+https://www.cube-soft.jp/cubepdfutility/
 
 ## はじめに
 
@@ -53,12 +53,18 @@ CubePDF Utility で編集可能なものは以下の通りです。
     - フォームへの入力を許可する
     - 注釈の追加・編集操作を許可する
 
-### バックアップ機能
+## 問題が発生した場合
 
-CubePDF Utility では、以下のフォルダに過去 30 日間のバックアップを作成するようにしています。
+CubePDF Utility は、以下のフォルダに実行ログを出力しています。
+問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡お願いいたします。
+
+C:\ユーザー\\(ユーザー名)\AppData\Local\CubeSoft\CubePdfUtility2\Log
+
+また、CubePDF Utility では以下のフォルダに過去 30 日間のバックアップを作成するようにしています。
 もし、何らかの不都合により PDF ファイルを消失した場合は、バックアップも検索して下さい。
 
-C:\ユーザー\<ユーザー名>\AppData\Local\CubeSoft\CubePdfUtility2\<日付>  
+C:\ユーザー\\(ユーザー名)\AppData\Local\CubeSoft\CubePdfUtility2\\(日付)
+
 ※ <ユーザー名> は、ログインしているユーザ名に置換して下さい。  
 ※ <日付> は、該当ファイルを編集した日付に置換して下さい。
 
