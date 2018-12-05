@@ -21,7 +21,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:r="urn:fluent-ribbon"
     xmlns:fs="clr-namespace:Cube.FileSystem;assembly=Cube.FileSystem"
-    xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui">
+    xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/ScrollStyle.xaml" />
@@ -241,7 +242,7 @@
             </Grid.ColumnDefinitions>
 
             <Image
-                Source="pack://application:,,,/Assets/Small/Pdf.png"
+                Source="{Binding Converter={my:IconConverter}}"
                 Stretch="Uniform" />
 
             <TextBlock
