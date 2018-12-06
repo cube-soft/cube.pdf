@@ -8,10 +8,10 @@ https://www.cube-soft.jp/cubepdfutility/
 
 ## Overview
 
-CubePDF Utility is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings through the graphical user interface (GUI).
+CubePDF Utility is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings through GUI.
 
-CubePDF Utility requires Microsoft .NET Framework 3.5 or more (4.5.2 or more recommended).
-The download link is as follows:  
+CubePDF Utility requires Microsoft .NET Framework 3.5 or more (4.5.2 or more recommended).  
+The download links are as follows:  
 
 * Microsoft .NET Framework 4.5.2  
   https://www.microsoft.com/ja-JP/download/details.aspx?id=42643
@@ -20,18 +20,16 @@ The download link is as follows:
 
 ## Support
 
-CubePDF Utility outputs the log to the following directory.
+CubePDF Utility outputs the log to the following directory.  
+```C:\Users\(UserName *1)\AppData\Local\CubeSoft\CubePdfUtility2\Log```  
 When you have some troubles, please contact support@cube-soft.jp along with these log files.
 
-C:\Users\\(UserName *1)\AppData\Local\CubeSoft\CubePdfUtility2\Log
-
-The application saves backup of edited files to the following directory during the past 30 days.
+The application saves backup of edited files to the following directory during the past 30 days.  
+```C:\Users\(UserName *1)\AppData\Local\CubeSoft\CubePdfUtility2\(Date *2)```  
 When you lost files in some unexpected errors, please recover them from the backup.
 
-C:\Users\\(UserName *1)\AppData\Local\CubeSoft\CubePdfUtility2\\(Date *2)
-
-*1 <UserName> ... log-on username  
-*2 <Date> ... date of editting the file
+*1 ... logged-on username  
+*2 ... editing date
 
 ## Dependencies
 
