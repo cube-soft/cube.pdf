@@ -59,6 +59,13 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2018/12/10 version 0.5.2β
+    - Fix a problem that encrypted PDF file cannot be opened in 32bit edition.
+    - Fix the layout of the preview window.
+    - Fix to display thumbnail images correctly in high DPI settings.
+    - Fix to display the number of selected items in the status bar.
+    - Fix to use associated file icon.
+    - Add a keyboard shortcut of Ctrl+Q that exits the application.
 * 2018/10/25 version 0.5.1β
     - Add menu of "Insertion details".
     - Fix to insert PDF pages from another process by Drag&Drop operation.
