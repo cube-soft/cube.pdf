@@ -27,6 +27,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Cube.Pdf.Tests.Editor.Interactions
 {
@@ -87,6 +88,27 @@ namespace Cube.Pdf.Tests.Editor.Interactions
             () => new TitleConverter().ConvertBack(null, null, null, null),
             Throws.TypeOf<NotSupportedException>()
         );
+
+        #endregion
+
+        #region IconConverter
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IconConverter
+        ///
+        /// <summary>
+        /// Executes the test of the IconConverter class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("Sample.pdf", ExpectedResult = true)]
+        [TestCase("NotFound",   ExpectedResult = true)]
+        [TestCase("",           ExpectedResult = false)]
+        public bool IconConverter(string src) => Convert<ImageSource>(
+            new IconConverter(),
+            src.HasValue() ? IO.Get(GetExamplesWith(src)) : null
+        ) != null;
 
         #endregion
 

@@ -1,4 +1,5 @@
-# CubePDF
+CubePDF
+====
 
 Copyright © 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
@@ -13,18 +14,23 @@ PowerPoint, and more), whenever you need it.
 The converter allows you to convert the files as easy as you can print the files;
 as a matter of fact, you can do it in the same manner as you print files. 
 
-CubePDF requires Microsoft .NET Framework 3.5 or more.
-The download link is as follows:  
-https://www.microsoft.com/en-us/download/details.aspx?id=22
+CubePDF requires Microsoft .NET Framework 3.5 or more.  
+The download links are as follows:
+
+* Microsoft .NET Framework 4.5.2  
+  https://www.microsoft.com/ja-JP/download/details.aspx?id=42643
+* Microsoft .NET Framework 3.5  
+  https://www.microsoft.com/ja-jp/download/details.aspx?id=22
 
 ## Support
 
-CubePDF outputs the log to the C:\ProgramData\CubeSoft\CubePdf\Log directory.
+CubePDF outputs the log to the following directory.  
+```C:\ProgramData\CubeSoft\CubePdf\Log```  
 When you have some troubles, please contact support@cube-soft.jp along with these log files.
 
 ## Dependencies
 
-Dependencies of the CubePDF is as follows.
+Dependencies of the CubePDF are as follows.
 
 * GPL Ghostscript
     - GNU Affero General Public License

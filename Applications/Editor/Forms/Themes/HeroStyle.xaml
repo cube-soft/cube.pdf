@@ -19,7 +19,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:fs="clr-namespace:Cube.FileSystem;assembly=Cube.FileSystem">
+    xmlns:fs="clr-namespace:Cube.FileSystem;assembly=Cube.FileSystem"
+    xmlns:my="clr-namespace:Cube.Pdf.App.Editor">
 
     <!-- **********************************************************************
       Hero
@@ -87,7 +88,7 @@
             </Grid.ColumnDefinitions>
 
             <Image
-                Source="pack://application:,,,/Assets/Small/Pdf.png"
+                Source="{Binding Converter={my:IconConverter}}"
                 Stretch="Uniform" />
             <TextBlock
                 Text="{Binding NameWithoutExtension}"

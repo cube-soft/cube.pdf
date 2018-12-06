@@ -159,7 +159,7 @@ namespace Cube.Pdf.App.Editor
         protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             if (CollectionChanged == null) return;
-            if (Context != null) Context.Send(_ => CollectionChanged(this, e), null);
+            if (Context != null) Context.Send(z => CollectionChanged(this, e), null);
             else CollectionChanged(this, e);
         }
 
