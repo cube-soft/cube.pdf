@@ -369,7 +369,7 @@ namespace Cube.Pdf.App.Clip
         {
             try
             {
-                using (var _ = new System.IO.FileStream(path,
+                using (new System.IO.FileStream(path,
                     System.IO.FileMode.Open,
                     System.IO.FileAccess.ReadWrite,
                     System.IO.FileShare.None)) return false;

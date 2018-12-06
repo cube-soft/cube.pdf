@@ -116,7 +116,7 @@ namespace Cube.Pdf.App.Picker
             Model.Restore();
 
             var sview = new ThumbnailForm();
-            var _     = new ThumbnailPresenter(sview, Model, Aggregator);
+            var sp    = new ThumbnailPresenter(sview, Model, Aggregator);
 
             sview.FormClosed += (s, ev) =>
             {
