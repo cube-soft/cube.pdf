@@ -27,7 +27,7 @@ namespace Cube.Pdf.Itext
     /// ReadOnlyPageList
     ///
     /// <summary>
-    /// 読み取り専用で PDF ページ一覧へアクセスするためのクラスです。
+    /// Represents a read only collection of PDF pages.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,11 +40,12 @@ namespace Cube.Pdf.Itext
         /// ReadOnlyPageList
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ReadOnlyPageList class with
+        /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="core">PdfReader オブジェクト</param>
-        /// <param name="file">PDF ファイル情報</param>
+        /// <param name="core">PdfReader object.</param>
+        /// <param name="file">PDF file information.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ReadOnlyPageList(PdfReader core, PdfFile file)
@@ -62,7 +63,7 @@ namespace Cube.Pdf.Itext
         /// File
         ///
         /// <summary>
-        /// PDF ファイル情報を取得します。
+        /// Gets the PDF file information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -73,7 +74,7 @@ namespace Cube.Pdf.Itext
         /// Count
         ///
         /// <summary>
-        /// ページ数を取得します。
+        /// Gets the number of pages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -84,7 +85,7 @@ namespace Cube.Pdf.Itext
         /// Item[int]
         ///
         /// <summary>
-        /// Page オブジェクトを取得します。
+        /// Gets the Page object corresponding the specified index.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -99,10 +100,12 @@ namespace Cube.Pdf.Itext
         /// GetEnumerator
         ///
         /// <summary>
-        /// 各ページオブジェクトへアクセスするための反復子を取得します。
+        /// Returns an enumerator that iterates through this collection.
         /// </summary>
         ///
-        /// <returns>反復子</returns>
+        /// <returns>
+        /// An IEnumerator(Page) object for this collection.
+        /// </returns>
         ///
         /* ----------------------------------------------------------------- */
         public override IEnumerator<Page> GetEnumerator()

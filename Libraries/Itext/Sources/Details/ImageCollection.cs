@@ -30,7 +30,7 @@ namespace Cube.Pdf.Itext
     /// EmbeddedImageCollection
     ///
     /// <summary>
-    /// PDF ファイルに埋め込まれた画像一覧を表すクラスです。
+    /// Represents a collection of embedded images in a PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -43,10 +43,12 @@ namespace Cube.Pdf.Itext
         /// GetEnumerator
         ///
         /// <summary>
-        /// 反復用オブジェクトを取得します。
+        /// Returns an enumerator that iterates through this collection.
         /// </summary>
         ///
-        /// <returns>反復用オブジェクト</returns>
+        /// <returns>
+        /// An IEnumerator(Image) object for this collection.
+        /// </returns>
         ///
         /* ----------------------------------------------------------------- */
         public override IEnumerator<Image> GetEnumerator() => _inner.GetEnumerator();
@@ -56,7 +58,7 @@ namespace Cube.Pdf.Itext
         /// RenderImage
         ///
         /// <summary>
-        /// 画像描画時に実行されます。
+        /// Occurs when the specified image is rendered.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -86,7 +88,7 @@ namespace Cube.Pdf.Itext
         /// RenderText
         ///
         /// <summary>
-        /// テキスト描画時に実行されます。。
+        /// Occurs when the specified text is rendered.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -97,7 +99,7 @@ namespace Cube.Pdf.Itext
         /// BeginTextBlock
         ///
         /// <summary>
-        /// テキスト描画開始時に実行されます。
+        /// Occurs when the text block begins to render.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -108,7 +110,7 @@ namespace Cube.Pdf.Itext
         /// EndTextBlock
         ///
         /// <summary>
-        /// テキスト描画終了時に実行されます。
+        /// Occurs when the text block ends to render.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -123,8 +125,8 @@ namespace Cube.Pdf.Itext
         /// Restore
         ///
         /// <summary>
-        /// 描画部分のビットマップとマスク処理用のビットマップから元々の
-        /// 画像を生成します。
+        /// Resotres the bitmap data structure from the specified
+        /// arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

@@ -34,7 +34,7 @@ namespace Cube.Pdf.Itext
     /// ReaderFactory
     ///
     /// <summary>
-    /// PdfReader を生成するためのクラスです。
+    /// Provices functionality to create a PdfReader instance.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -108,13 +108,14 @@ namespace Cube.Pdf.Itext
         /// CreateFromImage
         ///
         /// <summary>
-        /// 画像ファイルから PdfReader オブジェクトを生成します。
+        /// Creates a new instance of the PdfReader class from the
+        /// specified image.
         /// </summary>
         ///
-        /// <param name="src">画像ファイルのパス</param>
-        /// <param name="io">入出力用オブジェクト</param>
+        /// <param name="src">Path of the image.</param>
+        /// <param name="io">I/O handler.</param>
         ///
-        /// <returns>PdfReader オブジェクト</returns>
+        /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static PdfReader CreateFromImage(string src, IO io)

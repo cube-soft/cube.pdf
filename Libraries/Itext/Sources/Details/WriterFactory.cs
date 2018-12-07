@@ -29,7 +29,7 @@ namespace Cube.Pdf.Itext
     /// WriterFactory
     ///
     /// <summary>
-    /// PdfWriter および関連クラスを生成するためのクラスです。
+    /// Provides functionality to create a PdfWriter instance.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,15 +42,15 @@ namespace Cube.Pdf.Itext
         /// Create
         ///
         /// <summary>
-        /// PDF 作成用オブジェクトを生成します。
+        /// Creates new PDF writer objects.
         /// </summary>
         ///
-        /// <param name="path">PDF ファイルのパス</param>
-        /// <param name="data">メタ情報</param>
-        /// <param name="smart">スマートコピーを使用するかどうか</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="path">Path of the PDF document.</param>
+        /// <param name="data">Metadata of the PDF document.</param>
+        /// <param name="smart">Use smart copy mode or note.</param>
+        /// <param name="io">I/O handler.</param>
         ///
-        /// <returns>Document および PdfCopy オブジェクト</returns>
+        /// <returns>Document and PdfCopy objects.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static KeyValuePair<Document, PdfCopy> Create(string path, Metadata data, bool smart, IO io)
@@ -71,14 +71,14 @@ namespace Cube.Pdf.Itext
         /// Create
         ///
         /// <summary>
-        /// PdfStamper オブジェクトを生成します。
+        /// Creates a new instance of the PdfStamper class.
         /// </summary>
         ///
-        /// <param name="path">PDF ファイルのパス</param>
-        /// <param name="reader">PdfReader オブジェクト</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="path">Path of the PDF document.</param>
+        /// <param name="reader">PdfReader object.</param>
+        /// <param name="io">I/O handler.</param>
         ///
-        /// <returns>PdfStamper オブジェクト</returns>
+        /// <returns>PdfStamper object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static PdfStamper Create(string path, PdfReader reader, IO io) =>
