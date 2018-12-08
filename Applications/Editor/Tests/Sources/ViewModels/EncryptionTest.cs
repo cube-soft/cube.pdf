@@ -58,7 +58,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             await CreateAsync("Sample.pdf", "", 2, async (vm) =>
             {
                 var cts = new CancellationTokenSource();
-                using (var _ = Register(vm, cmp, false, cts))
+                using (Register(vm, cmp, false, cts))
                 {
                     Assert.That(vm.Ribbon.Encryption.Command.CanExecute(), Is.True);
                     vm.Ribbon.Encryption.Command.Execute();
