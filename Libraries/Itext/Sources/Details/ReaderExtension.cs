@@ -32,7 +32,7 @@ namespace Cube.Pdf.Itext
     /// ReaderExtension
     ///
     /// <summary>
-    /// PdfReader の拡張用クラスです。
+    /// Provides extended methods of the PdfReader class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -47,14 +47,14 @@ namespace Cube.Pdf.Itext
         /// GetPage
         ///
         /// <summary>
-        /// Page オブジェクトを生成します。
+        /// Gets the Page object from the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PdfReader オブジェクト</param>
-        /// <param name="file">PDF ファイル情報</param>
-        /// <param name="pagenum">ページ番号</param>
+        /// <param name="src">PdfReader object.</param>
+        /// <param name="file">PDF file information.</param>
+        /// <param name="pagenum">Page number</param>
         ///
-        /// <returns>Page オブジェクト</returns>
+        /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Page GetPage(this PdfReader src, PdfFile file, int pagenum) => new Page(
@@ -70,12 +70,12 @@ namespace Cube.Pdf.Itext
         /// GetMetadata
         ///
         /// <summary>
-        /// Metadata オブジェクトを取得します。
+        /// Gets the Metadata object from the specified reader.
         /// </summary>
         ///
-        /// <param name="src">PdfReader オブジェクト</param>
+        /// <param name="src">PdfReader object.</param>
         ///
-        /// <returns>Metadata オブジェクト</returns>
+        /// <returns>Metadata object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Metadata GetMetadata(this PdfReader src) => new Metadata
@@ -95,13 +95,13 @@ namespace Cube.Pdf.Itext
         /// GetEncryption
         ///
         /// <summary>
-        /// Encryption オブジェクトを取得します。
+        /// Gets the Encryption object from the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PdfReader オブジェクト</param>
-        /// <param name="file">PDF ファイル情報</param>
+        /// <param name="src">PdfReader object.</param>
+        /// <param name="file">PDF file information.</param>
         ///
-        /// <returns>Encryption オブジェクト</returns>
+        /// <returns>Encryption object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Encryption GetEncryption(this PdfReader src, PdfFile file)
@@ -125,12 +125,12 @@ namespace Cube.Pdf.Itext
         /// GetEncryptionMethod
         ///
         /// <summary>
-        /// 暗号化方式を取得します。
+        /// Gets the encryption method from the specified reader.
         /// </summary>
         ///
-        /// <param name="src">PdfReader オブジェクト</param>
+        /// <param name="src">PdfReader object.</param>
         ///
-        /// <returns>暗号化方式</returns>
+        /// <returns>Encryption method.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static EncryptionMethod GetEncryptionMethod(this PdfReader src)
@@ -151,13 +151,13 @@ namespace Cube.Pdf.Itext
         /// GetUserPassword
         ///
         /// <summary>
-        /// ユーザパスワードを取得します。
+        /// Gets the user password from the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PdfReader オブジェクト</param>
-        /// <param name="file">PDF のファイル情報</param>
+        /// <param name="src">PdfReader object.</param>
+        /// <param name="file">PDF file information.</param>
         ///
-        /// <returns>ユーザパスワード</returns>
+        /// <returns>User password.</returns>
         ///
         /// <remarks>
         /// 暗号化方式が AES256 の場合、ユーザパスワードの解析に
@@ -183,12 +183,13 @@ namespace Cube.Pdf.Itext
         /// GetContentParser
         ///
         /// <summary>
-        /// PdfReaderContentParser オブジェクトを取得します。
+        /// Gets the PdfReaderContentParser object from the specified
+        /// reader.
         /// </summary>
         ///
-        /// <param name="src">PdfReader オブジェクト</param>
+        /// <param name="src">PdfReader object.</param>
         ///
-        /// <returns>PdfReaderContentParser オブジェクト</returns>
+        /// <returns>PdfReaderContentParser object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static PdfReaderContentParser GetContentParser(this PdfReader src) =>
@@ -199,13 +200,16 @@ namespace Cube.Pdf.Itext
         /// GetBookmarks
         ///
         /// <summary>
-        /// PDF ファイルに存在するしおり情報を取得します。
+        /// Gets the collection of bookmarks embedded in the specified
+        /// PDF document.
         /// </summary>
         ///
-        /// <param name="src">PdfReader オブジェクト</param>
-        /// <param name="pagenum">ページ番号</param>
-        /// <param name="delta">ページ番号の差分</param>
-        /// <param name="dest">結果の格納用オブジェクト</param>
+        /// <param name="src">PdfReader object.</param>
+        /// <param name="pagenum">Page number.</param>
+        /// <param name="delta">
+        /// Difference in page numbers between PDF documents.
+        /// </param>
+        /// <param name="dest">Container for the result.</param>
         ///
         /// <remarks>
         /// PdfReader オブジェクトから取得されたしおり情報に対して、
@@ -235,18 +239,19 @@ namespace Cube.Pdf.Itext
         /// Rotate
         ///
         /// <summary>
-        /// Page の回転情報にしたがって PdfReader オブジェクトの内容を
+        /// Updates the rotation information of the specified PdfReader
+        /// object according to the specified Page object.
         /// 更新します。
         /// </summary>
+        ///
+        /// <param name="src">PdfReader object.</param>
+        /// <param name="page">Page object.</param>
         ///
         /// <remarks>
         /// PDF ページを回転させる場合、いったん PdfReader オブジェクトの
         /// 内容を更新した後に PdfCopy オブジェクト等でコピーする方法が
         /// もっとも容易に実現できるため、この方法を採用しています。
         /// </remarks>
-        ///
-        /// <param name="src">PdfReader オブジェクト</param>
-        /// <param name="page">Page オブジェクト</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void Rotate(this PdfReader src, Page page)
@@ -266,8 +271,7 @@ namespace Cube.Pdf.Itext
         /// ToSize
         ///
         /// <summary>
-        /// iTextSharp の Rectable オブジェクトを SizeF オブジェクトに
-        /// 変換します。
+        /// Converts from iTextSharp.text.Rectable to SizeF.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
