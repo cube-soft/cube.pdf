@@ -28,7 +28,7 @@ namespace Cube.Pdf.Itext
     /// ImageExtension
     ///
     /// <summary>
-    /// 画像データに関連する拡張用クラスです。
+    /// Provices extended methods of the image classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,13 +41,12 @@ namespace Cube.Pdf.Itext
         /// GetItextImage
         ///
         /// <summary>
-        /// System.Drawing.Image オブジェクトを iTextSharp.text.Image
-        /// オブジェクトに変換します。
+        /// Converts from System.Drawing.Image to iTextSharp.text.Image.
         /// </summary>
         ///
-        /// <param name="image">変換前のオブジェクト</param>
+        /// <param name="image">Source image.</param>
         ///
-        /// <returns>変換後のオブジェクト</returns>
+        /// <returns>Converted image.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static iTextSharp.text.Image GetItextImage(this Image image)
@@ -72,7 +71,7 @@ namespace Cube.Pdf.Itext
         /// GetSupportFormats
         ///
         /// <summary>
-        /// サポートしている画像フォーマット一覧を取得します。
+        /// Gets the collection of supported image formats.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

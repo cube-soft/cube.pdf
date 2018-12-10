@@ -102,7 +102,7 @@ namespace Cube.Pdf.Tests
             {
                 var src      = GetExamplesWith("SampleRc40.pdf");
                 var password = "bad-password-string";
-                using (var _ = Create(klass, src, password)) { /* Not reached */ }
+                using (Create(klass, src, password)) { /* Not reached */ }
             },
             Throws.TypeOf<EncryptionException>()
         );
@@ -122,7 +122,7 @@ namespace Cube.Pdf.Tests
             {
                 var src   = GetExamplesWith("SampleRc40.pdf");
                 var query = new Query<string>(e => e.Cancel = true);
-                using (var _ = Create(klass, src, query)) { /* Not reached */ }
+                using (Create(klass, src, query)) { /* Not reached */ }
             },
             Throws.TypeOf<OperationCanceledException>()
         );

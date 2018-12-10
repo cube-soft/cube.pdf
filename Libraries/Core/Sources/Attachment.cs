@@ -186,7 +186,7 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetBytes
+        /// GetData
         ///
         /// <summary>
         /// Gets the data of the attached file in byte unit.
