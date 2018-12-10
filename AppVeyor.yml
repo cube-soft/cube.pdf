@@ -1,4 +1,4 @@
-version: 2.13.2.{build}
+version: 2.14.0.{build}
 branches:
     only:
         - master
@@ -11,6 +11,7 @@ nuget:
 platform: Any CPU
 configuration: Release
 before_build:
+    - "SET PATH=C:\\Ruby22\\bin;C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
     - nuget sources add -name Cube.FileSystem -source https://ci.appveyor.com/nuget/cube.filesystem
     - nuget sources add -name Cube.Images -source https://ci.appveyor.com/nuget/cube.images
@@ -23,7 +24,6 @@ build:
     publish_nuget: true
     verbosity: minimal
 after_build:
-    - "SET PATH=C:\\Ruby22\\bin;%PATH%"
     - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x86.7z
     - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
     - 7z x -o"..\resources\native\x86\ghostscript" gs-x86.7z
@@ -87,7 +87,6 @@ after_test:
     - xcopy /q /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
     - xcopy /q /Y /I Applications\Editor\Forms\bin\Release CubePdf.Utility
     - xcopy /q /Y /I Applications\Editor\Proxy\bin\Release CubePdf.Utility.Proxy
-    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
     - pip install codecov
     - codecov -f "CoverResults.xml"
 artifacts:
