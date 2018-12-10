@@ -68,7 +68,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /// <summary>
         /// Executes the test to create a new instance of the PortMonitor
-        /// class with a force option.
+        /// class with an empty collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -76,7 +76,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void CreateForce()
         {
             var name = "Dummy Port";
-            var src  = new PortMonitor(name, true);
+            var src  = new PortMonitor(name, new PortMonitor[0]);
             Assert.That(src.Name,                     Is.EqualTo(name));
             Assert.That(src.Exists,                   Is.False, nameof(src.Exists));
             Assert.That(src.CanInstall(),             Is.False, nameof(src.CanInstall));
@@ -98,7 +98,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         [Test]
         public void Install_Throws()
         {
-            var src = new PortMonitor("Dummy Monitor", true);
+            var src = new PortMonitor("Dummy Monitor");
             Assert.That(src.Exists,       Is.False);
             Assert.That(src.CanInstall(), Is.False);
 
@@ -122,7 +122,7 @@ namespace Cube.Pdf.Tests.Pinstaller
         [Test]
         public void Uninstall_Ignore()
         {
-            var src = new PortMonitor("Dummy Monitor", true);
+            var src = new PortMonitor("Dummy Monitor");
             Assert.That(src.Exists, Is.False);
 
             src.FileName = "DummyMon.dll";

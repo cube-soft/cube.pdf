@@ -20,6 +20,7 @@ using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -49,7 +50,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="name">Name of the port monitor.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PortMonitor(string name) : this(name, false) { }
+        public PortMonitor(string name) : this(name, GetElements()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -61,15 +62,15 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /// <param name="name">Name of the port monitor.</param>
-        /// <param name="force">
-        /// Value indicating whether to forcibly create an object
-        /// ignoring any exceptions.
+        /// <param name="elements">
+        /// Collection of installed port monitors.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public PortMonitor(string name, bool force) : this(new MonitorInfo2())
+        public PortMonitor(string name, IEnumerable<PortMonitor> elements) : this(new MonitorInfo2())
         {
-            var obj = this.GetOrDefault(GetElements, name, force);
+            var sc  = StringComparison.InvariantCultureIgnoreCase;
+            var obj = elements.FirstOrDefault(e => e.Name.Equals(name, sc));
             Exists = (obj != null);
             if (Exists) _core = obj._core;
             else
@@ -194,13 +195,13 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PortMonitor> GetElements()
         {
-            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out var _)) return null;
+            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return null;
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var ptr = Marshal.AllocHGlobal((int)bytes);
             try
             {
-                if (GetEnumApi(ptr, bytes, out var __, out var n)) return Convert(ptr, n);
+                if (GetEnumApi(ptr, bytes, out _, out var n)) return Convert(ptr, n);
                 else throw new Win32Exception();
             }
             finally { Marshal.FreeHGlobal(ptr); }

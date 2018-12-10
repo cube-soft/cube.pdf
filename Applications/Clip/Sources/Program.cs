@@ -57,7 +57,7 @@ namespace Cube.Pdf.App.Clip
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 var view = Views.CreateMainView(args);
-                using (var _ = new ClipPresenter(view)) Application.Run(view);
+                using (new ClipPresenter(view)) Application.Run(view);
             }
             catch (Exception err) { Logger.Error(type, err.Message, err); }
         }

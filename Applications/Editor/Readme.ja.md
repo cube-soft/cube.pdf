@@ -1,10 +1,10 @@
 ﻿CubePDF Utility
 ====
 
-Copyright © 2013 CubeSoft Inc.  
+Copyright © 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
-https://www.cube-soft.jp/
+https://www.cube-soft.jp/cubepdfutility/
 
 ## はじめに
 
@@ -53,14 +53,18 @@ CubePDF Utility で編集可能なものは以下の通りです。
     - フォームへの入力を許可する
     - 注釈の追加・編集操作を許可する
 
-### バックアップ機能
+## 問題が発生した場合
 
-CubePDF Utility では、以下のフォルダに過去 30 日間のバックアップを作成するようにしています。
+CubePDF Utility は、以下のフォルダに実行ログを出力しています。  
+```C:\ユーザー\(ユーザー名)\AppData\Local\CubeSoft\CubePdfUtility2\Log```  
+問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡お願いいたします。
+
+また、CubePDF Utility では以下のフォルダに過去 30 日間のバックアップを作成するようにしています。  
+```C:\ユーザー\(ユーザー名)\AppData\Local\CubeSoft\CubePdfUtility2\(日付)```  
 もし、何らかの不都合により PDF ファイルを消失した場合は、バックアップも検索して下さい。
 
-C:\ユーザー\<ユーザー名>\AppData\Local\CubeSoft\CubePdfUtility2\<日付>  
-※ <ユーザー名> は、ログインしているユーザ名に置換して下さい。  
-※ <日付> は、該当ファイルを編集した日付に置換して下さい。
+※ (ユーザー名) は、ログインしているユーザ名に置換して下さい。  
+※ (日付) は、該当ファイルを編集した日付に置換して下さい。
 
 ## 利用ライブラリ
 
@@ -91,6 +95,13 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2018/12/10 version 0.5.2β
+    - 32bit 版でパスワードで保護された PDF ファイルが開けない不都合を修正
+    - プレビュー画面の表示処理を改善
+    - 高 DPI 設定時にサムネイルの表示が崩れる不都合を修正
+    - ステータスバーに選択項目数が表示されない不都合を修正
+    - 関連付けられたアイコンを使用するように修正
+    - Ctrl+Q でアプリケーションが終了するように修正
 * 2018/10/25 version 0.5.1β
     - 異なるプロセス（ウィンドウ）間でのドラッグ&ドロップによるページ移動に再対応
     - 詳細を設定して挿入機能に再対応

@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyVersion("0.5.1.0")]
-[assembly: AssemblyFileVersion("0.5.1.0")]
+[assembly: AssemblyVersion("0.5.2.0")]
+[assembly: AssemblyFileVersion("0.5.2.0")]
 [assembly: AssemblyTitle("CubePDF Utility")]
 [assembly: AssemblyDescription("Edit PDF pages, metadata, security settings, and more.")]
 [assembly: AssemblyCompany("CubeSoft")]

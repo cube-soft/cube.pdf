@@ -137,14 +137,12 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             dest.PropertyChanged += (s, e) => ++count;
 
             Execute(vm, vm.Ribbon.RotateLeft);
-            Assert.That(Wait.For(() => count >= 4), "Timeout (Left)");
-            Assert.That(dest.Image,  Is.Not.EqualTo(image).And.Not.EqualTo(dummy), "Left");
+            Assert.That(Wait.For(() => dest.Image != dummy), "Timeout (Left)");
             Assert.That(dest.Width,  Is.Not.EqualTo(width),  nameof(width));
             Assert.That(dest.Height, Is.Not.EqualTo(height), nameof(height));
 
             Execute(vm, vm.Ribbon.RotateRight);
-            Assert.That(Wait.For(() => count >= 8), "Timeout (Right)");
-            Assert.That(dest.Image,  Is.Not.EqualTo(image).And.Not.EqualTo(dummy), "Right");
+            Assert.That(Wait.For(() => dest.Image != dummy), "Timeout (Right)");
             Assert.That(dest.Width,  Is.EqualTo(width),  nameof(width));
             Assert.That(dest.Height, Is.EqualTo(height), nameof(height));
         });

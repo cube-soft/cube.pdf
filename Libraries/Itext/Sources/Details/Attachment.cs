@@ -27,7 +27,7 @@ namespace Cube.Pdf.Itext
     /// EmbeddedAttachment
     ///
     /// <summary>
-    /// PDF ファイルに添付済のファイルを表すクラスです。
+    /// Represents an file attached to a PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,13 +40,14 @@ namespace Cube.Pdf.Itext
         /// Attachment
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Attachment class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O オブジェクト</param>
-        /// <param name="name">添付ファイル名</param>
-        /// <param name="src">添付元 PDF ファイルのパス</param>
-        /// <param name="core">添付ストリーム</param>
+        /// <param name="io">I/O handler.</param>
+        /// <param name="name">Name of attached file.</param>
+        /// <param name="src">Path of the PDF document.</param>
+        /// <param name="core">Core object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public EmbeddedAttachment(string name, string src, IO io, PRStream core) :
@@ -64,7 +65,7 @@ namespace Cube.Pdf.Itext
         /// GetLength
         ///
         /// <summary>
-        /// 添付ファイルのサイズを取得します。
+        /// Gets the data length of the attached file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -73,10 +74,10 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetBytes
+        /// GetData
         ///
         /// <summary>
-        /// 添付ファイルの内容をバイト配列で取得します。
+        /// Gets the data of the attached file in byte unit.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -87,7 +88,7 @@ namespace Cube.Pdf.Itext
         /// GetChecksum
         ///
         /// <summary>
-        /// 添付ファイルのチェックサムを取得します。
+        /// Gets the checksum of attached file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

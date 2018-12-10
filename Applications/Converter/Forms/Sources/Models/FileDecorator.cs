@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using System;
@@ -165,9 +166,13 @@ namespace Cube.Pdf.App.Converter
 
             var tmp = IO.Combine(IO.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
             var gs  = GhostscriptFactory.Create(Settings);
-            gs.Options.Add(new Ghostscript.Argument('d', "FastWebView"));
-            gs.Invoke(src, tmp);
-            IO.Move(tmp, src, true);
+
+            if (gs is PdfConverter pdf)
+            {
+                pdf.Linearization = Value.Linearization;
+                pdf.Invoke(src, tmp);
+                IO.Move(tmp, src, true);
+            }
         }
 
         /* ----------------------------------------------------------------- */

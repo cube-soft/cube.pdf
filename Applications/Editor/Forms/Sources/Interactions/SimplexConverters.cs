@@ -19,6 +19,7 @@
 using Cube.Conversions;
 using Cube.FileSystem;
 using Cube.Generics;
+using Cube.Images.Icons;
 using Cube.Xui.Converters;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,38 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public override object ProvideValue(IServiceProvider serviceProvider) => this;
+    }
+
+    #endregion
+
+    #region IconConverter
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// IconConverter
+    ///
+    /// <summary>
+    /// Provides functionality to convert from the specified value to the
+    /// icon image.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class IconConverter : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectionToText
+        ///
+        /// <summary>
+        /// Initializes a new instance of the SelectionToText class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IconConverter() : base(e =>
+            e is Information fi ?
+            fi.GetIcon(IconSize.Small).ToBitmap().ToBitmapImage(true) :
+            null
+        ) { }
     }
 
     #endregion

@@ -192,7 +192,7 @@ namespace Cube.Pdf.App.Editor
             Reschedule(null);
             if (CollectionChanged == null) return;
             if (Preferences.Context == null) CollectionChanged(this, e);
-            else Preferences.Context.Send(_ => CollectionChanged(this, e), null);
+            else Preferences.Context.Send(z => CollectionChanged(this, e), null);
         }
 
         #endregion

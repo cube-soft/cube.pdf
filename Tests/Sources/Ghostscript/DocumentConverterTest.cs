@@ -116,6 +116,14 @@ namespace Cube.Pdf.Tests.Ghostscript
                 }, "SampleCjk.ps", new Version(1, 2));
 
                 /* --------------------------------------------------------- */
+                // Linearization
+                /* --------------------------------------------------------- */
+                yield return TestCase(new PdfConverter
+                {
+                    Linearization = true,
+                }, "Sample.ps", "Linearization");
+
+                /* --------------------------------------------------------- */
                 //
                 // EmbedFonts
                 //

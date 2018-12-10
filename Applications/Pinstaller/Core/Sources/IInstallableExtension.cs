@@ -19,8 +19,6 @@ using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Log;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Cube.Pdf.App.Pinstaller
 {
@@ -52,37 +50,6 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static string GetEnvironment(this IInstallable src) =>
             (IntPtr.Size == 4) ? "Windows NT x86" : "Windows x64";
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetOrDefault
-        ///
-        /// <summary>
-        /// Gets the first matched element from the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        /// <param name="collection">Collection of elements.</param>
-        /// <param name="name">Target name.</param>
-        /// <param name="ignoreError">Ignore exceptions or not.</param>
-        ///
-        /// <returns>First matched element.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static T GetOrDefault<T>(this IInstallable src, Func<IEnumerable<T>> collection,
-            string name, bool ignoreError) where T : IInstallable
-        {
-            try
-            {
-                var opt = StringComparison.InvariantCultureIgnoreCase;
-                return collection().FirstOrDefault(e => e.Name.Equals(name, opt));
-            }
-            catch
-            {
-                if (ignoreError) return default(T);
-                else throw;
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///

@@ -188,7 +188,7 @@ namespace Cube.Pdf.App.Pinstaller
             var dir = Path.Combine(Environment.SpecialFolder.System.GetName(), @"spool\printers");
             var src = Directory.GetFiles(dir);
 
-            this.LogDebug($"[Clear]\tJob:{src.Length}");
+            this.LogDebug(string.Join("\t", $"[{nameof(Reset)}]", $"Job:{src.Length}"));
 
             foreach (var f in src)
             {
@@ -229,8 +229,7 @@ namespace Cube.Pdf.App.Pinstaller
         private void Wait()
         {
             if (!_pending.TryGetValue(Status, out var dest)) return;
-            this.Log();
-            _core.WaitForStatus(dest, Timeout);
+            this.Log(() => _core.WaitForStatus(dest, Timeout));
         }
 
         #endregion

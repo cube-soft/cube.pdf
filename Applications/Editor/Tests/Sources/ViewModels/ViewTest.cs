@@ -87,25 +87,33 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         [Test]
         public void Select() => Create("SampleRotation.pdf", "", 9, vm =>
         {
-            var dest = vm.Data.Images.Selection;
+            var unit    = 3; // Number of PropertyChanged events per action.
+            var changed = 0;
+            var dest    = vm.Data.Images.Selection;
+            dest.PropertyChanged += (s, e) => ++changed;
+
             Assert.That(dest.Count,   Is.EqualTo(0));
             Assert.That(dest.Indices, Is.Not.Null);
             Assert.That(dest.Last,    Is.EqualTo(-1));
 
             vm.Data.Images.First().IsSelected = true;
             Assert.That(Wait.For(() => !vm.Data.Busy.Value));
+            Assert.That(changed,    Is.EqualTo(1 * unit));
             Assert.That(dest.Count, Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(0), nameof(dest.Last));
 
             Execute(vm, vm.Ribbon.SelectFlip);
+            Assert.That(changed,    Is.EqualTo(10 * unit));
             Assert.That(dest.Count, Is.EqualTo(8), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
 
             Execute(vm, vm.Ribbon.Select); // SelectAll
+            Assert.That(changed,    Is.EqualTo(11 * unit));
             Assert.That(dest.Count, Is.EqualTo(9), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
 
             Execute(vm, vm.Ribbon.Select); // SelectClear
+            Assert.That(changed, Is.EqualTo(20 * unit));
             Assert.That(dest.Count, Is.EqualTo(0));
         });
 
