@@ -23,6 +23,7 @@ using Cube.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -389,6 +390,23 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCollectionChanged
+        ///
+        /// <summary>
+        /// Raises the CollectionChanged event with the provided arguments.
+        /// </summary>
+        ///
+        /// <param name="e">Arguments of the event being raised.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        {
+            Reschedule(null);
+            base.OnCollectionChanged(e);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
