@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DirectoryMonitor : EnumerableBase<Information>, INotifyCollectionChanged
+    public class DirectoryMonitor : ObservableBase<Information>
     {
         #region Constructors
 
@@ -117,51 +117,6 @@ namespace Cube.Pdf.App.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IO IO { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Context
-        ///
-        /// <summary>
-        /// Gets or sets the synchronization context.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SynchronizationContext Context { get; set; }
-
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CollectionChanged
-        ///
-        /// <summary>
-        /// Occurs when an item is added, removed, changed, moved,
-        /// or the entire list is refreshed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCollectionChanged
-        ///
-        /// <summary>
-        /// Raises the CollectionChanged event with the provided arguments.
-        /// </summary>
-        ///
-        /// <param name="e">Arguments of the event being raised.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-        {
-            if (CollectionChanged == null) return;
-            if (Context != null) Context.Send(z => CollectionChanged(this, e), null);
-            else CollectionChanged(this, e);
-        }
 
         #endregion
 
