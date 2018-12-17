@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections.Mixin;
 using Cube.FileSystem;
 using System;
 using System.Collections.Generic;
@@ -132,7 +133,7 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Argument> OnCreateArguments() =>
             base.OnCreateArguments()
-            .Concat(Trim(new[] { CreateVersion(), CreateFastWebView() }));
+            .Concat(new[] { CreateVersion(), CreateFastWebView() }.Compact());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -159,17 +160,6 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private Argument CreateFastWebView() =>
             Linearization ? new Argument('d', "FastWebView") : null;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Trim
-        ///
-        /// <summary>
-        /// Removes null objects from the specified collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<T> Trim<T>(IEnumerable<T> src) => src.OfType<T>();
 
         #endregion
     }
