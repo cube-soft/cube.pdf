@@ -336,6 +336,22 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SkipUi
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to skip displaying the
+        /// main window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool SkipUi
+        {
+            get => _skipUi;
+            set => SetProperty(ref _skipUi, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// IsBusy
         ///
         /// <summary>
@@ -444,6 +460,7 @@ namespace Cube.Pdf.App.Converter
             _userProgram      = string.Empty;
             _metadata         = new Metadata();
             _encryption       = new Encryption();
+            _skipUi           = false;
             _busy             = false;
             _deleteSource     = false;
         }
@@ -482,6 +499,7 @@ namespace Cube.Pdf.App.Converter
         private string _userProgram;
         private Metadata _metadata;
         private Encryption _encryption;
+        private bool _skipUi;
         private bool _busy;
         private bool _deleteSource;
         #endregion

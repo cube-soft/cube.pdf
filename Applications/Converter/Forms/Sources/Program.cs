@@ -63,7 +63,8 @@ namespace Cube.Pdf.App.Converter
                 settings.Set(args);
                 settings.CheckUpdate();
 
-                Show(settings);
+                if (settings.Value.SkipUi) Invoke(settings);
+                else Show(settings);
             }
             catch (Exception err) { Logger.Error(LogType, err.ToString()); }
         }
@@ -88,6 +89,24 @@ namespace Cube.Pdf.App.Converter
             {
                 view.Bind(vm);
                 Application.Run(view);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the conversion directly.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Invoke(SettingsFolder settings)
+        {
+            using (var src = new MainFacade(settings))
+            {
+                src.UpdateExtension();
+                src.Convert();
             }
         }
 

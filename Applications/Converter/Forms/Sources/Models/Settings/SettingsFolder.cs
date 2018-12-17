@@ -231,6 +231,7 @@ namespace Cube.Pdf.App.Converter
 
             Value.Destination  = IO.Combine(dest.DirectoryName, $"{name}{ext}");
             Value.DeleteSource = op.ContainsKey("deleteonclose");
+            Value.SkipUi       = op.ContainsKey("skipui");
         }
 
         /* ----------------------------------------------------------------- */
