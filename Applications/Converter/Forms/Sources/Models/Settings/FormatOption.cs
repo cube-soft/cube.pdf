@@ -26,7 +26,7 @@ namespace Cube.Pdf.App.Converter
     /// FormatOption
     ///
     /// <summary>
-    /// 変換形式に関するオプションオプションを表す列挙型です。
+    /// Specifies format options.
     /// </summary>
     ///
     /// <remarks>
@@ -63,7 +63,7 @@ namespace Cube.Pdf.App.Converter
     /// FormatOptionExtension
     ///
     /// <summary>
-    /// FormatOption の拡張用クラスです。
+    /// Provides extended methods of the FormatOption class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
