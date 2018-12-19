@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,13 +30,13 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PortExtension
+    public static class PortExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Convert
         ///
         /// <summary>
         /// Creates a collection of ports from the specified configuration.
@@ -46,14 +47,44 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Collection of ports.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Port> Create(this IEnumerable<PortConfig> src) =>
-            src.Select(e => new Port(e.Name, e.MonitorName)
+        public static IEnumerable<Port> Convert(this IEnumerable<PortConfig> src) =>
+            src.Select(e => e.Convert());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Creates a new instance of the Port class  from the specified
+        /// configuration.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static Port Convert(this PortConfig src)
+        {
+            var proxy = src.RunAsUser && src.Proxy.HasValue();
+            return new Port(src.Name, src.MonitorName)
             {
-                Application = e.Application,
-                Arguments   = e.Arguments,
-                Temp        = e.Temp,
-                WaitForExit = e.WaitForExit
-            });
+                Application = proxy ? src.Proxy : src.Application,
+                Arguments   = proxy ?
+                              Combine(src.Arguments, "/Exec", src.Application.Quote()) :
+                              src.Arguments,
+                Temp        = src.Temp,
+                WaitForExit = src.WaitForExit,
+            };
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Combine
+        ///
+        /// <summary>
+        /// Removes empty elements and joins them with a whitespace.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string Combine(params string[] args) =>
+            string.Join(" ", args.Where(e => e.HasValue()));
 
         #endregion
     }

@@ -158,7 +158,7 @@ namespace Cube.Pdf.App.Pinstaller
         public void Install(string resource, bool reinstall) => Invoke(service =>
         {
             var monitors = Config.PortMonitors.Create().ToList();
-            var ports    = Config.Ports.Create().ToList();
+            var ports    = Config.Ports.Convert().ToList();
             var drivers  = Config.PrinterDrivers.Create().ToList();
             var printers = Config.Printers.Create().ToList();
 
@@ -195,7 +195,7 @@ namespace Cube.Pdf.App.Pinstaller
         public void Uninstall() => Invoke(service =>
         {
             var monitors = Config.PortMonitors.Create().ToList();
-            var ports    = Config.Ports.Create().ToList();
+            var ports    = Config.Ports.Convert().ToList();
             var drivers  = Config.PrinterDrivers.Create().ToList();
             var printers = Config.Printers.Create().ToList();
 

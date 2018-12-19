@@ -145,6 +145,7 @@ namespace Cube.Pdf.App.Pinstaller
             foreach (var e in config.Ports)
             {
                 e.Temp        = System.IO.Path.Combine(ca, e.Temp);
+                e.Proxy       = src.ReplaceDirectory(e.Proxy);
                 e.Application = src.ReplaceDirectory(e.Application);
                 e.Arguments   = src.ReplaceDirectory(e.Arguments);
             }
