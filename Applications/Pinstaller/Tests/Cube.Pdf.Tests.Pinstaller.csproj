@@ -97,6 +97,7 @@
     <Compile Include="Sources\ArgumentTest.cs" />
     <Compile Include="Sources\InstallerTest.cs" />
     <Compile Include="Sources\PortMonitorTest.cs" />
+    <Compile Include="Sources\PortConfigTest.cs" />
     <Compile Include="Sources\PortTest.cs" />
     <Compile Include="Sources\PrinterDriverTest.cs" />
     <Compile Include="Sources\PrinterTest.cs" />

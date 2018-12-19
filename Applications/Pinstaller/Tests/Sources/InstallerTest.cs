@@ -178,10 +178,12 @@ namespace Cube.Pdf.Tests.Pinstaller
                     {
                         Name         = "CubePDF:",
                         MonitorName  = "CubeMon",
-                        Application  = @"C:\Program Files\CubePDF\CubeProxy.exe",
-                        Arguments    = @"/Exec ""C:\Program Files\CubePDF\cubepdf.exe""",
+                        Proxy        = @"C:\Program Files\CubePDF\CubeProxy.exe",
+                        Application  = @"C:\Program Files\CubePDF\cubepdf.exe",
+                        Arguments    = @"/Dummy",
                         Temp         = @"CubeSoft\CubePDF",
                         WaitForExit  = false,
+                        RunAsUser    = true,
                     }},
                     PrinterDrivers = new[] { new PrinterDriverConfig
                     {
