@@ -114,7 +114,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public IconConverter() : base(e =>
             e is Information fi ?
-            fi.GetIcon(IconSize.Small).ToBitmap().ToBitmapImage(true) :
+            fi.GetIcon(IconSize.Small)?.ToBitmap().ToBitmapImage(true) :
             null
         ) { }
     }
