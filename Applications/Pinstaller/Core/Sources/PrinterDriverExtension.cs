@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Convert
         ///
         /// <summary>
         /// Creates a collection of the printer drivers from the specified
@@ -49,12 +49,12 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Collection of printer drivers.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<PrinterDriver> Create(this IEnumerable<PrinterDriverConfig> src) =>
-            src.Create(PrinterDriver.GetElements());
+        public static IEnumerable<PrinterDriver> Convert(this IEnumerable<PrinterDriverConfig> src) =>
+            src.Convert(PrinterDriver.GetElements());
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Convert
         ///
         /// <summary>
         /// Creates a collection of the printer drivers from the specified
@@ -69,7 +69,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Collection of printer drivers.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<PrinterDriver> Create(this IEnumerable<PrinterDriverConfig> src,
+        public static IEnumerable<PrinterDriver> Convert(this IEnumerable<PrinterDriverConfig> src,
             IEnumerable<PrinterDriver> elements) =>
             src.Select(e => new PrinterDriver(e.Name, elements)
             {

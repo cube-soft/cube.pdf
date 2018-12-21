@@ -37,7 +37,7 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Convert
         ///
         /// <summary>
         /// Creates a collection of port monitors from the specified
@@ -49,12 +49,12 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Collection of port monitors.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<PortMonitor> Create(this IEnumerable<PortMonitorConfig> src) =>
-            src.Create(PortMonitor.GetElements());
+        public static IEnumerable<PortMonitor> Convert(this IEnumerable<PortMonitorConfig> src) =>
+            src.Convert(PortMonitor.GetElements());
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Convert
         ///
         /// <summary>
         /// Creates a collection of port monitors from the specified
@@ -69,7 +69,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Collection of port monitors.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<PortMonitor> Create(this IEnumerable<PortMonitorConfig> src,
+        public static IEnumerable<PortMonitor> Convert(this IEnumerable<PortMonitorConfig> src,
             IEnumerable<PortMonitor> elements) =>
             src.Select(e => new PortMonitor(e.Name, elements)
             {
