@@ -71,6 +71,7 @@ namespace Cube.Pdf.App.Editor
             _cache.Created += (s, e) => e.Key.Refresh();
             _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
+            Context     = context;
             Selection   = new ImageSelection   { Context = context };
             Preferences = new ImagePreferences { Context = context };
 
