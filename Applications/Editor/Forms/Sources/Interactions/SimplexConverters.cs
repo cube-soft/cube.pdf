@@ -112,11 +112,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IconConverter() : base(e =>
-            e is Information fi ?
-            fi.GetIcon(IconSize.Small)?.ToBitmap().ToBitmapImage(true) :
-            null
-        ) { }
+        public IconConverter() : base(e => (e as Information)?.IconImage(IconSize.Small)) { }
     }
 
     #endregion
