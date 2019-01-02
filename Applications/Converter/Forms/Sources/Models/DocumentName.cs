@@ -154,7 +154,6 @@ namespace Cube.Pdf.App.Converter
             var head = dest.Substring(0, pos);
             var tail = dest.Substring(pos);
 
-
             if (System.IO.Path.HasExtension(head)) return head;
             if (System.IO.Path.HasExtension(tail))
             {

@@ -72,7 +72,7 @@ namespace Cube.Pdf.App.Converter
 
             try { action(); }
             catch (Exception err) { src.Show(err); }
-            finally { src.Sync(() => src.Messenger.Close.Publish()); }
+            finally { src.Post(() => src.Messenger.Close.Publish()); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -119,7 +119,7 @@ namespace Cube.Pdf.App.Converter
         ///
         /* ----------------------------------------------------------------- */
         public static void Show(this MainViewModel src, Func<MessageEventArgs> get) =>
-            src.SyncWait(() => src.Messenger.MessageBox.Publish(get()));
+            src.Send(() => src.Messenger.MessageBox.Publish(get()));
 
         #endregion
 
