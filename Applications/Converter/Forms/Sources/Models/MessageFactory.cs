@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class MessageFactory
+    internal static class MessageFactory
     {
         #region Methods
 

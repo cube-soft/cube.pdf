@@ -38,7 +38,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class GhostscriptFactory
+    internal static class GhostscriptFactory
     {
         #region Methods
 

@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileDecorator
+    internal class FileDecorator
     {
         #region Constructors
 
@@ -101,7 +101,7 @@ namespace Cube.Pdf.App.Converter
         /// Invoke
         ///
         /// <summary>
-        /// Invokes the operations on the specified file.
+        /// Invokes operations on the specified file.
         /// </summary>
         ///
         /// <param name="src">Path of the source file.</param>
@@ -124,7 +124,7 @@ namespace Cube.Pdf.App.Converter
         /// InvokeItext
         ///
         /// <summary>
-        /// Invokes the iTextSharp operations.
+        /// Invokes iTextSharp operations.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
