@@ -35,7 +35,7 @@ namespace Cube.Pdf.App.Converter
     /// SettingsFolder
     ///
     /// <summary>
-    /// 各種設定を保持するためのクラスです。
+    /// Represents the application and/or user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -70,7 +70,7 @@ namespace Cube.Pdf.App.Converter
         /// SettingsFolder
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the SettingsFolder class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -85,12 +85,13 @@ namespace Cube.Pdf.App.Converter
         /// SettingsFolder
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the SettingsFolder class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="format">設定情報の保存方法</param>
-        /// <param name="path">設定情報の保存パス</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="format">Serialization format.</param>
+        /// <param name="path">Path to save settings.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder(Cube.DataContract.Format format, string path, IO io) :
@@ -116,7 +117,7 @@ namespace Cube.Pdf.App.Converter
         /// Uri
         ///
         /// <summary>
-        /// Web ページの URL を取得します。
+        /// Gets the URL of the Web page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -127,7 +128,7 @@ namespace Cube.Pdf.App.Converter
         /// DocumentName
         ///
         /// <summary>
-        /// ドキュメント名を取得します。
+        /// Gets the document name.
         /// </summary>
         ///
         /// <remarks>
@@ -142,7 +143,7 @@ namespace Cube.Pdf.App.Converter
         /// MachineName
         ///
         /// <summary>
-        /// 端末名を取得します。
+        /// Gets the machine name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -153,7 +154,7 @@ namespace Cube.Pdf.App.Converter
         /// MachineName
         ///
         /// <summary>
-        /// ユーザ名を取得します。
+        /// Gets the user name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -176,7 +177,7 @@ namespace Cube.Pdf.App.Converter
         /// WorkDirectory
         ///
         /// <summary>
-        /// 作業ディレクトリのパスを取得または設定します。
+        /// Gets the path of the working directory.
         /// </summary>
         ///
         /// <remarks>
@@ -193,7 +194,7 @@ namespace Cube.Pdf.App.Converter
         /// UpdateProgram
         ///
         /// <summary>
-        /// アップデート確認用プログラムのパスを取得します。
+        /// Gets the path of the update program.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -208,10 +209,10 @@ namespace Cube.Pdf.App.Converter
         /// Set
         ///
         /// <summary>
-        /// プログラム引数の内容を設定します。
+        /// Sets values based on the specified arguments.
         /// </summary>
         ///
-        /// <param name="args">プログラム引数</param>
+        /// <param name="args">Program arguments.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Set(string[] args)
@@ -239,7 +240,7 @@ namespace Cube.Pdf.App.Converter
         /// CheckUpdate
         ///
         /// <summary>
-        /// アップデートの確認を実行します。
+        /// Checks if the application has been updated.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -264,7 +265,7 @@ namespace Cube.Pdf.App.Converter
         /// OnLoaded
         ///
         /// <summary>
-        /// 読み込み時に実行されます。
+        /// Occurs when the settings are loaded.
         /// </summary>
         ///
         /// <remarks>
@@ -293,7 +294,7 @@ namespace Cube.Pdf.App.Converter
         /// OnSaved
         ///
         /// <summary>
-        /// 保存時に実行されます。
+        /// Occurs when the settings are saved.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -319,7 +320,7 @@ namespace Cube.Pdf.App.Converter
         /// GetWorkDirectory
         ///
         /// <summary>
-        /// 作業ディレクトリのパスを取得します。
+        /// Gets the path of the working directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -340,7 +341,7 @@ namespace Cube.Pdf.App.Converter
         /// GetLastCheckUpdate
         ///
         /// <summary>
-        /// 最後にアップデートの更新を実行した日時を取得します。
+        /// Gets date time of the latest update.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -357,7 +358,7 @@ namespace Cube.Pdf.App.Converter
         /// GetString
         ///
         /// <summary>
-        /// レジストリから文字列を取得します。
+        /// Gets the string from the registry.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -388,7 +389,7 @@ namespace Cube.Pdf.App.Converter
         /// NormalizeFormat
         ///
         /// <summary>
-        /// Format の値を正規化します。
+        /// Normalizes the specified Format value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -402,7 +403,7 @@ namespace Cube.Pdf.App.Converter
         /// NormalizeOrientation
         ///
         /// <summary>
-        /// Orientation の値を正規化します。
+        /// Normalizes the specified Orientation value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -416,7 +417,7 @@ namespace Cube.Pdf.App.Converter
         /// NormalizeResolution
         ///
         /// <summary>
-        /// Resolution の値を正規化します。
+        /// Normalizes the specified Resolution value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -430,7 +431,7 @@ namespace Cube.Pdf.App.Converter
         /// NormalizeDestination
         ///
         /// <summary>
-        /// 保存パスを正規化します。
+        /// Normalizes the path of serialized data.
         /// </summary>
         ///
         /// <remarks>
