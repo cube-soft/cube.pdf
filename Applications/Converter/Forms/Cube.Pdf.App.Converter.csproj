@@ -109,6 +109,7 @@
     <Compile Include="Sources\Models\Settings\FormatOption.cs" />
     <Compile Include="Sources\Models\Settings\Parameters.cs" />
     <Compile Include="Sources\Models\Settings\Settings.cs" />
+    <Compile Include="Sources\Models\Settings\SettingsExtension.cs" />
     <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />
     <Compile Include="Sources\Models\DocumentName.cs" />
     <Compile Include="Sources\Models\FileDecorator.cs" />

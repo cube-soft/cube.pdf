@@ -24,8 +24,6 @@ using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Cube.Pdf.App.Converter
@@ -220,11 +218,11 @@ namespace Cube.Pdf.App.Converter
             var src = new ArgumentCollection(args, '/', true);
             var op  = src.Options;
 
-            if (TryGet(op, nameof(MachineName), out var pc)) MachineName = pc;
-            if (TryGet(op, nameof(UserName), out var user)) UserName = user;
-            if (TryGet(op, nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.Product, IO);
-            if (TryGet(op, nameof(Digest), out var digest)) Digest = digest;
-            if (TryGet(op, "InputFile", out var input)) Value.Source = input;
+            if (op.TryGetValue(nameof(MachineName), out var pc)) MachineName = pc;
+            if (op.TryGetValue(nameof(UserName), out var user)) UserName = user;
+            if (op.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.Product, IO);
+            if (op.TryGetValue(nameof(Digest), out var digest)) Digest = digest;
+            if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
 
             var dest = IO.Get(IO.Combine(Value.Destination, DocumentName.Name));
             var name = dest.NameWithoutExtension;
@@ -246,14 +244,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void CheckUpdate()
         {
-            try
-            {
-                if (!Value.CheckUpdate) return;
-                var time = GetLastCheckUpdate();
-                this.LogDebug($"LastCheckUpdate:{time}");
-                if (time.AddDays(1) < DateTime.Now) Process.Start(UpdateProgram, Assembly.Product);
-            }
-            catch (Exception err) { this.LogWarn($"{nameof(CheckUpdate)}:{err}", err); }
+            if (Value.CheckUpdate) this.CheckUpdate(UpdateProgram, Assembly.Product);
         }
 
         #endregion
@@ -326,7 +317,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private string GetWorkDirectory()
         {
-            var str   = GetString(Registry.LocalMachine, "LibPath");
+            var str   = this.GetValue(Registry.LocalMachine, "LibPath");
             var root  = str.HasValue() ?
                         str :
                         IO.Combine(
@@ -335,50 +326,6 @@ namespace Cube.Pdf.App.Converter
                         );
             return IO.Combine(root, Guid.NewGuid().ToString("D"));
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetLastCheckUpdate
-        ///
-        /// <summary>
-        /// Gets date time of the latest update.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private DateTime GetLastCheckUpdate()
-        {
-            var str = GetString(Registry.CurrentUser, "LastCheckUpdate");
-            return str.HasValue() ?
-                   DateTime.Parse(str).ToLocalTime() :
-                   DateTime.MinValue;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetString
-        ///
-        /// <summary>
-        /// Gets the string from the registry.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetString(RegistryKey root, string name)
-        {
-            var keyname = $@"Software\{Assembly.Company}\{Assembly.Product}";
-            using (var key = root.OpenSubKey(keyname, false)) return key?.GetValue(name) as string;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TryGet
-        ///
-        /// <summary>
-        /// Tries to get the value corresponding to the specified name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool TryGet(IReadOnlyDictionary<string, string> src, string name, out string dest) =>
-            src.TryGetValue(name.ToLowerInvariant(), out dest);
 
         #endregion
 
