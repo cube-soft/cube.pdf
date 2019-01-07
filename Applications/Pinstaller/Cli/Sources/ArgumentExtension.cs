@@ -50,7 +50,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public static string GetCommand(this ArgumentCollection src) =>
-            src.Options.TryGetValue("command", out var dest) ? dest : string.Empty;
+            src.Options.TryGetValue("Command", out var dest) ? dest : string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,7 +82,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public static string GetResourceDirectory(this ArgumentCollection src) =>
-            src.Options.TryGetValue("resource", out var dest) ? src.GetPath(dest) : _current;
+            src.Options.TryGetValue("Resource", out var dest) ? src.GetPath(dest) : _current;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,7 +99,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static int GetTimeout(this ArgumentCollection src)
         {
-            if (!src.Options.TryGetValue("timeout", out var str)) return 30;
+            if (!src.Options.TryGetValue("Timeout", out var str)) return 30;
             if (int.TryParse(str, out var dest)) return dest;
             else return 30;
         }
@@ -119,7 +119,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static int GetRetryCount(this ArgumentCollection src)
         {
-            if (!src.Options.TryGetValue("retry", out var str)) return 1;
+            if (!src.Options.TryGetValue("Retry", out var str)) return 1;
             if (int.TryParse(str, out var dest)) return dest;
             else return 1;
         }
@@ -157,7 +157,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         private static string GetPath(this ArgumentCollection src, string path) =>
-            path.HasValue() && src.Options.ContainsKey("relative") ?
+            path.HasValue() && src.Options.ContainsKey("Relative") ?
             System.IO.Path.Combine(_current, path) :
             path;
 
