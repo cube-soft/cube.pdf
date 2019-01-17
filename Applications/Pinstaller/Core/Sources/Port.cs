@@ -236,17 +236,19 @@ namespace Cube.Pdf.App.Pinstaller
         /// Installs the port.
         /// </summary>
         ///
+        /// <remarks>
+        /// ポート設定の更新を考慮して、Exists の値に関わらずレジストリへの
+        /// 書き込みは実行する。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         public void Install()
         {
             this.Log();
-            if (Exists || !CanInstall()) return;
-            Register(MonitorName, Name);
-            using (var k = Open(GetName(MonitorName, "Ports", Name), true))
-            {
-                k.Serialize(_core);
-                Exists = true;
-            }
+            if (!CanInstall()) return;
+            if (!Exists) Register(MonitorName, Name);
+            Exists = true;
+            using (var k = Open(GetName(MonitorName, "Ports", Name), true)) k.Serialize(_core);
         }
 
         /* ----------------------------------------------------------------- */
