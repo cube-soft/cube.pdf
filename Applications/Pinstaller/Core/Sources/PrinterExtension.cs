@@ -29,7 +29,7 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PrinterExtension
+    public static class PrinterExtension
     {
         #region Methods
 
@@ -67,12 +67,30 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<Printer> Convert(this IEnumerable<PrinterConfig> src,
             IEnumerable<Printer> elements) =>
-            src.Select(e => new Printer(e.Name, elements)
+            src.Select(e => e.Convert(elements));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Creates a new instance of the Printer class from the specified
+        /// configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Printer configuration.</param>
+        /// <param name="elements">Collection of printers.</param>
+        ///
+        /// <returns>Printer object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Printer Convert(this PrinterConfig src, IEnumerable<Printer> elements) =>
+            new Printer(src.Name)
             {
-                ShareName  = e.ShareName,
-                DriverName = e.DriverName,
-                PortName   = e.PortName,
-            });
+                ShareName  = src.ShareName,
+                DriverName = src.DriverName,
+                PortName   = src.PortName,
+            };
 
         #endregion
     }

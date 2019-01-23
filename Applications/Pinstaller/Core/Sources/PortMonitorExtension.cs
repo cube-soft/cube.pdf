@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PortMonitorExtension
+    public static class PortMonitorExtension
     {
         #region Methods
 
@@ -70,12 +70,32 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PortMonitor> Convert(this IEnumerable<PortMonitorConfig> src,
+            IEnumerable<PortMonitor> elements) => src.Select(e => e.Convert(elements));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Creates a new instance of the PortMonitor class with the
+        /// specified configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Port monitor configuration.</param>
+        /// <param name="elements">
+        /// Collection of installed port monitors.
+        /// </param>
+        ///
+        /// <returns>PortMonitor object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PortMonitor Convert(this PortMonitorConfig src,
             IEnumerable<PortMonitor> elements) =>
-            src.Select(e => new PortMonitor(e.Name, elements)
+            new PortMonitor(src.Name, elements)
             {
-                FileName = e.FileName,
-                Config   = e.Config,
-            });
+                FileName = src.FileName,
+                Config   = src.Config,
+            };
 
         /* ----------------------------------------------------------------- */
         ///

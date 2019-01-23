@@ -31,7 +31,7 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PrinterDriverExtension
+    public static class PrinterDriverExtension
     {
         #region Methods
 
@@ -71,15 +71,36 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PrinterDriver> Convert(this IEnumerable<PrinterDriverConfig> src,
             IEnumerable<PrinterDriver> elements) =>
-            src.Select(e => new PrinterDriver(e.Name, elements)
+            src.Select(e => e.Convert(elements));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Creates a new instance of the PrinterDriver class with the
+        /// specified configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Printer driver configuration.</param>
+        /// <param name="elements">
+        /// Collection of installed printer drivers.
+        /// </param>
+        ///
+        /// <returns>PrinterDriver object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PrinterDriver Convert(this PrinterDriverConfig src,
+            IEnumerable<PrinterDriver> elements) =>
+            new PrinterDriver(src.Name, elements)
             {
-                MonitorName  = e.MonitorName,
-                FileName     = e.FileName,
-                Config       = e.Config,
-                Data         = e.Data,
-                Help         = e.Help,
-                Dependencies = e.Dependencies,
-            });
+                MonitorName  = src.MonitorName,
+                FileName     = src.FileName,
+                Config       = src.Config,
+                Data         = src.Data,
+                Help         = src.Help,
+                Dependencies = src.Dependencies,
+            };
 
         /* ----------------------------------------------------------------- */
         ///

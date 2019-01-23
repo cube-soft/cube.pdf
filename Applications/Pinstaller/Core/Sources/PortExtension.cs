@@ -60,7 +60,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Port Convert(this PortConfig src)
+        public static Port Convert(this PortConfig src)
         {
             var proxy = src.RunAsUser && src.Proxy.HasValue();
             return new Port(src.Name, src.MonitorName)
