@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
-using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using Cube.Xui;
 using Cube.Xui.Mixin;
@@ -168,23 +167,6 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(e.OK.Command.CanExecute(), Is.True);
             e.OK.Command.Execute();
         });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AssertEncryption
-        ///
-        /// <summary>
-        /// Confirms that properties of the specified objects are equal.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AssertEncryption(string src, Encryption cmp)
-        {
-            using (var r = new DocumentReader(src, cmp.OwnerPassword))
-            {
-                AssertEncryption(r.Encryption, cmp);
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
