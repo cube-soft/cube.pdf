@@ -53,29 +53,22 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Set(int index, Encryption cmp)
+        public void Set(int index, Encryption cmp) => Create("Sample.pdf", "", 2, vm =>
         {
-            Create("Sample.pdf", "", 2, vm =>
+            Register(vm, cmp, false);
+
+            var cts = new CancellationTokenSource();
+            vm.Data.PropertyChanged += (s, e) =>
             {
-                Assert.That(vm.Data.Encryption, Is.Not.Null);
-                var cts = new CancellationTokenSource();
-                vm.Data.PropertyChanged += (s, e) =>
-                {
-                    if (e.PropertyName == nameof(vm.Data.Encryption)) cts.Cancel();
-                };
+                if (e.PropertyName == nameof(vm.Data.Encryption)) cts.Cancel();
+            };
 
-                Register(vm, cmp, false);
-                Assert.That(vm.Ribbon.Encryption.Command.CanExecute(), Is.True);
-                vm.Ribbon.Encryption.Command.Execute();
-                Assert.That(Wait.For(cts.Token), $"Timeout (Encryption)");
-
-                Destination = Path(Args(index, cmp.Method));
-                vm.Ribbon.SaveAs.Command.Execute();
-                Assert.That(Wait.For(() => IO.Exists(Destination)), $"Timeout (SaveAs)");
-            });
-
-            AssertEncryption(Destination, cmp);
-        }
+            Assert.That(vm.Data.Encryption, Is.Not.Null);
+            Assert.That(vm.Ribbon.Encryption.Command.CanExecute(), Is.True);
+            vm.Ribbon.Encryption.Command.Execute();
+            Assert.That(Wait.For(cts.Token), $"Timeout");
+            AssertEncryption(vm.Data.Encryption, cmp);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
