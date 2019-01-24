@@ -96,7 +96,7 @@ namespace Cube.Pdf.App.Converter
                       err is EncryptionException ece    ? CreateMessage(ece) :
                       err is CryptographicException cpe ? CreateMessage(cpe) :
                       $"{err.Message} ({err.GetType().Name})";
-            src.Show(() => MessageFactory.CreateError(msg));
+            src.Show(() => MessageFactory.CreateErrorMessage(msg));
         }
 
         /* ----------------------------------------------------------------- */
@@ -144,7 +144,7 @@ namespace Cube.Pdf.App.Converter
             if (!src.IO.Exists(dest) || so == SaveOption.Rename) return true;
 
             var args = default(MessageEventArgs);
-            src.Show(() => args = MessageFactory.CreateWarning(CreateMessage(dest, so)));
+            src.Show(() => args = MessageFactory.CreateWarningMessage(CreateMessage(dest, so)));
             Debug.Assert(args != null);
             return args.Result != DialogResult.Cancel;
         }
@@ -164,7 +164,7 @@ namespace Cube.Pdf.App.Converter
             var opt = StringComparison.InvariantCultureIgnoreCase;
             if (!eo.Enabled || eo.OwnerPassword.Equals(eo.OwnerConfirm, opt)) return true;
 
-            src.Show(() => MessageFactory.CreateError(Properties.Resources.MessagePassword));
+            src.Show(() => MessageFactory.CreateErrorMessage(Properties.Resources.MessagePassword));
             return false;
         }
 
@@ -184,7 +184,7 @@ namespace Cube.Pdf.App.Converter
             if (!eo.Enabled || !eo.OpenWithPassword || eo.UseOwnerPassword) return true;
             if (eo.UserPassword.Equals(eo.UserConfirm, opt)) return true;
 
-            src.Show(() => MessageFactory.CreateError(Properties.Resources.MessagePassword));
+            src.Show(() => MessageFactory.CreateErrorMessage(Properties.Resources.MessagePassword));
             return false;
         }
 

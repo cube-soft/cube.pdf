@@ -270,6 +270,24 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ExplicitDirectory
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to set a value to the
+        /// InitialDirectory property explicitly when showing a dialog
+        /// that selects the file or directory name.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool ExplicitDirectory
+        {
+            get => _explicit;
+            set => SetProperty(ref _explicit, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Language
         ///
         /// <summary>
@@ -455,6 +473,7 @@ namespace Cube.Pdf.App.Converter
             _linearization    = false;
             _sourceVisible    = false;
             _checkUpdate      = true;
+            _explicit         = false;
             _source           = string.Empty;
             _destination      = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             _userProgram      = string.Empty;
@@ -494,6 +513,7 @@ namespace Cube.Pdf.App.Converter
         private bool _linearization;
         private bool _sourceVisible;
         private bool _checkUpdate;
+        private bool _explicit;
         private string _source;
         private string _destination;
         private string _userProgram;
