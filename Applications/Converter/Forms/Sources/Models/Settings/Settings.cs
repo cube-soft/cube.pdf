@@ -348,6 +348,22 @@ namespace Cube.Pdf.App.Converter
             set => SetProperty(ref _destination, value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Gets or sets the PDF metadata.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Metadata Metadata
+        {
+            get => _metadata;
+            set => SetProperty(ref _metadata, value);
+        }
+
         #endregion
 
         /* ----------------------------------------------------------------- */
@@ -410,21 +426,6 @@ namespace Cube.Pdf.App.Converter
         {
             get => _source;
             set => SetProperty(ref _source, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Metadata
-        ///
-        /// <summary>
-        /// Gets or sets the PDF metadata.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Metadata Metadata
-        {
-            get => _metadata;
-            set => SetProperty(ref _metadata, value);
         }
 
         /* ----------------------------------------------------------------- */
