@@ -70,7 +70,7 @@ namespace Cube.Pdf.App.Editor
             Keywords = this.Create(() => src.Keywords, e => src.Keywords = e, () => Properties.Resources.MenuKeywords);
             Creator  = this.Create(() => src.Creator,  e => src.Creator  = e, () => Properties.Resources.MenuCreator );
             Version  = CreateVersion(src);
-            Viewer   = CreateViewerPreferences(src);
+            Options  = CreateViewerOptions(src);
 
             OK.Command = new RelayCommand(() => { Send<CloseMessage>(); callback(src); });
         }
@@ -152,15 +152,15 @@ namespace Cube.Pdf.App.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Viewer
+        /// ViewerOptions
         ///
         /// <summary>
-        /// Gets the menu that represents the viewer preferences of the
+        /// Gets the menu that represents the viewer options of the
         /// PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<ViewerPreferences> Viewer { get; }
+        public BindableElement<ViewerOptions> Options { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -277,14 +277,14 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<ViewerPreferences> ViewerPreferences { get; } = new[]
+        public IEnumerable<ViewerOptions> ViewerOptions { get; } = new[]
         {
-            Pdf.ViewerPreferences.SinglePage,
-            Pdf.ViewerPreferences.OneColumn,
-            Pdf.ViewerPreferences.TwoColumnLeft,
-            Pdf.ViewerPreferences.TwoColumnRight,
-            Pdf.ViewerPreferences.TwoPageLeft,
-            Pdf.ViewerPreferences.TwoPageRight,
+            Pdf.ViewerOptions.SinglePage,
+            Pdf.ViewerOptions.OneColumn,
+            Pdf.ViewerOptions.TwoColumnLeft,
+            Pdf.ViewerOptions.TwoColumnRight,
+            Pdf.ViewerOptions.TwoPageLeft,
+            Pdf.ViewerOptions.TwoPageRight,
         };
 
         #endregion
@@ -318,10 +318,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private BindableElement<ViewerPreferences> CreateViewerPreferences(Metadata src)
+        private BindableElement<ViewerOptions> CreateViewerOptions(Metadata src)
         {
-            if (src.Viewer == Pdf.ViewerPreferences.None) src.Viewer = Pdf.ViewerPreferences.OneColumn;
-            return this.Create(() => src.Viewer, e => src.Viewer = e, () => Properties.Resources.MenuLayout);
+            if (src.Options == Pdf.ViewerOptions.None) src.Options = Pdf.ViewerOptions.OneColumn;
+            return this.Create(() => src.Options, e => src.Options = e, () => Properties.Resources.MenuLayout);
         }
 
         #endregion

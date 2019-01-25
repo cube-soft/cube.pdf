@@ -270,12 +270,12 @@ namespace Cube.Pdf.Tests.Converter
                         Linearization    = true,
                         Metadata         = new Metadata
                         {
-                            Title          = "Linearization test title",
-                            Author         = "Linearization test author",
-                            Subject        = "Linearization test Subject",
-                            Keywords       = "Linearization test keywords",
-                            Creator        = "Linearization test creator",
-                            Viewer = ViewerPreferences.SinglePage,
+                            Title    = "Linearization test title",
+                            Author   = "Linearization test author",
+                            Subject  = "Linearization test Subject",
+                            Keywords = "Linearization test keywords",
+                            Creator  = "Linearization test creator",
+                            Options  = ViewerOptions.SinglePage,
                         }
                     },
                     CreateArgs("PDF テスト (Linearization)")
@@ -306,12 +306,12 @@ namespace Cube.Pdf.Tests.Converter
                         },
                         Metadata = new Metadata
                         {
-                            Title          = "Encryption test title",
-                            Author         = "Encryption test author",
-                            Subject        = "Encryption test Subject",
-                            Keywords       = "Encryption test keywords",
-                            Creator        = "Encryption test creator",
-                            Viewer = ViewerPreferences.SinglePage,
+                            Title    = "Encryption test title",
+                            Author   = "Encryption test author",
+                            Subject  = "Encryption test Subject",
+                            Keywords = "Encryption test keywords",
+                            Creator  = "Encryption test creator",
+                            Options  = ViewerOptions.SinglePage,
                         }
                     },
                     CreateArgs("PDF テスト (Encryption)")

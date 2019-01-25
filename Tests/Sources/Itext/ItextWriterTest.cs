@@ -252,7 +252,7 @@ namespace Cube.Pdf.Tests.Itext
                 Creator  = value,
                 Producer = value,
                 Version  = new Version(1, 5),
-                Viewer   = ViewerPreferences.TwoColumnLeft,
+                Options  = ViewerOptions.TwoColumnLeft,
             };
 
             using (var w = new DocumentWriter(IO))
@@ -273,7 +273,7 @@ namespace Cube.Pdf.Tests.Itext
                 Assert.That(m.Producer,      Does.StartWith("iTextSharp"));
                 Assert.That(m.Version.Major, Is.EqualTo(cmp.Version.Major));
                 Assert.That(m.Version.Minor, Is.EqualTo(cmp.Version.Minor));
-                Assert.That(m.Viewer,        Is.EqualTo(cmp.Viewer));
+                Assert.That(m.Options,       Is.EqualTo(cmp.Options));
             }
         }
 

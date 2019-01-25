@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Runtime.Serialization;
 
 namespace Cube.Pdf
 {
@@ -29,6 +30,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
+    [DataContract]
     public class Metadata : ObservableProperty
     {
         #region Properties
@@ -49,6 +51,7 @@ namespace Cube.Pdf
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public Version Version
         {
             get => _version;
@@ -64,6 +67,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Author
         {
             get => _author;
@@ -79,6 +83,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Title
         {
             get => _title;
@@ -94,6 +99,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Subject
         {
             get => _subject;
@@ -109,6 +115,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Keywords
         {
             get => _keywords;
@@ -124,6 +131,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Creator
         {
             get => _creator;
@@ -139,6 +147,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Producer
         {
             get => _producer;
@@ -147,17 +156,18 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Viewer
+        /// Options
         ///
         /// <summary>
-        /// Gets or sets a value of viewer preferences.
+        /// Gets or sets a value of viewer options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ViewerPreferences Viewer
+        [DataMember]
+        public ViewerOptions Options
         {
-            get => _viewer;
-            set => SetProperty(ref _viewer, value);
+            get => _options;
+            set => SetProperty(ref _options, value);
         }
 
         #endregion
@@ -170,7 +180,7 @@ namespace Cube.Pdf
         private string _keywords = string.Empty;
         private string _creator = string.Empty;
         private string _producer = string.Empty;
-        private ViewerPreferences _viewer = ViewerPreferences.OneColumn;
+        private ViewerOptions _options = ViewerOptions.OneColumn;
         #endregion
     }
 }

@@ -127,7 +127,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                     Creator  = "Test creator",
                     Producer = "Test producer",
                     Version  = new Version(1, 6),
-                    Viewer   = ViewerPreferences.TwoColumnRight,
+                    Options  = ViewerOptions.TwoColumnRight,
                 });
 
                 yield return new TestCaseData(n++, new Metadata
@@ -139,7 +139,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                     Creator  = "日本語のアプリケーション",
                     Producer = "日本語の PDF 変換",
                     Version  = new Version(1, 7),
-                    Viewer   = ViewerPreferences.OneColumn,
+                    Options  = ViewerOptions.OneColumn,
                 });
             }
         }
@@ -172,7 +172,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             e.Subject.Value  = src.Subject;
             e.Keywords.Value = src.Keywords;
             e.Creator.Value  = src.Creator;
-            e.Viewer.Value   = src.Viewer;
+            e.Options.Value  = src.Options;
             e.Version.Value  = src.Version;
 
             Assert.That(e.OK.Command.CanExecute(), Is.True);
@@ -195,7 +195,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(src.Subject,       Is.EqualTo(cmp.Subject),  nameof(src.Subject));
             Assert.That(src.Keywords,      Is.EqualTo(cmp.Keywords), nameof(src.Keywords));
             Assert.That(src.Creator,       Is.EqualTo(cmp.Creator),  nameof(src.Creator));
-            Assert.That(src.Viewer,        Is.EqualTo(cmp.Viewer));
+            Assert.That(src.Options,       Is.EqualTo(cmp.Options));
             Assert.That(src.Version.Major, Is.EqualTo(cmp.Version.Major));
             Assert.That(src.Version.Minor, Is.EqualTo(cmp.Version.Minor));
         }

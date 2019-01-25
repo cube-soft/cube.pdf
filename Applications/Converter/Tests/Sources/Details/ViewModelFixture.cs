@@ -369,12 +369,12 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         private void Set(MetadataViewModel vm, Metadata src)
         {
-            vm.Title          = src.Title;
-            vm.Author         = src.Author;
-            vm.Subject        = src.Subject;
-            vm.Keywords       = src.Keywords;
-            vm.Creator        = src.Creator;
-            vm.Viewer = src.Viewer;
+            vm.Title     = src.Title;
+            vm.Author    = src.Author;
+            vm.Subject   = src.Subject;
+            vm.Keywords  = src.Keywords;
+            vm.Creator   = src.Creator;
+            vm.Options   = src.Options;
         }
 
         /* ----------------------------------------------------------------- */

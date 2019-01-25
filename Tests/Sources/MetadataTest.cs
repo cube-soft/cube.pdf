@@ -95,7 +95,7 @@ namespace Cube.Pdf.Tests
                         Keywords = "",
                         Creator  = "CubePDF",
                         Producer = "GPL Ghostscript",
-                        Viewer   = ViewerPreferences.None,
+                        Options  = ViewerOptions.None,
                     });
 
                     yield return new TestCaseData(klass, "SampleRotation.pdf", new Metadata
@@ -107,7 +107,7 @@ namespace Cube.Pdf.Tests
                         Keywords = "CubeSoft,PDF,Test",
                         Creator  = "CubePDF",
                         Producer = "iTextSharp",
-                        Viewer   = ViewerPreferences.TwoPageLeft | ViewerPreferences.Thumbnail,
+                        Options   = ViewerOptions.TwoPageLeft | ViewerOptions.Thumbnail,
                     });
                 }
             }

@@ -194,7 +194,7 @@ namespace Cube.Pdf.Tests.Editor.Interactions
 
         #endregion
 
-        #region ViewerPreferencesConverter
+        #region ViewerOptionsConverter
 
         /* ----------------------------------------------------------------- */
         ///
@@ -205,14 +205,14 @@ namespace Cube.Pdf.Tests.Editor.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(ViewerPreferences.SinglePage,     Language.English,  ExpectedResult = "Single page")]
-        [TestCase(ViewerPreferences.OneColumn,      Language.Japanese, ExpectedResult = "連続ページ")]
-        [TestCase(ViewerPreferences.TwoPageLeft,    Language.English,  ExpectedResult = "Two page (left)")]
-        [TestCase(ViewerPreferences.TwoPageRight,   Language.Japanese, ExpectedResult = "見開きページ (右綴じ)")]
-        [TestCase(ViewerPreferences.TwoColumnLeft,  Language.English,  ExpectedResult = "Two column (left)")]
-        [TestCase(ViewerPreferences.TwoColumnRight, Language.Japanese, ExpectedResult = "連続見開きページ (右綴じ)")]
-        public string ViewerPreferencesConverter(ViewerPreferences src, Language lang) =>
-            Convert<string>(new ViewerPreferencesConverter(), src, lang);
+        [TestCase(ViewerOptions.SinglePage,     Language.English,  ExpectedResult = "Single page")]
+        [TestCase(ViewerOptions.OneColumn,      Language.Japanese, ExpectedResult = "連続ページ")]
+        [TestCase(ViewerOptions.TwoPageLeft,    Language.English,  ExpectedResult = "Two page (left)")]
+        [TestCase(ViewerOptions.TwoPageRight,   Language.Japanese, ExpectedResult = "見開きページ (右綴じ)")]
+        [TestCase(ViewerOptions.TwoColumnLeft,  Language.English,  ExpectedResult = "Two column (left)")]
+        [TestCase(ViewerOptions.TwoColumnRight, Language.Japanese, ExpectedResult = "連続見開きページ (右綴じ)")]
+        public string ViewerOptionsConverter(ViewerOptions src, Language lang) =>
+            Convert<string>(new ViewerOptionsConverter(), src, lang);
 
         #endregion
 

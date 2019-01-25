@@ -103,7 +103,6 @@ namespace Cube.Pdf.App.Converter
             Version.Digit  = 3;
             Version.Suffix = $"RC{Assembly.Version.Revision}";
             UpdateProgram  = IO.Combine(IO.Get(Assembly.Location).DirectoryName, "UpdateChecker.exe");
-
         }
 
         #endregion
@@ -273,7 +272,7 @@ namespace Cube.Pdf.App.Converter
             e.NewValue.Orientation = NormalizeOrientation(e.NewValue);
             e.NewValue.Destination = NormalizeDestination(e.NewValue);
             e.NewValue.Metadata.Creator = Assembly.Product;
-            e.NewValue.Metadata.Viewer = ViewerPreferences.OneColumn;
+            e.NewValue.Metadata.Options = ViewerOptions.OneColumn;
             e.NewValue.Encryption.Deny();
             e.NewValue.Encryption.Permission.Accessibility = PermissionValue.Allow;
 

@@ -54,7 +54,7 @@ namespace Cube.Pdf.Mixin
             Version        = src.Version,
             Creator        = src.Creator,
             Producer       = src.Producer,
-            Viewer    = src.Viewer,
+            Options        = src.Options,
         };
 
         #endregion

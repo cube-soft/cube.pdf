@@ -89,6 +89,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -116,7 +117,7 @@
     <Compile Include="Sources\PageExtension.cs" />
     <Compile Include="Sources\Permission.cs" />
     <Compile Include="Sources\PermissionValue.cs" />
-    <Compile Include="Sources\ViewerPreferences.cs" />
+    <Compile Include="Sources\ViewerOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Cube.snk" />
