@@ -33,6 +33,21 @@ namespace Cube.Pdf
     [DataContract]
     public class Metadata : ObservableProperty
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Metadata class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata() { Reset(); }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -172,15 +187,52 @@ namespace Cube.Pdf
 
         #endregion
 
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDeserializing
+        ///
+        /// <summary>
+        /// Occurs before deserializing.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext context) => Reset();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// Resets values.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Reset()
+        {
+            _version  = new Version(1, 7);
+            _author   = string.Empty;
+            _title    = string.Empty;
+            _subject  = string.Empty;
+            _keywords = string.Empty;
+            _creator  = string.Empty;
+            _producer = string.Empty;
+            _options  = ViewerOptions.OneColumn;
+        }
+
+        #endregion
+
         #region Fields
-        private Version _version = new Version(1, 7);
-        private string _author = string.Empty;
-        private string _title = string.Empty;
-        private string _subject = string.Empty;
-        private string _keywords = string.Empty;
-        private string _creator = string.Empty;
-        private string _producer = string.Empty;
-        private ViewerOptions _options = ViewerOptions.OneColumn;
+        private Version _version;
+        private string _author;
+        private string _title;
+        private string _subject;
+        private string _keywords;
+        private string _creator;
+        private string _producer;
+        private ViewerOptions _options;
         #endregion
     }
 }
