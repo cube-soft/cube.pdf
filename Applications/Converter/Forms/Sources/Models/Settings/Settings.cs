@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Ghostscript;
 using System;
+using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace Cube.Pdf.App.Converter
@@ -476,11 +477,31 @@ namespace Cube.Pdf.App.Converter
             _source           = string.Empty;
             _destination      = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             _userProgram      = string.Empty;
-            _metadata         = new Metadata();
+            _metadata         = CreateMetadata();
             _encryption       = new Encryption();
             _skipUi           = false;
             _busy             = false;
             _deleteSource     = false;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMetadata
+        ///
+        /// <summary>
+        /// Creates a new instance of the Metadata class with default
+        /// values.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Metadata CreateMetadata()
+        {
+            var asm = Assembly.GetExecutingAssembly().GetReader();
+            return new Metadata
+            {
+                Creator  = asm.Product,
+                Producer = asm.Product,
+            };
         }
 
         /* ----------------------------------------------------------------- */
