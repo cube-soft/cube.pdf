@@ -115,6 +115,7 @@
     <Compile Include="Sources\MetadataExtension.cs" />
     <Compile Include="Sources\Page.cs" />
     <Compile Include="Sources\PageExtension.cs" />
+    <Compile Include="Sources\PdfVersion.cs" />
     <Compile Include="Sources\Permission.cs" />
     <Compile Include="Sources\PermissionValue.cs" />
     <Compile Include="Sources\ViewerOptions.cs" />

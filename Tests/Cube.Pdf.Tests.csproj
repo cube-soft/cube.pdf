@@ -117,6 +117,7 @@
     <Compile Include="Sources\FileTest.cs" />
     <Compile Include="Sources\MetadataTest.cs" />
     <Compile Include="Sources\PageTest.cs" />
+    <Compile Include="Sources\PdfVersionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
