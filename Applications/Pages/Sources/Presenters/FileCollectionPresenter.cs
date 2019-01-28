@@ -67,7 +67,7 @@ namespace Cube.Pdf.App.Pages
             Model.PasswordRequired  += Model_PasswordRequired;
 
             var reader = new AssemblyReader(Settings.Assembly);
-            Model.Metadata.Version = new Version(1, 7);
+            Model.Metadata.Version = new PdfVersion(1, 7);
             Model.Metadata.Creator = reader.Product;
         }
 

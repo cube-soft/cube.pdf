@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections.Mixin;
 using Cube.FileSystem;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -102,7 +101,7 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Version Version { get; set; } = new Version(1, 7);
+        public PdfVersion Version { get; set; } = new PdfVersion(1, 7);
 
         /* ----------------------------------------------------------------- */
         ///

@@ -251,7 +251,7 @@ namespace Cube.Pdf.Tests.Itext
                 Keywords = value,
                 Creator  = value,
                 Producer = value,
-                Version  = new Version(1, 5),
+                Version  = new PdfVersion(1, 5),
                 Options  = ViewerOptions.TwoColumnLeft,
             };
 

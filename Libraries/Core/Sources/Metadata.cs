@@ -58,16 +58,9 @@ namespace Cube.Pdf
         /// Gets or sets a version of the PDF document.
         /// </summary>
         ///
-        /// <remarks>
-        /// 現時点で有効な PDF バージョンは 1.0, 1.1, 1.2, 1.3, 1.4, 1.5,
-        /// 1.6, 1.7, 1.7 Extension Level 3, 1.7 Extension Level 5 の
-        /// 10 種類です。Adobe Extension Level の値は Build プロパティで
-        /// 保持する事とします。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public Version Version
+        public PdfVersion Version
         {
             get => _version;
             set => SetProperty(ref _version, value);
@@ -212,7 +205,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         private void Reset()
         {
-            _version  = new Version(1, 7);
+            _version  = new PdfVersion(1, 7);
             _author   = string.Empty;
             _title    = string.Empty;
             _subject  = string.Empty;
@@ -225,7 +218,7 @@ namespace Cube.Pdf
         #endregion
 
         #region Fields
-        private Version _version;
+        private PdfVersion _version;
         private string _author;
         private string _title;
         private string _subject;

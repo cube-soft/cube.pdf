@@ -126,7 +126,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                     Keywords = "Test keywords",
                     Creator  = "Test creator",
                     Producer = "Test producer",
-                    Version  = new Version(1, 6),
+                    Version  = new PdfVersion(1, 6),
                     Options  = ViewerOptions.TwoColumnRight,
                 });
 
@@ -138,7 +138,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                     Keywords = "日本語のキーワード",
                     Creator  = "日本語のアプリケーション",
                     Producer = "日本語の PDF 変換",
-                    Version  = new Version(1, 7),
+                    Version  = new PdfVersion(1, 7),
                     Options  = ViewerOptions.OneColumn,
                 });
             }

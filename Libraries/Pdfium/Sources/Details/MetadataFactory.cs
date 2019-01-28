@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -92,10 +91,10 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Version GetVersion(PdfiumReader core) => core.Invoke(
+        private static PdfVersion GetVersion(PdfiumReader core) => core.Invoke(
             e => PdfiumApi.FPDF_GetFileVersion(e, out var version) ?
-            new Version(version / 10, version % 10) :
-            new Version(1, 7)
+            new PdfVersion(version / 10, version % 10) :
+            new PdfVersion(1, 7)
         );
 
         /* ----------------------------------------------------------------- */

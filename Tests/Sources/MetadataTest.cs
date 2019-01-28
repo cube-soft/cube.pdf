@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Tests
@@ -88,7 +87,7 @@ namespace Cube.Pdf.Tests
                 {
                     yield return new TestCaseData(klass, "Sample.pdf", new Metadata
                     {
-                        Version  = new Version(1, 7, 0, 0),
+                        Version  = new PdfVersion(1, 7),
                         Title    = "README",
                         Author   = "株式会社キューブ・ソフト",
                         Subject  = "",
@@ -100,7 +99,7 @@ namespace Cube.Pdf.Tests
 
                     yield return new TestCaseData(klass, "SampleRotation.pdf", new Metadata
                     {
-                        Version  = new Version(1, 7, 0, 0),
+                        Version  = new PdfVersion(1, 7),
                         Title    = "テスト用文書",
                         Author   = "株式会社キューブ・ソフト",
                         Subject  = "Cube.Pdf.Tests",

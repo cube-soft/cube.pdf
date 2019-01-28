@@ -148,7 +148,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<Version> Version { get; }
+        public BindableElement<PdfVersion> Version { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -258,14 +258,14 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Version> Versions { get; } = new[]
+        public IEnumerable<PdfVersion> Versions { get; } = new[]
         {
-            new Version(1, 7),
-            new Version(1, 6),
-            new Version(1, 5),
-            new Version(1, 4),
-            new Version(1, 3),
-            new Version(1, 2),
+            new PdfVersion(1, 7),
+            new PdfVersion(1, 6),
+            new PdfVersion(1, 5),
+            new PdfVersion(1, 4),
+            new PdfVersion(1, 3),
+            new PdfVersion(1, 2),
         };
 
         /* ----------------------------------------------------------------- */
@@ -302,7 +302,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private BindableElement<Version> CreateVersion(Metadata src)
+        private BindableElement<PdfVersion> CreateVersion(Metadata src)
         {
             src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
                           Versions.First();
