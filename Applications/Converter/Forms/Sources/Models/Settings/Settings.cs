@@ -80,12 +80,12 @@ namespace Cube.Pdf.App.Converter
         ///
         /// <remarks>
         /// 旧 CubePDF で PDFVersion と呼んでいたものを汎用化した形で定義
-        /// しています。PDF のバージョン以外のオプションが定義された段階で
-        /// レジストリ等の設定項目名も変更する予定です。
+        /// しています。RC18 以降、Metadata の内容も設定を保存の対象となった
+        /// ため、このプロパティの扱いを要検討。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember(Name = "PDFVersion")]
+        [DataMember]
         public FormatOption FormatOption
         {
             get => _formatOption;
