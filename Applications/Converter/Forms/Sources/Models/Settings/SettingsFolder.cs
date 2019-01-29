@@ -24,6 +24,7 @@ using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using Microsoft.Win32;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Cube.Pdf.App.Converter
@@ -299,6 +300,25 @@ namespace Cube.Pdf.App.Converter
                 }.Save();
             }
             finally { base.OnSaved(e); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPropertyChanged
+        ///
+        /// <summary>
+        /// Occurs when the PropertyChanged event is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            try
+            {
+                if (e.PropertyName != nameof(Value.FormatOption)) return;
+                Value.Metadata.Version = Value.FormatOption.GetVersion();
+            }
+            finally { base.OnPropertyChanged(e); }
         }
 
         #region Get
