@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
@@ -165,7 +166,7 @@ namespace Cube.Pdf.Tests.Converter
             };
 
             var dest = new SettingsFolder();
-            dest.Set(src);
+            dest.Set(new ArgumentCollection(src, '/', true));
 
             var path = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -195,7 +196,7 @@ namespace Cube.Pdf.Tests.Converter
         public void Set_Empty()
         {
             var dest = new SettingsFolder();
-            dest.Set(new string[0]);
+            dest.Set(new ArgumentCollection(new string[0], '/', true));
 
             Assert.That(dest.MachineName,        Is.EqualTo(Environment.MachineName));
             Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));

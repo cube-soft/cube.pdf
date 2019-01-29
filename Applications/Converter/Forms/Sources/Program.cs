@@ -16,6 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
+using Cube.DataContract;
+using Cube.FileSystem;
 using Cube.Log;
 using System;
 using System.Reflection;
@@ -58,9 +61,10 @@ namespace Cube.Pdf.App.Converter
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var settings = new SettingsFolder();
+                var src      = new ArgumentCollection(args, '/', true);
+                var settings = CreateSettings(src);
                 settings.Load();
-                settings.Set(args);
+                settings.Set(src);
 
                 if (settings.Value.SkipUi) Invoke(settings);
                 else Show(settings);
@@ -71,6 +75,21 @@ namespace Cube.Pdf.App.Converter
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateSettings
+        ///
+        /// <summary>
+        /// Creates a new instance of the SettingsFolder class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static SettingsFolder CreateSettings(ArgumentCollection src) =>
+            src.Options.TryGetValue("Settings", out var subkey) ?
+            new SettingsFolder(Format.Registry, subkey, new IO()) :
+            new SettingsFolder();
 
         /* ----------------------------------------------------------------- */
         ///

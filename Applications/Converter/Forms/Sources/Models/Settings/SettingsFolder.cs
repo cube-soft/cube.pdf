@@ -210,14 +210,12 @@ namespace Cube.Pdf.App.Converter
         /// Sets values based on the specified arguments.
         /// </summary>
         ///
-        /// <param name="args">Program arguments.</param>
+        /// <param name="src">Program arguments.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Set(string[] args)
+        public void Set(ArgumentCollection src)
         {
-            var src = new ArgumentCollection(args, '/', true);
-            var op  = src.Options;
-
+            var op = src.Options;
             if (op.TryGetValue(nameof(MachineName), out var pc)) MachineName = pc;
             if (op.TryGetValue(nameof(UserName), out var user)) UserName = user;
             if (op.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.Product, IO);
