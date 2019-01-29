@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Reflection;
@@ -475,7 +476,7 @@ namespace Cube.Pdf.App.Converter
             _checkUpdate      = true;
             _explicit         = false;
             _source           = string.Empty;
-            _destination      = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            _destination      = Environment.SpecialFolder.Desktop.GetName();
             _userProgram      = string.Empty;
             _metadata         = CreateMetadata();
             _encryption       = new Encryption();
