@@ -134,13 +134,7 @@ namespace Cube.Pdf.App.Converter
 
             using (var writer = new DocumentWriter(IO))
             {
-                var v = Value.FormatOption.GetVersion();
-                Value.Metadata.Version  = v;
-                Value.Encryption.Method = v.Minor >= 7 ? EncryptionMethod.Aes256 :
-                                          v.Minor >= 6 ? EncryptionMethod.Aes128 :
-                                          v.Minor >= 4 ? EncryptionMethod.Standard128 :
-                                                         EncryptionMethod.Standard40;
-
+                Value.Encryption.Method = GetEncryptionMethod(Value.Metadata.Version);
                 writer.Set(Value.Metadata);
                 writer.Set(Value.Encryption);
                 Add(writer, Value.Destination, SaveOption.MergeTail);
@@ -195,6 +189,21 @@ namespace Cube.Pdf.App.Converter
 
             src.Add(new DocumentReader(path, password, true, IO));
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEncryptionMethod
+        ///
+        /// <summary>
+        /// Gets an EncryptionMethod value from the specified version.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private EncryptionMethod GetEncryptionMethod(PdfVersion src) =>
+            src.Minor >= 7 ? EncryptionMethod.Aes256 :
+            src.Minor >= 6 ? EncryptionMethod.Aes128 :
+            src.Minor >= 4 ? EncryptionMethod.Standard128 :
+                             EncryptionMethod.Standard40;
 
         #endregion
     }
