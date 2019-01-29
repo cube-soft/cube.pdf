@@ -268,10 +268,11 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         protected override void OnLoaded(ValueChangedEventArgs<Settings> e)
         {
-            e.NewValue.Format      = NormalizeFormat(e.NewValue);
-            e.NewValue.Resolution  = NormalizeResolution(e.NewValue);
+            e.NewValue.Format = NormalizeFormat(e.NewValue);
+            e.NewValue.Resolution = NormalizeResolution(e.NewValue);
             e.NewValue.Orientation = NormalizeOrientation(e.NewValue);
             e.NewValue.Destination = NormalizeDestination(e.NewValue);
+            e.NewValue.Metadata.Version = e.NewValue.FormatOption.GetVersion();
             e.NewValue.Encryption.Deny();
             e.NewValue.Encryption.Permission.Accessibility = PermissionValue.Allow;
 

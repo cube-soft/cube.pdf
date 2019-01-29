@@ -115,6 +115,8 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(md.Subject,            Is.Empty);
             Assert.That(md.Keywords,           Is.Empty);
             Assert.That(md.Creator,            Is.EqualTo("CubePDF"));
+            Assert.That(md.Version.Major,      Is.EqualTo(1));
+            Assert.That(md.Version.Minor,      Is.EqualTo(7));
 
             var ec = dest.Encryption;
             Assert.That(ec.Enabled,            Is.False);
