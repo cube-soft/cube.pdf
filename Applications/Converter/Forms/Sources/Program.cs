@@ -61,7 +61,6 @@ namespace Cube.Pdf.App.Converter
                 var settings = new SettingsFolder();
                 settings.Load();
                 settings.Set(args);
-                settings.CheckUpdate();
 
                 if (settings.Value.SkipUi) Invoke(settings);
                 else Show(settings);

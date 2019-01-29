@@ -204,19 +204,6 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(dest.Value.Source,       Is.Empty);
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// アップデート確認のテストを実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void CheckUpdate() =>
-            Assert.DoesNotThrow(() => new SettingsFolder().CheckUpdate());
-
         #endregion
     }
 }

@@ -233,20 +233,6 @@ namespace Cube.Pdf.App.Converter
             Value.SkipUi       = op.ContainsKey("SkipUI");
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// Checks if the application has been updated.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void CheckUpdate()
-        {
-            if (Value.CheckUpdate) this.CheckUpdate(UpdateProgram, Assembly.Product);
-        }
-
         #endregion
 
         #region Implementations

@@ -50,43 +50,6 @@ namespace Cube.Pdf.App.Converter
         public static string GetValue(this SettingsFolder src, RegistryKey root, string name) =>
             root.GetValue<string>($@"Software\{src.Assembly.Company}\{src.Assembly.Product}", name);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// Checks if the application has been updated.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void CheckUpdate(this SettingsFolder src, string exec, string args)
-        {
-            try
-            {
-                var time = src.GetLastCheckUpdate();
-                src.LogDebug($"LastCheckUpdate:{time}");
-                if (time.AddDays(1) < DateTime.Now && src.IO.Exists(exec)) Process.Start(exec, args);
-            }
-            catch (Exception err) { src.LogWarn($"{nameof(CheckUpdate)}:{err}", err); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetLastCheckUpdate
-        ///
-        /// <summary>
-        /// Gets date time of the latest update.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static DateTime GetLastCheckUpdate(this SettingsFolder src)
-        {
-            var value = src.GetValue(Registry.CurrentUser, "LastCheckUpdate");
-            return value.HasValue() ?
-                   DateTime.Parse(value).ToLocalTime() :
-                   DateTime.MinValue;
-        }
-
         #endregion
     }
 }
