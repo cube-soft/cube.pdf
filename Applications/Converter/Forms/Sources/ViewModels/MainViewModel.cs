@@ -227,7 +227,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Model.Save();
+        public void Save() => this.Save(Model);
 
         /* ----------------------------------------------------------------- */
         ///

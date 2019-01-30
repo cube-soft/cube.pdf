@@ -77,6 +77,37 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Save
+        ///
+        /// <summary>
+        /// Saves the current settings.
+        /// </summary>
+        ///
+        /// <param name="src">MainViewModel</param>
+        /// <param name="model">Model object for the MainViewModel.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Save(this MainViewModel src, MainFacade model)
+        {
+            var data = model.Settings.Value.Metadata;
+            var show = data.Title.HasValue()   ||
+                       data.Author.HasValue()  ||
+                       data.Subject.HasValue() ||
+                       data.Keywords.HasValue();
+
+            if (show)
+            {
+                var args = MessageFactory.CreateWarningMessage(Properties.Resources.MessageSave);
+                src.Show(() => args);
+                Debug.Assert(args != null);
+                if (args.Result == DialogResult.Cancel) return;
+            }
+
+            model.Save();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Show
         ///
         /// <summary>
