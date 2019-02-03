@@ -97,10 +97,10 @@ namespace Cube.Pdf.App.Converter
 
             if (show)
             {
-                var args = MessageFactory.CreateWarningMessage(Properties.Resources.MessageSave);
-                src.Show(() => args);
-                Debug.Assert(args != null);
-                if (args.Result == DialogResult.Cancel) return;
+                var msg = MessageFactory.CreateWarningMessage(Properties.Resources.MessageSave);
+                src.Show(msg);
+                Debug.Assert(msg != null);
+                if (msg.Result == DialogResult.Cancel) return;
             }
 
             model.Save();
@@ -127,7 +127,7 @@ namespace Cube.Pdf.App.Converter
                       err is EncryptionException ece    ? CreateMessage(ece) :
                       err is CryptographicException cpe ? CreateMessage(cpe) :
                       $"{err.Message} ({err.GetType().Name})";
-            src.Show(() => MessageFactory.CreateErrorMessage(msg));
+            src.Show(MessageFactory.CreateErrorMessage(msg));
         }
 
         /* ----------------------------------------------------------------- */
@@ -139,18 +139,11 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /// <param name="src">MainViewModel</param>
-        /// <param name="get">メッセージ生成オブジェクト</param>
-        ///
-        /// <remarks>
-        /// メッセージのローカライズのためには UICulture の都合上、
-        /// オブジェクトを UI スレッドで生成する必要があります。そのため、
-        /// メッセージオブジェクトを直接指定せず関数オブジェクトを経由する
-        /// 形にしています。
-        /// </remarks>
+        /// <param name="msg">Message object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Show(this MainViewModel src, Func<MessageEventArgs> get) =>
-            src.Send(() => src.Messenger.MessageBox.Publish(get()));
+        public static void Show(this MainViewModel src, MessageEventArgs msg) =>
+            src.Send(() => src.Messenger.MessageBox.Publish(msg));
 
         #endregion
 
@@ -174,10 +167,10 @@ namespace Cube.Pdf.App.Converter
 
             if (!src.IO.Exists(dest) || so == SaveOption.Rename) return true;
 
-            var args = default(MessageEventArgs);
-            src.Show(() => args = MessageFactory.CreateWarningMessage(CreateMessage(dest, so)));
-            Debug.Assert(args != null);
-            return args.Result != DialogResult.Cancel;
+            var msg = MessageFactory.CreateWarningMessage(CreateMessage(dest, so));
+            src.Show(msg);
+            Debug.Assert(msg != null);
+            return msg.Result != DialogResult.Cancel;
         }
 
         /* ----------------------------------------------------------------- */
@@ -191,11 +184,11 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private static bool ValidateOwnerPassword(MainViewModel src)
         {
-            var eo  = src.Encryption;
-            var opt = StringComparison.InvariantCultureIgnoreCase;
-            if (!eo.Enabled || eo.OwnerPassword.Equals(eo.OwnerConfirm, opt)) return true;
+            var eo = src.Encryption;
+            var sc = StringComparison.InvariantCultureIgnoreCase;
+            if (!eo.Enabled || eo.OwnerPassword.Equals(eo.OwnerConfirm, sc)) return true;
 
-            src.Show(() => MessageFactory.CreateErrorMessage(Properties.Resources.MessagePassword));
+            src.Show(MessageFactory.CreateErrorMessage(Properties.Resources.MessagePassword));
             return false;
         }
 
@@ -210,12 +203,12 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         private static bool ValidateUserPassword(MainViewModel src)
         {
-            var eo  = src.Encryption;
-            var opt = StringComparison.InvariantCultureIgnoreCase;
+            var eo = src.Encryption;
+            var sc = StringComparison.InvariantCultureIgnoreCase;
             if (!eo.Enabled || !eo.OpenWithPassword || eo.UseOwnerPassword) return true;
-            if (eo.UserPassword.Equals(eo.UserConfirm, opt)) return true;
+            if (eo.UserPassword.Equals(eo.UserConfirm, sc)) return true;
 
-            src.Show(() => MessageFactory.CreateErrorMessage(Properties.Resources.MessagePassword));
+            src.Show(MessageFactory.CreateErrorMessage(Properties.Resources.MessagePassword));
             return false;
         }
 
