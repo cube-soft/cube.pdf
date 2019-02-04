@@ -143,9 +143,13 @@ namespace Cube.Pdf.Tests.Pinstaller
         public void Install_Throws()
         {
             var src  = GetExamplesWith("SampleDummy.json");
-            var dest = new Installer(Format.Json, src);
+            var dest = new Installer(Format.Json, src)
+            {
+                Reinstall         = true,
+                ResourceDirectory = Examples,
+            };
 
-            Assert.That(() => dest.Install(Examples, true), Throws.InstanceOf<Exception>());
+            Assert.That(() => dest.Install(), Throws.InstanceOf<Exception>());
         }
 
         #endregion

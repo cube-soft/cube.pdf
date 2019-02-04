@@ -136,6 +136,29 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public TimeSpan Timeout { get; set; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reinstall
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to reinstall devices
+        /// when provided devices have already been installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Reinstall { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResourceDirectory
+        ///
+        /// <summary>
+        /// Get the directory path where resource files exist.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string ResourceDirectory { get; set; }
+
         #endregion
 
         #region Methods
@@ -148,14 +171,8 @@ namespace Cube.Pdf.App.Pinstaller
         /// Installs devices according to the Config property.
         /// </summary>
         ///
-        /// <param name="resource">Resource directory.</param>
-        /// <param name="reinstall">
-        /// Value indicating whether re-installing devices when provided
-        /// devices have already been installed.
-        /// </param>
-        ///
         /* ----------------------------------------------------------------- */
-        public void Install(string resource, bool reinstall) => Invoke(service =>
+        public void Install() => Invoke(service =>
         {
             var monitors = Config.PortMonitors.Convert().ToList();
             var ports    = Config.Ports.Convert().ToList();
@@ -163,7 +180,7 @@ namespace Cube.Pdf.App.Pinstaller
             var printers = Config.Printers.Convert().ToList();
 
             // Uninstall
-            if (reinstall)
+            if (Reinstall)
             {
                 Uninstall(printers, drivers, ports);
                 service.Reset();
@@ -172,8 +189,8 @@ namespace Cube.Pdf.App.Pinstaller
 
             // Copy
             service.Stop();
-            foreach (var e in monitors) e.Copy(resource, IO);
-            foreach (var e in drivers)  e.Copy(resource, IO);
+            foreach (var e in monitors) e.Copy(ResourceDirectory, IO);
+            foreach (var e in drivers)  e.Copy(ResourceDirectory, IO);
             service.Start();
 
             // Install
