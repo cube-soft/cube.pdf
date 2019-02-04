@@ -89,21 +89,17 @@ namespace Cube.Pdf.App.Pinstaller
         private static void Install(ArgumentCollection src, bool reinstall)
         {
             var sec    = src.GetTimeout();
-            var config = src.GetConfiguration();
-            var engine = new Installer(Format.Json, config)
-            {
-                Reinstall         = reinstall,
-                ResourceDirectory = src.GetResourceDirectory(),
-            };
+            var engine = Create(src);
 
             Logger.Debug(LogType, $"Method:{nameof(Install).Quote()}");
-            Logger.Debug(LogType, $"Configuration:{config.Quote()}");
+            Logger.Debug(LogType, $"Configuration:{engine.Location.Quote()}");
             Logger.Debug(LogType, $"Resource:{engine.ResourceDirectory.Quote()}");
 
             Normalize(src, engine.Config);
             Invoke(src.GetRetryCount(), i =>
             {
-                engine.Timeout = TimeSpan.FromSeconds(sec * (i + 1));
+                engine.Reinstall = reinstall;
+                engine.Timeout   = TimeSpan.FromSeconds(sec * (i + 1));
                 engine.Install();
             });
         }
@@ -120,11 +116,10 @@ namespace Cube.Pdf.App.Pinstaller
         private static void Uninstall(ArgumentCollection src)
         {
             var sec    = src.GetTimeout();
-            var config = src.GetConfiguration();
-            var engine = new Installer(Format.Json, config);
+            var engine = Create(src);
 
             Logger.Debug(LogType, $"Method:{nameof(Uninstall).Quote()}");
-            Logger.Debug(LogType, $"Configuration:{config.Quote()}");
+            Logger.Debug(LogType, $"Configuration:{engine.Location.Quote()}");
 
             Invoke(src.GetRetryCount(), i =>
             {
@@ -132,6 +127,23 @@ namespace Cube.Pdf.App.Pinstaller
                 engine.Uninstall();
             });
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new instance of the Installer class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static Installer Create(ArgumentCollection src) =>
+            new Installer(Format.Json, src.GetConfiguration())
+            {
+                Resolve           = src.HasResolveOption(),
+                ResourceDirectory = src.GetResourceDirectory(),
+            };
 
         /* ----------------------------------------------------------------- */
         ///

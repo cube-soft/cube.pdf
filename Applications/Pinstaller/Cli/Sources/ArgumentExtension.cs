@@ -126,6 +126,25 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// HasResolveOption
+        ///
+        /// <summary>
+        /// Gets a value indicating whether to resolve dependencies of
+        /// the provided configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        ///
+        /// <returns>
+        /// true for having the Resolve option; otherwise false.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool HasResolveOption(this ArgumentCollection src) =>
+            src.Options.ContainsKey("Resolve");
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ReplaceDirectory
         ///
         /// <summary>

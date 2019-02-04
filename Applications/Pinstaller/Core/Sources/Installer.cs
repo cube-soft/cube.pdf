@@ -150,6 +150,18 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Resolve
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to resolve dependencies
+        /// of the provided configuration.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Resolve { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ResourceDirectory
         ///
         /// <summary>
@@ -243,12 +255,7 @@ namespace Cube.Pdf.App.Pinstaller
                 Printers       = src.Printers.ToList(),
             };
 
-            new DeviceConfigResolver(
-                cp,
-                Printer.GetElements(),
-                PrinterDriver.GetElements(),
-                PortMonitor.GetElements()
-            ).Invoke();
+            if (Resolve) ResolveDependency(cp);
 
             var monitors = cp.PortMonitors.Convert().ToList();
             var ports    = cp.Ports.Convert().ToList();
@@ -276,6 +283,23 @@ namespace Cube.Pdf.App.Pinstaller
                 foreach (var e in inner) e.Uninstall();
             }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResolveDependency
+        ///
+        /// <summary>
+        /// Resolves dependencies of the specified configuration.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResolveDependency(DeviceConfig dest) =>
+            new DeviceConfigResolver(
+                dest,
+                Printer.GetElements(),
+                PrinterDriver.GetElements(),
+                PortMonitor.GetElements()
+            ).Invoke();
 
         /* ----------------------------------------------------------------- */
         ///
