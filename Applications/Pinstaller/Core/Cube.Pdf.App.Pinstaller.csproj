@@ -94,6 +94,7 @@
     <Compile Include="Sources\Native\Structures.cs" />
     <Compile Include="Sources\Native\WinSpool.cs" />
     <Compile Include="Sources\DeviceConfig.cs" />
+    <Compile Include="Sources\DeviceConfigResolver.cs" />
     <Compile Include="Sources\IInstallable.cs" />
     <Compile Include="Sources\IInstallableExtension.cs" />
     <Compile Include="Sources\Installer.cs" />
