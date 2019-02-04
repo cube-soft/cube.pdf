@@ -69,9 +69,8 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public Printer(string name, IEnumerable<Printer> elements) : this(CreateCore())
         {
-            var sc  = StringComparison.InvariantCultureIgnoreCase;
-            var obj = elements.FirstOrDefault(e => e.Name.Equals(name, sc));
-            Exists = (obj != null);
+            var obj = elements.FirstOrDefault(e => e.Name.FuzzyEquals(name));
+            Exists = obj != null;
             if (Exists) _core = obj._core;
             else
             {

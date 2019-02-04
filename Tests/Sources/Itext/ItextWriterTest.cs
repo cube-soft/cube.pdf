@@ -17,10 +17,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
+using Cube.Generics;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -221,8 +221,7 @@ namespace Cube.Pdf.Tests.Itext
             using (var r = new DocumentReader(dest, "", false, IO))
             {
                 var items = r.Attachments;
-                var opt   = StringComparison.InvariantCultureIgnoreCase;
-                Assert.That(items.Any(x => x.Name.Equals(file, opt)), Is.True);
+                Assert.That(items.Any(x => x.Name.FuzzyEquals(file)), Is.True);
                 foreach (var obj in items) Assert.That(obj.Length, Is.AtLeast(1));
                 return items.Count();
             }

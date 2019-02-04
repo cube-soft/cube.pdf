@@ -266,8 +266,7 @@ namespace Cube.Pdf.App.Pinstaller
             if (!Exists) return;
             using (var k = Open(GetName(MonitorName, "Ports"), true))
             {
-                var sc = StringComparison.InvariantCultureIgnoreCase;
-                if (k.GetSubKeyNames().Any(e => e.Equals(Name, sc))) k.DeleteSubKeyTree(Name);
+                if (k.GetSubKeyNames().Any(e => e.FuzzyEquals(Name))) k.DeleteSubKeyTree(Name);
                 Exists = false;
             }
         }

@@ -331,17 +331,16 @@ namespace Cube.Pdf.App.Editor
         {
             if (!Enabled.Value) return true;
 
-            var cmp   = StringComparison.InvariantCulture;
             var owner = OwnerPassword.Value;
             var oc    = OwnerConfirm.Value;
-            if (!owner.HasValue() || !owner.Equals(oc, cmp)) return false;
+            if (!owner.HasValue() || !owner.FuzzyEquals(oc)) return false;
 
             if (!IsOpenPassword.Value) return true;
 
             var share = IsSharePassword.Value;
             var user  = UserPassword.Value;
             var uc    = UserConfirm.Value;
-            if (!share && (!user.HasValue() || !user.Equals(uc, cmp))) return false;
+            if (!share && (!user.HasValue() || !user.FuzzyEquals(uc))) return false;
 
             return true;
         }
@@ -384,8 +383,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private BindableElement<bool> CreateShare(Encryption src)
         {
-            var cmp   = StringComparison.InvariantCulture;
-            var value = src.OwnerPassword.HasValue() && src.OwnerPassword.Equals(src.UserPassword, cmp);
+            var value = src.OwnerPassword.HasValue() && src.OwnerPassword.FuzzyEquals(src.UserPassword);
             if (value) src.UserPassword = string.Empty;
             return new BindableElement<bool>(value, () => Properties.Resources.MenuSharePassword);
         }

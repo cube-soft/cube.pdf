@@ -19,6 +19,7 @@
 using Cube.FileSystem;
 using Cube.FileSystem.Mixin;
 using Cube.Forms;
+using Cube.Generics;
 using Cube.Log;
 using Cube.Pdf.Ghostscript;
 using System;
@@ -351,8 +352,7 @@ namespace Cube.Pdf.App.Converter
         private void InvokeGhostscript(string dest) => InvokeUnlessDisposed(() =>
         {
             var cmp = GetDigest(Value.Source);
-            var opt = StringComparison.InvariantCultureIgnoreCase;
-            if (!Settings.Digest.Equals(cmp, opt)) throw new CryptographicException();
+            if (!Settings.Digest.FuzzyEquals(cmp)) throw new CryptographicException();
 
             var gs = GhostscriptFactory.Create(Settings);
             gs.Invoke(Value.Source, dest);

@@ -185,8 +185,7 @@ namespace Cube.Pdf.App.Converter
         private static bool ValidateOwnerPassword(MainViewModel src)
         {
             var eo = src.Encryption;
-            var sc = StringComparison.InvariantCultureIgnoreCase;
-            if (!eo.Enabled || eo.OwnerPassword.Equals(eo.OwnerConfirm, sc)) return true;
+            if (!eo.Enabled || eo.OwnerPassword.FuzzyEquals(eo.OwnerConfirm)) return true;
 
             src.Show(MessageFactory.CreateErrorMessage(Properties.Resources.MessagePassword));
             return false;
@@ -204,9 +203,8 @@ namespace Cube.Pdf.App.Converter
         private static bool ValidateUserPassword(MainViewModel src)
         {
             var eo = src.Encryption;
-            var sc = StringComparison.InvariantCultureIgnoreCase;
             if (!eo.Enabled || !eo.OpenWithPassword || eo.UseOwnerPassword) return true;
-            if (eo.UserPassword.Equals(eo.UserConfirm, sc)) return true;
+            if (eo.UserPassword.FuzzyEquals(eo.UserConfirm)) return true;
 
             src.Show(MessageFactory.CreateErrorMessage(Properties.Resources.MessagePassword));
             return false;
