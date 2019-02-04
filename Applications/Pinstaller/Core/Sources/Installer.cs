@@ -174,18 +174,12 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Install() => Invoke(service =>
         {
+            if (Reinstall) Uninstall(Config, service);
+
             var monitors = Config.PortMonitors.Convert().ToList();
             var ports    = Config.Ports.Convert().ToList();
             var drivers  = Config.PrinterDrivers.Convert().ToList();
             var printers = Config.Printers.Convert().ToList();
-
-            // Uninstall
-            if (Reinstall)
-            {
-                Uninstall(printers, drivers, ports);
-                service.Reset();
-                Uninstall(monitors);
-            }
 
             // Copy
             service.Stop();
@@ -209,17 +203,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Uninstall() => Invoke(service =>
-        {
-            var monitors = Config.PortMonitors.Convert().ToList();
-            var ports    = Config.Ports.Convert().ToList();
-            var drivers  = Config.PrinterDrivers.Convert().ToList();
-            var printers = Config.Printers.Convert().ToList();
-
-            Uninstall(printers, drivers, ports);
-            service.Reset();
-            Uninstall(monitors);
-        });
+        public void Uninstall() => Invoke(service => Uninstall(Config, service));
 
         #endregion
 
@@ -239,6 +223,42 @@ namespace Cube.Pdf.App.Pinstaller
             format == Format.Registry ?
             format.Deserialize<DeviceConfig>(src) :
             io.Load(src, e => format.Deserialize<DeviceConfig>(e));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uninstall
+        ///
+        /// <summary>
+        /// Uninstalls all of the specified devices.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Uninstall(DeviceConfig src, SpoolerService service)
+        {
+            var cp = new DeviceConfig
+            {
+                PortMonitors   = src.PortMonitors.ToList(),
+                Ports          = src.Ports.ToList(),
+                PrinterDrivers = src.PrinterDrivers.ToList(),
+                Printers       = src.Printers.ToList(),
+            };
+
+            new DeviceConfigResolver(
+                cp,
+                Printer.GetElements(),
+                PrinterDriver.GetElements(),
+                PortMonitor.GetElements()
+            ).Invoke();
+
+            var monitors = cp.PortMonitors.Convert().ToList();
+            var ports    = cp.Ports.Convert().ToList();
+            var drivers  = cp.PrinterDrivers.Convert().ToList();
+            var printers = cp.Printers.Convert().ToList();
+
+            Uninstall(printers, drivers, ports);
+            service.Reset();
+            Uninstall(monitors);
+        }
 
         /* ----------------------------------------------------------------- */
         ///

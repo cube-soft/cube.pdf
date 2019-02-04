@@ -46,20 +46,17 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="src">Source device configuration.</param>
         /// <param name="printers">Installed printers.</param>
         /// <param name="drivers">Installed printer drivers.</param>
-        /// <param name="ports">Installed ports.</param>
         /// <param name="monitors">Installled port monitors.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DeviceConfigResolver(DeviceConfig src,
             IEnumerable<Printer> printers,
             IEnumerable<PrinterDriver> drivers,
-            IEnumerable<Port> ports,
             IEnumerable<PortMonitor> monitors)
         {
             Source         = src;
             Printers       = printers;
             PrinterDrivers = drivers;
-            Ports          = ports;
             PortMonitors   = monitors;
         }
 
@@ -102,17 +99,6 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ports
-        ///
-        /// <summary>
-        /// Gets the collection of installed ports.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<Port> Ports { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// PortMonitors
         ///
         /// <summary>
@@ -137,7 +123,6 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public void Invoke()
         {
-            ResolvePorts();
             ResolveDrivers();
             ResolvePrinters();
         }
@@ -145,34 +130,6 @@ namespace Cube.Pdf.App.Pinstaller
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ResolvePorts
-        ///
-        /// <summary>
-        /// Resolves the dependency of port settings.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ResolvePorts()
-        {
-            var monitors = new HashSet<string>(Source.PortMonitors.Select(e => e.Name));
-            var ports    = new HashSet<string>(Source.Ports.Select(e => e.Name));
-            var results  = Ports.Where(e => !ports.Contains(e.Name) && monitors.Contains(e.MonitorName));
-
-            foreach (var e in results) Source.Ports.Add(new PortConfig
-            {
-                Name        = e.Name,
-                MonitorName = e.MonitorName,
-                Application = e.Application,
-                Arguments   = e.Arguments,
-                Temp        = e.Temp,
-                WaitForExit = e.WaitForExit,
-                RunAsUser   = false,
-                Proxy       = string.Empty,
-            });
-        }
 
         /* ----------------------------------------------------------------- */
         ///
