@@ -150,7 +150,7 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Resolve
+        /// Recursive
         ///
         /// <summary>
         /// Gets or sets a value indicating whether to resolve dependencies
@@ -158,7 +158,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Resolve { get; set; }
+        public bool Recursive { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -255,7 +255,7 @@ namespace Cube.Pdf.App.Pinstaller
                 Printers       = src.Printers.ToList(),
             };
 
-            if (Resolve) ResolveDependency(cp);
+            if (Recursive) ResolveDependencies(cp);
 
             var monitors = cp.PortMonitors.Convert().ToList();
             var ports    = cp.Ports.Convert().ToList();
@@ -286,14 +286,14 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ResolveDependency
+        /// ResolveDependencies
         ///
         /// <summary>
         /// Resolves dependencies of the specified configuration.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ResolveDependency(DeviceConfig dest) =>
+        private void ResolveDependencies(DeviceConfig dest) =>
             new DeviceConfigResolver(
                 dest,
                 Printer.GetElements(),

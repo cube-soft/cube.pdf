@@ -126,22 +126,21 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// HasResolveOption
+        /// HasForceOption
         ///
         /// <summary>
-        /// Gets a value indicating whether to resolve dependencies of
-        /// the provided configuration.
+        /// Gets a value indicating whether to uninstall devices forcibly.
         /// </summary>
         ///
         /// <param name="src">Source arguments.</param>
         ///
         /// <returns>
-        /// true for having the Resolve option; otherwise false.
+        /// true for having the Force option; otherwise false.
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static bool HasResolveOption(this ArgumentCollection src) =>
-            src.Options.ContainsKey("Resolve");
+        public static bool HasForceOption(this ArgumentCollection src) =>
+            src.Options.ContainsKey("Force");
 
         /* ----------------------------------------------------------------- */
         ///

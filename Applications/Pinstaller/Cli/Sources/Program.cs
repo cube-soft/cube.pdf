@@ -141,7 +141,7 @@ namespace Cube.Pdf.App.Pinstaller
         private static Installer Create(ArgumentCollection src) =>
             new Installer(Format.Json, src.GetConfiguration())
             {
-                Resolve           = src.HasResolveOption(),
+                Recursive         = src.HasForceOption(),
                 ResourceDirectory = src.GetResourceDirectory(),
             };
 
