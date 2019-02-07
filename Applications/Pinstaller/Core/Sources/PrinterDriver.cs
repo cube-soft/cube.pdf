@@ -395,7 +395,7 @@ namespace Cube.Pdf.App.Pinstaller
 
         #region Fields
         private DriverInfo3 _core;
-        private string _directory;
+        private static string _directory;
         #endregion
     }
 }
