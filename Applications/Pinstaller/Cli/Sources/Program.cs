@@ -16,8 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.DataContract;
 using Cube.Generics;
+using Cube.Iteration;
 using Cube.Log;
 using Cube.Pdf.App.Pinstaller.Debug;
 using System;
@@ -89,14 +89,13 @@ namespace Cube.Pdf.App.Pinstaller
         private static void Install(ArgumentCollection src, bool reinstall)
         {
             var sec    = src.GetTimeout();
-            var engine = Create(src);
+            var engine = src.CreateInstaller();
 
             Logger.Debug(LogType, $"Method:{nameof(Install).Quote()}");
             Logger.Debug(LogType, $"Configuration:{engine.Location.Quote()}");
             Logger.Debug(LogType, $"Resource:{engine.ResourceDirectory.Quote()}");
 
-            Normalize(src, engine.Config);
-            Invoke(src.GetRetryCount(), i =>
+            engine.Try(src.GetRetryCount(), i =>
             {
                 engine.Reinstall = reinstall;
                 engine.Timeout   = TimeSpan.FromSeconds(sec * (i + 1));
@@ -116,73 +115,16 @@ namespace Cube.Pdf.App.Pinstaller
         private static void Uninstall(ArgumentCollection src)
         {
             var sec    = src.GetTimeout();
-            var engine = Create(src);
+            var engine = src.CreateInstaller();
 
             Logger.Debug(LogType, $"Method:{nameof(Uninstall).Quote()}");
             Logger.Debug(LogType, $"Configuration:{engine.Location.Quote()}");
 
-            Invoke(src.GetRetryCount(), i =>
+            engine.Try(src.GetRetryCount(), i =>
             {
                 engine.Timeout = TimeSpan.FromSeconds(sec * (i + 1));
                 engine.Uninstall();
             });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new instance of the Installer class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static Installer Create(ArgumentCollection src) =>
-            new Installer(Format.Json, src.GetConfiguration())
-            {
-                Recursive         = src.HasForceOption(),
-                ResourceDirectory = src.GetResourceDirectory(),
-            };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Normalize
-        ///
-        /// <summary>
-        /// Normalizes some information.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Normalize(ArgumentCollection src, DeviceConfig config)
-        {
-            var ca = Environment.SpecialFolder.CommonApplicationData.GetName();
-            foreach (var e in config.Ports)
-            {
-                e.Temp        = System.IO.Path.Combine(ca, e.Temp);
-                e.Proxy       = src.ReplaceDirectory(e.Proxy);
-                e.Application = src.ReplaceDirectory(e.Application);
-                e.Arguments   = src.ReplaceDirectory(e.Arguments);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Executes the specified action until it succeeds.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Invoke(int n, Action<int> action)
-        {
-            for (var i = 0; i < n; ++i)
-            {
-                try { action(i); return; }
-                catch (Exception e) { Logger.Warn(LogType, e.ToString(), e); }
-            }
-            throw new ArgumentException($"Try {n} times.");
         }
 
         #endregion

@@ -16,7 +16,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
+using Cube.DataContract;
 using Cube.Generics;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -35,6 +37,32 @@ namespace Cube.Pdf.App.Pinstaller
     public static class ArgumentExtension
     {
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateInstaller
+        ///
+        /// <summary>
+        /// Creates a new instance of the Installer class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        ///
+        /// <returns>Installer object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Installer CreateInstaller(this ArgumentCollection src)
+        {
+            var dest = new Installer(Format.Json, src.GetConfiguration())
+            {
+                Recursive         = src.HasForceOption(),
+                ResourceDirectory = src.GetResourceDirectory(),
+            };
+
+            src.ReplaceDirectory(dest.Config);
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -147,7 +175,31 @@ namespace Cube.Pdf.App.Pinstaller
         /// ReplaceDirectory
         ///
         /// <summary>
-        /// Replace all %%DIR%% strings with the current directory.
+        /// Replaces some directory path.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        /// <param name="dest">Target configuration.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void ReplaceDirectory(this ArgumentCollection src, DeviceConfig dest)
+        {
+            var ca = Environment.SpecialFolder.CommonApplicationData.GetName();
+            foreach (var e in dest.Ports)
+            {
+                e.Temp        = System.IO.Path.Combine(ca, e.Temp);
+                e.Proxy       = src.ReplaceDirectory(e.Proxy);
+                e.Application = src.ReplaceDirectory(e.Application);
+                e.Arguments   = src.ReplaceDirectory(e.Arguments);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceDirectory
+        ///
+        /// <summary>
+        /// Replaces all %%DIR%% strings with the current directory.
         /// </summary>
         ///
         /// <param name="src">Source arguments.</param>
