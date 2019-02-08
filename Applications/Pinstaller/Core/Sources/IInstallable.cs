@@ -64,6 +64,18 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// RetryCount
+        ///
+        /// <summary>
+        /// Gets or sets the maximum number of attempts for an installation
+        /// or uninstallation operation to succeed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        int RetryCount { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// CanInstall
         ///
         /// <summary>

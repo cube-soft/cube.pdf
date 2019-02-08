@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
 using Cube.Generics;
+using Cube.Iteration;
 using Cube.Pdf.App.Pinstaller.Debug;
 using Microsoft.Win32;
 using System;
@@ -69,6 +70,7 @@ namespace Cube.Pdf.App.Pinstaller
             MonitorName = monitor;
             Environment = this.GetEnvironment();
             Exists      = core != null;
+            RetryCount  = 3;
             _core       = core ?? new Core();
         }
 
@@ -182,6 +184,18 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public bool Exists { get; private set; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RetryCount
+        ///
+        /// <summary>
+        /// Gets or sets the maximum number of attempts for an installation
+        /// or uninstallation operation to succeed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int RetryCount { get; set; }
+
         #endregion
 
         #region Methods
@@ -245,10 +259,13 @@ namespace Cube.Pdf.App.Pinstaller
         public void Install()
         {
             this.Log();
-            if (!CanInstall()) return;
-            if (!Exists) Register(MonitorName, Name);
-            Exists = true;
-            using (var k = Open(GetName(MonitorName, "Ports", Name), true)) k.Serialize(_core);
+
+            if (CanInstall()) this.Try(RetryCount, () =>
+            {
+                if (!Exists) Register(MonitorName, Name);
+                Exists = true;
+                using (var k = Open(GetName(MonitorName, "Ports", Name), true)) k.Serialize(_core);
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -263,12 +280,16 @@ namespace Cube.Pdf.App.Pinstaller
         public void Uninstall()
         {
             this.Log();
-            if (!Exists) return;
-            using (var k = Open(GetName(MonitorName, "Ports"), true))
+
+            if (Exists) this.Try(RetryCount, () =>
             {
-                if (k.GetSubKeyNames().Any(e => e.FuzzyEquals(Name))) k.DeleteSubKeyTree(Name);
-                Exists = false;
-            }
+                using (var k = Open(GetName(MonitorName, "Ports"), true))
+                {
+                    var names = k.GetSubKeyNames();
+                    if (names.Any(e => e.FuzzyEquals(Name))) k.DeleteSubKeyTree(Name);
+                    Exists = false;
+                }
+            });
         }
 
         #endregion
