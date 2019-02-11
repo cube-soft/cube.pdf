@@ -17,13 +17,11 @@ PDF 形式などの文書を作成する事のできる、とても便利なソ�
 * CubePDF ユーザーズマニュアル  
   https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Document.ja.md
 
-CubePDF を使用するためには、Microsoft .NET Framework 3.5 以降がインストールされている
-必要があります。Microsoft .NET Framework 3.5 は、以下の URL からダウンロードして下さい。
+CubePDF を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります。
+.NET Framework は、以下の URL からダウンロードして下さい。
 
-* Microsoft .NET Framework 4.5.2  
-  https://www.microsoft.com/ja-JP/download/details.aspx?id=42643
-* Microsoft .NET Framework 3.5  
-  https://www.microsoft.com/ja-jp/download/details.aspx?id=22
+* .NET Downloads for Linux, macOS, and Windows  
+  https://dotnet.microsoft.com/download
 
 ## 問題が発生した場合
 
@@ -54,7 +52,7 @@ CubePDF は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
-* 2018/02/05 version 1.0.0RC18
+* 2018/02/15 version 1.0.0RC18
     - 文書プロパティの各項目を設定を保存機能の対象となるように変更
     - 名前を付けて保存ダイアログにおける初期表示フォルダの挙動に関するオプションを追加
     - CubePDF プリンタのインストール処理を改善
