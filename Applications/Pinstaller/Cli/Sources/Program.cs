@@ -18,7 +18,6 @@
 using Cube.Collections;
 using Cube.Generics;
 using Cube.Iteration;
-using Cube.Log;
 using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Reflection;

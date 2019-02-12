@@ -397,9 +397,9 @@ namespace Cube.Pdf.App.Converter
                 var dest = IO.Get(src.Destination);
                 return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
             }
-            catch (Exception err)
+            catch (Exception e)
             {
-                this.LogWarn(err.ToString(), err);
+                this.LogWarn(e);
                 return desktop;
             }
         }

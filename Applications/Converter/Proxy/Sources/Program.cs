@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.Log;
 using System;
 
 namespace Cube.Pdf.App.Proxy
@@ -65,7 +64,7 @@ namespace Cube.Pdf.App.Proxy
                 };
                 proc.WaitForExit();
             }
-            catch (Exception err) { Logger.Error(LogType, err.ToString(), err); }
+            catch (Exception e) { Logger.Error(LogType, e); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -96,7 +95,7 @@ namespace Cube.Pdf.App.Proxy
             catch (Exception e)
             {
                 if (!src.Options.TryGetValue("ThreadID", out var id)) throw;
-                Logger.Warn(LogType, e.Message, e);
+                Logger.Warn(LogType, e);
                 Logger.Info(LogType, $"Use ThreadID ({id})");
                 return Cube.Processes.Process.StartAs(uint.Parse(id), exec, args);
             }

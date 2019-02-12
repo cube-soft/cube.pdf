@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -59,7 +58,7 @@ namespace Cube.Pdf.App.Clip
                 var view = Views.CreateMainView(args);
                 using (new ClipPresenter(view)) Application.Run(view);
             }
-            catch (Exception err) { Logger.Error(type, err.Message, err); }
+            catch (Exception e) { Logger.Error(type, e); }
         }
     }
 }

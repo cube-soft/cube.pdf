@@ -145,13 +145,13 @@ namespace Cube.Pdf.App.Clip
                     Model.Open(file);
                     break;
                 }
-                catch (EncryptionException err)
+                catch (EncryptionException e)
                 {
-                    this.LogError(err.Message, err);
+                    this.LogError(e);
                     Aggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
                     break;
                 }
-                catch (Exception err) { this.LogWarn(err.Message, err); }
+                catch (Exception e) { this.LogWarn(e); }
             }
         });
 
@@ -210,10 +210,10 @@ namespace Cube.Pdf.App.Clip
                 await Async(() => Model.Save());
                 Aggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageSuccess);
             }
-            catch (Exception err)
+            catch (Exception e)
             {
-                this.LogError(err.Message, err);
-                Aggregator?.GetEvents()?.Error.Publish(err.Message);
+                this.LogError(e);
+                Aggregator?.GetEvents()?.Error.Publish(e.Message);
             }
             finally { SyncWait(() => View.IsBusy = false); }
         }

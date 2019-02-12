@@ -92,7 +92,7 @@ namespace Cube.Pdf.App.Picker
                 });
                 Aggregator.GetEvents()?.SaveComplete.Publish();
             }
-            catch (Exception err) { this.LogError(err.Message, err); }
+            catch (Exception e) { this.LogError(e); }
 
             SyncWait(() =>
             {

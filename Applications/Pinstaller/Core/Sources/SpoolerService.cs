@@ -193,7 +193,7 @@ namespace Cube.Pdf.App.Pinstaller
             foreach (var f in src)
             {
                 try { File.Delete(f); }
-                catch (Exception err) { this.LogWarn($"{f}:{err}", err); }
+                catch (Exception e) { this.LogWarn($"{f}:{e.Message}"); }
             }
         });
 

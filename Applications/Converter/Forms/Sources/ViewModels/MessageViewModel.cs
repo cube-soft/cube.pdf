@@ -111,22 +111,22 @@ namespace Cube.Pdf.App.Converter
         /// Show
         ///
         /// <summary>
-        /// エラーメッセージを表示します。
+        /// Shows an error message.
         /// </summary>
         ///
         /// <param name="src">MainViewModel</param>
-        /// <param name="err">例外オブジェクト</param>
+        /// <param name="error">Exception object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Show(this MainViewModel src, Exception err)
+        public static void Show(this MainViewModel src, Exception error)
         {
-            if (err is OperationCanceledException) return;
+            if (error is OperationCanceledException) return;
 
-            src.LogError(err.ToString(), err);
-            var msg = err is GsApiException gse         ? CreateMessage(gse) :
-                      err is EncryptionException ece    ? CreateMessage(ece) :
-                      err is CryptographicException cpe ? CreateMessage(cpe) :
-                      $"{err.Message} ({err.GetType().Name})";
+            src.LogError(error);
+            var msg = error is GsApiException gse         ? CreateMessage(gse) :
+                      error is EncryptionException ece    ? CreateMessage(ece) :
+                      error is CryptographicException cpe ? CreateMessage(cpe) :
+                      $"{error.Message} ({error.GetType().Name})";
             src.Show(MessageFactory.CreateErrorMessage(msg));
         }
 
@@ -135,7 +135,7 @@ namespace Cube.Pdf.App.Converter
         /// Show
         ///
         /// <summary>
-        /// メッセージを表示します。
+        /// Shows the specified message.
         /// </summary>
         ///
         /// <param name="src">MainViewModel</param>

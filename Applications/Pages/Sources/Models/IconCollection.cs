@@ -113,9 +113,9 @@ namespace Cube.Pdf.App.Pages
         private Icon DefaultIcon()
         {
             try { return IconFactory.Create(StockIcons.DocumentNotAssociated, IconSize.Small); }
-            catch (Exception err)
+            catch (Exception e)
             {
-                this.LogError(err.Message, err);
+                this.LogError(e);
                 return Properties.Resources.NotAssociated;
             }
         }

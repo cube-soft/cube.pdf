@@ -19,7 +19,6 @@
 using Cube.Collections;
 using Cube.DataContract;
 using Cube.FileSystem;
-using Cube.Log;
 using System;
 using System.Reflection;
 using System.Windows.Forms;

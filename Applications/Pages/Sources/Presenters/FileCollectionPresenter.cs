@@ -250,10 +250,10 @@ namespace Cube.Pdf.App.Pages
                 Settings.AllowOperation = false;
                 await Async(() => action());
             }
-            catch (Exception err)
+            catch (Exception e)
             {
-                this.LogError(err.Message, err);
-                Views.ShowErrorMessage(err);
+                this.LogError(e);
+                Views.ShowErrorMessage(e);
             }
             finally { Settings.AllowOperation = true; }
         }
