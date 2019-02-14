@@ -301,10 +301,12 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static PrinterInfo2 CreateCore() => new PrinterInfo2
         {
-            pPrintProcessor = "winprint",
-            pDatatype       = "RAW",
-            Priority        = 1,
-            DefaultPriority = 1,
+            pPrintProcessor     = "winprint",
+            pDatatype           = "RAW",
+            pDevMode            = IntPtr.Zero,
+            pSecurityDescriptor = IntPtr.Zero,
+            Priority            = 1,
+            DefaultPriority     = 1,
         };
 
         /* ----------------------------------------------------------------- */

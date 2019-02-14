@@ -83,8 +83,7 @@ namespace Cube.Pdf.App.Pinstaller
         public IntPtr pDevMode;
         [MarshalAs(UnmanagedType.LPTStr)] public string pSepFile;
         [MarshalAs(UnmanagedType.LPTStr)] public string pPrintProcessor;
-        [MarshalAs(UnmanagedType.LPTStr)]
-        public string pDatatype;
+        [MarshalAs(UnmanagedType.LPTStr)] public string pDatatype;
         [MarshalAs(UnmanagedType.LPTStr)] public string pParameters;
         public IntPtr pSecurityDescriptor;
         public uint Attributes;
