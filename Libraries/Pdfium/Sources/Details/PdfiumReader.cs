@@ -163,10 +163,10 @@ namespace Cube.Pdf.Pdfium
                     if (denied) throw new LoadException(LoadStatus.PasswordError);
                     return dest;
                 }
-                catch (LoadException e)
+                catch (LoadException err)
                 {
-                    if (e.Status != LoadStatus.PasswordError) throw;
-                    if (query is QueryValue<string>) throw new EncryptionException(e.Message, e);
+                    if (err.Status != LoadStatus.PasswordError) throw;
+                    if (query is QueryValue<string>) throw new EncryptionException(err.Message, err);
                     var args = query.RequestPassword(src);
                     if (!args.Cancel) pass = args.Result;
                     else throw new OperationCanceledException();
@@ -256,7 +256,7 @@ namespace Cube.Pdf.Pdfium
                 }
             }
 
-            if (disposing) _stream.Dispose();
+            if (disposing) _stream?.Dispose();
         }
 
         #endregion

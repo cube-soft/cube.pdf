@@ -93,9 +93,9 @@ namespace Cube.Pdf.Itext
                     }
                     else return dest;
                 }
-                catch (BadPasswordException e)
+                catch (BadPasswordException err)
                 {
-                    if (query is QueryValue<string>) throw new EncryptionException(e.Message, e);
+                    if (query is QueryValue<string>) throw new EncryptionException(err.Message, err);
                     var args = query.RequestPassword(src);
                     if (!args.Cancel) password = args.Result;
                     else throw new OperationCanceledException();

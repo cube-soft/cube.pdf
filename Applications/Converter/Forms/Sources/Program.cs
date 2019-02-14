@@ -68,7 +68,7 @@ namespace Cube.Pdf.App.Converter
                 if (settings.Value.SkipUi) Invoke(settings);
                 else Show(settings);
             }
-            catch (Exception err) { Logger.Error(LogType, err.ToString()); }
+            catch (Exception err) { Logger.Error(LogType, err); }
         }
 
         #endregion

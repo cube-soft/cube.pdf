@@ -96,10 +96,10 @@ namespace Cube.Pdf.App.Editor
         public static void OpenLink(this MainFacade src, Information link)
         {
             try { src.Open(Shortcut.Resolve(link?.FullName)?.Target); }
-            catch (Exception e)
+            catch (Exception err)
             {
-                var cancel = e is OperationCanceledException ||
-                             e is TwiceException;
+                var cancel = err is OperationCanceledException ||
+                             err is TwiceException;
                 if (!cancel) src.Bindable.IO.TryDelete(link?.FullName);
                 throw;
             }

@@ -125,7 +125,7 @@ namespace Cube.Pdf.App.Pages
                 else if (info.Exists)
                 {
                     try { Add(path); }
-                    catch (Exception e) { this.LogWarn($"Ignore:{path} ({e.Message})"); }
+                    catch (Exception err) { this.LogWarn($"Ignore:{path} ({err.Message})"); }
                 }
             }
         }

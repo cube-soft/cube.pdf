@@ -58,7 +58,7 @@ namespace Cube.Pdf.App.Clip
                 var view = Views.CreateMainView(args);
                 using (new ClipPresenter(view)) Application.Run(view);
             }
-            catch (Exception e) { Logger.Error(type, e); }
+            catch (Exception err) { Logger.Error(type, err); }
         }
     }
 }

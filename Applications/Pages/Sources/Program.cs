@@ -65,7 +65,7 @@ namespace Cube.Pdf.App.Pages
                     }
                 }
             }
-            catch (Exception e) { Logger.Error(type, e); }
+            catch (Exception err) { Logger.Error(type, err); }
         }
     }
 }

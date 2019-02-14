@@ -68,7 +68,7 @@ namespace Cube.Pdf.App.Pinstaller
                 else Logger.Warn(LogType, $"{cmd}:Unexpected command");
                 return 0;
             }
-            catch (Exception err) { Logger.Error(LogType, err.ToString()); }
+            catch (Exception err) { Logger.Error(LogType, err); }
             return -1;
         }
 

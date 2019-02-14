@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Pages
             var index = (indices.Count > 0) ? indices[0] : -1;
             if (index < 0 || index >= Model.Count) return;
             try { System.Diagnostics.Process.Start(Model[index].FullName); }
-            catch (Exception err) { this.LogWarn(err.ToString()); }
+            catch (Exception err) { this.LogWarn(err); }
         });
 
         /* --------------------------------------------------------------------- */
@@ -250,10 +250,10 @@ namespace Cube.Pdf.App.Pages
                 Settings.AllowOperation = false;
                 await Async(() => action());
             }
-            catch (Exception e)
+            catch (Exception err)
             {
-                this.LogError(e);
-                Views.ShowErrorMessage(e);
+                this.LogError(err);
+                Views.ShowErrorMessage(err);
             }
             finally { Settings.AllowOperation = true; }
         }
