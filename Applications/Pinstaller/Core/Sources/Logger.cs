@@ -56,7 +56,7 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             var sw     = Stopwatch.StartNew();
 
             try { action(); }
-            catch { status = "Failed"; }
+            catch { status = "Failed"; throw; }
             finally { src.Put($"[{method}]", $"{status}", $"({sw.Elapsed})"); }
         }
 
