@@ -260,12 +260,12 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
 
-            if (CanInstall()) this.Try(RetryCount, () =>
+            if (CanInstall()) this.Log(() => this.Try(RetryCount, () =>
             {
                 if (!Exists) Register(MonitorName, Name);
                 Exists = true;
                 using (var k = Open(GetName(MonitorName, "Ports", Name), true)) k.Serialize(_core);
-            });
+            }));
         }
 
         /* ----------------------------------------------------------------- */
@@ -281,7 +281,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
 
-            if (Exists) this.Try(RetryCount, () =>
+            if (Exists) this.Log(() => this.Try(RetryCount, () =>
             {
                 using (var k = Open(GetName(MonitorName, "Ports"), true))
                 {
@@ -289,7 +289,7 @@ namespace Cube.Pdf.App.Pinstaller
                     if (names.Any(e => e.FuzzyEquals(Name))) k.DeleteSubKeyTree(Name);
                     Exists = false;
                 }
-            });
+            }));
         }
 
         #endregion

@@ -29,12 +29,12 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct MonitorInfo2
     {
-        [MarshalAs(UnmanagedType.LPTStr)] public string pName;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pEnvironment;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pDLLName;
+        public string pName;
+        public string pEnvironment;
+        public string pDLLName;
     }
 
     /* --------------------------------------------------------------------- */
@@ -46,19 +46,19 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct DriverInfo3
     {
         public uint cVersion;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pName;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pEnvironment;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pDriverPath;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pDataFile;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pConfigFile;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pHelpFile;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pDependentFiles;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pMonitorName;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pDefaultDataType;
+        public string pName;
+        public string pEnvironment;
+        public string pDriverPath;
+        public string pDataFile;
+        public string pConfigFile;
+        public string pHelpFile;
+        public string pDependentFiles;
+        public string pMonitorName;
+        public string pDefaultDataType;
     }
 
     /* --------------------------------------------------------------------- */
@@ -70,21 +70,21 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct PrinterInfo2
     {
-        [MarshalAs(UnmanagedType.LPTStr)] public string pServerName;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pPrinterName;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pShareName;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pPortName;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pDriverName;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pComment;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pLocation;
+        public string pServerName;
+        public string pPrinterName;
+        public string pShareName;
+        public string pPortName;
+        public string pDriverName;
+        public string pComment;
+        public string pLocation;
         public IntPtr pDevMode;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pSepFile;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pPrintProcessor;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pDatatype;
-        [MarshalAs(UnmanagedType.LPTStr)] public string pParameters;
+        public string pSepFile;
+        public string pPrintProcessor;
+        public string pDatatype;
+        public string pParameters;
         public IntPtr pSecurityDescriptor;
         public uint Attributes;
         public uint Priority;
@@ -105,7 +105,7 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct PrinterDefaults
     {
         public IntPtr pDatatype;

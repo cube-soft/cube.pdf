@@ -244,11 +244,11 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
 
-            if (!Exists && CanInstall()) this.Try(RetryCount, () =>
+            if (!Exists && CanInstall()) this.Log(() => this.Try(RetryCount, () =>
             {
                 if (!NativeMethods.AddMonitor("", 2u, ref _core)) throw new Win32Exception();
                 Exists = true;
-            });
+            }));
         }
 
         /* ----------------------------------------------------------------- */
@@ -264,11 +264,11 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
 
-            if (Exists) this.Try(RetryCount, () =>
+            if (Exists) this.Log(() => this.Try(RetryCount, () =>
             {
                 if (!NativeMethods.DeleteMonitor("", "", Name)) throw new Win32Exception();
                 Exists = false;
-            });
+            }));
         }
 
         #endregion

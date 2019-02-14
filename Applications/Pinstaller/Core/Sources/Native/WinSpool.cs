@@ -45,7 +45,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool EnumMonitors(
             string pName,
             uint Level,
@@ -64,7 +64,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool AddMonitor(
             string pName,
             uint Level,
@@ -80,7 +80,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool DeleteMonitor(
             string pName,
             string pEnvironment,
@@ -103,7 +103,7 @@ namespace Cube.Pdf.App.Pinstaller
         [DllImport(LibName, EntryPoint = "XcvDataW", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool XcvData(
             IntPtr hXcv,
-            [MarshalAs(UnmanagedType.LPWStr)] string pszDataName,
+            string pszDataName,
             IntPtr InputData,
             uint cbInputData,
             IntPtr OutputData,
@@ -126,7 +126,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool EnumPrinterDrivers(
             string pName,
             string pEnvironment,
@@ -146,7 +146,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool AddPrinterDriver(
             string pName,
             uint Level,
@@ -162,7 +162,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool DeletePrinterDriver(
             string pName,
             string pEnvironment,
@@ -178,7 +178,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool GetPrinterDriverDirectory(
             string pName,
             string pEnvironment,
@@ -201,7 +201,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool EnumPrinters(
             uint Flags,
             string Name,
@@ -221,7 +221,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern IntPtr AddPrinter(
             string pName,
             uint Level,
@@ -237,7 +237,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool OpenPrinter(
             string pName,
             out IntPtr phPrinter,

@@ -250,13 +250,13 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
 
-            if (!Exists) this.Try(RetryCount, () =>
+            if (!Exists) this.Log(() => this.Try(RetryCount, () =>
             {
                 var dest = NativeMethods.AddPrinter("", 2, ref _core);
                 if (dest == IntPtr.Zero) throw new Win32Exception();
                 NativeMethods.ClosePrinter(dest);
                 Exists = true;
-            });
+            }));
         }
 
         /* ----------------------------------------------------------------- */
@@ -272,7 +272,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             this.Log();
 
-            if (Exists) this.Try(RetryCount, () =>
+            if (Exists) this.Log(() => this.Try(RetryCount, () =>
             {
                 var mask = AccessMask.PrinterAccessAll.Create();
                 if (!NativeMethods.OpenPrinter(Name, out var src, ref mask)) throw new Win32Exception();
@@ -283,7 +283,7 @@ namespace Cube.Pdf.App.Pinstaller
                     Exists = false;
                 }
                 finally { NativeMethods.ClosePrinter(src); }
-            });
+            }));
         }
 
         #endregion

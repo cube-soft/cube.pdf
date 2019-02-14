@@ -90,7 +90,6 @@ namespace Cube.Pdf.App.Pinstaller
             var sec    = src.GetTimeout();
             var engine = src.CreateInstaller();
 
-            Logger.Debug(LogType, $"Method:{nameof(Install).Quote()}");
             Logger.Debug(LogType, $"Configuration:{engine.Location.Quote()}");
             Logger.Debug(LogType, $"Resource:{engine.ResourceDirectory.Quote()}");
 
