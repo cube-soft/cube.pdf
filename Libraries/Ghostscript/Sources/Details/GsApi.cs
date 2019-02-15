@@ -83,13 +83,9 @@ namespace Cube.Pdf.Ghostscript
                 _core.Initialize();
                 if (_core.Handle == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
 
-                try
-                {
-                    var status = NativeMethods.InitWithArgs(_core.Handle, args.Length, args);
-                    var error = status < 0 && status != (int)GsApiStatus.Quit && status != (int)GsApiStatus.Info;
-                    if (error) throw new GsApiException(status);
-                }
-                finally { NativeMethods.Exit(_core.Handle); }
+                var code = NativeMethods.InitWithArgs(_core.Handle, args.Length, args);
+                NativeMethods.Exit(_core.Handle);
+                if (IsError(code)) throw new GsApiException(code);
             }
         }
 
@@ -107,7 +103,9 @@ namespace Cube.Pdf.Ghostscript
             if (!_initialize.Invoked) _initialize.Invoke();
         }
 
-        #region IDisposable
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -133,13 +131,27 @@ namespace Cube.Pdf.Ghostscript
             }
         }
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsError
+        ///
+        /// <summary>
+        /// Determines whether the specified value represents an error code.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static bool IsError(int code) =>
+            code < 0 &&
+            code != (int)GsApiStatus.Quit &&
+            code != (int)GsApiStatus.Info;
 
         #endregion
 
+        #region Fields
         private static readonly GsApi _core = new GsApi();
         private IntPtr _handle;
         private readonly OnceAction _initialize;
+        #endregion
     }
 
     /* --------------------------------------------------------------------- */
