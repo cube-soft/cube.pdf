@@ -73,10 +73,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.13.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.14.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.13.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.14.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -97,6 +97,7 @@
     <Compile Include="Sources\ArgumentTest.cs" />
     <Compile Include="Sources\InstallerTest.cs" />
     <Compile Include="Sources\PortMonitorTest.cs" />
+    <Compile Include="Sources\PortConfigTest.cs" />
     <Compile Include="Sources\PortTest.cs" />
     <Compile Include="Sources\PrinterDriverTest.cs" />
     <Compile Include="Sources\PrinterTest.cs" />

@@ -18,14 +18,13 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
-using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
+using Cube.Xui;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cube.Pdf.Tests.Editor.ViewModels
 {
@@ -53,30 +52,22 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public async Task Set(int index, Encryption cmp)
+        public void Set(int index, Encryption cmp) => Create("Sample.pdf", "", 2, vm =>
         {
-            await CreateAsync("Sample.pdf", "", 2, async (vm) =>
+            Register(vm, cmp, false);
+
+            var cts = new CancellationTokenSource();
+            vm.Data.PropertyChanged += (s, e) =>
             {
-                var cts = new CancellationTokenSource();
-                using (Register(vm, cmp, false, cts))
-                {
-                    Assert.That(vm.Ribbon.Encryption.Command.CanExecute(), Is.True);
-                    vm.Ribbon.Encryption.Command.Execute();
-                    var done = await Wait.ForAsync(cts.Token).ConfigureAwait(false);
-                    Assert.That(done, $"Timeout (Encryption)");
-                }
+                if (e.PropertyName == nameof(vm.Data.Encryption)) cts.Cancel();
+            };
 
-                Assert.That(vm.Data.History.Undoable, Is.True);
-                Assert.That(vm.Data.History.Redoable, Is.False);
-
-                Destination = Path(Args(index, cmp.Method));
-                await ExecuteAsync(vm, vm.Ribbon.SaveAs);
-                var save = await Wait.ForAsync(() => IO.Exists(Destination)).ConfigureAwait(false);
-                Assert.That(save, $"Timeout (SaveAs)");
-            });
-
-            AssertEncryption(Destination, cmp);
-        }
+            Assert.That(vm.Data.Encryption, Is.Not.Null);
+            Assert.That(vm.Ribbon.Encryption.Command.CanExecute(), Is.True);
+            vm.Ribbon.Encryption.Command.Execute();
+            Assert.That(Wait.For(cts.Token), $"Timeout");
+            AssertEncryption(vm.Data.Encryption, cmp);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,21 +80,19 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => CreateAsync("Sample.pdf", "", 2, async (vm) =>
+        public void Cancel() => Create("Sample.pdf", "", 2, vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Register<EncryptionViewModel>(this, e =>
+            vm.Register<EncryptionViewModel>(this, e =>
             {
                 e.OwnerPassword.Value = "dummy";
+                e.Register<CloseMessage>(this, z => cts.Cancel());
                 Assert.That(e.Cancel.Command.CanExecute(), Is.True);
                 e.Cancel.Command.Execute();
-                cts.Cancel();
             });
-
             vm.Ribbon.Encryption.Command.Execute();
-            await Wait.ForAsync(cts.Token);
-            dp.Dispose();
 
+            Assert.That(Wait.For(cts.Token), "Timeout");
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
             Assert.That(vm.Data.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
@@ -126,9 +115,9 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         {
             get
             {
-                var index = 0;
+                var n = 0;
 
-                yield return new TestCaseData(++index, new Encryption
+                yield return new TestCaseData(n++, new Encryption
                 {
                     OwnerPassword    = "owner",
                     UserPassword     = "user",
@@ -154,11 +143,9 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IDisposable Register(MainViewModel vm, Encryption src, bool share,
-            CancellationTokenSource cts) => vm.Register<EncryptionViewModel>(this, e =>
+        private IDisposable Register(MainViewModel vm, Encryption src, bool share) =>
+            vm.Register<EncryptionViewModel>(this, e =>
         {
-            var pm = src.Permission;
-
             e.Enabled.Value            = src.Enabled;
             e.OwnerPassword.Value      = src.OwnerPassword;
             e.OwnerConfirm.Value       = src.OwnerPassword;
@@ -166,35 +153,20 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             e.IsOpenPassword.Value     = src.OpenWithPassword;
             e.IsSharePassword.Value    = share;
             e.UserPassword.Value       = src.UserPassword;
+
+            var p = src.Permission;
+
             e.UserConfirm.Value        = src.UserPassword;
-            e.AllowPrint.Value         = pm.Print.IsAllowed();
-            e.AllowCopy.Value          = pm.CopyContents.IsAllowed();
-            e.AllowModify.Value        = pm.ModifyContents.IsAllowed();
-            e.AllowAnnotation.Value    = pm.ModifyAnnotations.IsAllowed();
-            e.AllowForm.Value          = pm.InputForm.IsAllowed();
-            e.AllowAccessibility.Value = pm.Accessibility.IsAllowed();
+            e.AllowPrint.Value         = p.Print.IsAllowed();
+            e.AllowCopy.Value          = p.CopyContents.IsAllowed();
+            e.AllowModify.Value        = p.ModifyContents.IsAllowed();
+            e.AllowAnnotation.Value    = p.ModifyAnnotations.IsAllowed();
+            e.AllowForm.Value          = p.InputForm.IsAllowed();
+            e.AllowAccessibility.Value = p.Accessibility.IsAllowed();
 
             Assert.That(e.OK.Command.CanExecute(), Is.True);
             e.OK.Command.Execute();
-            cts.Cancel(); // done
         });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AssertEncryption
-        ///
-        /// <summary>
-        /// Confirms that properties of the specified objects are equal.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AssertEncryption(string src, Encryption cmp)
-        {
-            using (var r = new DocumentReader(src, cmp.OwnerPassword))
-            {
-                AssertEncryption(r.Encryption, cmp);
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///

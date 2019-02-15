@@ -23,19 +23,19 @@ namespace Cube.Pdf.App.Converter
     /// SaveOption
     ///
     /// <summary>
-    /// 保存オプションを表す列挙型です。
+    /// Specifies how to save when the specified path exists.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     public enum SaveOption
     {
-        /// <summary>上書き</summary>
+        /// <summary>Overwrite</summary>
         Overwrite = 0,
-        /// <summary>先頭に結合</summary>
+        /// <summary>Merge at the beginning</summary>
         MergeHead = 1,
-        /// <summary>末尾に結合</summary>
+        /// <summary>Merge at the end</summary>
         MergeTail = 2,
-        /// <summary>リネーム</summary>
+        /// <summary>Rename</summary>
         Rename = 3,
     }
 
@@ -44,19 +44,19 @@ namespace Cube.Pdf.App.Converter
     /// PostProcess
     ///
     /// <summary>
-    /// ポストプロセスを表す列挙型です。
+    /// Specifies the post process.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     public enum PostProcess
     {
-        /// <summary>開く</summary>
+        /// <summary>Open</summary>
         Open = 0,
-        /// <summary>保存フォルダを開く</summary>
+        /// <summary>Open the directory that the saved file exists</summary>
         OpenDirectory = 3,
-        /// <summary>何もしない</summary>
+        /// <summary>Nothing</summary>
         None = 1,
-        /// <summary>その他（ユーザプログラム）</summary>
+        /// <summary>Executes the user specified program</summary>
         Others = 2,
     }
 }

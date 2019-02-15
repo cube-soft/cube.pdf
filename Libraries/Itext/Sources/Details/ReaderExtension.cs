@@ -19,7 +19,6 @@
 using Cube.Generics;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -80,14 +79,14 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static Metadata GetMetadata(this PdfReader src) => new Metadata
         {
-            Version  = new Version(1, src.PdfVersion - '0', 0, 0),
+            Version  = new PdfVersion(1, src.PdfVersion - '0'),
             Author   = src.Info.TryGetValue("Author",   out var s0) ? s0 : string.Empty,
             Title    = src.Info.TryGetValue("Title",    out var s1) ? s1 : string.Empty,
             Subject  = src.Info.TryGetValue("Subject",  out var s2) ? s2 : string.Empty,
             Keywords = src.Info.TryGetValue("Keywords", out var s3) ? s3 : string.Empty,
             Creator  = src.Info.TryGetValue("Creator",  out var s4) ? s4 : string.Empty,
             Producer = src.Info.TryGetValue("Producer", out var s5) ? s5 : string.Empty,
-            Viewer   = ViewerPreferencesFactory.Create(src.SimpleViewerPreferences),
+            Options  = ViewerOptionsFactory.Create(src.SimpleViewerPreferences),
         };
 
         /* ----------------------------------------------------------------- */

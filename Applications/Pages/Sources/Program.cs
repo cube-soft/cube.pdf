@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -66,7 +65,7 @@ namespace Cube.Pdf.App.Pages
                     }
                 }
             }
-            catch (Exception err) { Logger.Error(type, err.Message, err); }
+            catch (Exception err) { Logger.Error(type, err); }
         }
     }
 }

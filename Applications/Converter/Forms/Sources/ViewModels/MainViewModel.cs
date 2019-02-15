@@ -227,7 +227,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Model.Save();
+        public void Save() => this.Save(Model);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -240,7 +240,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void BrowseSource()
         {
-            var e = MessageFactory.CreateSource(Settings.Source, IO);
+            var e = Model.Settings.CreateSourceMessage();
             Messenger.OpenFileDialog.Publish(e);
             Model.UpdateSource(e);
         }
@@ -256,7 +256,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void BrowseDestination()
         {
-            var e = MessageFactory.CreateDestination(Settings.Destination, IO);
+            var e = Model.Settings.CreateDestinationMessage();
             Messenger.SaveFileDialog.Publish(e);
             Model.UpdateDestination(e);
         }
@@ -272,7 +272,7 @@ namespace Cube.Pdf.App.Converter
         /* ----------------------------------------------------------------- */
         public void BrowseUserProgram()
         {
-            var e = MessageFactory.CreateUserProgram(Settings.UserProgram, IO);
+            var e = Model.Settings.CreateUserProgramMessage();
             Messenger.OpenFileDialog.Publish(e);
             Model.UpdateUserProgram(e);
         }

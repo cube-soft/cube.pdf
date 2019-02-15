@@ -83,7 +83,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseDown(object s, MouseButtonEventArgs e)
         {
-            if (IsKeyPressed()) return;
+            if (Keys.ModifierKeys.IsPressed()) return;
 
             var pt = e.GetPosition(AssociatedObject);
             if (pt.X >= AssociatedObject.ActualWidth - 16) return;
@@ -93,22 +93,6 @@ namespace Cube.Pdf.App.Editor
 
             if (Command?.CanExecute() ?? false) Command?.Execute();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsKeyPressed
-        ///
-        /// <summary>
-        /// Gets a value indicating whether the Ctrl or Shift key is
-        /// pressed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsKeyPressed() =>
-            (Keyboard.GetKeyStates(Key.LeftShift)  & KeyStates.Down) == KeyStates.Down ||
-            (Keyboard.GetKeyStates(Key.RightShift) & KeyStates.Down) == KeyStates.Down ||
-            (Keyboard.GetKeyStates(Key.LeftCtrl)   & KeyStates.Down) == KeyStates.Down ||
-            (Keyboard.GetKeyStates(Key.RightCtrl)  & KeyStates.Down) == KeyStates.Down;
 
         #endregion
     }

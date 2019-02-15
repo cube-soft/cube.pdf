@@ -34,11 +34,12 @@ namespace Cube.Pdf.App.Converter
     /// GhostscriptFactory
     ///
     /// <summary>
-    /// Ghostscript.Converter オブジェクトを生成するためのクラスです。
+    /// Provides functionality to create a new instance of the
+    /// Ghostscript.Converter class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class GhostscriptFactory
+    internal static class GhostscriptFactory
     {
         #region Methods
 
@@ -47,12 +48,13 @@ namespace Cube.Pdf.App.Converter
         /// Create
         ///
         /// <summary>
-        /// Ghostscript.Converter オブジェクトを生成します。
+        /// Initializes a new instance of the Ghostscript.Converter class
+        /// with the specified settings.
         /// </summary>
         ///
-        /// <param name="src">設定情報</param>
+        /// <param name="src">User settings.</param>
         ///
-        /// <returns>Ghostscript.Converter オブジェクト</returns>
+        /// <returns>Ghostscript.Converter object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static Ghostscript.Converter Create(SettingsFolder src)
@@ -78,10 +80,10 @@ namespace Cube.Pdf.App.Converter
         /// LogDebug
         ///
         /// <summary>
-        /// Ghostscript API のログを出力します。
+        /// Outputs log ot the Ghostscript API.
         /// </summary>
         ///
-        /// <param name="src">Ghostscript オブジェクト</param>
+        /// <param name="src">Ghostscript converter object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public static void LogDebug(this Ghostscript.Converter src)
@@ -106,7 +108,8 @@ namespace Cube.Pdf.App.Converter
         /// CreateDocumentConverter
         ///
         /// <summary>
-        /// DocumentConverter オブジェクトを生成します。
+        /// Initializes a new instance of the DocumentConverter class with
+        /// the specified settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -129,7 +132,8 @@ namespace Cube.Pdf.App.Converter
         /// CreateImageConverter
         ///
         /// <summary>
-        /// ImageConverter オブジェクトを生成します。
+        /// Initializes a new instance of the ImageConverter class with
+        /// the specified settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -151,7 +155,7 @@ namespace Cube.Pdf.App.Converter
         /// GetFormatMap
         ///
         /// <summary>
-        /// Format の対応関係を取得します。
+        /// Gets the Format collection.
         /// </summary>
         ///
         /// <remarks>

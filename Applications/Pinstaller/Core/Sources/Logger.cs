@@ -44,6 +44,30 @@ namespace Cube.Pdf.App.Pinstaller.Debug
         /// Puts debug information to the log file.
         /// </summary>
         ///
+        /// <param name="src">Service object.</param>
+        /// <param name="action">User action.</param>
+        /// <param name="method">Method name.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Log(this IInstallable src, Action action,
+            [CallerMemberName] string method = null)
+        {
+            var status = "Success";
+            var sw     = Stopwatch.StartNew();
+
+            try { action(); }
+            catch { status = "Failed"; throw; }
+            finally { src.Put($"[{method}]", $"{status}", $"({sw.Elapsed})"); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Log
+        ///
+        /// <summary>
+        /// Puts debug information to the log file.
+        /// </summary>
+        ///
         /// <param name="src">Port monitor object.</param>
         /// <param name="method">Method name.</param>
         ///

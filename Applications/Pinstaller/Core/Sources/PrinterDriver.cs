@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
+using Cube.Iteration;
 using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
@@ -71,9 +72,8 @@ namespace Cube.Pdf.App.Pinstaller
         public PrinterDriver(string name, IEnumerable<PrinterDriver> elements) :
             this(new DriverInfo3 { cVersion = 3, pDefaultDataType = "RAW" })
         {
-            var sc  = StringComparison.InvariantCultureIgnoreCase;
-            var obj = elements.FirstOrDefault(e => e.Name.Equals(name, sc));
-            Exists = (obj != null);
+            var obj = elements.FirstOrDefault(e => e.Name.FuzzyEquals(name));
+            Exists = obj != null;
             if (Exists) _core = obj._core;
             else
             {
@@ -91,7 +91,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PrinterDriver(DriverInfo3 core) { _core = core; }
+        private PrinterDriver(DriverInfo3 core)
+        {
+            RetryCount = 3;
+            _core = core;
+        }
 
         #endregion
 
@@ -240,6 +244,18 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public string DirectoryName => _directory ?? (_directory = GetDirectory());
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RetryCount
+        ///
+        /// <summary>
+        /// Gets or sets the maximum number of attempts for an installation
+        /// or uninstallation operation to succeed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int RetryCount { get; set; }
+
         #endregion
 
         #region Methods
@@ -298,9 +314,12 @@ namespace Cube.Pdf.App.Pinstaller
         public void Install()
         {
             this.Log();
-            if (Exists || !CanInstall()) return;
-            if (!NativeMethods.AddPrinterDriver("", 3, ref _core)) throw new Win32Exception();
-            Exists = true;
+
+            if (!Exists && CanInstall()) this.Log(() => this.Try(RetryCount, () =>
+            {
+                if (!NativeMethods.AddPrinterDriver("", 3, ref _core)) throw new Win32Exception();
+                Exists = true;
+            }));
         }
 
         /* ----------------------------------------------------------------- */
@@ -315,9 +334,12 @@ namespace Cube.Pdf.App.Pinstaller
         public void Uninstall()
         {
             this.Log();
-            if (!Exists) return;
-            if (!NativeMethods.DeletePrinterDriver("", Environment, Name)) throw new Win32Exception();
-            Exists = false;
+
+            if (Exists) this.Log(() => this.Try(RetryCount, () =>
+            {
+                if (!NativeMethods.DeletePrinterDriver("", Environment, Name)) throw new Win32Exception();
+                Exists = false;
+            }));
         }
 
         #endregion
@@ -396,7 +418,7 @@ namespace Cube.Pdf.App.Pinstaller
 
         #region Fields
         private DriverInfo3 _core;
-        private string _directory;
+        private static string _directory;
         #endregion
     }
 }

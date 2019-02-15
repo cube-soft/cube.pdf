@@ -178,20 +178,20 @@
                     Grid.Column="1" />
 
                 <!-- **********************************************************
-                  ViewerPreferences
+                  ViewerOptions
                 *********************************************************** -->
                 <TextBlock
                     Text="{Binding Viewer.Text}"
                     Grid.Row="1"
                     Grid.Column="0" />
                 <ComboBox
-                    ItemsSource="{Binding ViewerPreferences}"
-                    SelectedValue="{Binding Viewer.Value, Mode=TwoWay}"
+                    ItemsSource="{Binding ViewerOptions}"
+                    SelectedValue="{Binding Options.Value, Mode=TwoWay}"
                     Grid.Row="1"
                     Grid.Column="1">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={my:ViewerPreferencesConverter}}" />
+                            <TextBlock Text="{Binding Converter={my:ViewerOptionsConverter}}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

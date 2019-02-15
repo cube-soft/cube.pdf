@@ -112,8 +112,8 @@ namespace Cube.Pdf.Tests.Ghostscript
                 /* --------------------------------------------------------- */
                 yield return TestCase(new PdfConverter
                 {
-                    Version = new Version(1, 2),
-                }, "SampleCjk.ps", new Version(1, 2));
+                    Version = new PdfVersion(1, 2),
+                }, "SampleCjk.ps", new PdfVersion(1, 2));
 
                 /* --------------------------------------------------------- */
                 // Linearization

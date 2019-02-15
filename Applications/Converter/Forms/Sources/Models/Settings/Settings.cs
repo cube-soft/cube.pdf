@@ -16,8 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Generics;
 using Cube.Pdf.Ghostscript;
 using System;
+using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace Cube.Pdf.App.Converter
@@ -27,7 +29,7 @@ namespace Cube.Pdf.App.Converter
     /// Settings
     ///
     /// <summary>
-    /// ユーザ設定を保持するためのクラスです。
+    /// Represents the user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,14 +43,11 @@ namespace Cube.Pdf.App.Converter
         /// Settings
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the Settings class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings()
-        {
-            Reset();
-        }
+        public Settings() { Reset(); }
 
         #endregion
 
@@ -61,7 +60,7 @@ namespace Cube.Pdf.App.Converter
         /// Format
         ///
         /// <summary>
-        /// 変換形式を取得または設定します。
+        /// Gets or sets the converting format.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -77,17 +76,17 @@ namespace Cube.Pdf.App.Converter
         /// FormatOption
         ///
         /// <summary>
-        /// 変換形式に関するオプションを取得または設定します。
+        /// Gets or sets a value that represents format options.
         /// </summary>
         ///
         /// <remarks>
         /// 旧 CubePDF で PDFVersion と呼んでいたものを汎用化した形で定義
-        /// しています。PDF のバージョン以外のオプションが定義された段階で
-        /// レジストリ等の設定項目名も変更する予定です。
+        /// しています。RC18 以降、Metadata の内容も設定を保存の対象となった
+        /// ため、このプロパティの扱いを要検討。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember(Name = "PDFVersion")]
+        [DataMember]
         public FormatOption FormatOption
         {
             get => _formatOption;
@@ -99,7 +98,7 @@ namespace Cube.Pdf.App.Converter
         /// SaveOption
         ///
         /// <summary>
-        /// 保存オプションを取得または設定します。
+        /// Gets or sets a value that represents save options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -115,7 +114,7 @@ namespace Cube.Pdf.App.Converter
         /// Orientation
         ///
         /// <summary>
-        /// ページの向きを取得または設定します。
+        /// Gets or sets the page orientation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -131,7 +130,7 @@ namespace Cube.Pdf.App.Converter
         /// Downsampling
         ///
         /// <summary>
-        /// ダウンサンプリング方式を取得または設定します。
+        /// Gets or sets a value that represents the method of downsampling.
         /// </summary>
         ///
         /// <remarks>
@@ -152,7 +151,7 @@ namespace Cube.Pdf.App.Converter
         /// Resolution
         ///
         /// <summary>
-        /// 解像度を取得または設定します。
+        /// Gets or sets the resolution.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -168,7 +167,7 @@ namespace Cube.Pdf.App.Converter
         /// Grayscale
         ///
         /// <summary>
-        /// グレースケールに変換するかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to convert in grayscale.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -184,7 +183,7 @@ namespace Cube.Pdf.App.Converter
         /// EmbedFonts
         ///
         /// <summary>
-        /// フォント情報を埋め込むかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to embed fonts.
         /// </summary>
         ///
         /// <remarks>
@@ -205,8 +204,8 @@ namespace Cube.Pdf.App.Converter
         /// ImageCompression
         ///
         /// <summary>
-        /// PDF 中の画像を JPEG 圧縮するかどうかを示す値を取得または
-        /// 設定します。
+        /// Gets or sets a value indicating whether to compress embedded
+        /// images as JPEG format.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -222,8 +221,8 @@ namespace Cube.Pdf.App.Converter
         /// Linearization
         ///
         /// <summary>
-        /// PDF ファイルを Web 表示用に最適化するかどうかを示す値を取得
-        /// または設定します。
+        /// Gets or sets a value indicating whether to apply the
+        /// linearization option (aka: Web optimization).
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -239,8 +238,8 @@ namespace Cube.Pdf.App.Converter
         /// SourceVisible
         ///
         /// <summary>
-        /// 入力ファイルのパスがユーザに確認できる形で表示するかどうかを
-        /// 示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to display the
+        /// path of the source file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -256,8 +255,8 @@ namespace Cube.Pdf.App.Converter
         /// CheckUpdate
         ///
         /// <summary>
-        /// アップデートの確認を実行するかどうかを示す値を取得または
-        /// 設定します。
+        /// Gets or sets a value indicating whether to check the update
+        /// of the application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -270,10 +269,28 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ExplicitDirectory
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to set a value to the
+        /// InitialDirectory property explicitly when showing a dialog
+        /// that selects the file or directory name.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool ExplicitDirectory
+        {
+            get => _explicit;
+            set => SetProperty(ref _explicit, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Language
         ///
         /// <summary>
-        /// 表示言語を取得または設定します。
+        /// Gets or sets the displayed language.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -289,7 +306,7 @@ namespace Cube.Pdf.App.Converter
         /// PostProcess
         ///
         /// <summary>
-        /// ポストプロセスを取得または設定します。
+        /// Gets or sets a value that represents the post-process.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -305,7 +322,8 @@ namespace Cube.Pdf.App.Converter
         /// UserProgram
         ///
         /// <summary>
-        /// ユーザプログラムのパスを取得または設定します。
+        /// Gets or sets the path of the user program that executes after
+        /// converting.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -321,7 +339,7 @@ namespace Cube.Pdf.App.Converter
         /// Destination
         ///
         /// <summary>
-        /// 保存先のパスを取得または設定します。
+        /// Gets or sets the path to save the converted file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -332,14 +350,46 @@ namespace Cube.Pdf.App.Converter
             set => SetProperty(ref _destination, value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Gets or sets the PDF metadata.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Metadata Metadata
+        {
+            get => _metadata;
+            set => SetProperty(ref _metadata, value);
+        }
+
         #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SkipUi
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to skip displaying the
+        /// main window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool SkipUi
+        {
+            get => _skipUi;
+            set => SetProperty(ref _skipUi, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// IsBusy
         ///
         /// <summary>
-        /// 変換処理中かどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether the application is busy.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -354,8 +404,8 @@ namespace Cube.Pdf.App.Converter
         /// DeleteSource
         ///
         /// <summary>
-        /// 変換処理完了後に入力ファイルを削除するかどうかを示す値を
-        /// 取得または設定します。
+        /// Gets or sets a value indicating whether to delete the source
+        /// file after converting.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -370,7 +420,7 @@ namespace Cube.Pdf.App.Converter
         /// Source
         ///
         /// <summary>
-        /// 入力ファイルのパスを取得または設定します。
+        /// Gets or sets the path of the source file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -382,25 +432,10 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Metadata
-        ///
-        /// <summary>
-        /// PDF のメタ情報を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Metadata Metadata
-        {
-            get => _metadata;
-            set => SetProperty(ref _metadata, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Encryption
         ///
         /// <summary>
-        /// PDF の暗号化情報を取得または設定します。
+        /// Gets or sets the encryption information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -419,7 +454,7 @@ namespace Cube.Pdf.App.Converter
         /// Reset
         ///
         /// <summary>
-        /// 設定をリセットします。
+        /// Resets values.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -439,13 +474,35 @@ namespace Cube.Pdf.App.Converter
             _linearization    = false;
             _sourceVisible    = false;
             _checkUpdate      = true;
+            _explicit         = false;
             _source           = string.Empty;
-            _destination      = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            _destination      = Environment.SpecialFolder.Desktop.GetName();
             _userProgram      = string.Empty;
-            _metadata         = new Metadata();
+            _metadata         = CreateMetadata();
             _encryption       = new Encryption();
+            _skipUi           = false;
             _busy             = false;
             _deleteSource     = false;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMetadata
+        ///
+        /// <summary>
+        /// Creates a new instance of the Metadata class with default
+        /// values.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Metadata CreateMetadata()
+        {
+            var asm = Assembly.GetExecutingAssembly().GetReader();
+            return new Metadata
+            {
+                Creator  = asm.Product,
+                Producer = asm.Product,
+            };
         }
 
         /* ----------------------------------------------------------------- */
@@ -453,7 +510,7 @@ namespace Cube.Pdf.App.Converter
         /// OnDeserializing
         ///
         /// <summary>
-        /// デシリアライズ直前に実行されます。
+        /// Occurs before deserializing.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -477,11 +534,13 @@ namespace Cube.Pdf.App.Converter
         private bool _linearization;
         private bool _sourceVisible;
         private bool _checkUpdate;
+        private bool _explicit;
         private string _source;
         private string _destination;
         private string _userProgram;
         private Metadata _metadata;
         private Encryption _encryption;
+        private bool _skipUi;
         private bool _busy;
         private bool _deleteSource;
         #endregion

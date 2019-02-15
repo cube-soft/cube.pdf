@@ -34,7 +34,7 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ProcessLauncher
+    internal class ProcessLauncher
     {
         #region Constructors
 

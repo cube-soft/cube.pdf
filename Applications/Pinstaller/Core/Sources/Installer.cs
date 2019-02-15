@@ -136,6 +136,41 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public TimeSpan Timeout { get; set; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reinstall
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to reinstall devices
+        /// when provided devices have already been installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Reinstall { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Recursive
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to resolve dependencies
+        /// of the provided configuration.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Recursive { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResourceDirectory
+        ///
+        /// <summary>
+        /// Get the directory path where resource files exist.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string ResourceDirectory { get; set; }
+
         #endregion
 
         #region Methods
@@ -148,32 +183,20 @@ namespace Cube.Pdf.App.Pinstaller
         /// Installs devices according to the Config property.
         /// </summary>
         ///
-        /// <param name="resource">Resource directory.</param>
-        /// <param name="reinstall">
-        /// Value indicating whether re-installing devices when provided
-        /// devices have already been installed.
-        /// </param>
-        ///
         /* ----------------------------------------------------------------- */
-        public void Install(string resource, bool reinstall) => Invoke(service =>
+        public void Install() => Invoke(service =>
         {
-            var monitors = Config.PortMonitors.Create().ToList();
-            var ports    = Config.Ports.Create().ToList();
-            var drivers  = Config.PrinterDrivers.Create().ToList();
-            var printers = Config.Printers.Create().ToList();
+            if (Reinstall) Uninstall(Config, service);
 
-            // Uninstall
-            if (reinstall)
-            {
-                Uninstall(printers, drivers, ports);
-                service.Reset();
-                Uninstall(monitors);
-            }
+            var monitors = Config.PortMonitors.Convert().ToList();
+            var ports    = Config.Ports.Convert().ToList();
+            var drivers  = Config.PrinterDrivers.Convert().ToList();
+            var printers = Config.Printers.Convert().ToList();
 
             // Copy
             service.Stop();
-            foreach (var e in monitors) e.Copy(resource, IO);
-            foreach (var e in drivers)  e.Copy(resource, IO);
+            foreach (var e in monitors) e.Copy(ResourceDirectory, IO);
+            foreach (var e in drivers)  e.Copy(ResourceDirectory, IO);
             service.Start();
 
             // Install
@@ -192,17 +215,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Uninstall() => Invoke(service =>
-        {
-            var monitors = Config.PortMonitors.Create().ToList();
-            var ports    = Config.Ports.Create().ToList();
-            var drivers  = Config.PrinterDrivers.Create().ToList();
-            var printers = Config.Printers.Create().ToList();
-
-            Uninstall(printers, drivers, ports);
-            service.Reset();
-            Uninstall(monitors);
-        });
+        public void Uninstall() => Invoke(service => Uninstall(Config, service));
 
         #endregion
 
@@ -232,6 +245,37 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        private void Uninstall(DeviceConfig src, SpoolerService service)
+        {
+            var cp = new DeviceConfig
+            {
+                PortMonitors   = src.PortMonitors.ToList(),
+                Ports          = src.Ports.ToList(),
+                PrinterDrivers = src.PrinterDrivers.ToList(),
+                Printers       = src.Printers.ToList(),
+            };
+
+            if (Recursive) ResolveDependencies(cp);
+
+            var monitors = cp.PortMonitors.Convert().ToList();
+            var ports    = cp.Ports.Convert().ToList();
+            var drivers  = cp.PrinterDrivers.Convert().ToList();
+            var printers = cp.Printers.Convert().ToList();
+
+            Uninstall(printers, drivers, ports);
+            service.Reset();
+            Uninstall(monitors);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uninstall
+        ///
+        /// <summary>
+        /// Uninstalls all of the specified devices.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
         private void Uninstall(params IEnumerable<IInstallable>[] devices)
         {
             foreach (var inner in devices)
@@ -239,6 +283,23 @@ namespace Cube.Pdf.App.Pinstaller
                 foreach (var e in inner) e.Uninstall();
             }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResolveDependencies
+        ///
+        /// <summary>
+        /// Resolves dependencies of the specified configuration.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResolveDependencies(DeviceConfig dest) =>
+            new DeviceConfigResolver(
+                dest,
+                Printer.GetElements(),
+                PrinterDriver.GetElements(),
+                PortMonitor.GetElements()
+            ).Invoke();
 
         /* ----------------------------------------------------------------- */
         ///

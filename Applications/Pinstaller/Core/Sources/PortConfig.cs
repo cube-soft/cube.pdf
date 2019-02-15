@@ -82,6 +82,22 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Proxy
+        ///
+        /// <summary>
+        /// Gets or sets the path of the proxy program.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Proxy
+        {
+            get => _proxy;
+            set => SetProperty(ref _proxy, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Application
         ///
         /// <summary>
@@ -145,6 +161,23 @@ namespace Cube.Pdf.App.Pinstaller
             set => SetProperty(ref _wait, value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RunAsUser
+        ///
+        /// <summary>
+        /// Gets or sets the value indicating whether the application is
+        /// invoked as the currently logged on user process.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool RunAsUser
+        {
+            get => _runAsUser;
+            set => SetProperty(ref _runAsUser, value);
+        }
+
         #endregion
 
         #region Implementations
@@ -174,10 +207,12 @@ namespace Cube.Pdf.App.Pinstaller
         {
             _name        = string.Empty;
             _monitorName = string.Empty;
+            _proxy       = string.Empty;
             _application = string.Empty;
             _arguments   = string.Empty;
             _temp        = string.Empty;
             _wait        = false;
+            _runAsUser   = true;
         }
 
         #endregion
@@ -185,10 +220,12 @@ namespace Cube.Pdf.App.Pinstaller
         #region Fields
         private string _name;
         private string _monitorName;
+        private string _proxy;
         private string _application;
         private string _arguments;
         private string _temp;
         private bool _wait;
+        private bool _runAsUser;
         #endregion
     }
 }

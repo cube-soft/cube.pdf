@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
+using Cube.Iteration;
 using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
@@ -69,9 +70,8 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public Printer(string name, IEnumerable<Printer> elements) : this(CreateCore())
         {
-            var sc  = StringComparison.InvariantCultureIgnoreCase;
-            var obj = elements.FirstOrDefault(e => e.Name.Equals(name, sc));
-            Exists = (obj != null);
+            var obj = elements.FirstOrDefault(e => e.Name.FuzzyEquals(name));
+            Exists = obj != null;
             if (Exists) _core = obj._core;
             else
             {
@@ -93,6 +93,7 @@ namespace Cube.Pdf.App.Pinstaller
         private Printer(PrinterInfo2 core)
         {
             Environment = this.GetEnvironment();
+            RetryCount  = 3;
             _core = core;
         }
 
@@ -184,6 +185,18 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public bool Exists { get; private set; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RetryCount
+        ///
+        /// <summary>
+        /// Gets or sets the maximum number of attempts for an installation
+        /// or uninstallation operation to succeed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int RetryCount { get; set; }
+
         #endregion
 
         #region Methods
@@ -236,11 +249,14 @@ namespace Cube.Pdf.App.Pinstaller
         public void Install()
         {
             this.Log();
-            if (Exists) return;
-            var dest = NativeMethods.AddPrinter("", 2, ref _core);
-            if (dest == IntPtr.Zero) throw new Win32Exception();
-            NativeMethods.ClosePrinter(dest);
-            Exists = true;
+
+            if (!Exists) this.Log(() => this.Try(RetryCount, () =>
+            {
+                var dest = NativeMethods.AddPrinter("", 2, ref _core);
+                if (dest == IntPtr.Zero) throw new Win32Exception();
+                NativeMethods.ClosePrinter(dest);
+                Exists = true;
+            }));
         }
 
         /* ----------------------------------------------------------------- */
@@ -255,17 +271,19 @@ namespace Cube.Pdf.App.Pinstaller
         public void Uninstall()
         {
             this.Log();
-            if (!Exists) return;
 
-            var access = AccessMask.PrinterAccessAll.Create();
-            if (!NativeMethods.OpenPrinter(Name, out var src, ref access)) throw new Win32Exception();
-
-            try
+            if (Exists) this.Log(() => this.Try(RetryCount, () =>
             {
-                if (!NativeMethods.DeletePrinter(src)) throw new Win32Exception();
-                Exists = false;
-            }
-            finally { NativeMethods.ClosePrinter(src); }
+                var mask = AccessMask.PrinterAccessAll.Create();
+                if (!NativeMethods.OpenPrinter(Name, out var src, ref mask)) throw new Win32Exception();
+
+                try
+                {
+                    if (!NativeMethods.DeletePrinter(src)) throw new Win32Exception();
+                    Exists = false;
+                }
+                finally { NativeMethods.ClosePrinter(src); }
+            }));
         }
 
         #endregion
@@ -283,10 +301,12 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static PrinterInfo2 CreateCore() => new PrinterInfo2
         {
-            pPrintProcessor = "winprint",
-            pDatatype       = "RAW",
-            Priority        = 1,
-            DefaultPriority = 1,
+            pPrintProcessor     = "winprint",
+            pDatatype           = "RAW",
+            pDevMode            = IntPtr.Zero,
+            pSecurityDescriptor = IntPtr.Zero,
+            Priority            = 1,
+            DefaultPriority     = 1,
         };
 
         /* ----------------------------------------------------------------- */

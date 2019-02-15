@@ -231,17 +231,17 @@ namespace Cube.Pdf.Tests.Converter
         [Test]
         public void ViewerPreferences() => Create(vm =>
         {
-            var v = ViewResource.ViewerPreferences;
+            var v = ViewResource.ViewerOptions;
             Assert.That(v.Count, Is.EqualTo(6));
-            Assert.That(v[0].Value, Is.EqualTo(Pdf.ViewerPreferences.SinglePage));
-            Assert.That(v[1].Value, Is.EqualTo(Pdf.ViewerPreferences.OneColumn));
-            Assert.That(v[2].Value, Is.EqualTo(Pdf.ViewerPreferences.TwoPageLeft));
-            Assert.That(v[3].Value, Is.EqualTo(Pdf.ViewerPreferences.TwoPageRight));
-            Assert.That(v[4].Value, Is.EqualTo(Pdf.ViewerPreferences.TwoColumnLeft));
-            Assert.That(v[5].Value, Is.EqualTo(Pdf.ViewerPreferences.TwoColumnRight));
+            Assert.That(v[0].Value, Is.EqualTo(Pdf.ViewerOptions.SinglePage));
+            Assert.That(v[1].Value, Is.EqualTo(Pdf.ViewerOptions.OneColumn));
+            Assert.That(v[2].Value, Is.EqualTo(Pdf.ViewerOptions.TwoPageLeft));
+            Assert.That(v[3].Value, Is.EqualTo(Pdf.ViewerOptions.TwoPageRight));
+            Assert.That(v[4].Value, Is.EqualTo(Pdf.ViewerOptions.TwoColumnLeft));
+            Assert.That(v[5].Value, Is.EqualTo(Pdf.ViewerOptions.TwoColumnRight));
 
             vm.Settings.Language = Language.English;
-            var en = ViewResource.ViewerPreferences;
+            var en = ViewResource.ViewerOptions;
             Assert.That(en[0].Key, Is.EqualTo("Single page"));
             Assert.That(en[1].Key, Is.EqualTo("One column"));
             Assert.That(en[2].Key, Is.EqualTo("Two page (left)"));
@@ -250,7 +250,7 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(en[5].Key, Is.EqualTo("Two column (right)"));
 
             vm.Settings.Language = Language.Japanese;
-            var ja = ViewResource.ViewerPreferences;
+            var ja = ViewResource.ViewerOptions;
             Assert.That(ja[0].Key, Is.EqualTo("単一ページ"));
             Assert.That(ja[1].Key, Is.EqualTo("連続ページ"));
             Assert.That(ja[2].Key, Is.EqualTo("見開きページ（左綴じ）"));

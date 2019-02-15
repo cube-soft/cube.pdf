@@ -16,9 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.DataContract;
 using Cube.Generics;
-using Cube.Log;
+using Cube.Iteration;
 using Cube.Pdf.App.Pinstaller.Debug;
 using System;
 using System.Reflection;
@@ -60,16 +59,16 @@ namespace Cube.Pdf.App.Pinstaller
 
                 var src = new ArgumentCollection(args, '/', true);
                 var cmd = src.GetCommand();
-                var sop = StringComparison.InvariantCultureIgnoreCase;
 
                 if (src.Count <= 0) Logger.Warn(LogType, "Configuration not found");
                 else if (!cmd.HasValue()) Logger.Warn(LogType, "Command not found");
-                else if (cmd.Equals("install", sop)) Install(src);
-                else if (cmd.Equals("uninstall", sop)) Uninstall(src);
+                else if (cmd.FuzzyEquals("Install")) Install(src, false);
+                else if (cmd.FuzzyEquals("Reinstall")) Install(src, true);
+                else if (cmd.FuzzyEquals("Uninstall")) Uninstall(src);
                 else Logger.Warn(LogType, $"{cmd}:Unexpected command");
                 return 0;
             }
-            catch (Exception err) { Logger.Error(LogType, err.ToString()); }
+            catch (Exception err) { Logger.Error(LogType, err); }
             return -1;
         }
 
@@ -86,22 +85,19 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Install(ArgumentCollection src)
+        private static void Install(ArgumentCollection src, bool reinstall)
         {
             var sec    = src.GetTimeout();
-            var config = src.GetConfiguration();
-            var engine = new Installer(Format.Json, config);
-            var dir    = src.GetResourceDirectory();
+            var engine = src.CreateInstaller();
 
-            Logger.Debug(LogType, $"Method:{nameof(Install).Quote()}");
-            Logger.Debug(LogType, $"Configuration:{config.Quote()}");
-            Logger.Debug(LogType, $"Resource:{dir.Quote()}");
+            Logger.Debug(LogType, $"Configuration:{engine.Location.Quote()}");
+            Logger.Debug(LogType, $"Resource:{engine.ResourceDirectory.Quote()}");
 
-            Normalize(src, engine.Config);
-            Invoke(src.GetRetryCount(), i =>
+            engine.Try(src.GetRetryCount(), i =>
             {
-                engine.Timeout = TimeSpan.FromSeconds(sec * (i + 1));
-                engine.Install(dir, true);
+                engine.Reinstall = reinstall;
+                engine.Timeout   = TimeSpan.FromSeconds(sec * (i + 1));
+                engine.Install();
             });
         }
 
@@ -117,56 +113,16 @@ namespace Cube.Pdf.App.Pinstaller
         private static void Uninstall(ArgumentCollection src)
         {
             var sec    = src.GetTimeout();
-            var config = src.GetConfiguration();
-            var engine = new Installer(Format.Json, config);
+            var engine = src.CreateInstaller();
 
             Logger.Debug(LogType, $"Method:{nameof(Uninstall).Quote()}");
-            Logger.Debug(LogType, $"Configuration:{config.Quote()}");
+            Logger.Debug(LogType, $"Configuration:{engine.Location.Quote()}");
 
-            Invoke(src.GetRetryCount(), i =>
+            engine.Try(src.GetRetryCount(), i =>
             {
                 engine.Timeout = TimeSpan.FromSeconds(sec * (i + 1));
                 engine.Uninstall();
             });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Normalize
-        ///
-        /// <summary>
-        /// Normalizes some information.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Normalize(ArgumentCollection src, DeviceConfig config)
-        {
-            var ca = Environment.SpecialFolder.CommonApplicationData.GetName();
-            foreach (var e in config.Ports)
-            {
-                e.Temp        = System.IO.Path.Combine(ca, e.Temp);
-                e.Application = src.ReplaceDirectory(e.Application);
-                e.Arguments   = src.ReplaceDirectory(e.Arguments);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Executes the specified action until it succeeds.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Invoke(int n, Action<int> action)
-        {
-            for (var i = 0; i < n; ++i)
-            {
-                try { action(i); return; }
-                catch (Exception e) { Logger.Warn(LogType, e.ToString(), e); }
-            }
-            throw new ArgumentException($"Try {n} times.");
         }
 
         #endregion

@@ -19,7 +19,6 @@
 using Cube.FileSystem;
 using Cube.Pdf.Mixin;
 using iTextSharp.text.pdf;
-using System.Diagnostics;
 
 namespace Cube.Pdf.Itext
 {
@@ -157,9 +156,7 @@ namespace Cube.Pdf.Itext
         public DocumentReader(string src, IQuery<string> password,
             bool fullaccess, bool partial, IO io) : base(io)
         {
-            Debug.Assert(io != null);
-            _core = ReaderFactory.Create(src, password, fullaccess, partial, out string result);
-            Debug.Assert(_core != null);
+            _core = ReaderFactory.Create(src, password, fullaccess, partial, out var result);
 
             var f = io.GetPdfFile(src, result);
             f.Count      = _core.NumberOfPages;
@@ -208,7 +205,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (disposing) _core.Dispose();
+            if (disposing) _core?.Dispose();
         }
 
         #endregion

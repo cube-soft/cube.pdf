@@ -30,11 +30,11 @@ namespace Cube.Pdf.App.Converter
     /// FileTransfer
     ///
     /// <summary>
-    /// ファイルの移動およびリネームを実行するためのクラスです。
+    /// Provides functionality to move or rename files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileTransfer : IDisposable
+    internal class FileTransfer : DisposableBase
     {
         #region Constructors
 
@@ -43,18 +43,18 @@ namespace Cube.Pdf.App.Converter
         /// FileTransfer
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the FileTransfer class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="format">変換形式</param>
-        /// <param name="dest">最終的な保存パス</param>
-        /// <param name="work">作業ディレクトリ</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="format">Target format.</param>
+        /// <param name="dest">Path to save.</param>
+        /// <param name="work">Working directory.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public FileTransfer(Format format, string dest, string work, IO io)
         {
-            _dispose      = new OnceAction<bool>(Dispose);
             IO            = io;
             Format        = format;
             Information   = io.Get(dest);
@@ -71,7 +71,7 @@ namespace Cube.Pdf.App.Converter
         /// IO
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します。
+        /// Gets the I/O hander.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -82,7 +82,7 @@ namespace Cube.Pdf.App.Converter
         /// Format
         ///
         /// <summary>
-        /// 変換形式を取得します。
+        /// Gets the target format.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -93,8 +93,8 @@ namespace Cube.Pdf.App.Converter
         /// AutoRename
         ///
         /// <summary>
-        /// 同名のファイルが存在する場合、自動的にリネームするかどうかを
-        /// 示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to rename files
+        /// automatically when the specified file exists.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -105,7 +105,7 @@ namespace Cube.Pdf.App.Converter
         /// Value
         ///
         /// <summary>
-        /// 保存用パスを取得します。
+        /// Gets the path to save the file.
         /// </summary>
         ///
         /// <remarks>
@@ -121,7 +121,7 @@ namespace Cube.Pdf.App.Converter
         /// WorkDirectory
         ///
         /// <summary>
-        /// 作業用の一時ディレクトリのパスを取得します。
+        /// Gets the path of the working directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -132,7 +132,7 @@ namespace Cube.Pdf.App.Converter
         /// Information
         ///
         /// <summary>
-        /// 最終的な保存パスを示すオブジェクトを取得します。
+        /// Gets a value that represents the path to save the file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -147,7 +147,7 @@ namespace Cube.Pdf.App.Converter
         /// Invoke
         ///
         /// <summary>
-        /// ファイルの移動を実行します。
+        /// Invokes operations to move or rename files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -170,44 +170,21 @@ namespace Cube.Pdf.App.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~FileTransfer
-        ///
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~FileTransfer() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Dispose
         ///
         /// <summary>
-        /// リソースを解放します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// リソースを解放します。
+        /// Releases the unmanaged resources used by the
+        /// FileTransfer and optionally releases the managed
+        /// resources.
         /// </summary>
         ///
         /// <param name="disposing">
-        /// マネージリソースを解放するかどうか
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing) => IO.TryDelete(WorkDirectory);
+        protected override void Dispose(bool disposing) => IO.TryDelete(WorkDirectory);
 
         #endregion
 
@@ -220,7 +197,7 @@ namespace Cube.Pdf.App.Converter
         /// GetWorkDirectory
         ///
         /// <summary>
-        /// 作業ディレクトリのパスを取得します。
+        /// Gets the path of the working directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -234,7 +211,7 @@ namespace Cube.Pdf.App.Converter
         /// GetName
         ///
         /// <summary>
-        /// ファイル名を表す文字列を取得します。
+        /// Gets the value that represents the filename.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -248,7 +225,7 @@ namespace Cube.Pdf.App.Converter
         /// GetDestination
         ///
         /// <summary>
-        /// 保存パスを取得します。
+        /// Gets the path to save the file from the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -263,7 +240,7 @@ namespace Cube.Pdf.App.Converter
         /// GetDestinationCore
         ///
         /// <summary>
-        /// 保存パスを取得します。
+        /// Gets the path to save the file from the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -279,10 +256,6 @@ namespace Cube.Pdf.App.Converter
             return IO.Combine(Information.DirectoryName, dest);
         }
 
-        #endregion
-
-        #region Fields
-        private readonly OnceAction<bool> _dispose;
         #endregion
     }
 }

@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("2.13.2.0")]
-[assembly: AssemblyFileVersion("2.13.2.0")]
+[assembly: AssemblyVersion("2.14.0.0")]
+[assembly: AssemblyFileVersion("2.14.0.0")]
 [assembly: AssemblyTitle("Cube.Pdf.App.Pinstaller")]
 [assembly: AssemblyDescription("Library to install printer and related modules.")]
 [assembly: AssemblyConfiguration("")]

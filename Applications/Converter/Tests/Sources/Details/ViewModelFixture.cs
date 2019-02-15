@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using Cube.FileSystem.TestService;
 using Cube.Forms;
 using Cube.Generics;
@@ -170,7 +171,7 @@ namespace Cube.Pdf.Tests.Converter
 
             dest.Load();
             dest.Value.Destination = Results;
-            dest.Set(args);
+            dest.Set(new ArgumentCollection(args, '/', true));
 
             return dest;
         }
@@ -369,12 +370,12 @@ namespace Cube.Pdf.Tests.Converter
         /* ----------------------------------------------------------------- */
         private void Set(MetadataViewModel vm, Metadata src)
         {
-            vm.Title          = src.Title;
-            vm.Author         = src.Author;
-            vm.Subject        = src.Subject;
-            vm.Keywords       = src.Keywords;
-            vm.Creator        = src.Creator;
-            vm.Viewer = src.Viewer;
+            vm.Title     = src.Title;
+            vm.Author    = src.Author;
+            vm.Subject   = src.Subject;
+            vm.Keywords  = src.Keywords;
+            vm.Creator   = src.Creator;
+            vm.Options   = src.Options;
         }
 
         /* ----------------------------------------------------------------- */

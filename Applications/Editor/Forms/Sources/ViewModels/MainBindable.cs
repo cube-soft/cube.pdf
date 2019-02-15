@@ -33,7 +33,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainBindable
+    public class MainBindable : ObservableProperty
     {
         #region Constructors
 
@@ -145,7 +145,7 @@ namespace Cube.Pdf.App.Editor
                 if (_metadata == null) LazyLoad();
                 return _metadata;
             }
-            set => _metadata = value;
+            set => SetProperty(ref _metadata, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -164,7 +164,7 @@ namespace Cube.Pdf.App.Editor
                 if (_encryption == null) LazyLoad();
                 return _encryption;
             }
-            set => _encryption = value;
+            set => SetProperty(ref _encryption, value);
         }
 
         #region Bindable

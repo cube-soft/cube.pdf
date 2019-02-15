@@ -80,15 +80,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\packages\Cube.Core.1.13.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.Core.1.14.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\packages\Cube.FileSystem.1.13.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\packages\Cube.FileSystem.1.14.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -114,9 +115,10 @@
     <Compile Include="Sources\MetadataExtension.cs" />
     <Compile Include="Sources\Page.cs" />
     <Compile Include="Sources\PageExtension.cs" />
+    <Compile Include="Sources\PdfVersion.cs" />
     <Compile Include="Sources\Permission.cs" />
     <Compile Include="Sources\PermissionValue.cs" />
-    <Compile Include="Sources\ViewerPreferences.cs" />
+    <Compile Include="Sources\ViewerOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Cube.snk" />

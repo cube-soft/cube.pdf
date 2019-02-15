@@ -30,7 +30,7 @@ namespace Cube.Pdf.Ghostscript
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class GsApi : IDisposable
+    internal sealed class GsApi : DisposableBase
     {
         #region Constructors
 
@@ -46,7 +46,6 @@ namespace Cube.Pdf.Ghostscript
         private GsApi()
         {
             _initialize = new OnceAction(() => NativeMethods.NewInstance(out _handle, IntPtr.Zero));
-            _dispose    = new OnceAction<bool>(Dispose);
         }
 
         #endregion
@@ -84,13 +83,9 @@ namespace Cube.Pdf.Ghostscript
                 _core.Initialize();
                 if (_core.Handle == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
 
-                try
-                {
-                    var status = NativeMethods.InitWithArgs(_core.Handle, args.Length, args);
-                    var error = status < 0 && status != (int)GsApiStatus.Quit && status != (int)GsApiStatus.Info;
-                    if (error) throw new GsApiException(status);
-                }
-                finally { NativeMethods.Exit(_core.Handle); }
+                var code = NativeMethods.InitWithArgs(_core.Handle, args.Length, args);
+                NativeMethods.Exit(_core.Handle);
+                if (IsError(code)) throw new GsApiException(code);
             }
         }
 
@@ -108,33 +103,9 @@ namespace Cube.Pdf.Ghostscript
             if (!_initialize.Invoked) _initialize.Invoke();
         }
 
-        #region IDisposable
+        #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~GsApi
-        ///
-        /// <summary>
-        /// Finalizes the GsApi.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~GsApi() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the GsApi.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -151,16 +122,36 @@ namespace Cube.Pdf.Ghostscript
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        private void Dispose(bool disposing) => NativeMethods.DeleteInstance(_handle);
+        protected override void Dispose(bool disposing)
+        {
+            if (_handle != IntPtr.Zero)
+            {
+                NativeMethods.DeleteInstance(_handle);
+                _handle = IntPtr.Zero;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsError
+        ///
+        /// <summary>
+        /// Determines whether the specified value represents an error code.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static bool IsError(int code) =>
+            code < 0 &&
+            code != (int)GsApiStatus.Quit &&
+            code != (int)GsApiStatus.Info;
 
         #endregion
 
-        #endregion
-
+        #region Fields
         private static readonly GsApi _core = new GsApi();
         private IntPtr _handle;
-        private OnceAction _initialize;
-        private OnceAction<bool> _dispose;
+        private readonly OnceAction _initialize;
+        #endregion
     }
 
     /* --------------------------------------------------------------------- */

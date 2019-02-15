@@ -77,10 +77,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.13.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.14.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.13.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.14.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +94,7 @@
     <Compile Include="Sources\Native\Structures.cs" />
     <Compile Include="Sources\Native\WinSpool.cs" />
     <Compile Include="Sources\DeviceConfig.cs" />
+    <Compile Include="Sources\DeviceConfigResolver.cs" />
     <Compile Include="Sources\IInstallable.cs" />
     <Compile Include="Sources\IInstallableExtension.cs" />
     <Compile Include="Sources\Installer.cs" />

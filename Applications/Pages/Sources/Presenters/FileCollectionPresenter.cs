@@ -67,7 +67,7 @@ namespace Cube.Pdf.App.Pages
             Model.PasswordRequired  += Model_PasswordRequired;
 
             var reader = new AssemblyReader(Settings.Assembly);
-            Model.Metadata.Version = new Version(1, 7);
+            Model.Metadata.Version = new PdfVersion(1, 7);
             Model.Metadata.Creator = reader.Product;
         }
 
@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Pages
             var index = (indices.Count > 0) ? indices[0] : -1;
             if (index < 0 || index >= Model.Count) return;
             try { System.Diagnostics.Process.Start(Model[index].FullName); }
-            catch (Exception err) { this.LogWarn(err.ToString()); }
+            catch (Exception err) { this.LogWarn(err); }
         });
 
         /* --------------------------------------------------------------------- */
@@ -252,7 +252,7 @@ namespace Cube.Pdf.App.Pages
             }
             catch (Exception err)
             {
-                this.LogError(err.Message, err);
+                this.LogError(err);
                 Views.ShowErrorMessage(err);
             }
             finally { Settings.AllowOperation = true; }

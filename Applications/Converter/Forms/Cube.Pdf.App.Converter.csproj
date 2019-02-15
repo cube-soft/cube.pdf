@@ -83,16 +83,16 @@
       <HintPath>..\..\..\..\packages\AlphaFS.2.2.6\lib\net45\AlphaFS.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.13.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.14.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.13.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.14.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\..\packages\Cube.Images.1.13.0\lib\net45\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Images.1.14.0\lib\net45\Cube.Images.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Forms">
-      <HintPath>..\..\..\..\packages\Cube.Forms.1.13.0\lib\net45\Cube.Forms.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Forms.1.14.0\lib\net45\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -109,6 +109,7 @@
     <Compile Include="Sources\Models\Settings\FormatOption.cs" />
     <Compile Include="Sources\Models\Settings\Parameters.cs" />
     <Compile Include="Sources\Models\Settings\Settings.cs" />
+    <Compile Include="Sources\Models\Settings\SettingsExtension.cs" />
     <Compile Include="Sources\Models\Settings\SettingsFolder.cs" />
     <Compile Include="Sources\Models\DocumentName.cs" />
     <Compile Include="Sources\Models\FileDecorator.cs" />

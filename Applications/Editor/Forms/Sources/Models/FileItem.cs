@@ -19,7 +19,6 @@
 using Cube.FileSystem;
 using Cube.Images.Icons;
 using Cube.Xui;
-using Cube.Xui.Converters;
 using System;
 using System.Windows.Media;
 
@@ -61,7 +60,7 @@ namespace Cube.Pdf.App.Editor
             FullName      = info.FullName;
             Length        = info.Length;
             LastWriteTime = info.LastWriteTime;
-            Icon          = info.GetIcon(IconSize.Small).ToBitmap().ToBitmapImage(true);
+            Icon          = info.IconImage(IconSize.Small);
         }
 
         #endregion

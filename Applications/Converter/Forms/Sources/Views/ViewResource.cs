@@ -104,14 +104,14 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, ViewerPreferences>> ViewerPreferences => new []
+        public static IList<KeyValuePair<string, ViewerOptions>> ViewerOptions => new []
         {
-            Pair(Properties.Resources.MenuSinglePage,     Pdf.ViewerPreferences.SinglePage),
-            Pair(Properties.Resources.MenuOneColumn,      Pdf.ViewerPreferences.OneColumn),
-            Pair(Properties.Resources.MenuTwoPageLeft,    Pdf.ViewerPreferences.TwoPageLeft),
-            Pair(Properties.Resources.MenuTwoPageRight,   Pdf.ViewerPreferences.TwoPageRight),
-            Pair(Properties.Resources.MenuTwoColumnLeft,  Pdf.ViewerPreferences.TwoColumnLeft),
-            Pair(Properties.Resources.MenuTwoColumnRight, Pdf.ViewerPreferences.TwoColumnRight),
+            Pair(Properties.Resources.MenuSinglePage,     Pdf.ViewerOptions.SinglePage),
+            Pair(Properties.Resources.MenuOneColumn,      Pdf.ViewerOptions.OneColumn),
+            Pair(Properties.Resources.MenuTwoPageLeft,    Pdf.ViewerOptions.TwoPageLeft),
+            Pair(Properties.Resources.MenuTwoPageRight,   Pdf.ViewerOptions.TwoPageRight),
+            Pair(Properties.Resources.MenuTwoColumnLeft,  Pdf.ViewerOptions.TwoColumnLeft),
+            Pair(Properties.Resources.MenuTwoColumnRight, Pdf.ViewerOptions.TwoColumnRight),
         };
 
         /* ----------------------------------------------------------------- */
