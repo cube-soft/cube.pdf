@@ -94,7 +94,8 @@ namespace Cube.Pdf.Tests.Ghostscript
                 if (!IO.Exists(dest)) throw new FileNotFoundException("ErrorTest");
             },
             Throws.TypeOf<FileNotFoundException>().Or
-                  .TypeOf<GsApiException>()
+                  .TypeOf<GsApiException>().Or
+                  .TypeOf<System.Runtime.InteropServices.COMException>()
         );
 
         #endregion
