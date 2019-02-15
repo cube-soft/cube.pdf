@@ -65,6 +65,18 @@ namespace Cube.Pdf.Tests.Editor.Interactions
             src.Detach();
         });
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsPressed
+        ///
+        /// <summary>
+        /// Executes the test of the IsPressed extended method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void IsPressed() => Assert.That(Keys.ModifierKeys.IsPressed(), Is.False);
+
         #endregion
     }
 }

@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Generics;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -54,8 +53,7 @@ namespace Cube.Pdf.App.Editor
             {
                 var src = e.ToCultureInfo();
                 var cmp = Properties.Resources.Culture?.Name;
-                var opt = StringComparison.InvariantCultureIgnoreCase;
-                if (cmp.HasValue() && cmp.Equals(src.Name, opt)) return false;
+                if (cmp.HasValue() && cmp.FuzzyEquals(src.Name)) return false;
                 Properties.Resources.Culture = src;
                 return true;
             });

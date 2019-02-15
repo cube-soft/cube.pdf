@@ -47,7 +47,7 @@ namespace Cube.Pdf.App.Converter.Properties {
         }
         
         /// <summary>
-        ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
+        ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -419,6 +419,15 @@ namespace Cube.Pdf.App.Converter.Properties {
         internal static string MessagePassword {
             get {
                 return ResourceManager.GetString("MessagePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Some value is entered in the Title, Author, Subject, or Keywords field. Do you want to save the settings? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageSave {
+            get {
+                return ResourceManager.GetString("MessageSave", resourceCulture);
             }
         }
         

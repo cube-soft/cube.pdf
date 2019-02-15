@@ -29,13 +29,13 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PrinterExtension
+    public static class PrinterExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Convert
         ///
         /// <summary>
         /// Creates a collection of printers from the specified
@@ -47,12 +47,12 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Collection of printers.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Printer> Create(this IEnumerable<PrinterConfig> src) =>
-            src.Create(Printer.GetElements());
+        public static IEnumerable<Printer> Convert(this IEnumerable<PrinterConfig> src) =>
+            src.Convert(Printer.GetElements());
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Convert
         ///
         /// <summary>
         /// Creates a collection of printers from the specified
@@ -65,14 +65,32 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Collection of printers.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Printer> Create(this IEnumerable<PrinterConfig> src,
+        public static IEnumerable<Printer> Convert(this IEnumerable<PrinterConfig> src,
             IEnumerable<Printer> elements) =>
-            src.Select(e => new Printer(e.Name, elements)
+            src.Select(e => e.Convert(elements));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Creates a new instance of the Printer class from the specified
+        /// configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Printer configuration.</param>
+        /// <param name="elements">Collection of printers.</param>
+        ///
+        /// <returns>Printer object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Printer Convert(this PrinterConfig src, IEnumerable<Printer> elements) =>
+            new Printer(src.Name)
             {
-                ShareName  = e.ShareName,
-                DriverName = e.DriverName,
-                PortName   = e.PortName,
-            });
+                ShareName  = src.ShareName,
+                DriverName = src.DriverName,
+                PortName   = src.PortName,
+            };
 
         #endregion
     }

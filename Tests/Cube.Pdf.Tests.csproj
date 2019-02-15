@@ -83,10 +83,10 @@
       <HintPath>..\..\packages\Cube.Backwards.1.5.0\lib\net35\Cube.Backwards.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\packages\Cube.Core.1.13.0\lib\net35\Cube.Core.dll</HintPath>
+      <HintPath>..\..\packages\Cube.Core.1.14.0\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\packages\Cube.FileSystem.1.13.0\lib\net35\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\packages\Cube.FileSystem.1.14.0\lib\net35\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp">
       <HintPath>..\..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
@@ -126,6 +126,7 @@
     <Compile Include="Sources\FileTest.cs" />
     <Compile Include="Sources\MetadataTest.cs" />
     <Compile Include="Sources\PageTest.cs" />
+    <Compile Include="Sources\PdfVersionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

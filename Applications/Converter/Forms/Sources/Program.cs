@@ -16,7 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
+using Cube.Collections;
+using Cube.DataContract;
+using Cube.FileSystem;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -58,19 +60,35 @@ namespace Cube.Pdf.App.Converter
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var settings = new SettingsFolder();
+                var src      = new ArgumentCollection(args, '/', true);
+                var settings = CreateSettings(src);
                 settings.Load();
-                settings.Set(args);
-                settings.CheckUpdate();
+                settings.Set(src);
 
-                Show(settings);
+                if (settings.Value.SkipUi) Invoke(settings);
+                else Show(settings);
             }
-            catch (Exception err) { Logger.Error(LogType, err.ToString()); }
+            catch (Exception err) { Logger.Error(LogType, err); }
         }
 
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateSettings
+        ///
+        /// <summary>
+        /// Creates a new instance of the SettingsFolder class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static SettingsFolder CreateSettings(ArgumentCollection src) =>
+            src.Options.TryGetValue("Settings", out var subkey) ?
+            new SettingsFolder(Format.Registry, subkey, new IO()) :
+            new SettingsFolder();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -88,6 +106,24 @@ namespace Cube.Pdf.App.Converter
             {
                 view.Bind(vm);
                 Application.Run(view);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the conversion directly.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Invoke(SettingsFolder settings)
+        {
+            using (var src = new MainFacade(settings))
+            {
+                src.UpdateExtension();
+                src.Convert();
             }
         }
 

@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Log;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;

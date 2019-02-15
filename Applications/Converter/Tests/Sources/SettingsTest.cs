@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
@@ -62,7 +63,7 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));
             Assert.That(dest.DocumentName.Value, Is.Empty);
             Assert.That(dest.DocumentName.Name,  Is.EqualTo("CubePDF"));
-            Assert.That(dest.Version.ToString(), Is.EqualTo("1.0.0RC17"));
+            Assert.That(dest.Version.ToString(), Is.EqualTo("1.0.0RC18"));
             Assert.That(dest.Value,              Is.Not.Null);
         }
 
@@ -107,6 +108,7 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(dest.Source,           Is.Empty);
             Assert.That(dest.Destination,      Is.EqualTo(desktop));
             Assert.That(dest.IsBusy,           Is.False);
+            Assert.That(dest.SkipUi,           Is.False);
 
             var md = dest.Metadata;
             Assert.That(md.Title,              Is.Empty);
@@ -114,6 +116,8 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(md.Subject,            Is.Empty);
             Assert.That(md.Keywords,           Is.Empty);
             Assert.That(md.Creator,            Is.EqualTo("CubePDF"));
+            Assert.That(md.Version.Major,      Is.EqualTo(1));
+            Assert.That(md.Version.Minor,      Is.EqualTo(7));
 
             var ec = dest.Encryption;
             Assert.That(ec.Enabled,            Is.False);
@@ -146,6 +150,7 @@ namespace Cube.Pdf.Tests.Converter
             var src = new[]
             {
                 "/DeleteOnClose",
+                "/SkipUI",
                 "/DocumentName",
                 "(234)?File.txt - Sample Application",
                 "/InputFile",
@@ -161,7 +166,7 @@ namespace Cube.Pdf.Tests.Converter
             };
 
             var dest = new SettingsFolder();
-            dest.Set(src);
+            dest.Set(new ArgumentCollection(src, '/', true));
 
             var path = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -173,6 +178,7 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(dest.DocumentName.Value, Is.EqualTo("(234)?File.txt - Sample Application"));
             Assert.That(dest.DocumentName.Name,  Is.EqualTo("(234)_File.txt"));
             Assert.That(dest.Value.DeleteSource, Is.True);
+            Assert.That(dest.Value.SkipUi,       Is.True);
             Assert.That(dest.Value.Source,       Is.EqualTo(@"C:\WINDOWS\CubePDF\PS3AEE.tmp"));
             Assert.That(dest.Value.Destination,  Is.EqualTo(path));
         }
@@ -190,7 +196,7 @@ namespace Cube.Pdf.Tests.Converter
         public void Set_Empty()
         {
             var dest = new SettingsFolder();
-            dest.Set(new string[0]);
+            dest.Set(new ArgumentCollection(new string[0], '/', true));
 
             Assert.That(dest.MachineName,        Is.EqualTo(Environment.MachineName));
             Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));
@@ -198,19 +204,6 @@ namespace Cube.Pdf.Tests.Converter
             Assert.That(dest.Value.DeleteSource, Is.False);
             Assert.That(dest.Value.Source,       Is.Empty);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// アップデート確認のテストを実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void CheckUpdate() =>
-            Assert.DoesNotThrow(() => new SettingsFolder().CheckUpdate());
 
         #endregion
     }

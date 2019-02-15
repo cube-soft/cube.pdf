@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Runtime.Serialization;
 
 namespace Cube.Pdf
 {
@@ -29,8 +30,24 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
+    [DataContract]
     public class Metadata : ObservableProperty
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Metadata class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata() { Reset(); }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -41,15 +58,9 @@ namespace Cube.Pdf
         /// Gets or sets a version of the PDF document.
         /// </summary>
         ///
-        /// <remarks>
-        /// 現時点で有効な PDF バージョンは 1.0, 1.1, 1.2, 1.3, 1.4, 1.5,
-        /// 1.6, 1.7, 1.7 Extension Level 3, 1.7 Extension Level 5 の
-        /// 10 種類です。Adobe Extension Level の値は Build プロパティで
-        /// 保持する事とします。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public Version Version
+        [DataMember]
+        public PdfVersion Version
         {
             get => _version;
             set => SetProperty(ref _version, value);
@@ -64,6 +75,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Author
         {
             get => _author;
@@ -79,6 +91,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Title
         {
             get => _title;
@@ -94,6 +107,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Subject
         {
             get => _subject;
@@ -109,6 +123,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Keywords
         {
             get => _keywords;
@@ -124,6 +139,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Creator
         {
             get => _creator;
@@ -139,6 +155,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Producer
         {
             get => _producer;
@@ -147,30 +164,68 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Viewer
+        /// Options
         ///
         /// <summary>
-        /// Gets or sets a value of viewer preferences.
+        /// Gets or sets a value of viewer options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ViewerPreferences Viewer
+        [DataMember]
+        public ViewerOptions Options
         {
-            get => _viewer;
-            set => SetProperty(ref _viewer, value);
+            get => _options;
+            set => SetProperty(ref _options, value);
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDeserializing
+        ///
+        /// <summary>
+        /// Occurs before deserializing.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext context) => Reset();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// Resets values.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Reset()
+        {
+            _version  = new PdfVersion(1, 7);
+            _author   = string.Empty;
+            _title    = string.Empty;
+            _subject  = string.Empty;
+            _keywords = string.Empty;
+            _creator  = string.Empty;
+            _producer = string.Empty;
+            _options  = ViewerOptions.OneColumn;
         }
 
         #endregion
 
         #region Fields
-        private Version _version = new Version(1, 7);
-        private string _author = string.Empty;
-        private string _title = string.Empty;
-        private string _subject = string.Empty;
-        private string _keywords = string.Empty;
-        private string _creator = string.Empty;
-        private string _producer = string.Empty;
-        private ViewerPreferences _viewer = ViewerPreferences.OneColumn;
+        private PdfVersion _version;
+        private string _author;
+        private string _title;
+        private string _subject;
+        private string _keywords;
+        private string _creator;
+        private string _producer;
+        private ViewerOptions _options;
         #endregion
     }
 }

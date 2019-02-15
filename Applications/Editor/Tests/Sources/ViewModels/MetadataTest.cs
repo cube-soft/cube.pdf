@@ -18,13 +18,12 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
 using Cube.Pdf.App.Editor;
-using Cube.Pdf.Itext;
+using Cube.Xui;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cube.Pdf.Tests.Editor.ViewModels
 {
@@ -53,30 +52,22 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public async Task Set(int index, Metadata cmp)
+        public void Set(int index, Metadata cmp) => Create("Sample.pdf", "", 2, vm =>
         {
-            await CreateAsync("Sample.pdf", "", 2, async (vm) =>
+            Register(vm, cmp);
+
+            var cts = new CancellationTokenSource();
+            vm.Data.PropertyChanged += (s, e) =>
             {
-                var cts = new CancellationTokenSource();
-                using (Register(vm, cmp, cts))
-                {
-                    Assert.That(vm.Ribbon.Metadata.Command.CanExecute(), Is.True);
-                    vm.Ribbon.Metadata.Command.Execute();
-                    var done = await Wait.ForAsync(cts.Token).ConfigureAwait(false);
-                    Assert.That(done, $"Timeout (Metadata)");
-                }
+                if (e.PropertyName == nameof(vm.Data.Metadata)) cts.Cancel();
+            };
 
-                Assert.That(vm.Data.History.Undoable, Is.True);
-                Assert.That(vm.Data.History.Redoable, Is.False);
-
-                Destination = Path(Args(index, cmp.Title));
-                await ExecuteAsync(vm, vm.Ribbon.SaveAs).ConfigureAwait(false);
-                var save = await Wait.ForAsync(() => IO.Exists(Destination)).ConfigureAwait(false);
-                Assert.That(save, $"Timeout (SaveAs)");
-            });
-
-            AssertMetadata(Destination, cmp);
-        }
+            Assert.That(vm.Data.Metadata, Is.Not.Null);
+            Assert.That(vm.Ribbon.Metadata.Command.CanExecute(), Is.True);
+            vm.Ribbon.Metadata.Command.Execute();
+            Assert.That(Wait.For(cts.Token), $"Timeout");
+            AssertMetadata(vm.Data.Metadata, cmp);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,21 +80,21 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public Task Cancel() => CreateAsync("Sample.pdf", "", 2, async (vm) =>
+        public void Cancel() => Create("Sample.pdf", "", 2, vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Register<MetadataViewModel>(this, e =>
+            vm.Register<MetadataViewModel>(this, e =>
             {
                 e.Document.Value = "dummy";
+                e.Register<CloseMessage>(this, z => cts.Cancel());
                 Assert.That(e.Cancel.Command.CanExecute(), Is.True);
                 e.Cancel.Command.Execute();
-                cts.Cancel(); // done
             });
 
+            Assert.That(vm.Data.Metadata, Is.Not.Null);
             vm.Ribbon.Metadata.Command.Execute();
-            await Wait.ForAsync(cts.Token);
-            dp.Dispose();
 
+            Assert.That(Wait.For(cts.Token), "Timeout");
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.False);
             Assert.That(vm.Data.Metadata.Title, Is.Not.EqualTo("dummy"));
@@ -126,9 +117,9 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         {
             get
             {
-                var index = 0;
+                var n = 0;
 
-                yield return new TestCaseData(++index, new Metadata
+                yield return new TestCaseData(n++, new Metadata
                 {
                     Title    = "Test title",
                     Author   = "Test author",
@@ -136,11 +127,11 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                     Keywords = "Test keywords",
                     Creator  = "Test creator",
                     Producer = "Test producer",
-                    Version  = new Version(1, 6),
-                    Viewer   = ViewerPreferences.TwoColumnRight,
+                    Version  = new PdfVersion(1, 6),
+                    Options  = ViewerOptions.TwoColumnRight,
                 });
 
-                yield return new TestCaseData(++index, new Metadata
+                yield return new TestCaseData(n++, new Metadata
                 {
                     Title    = "日本語のタイトル",
                     Author   = "日本語の著者",
@@ -148,8 +139,8 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
                     Keywords = "日本語のキーワード",
                     Creator  = "日本語のアプリケーション",
                     Producer = "日本語の PDF 変換",
-                    Version  = new Version(1, 7),
-                    Viewer   = ViewerPreferences.OneColumn,
+                    Version  = new PdfVersion(1, 7),
+                    Options  = ViewerOptions.OneColumn,
                 });
             }
         }
@@ -168,7 +159,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IDisposable Register(MainViewModel vm, Metadata src, CancellationTokenSource cts) =>
+        private IDisposable Register(MainViewModel vm, Metadata src) =>
             vm.Register<MetadataViewModel>(this, e =>
         {
             Assert.That(e.Filename.Value,      Is.Not.Null.And.Not.Empty);
@@ -182,30 +173,12 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             e.Subject.Value  = src.Subject;
             e.Keywords.Value = src.Keywords;
             e.Creator.Value  = src.Creator;
-            e.Viewer.Value   = src.Viewer;
+            e.Options.Value  = src.Options;
             e.Version.Value  = src.Version;
 
             Assert.That(e.OK.Command.CanExecute(), Is.True);
             e.OK.Command.Execute();
-            cts.Cancel(); // done
         });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AssertMetadata
-        ///
-        /// <summary>
-        /// Confirms that properties of the specified objects are equal.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AssertMetadata(string src, Metadata cmp)
-        {
-            using (var reader = new DocumentReader(src))
-            {
-                AssertMetadata(reader.Metadata, cmp);
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -223,7 +196,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             Assert.That(src.Subject,       Is.EqualTo(cmp.Subject),  nameof(src.Subject));
             Assert.That(src.Keywords,      Is.EqualTo(cmp.Keywords), nameof(src.Keywords));
             Assert.That(src.Creator,       Is.EqualTo(cmp.Creator),  nameof(src.Creator));
-            Assert.That(src.Viewer,        Is.EqualTo(cmp.Viewer));
+            Assert.That(src.Options,       Is.EqualTo(cmp.Options));
             Assert.That(src.Version.Major, Is.EqualTo(cmp.Version.Major));
             Assert.That(src.Version.Minor, Is.EqualTo(cmp.Version.Minor));
         }

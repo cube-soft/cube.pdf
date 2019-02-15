@@ -147,11 +147,11 @@ namespace Cube.Pdf.App.Clip
                 }
                 catch (EncryptionException err)
                 {
-                    this.LogError(err.Message, err);
+                    this.LogError(err);
                     Aggregator?.GetEvents()?.Message.Publish(Properties.Resources.MessageEncryption);
                     break;
                 }
-                catch (Exception err) { this.LogWarn(err.Message, err); }
+                catch (Exception err) { this.LogWarn(err); }
             }
         });
 
@@ -212,7 +212,7 @@ namespace Cube.Pdf.App.Clip
             }
             catch (Exception err)
             {
-                this.LogError(err.Message, err);
+                this.LogError(err);
                 Aggregator?.GetEvents()?.Error.Publish(err.Message);
             }
             finally { SyncWait(() => View.IsBusy = false); }

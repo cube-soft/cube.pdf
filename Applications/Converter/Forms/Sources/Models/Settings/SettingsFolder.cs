@@ -24,8 +24,7 @@ using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Cube.Pdf.App.Converter
@@ -35,7 +34,7 @@ namespace Cube.Pdf.App.Converter
     /// SettingsFolder
     ///
     /// <summary>
-    /// 各種設定を保持するためのクラスです。
+    /// Represents the application and/or user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -58,8 +57,7 @@ namespace Cube.Pdf.App.Converter
             {
                 var src = e.ToCultureInfo();
                 var cmp = Properties.Resources.Culture?.Name;
-                var opt = StringComparison.InvariantCultureIgnoreCase;
-                if (cmp.HasValue() && cmp.Equals(src.Name, opt)) return false;
+                if (cmp.HasValue() && cmp.FuzzyEquals(src.Name)) return false;
                 Properties.Resources.Culture = src;
                 return true;
             });
@@ -70,7 +68,7 @@ namespace Cube.Pdf.App.Converter
         /// SettingsFolder
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the SettingsFolder class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -85,12 +83,13 @@ namespace Cube.Pdf.App.Converter
         /// SettingsFolder
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the SettingsFolder class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="format">設定情報の保存方法</param>
-        /// <param name="path">設定情報の保存パス</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="format">Serialization format.</param>
+        /// <param name="path">Path to save settings.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder(Cube.DataContract.Format format, string path, IO io) :
@@ -104,7 +103,6 @@ namespace Cube.Pdf.App.Converter
             Version.Digit  = 3;
             Version.Suffix = $"RC{Assembly.Version.Revision}";
             UpdateProgram  = IO.Combine(IO.Get(Assembly.Location).DirectoryName, "UpdateChecker.exe");
-
         }
 
         #endregion
@@ -116,7 +114,7 @@ namespace Cube.Pdf.App.Converter
         /// Uri
         ///
         /// <summary>
-        /// Web ページの URL を取得します。
+        /// Gets the URL of the Web page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -127,7 +125,7 @@ namespace Cube.Pdf.App.Converter
         /// DocumentName
         ///
         /// <summary>
-        /// ドキュメント名を取得します。
+        /// Gets the document name.
         /// </summary>
         ///
         /// <remarks>
@@ -142,7 +140,7 @@ namespace Cube.Pdf.App.Converter
         /// MachineName
         ///
         /// <summary>
-        /// 端末名を取得します。
+        /// Gets the machine name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -153,7 +151,7 @@ namespace Cube.Pdf.App.Converter
         /// MachineName
         ///
         /// <summary>
-        /// ユーザ名を取得します。
+        /// Gets the user name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -176,7 +174,7 @@ namespace Cube.Pdf.App.Converter
         /// WorkDirectory
         ///
         /// <summary>
-        /// 作業ディレクトリのパスを取得または設定します。
+        /// Gets the path of the working directory.
         /// </summary>
         ///
         /// <remarks>
@@ -193,7 +191,7 @@ namespace Cube.Pdf.App.Converter
         /// UpdateProgram
         ///
         /// <summary>
-        /// アップデート確認用プログラムのパスを取得します。
+        /// Gets the path of the update program.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -208,50 +206,28 @@ namespace Cube.Pdf.App.Converter
         /// Set
         ///
         /// <summary>
-        /// プログラム引数の内容を設定します。
+        /// Sets values based on the specified arguments.
         /// </summary>
         ///
-        /// <param name="args">プログラム引数</param>
+        /// <param name="src">Program arguments.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Set(string[] args)
+        public void Set(ArgumentCollection src)
         {
-            var src = new ArgumentCollection(args, '/', true);
-            var op  = src.Options;
-
-            if (TryGet(op, nameof(MachineName), out var pc)) MachineName = pc;
-            if (TryGet(op, nameof(UserName), out var user)) UserName = user;
-            if (TryGet(op, nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.Product, IO);
-            if (TryGet(op, nameof(Digest), out var digest)) Digest = digest;
-            if (TryGet(op, "InputFile", out var input)) Value.Source = input;
+            var op = src.Options;
+            if (op.TryGetValue(nameof(MachineName), out var pc)) MachineName = pc;
+            if (op.TryGetValue(nameof(UserName), out var user)) UserName = user;
+            if (op.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.Product, IO);
+            if (op.TryGetValue(nameof(Digest), out var digest)) Digest = digest;
+            if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
 
             var dest = IO.Get(IO.Combine(Value.Destination, DocumentName.Name));
             var name = dest.NameWithoutExtension;
             var ext  = Value.Format.GetExtension();
 
             Value.Destination  = IO.Combine(dest.DirectoryName, $"{name}{ext}");
-            Value.DeleteSource = op.ContainsKey("deleteonclose");
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// アップデートの確認を実行します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void CheckUpdate()
-        {
-            try
-            {
-                if (!Value.CheckUpdate) return;
-                var time = GetLastCheckUpdate();
-                this.LogDebug($"LastCheckUpdate:{time}");
-                if (time.AddDays(1) < DateTime.Now) Process.Start(UpdateProgram, Assembly.Product);
-            }
-            catch (Exception err) { this.LogWarn($"{nameof(CheckUpdate)}:{err}", err); }
+            Value.DeleteSource = op.ContainsKey("DeleteOnClose");
+            Value.SkipUi       = op.ContainsKey("SkipUI");
         }
 
         #endregion
@@ -263,7 +239,7 @@ namespace Cube.Pdf.App.Converter
         /// OnLoaded
         ///
         /// <summary>
-        /// 読み込み時に実行されます。
+        /// Occurs when the settings are loaded.
         /// </summary>
         ///
         /// <remarks>
@@ -279,8 +255,7 @@ namespace Cube.Pdf.App.Converter
             e.NewValue.Resolution = NormalizeResolution(e.NewValue);
             e.NewValue.Orientation = NormalizeOrientation(e.NewValue);
             e.NewValue.Destination = NormalizeDestination(e.NewValue);
-            e.NewValue.Metadata.Creator = Assembly.Product;
-            e.NewValue.Metadata.Viewer = ViewerPreferences.OneColumn;
+            e.NewValue.Metadata.Version = e.NewValue.FormatOption.GetVersion();
             e.NewValue.Encryption.Deny();
             e.NewValue.Encryption.Permission.Accessibility = PermissionValue.Allow;
 
@@ -292,7 +267,7 @@ namespace Cube.Pdf.App.Converter
         /// OnSaved
         ///
         /// <summary>
-        /// 保存時に実行されます。
+        /// Occurs when the settings are saved.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -311,6 +286,25 @@ namespace Cube.Pdf.App.Converter
             finally { base.OnSaved(e); }
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnPropertyChanged
+        ///
+        /// <summary>
+        /// Occurs when the PropertyChanged event is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            try
+            {
+                if (e.PropertyName != nameof(Value.FormatOption)) return;
+                Value.Metadata.Version = Value.FormatOption.GetVersion();
+            }
+            finally { base.OnPropertyChanged(e); }
+        }
+
         #region Get
 
         /* ----------------------------------------------------------------- */
@@ -318,13 +312,13 @@ namespace Cube.Pdf.App.Converter
         /// GetWorkDirectory
         ///
         /// <summary>
-        /// 作業ディレクトリのパスを取得します。
+        /// Gets the path of the working directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private string GetWorkDirectory()
         {
-            var str   = GetString(Registry.LocalMachine, "LibPath");
+            var str   = this.GetValue(Registry.LocalMachine, "LibPath");
             var root  = str.HasValue() ?
                         str :
                         IO.Combine(
@@ -333,50 +327,6 @@ namespace Cube.Pdf.App.Converter
                         );
             return IO.Combine(root, Guid.NewGuid().ToString("D"));
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetLastCheckUpdate
-        ///
-        /// <summary>
-        /// 最後にアップデートの更新を実行した日時を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private DateTime GetLastCheckUpdate()
-        {
-            var str = GetString(Registry.CurrentUser, "LastCheckUpdate");
-            return str.HasValue() ?
-                   DateTime.Parse(str).ToLocalTime() :
-                   DateTime.MinValue;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetString
-        ///
-        /// <summary>
-        /// レジストリから文字列を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetString(RegistryKey root, string name)
-        {
-            var keyname = $@"Software\{Assembly.Company}\{Assembly.Product}";
-            using (var key = root.OpenSubKey(keyname, false)) return key?.GetValue(name) as string;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TryGet
-        ///
-        /// <summary>
-        /// Tries to get the value corresponding to the specified name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool TryGet(IDictionary<string, string> src, string name, out string dest) =>
-            src.TryGetValue(name.ToLowerInvariant(), out dest);
 
         #endregion
 
@@ -387,7 +337,7 @@ namespace Cube.Pdf.App.Converter
         /// NormalizeFormat
         ///
         /// <summary>
-        /// Format の値を正規化します。
+        /// Normalizes the specified Format value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -401,7 +351,7 @@ namespace Cube.Pdf.App.Converter
         /// NormalizeOrientation
         ///
         /// <summary>
-        /// Orientation の値を正規化します。
+        /// Normalizes the specified Orientation value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -415,7 +365,7 @@ namespace Cube.Pdf.App.Converter
         /// NormalizeResolution
         ///
         /// <summary>
-        /// Resolution の値を正規化します。
+        /// Normalizes the specified Resolution value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -429,7 +379,7 @@ namespace Cube.Pdf.App.Converter
         /// NormalizeDestination
         ///
         /// <summary>
-        /// 保存パスを正規化します。
+        /// Normalizes the path of serialized data.
         /// </summary>
         ///
         /// <remarks>
@@ -449,7 +399,7 @@ namespace Cube.Pdf.App.Converter
             }
             catch (Exception err)
             {
-                this.LogWarn(err.ToString(), err);
+                this.LogWarn(err);
                 return desktop;
             }
         }

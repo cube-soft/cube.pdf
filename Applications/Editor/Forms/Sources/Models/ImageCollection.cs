@@ -21,7 +21,6 @@ using Cube.Collections.Mixin;
 using Cube.Log;
 using Cube.Tasks;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -42,7 +41,7 @@ namespace Cube.Pdf.App.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCollection : DisposableBase, IReadOnlyList<ImageItem>, INotifyCollectionChanged
+    public class ImageCollection : ObservableBase<ImageItem>, IReadOnlyList<ImageItem>, IDisposable
     {
         #region Constructors
 
@@ -64,13 +63,15 @@ namespace Cube.Pdf.App.Editor
             ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName).Create(e);
             void update(string s) { if (s == nameof(Preferences.VisibleLast)) Reschedule(null); };
 
-            _inner = new ObservableCollection<ImageItem>();
-            _cache = new CacheCollection<ImageItem, ImageSource>(create);
+            _dispose = new OnceAction<bool>(Dispose);
+            _inner   = new ObservableCollection<ImageItem>();
+            _cache   = new CacheCollection<ImageItem, ImageSource>(create);
 
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
             _cache.Created += (s, e) => e.Key.Refresh();
             _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
+            Context     = context;
             Selection   = new ImageSelection   { Context = context };
             Preferences = new ImagePreferences { Context = context };
 
@@ -162,72 +163,7 @@ namespace Cube.Pdf.App.Editor
 
         #endregion
 
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CollectionChanged
-        ///
-        /// <summary>
-        /// Occurs when an item is added, removed, changed, moved,
-        /// or the entire list is refreshed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCollectionChanged
-        ///
-        /// <summary>
-        /// Raises the CollectionChanged event with the provided arguments.
-        /// </summary>
-        ///
-        /// <param name="e">Arguments of the event being raised.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-        {
-            Reschedule(null);
-            if (CollectionChanged == null) return;
-            if (Preferences.Context == null) CollectionChanged(this, e);
-            else Preferences.Context.Send(z => CollectionChanged(this, e), null);
-        }
-
-        #endregion
-
         #region Methods
-
-        #region IEnumerable
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEnumerator
-        ///
-        /// <summary>
-        /// Returns an enumerator that iterates through this collection.
-        /// </summary>
-        ///
-        /// <returns>
-        /// An IEnumerator(ImageEntry) object for this collection.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerator<ImageItem> GetEnumerator() => _inner.GetEnumerator();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IEnumerable.GetEnumerator
-        ///
-        /// <summary>
-        /// Returns an enumerator that iterates through this collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
 
         /* ----------------------------------------------------------------- */
         ///
@@ -389,9 +325,48 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public void Refresh() => Reschedule(() => _cache.Clear());
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEnumerator
+        ///
+        /// <summary>
+        /// Returns an enumerator that iterates through this collection.
+        /// </summary>
+        ///
+        /// <returns>
+        /// An IEnumerator(ImageEntry) object for this collection.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override IEnumerator<ImageItem> GetEnumerator() => _inner.GetEnumerator();
 
-        #region Implementations
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~ImageCollection
+        ///
+        /// <summary>
+        /// Finalizes the ImageCollection
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~ImageCollection() => _dispose.Invoke(false);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases all resources used by the ImageCollection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Dispose()
+        {
+            _dispose.Invoke(true);
+            GC.SuppressFinalize(this);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -409,7 +384,30 @@ namespace Cube.Pdf.App.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { if (disposing) Clear(); }
+        protected virtual void Dispose(bool disposing) { if (disposing) Clear(); }
+
+        #endregion
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCollectionChanged
+        ///
+        /// <summary>
+        /// Raises the CollectionChanged event with the provided arguments.
+        /// </summary>
+        ///
+        /// <param name="e">Arguments of the event being raised.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        {
+            Reschedule(null);
+            base.OnCollectionChanged(e);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -439,7 +437,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void Reschedule(Action before)
         {
-            if (Disposed) return;
+            if (_dispose.Invoked) return;
 
             var cts = new CancellationTokenSource();
             Interlocked.Exchange(ref _task, cts)?.Cancel();
@@ -452,7 +450,7 @@ namespace Cube.Pdf.App.Editor
             {
                 for (var i = min; i < max; ++i)
                 {
-                    if (Disposed || cts.Token.IsCancellationRequested) return;
+                    if (_dispose.Invoked || cts.Token.IsCancellationRequested) return;
                     _cache.GetOrCreate(_inner[i]);
                 }
             }).Forget();
@@ -461,6 +459,7 @@ namespace Cube.Pdf.App.Editor
         #endregion
 
         #region Fields
+        private readonly OnceAction<bool> _dispose;
         private readonly ObservableCollection<ImageItem> _inner;
         private readonly CacheCollection<ImageItem, ImageSource> _cache;
         private CancellationTokenSource _task;

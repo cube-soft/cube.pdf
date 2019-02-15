@@ -16,7 +16,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
+using Cube.DataContract;
 using Cube.Generics;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -38,6 +40,32 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CreateInstaller
+        ///
+        /// <summary>
+        /// Creates a new instance of the Installer class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        ///
+        /// <returns>Installer object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Installer CreateInstaller(this ArgumentCollection src)
+        {
+            var dest = new Installer(Format.Json, src.GetConfiguration())
+            {
+                Recursive         = src.HasForceOption(),
+                ResourceDirectory = src.GetResourceDirectory(),
+            };
+
+            src.ReplaceDirectory(dest.Config);
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetCommand
         ///
         /// <summary>
@@ -50,7 +78,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public static string GetCommand(this ArgumentCollection src) =>
-            src.Options.TryGetValue("command", out var dest) ? dest : string.Empty;
+            src.Options.TryGetValue("Command", out var dest) ? dest : string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,7 +110,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public static string GetResourceDirectory(this ArgumentCollection src) =>
-            src.Options.TryGetValue("resource", out var dest) ? src.GetPath(dest) : _current;
+            src.Options.TryGetValue("Resource", out var dest) ? src.GetPath(dest) : _current;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,7 +127,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static int GetTimeout(this ArgumentCollection src)
         {
-            if (!src.Options.TryGetValue("timeout", out var str)) return 30;
+            if (!src.Options.TryGetValue("Timeout", out var str)) return 30;
             if (int.TryParse(str, out var dest)) return dest;
             else return 30;
         }
@@ -119,9 +147,51 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static int GetRetryCount(this ArgumentCollection src)
         {
-            if (!src.Options.TryGetValue("retry", out var str)) return 1;
+            if (!src.Options.TryGetValue("Retry", out var str)) return 1;
             if (int.TryParse(str, out var dest)) return dest;
             else return 1;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// HasForceOption
+        ///
+        /// <summary>
+        /// Gets a value indicating whether to uninstall devices forcibly.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        ///
+        /// <returns>
+        /// true for having the Force option; otherwise false.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool HasForceOption(this ArgumentCollection src) =>
+            src.Options.ContainsKey("Force");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReplaceDirectory
+        ///
+        /// <summary>
+        /// Replaces some directory path.
+        /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        /// <param name="dest">Target configuration.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void ReplaceDirectory(this ArgumentCollection src, DeviceConfig dest)
+        {
+            var ca = Environment.SpecialFolder.CommonApplicationData.GetName();
+            foreach (var e in dest.Ports)
+            {
+                e.Temp        = System.IO.Path.Combine(ca, e.Temp);
+                e.Proxy       = src.ReplaceDirectory(e.Proxy);
+                e.Application = src.ReplaceDirectory(e.Application);
+                e.Arguments   = src.ReplaceDirectory(e.Arguments);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,7 +199,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// ReplaceDirectory
         ///
         /// <summary>
-        /// Replace all %%DIR%% strings with the current directory.
+        /// Replaces all %%DIR%% strings with the current directory.
         /// </summary>
         ///
         /// <param name="src">Source arguments.</param>
@@ -157,7 +227,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         private static string GetPath(this ArgumentCollection src, string path) =>
-            path.HasValue() && src.Options.ContainsKey("relative") ?
+            path.HasValue() && src.Options.ContainsKey("Relative") ?
             System.IO.Path.Combine(_current, path) :
             path;
 

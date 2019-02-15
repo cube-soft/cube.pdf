@@ -84,10 +84,10 @@
       <HintPath>..\..\..\..\packages\Cube.Backwards.1.5.0\lib\net35\Cube.Backwards.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.13.0\lib\net35\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.14.0\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.13.0\lib\net35\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.14.0\lib\net35\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>..\..\..\..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
@@ -104,6 +104,7 @@
     <Compile Include="Sources\Native\Structures.cs" />
     <Compile Include="Sources\Native\WinSpool.cs" />
     <Compile Include="Sources\DeviceConfig.cs" />
+    <Compile Include="Sources\DeviceConfigResolver.cs" />
     <Compile Include="Sources\IInstallable.cs" />
     <Compile Include="Sources\IInstallableExtension.cs" />
     <Compile Include="Sources\Installer.cs" />

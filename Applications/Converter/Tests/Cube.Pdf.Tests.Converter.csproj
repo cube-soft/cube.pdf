@@ -83,16 +83,16 @@
       <HintPath>..\..\..\..\packages\Cube.Backwards.1.5.0\lib\net35\Cube.Backwards.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.13.0\lib\net35\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.14.0\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.13.0\lib\net35\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.14.0\lib\net35\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\..\packages\Cube.Images.1.13.0\lib\net35\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Images.1.14.0\lib\net35\Cube.Images.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Forms">
-      <HintPath>..\..\..\..\packages\Cube.Forms.1.13.0\lib\net35\Cube.Forms.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Forms.1.14.0\lib\net35\Cube.Forms.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>

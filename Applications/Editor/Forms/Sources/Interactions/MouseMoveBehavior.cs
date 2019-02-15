@@ -201,7 +201,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseDown(object s, MouseEventArgs e)
         {
-            if (Selection.Count > 1) WhenDragStart(s, e);
+            if (Selection.Count > 1 && !Keys.ModifierKeys.IsPressed()) WhenDragStart(s, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -215,7 +215,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseMove(object s, MouseEventArgs e)
         {
-            if (e.LeftButton.IsPressed()) WhenDragStart(s, e);
+            if (e.LeftButton.IsPressed() && !Keys.ModifierKeys.IsPressed()) WhenDragStart(s, e);
         }
 
         /* ----------------------------------------------------------------- */

@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.App.Converter
@@ -26,7 +25,7 @@ namespace Cube.Pdf.App.Converter
     /// FormatOption
     ///
     /// <summary>
-    /// 変換形式に関するオプションオプションを表す列挙型です。
+    /// Specifies format options.
     /// </summary>
     ///
     /// <remarks>
@@ -63,7 +62,7 @@ namespace Cube.Pdf.App.Converter
     /// FormatOptionExtension
     ///
     /// <summary>
-    /// FormatOption の拡張用クラスです。
+    /// Provides extended methods of the FormatOption class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -84,9 +83,9 @@ namespace Cube.Pdf.App.Converter
         /// <returns>Version</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Version GetVersion(this FormatOption src) =>
+        public static PdfVersion GetVersion(this FormatOption src) =>
             GetFormatOptionMap().TryGetValue(src, out var dest) ?
-            dest : new Version(1, 0);
+            dest : new PdfVersion(1, 0);
 
         #endregion
 
@@ -101,25 +100,25 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static IDictionary<FormatOption, Version> GetFormatOptionMap() => _options ?? (
-            _options = new Dictionary<FormatOption, Version>
+        private static IDictionary<FormatOption, PdfVersion> GetFormatOptionMap() => _options ?? (
+            _options = new Dictionary<FormatOption, PdfVersion>
             {
-                { FormatOption.Pdf12,  new Version(1, 2) },
-                { FormatOption.Pdf13,  new Version(1, 3) },
-                { FormatOption.Pdf14,  new Version(1, 4) },
-                { FormatOption.Pdf15,  new Version(1, 5) },
-                { FormatOption.Pdf16,  new Version(1, 6) },
-                { FormatOption.Pdf17,  new Version(1, 7) },
-                { FormatOption.PdfA,   new Version(1, 3) },
-                { FormatOption.PdfX1a, new Version(1, 3) },
-                { FormatOption.PdfX3,  new Version(1, 3) },
+                { FormatOption.Pdf12,  new PdfVersion(1, 2) },
+                { FormatOption.Pdf13,  new PdfVersion(1, 3) },
+                { FormatOption.Pdf14,  new PdfVersion(1, 4) },
+                { FormatOption.Pdf15,  new PdfVersion(1, 5) },
+                { FormatOption.Pdf16,  new PdfVersion(1, 6) },
+                { FormatOption.Pdf17,  new PdfVersion(1, 7) },
+                { FormatOption.PdfA,   new PdfVersion(1, 3) },
+                { FormatOption.PdfX1a, new PdfVersion(1, 3) },
+                { FormatOption.PdfX3,  new PdfVersion(1, 3) },
             }
         );
 
         #endregion
 
         #region Fields
-        private static IDictionary<FormatOption, Version> _options;
+        private static IDictionary<FormatOption, PdfVersion> _options;
         #endregion
     }
 }

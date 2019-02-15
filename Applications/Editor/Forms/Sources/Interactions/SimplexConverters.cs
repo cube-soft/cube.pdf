@@ -113,11 +113,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IconConverter() : base(e =>
-            e is Information fi ?
-            fi.GetIcon(IconSize.Small).ToBitmap().ToBitmapImage(true) :
-            null
-        ) { }
+        public IconConverter() : base(e => (e as Information)?.IconImage(IconSize.Small)) { }
     }
 
     #endregion
@@ -249,14 +245,14 @@ namespace Cube.Pdf.App.Editor
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewerPreferencesConverter
+    /// ViewerOptionsConverter
     ///
     /// <summary>
     /// Provides functionality to convert a ViewerPreferences.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ViewerPreferencesConverter : SimplexConverter
+    public class ViewerOptionsConverter : SimplexConverter
     {
         /* ----------------------------------------------------------------- */
         ///
@@ -268,15 +264,15 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ViewerPreferencesConverter() : base(e =>
+        public ViewerOptionsConverter() : base(e =>
         {
-            var src = e.TryCast<ViewerPreferences>();
-            if (src.HasFlag(ViewerPreferences.SinglePage))     return Properties.Resources.MenuViewSinglePage;
-            if (src.HasFlag(ViewerPreferences.OneColumn))      return Properties.Resources.MenuViewOneColumn;
-            if (src.HasFlag(ViewerPreferences.TwoPageLeft))    return Properties.Resources.MenuViewTwoPageLeft;
-            if (src.HasFlag(ViewerPreferences.TwoPageRight))   return Properties.Resources.MenuViewTwoPageRight;
-            if (src.HasFlag(ViewerPreferences.TwoColumnLeft))  return Properties.Resources.MenuViewTwoColumnLeft;
-            if (src.HasFlag(ViewerPreferences.TwoColumnRight)) return Properties.Resources.MenuViewTwoColumnRight;
+            var src = e.TryCast<ViewerOptions>();
+            if (src.HasFlag(ViewerOptions.SinglePage))     return Properties.Resources.MenuViewSinglePage;
+            if (src.HasFlag(ViewerOptions.OneColumn))      return Properties.Resources.MenuViewOneColumn;
+            if (src.HasFlag(ViewerOptions.TwoPageLeft))    return Properties.Resources.MenuViewTwoPageLeft;
+            if (src.HasFlag(ViewerOptions.TwoPageRight))   return Properties.Resources.MenuViewTwoPageRight;
+            if (src.HasFlag(ViewerOptions.TwoColumnLeft))  return Properties.Resources.MenuViewTwoColumnLeft;
+            if (src.HasFlag(ViewerOptions.TwoColumnRight)) return Properties.Resources.MenuViewTwoColumnRight;
             return "Unknown";
         }) { }
     }

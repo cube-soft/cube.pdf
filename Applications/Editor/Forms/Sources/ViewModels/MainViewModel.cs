@@ -69,7 +69,7 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         public MainViewModel(SettingsFolder src) : base(new Messenger())
         {
-            var recent   = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
+            var recent   = Environment.SpecialFolder.Recent.GetName();
             var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO);
             var password = new Query<string>(e => Send(new PasswordViewModel(e, src.IO, Context)));
 

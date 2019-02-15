@@ -96,16 +96,16 @@
       <HintPath>..\..\..\..\packages\Cube.Backwards.1.5.0\lib\net35\Cube.Backwards.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.13.0\lib\net35\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.14.0\lib\net35\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.13.0\lib\net35\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.14.0\lib\net35\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Images">
-      <HintPath>..\..\..\..\packages\Cube.Images.1.13.0\lib\net35\Cube.Images.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Images.1.14.0\lib\net35\Cube.Images.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Xui">
-      <HintPath>..\..\..\..\packages\Cube.Xui.1.13.0\lib\net35\Cube.Xui.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Xui.1.14.0\lib\net35\Cube.Xui.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight">
       <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1.1\lib\net35\GalaSoft.MvvmLight.dll</HintPath>
@@ -146,6 +146,7 @@
     <Compile Include="Sources\Interactions\Hack35Behavior.cs" />
     <Compile Include="Sources\Interactions\DragDropObject.cs" />
     <Compile Include="Sources\Interactions\InsertDropTarget.cs" />
+    <Compile Include="Sources\Interactions\Keys.cs" />
     <Compile Include="Sources\Interactions\MouseClearBehavior.cs" />
     <Compile Include="Sources\Interactions\MouseExtension.cs" />
     <Compile Include="Sources\Interactions\MouseMoveBehavior.cs" />

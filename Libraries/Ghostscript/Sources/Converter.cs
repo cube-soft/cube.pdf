@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections.Mixin;
 using Cube.FileSystem;
 using Cube.Generics;
 using Cube.Log;
@@ -301,26 +302,22 @@ namespace Cube.Pdf.Ghostscript
         /// <returns>Collection of arguments.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual IEnumerable<Argument> OnCreateArguments()
+        protected virtual IEnumerable<Argument> OnCreateArguments() => new []
         {
-            var args = new List<Argument>
-            {
-                Format.GetArgument(),
-                new Argument('d', "SAFER"),
-                new Argument('d', "BATCH"),
-                new Argument('d', "NOPAUSE"),
-                CreateQuiet(),
-                CreateLog(),
-                CreateResources(),
-                CreateFonts(),
-                CreateResolution(),
-                Paper.GetArgument(),
-                Orientation.GetArgument(),
-            }
-            .Concat(Options);
-
-            return Trim(args);
+            Format.GetArgument(),
+            new Argument('d', "SAFER"),
+            new Argument('d', "BATCH"),
+            new Argument('d', "NOPAUSE"),
+            CreateQuiet(),
+            CreateLog(),
+            CreateResources(),
+            CreateFonts(),
+            CreateResolution(),
+            Paper.GetArgument(),
+            Orientation.GetArgument(),
         }
+        .Concat(Options)
+        .Compact();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -335,7 +332,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         protected virtual IEnumerable<Code> OnCreateCodes() =>
-            Trim(new[] { Orientation.GetCode() });
+            new[] { Orientation.GetCode() }.Compact();
 
         #endregion
 
@@ -442,17 +439,6 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private Argument CreateResolution() => new Argument('r', Resolution);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Trim
-        ///
-        /// <summary>
-        /// Removes null objects from the specified collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<T> Trim<T>(IEnumerable<T> src) => src.OfType<T>();
 
         /* ----------------------------------------------------------------- */
         ///

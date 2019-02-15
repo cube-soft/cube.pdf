@@ -122,12 +122,12 @@ namespace Cube.Pdf.Tests.Converter
         public void MetadataViewModel() => Invoke(vm =>
         {
             var vmm = vm.Metadata;
-            Assert.That(vmm.Title,      Is.Empty, nameof(vmm.Title));
-            Assert.That(vmm.Author,     Is.Empty, nameof(vmm.Author));
-            Assert.That(vmm.Subject,    Is.Empty, nameof(vmm.Subject));
-            Assert.That(vmm.Keywords,   Is.Empty, nameof(vmm.Keywords));
-            Assert.That(vmm.Creator,    Is.EqualTo("CubePDF"));
-            Assert.That(vmm.Viewer, Is.EqualTo(ViewerPreferences.OneColumn));
+            Assert.That(vmm.Title,    Is.Empty, nameof(vmm.Title));
+            Assert.That(vmm.Author,   Is.Empty, nameof(vmm.Author));
+            Assert.That(vmm.Subject,  Is.Empty, nameof(vmm.Subject));
+            Assert.That(vmm.Keywords, Is.Empty, nameof(vmm.Keywords));
+            Assert.That(vmm.Creator,  Is.EqualTo("CubePDF"));
+            Assert.That(vmm.Options,  Is.EqualTo(ViewerOptions.OneColumn));
         });
 
         /* ----------------------------------------------------------------- */

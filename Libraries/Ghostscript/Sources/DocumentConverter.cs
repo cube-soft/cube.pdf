@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections.Mixin;
 using Cube.FileSystem;
 using System.Collections.Generic;
 using System.Linq;
@@ -179,7 +180,7 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Code> OnCreateCodes() =>
             base.OnCreateCodes()
-            .Concat(Trim(new[] { CreateEmbedFontsCode() }));
+            .Concat(new[] { CreateEmbedFontsCode() }.Compact());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -214,7 +215,7 @@ namespace Cube.Pdf.Ghostscript
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<Argument> CreateImageArguments() => Trim(new[]
+        private IEnumerable<Argument> CreateImageArguments() => new[]
         {
             new Argument("ColorImageResolution",  Resolution),
             new Argument("GrayImageResolution",   Resolution),
@@ -234,7 +235,7 @@ namespace Cube.Pdf.Ghostscript
             Compression.GetArgument("ColorImageFilter"),
             Compression.GetArgument("GrayImageFilter"),
             Compression.GetArgument("MonoImageFilter"),
-        });
+        }.Compact();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -263,17 +264,6 @@ namespace Cube.Pdf.Ghostscript
             Resolution <  300 ?  300 :
             Resolution < 1200 ? 1200 :
             Resolution;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Trim
-        ///
-        /// <summary>
-        /// Removes null objects from the specified collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<T> Trim<T>(IEnumerable<T> src) => src.OfType<T>();
 
         #endregion
     }

@@ -70,7 +70,7 @@ namespace Cube.Pdf.App.Editor
             Keywords = this.Create(() => src.Keywords, e => src.Keywords = e, () => Properties.Resources.MenuKeywords);
             Creator  = this.Create(() => src.Creator,  e => src.Creator  = e, () => Properties.Resources.MenuCreator );
             Version  = CreateVersion(src);
-            Viewer   = CreateViewerPreferences(src);
+            Options  = CreateViewerOptions(src);
 
             OK.Command = new RelayCommand(() => { Send<CloseMessage>(); callback(src); });
         }
@@ -148,19 +148,19 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<Version> Version { get; }
+        public BindableElement<PdfVersion> Version { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Viewer
+        /// ViewerOptions
         ///
         /// <summary>
-        /// Gets the menu that represents the viewer preferences of the
+        /// Gets the menu that represents the viewer options of the
         /// PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<ViewerPreferences> Viewer { get; }
+        public BindableElement<ViewerOptions> Options { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -258,14 +258,14 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Version> Versions { get; } = new[]
+        public IEnumerable<PdfVersion> Versions { get; } = new[]
         {
-            new Version(1, 7),
-            new Version(1, 6),
-            new Version(1, 5),
-            new Version(1, 4),
-            new Version(1, 3),
-            new Version(1, 2),
+            new PdfVersion(1, 7),
+            new PdfVersion(1, 6),
+            new PdfVersion(1, 5),
+            new PdfVersion(1, 4),
+            new PdfVersion(1, 3),
+            new PdfVersion(1, 2),
         };
 
         /* ----------------------------------------------------------------- */
@@ -277,14 +277,14 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<ViewerPreferences> ViewerPreferences { get; } = new[]
+        public IEnumerable<ViewerOptions> ViewerOptions { get; } = new[]
         {
-            Pdf.ViewerPreferences.SinglePage,
-            Pdf.ViewerPreferences.OneColumn,
-            Pdf.ViewerPreferences.TwoColumnLeft,
-            Pdf.ViewerPreferences.TwoColumnRight,
-            Pdf.ViewerPreferences.TwoPageLeft,
-            Pdf.ViewerPreferences.TwoPageRight,
+            Pdf.ViewerOptions.SinglePage,
+            Pdf.ViewerOptions.OneColumn,
+            Pdf.ViewerOptions.TwoColumnLeft,
+            Pdf.ViewerOptions.TwoColumnRight,
+            Pdf.ViewerOptions.TwoPageLeft,
+            Pdf.ViewerOptions.TwoPageRight,
         };
 
         #endregion
@@ -302,7 +302,7 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private BindableElement<Version> CreateVersion(Metadata src)
+        private BindableElement<PdfVersion> CreateVersion(Metadata src)
         {
             src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
                           Versions.First();
@@ -318,10 +318,10 @@ namespace Cube.Pdf.App.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private BindableElement<ViewerPreferences> CreateViewerPreferences(Metadata src)
+        private BindableElement<ViewerOptions> CreateViewerOptions(Metadata src)
         {
-            if (src.Viewer == Pdf.ViewerPreferences.None) src.Viewer = Pdf.ViewerPreferences.OneColumn;
-            return this.Create(() => src.Viewer, e => src.Viewer = e, () => Properties.Resources.MenuLayout);
+            if (src.Options == Pdf.ViewerOptions.None) src.Options = Pdf.ViewerOptions.OneColumn;
+            return this.Create(() => src.Options, e => src.Options = e, () => Properties.Resources.MenuLayout);
         }
 
         #endregion

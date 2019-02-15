@@ -31,13 +31,13 @@ namespace Cube.Pdf.App.Pinstaller
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class PortMonitorExtension
+    public static class PortMonitorExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Convert
         ///
         /// <summary>
         /// Creates a collection of port monitors from the specified
@@ -49,12 +49,12 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Collection of port monitors.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<PortMonitor> Create(this IEnumerable<PortMonitorConfig> src) =>
-            src.Create(PortMonitor.GetElements());
+        public static IEnumerable<PortMonitor> Convert(this IEnumerable<PortMonitorConfig> src) =>
+            src.Convert(PortMonitor.GetElements());
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Convert
         ///
         /// <summary>
         /// Creates a collection of port monitors from the specified
@@ -69,13 +69,33 @@ namespace Cube.Pdf.App.Pinstaller
         /// <returns>Collection of port monitors.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<PortMonitor> Create(this IEnumerable<PortMonitorConfig> src,
+        public static IEnumerable<PortMonitor> Convert(this IEnumerable<PortMonitorConfig> src,
+            IEnumerable<PortMonitor> elements) => src.Select(e => e.Convert(elements));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Creates a new instance of the PortMonitor class with the
+        /// specified configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Port monitor configuration.</param>
+        /// <param name="elements">
+        /// Collection of installed port monitors.
+        /// </param>
+        ///
+        /// <returns>PortMonitor object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PortMonitor Convert(this PortMonitorConfig src,
             IEnumerable<PortMonitor> elements) =>
-            src.Select(e => new PortMonitor(e.Name, elements)
+            new PortMonitor(src.Name, elements)
             {
-                FileName = e.FileName,
-                Config   = e.Config,
-            });
+                FileName = src.FileName,
+                Config   = src.Config,
+            };
 
         /* ----------------------------------------------------------------- */
         ///

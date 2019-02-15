@@ -42,7 +42,7 @@ namespace Cube.AdvApi32
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool CreateProcessAsUser(
             IntPtr hToken,
             string lpApplicationName,

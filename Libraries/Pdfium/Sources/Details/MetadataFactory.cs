@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -57,7 +56,7 @@ namespace Cube.Pdf.Pdfium
             Keywords = GetText(core, nameof(Metadata.Keywords)),
             Creator  = GetText(core, nameof(Metadata.Creator)),
             Producer = GetText(core, nameof(Metadata.Producer)),
-            Viewer   = GetPageMode(core),
+            Options  = GetPageMode(core),
         };
 
         #endregion
@@ -92,10 +91,10 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Version GetVersion(PdfiumReader core) => core.Invoke(
+        private static PdfVersion GetVersion(PdfiumReader core) => core.Invoke(
             e => PdfiumApi.FPDF_GetFileVersion(e, out var version) ?
-            new Version(version / 10, version % 10) :
-            new Version(1, 7)
+            new PdfVersion(version / 10, version % 10) :
+            new PdfVersion(1, 7)
         );
 
         /* ----------------------------------------------------------------- */
@@ -107,17 +106,17 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static ViewerPreferences GetPageMode(PdfiumReader core)
+        private static ViewerOptions GetPageMode(PdfiumReader core)
         {
             var m = core.Invoke(e => PdfiumApi.FPDFDoc_GetPageMode(e));
-            return new Dictionary<int, ViewerPreferences>
+            return new Dictionary<int, ViewerOptions>
             {
-                { 1, ViewerPreferences.Outline         },
-                { 2, ViewerPreferences.Thumbnail       },
-                { 3, ViewerPreferences.FullScreen      },
-                { 4, ViewerPreferences.OptionalContent },
-                { 5, ViewerPreferences.Attachment      },
-            }.TryGetValue(m, out var dest) ? dest : ViewerPreferences.None;
+                { 1, ViewerOptions.Outline         },
+                { 2, ViewerOptions.Thumbnail       },
+                { 3, ViewerOptions.FullScreen      },
+                { 4, ViewerOptions.OptionalContent },
+                { 5, ViewerOptions.Attachment      },
+            }.TryGetValue(m, out var dest) ? dest : ViewerOptions.None;
         }
 
         #endregion

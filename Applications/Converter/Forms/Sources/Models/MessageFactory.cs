@@ -31,32 +31,39 @@ namespace Cube.Pdf.App.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class MessageFactory
+    internal static class MessageFactory
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateSource
+        /// CreateSourceMessage
         ///
         /// <summary>
         /// Creates a message to show the OpenFileDialog.
         /// </summary>
         ///
-        /// <param name="src">Initial value for the FileName.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="src">User settings.</param>
         ///
         /// <returns>OpenFileEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileEventArgs CreateSource(string src, IO io) => new OpenFileEventArgs
+        public static OpenFileEventArgs CreateSourceMessage(this SettingsFolder src)
         {
-            Title            = Properties.Resources.TitleBrowseSource,
-            FileName         = GetFileName(src, io),
-            Multiselect      = false,
-            Filter           = ViewResource.SourceFilters.GetFilter(),
-            FilterIndex      = ViewResource.SourceFilters.GetFilterIndex(src, io),
-        };
+            var io   = src.IO;
+            var path = src.Value.Source;
+            var dest = new OpenFileEventArgs
+            {
+                Title       = Properties.Resources.TitleBrowseSource,
+                FileName    = GetFileName(path, io),
+                Multiselect = false,
+                Filter      = ViewResource.SourceFilters.GetFilter(),
+                FilterIndex = ViewResource.SourceFilters.GetFilterIndex(path, io),
+            };
+
+            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,46 +73,60 @@ namespace Cube.Pdf.App.Converter
         /// Creates a message to show the SaveFileDialog.
         /// </summary>
         ///
-        /// <param name="src">Initial value for the FileName.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="src">User settings.</param>
         ///
         /// <returns>SaveFileEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileEventArgs CreateDestination(string src, IO io) => new SaveFileEventArgs
+        public static SaveFileEventArgs CreateDestinationMessage(this SettingsFolder src)
         {
-            Title            = Properties.Resources.TitleBroseDestination,
-            FileName         = GetFileName(src, io),
-            OverwritePrompt  = false,
-            Filter           = ViewResource.DestinationFilters.GetFilter(),
-            FilterIndex      = ViewResource.DestinationFilters.GetFilterIndex(src, io),
-        };
+            var io   = src.IO;
+            var path = src.Value.Destination;
+            var dest = new SaveFileEventArgs
+            {
+                Title           = Properties.Resources.TitleBroseDestination,
+                FileName        = GetFileName(path, io),
+                OverwritePrompt = false,
+                Filter          = ViewResource.DestinationFilters.GetFilter(),
+                FilterIndex     = ViewResource.DestinationFilters.GetFilterIndex(path, io),
+            };
+
+            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateUserProgram
+        /// CreateUserProgramMessage
         ///
         /// <summary>
         /// Creates a message to show the OpenFileDialog.
         /// </summary>
         ///
-        /// <param name="src">Initial value for the FileName.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="src">User settings.</param>
         ///
         /// <returns>OpenFileEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileEventArgs CreateUserProgram(string src, IO io) => new OpenFileEventArgs
+        public static OpenFileEventArgs CreateUserProgramMessage(this SettingsFolder src)
         {
-            Title            = Properties.Resources.TitleBroseUserProgram,
-            FileName         = GetFileName(src, io),
-            Multiselect      = false,
-            Filter           = ViewResource.UserProgramFilters.GetFilter(),
-        };
+            var io   = src.IO;
+            var path = src.Value.UserProgram;
+            var dest = new OpenFileEventArgs
+            {
+                Title       = Properties.Resources.TitleBroseUserProgram,
+                FileName    = GetFileName(path, io),
+                Multiselect = false,
+                Filter      = ViewResource.UserProgramFilters.GetFilter(),
+            };
+
+            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateWarning
+        /// CreateWarningMessage
         ///
         /// <summary>
         /// Create a message to show the DialogBox with a warning icon
@@ -117,16 +138,17 @@ namespace Cube.Pdf.App.Converter
         /// <returns>MessageEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static MessageEventArgs CreateWarning(string src) => new MessageEventArgs(
-            src,
-            Properties.Resources.TitleWarning,
-            System.Windows.Forms.MessageBoxButtons.OKCancel,
-            System.Windows.Forms.MessageBoxIcon.Warning
-        );
+        public static MessageEventArgs CreateWarningMessage(string src) =>
+            new MessageEventArgs(
+                src,
+                Properties.Resources.TitleWarning,
+                System.Windows.Forms.MessageBoxButtons.OKCancel,
+                System.Windows.Forms.MessageBoxIcon.Warning
+            );
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateError
+        /// CreateErrorMessage
         ///
         /// <summary>
         /// Create a message to show the DialogBox with an error icon
@@ -138,12 +160,13 @@ namespace Cube.Pdf.App.Converter
         /// <returns>MessageEventArgs object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static MessageEventArgs CreateError(string src) => new MessageEventArgs(
-            src,
-            Properties.Resources.TitleError,
-            System.Windows.Forms.MessageBoxButtons.OK,
-            System.Windows.Forms.MessageBoxIcon.Error
-        );
+        public static MessageEventArgs CreateErrorMessage(string src) =>
+            new MessageEventArgs(
+                src,
+                Properties.Resources.TitleError,
+                System.Windows.Forms.MessageBoxButtons.OK,
+                System.Windows.Forms.MessageBoxIcon.Error
+            );
 
         #endregion
 

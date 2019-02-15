@@ -17,8 +17,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Images.Icons;
 using Cube.Xui;
+using Cube.Xui.Converters;
 using System.Reflection;
+using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.App.Editor
 {
@@ -33,7 +36,7 @@ namespace Cube.Pdf.App.Editor
     /* --------------------------------------------------------------------- */
     internal static class Factory
     {
-        #region Methods
+        #region Messages
 
         /* ----------------------------------------------------------------- */
         ///
@@ -142,6 +145,27 @@ namespace Cube.Pdf.App.Editor
             Buttons = System.Windows.MessageBoxButton.YesNoCancel,
             Image   = System.Windows.MessageBoxImage.Information,
         };
+
+        #endregion
+
+        #region Images
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IconImage
+        ///
+        /// <summary>
+        /// Creates a icon from the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">File information.</param>
+        /// <param name="size">Icon size.</param>
+        ///
+        /// <returns>Bitmap of the requested icon.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static BitmapImage IconImage(this Information src, IconSize size) =>
+            src.GetIcon(size)?.ToBitmap().ToBitmapImage(true);
 
         #endregion
     }

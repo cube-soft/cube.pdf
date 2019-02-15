@@ -130,24 +130,23 @@ namespace Cube.Pdf.Tests.Pinstaller
             var src  = new ArgumentCollection(new string[0], '/', true);
             var dest = new Installer(Format.Json, GetExamplesWith("SampleSkeleton.json"));
 
-            var s0 = dest.Config.Ports[0].Application;
+            var s0 = dest.Config.Ports[0].Proxy;
             var c0 = src.ReplaceDirectory(s0);
-            Assert.That(s0, Is.EqualTo("%%DIR%%\\CubeProxy.exe"));
+            Assert.That(s0, Is.EqualTo(@"%%dir%%\CubePDF\CubeProxy.exe"));
             Assert.That(c0, Is.Not.EqualTo(s0));
-            Assert.That(c0, Does.Not.StartWith("%%DIR%%"));
+            Assert.That(c0, Does.Not.StartWith("%%dir%%"));
             Assert.That(c0, Does.EndWith("CubeProxy.exe"));
 
-            var s1 = dest.Config.Ports[0].Arguments;
+            var s1 = dest.Config.Ports[0].Application;
             var c1 = src.ReplaceDirectory(s1);
-            Assert.That(s1, Is.EqualTo("/Exec \"%%dir%%\\CubePDF\\cubepdf.exe\""));
+            Assert.That(s1, Is.EqualTo(@"%%DIR%%\CubePDF\cubepdf.exe"));
             Assert.That(c1, Is.Not.EqualTo(s1));
-            Assert.That(c1, Does.Not.Contain("%%dir%%"));
-            Assert.That(c1, Does.StartWith("/Exec"));
-            Assert.That(c1, Does.EndWith("\""));
+            Assert.That(c1, Does.Not.StartsWith("%%DIR%%"));
+            Assert.That(c1, Does.EndWith("cubepdf.exe"));
 
-            var s2 = dest.Config.Ports[1].Application;
+            var s2 = dest.Config.Ports[1].Proxy;
             var c2 = src.ReplaceDirectory(s2);
-            Assert.That(s2, Is.EqualTo("C:\\Program Files\\CubePDF\\CubeProxy.exe"));
+            Assert.That(s2, Is.EqualTo(@"C:\Program Files\CubePDF\CubeProxy.exe"));
             Assert.That(c2, Is.EqualTo(s2));
 
             var s3 = dest.Config.Ports[1].Arguments;

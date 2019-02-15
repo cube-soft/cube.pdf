@@ -418,7 +418,7 @@
             //
             // ViewerPreferencesComboBox
             //
-            this.ViewerPreferencesComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "Viewer", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.ViewerPreferencesComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "Options", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.ViewerPreferencesComboBox, "ViewerPreferencesComboBox");
             this.ViewerPreferencesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ViewerPreferencesComboBox.FormattingEnabled = true;

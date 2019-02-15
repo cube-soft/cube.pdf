@@ -27,7 +27,8 @@ namespace Cube.Pdf.App.Converter
     /// DocumentName
     ///
     /// <summary>
-    /// ドキュメント名を管理するクラスです。
+    /// Provides functionality to use the specified document name as a
+    /// filename.
     /// </summary>
     ///
     /// <remarks>
@@ -45,12 +46,13 @@ namespace Cube.Pdf.App.Converter
         /// DocumentName
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the DocumentName class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="src">ドキュメント名を示す文字列</param>
-        /// <param name="alternate">代替名</param>
-        /// <param name="io">I/O オブジェクト</param>
+        /// <param name="src">Document name.</param>
+        /// <param name="alternate">Default filename.</param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentName(string src, string alternate, IO io)
@@ -76,7 +78,7 @@ namespace Cube.Pdf.App.Converter
         /// IO
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します。
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -87,7 +89,7 @@ namespace Cube.Pdf.App.Converter
         /// Value
         ///
         /// <summary>
-        /// オリジナルのドキュメント名を取得します。
+        /// Gets the original document name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -98,7 +100,7 @@ namespace Cube.Pdf.App.Converter
         /// Name
         ///
         /// <summary>
-        /// ファイル名として利用可能な名前を取得します。
+        /// Gets a name that can be used as a filename.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -109,8 +111,8 @@ namespace Cube.Pdf.App.Converter
         /// DefaultName
         ///
         /// <summary>
-        /// ドキュメント名がファイル名として利用できない場合に代替する
-        /// 名前を取得します。
+        /// Gets a name that is used when the specified document name
+        /// cannot be used as a filename.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -121,7 +123,7 @@ namespace Cube.Pdf.App.Converter
         /// Filter
         ///
         /// <summary>
-        /// ドキュメント名のフィルタ用オブジェクトを取得します。
+        /// Gets the path filter object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -136,7 +138,7 @@ namespace Cube.Pdf.App.Converter
         /// GetName
         ///
         /// <summary>
-        /// ファイル名として利用する文字列を取得します。
+        /// Gets a name that is used as a filename.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
