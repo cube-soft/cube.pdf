@@ -30,7 +30,7 @@ namespace Cube.Pdf.Ghostscript
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class GsApi : IDisposable
+    internal sealed class GsApi : DisposableBase
     {
         #region Constructors
 
@@ -46,7 +46,6 @@ namespace Cube.Pdf.Ghostscript
         private GsApi()
         {
             _initialize = new OnceAction(() => NativeMethods.NewInstance(out _handle, IntPtr.Zero));
-            _dispose    = new OnceAction<bool>(Dispose);
         }
 
         #endregion
@@ -112,32 +111,6 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~GsApi
-        ///
-        /// <summary>
-        /// Finalizes the GsApi.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~GsApi() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the GsApi.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Dispose
         ///
         /// <summary>
@@ -151,7 +124,14 @@ namespace Cube.Pdf.Ghostscript
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        private void Dispose(bool disposing) => NativeMethods.DeleteInstance(_handle);
+        protected override void Dispose(bool disposing)
+        {
+            if (_handle != IntPtr.Zero)
+            {
+                NativeMethods.DeleteInstance(_handle);
+                _handle = IntPtr.Zero;
+            }
+        }
 
         #endregion
 
@@ -159,8 +139,7 @@ namespace Cube.Pdf.Ghostscript
 
         private static readonly GsApi _core = new GsApi();
         private IntPtr _handle;
-        private OnceAction _initialize;
-        private OnceAction<bool> _dispose;
+        private readonly OnceAction _initialize;
     }
 
     /* --------------------------------------------------------------------- */
