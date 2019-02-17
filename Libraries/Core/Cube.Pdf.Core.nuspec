@@ -9,9 +9,9 @@
         <owners>CubeSoft</owners>
         <description>Basic data structures and interfaces for CubePDF libraries.</description>
         <tags>Cube PDF</tags>
+        <license type="expression">Apache-2.0</license>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
-        <licenseUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/License.txt</licenseUrl>
         <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
     </metadata>
 </package>
