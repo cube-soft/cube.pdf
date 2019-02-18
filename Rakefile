@@ -6,9 +6,9 @@ require 'fileutils'
 # Configuration
 # --------------------------------------------------------------------------- #
 SOLUTION       = 'Cube.Pdf'
-APPLICATIONS   = 'Applications'
+SUFFIX         = 'Applications'
 PROJECTS       = [ 'Core', 'Ghostscript', 'Itext', 'Pdfium' ]
-BRANCHES       = [ 'master', 'net35' ]
+BRANCHES       = [ 'stable', 'net35' ]
 PLATFORMS      = [ 'x86', 'x64' ]
 CONFIGURATIONS = [ 'Debug', 'Release' ]
 NATIVE         = '../resources/native'
@@ -53,8 +53,8 @@ end
 task :build do
     BRANCHES.each { |branch|
         sh("#{CHECKOUT} #{branch}")
-        sh("#{RESTORE} #{SOLUTION}.#{APPLICATIONS}.sln")
-        sh("#{BUILD} #{SOLUTION}.#{APPLICATIONS}.sln")
+        sh("#{RESTORE} #{SOLUTION}.#{SUFFIX}.sln")
+        sh("#{BUILD} #{SOLUTION}.#{SUFFIX}.sln")
     }
 end
 
@@ -97,8 +97,8 @@ end
 # Test
 # --------------------------------------------------------------------------- #
 task :test do
-    sh("#{RESTORE} #{SOLUTION}.#{APPLICATIONS}.sln")
-    sh("#{BUILD} #{SOLUTION}.#{APPLICATIONS}.sln")
+    sh("#{RESTORE} #{SOLUTION}.#{SUFFIX}.sln")
+    sh("#{BUILD} #{SOLUTION}.#{SUFFIX}.sln")
 
     branch = `git symbolic-ref --short HEAD`.chomp
     TESTCASES.each { |proj, dir|
