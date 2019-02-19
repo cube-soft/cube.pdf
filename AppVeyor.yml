@@ -26,8 +26,8 @@ build:
 after_build:
     - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x86.7z
     - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
-    - 7z x -o"..\resources\native\x86\ghostscript" gs-x86.7z
-    - 7z x -o"..\resources\native\x64\ghostscript" gs-x64.7z
+    - 7z x -o"..\resources\native\x86\gs" gs-x86.7z
+    - 7z x -o"..\resources\native\x64\gs" gs-x64.7z
     - rake copy
 test_script:
     - >

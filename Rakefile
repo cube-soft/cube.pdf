@@ -77,7 +77,7 @@ task :copy do
 
         # Ghostscript
         [ 'Tests', 'Applications/Converter/Tests', 'Applications/Converter/Forms' ].each { |dest|
-            src  = [ NATIVE, set[1], 'ghostscript', 'gsdll32.dll' ].join('/')
+            src  = [ NATIVE, set[1], 'gs', 'gsdll32.dll' ].join('/')
             do_copy(src, "#{dest}/#{x86_64}")
             do_copy(src, "#{dest}/#{any_cpu}") if (set[1] == 'x64')
         }
