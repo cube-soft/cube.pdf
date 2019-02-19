@@ -26,15 +26,15 @@ build:
 after_build:
     - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x86.7z
     - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
-    - 7z x -o"..\resources\native\x86\ghostscript" gs-x86.7z
-    - 7z x -o"..\resources\native\x64\ghostscript" gs-x64.7z
+    - 7z x -o"..\resources\native\x86\gs" gs-x86.7z
+    - 7z x -o"..\resources\native\x64\gs" gs-x64.7z
     - rake copy
 test_script:
     - >
-      ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      ..\packages\OpenCover.4.7.922\tools\OpenCover.Console.exe
       -log:Error
       -register:user
-      -target:nunit3-console.exe
+      -target:../packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe
       -targetargs:Cube.Pdf.Tests.dll
       -targetdir:Tests\bin\Release
       -returntargetcode
@@ -42,10 +42,10 @@ test_script:
       -output:CoverResults.xml
       -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.*"
     - >
-      ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      ..\packages\OpenCover.4.7.922\tools\OpenCover.Console.exe
       -log:Error
       -register:user
-      -target:nunit3-console.exe
+      -target:../packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe
       -targetargs:"Cube.Pdf.Tests.Converter.dll --workers=1"
       -targetdir:Applications\Converter\Tests\bin\Release
       -returntargetcode
@@ -54,10 +54,10 @@ test_script:
       -output:CoverResults.xml
       -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program"
     - >
-      ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      ..\packages\OpenCover.4.7.922\tools\OpenCover.Console.exe
       -log:Error
       -register:user
-      -target:nunit3-console.exe
+      -target:../packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe
       -targetargs:"Cube.Pdf.Tests.Editor.dll --workers=1"
       -targetdir:Applications\Editor\Tests\bin\Release
       -returntargetcode
@@ -66,10 +66,10 @@ test_script:
       -output:CoverResults.xml
       -filter:"+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Window -[*]*Control -[*]*.App"
     - >
-      ..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
+      ..\packages\OpenCover.4.7.922\tools\OpenCover.Console.exe
       -log:Error
       -register:user
-      -target:nunit3-console.exe
+      -target:../packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe
       -targetargs:Cube.Pdf.Tests.Pinstaller.dll
       -targetdir:Applications\Pinstaller\Tests\bin\Release
       -returntargetcode
