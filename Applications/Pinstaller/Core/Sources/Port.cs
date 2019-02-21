@@ -70,7 +70,7 @@ namespace Cube.Pdf.App.Pinstaller
             MonitorName = monitor;
             Environment = this.GetEnvironment();
             Exists      = core != null;
-            RetryCount  = 3;
+            RetryCount  = 5;
             _core       = core ?? new Core();
         }
 

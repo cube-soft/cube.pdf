@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private PrinterDriver(DriverInfo3 core)
         {
-            RetryCount = 3;
+            RetryCount = 5;
             _core = core;
         }
 
