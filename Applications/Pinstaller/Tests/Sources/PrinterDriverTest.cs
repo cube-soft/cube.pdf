@@ -90,6 +90,36 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Install
+        ///
+        /// <summary>
+        /// Executes the test of Install method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Install() => Invoke(() =>
+        {
+            var src = new PrinterDriverConfig
+            {
+                Name         = "CubeTestPrinterDriver",
+                MonitorName  = "",
+                FileName     = "pscript5.dll",
+                Config       = "ps5ui.dll",
+                Data         = "cubepdf.ppd",
+                Help         = "pscript.hlp",
+                Dependencies = new[] { "pscript.ntf", "pscriptfe.ntf", "ps_schm.gdl" },
+                DriverStore  = "ntprint",
+            };
+
+            var dest = src.Convert(PrinterDriver.GetElements());
+            dest.Copy(Examples, IO);
+            dest.Install();
+            Assert.That(dest.Exists, Is.True);
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Install_Throws
         ///
         /// <summary>
@@ -179,8 +209,8 @@ namespace Cube.Pdf.Tests.Pinstaller
         [TestCase("",        ExpectedResult = false)]
         public bool GetDriverStoreDirectory(string src)
         {
-            var config = new PrinterDriverConfig { DriverStore = src };
-            var dest   = config.GetDriverStoreDirectory(IO);
+            var driver = new PrinterDriver("Dummy", new PrinterDriver[0]) { DriverStore = src };
+            var dest   = driver.GetDriverStoreDirectory(IO);
             this.LogDebug($"[{nameof(GetDriverStoreDirectory)}] {src} -> {dest.Quote()}");
             return dest.HasValue() && IO.Exists(dest);
         }

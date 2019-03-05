@@ -102,6 +102,7 @@ namespace Cube.Pdf.App.Pinstaller
                 Data         = src.Data,
                 Help         = src.Help,
                 Dependencies = src.Dependencies,
+                DriverStore  = src.DriverStore,
             };
 
         /* ----------------------------------------------------------------- */
@@ -116,21 +117,18 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="from">Resource directory.</param>
         /// <param name="io">I/O handler.</param>
         ///
-        /// <remarks>
-        /// Dependencies には複数のファイルが指定される可能性がある。
-        /// その場合の処理方法を要検討。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         public static void Copy(this PrinterDriver src, string from, IO io)
         {
-            var to = src.DirectoryName;
+            var tmp = src.GetDriverStoreDirectory(io);
+            var dir = tmp.HasValue() && io.Exists(tmp) ? tmp : from;
+            var to  = src.DirectoryName;
 
-            io.Copy(src.FileName,     from, to);
-            io.Copy(src.Config,       from, to);
-            io.Copy(src.Data,         from, to);
-            io.Copy(src.Help,         from, to);
-            foreach (var f in src.Dependencies) io.Copy(f, from, to); // see remarks
+            io.Copy(src.FileName, dir, to);
+            io.Copy(src.Config,   dir, to);
+            io.Copy(src.Data,    from, to);
+            io.Copy(src.Help,     dir, to);
+            foreach (var f in src.Dependencies) io.Copy(f, from, to);
         }
 
         /* ----------------------------------------------------------------- */
@@ -141,11 +139,11 @@ namespace Cube.Pdf.App.Pinstaller
         /// Gets the directory path from the specified configuration.
         /// </summary>
         ///
-        /// <param name="src">Printer driver configuration.</param>
+        /// <param name="src">Printer driver object.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static string GetDriverStoreDirectory(this PrinterDriverConfig src, IO io)
+        public static string GetDriverStoreDirectory(this PrinterDriver src, IO io)
         {
             if (!src.DriverStore.HasValue()) return string.Empty;
 

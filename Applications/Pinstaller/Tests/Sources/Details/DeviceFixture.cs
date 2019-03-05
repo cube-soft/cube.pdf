@@ -69,7 +69,12 @@ namespace Cube.Pdf.Tests.Pinstaller
         protected void Invoke(Action action)
         {
             try { action(); }
-            catch (InvalidOperationException err) { this.LogWarn($"{err.Message} ({err.GetType().Name})"); }
+            catch (Exception err)
+            {
+                if (err is InvalidOperationException ||
+                    err is UnauthorizedAccessException) this.LogWarn($"{err.Message} ({err.GetType().Name})");
+                else throw;
+            }
         }
 
         #endregion

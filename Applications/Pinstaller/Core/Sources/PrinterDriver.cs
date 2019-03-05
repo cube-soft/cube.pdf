@@ -245,6 +245,18 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// DriverStore
+        ///
+        /// <summary>
+        /// Gets or sets the name to find the target resources in the
+        /// DriverStore directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string DriverStore { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// RetryCount
         ///
         /// <summary>
