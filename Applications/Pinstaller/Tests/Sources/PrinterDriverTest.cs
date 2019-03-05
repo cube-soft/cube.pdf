@@ -82,9 +82,9 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
             Assert.That(src.Data.HasValue(),          Is.False, nameof(src.Data));
             Assert.That(src.Help.HasValue(),          Is.False, nameof(src.Help));
-            Assert.That(src.Dependencies.HasValue(),  Is.False, nameof(src.Dependencies));
             Assert.That(src.Environment.HasValue(),   Is.True, nameof(src.Environment));
             Assert.That(src.DirectoryName.HasValue(), Is.True, nameof(src.DirectoryName));
+            Assert.That(src.Dependencies.Count(),     Is.EqualTo(0));
         }
 
         /* ----------------------------------------------------------------- */
@@ -107,7 +107,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             src.Config       = "DummyUi.dll";
             src.Data         = "Dummy.ppd";
             src.Help         = "Dummy.hlp";
-            src.Dependencies = "Dummy.ntf";
+            src.Dependencies = new[] { "Dummy.ntf" };
             Assert.That(src.CanInstall(), Is.True);
             Assert.That(() => src.Install(), Throws.InstanceOf<Exception>());
         }
@@ -133,7 +133,7 @@ namespace Cube.Pdf.Tests.Pinstaller
             src.Config       = "DummyUi.dll";
             src.Data         = "Dummy.ppd";
             src.Help         = "Dummy.hlp";
-            src.Dependencies = "Dummy.ntf";
+            src.Dependencies = new[] { "Dummy.ntf" };
             Assert.DoesNotThrow(() => src.Uninstall());
         }
 

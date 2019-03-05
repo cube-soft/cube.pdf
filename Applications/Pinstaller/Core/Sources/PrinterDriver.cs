@@ -69,8 +69,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public PrinterDriver(string name, IEnumerable<PrinterDriver> elements) :
-            this(new DriverInfo3 { cVersion = 3, pDefaultDataType = "RAW" })
+        public PrinterDriver(string name, IEnumerable<PrinterDriver> elements) : this(Create())
         {
             var obj = elements.FirstOrDefault(e => e.Name.FuzzyEquals(name));
             Exists = obj != null;
@@ -215,10 +214,10 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Dependencies
+        public IEnumerable<string> Dependencies
         {
-            get => _core.pDependentFiles;
-            set => _core.pDependentFiles = value;
+            get => _core.pDependentFiles.Split('\0').Where(e => e.HasValue());
+            set => _core.pDependentFiles = string.Join("\0", value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -389,6 +388,22 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static bool GetEnumApi(IntPtr src, uint n, out uint bytes, out uint count) =>
             NativeMethods.EnumPrinterDrivers("", "", 3, src, n, out bytes, out count);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new instance of the DriverInfo3 class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static DriverInfo3 Create() => new DriverInfo3
+        {
+            cVersion         = 3,
+            pDefaultDataType = "RAW",
+            pDependentFiles  = string.Empty,
+        };
 
         /* ----------------------------------------------------------------- */
         ///

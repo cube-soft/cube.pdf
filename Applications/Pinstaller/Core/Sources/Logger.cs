@@ -19,6 +19,7 @@ using Cube.Generics;
 using Cube.Log;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Cube.Pdf.App.Pinstaller.Debug
@@ -134,8 +135,8 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             $"{nameof(src.Config)}:{src.Config.Quote()}",
             $"{nameof(src.Data)}:{src.Data.Quote()}",
             $"{nameof(src.Help)}:{src.Help.Quote()}",
-            $"{nameof(src.Dependencies)}:{src.Dependencies.Quote()}",
-            $"{nameof(src.DirectoryName)}:{src.DirectoryName.Quote()}"
+            $"{nameof(src.DirectoryName)}:{src.DirectoryName.Quote()}",
+            $"[ {string.Join(" ", src.Dependencies.Select(e => e.Quote()))} ]"
         );
 
         /* ----------------------------------------------------------------- */

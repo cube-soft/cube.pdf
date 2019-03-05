@@ -197,7 +197,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                         Config       = "cubeps5ui.dll",
                         Data         = "cubepdf.ppd",
                         Help         = "cubeps.hlp",
-                        Dependencies = "cubeps.ntf",
+                        Dependencies = new[] { "cubeps.ntf", "cubepsfe.ntf" },
                     }},
                     Printers = new[] { new PrinterConfig
                     {

@@ -128,7 +128,7 @@ namespace Cube.Pdf.App.Pinstaller
             io.Copy(src.Config,       from, to);
             io.Copy(src.Data,         from, to);
             io.Copy(src.Help,         from, to);
-            io.Copy(src.Dependencies, from, to); // see remarks
+            foreach (var f in src.Dependencies) io.Copy(f, from, to); // see remarks
         }
 
         #endregion

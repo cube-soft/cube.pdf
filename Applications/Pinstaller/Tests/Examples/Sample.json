@@ -12,7 +12,7 @@
         "Config"            : "cubeps5ui.dll",
         "Data"              : "cubepdf.ppd",
         "Help"              : "cubeps.hlp",
-        "Dependencies"      : "cubeps.ntf"
+        "Dependencies"      : [ "cubeps.ntf", "cubepsfe.ntf" ]
     }],
     "Ports" : [{
         "Name"              : "CubePDF:",

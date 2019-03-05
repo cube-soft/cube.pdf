@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -154,7 +155,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public string Dependencies
+        public IEnumerable<string> Dependencies
         {
             get => _dependencies;
             set => SetProperty(ref _dependencies, value);
@@ -193,7 +194,7 @@ namespace Cube.Pdf.App.Pinstaller
             _config       = string.Empty;
             _data         = string.Empty;
             _help         = string.Empty;
-            _dependencies = string.Empty;
+            _dependencies = new string[0];
         }
 
         #endregion
@@ -205,7 +206,7 @@ namespace Cube.Pdf.App.Pinstaller
         private string _config;
         private string _data;
         private string _help;
-        private string _dependencies;
+        private IEnumerable<string> _dependencies;
         #endregion
     }
 }

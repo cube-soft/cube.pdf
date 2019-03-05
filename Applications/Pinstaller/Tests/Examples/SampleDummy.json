@@ -12,7 +12,7 @@
         "Config"            : "dummy5ui.dll",
         "Data"              : "dummy.ppd",
         "Help"              : "dummy.hlp",
-        "Dependencies"      : "dummy.ntf"
+        "Dependencies"      : [ "dummy.ntf" ]
     }],
     "Ports" : [{
         "Name"              : "DummyPort:",
