@@ -34,7 +34,7 @@ test_script:
       ..\packages\OpenCover.4.7.922\tools\OpenCover.Console.exe
       -log:Error
       -register:user
-      -target:../packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe
+      -target:nunit3-console.exe
       -targetargs:Cube.Pdf.Tests.dll
       -targetdir:Tests\bin\Release
       -returntargetcode
@@ -45,7 +45,7 @@ test_script:
       ..\packages\OpenCover.4.7.922\tools\OpenCover.Console.exe
       -log:Error
       -register:user
-      -target:../packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe
+      -target:nunit3-console.exe
       -targetargs:"Cube.Pdf.Tests.Converter.dll --workers=1"
       -targetdir:Applications\Converter\Tests\bin\Release
       -returntargetcode
@@ -57,7 +57,7 @@ test_script:
       ..\packages\OpenCover.4.7.922\tools\OpenCover.Console.exe
       -log:Error
       -register:user
-      -target:../packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe
+      -target:nunit3-console.exe
       -targetargs:"Cube.Pdf.Tests.Editor.dll --workers=1"
       -targetdir:Applications\Editor\Tests\bin\Release
       -returntargetcode
@@ -69,7 +69,7 @@ test_script:
       ..\packages\OpenCover.4.7.922\tools\OpenCover.Console.exe
       -log:Error
       -register:user
-      -target:../packages/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe
+      -target:nunit3-console.exe
       -targetargs:Cube.Pdf.Tests.Pinstaller.dll
       -targetdir:Applications\Pinstaller\Tests\bin\Release
       -returntargetcode
