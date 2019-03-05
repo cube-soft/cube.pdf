@@ -128,7 +128,7 @@ namespace Cube.Pdf.App.Pinstaller
             io.Copy(src.Config,   dir, to);
             io.Copy(src.Data,    from, to);
             io.Copy(src.Help,     dir, to);
-            foreach (var f in src.Dependencies) io.Copy(f, from, to);
+            foreach (var f in src.Dependencies) io.Copy(f, dir, to);
         }
 
         /* ----------------------------------------------------------------- */
