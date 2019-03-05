@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
+using Cube.Log;
 using Cube.Pdf.App.Pinstaller;
 using Cube.Pdf.App.Pinstaller.Debug;
 using NUnit.Framework;
@@ -161,6 +162,27 @@ namespace Cube.Pdf.Tests.Pinstaller
                 Assert.That(e.DirectoryName.HasValue(), Is.True, nameof(e.DirectoryName));
                 Assert.That(e.Exists,                   Is.True, nameof(e.Exists));
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetDriverStoreDirectory
+        ///
+        /// <summary>
+        /// Executes the test of the GetDriverStoreDirectory extended
+        /// method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("ntprint", ExpectedResult = true)]
+        [TestCase("dummy",   ExpectedResult = false)]
+        [TestCase("",        ExpectedResult = false)]
+        public bool GetDriverStoreDirectory(string src)
+        {
+            var config = new PrinterDriverConfig { DriverStore = src };
+            var dest   = config.GetDriverStoreDirectory(IO);
+            this.LogDebug($"[{nameof(GetDriverStoreDirectory)}] {src} -> {dest.Quote()}");
+            return dest.HasValue() && IO.Exists(dest);
         }
 
         #endregion

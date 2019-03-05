@@ -16,6 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Generics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -129,6 +131,31 @@ namespace Cube.Pdf.App.Pinstaller
             io.Copy(src.Data,         from, to);
             io.Copy(src.Help,         from, to);
             foreach (var f in src.Dependencies) io.Copy(f, from, to); // see remarks
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetDriverStoreDirectory
+        ///
+        /// <summary>
+        /// Gets the directory path from the specified configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Printer driver configuration.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string GetDriverStoreDirectory(this PrinterDriverConfig src, IO io)
+        {
+            if (!src.DriverStore.HasValue()) return string.Empty;
+
+            var root = io.Combine(Environment.SpecialFolder.System.GetName(), @"DriverStore\FileRepository");
+            var arch = IntPtr.Size == 4 ? "x86" : "amd64";
+            var dirs = io.GetDirectories(root, $"{src.DriverStore}.inf_{arch}*")
+                         .OrderByDescending(e => io.Get(e).LastWriteTime);
+            var dest = dirs.FirstOrDefault();
+
+            return dest.HasValue() ? io.Combine(dest, arch) : string.Empty;
         }
 
         #endregion

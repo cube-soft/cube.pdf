@@ -161,6 +161,23 @@ namespace Cube.Pdf.App.Pinstaller
             set => SetProperty(ref _dependencies, value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DriverStore
+        ///
+        /// <summary>
+        /// Gets or sets the name to find the target resources in the
+        /// DriverStore directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string DriverStore
+        {
+            get => _store;
+            set => SetProperty(ref _store, value);
+        }
+
         #endregion
 
         #region Implementations
@@ -195,6 +212,7 @@ namespace Cube.Pdf.App.Pinstaller
             _data         = string.Empty;
             _help         = string.Empty;
             _dependencies = new string[0];
+            _store        = string.Empty;
         }
 
         #endregion
@@ -207,6 +225,7 @@ namespace Cube.Pdf.App.Pinstaller
         private string _data;
         private string _help;
         private IEnumerable<string> _dependencies;
+        private string _store;
         #endregion
     }
 }
