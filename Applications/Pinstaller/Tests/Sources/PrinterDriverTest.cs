@@ -108,7 +108,7 @@ namespace Cube.Pdf.Tests.Pinstaller
                 Config       = "ps5ui.dll",
                 Data         = "cubepdf.ppd",
                 Help         = "pscript.hlp",
-                Dependencies = new[] { "pscript.ntf", "pscriptfe.ntf", "ps_schm.gdl" },
+                Dependencies = new[] { "pscript.ntf", "pscrptfe.ntf", "ps_schm.gdl" },
                 DriverStore  = "ntprint",
             };
 
