@@ -90,17 +90,17 @@ namespace Cube.Pdf.Tests.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Install
+        /// Copy
         ///
         /// <summary>
-        /// Executes the test of Install method.
+        /// Executes the test of Copy extende method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Install() => Invoke(() =>
+        public void Copy() => Invoke(() =>
         {
-            var src = new PrinterDriverConfig
+            var dest = new PrinterDriverConfig
             {
                 Name         = "CubeTestPrinterDriver",
                 MonitorName  = "",
@@ -110,12 +110,15 @@ namespace Cube.Pdf.Tests.Pinstaller
                 Help         = "pscript.hlp",
                 Dependencies = new[] { "pscript.ntf", "pscrptfe.ntf", "ps_schm.gdl" },
                 DriverStore  = "ntprint",
-            };
+            }.Convert(PrinterDriver.GetElements());
 
-            var dest = src.Convert(PrinterDriver.GetElements());
             dest.Copy(Examples, IO);
-            dest.Install();
-            Assert.That(dest.Exists, Is.True);
+            var dir = dest.DirectoryName;
+            Assert.That(IO.Exists(IO.Combine(dir, dest.FileName)), dest.FileName);
+            Assert.That(IO.Exists(IO.Combine(dir, dest.Config)),   dest.Config);
+            Assert.That(IO.Exists(IO.Combine(dir, dest.Data)),     dest.Data);
+            Assert.That(IO.Exists(IO.Combine(dir, dest.Help)),     dest.Help);
+            foreach (var s in dest.Dependencies) Assert.That(IO.Exists(IO.Combine(dir, s)), s);
         });
 
         /* ----------------------------------------------------------------- */
