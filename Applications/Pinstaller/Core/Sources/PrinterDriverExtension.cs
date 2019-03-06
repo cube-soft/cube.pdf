@@ -150,9 +150,9 @@ namespace Cube.Pdf.App.Pinstaller
 
             var root = io.Combine(Environment.SpecialFolder.System.GetName(), @"DriverStore\FileRepository");
             var arch = IntPtr.Size == 4 ?  "x86" : "amd64";
-            var dir  = IntPtr.Size == 4 ? "i386" : "amd64";
+            var sub  = IntPtr.Size == 4 ? "i386" : "amd64";
             var dest = io.GetDirectories(root, $"{src.DriverStore}.inf_{arch}*")
-                         .SelectMany(e => new[] { io.Combine(e, dir), e })
+                         .SelectMany(e => new[] { io.Combine(e, sub), e })
                          .Where(e =>
                          {
                              var ok = io.Exists(e) && io.GetFiles(e, "*.dll").Length > 0;
