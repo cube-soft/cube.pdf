@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Generics;
+using Cube.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -147,12 +148,17 @@ namespace Cube.Pdf.App.Pinstaller
         {
             if (!src.DriverStore.HasValue()) return string.Empty;
 
-            var root = io.Combine(Environment.SpecialFolder.System.GetName(), @"DriverStore\FileRepository");
             var arch = IntPtr.Size == 4 ? "x86" : "amd64";
-            var dirs = io.GetDirectories(root, $"{src.DriverStore}.inf_{arch}*")
-                         .OrderByDescending(e => io.Get(e).LastWriteTime);
-            var dest = dirs.FirstOrDefault();
-
+            var root = io.Combine(Environment.SpecialFolder.System.GetName(), @"DriverStore\FileRepository");
+            var dest = io.GetDirectories(root, $"{src.DriverStore}.inf_{arch}*")
+                         .Where(e =>
+                         {
+                             var exists = io.Exists(io.Combine(e, arch));
+                             src.LogDebug($"{e} ({exists})");
+                             return io.Exists(io.Combine(e, arch));
+                         })
+                         .OrderByDescending(e => io.Get(e).LastWriteTime)
+                         .FirstOrDefault();
             return dest.HasValue() ? io.Combine(dest, arch) : string.Empty;
         }
 
