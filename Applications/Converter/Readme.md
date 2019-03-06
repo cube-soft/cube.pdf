@@ -50,6 +50,8 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2018/03/14 version 1.0.0RC19
+    - Fix to install and uninstall the CubePDF printer.
 * 2018/02/15 version 1.0.0RC18
     - Fix to apply for the Metadata as the target of the saving settings function.
     - Add an option to set the initial directory when showing the saving file dialog.
