@@ -72,7 +72,7 @@ namespace Cube.Pdf.App.Pinstaller
             var dest = io.Combine(to, filename);
             if (!io.Exists(src)) return;
 
-            io.LogDebug(string.Join("\t", $"[{nameof(Copy)}]", src.Quote(), dest.Quote()));
+            io.LogDebug(string.Join("\t", $"[{nameof(Copy)}]", $"From:{src.Quote()}", $"To:{dest.Quote()}"));
             io.Copy(src, dest, true);
         }
 
