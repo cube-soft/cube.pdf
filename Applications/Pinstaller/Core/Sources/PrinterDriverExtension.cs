@@ -156,6 +156,25 @@ namespace Cube.Pdf.App.Pinstaller
             return dest.HasValue() ? io.Combine(dest, arch) : string.Empty;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Exists
+        ///
+        /// <summary>
+        /// Determines whether the specified filename exists in the
+        /// specified directory.
+        /// </summary>
+        ///
+        /// <param name="src">Printer driver object.</param>
+        /// <param name="filename">Target filename.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /// <returns>true for exists; otherwise false.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal static bool Exists(this PrinterDriver src, string filename, IO io) =>
+            io.Exists(io.Combine(src.DirectoryName, filename));
+
         #endregion
     }
 }
