@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Pinstaller
         private Printer(PrinterInfo2 core)
         {
             Environment = this.GetEnvironment();
-            RetryCount  = 5;
+            RetryCount  = 10;
             _core = core;
         }
 

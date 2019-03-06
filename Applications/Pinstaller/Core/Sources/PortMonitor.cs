@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             _core = core;
             DirectoryName = System.Environment.SpecialFolder.System.GetName();
-            RetryCount    = 5;
+            RetryCount    = 10;
         }
 
         #endregion
