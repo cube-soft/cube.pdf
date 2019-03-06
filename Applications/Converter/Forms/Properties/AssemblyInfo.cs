@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("1.0.0.18")]
-[assembly: AssemblyFileVersion("1.0.0.18")]
+[assembly: AssemblyVersion("1.0.0.19")]
+[assembly: AssemblyFileVersion("1.0.0.19")]
 [assembly: AssemblyTitle("CubePDF")]
 [assembly: AssemblyDescription("PDF converting application via the virtual printer.")]
 [assembly: AssemblyCompany("CubeSoft")]
