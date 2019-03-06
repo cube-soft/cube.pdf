@@ -148,18 +148,20 @@ namespace Cube.Pdf.App.Pinstaller
         {
             if (!src.DriverStore.HasValue()) return string.Empty;
 
-            var arch = IntPtr.Size == 4 ? "x86" : "amd64";
             var root = io.Combine(Environment.SpecialFolder.System.GetName(), @"DriverStore\FileRepository");
+            var arch = IntPtr.Size == 4 ?  "x86" : "amd64";
+            var dir  = IntPtr.Size == 4 ? "i386" : "amd64";
             var dest = io.GetDirectories(root, $"{src.DriverStore}.inf_{arch}*")
+                         .SelectMany(e => new[] { io.Combine(e, dir), e })
                          .Where(e =>
                          {
-                             var exists = io.Exists(io.Combine(e, arch));
-                             src.LogDebug($"{e} ({exists})");
-                             return io.Exists(io.Combine(e, arch));
+                             var ok = io.Exists(e) && io.GetFiles(e, "*.dll").Length > 0;
+                             src.LogDebug($"{e} ({ok})");
+                             return ok;
                          })
                          .OrderByDescending(e => io.Get(e).LastWriteTime)
                          .FirstOrDefault();
-            return dest.HasValue() ? io.Combine(dest, arch) : string.Empty;
+            return dest.HasValue() ? dest : string.Empty;
         }
 
         /* ----------------------------------------------------------------- */
