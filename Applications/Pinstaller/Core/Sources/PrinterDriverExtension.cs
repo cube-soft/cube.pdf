@@ -103,7 +103,7 @@ namespace Cube.Pdf.App.Pinstaller
                 Data         = src.Data,
                 Help         = src.Help,
                 Dependencies = src.Dependencies,
-                DriverStore  = src.DriverStore,
+                Repository   = src.Repository,
             };
 
         /* ----------------------------------------------------------------- */
@@ -115,26 +115,31 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /// <param name="src">Printer driver object.</param>
-        /// <param name="from">Resource directory.</param>
+        /// <param name="user">User resource directory.</param>
         /// <param name="io">I/O handler.</param>
         ///
+        /// <remarks>
+        /// データファイル (PPD) は、常にユーザが指定したディレクトリから
+        /// コピーします。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public static void Copy(this PrinterDriver src, string from, IO io)
+        public static void Copy(this PrinterDriver src, string user, IO io)
         {
-            var tmp = src.GetDriverStoreDirectory(io);
-            var dir = tmp.HasValue() && io.Exists(tmp) ? tmp : from;
-            var to  = src.DirectoryName;
+            var system = src.GetRepository(io);
+            var from   = system.HasValue() && io.Exists(system) ? system : user;
+            var to     = src.TargetDirectory;
 
-            io.Copy(src.FileName, dir, to);
-            io.Copy(src.Config,   dir, to);
-            io.Copy(src.Data,    from, to);
-            io.Copy(src.Help,     dir, to);
-            foreach (var f in src.Dependencies) io.Copy(f, dir, to);
+            io.Copy(src.Data,     user, to); // see remarks.
+            io.Copy(src.FileName, from, to);
+            io.Copy(src.Config,   from, to);
+            io.Copy(src.Help,     from, to);
+            foreach (var f in src.Dependencies) io.Copy(f, from, to);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetDriverStoreDirectory
+        /// GetRepository
         ///
         /// <summary>
         /// Gets the directory path from the specified configuration.
@@ -143,15 +148,17 @@ namespace Cube.Pdf.App.Pinstaller
         /// <param name="src">Printer driver object.</param>
         /// <param name="io">I/O handler.</param>
         ///
+        /// <returns>Path of the repository</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public static string GetDriverStoreDirectory(this PrinterDriver src, IO io)
+        public static string GetRepository(this PrinterDriver src, IO io)
         {
-            if (!src.DriverStore.HasValue()) return string.Empty;
+            if (!src.Repository.HasValue()) return string.Empty;
 
             var root = io.Combine(Environment.SpecialFolder.System.GetName(), @"DriverStore\FileRepository");
             var arch = IntPtr.Size == 4 ?  "x86" : "amd64";
             var sub  = IntPtr.Size == 4 ? "i386" : "amd64";
-            var dest = io.GetDirectories(root, $"{src.DriverStore}.inf_{arch}*")
+            var dest = io.GetDirectories(root, $"{src.Repository}.inf_{arch}*")
                          .SelectMany(e => new[] { io.Combine(e, sub), e })
                          .Where(e =>
                          {
@@ -181,7 +188,7 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         internal static bool Exists(this PrinterDriver src, string filename, IO io) =>
-            io.Exists(io.Combine(src.DirectoryName, filename));
+            io.Exists(io.Combine(src.TargetDirectory, filename));
 
         #endregion
     }

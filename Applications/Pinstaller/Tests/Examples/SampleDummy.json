@@ -17,7 +17,9 @@
     "Ports" : [{
         "Name"              : "DummyPort:",
         "MonitorName"       : "DummyMonitor",
-        "Application"       : "dummy.exe"
+        "Application"       : "dummy.exe",
+        "Arguments"         : "",
+        "WaitForExit"       : false
     }],
     "PortMonitors" : [{
         "Name"              : "DummyMonitor",

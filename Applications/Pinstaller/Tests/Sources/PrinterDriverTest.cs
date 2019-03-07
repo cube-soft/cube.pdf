@@ -54,9 +54,9 @@ namespace Cube.Pdf.Tests.Pinstaller
         public bool Create(string name)
         {
             var src = new PrinterDriver(name);
-            Assert.That(src.Name.Unify(),             Is.EqualTo(name));
-            Assert.That(src.Environment.HasValue(),   Is.True, nameof(src.Environment));
-            Assert.That(src.DirectoryName.HasValue(), Is.True, nameof(src.DirectoryName));
+            Assert.That(src.Name.Unify(),               Is.EqualTo(name));
+            Assert.That(src.Environment.HasValue(),     Is.True, nameof(src.Environment));
+            Assert.That(src.TargetDirectory.HasValue(), Is.True, nameof(src.TargetDirectory));
             return src.Exists;
         }
 
@@ -75,17 +75,17 @@ namespace Cube.Pdf.Tests.Pinstaller
         {
             var name = "Dummy Driver";
             var src  = new PrinterDriver(name, new PrinterDriver[0]);
-            Assert.That(src.Name,                     Is.EqualTo(name));
-            Assert.That(src.Exists,                   Is.False, nameof(src.Exists));
-            Assert.That(src.CanInstall(),             Is.False, nameof(src.CanInstall));
-            Assert.That(src.MonitorName.HasValue(),   Is.False, nameof(src.MonitorName));
-            Assert.That(src.FileName.HasValue(),      Is.False, nameof(src.FileName));
-            Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
-            Assert.That(src.Data.HasValue(),          Is.False, nameof(src.Data));
-            Assert.That(src.Help.HasValue(),          Is.False, nameof(src.Help));
-            Assert.That(src.Environment.HasValue(),   Is.True, nameof(src.Environment));
-            Assert.That(src.DirectoryName.HasValue(), Is.True, nameof(src.DirectoryName));
-            Assert.That(src.Dependencies.Count(),     Is.EqualTo(0));
+            Assert.That(src.Name,                       Is.EqualTo(name));
+            Assert.That(src.Exists,                     Is.False, nameof(src.Exists));
+            Assert.That(src.CanInstall(),               Is.False, nameof(src.CanInstall));
+            Assert.That(src.MonitorName.HasValue(),     Is.False, nameof(src.MonitorName));
+            Assert.That(src.FileName.HasValue(),        Is.False, nameof(src.FileName));
+            Assert.That(src.Config.HasValue(),          Is.False, nameof(src.Config));
+            Assert.That(src.Data.HasValue(),            Is.False, nameof(src.Data));
+            Assert.That(src.Help.HasValue(),            Is.False, nameof(src.Help));
+            Assert.That(src.Environment.HasValue(),     Is.True, nameof(src.Environment));
+            Assert.That(src.TargetDirectory.HasValue(), Is.True, nameof(src.TargetDirectory));
+            Assert.That(src.Dependencies.Count(),       Is.EqualTo(0));
         }
 
         /* ----------------------------------------------------------------- */
@@ -109,11 +109,11 @@ namespace Cube.Pdf.Tests.Pinstaller
                 Data         = "cubepdf.ppd",
                 Help         = "pscript.hlp",
                 Dependencies = new[] { "pscript.ntf", "pscrptfe.ntf", "ps_schm.gdl" },
-                DriverStore  = "ntprint",
+                Repository   = "ntprint",
             }.Convert(PrinterDriver.GetElements());
 
             dest.Copy(Examples, IO);
-            var dir = dest.DirectoryName;
+            var dir = dest.TargetDirectory;
             Assert.That(IO.Exists(IO.Combine(dir, dest.FileName)), dest.FileName);
             Assert.That(IO.Exists(IO.Combine(dir, dest.Config)),   dest.Config);
             Assert.That(IO.Exists(IO.Combine(dir, dest.Data)),     dest.Data);
@@ -189,32 +189,31 @@ namespace Cube.Pdf.Tests.Pinstaller
             foreach (var e in src)
             {
                 e.Log();
-                Assert.That(e.Name.HasValue(),          Is.True, nameof(e.Name));
-                Assert.That(e.FileName.HasValue(),      Is.True, nameof(e.FileName));
-                Assert.That(e.Environment.HasValue(),   Is.True, nameof(e.Environment));
-                Assert.That(e.DirectoryName.HasValue(), Is.True, nameof(e.DirectoryName));
-                Assert.That(e.Exists,                   Is.True, nameof(e.Exists));
+                Assert.That(e.Name.HasValue(),            Is.True, nameof(e.Name));
+                Assert.That(e.FileName.HasValue(),        Is.True, nameof(e.FileName));
+                Assert.That(e.Environment.HasValue(),     Is.True, nameof(e.Environment));
+                Assert.That(e.TargetDirectory.HasValue(), Is.True, nameof(e.TargetDirectory));
+                Assert.That(e.Exists,                     Is.True, nameof(e.Exists));
             }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetDriverStoreDirectory
+        /// GetRepository
         ///
         /// <summary>
-        /// Executes the test of the GetDriverStoreDirectory extended
-        /// method.
+        /// Executes the test of the GetRepository extended method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("ntprint", ExpectedResult = true)]
         [TestCase("dummy",   ExpectedResult = false)]
         [TestCase("",        ExpectedResult = false)]
-        public bool GetDriverStoreDirectory(string src)
+        public bool GetRepository(string src)
         {
-            var driver = new PrinterDriver("Dummy", new PrinterDriver[0]) { DriverStore = src };
-            var dest   = driver.GetDriverStoreDirectory(IO);
-            this.LogDebug($"[{nameof(GetDriverStoreDirectory)}] {src} -> {dest.Quote()}");
+            var driver = new PrinterDriver("Dummy", new PrinterDriver[0]) { Repository = src };
+            var dest   = driver.GetRepository(IO);
+            this.LogDebug($"[{nameof(GetRepository)}] {src} -> {dest.Quote()}");
             return dest.HasValue() && IO.Exists(dest);
         }
 

@@ -222,38 +222,15 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Exists
+        /// Repository
         ///
         /// <summary>
-        /// Gets the value indicating whether the printer driver has been
-        /// already installed.
+        /// Gets or sets the name to find the resource files in the
+        /// DriverStore/FileRepository directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Exists { get; private set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DirectoryName
-        ///
-        /// <summary>
-        /// Gets the default path that driver resources are installed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string DirectoryName => _directory ?? (_directory = GetDirectory());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DriverStore
-        ///
-        /// <summary>
-        /// Gets or sets the name to find the target resources in the
-        /// DriverStore directory.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string DriverStore { get; set; }
+        public string Repository { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -266,6 +243,29 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         public int RetryCount { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Exists
+        ///
+        /// <summary>
+        /// Gets the value indicating whether the printer driver has been
+        /// already installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Exists { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TargetDirectory
+        ///
+        /// <summary>
+        /// Gets the default path that driver resources are installed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string TargetDirectory => _directory ?? (_directory = GetTargetDirectory());
 
         #endregion
 
@@ -359,21 +359,21 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetDirectory
+        /// GetTargetDirectory
         ///
         /// <summary>
         /// Gets the default path that driver resources are installed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetDirectory()
+        private static string GetTargetDirectory()
         {
             if (GetDirectoryApi(null, 0, out var bytes)) return string.Empty;
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var sb = new StringBuilder((int)bytes);
-            if (GetDirectoryApi(sb, bytes, out _)) return sb.ToString();
-            else throw new Win32Exception();
+            if (!GetDirectoryApi(sb, bytes, out _)) throw new Win32Exception();
+            return sb.ToString();
         }
 
         /* ----------------------------------------------------------------- */
