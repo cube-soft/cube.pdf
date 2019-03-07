@@ -188,11 +188,12 @@ CubePinstaller に指定する JSON ファイルの構成例は下記の通り�
     "PrinterDrivers" : [{
         "Name"         : "CubePDF",
         "MonitorName"  : "CubeMon",
-        "FileName"     : "cubeps5.dll",
-        "Config"       : "cubeps5ui.dll",
         "Data"         : "cubepdf.ppd",
-        "Help"         : "cubeps.hlp",
-        "Dependencies" : "cubeps.ntf"
+        "Repository"   : "ntprint",
+        "FileName"     : "pscript5.dll",
+        "Config"       : "ps5ui.dll",
+        "Help"         : "pscript.hlp",
+        "Dependencies" : [ "pscript.ntf", "pscrptfe.ntf", "ps_schm.gdl" ]
     }],
     "Ports" : [{
         "Name"         : "CubePDF:",
