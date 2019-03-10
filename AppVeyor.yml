@@ -80,16 +80,16 @@ test_script:
 after_test:
     - xcopy /q /Y /I CoverResults.xml TestLog\
     - xcopy /q /Y /I "Tests\bin\Release\*.log" TestLog\
-    - xcopy /q /Y /I "Applications\*\Tests\bin\Release\*.log" TestLog\
-    - xcopy /q /Y /I Applications\Converter\Forms\bin\Release CubePdf
-    - xcopy /q /Y /I Applications\Converter\Proxy\bin\Release CubePdf.Proxy
-    - xcopy /q /Y /I Applications\Editor\Forms\bin\Release CubePdf.Utility
-    - xcopy /q /Y /I Applications\Editor\Proxy\bin\Release CubePdf.Utility.Proxy
+    - xcopy /q /Y /I "Applications\Converter\Tests\bin\Release\*.log" TestLog\
+    - xcopy /q /Y /I "Applications\Editor\Tests\bin\Release\*.log" TestLog\
+    - xcopy /q /Y /I "Applications\Pinstaller\Tests\bin\Release\*.log" TestLog\
+    - xcopy /q /Y /I "Applications\Converter\Proxy\bin\Release" CubePdf
+    - xcopy /q /Y /I "Applications\Converter\Forms\bin\Release" CubePdf
+    - xcopy /q /Y /I "Applications\Editor\Proxy\bin\Release" CubePdf.Utility
+    - xcopy /q /Y /I "Applications\Editor\Forms\bin\Release" CubePdf.Utility
     - pip install codecov
     - codecov -f "CoverResults.xml"
 artifacts:
     - path: CubePdf
-    - path: CubePdf.Proxy
     - path: CubePdf.Utility
-    - path: CubePdf.Utility.Proxy
     - path: TestLog
