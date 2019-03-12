@@ -16,6 +16,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Generics;
+using Cube.Log;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -100,6 +103,7 @@ namespace Cube.Pdf.App.Pinstaller
                 Data         = src.Data,
                 Help         = src.Help,
                 Dependencies = src.Dependencies,
+                Repository   = src.Repository,
             };
 
         /* ----------------------------------------------------------------- */
@@ -111,25 +115,80 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /// <param name="src">Printer driver object.</param>
-        /// <param name="from">Resource directory.</param>
+        /// <param name="user">User resource directory.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /// <remarks>
-        /// Dependencies には複数のファイルが指定される可能性がある。
-        /// その場合の処理方法を要検討。
+        /// データファイル (PPD) は、常にユーザが指定したディレクトリから
+        /// コピーします。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Copy(this PrinterDriver src, string from, IO io)
+        public static void Copy(this PrinterDriver src, string user, IO io)
         {
-            var to = src.DirectoryName;
+            var system = src.GetRepository(io);
+            var from   = system.HasValue() && io.Exists(system) ? system : user;
+            var to     = src.TargetDirectory;
 
-            io.Copy(src.FileName,     from, to);
-            io.Copy(src.Config,       from, to);
-            io.Copy(src.Data,         from, to);
-            io.Copy(src.Help,         from, to);
-            io.Copy(src.Dependencies, from, to); // see remarks
+            io.Copy(src.Data,     user, to); // see remarks.
+            io.Copy(src.FileName, from, to);
+            io.Copy(src.Config,   from, to);
+            io.Copy(src.Help,     from, to);
+            foreach (var f in src.Dependencies) io.Copy(f, from, to);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetRepository
+        ///
+        /// <summary>
+        /// Gets the directory path from the specified configuration.
+        /// </summary>
+        ///
+        /// <param name="src">Printer driver object.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /// <returns>Path of the repository</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string GetRepository(this PrinterDriver src, IO io)
+        {
+            if (!src.Repository.HasValue()) return string.Empty;
+
+            var root = io.Combine(Environment.SpecialFolder.System.GetName(), @"DriverStore\FileRepository");
+            var arch = IntPtr.Size == 4 ?  "x86" : "amd64";
+            var sub  = IntPtr.Size == 4 ? "i386" : "amd64";
+            var dest = io.GetDirectories(root, $"{src.Repository}.inf_{arch}*")
+                         .SelectMany(e => new[] { io.Combine(e, sub), e })
+                         .Where(e =>
+                         {
+                             var ok = io.Exists(e) && io.GetFiles(e, "*.dll").Length > 0;
+                             src.LogDebug($"{e} ({ok})");
+                             return ok;
+                         })
+                         .OrderByDescending(e => io.Get(e).LastWriteTime)
+                         .FirstOrDefault();
+            return dest.HasValue() ? dest : string.Empty;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Exists
+        ///
+        /// <summary>
+        /// Determines whether the specified filename exists in the
+        /// specified directory.
+        /// </summary>
+        ///
+        /// <param name="src">Printer driver object.</param>
+        /// <param name="filename">Target filename.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /// <returns>true for exists; otherwise false.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal static bool Exists(this PrinterDriver src, string filename, IO io) =>
+            io.Exists(io.Combine(src.TargetDirectory, filename));
 
         #endregion
     }

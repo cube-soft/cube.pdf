@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Cube.Pdf.App.Pinstaller
@@ -154,10 +155,27 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public string Dependencies
+        public IEnumerable<string> Dependencies
         {
             get => _dependencies;
             set => SetProperty(ref _dependencies, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Repository
+        ///
+        /// <summary>
+        /// Gets or sets the name to find the resource files in the
+        /// DriverStore/FileRepository directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Repository
+        {
+            get => _repository;
+            set => SetProperty(ref _repository, value);
         }
 
         #endregion
@@ -193,7 +211,8 @@ namespace Cube.Pdf.App.Pinstaller
             _config       = string.Empty;
             _data         = string.Empty;
             _help         = string.Empty;
-            _dependencies = string.Empty;
+            _dependencies = new string[0];
+            _repository   = string.Empty;
         }
 
         #endregion
@@ -205,7 +224,8 @@ namespace Cube.Pdf.App.Pinstaller
         private string _config;
         private string _data;
         private string _help;
-        private string _dependencies;
+        private IEnumerable<string> _dependencies;
+        private string _repository;
         #endregion
     }
 }

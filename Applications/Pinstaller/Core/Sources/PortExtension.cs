@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -60,31 +59,16 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Port Convert(this PortConfig src)
-        {
-            var proxy = src.RunAsUser && src.Proxy.HasValue();
-            return new Port(src.Name, src.MonitorName)
+        public static Port Convert(this PortConfig src) =>
+            new Port(src.Name, src.MonitorName)
             {
-                Application = proxy ? src.Proxy : src.Application,
-                Arguments   = proxy ?
-                              Combine(src.Arguments, "/Exec", src.Application.Quote()) :
-                              src.Arguments,
+                Application = src.Application,
+                Arguments   = src.Arguments,
+                Proxy       = src.Proxy,
                 Temp        = src.Temp,
                 WaitForExit = src.WaitForExit,
+                RunAsUser   = src.RunAsUser,
             };
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Combine
-        ///
-        /// <summary>
-        /// Removes empty elements and joins them with a whitespace.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static string Combine(params string[] args) =>
-            string.Join(" ", args.Where(e => e.HasValue()));
 
         #endregion
     }

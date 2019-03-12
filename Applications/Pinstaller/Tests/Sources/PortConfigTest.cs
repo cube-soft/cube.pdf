@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
-using Cube.Generics;
 using Cube.Pdf.App.Pinstaller;
 using NUnit.Framework;
 using System.Linq;
@@ -88,10 +87,12 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(dest.Count,          Is.EqualTo(1));
             Assert.That(dest[0].Name,        Is.EqualTo(src[0].Name));
             Assert.That(dest[0].MonitorName, Is.EqualTo(src[0].MonitorName));
-            Assert.That(dest[0].Application, Is.EqualTo(src[0].Proxy));
-            Assert.That(dest[0].Arguments,   Is.EqualTo($"/Dummy /Exec {src[0].Application.Quote()}"));
+            Assert.That(dest[0].Application, Is.EqualTo(src[0].Application));
+            Assert.That(dest[0].Arguments,   Is.EqualTo(src[0].Arguments));
+            Assert.That(dest[0].Proxy,       Is.EqualTo(src[0].Proxy));
             Assert.That(dest[0].Temp,        Is.EqualTo(src[0].Temp));
             Assert.That(dest[0].WaitForExit, Is.EqualTo(src[0].WaitForExit));
+            Assert.That(dest[0].RunAsUser,   Is.EqualTo(src[0].RunAsUser));
         }
 
         /* ----------------------------------------------------------------- */
@@ -123,9 +124,11 @@ namespace Cube.Pdf.Tests.Pinstaller
             Assert.That(dest[0].Name,        Is.EqualTo(src[0].Name));
             Assert.That(dest[0].MonitorName, Is.EqualTo(src[0].MonitorName));
             Assert.That(dest[0].Application, Is.EqualTo(src[0].Application));
-            Assert.That(dest[0].Arguments,   Is.Empty);
+            Assert.That(dest[0].Arguments,   Is.EqualTo(src[0].Arguments));
+            Assert.That(dest[0].Proxy,       Is.EqualTo(src[0].Proxy));
             Assert.That(dest[0].Temp,        Is.EqualTo(src[0].Temp));
             Assert.That(dest[0].WaitForExit, Is.EqualTo(src[0].WaitForExit));
+            Assert.That(dest[0].RunAsUser,   Is.EqualTo(src[0].RunAsUser));
         }
 
         #endregion

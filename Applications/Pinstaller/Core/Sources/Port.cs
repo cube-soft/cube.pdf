@@ -70,7 +70,7 @@ namespace Cube.Pdf.App.Pinstaller
             MonitorName = monitor;
             Environment = this.GetEnvironment();
             Exists      = core != null;
-            RetryCount  = 3;
+            RetryCount  = 10;
             _core       = core ?? new Core();
         }
 
@@ -132,6 +132,21 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Proxy
+        ///
+        /// <summary>
+        /// Gets or sets the path of the proxy application.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Proxy
+        {
+            get => _core.AppProxy;
+            set => _core.AppProxy = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Temp
         ///
         /// <summary>
@@ -159,6 +174,22 @@ namespace Cube.Pdf.App.Pinstaller
         {
             get => _core.WaitForApp;
             set => _core.WaitForApp = value;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RunAsUser
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to run the provided
+        /// application as the currently logged on user.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool RunAsUser
+        {
+            get => _core.UseAppProxy;
+            set => _core.UseAppProxy = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -308,10 +339,12 @@ namespace Cube.Pdf.App.Pinstaller
         [DataContract]
         private class Core
         {
-            [DataMember] public string AppPath { get; set; }
-            [DataMember] public string AppArgs { get; set; }
-            [DataMember] public string TempDir { get; set; }
-            [DataMember] public bool WaitForApp { get; set; }
+            [DataMember] public string AppPath   { get; set; }
+            [DataMember] public string AppArgs   { get; set; }
+            [DataMember] public string AppProxy  { get; set; }
+            [DataMember] public string TempDir   { get; set; }
+            [DataMember] public bool WaitForApp  { get; set; }
+            [DataMember] public bool UseAppProxy { get; set; }
         }
 
         /* ----------------------------------------------------------------- */

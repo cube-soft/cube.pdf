@@ -138,7 +138,8 @@ CubePinstaller に指定する構成用 JSON ファイルの仕様は下記の�
 
 **PrinterDrivers** には、インストールまたはアンインストールするプリンタドライバを
 指定します。指定可能な項目は、**Name**, **MonitorName**, **FileName**, **Config**,
-**Data**, **Help**, **Dependencies** の 7 種類でいずれも string です。
+**Data**, **Help**, **Dependencies**, **Repository** の 8 種類で、
+**Dependencies** は string の配列、それ以外は string です。
 
 **Name** はインストールまたはアンインストールするプリンタドライバの名前、
 **MonitorName** はプリンタドライバが利用するポートモニタの名前を表し、
@@ -146,10 +147,15 @@ CubePinstaller に指定する構成用 JSON ファイルの仕様は下記の�
 既にインストールされているか、または、同じ構成ファイルに記述されている必要が
 あります。
 
+**Repository** は、各種モジュールを DriverStore ディレクトリから検索する際に
+使用します。例えば、64bit 環境において ntprint を指定した場合、
+DriverStore/FileRepository/ntprint.ing_amd64_xxxxxxxxxxxxxxx/amd64
+からの取得を試みます。
+
 **FileName**, **Config**, **Data**, **Help**, **Dependencies** はインストールに
 必要なモジュール名を表します。これらの項目はアンインストール時には省略する事が
 できます。また、指定されたモジュールは **/Resource** オプションで指定された
-ディレクトリに存在するものとします。
+ディレクトリ、または DriverStore ディレクトリ下に存在するものとします。
 
 尚、**Data** で指定するファイルには PCFileName と言う項目が存在します。
 この項目と実際のファイル名が異なる場合、プリンタドライバのインストールに失敗する
@@ -182,11 +188,12 @@ CubePinstaller に指定する JSON ファイルの構成例は下記の通り�
     "PrinterDrivers" : [{
         "Name"         : "CubePDF",
         "MonitorName"  : "CubeMon",
-        "FileName"     : "cubeps5.dll",
-        "Config"       : "cubeps5ui.dll",
         "Data"         : "cubepdf.ppd",
-        "Help"         : "cubeps.hlp",
-        "Dependencies" : "cubeps.ntf"
+        "Repository"   : "ntprint",
+        "FileName"     : "pscript5.dll",
+        "Config"       : "ps5ui.dll",
+        "Help"         : "pscript.hlp",
+        "Dependencies" : [ "pscript.ntf", "pscrptfe.ntf", "ps_schm.gdl" ]
     }],
     "Ports" : [{
         "Name"         : "CubePDF:",

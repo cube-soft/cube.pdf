@@ -193,11 +193,12 @@ namespace Cube.Pdf.Tests.Pinstaller
                     {
                         Name         = "CubePDF",
                         MonitorName  = "CubeMon",
-                        FileName     = "cubeps5.dll",
-                        Config       = "cubeps5ui.dll",
+                        FileName     = "pscript5.dll",
+                        Config       = "ps5ui.dll",
                         Data         = "cubepdf.ppd",
-                        Help         = "cubeps.hlp",
-                        Dependencies = "cubeps.ntf",
+                        Help         = "pscript.hlp",
+                        Dependencies = new[] { "pscript.ntf", "pscrptfe.ntf", "ps_schm.gdl" },
+                        Repository   = "ntprint",
                     }},
                     Printers = new[] { new PrinterConfig
                     {
