@@ -92,8 +92,8 @@ namespace Cube.Pdf.App.Pinstaller
         private PortMonitor(MonitorInfo2 core)
         {
             _core = core;
-            DirectoryName = System.Environment.SpecialFolder.System.GetName();
-            RetryCount    = 3;
+            TargetDirectory = System.Environment.SpecialFolder.System.GetName();
+            RetryCount = 10;
         }
 
         #endregion
@@ -170,14 +170,14 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DirectoryName
+        /// TargetDirectory
         ///
         /// <summary>
         /// Gets the default path that monitor resources are installed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string DirectoryName { get; }
+        public string TargetDirectory { get; }
 
         /* ----------------------------------------------------------------- */
         ///

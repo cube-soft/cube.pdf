@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.FileSystem.Mixin;
 using Cube.Forms;
 using Cube.Generics;
 using Cube.Log;
@@ -206,8 +205,12 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void UpdateExtension() => Value.Destination =
-            IO.ChangeExtension(Value.Destination, Value.Format.GetExtension());
+        public void UpdateExtension()
+        {
+            var fi  = IO.Get(Value.Destination);
+            var ext = Value.Format.GetExtension();
+            Value.Destination = IO.Combine(fi.DirectoryName, $"{fi.NameWithoutExtension}{ext}");
+        }
 
         #region IDisposable
 

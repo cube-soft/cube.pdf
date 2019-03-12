@@ -112,7 +112,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         public static void Copy(this PortMonitor src, string from, IO io)
         {
-            var to = src.DirectoryName;
+            var to = src.TargetDirectory;
 
             io.Copy(src.FileName, from, to);
             io.Copy(src.Config,   from, to);

@@ -69,8 +69,7 @@ namespace Cube.Pdf.App.Pinstaller
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public PrinterDriver(string name, IEnumerable<PrinterDriver> elements) :
-            this(new DriverInfo3 { cVersion = 3, pDefaultDataType = "RAW" })
+        public PrinterDriver(string name, IEnumerable<PrinterDriver> elements) : this(Create())
         {
             var obj = elements.FirstOrDefault(e => e.Name.FuzzyEquals(name));
             Exists = obj != null;
@@ -93,7 +92,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private PrinterDriver(DriverInfo3 core)
         {
-            RetryCount = 3;
+            RetryCount = 10;
             _core = core;
         }
 
@@ -215,11 +214,35 @@ namespace Cube.Pdf.App.Pinstaller
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Dependencies
+        public IEnumerable<string> Dependencies
         {
-            get => _core.pDependentFiles;
-            set => _core.pDependentFiles = value;
+            get => _core.pDependentFiles.Split('\0').Where(e => e.HasValue());
+            set => _core.pDependentFiles = string.Join("\0", value.ToArray());
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Repository
+        ///
+        /// <summary>
+        /// Gets or sets the name to find the resource files in the
+        /// DriverStore/FileRepository directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Repository { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RetryCount
+        ///
+        /// <summary>
+        /// Gets or sets the maximum number of attempts for an installation
+        /// or uninstallation operation to succeed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int RetryCount { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -235,26 +258,14 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DirectoryName
+        /// TargetDirectory
         ///
         /// <summary>
         /// Gets the default path that driver resources are installed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string DirectoryName => _directory ?? (_directory = GetDirectory());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RetryCount
-        ///
-        /// <summary>
-        /// Gets or sets the maximum number of attempts for an installation
-        /// or uninstallation operation to succeed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int RetryCount { get; set; }
+        public string TargetDirectory => _directory ?? (_directory = GetTargetDirectory());
 
         #endregion
 
@@ -348,21 +359,21 @@ namespace Cube.Pdf.App.Pinstaller
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetDirectory
+        /// GetTargetDirectory
         ///
         /// <summary>
         /// Gets the default path that driver resources are installed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetDirectory()
+        private static string GetTargetDirectory()
         {
             if (GetDirectoryApi(null, 0, out var bytes)) return string.Empty;
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var sb = new StringBuilder((int)bytes);
-            if (GetDirectoryApi(sb, bytes, out _)) return sb.ToString();
-            else throw new Win32Exception();
+            if (!GetDirectoryApi(sb, bytes, out _)) throw new Win32Exception();
+            return sb.ToString();
         }
 
         /* ----------------------------------------------------------------- */
@@ -389,6 +400,22 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private static bool GetEnumApi(IntPtr src, uint n, out uint bytes, out uint count) =>
             NativeMethods.EnumPrinterDrivers("", "", 3, src, n, out bytes, out count);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new instance of the DriverInfo3 class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static DriverInfo3 Create() => new DriverInfo3
+        {
+            cVersion         = 3,
+            pDefaultDataType = "RAW",
+            pDependentFiles  = string.Empty,
+        };
 
         /* ----------------------------------------------------------------- */
         ///

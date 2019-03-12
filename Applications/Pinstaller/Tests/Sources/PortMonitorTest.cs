@@ -54,11 +54,11 @@ namespace Cube.Pdf.Tests.Pinstaller
         public bool Create(string name, string filename)
         {
             var src = new PortMonitor(name);
-            Assert.That(src.Name.Unify(),             Is.EqualTo(name));
-            Assert.That(src.FileName.Unify(),         Is.EqualTo(filename));
-            Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
-            Assert.That(src.Environment.HasValue(),   Is.True,  nameof(src.Environment));
-            Assert.That(src.DirectoryName.HasValue(), Is.True,  nameof(src.DirectoryName));
+            Assert.That(src.Name.Unify(),               Is.EqualTo(name));
+            Assert.That(src.FileName.Unify(),           Is.EqualTo(filename));
+            Assert.That(src.Config.HasValue(),          Is.False, nameof(src.Config));
+            Assert.That(src.Environment.HasValue(),     Is.True,  nameof(src.Environment));
+            Assert.That(src.TargetDirectory.HasValue(), Is.True,  nameof(src.TargetDirectory));
             return src.Exists;
         }
 
@@ -77,13 +77,13 @@ namespace Cube.Pdf.Tests.Pinstaller
         {
             var name = "Dummy Port";
             var src  = new PortMonitor(name, new PortMonitor[0]);
-            Assert.That(src.Name,                     Is.EqualTo(name));
-            Assert.That(src.Exists,                   Is.False, nameof(src.Exists));
-            Assert.That(src.CanInstall(),             Is.False, nameof(src.CanInstall));
-            Assert.That(src.FileName.HasValue(),      Is.False, nameof(src.FileName));
-            Assert.That(src.Config.HasValue(),        Is.False, nameof(src.Config));
-            Assert.That(src.Environment.HasValue(),   Is.True,  nameof(src.Environment));
-            Assert.That(src.DirectoryName.HasValue(), Is.True,  nameof(src.DirectoryName));
+            Assert.That(src.Name,                       Is.EqualTo(name));
+            Assert.That(src.Exists,                     Is.False, nameof(src.Exists));
+            Assert.That(src.CanInstall(),               Is.False, nameof(src.CanInstall));
+            Assert.That(src.FileName.HasValue(),        Is.False, nameof(src.FileName));
+            Assert.That(src.Config.HasValue(),          Is.False, nameof(src.Config));
+            Assert.That(src.Environment.HasValue(),     Is.True,  nameof(src.Environment));
+            Assert.That(src.TargetDirectory.HasValue(), Is.True,  nameof(src.TargetDirectory));
         }
 
         /* ----------------------------------------------------------------- */

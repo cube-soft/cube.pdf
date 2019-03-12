@@ -12,12 +12,14 @@
         "Config"            : "dummy5ui.dll",
         "Data"              : "dummy.ppd",
         "Help"              : "dummy.hlp",
-        "Dependencies"      : "dummy.ntf"
+        "Dependencies"      : [ "dummy.ntf" ]
     }],
     "Ports" : [{
         "Name"              : "DummyPort:",
         "MonitorName"       : "DummyMonitor",
-        "Application"       : "dummy.exe"
+        "Application"       : "dummy.exe",
+        "Arguments"         : "",
+        "WaitForExit"       : false
     }],
     "PortMonitors" : [{
         "Name"              : "DummyMonitor",

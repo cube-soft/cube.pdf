@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("1.0.0.17")]
-[assembly: AssemblyFileVersion("1.0.0.17")]
+[assembly: AssemblyVersion("1.0.0.19")]
+[assembly: AssemblyFileVersion("1.0.0.19")]
 [assembly: AssemblyTitle("Cube.Pdf.Tests.Converter")]
 [assembly: AssemblyDescription("Tests for CubePDF")]
 [assembly: AssemblyCompany("CubeSoft")]

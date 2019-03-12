@@ -196,7 +196,11 @@ namespace Cube.Pdf.App.Pinstaller
             // Copy
             service.Stop();
             foreach (var e in monitors) e.Copy(ResourceDirectory, IO);
-            foreach (var e in drivers)  e.Copy(ResourceDirectory, IO);
+            foreach (var e in drivers)
+            {
+                e.Copy(ResourceDirectory, IO);
+                e.Dependencies = e.Dependencies.Where(s => e.Exists(s, IO));
+            }
             service.Start();
 
             // Install
