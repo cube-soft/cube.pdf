@@ -106,9 +106,11 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             $"{nameof(src.MonitorName)}:{src.MonitorName.Quote()}",
             $"{nameof(src.Environment)}:{src.Environment.Quote()}",
             $"{nameof(src.Application)}:{src.Application.Quote()}",
+            $"{nameof(src.Proxy)}:{src.Proxy.Quote()}",
             $"{nameof(src.Arguments)}:[ {src.Arguments} ]",
             $"{nameof(src.Temp)}:{src.Temp.Quote()}",
-            $"{nameof(src.WaitForExit)}:{src.WaitForExit}"
+            $"{nameof(src.WaitForExit)}:{src.WaitForExit}",
+            $"{nameof(src.RunAsUser)}:{src.RunAsUser}"
         );
 
         /* ----------------------------------------------------------------- */
@@ -137,7 +139,7 @@ namespace Cube.Pdf.App.Pinstaller.Debug
             $"{nameof(src.Help)}:{src.Help.Quote()}",
             $"{nameof(src.Repository)}:{src.Repository.Quote()}",
             $"{nameof(src.TargetDirectory)}:{src.TargetDirectory.Quote()}",
-            $"[ {string.Join(" ", src.Dependencies.Select(e => e.Quote()).ToArray())} ]"
+            $"{nameof(src.Dependencies)}:[ {string.Join(" ", src.Dependencies.Select(e => e.Quote()).ToArray())} ]"
         );
 
         /* ----------------------------------------------------------------- */
