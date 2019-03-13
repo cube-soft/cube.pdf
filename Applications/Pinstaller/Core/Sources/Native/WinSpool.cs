@@ -147,10 +147,11 @@ namespace Cube.Pdf.App.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [DllImport(LibName, SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern bool AddPrinterDriver(
+        public static extern bool AddPrinterDriverEx(
             string pName,
             uint Level,
-            ref DriverInfo3 pDriverInfo
+            ref DriverInfo3 pDriverInfo,
+            uint dwFileCopyFlags
         );
 
         /* ----------------------------------------------------------------- */

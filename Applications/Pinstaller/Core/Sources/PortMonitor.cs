@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             _core = core;
             TargetDirectory = System.Environment.SpecialFolder.System.GetName();
-            RetryCount = 10;
+            RetryCount = 5;
         }
 
         #endregion
@@ -246,7 +246,7 @@ namespace Cube.Pdf.App.Pinstaller
 
             if (!Exists && CanInstall()) this.Log(() => this.Try(RetryCount, () =>
             {
-                if (!NativeMethods.AddMonitor("", 2u, ref _core)) throw new Win32Exception();
+                if (!NativeMethods.AddMonitor(null, 2u, ref _core)) throw new Win32Exception();
                 Exists = true;
             }));
         }
@@ -266,7 +266,7 @@ namespace Cube.Pdf.App.Pinstaller
 
             if (Exists) this.Log(() => this.Try(RetryCount, () =>
             {
-                if (!NativeMethods.DeleteMonitor("", "", Name)) throw new Win32Exception();
+                if (!NativeMethods.DeleteMonitor(null, Environment, Name)) throw new Win32Exception();
                 Exists = false;
             }));
         }

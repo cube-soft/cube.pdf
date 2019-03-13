@@ -92,7 +92,7 @@ namespace Cube.Pdf.App.Pinstaller
         /* ----------------------------------------------------------------- */
         private PrinterDriver(DriverInfo3 core)
         {
-            RetryCount = 10;
+            RetryCount = 5;
             _core = core;
         }
 
@@ -328,7 +328,10 @@ namespace Cube.Pdf.App.Pinstaller
 
             if (!Exists && CanInstall()) this.Log(() => this.Try(RetryCount, () =>
             {
-                if (!NativeMethods.AddPrinterDriver("", 3, ref _core)) throw new Win32Exception();
+                if (!NativeMethods.AddPrinterDriverEx(null,
+                    3, ref _core,
+                    0x04 /* APD_COPY_ALL_FILES */
+                )) throw new Win32Exception();
                 Exists = true;
             }));
         }
@@ -348,7 +351,7 @@ namespace Cube.Pdf.App.Pinstaller
 
             if (Exists) this.Log(() => this.Try(RetryCount, () =>
             {
-                if (!NativeMethods.DeletePrinterDriver("", Environment, Name)) throw new Win32Exception();
+                if (!NativeMethods.DeletePrinterDriver(null, Environment, Name)) throw new Win32Exception();
                 Exists = false;
             }));
         }

@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Pinstaller
         private Printer(PrinterInfo2 core)
         {
             Environment = this.GetEnvironment();
-            RetryCount  = 10;
+            RetryCount  = 5;
             _core = core;
         }
 
@@ -252,7 +252,7 @@ namespace Cube.Pdf.App.Pinstaller
 
             if (!Exists) this.Log(() => this.Try(RetryCount, () =>
             {
-                var dest = NativeMethods.AddPrinter("", 2, ref _core);
+                var dest = NativeMethods.AddPrinter(null, 2, ref _core);
                 if (dest == IntPtr.Zero) throw new Win32Exception();
                 NativeMethods.ClosePrinter(dest);
                 Exists = true;
