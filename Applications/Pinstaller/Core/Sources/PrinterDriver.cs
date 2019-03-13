@@ -217,7 +217,7 @@ namespace Cube.Pdf.App.Pinstaller
         public IEnumerable<string> Dependencies
         {
             get => _core.pDependentFiles.Split('\0').Where(e => e.HasValue());
-            set => _core.pDependentFiles = string.Join("\0", value);
+            set => _core.pDependentFiles = value.Count() > 0 ? value.Aggregate("", (s, e) => $"{s}{e}\0") : "\0";
         }
 
         /* ----------------------------------------------------------------- */
@@ -417,7 +417,7 @@ namespace Cube.Pdf.App.Pinstaller
         {
             cVersion         = 3,
             pDefaultDataType = "RAW",
-            pDependentFiles  = string.Empty,
+            pDependentFiles  = "\0",
         };
 
         /* ----------------------------------------------------------------- */
