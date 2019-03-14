@@ -27,7 +27,7 @@ CubePDF を使用するためには、.NET Framework 3.5 以降がインスト�
 
 CubePDF は、以下のフォルダに実行ログを出力しています。  
 ```C:\ProgramData\CubeSoft\CubePdf\Log```  
-問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡お願いいたします。
+問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡をお願いいたします。
 
 ## 利用ライブラリ
 
