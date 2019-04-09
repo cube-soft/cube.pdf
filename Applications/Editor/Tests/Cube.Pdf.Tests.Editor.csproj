@@ -76,13 +76,13 @@
       <HintPath>..\..\..\..\packages\AlphaFS.2.2.6\lib\net45\AlphaFS.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Core">
-      <HintPath>..\..\..\..\packages\Cube.Core.1.14.0\lib\net45\Cube.Core.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Core.1.15.0\lib\net45\Cube.Core.dll</HintPath>
     </Reference>
     <Reference Include="Cube.FileSystem">
-      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.14.0\lib\net45\Cube.FileSystem.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.FileSystem.1.15.0\lib\net45\Cube.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Cube.Xui">
-      <HintPath>..\..\..\..\packages\Cube.Xui.1.14.0\lib\net45\Cube.Xui.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Cube.Xui.1.15.0\lib\net45\Cube.Xui.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight">
       <HintPath>..\..\..\..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>

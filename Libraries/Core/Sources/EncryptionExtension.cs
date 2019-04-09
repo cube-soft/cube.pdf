@@ -142,7 +142,7 @@ namespace Cube.Pdf.Mixin
             {
                 query.Request(dest);
                 if (dest.Cancel || dest.Result.HasValue()) return dest;
-                else throw new ArgumentException(Properties.Resources.ErrorPasswordEmpty);
+                else throw new ArgumentException("Password is empty.");
             }
             catch (Exception err) { throw Convert(err); }
         }
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         private static EncryptionException Convert(Exception src) =>
-            new EncryptionException(Properties.Resources.ErrorPassword, src);
+            new EncryptionException("Input password may be incorrect.", src);
 
         #endregion
     }

@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyVersion("2.14.1.0")]
-[assembly: AssemblyFileVersion("2.14.1.0")]
+[assembly: AssemblyVersion("2.15.0.0")]
+[assembly: AssemblyFileVersion("2.15.0.0")]
 [assembly: AssemblyTitle("Cube PrinterInstaller")]
 [assembly: AssemblyDescription("Installing and uninstalling port monitor, port, printer driver, and printer.")]
 [assembly: AssemblyConfiguration("")]
