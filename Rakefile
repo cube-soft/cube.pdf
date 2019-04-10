@@ -22,34 +22,26 @@ require 'rake/clean'
 # configuration
 # --------------------------------------------------------------------------- #
 PROJECT     = 'Cube.Pdf'
-APPLICATION = 'Applications'
-LIBRARY     = '../packages'
+LIB         = '../packages'
 NATIVE      = '../resources/native'
 BRANCHES    = ['stable', 'net35']
 FRAMEWORKS  = ['net45', 'net35']
 CONFIGS     = ['Release', 'Debug']
 PLATFORMS   = ['Any CPU', 'x86', 'x64']
-PACKAGES    = [
-    "Libraries/#{PROJECT}.Core.nuspec",
-    "Libraries/#{PROJECT}.Ghostscript.nuspec",
-    "Libraries/#{PROJECT}.Itext.nuspec",
-    "Libraries/#{PROJECT}.Pdfium.nuspec"
-]
-
-TESTCASES   = {
-    'Cube.Pdf.Tests'            => 'Tests',
-    'Cube.Pdf.Tests.Converter'  => 'Applications/Converter/Tests',
-    'Cube.Pdf.Tests.Editor'     => 'Applications/Editor/Tests',
-    'Cube.Pdf.Tests.Pinstaller' => 'Applications/Pinstaller/Tests'
-}
-
 GS_NAME     = 'gsdll32.dll'
 GS_DEST     = ['Tests', 'Applications/Converter/Tests', 'Applications/Converter/Forms']
-
 PDFIUM_NAME = 'pdfiumviewer.native'
 PDFIUM_KIND = 'no_v8-no_xfa'
 PDFIUM_VER  = '2018.4.8.256'
-PDFIUM_DEST = ['Tests', 'Applications/Editor/Tests', 'Applications/Editor/Forms' ]
+PDFIUM_DEST = ['Tests', 'Applications/Editor/Tests', 'Applications/Editor/Forms']
+PACKAGES    = ['Libraries/Cube.Pdf.Core.nuspec',
+               'Libraries/Cube.Pdf.Ghostscript.nuspec',
+               'Libraries/Cube.Pdf.Itext.nuspec',
+               'Libraries/Cube.Pdf.Pdfium.nuspec']
+TESTCASES   = {'Cube.Pdf.Tests'            => 'Tests',
+               'Cube.Pdf.Tests.Converter'  => 'Applications/Converter/Tests',
+               'Cube.Pdf.Tests.Editor'     => 'Applications/Editor/Tests',
+               'Cube.Pdf.Tests.Pinstaller' => 'Applications/Pinstaller/Tests'}
 
 # --------------------------------------------------------------------------- #
 # commands
@@ -62,7 +54,7 @@ TEST  = "../packages/NUnit.ConsoleRunner/3.10.0/tools/nunit3-console.exe"
 # clean
 # --------------------------------------------------------------------------- #
 CLEAN.include("#{PROJECT}.*.nupkg")
-CLEAN.include("#{LIBRARY}/cube.*")
+CLEAN.include("#{LIB}/cube.*")
 CLEAN.include(['bin', 'obj'].map{ |e| "**/#{e}" })
 
 # --------------------------------------------------------------------------- #
@@ -88,7 +80,7 @@ desc "Clean objects and build the solution in pre-defined branches and platforms
 task :clean_build => [:clean] do
     BRANCHES.product(['Any CPU']) { |e|
         sh("git checkout #{e[0]}")
-        RakeFileUtils::rm_rf(FileList.new("#{LIBRARY}/cube.*"))
+        RakeFileUtils::rm_rf(FileList.new("#{LIB}/cube.*"))
         Rake::Task[:build].reenable
         Rake::Task[:build].invoke(e[1])
     }
@@ -100,8 +92,8 @@ end
 desc "Build the solution in the current branch."
 task :build, [:platform] do |_, e|
     e.with_defaults(:platform => PLATFORMS[0])
-    sh("nuget restore #{PROJECT}.#{APPLICATION}.sln")
-    sh(%(#{BUILD} -p:Platform="#{e.platform}" #{PROJECT}.#{APPLICATION}.sln))
+    sh("nuget restore #{PROJECT}.Apps.sln")
+    sh(%(#{BUILD} -p:Platform="#{e.platform}" #{PROJECT}.Apps.sln))
 end
 
 # --------------------------------------------------------------------------- #
@@ -109,17 +101,12 @@ end
 # --------------------------------------------------------------------------- #
 desc "Build and test projects in the current branch."
 task :test => [:build] do
-    fw  = `git symbolic-ref --short HEAD`.chomp
+    fw  = %x(git symbolic-ref --short HEAD).chomp
     fw  = 'net45' if (fw != 'net35')
     bin = ['bin', PLATFORMS[0], CONFIGS[0], fw].join('/')
-
     Rake::Task[:copy].reenable
     Rake::Task[:copy].invoke(fw)
-
-    TESTCASES.each { |proj, root|
-        dir = "#{root}/#{bin}"
-        sh(%(#{TEST} "#{dir}/#{proj}.dll" --work="#{dir}"))
-    }
+    TESTCASES.each { |p, d| sh(%(#{TEST} "#{d}/#{bin}/#{p}.dll" --work="#{d}/#{bin}")) }
 end
 
 # --------------------------------------------------------------------------- #
@@ -132,7 +119,6 @@ task :copy, [:framework] do |_, e|
         pf  = (set[1] == 'Any CPU') ? 'x64' : set[1]
         bin = ['bin', set[1], set[2], set[0]].join('/')
 
-        # Ghostscript
         GS_DEST.each { |root|
             src  = "#{NATIVE}/#{pf}/gs/#{GS_NAME}"
             dest = "#{root}/#{bin}"
@@ -140,11 +126,10 @@ task :copy, [:framework] do |_, e|
             RakeFileUtils::cp_r(src, dest)
         }
 
-        # PDFium
         PDFIUM_DEST.each { |root|
             cvt  = (pf == 'x64') ? 'x86_64' : 'x86'
             name = [PDFIUM_NAME, cvt, PDFIUM_KIND].join('.')
-            src  = [LIBRARY, name, PDFIUM_VER, 'Build', pf, 'pdfium.dll'].join('/')
+            src  = [LIB, name, PDFIUM_VER, 'Build', pf, 'pdfium.dll'].join('/')
             dest = "#{root}/#{bin}"
             RakeFileUtils::mkdir_p(dest)
             RakeFileUtils::cp_r(src, dest)
