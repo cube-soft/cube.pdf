@@ -35,6 +35,7 @@ PACKAGES    = [
     "Libraries/#{PROJECT}.Itext.nuspec",
     "Libraries/#{PROJECT}.Pdfium.nuspec"
 ]
+
 TESTCASES   = {
     'Cube.Pdf.Tests'            => 'Tests',
     'Cube.Pdf.Tests.Converter'  => 'Applications/Converter/Tests',
@@ -42,12 +43,13 @@ TESTCASES   = {
     'Cube.Pdf.Tests.Pinstaller' => 'Applications/Pinstaller/Tests'
 }
 
+GS_NAME     = 'gsdll32.dll'
+GS_DEST     = ['Tests', 'Applications/Converter/Tests', 'Applications/Converter/Forms']
+
 PDFIUM_NAME = 'pdfiumviewer.native'
 PDFIUM_KIND = 'no_v8-no_xfa'
 PDFIUM_VER  = '2018.4.8.256'
-
-CP_GS       = ['Tests', 'Applications/Converter/Tests', 'Applications/Converter/Forms']
-CP_PDFIUM   = ['Tests', 'Applications/Editor/Tests', 'Applications/Editor/Forms' ]
+PDFIUM_DEST = ['Tests', 'Applications/Editor/Tests', 'Applications/Editor/Forms' ]
 
 # --------------------------------------------------------------------------- #
 # commands
@@ -131,21 +133,22 @@ task :copy, [:framework] do |_, e|
         bin = ['bin', set[1], set[2], set[0]].join('/')
 
         # Ghostscript
-        CP_GS.each { |root|
-            src  = "#{NATIVE}/#{pf}/gs/gsdll32.dll"
+        GS_DEST.each { |root|
+            src  = "#{NATIVE}/#{pf}/gs/#{GS_NAME}"
             dest = "#{root}/#{bin}"
             RakeFileUtils::mkdir_p(dest)
             RakeFileUtils::cp_r(src, dest)
         }
 
         # PDFium
-        CP_PDFIUM.each { |root|
+        PDFIUM_DEST.each { |root|
             cvt  = (pf == 'x64') ? 'x86_64' : 'x86'
             name = [PDFIUM_NAME, cvt, PDFIUM_KIND].join('.')
             src  = [LIBRARY, name, PDFIUM_VER, 'Build', pf, 'pdfium.dll'].join('/')
             dest = "#{root}/#{bin}"
             RakeFileUtils::mkdir_p(dest)
             RakeFileUtils::cp_r(src, dest)
+            puts dest
         }
     }
 end
