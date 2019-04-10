@@ -121,6 +121,7 @@ namespace Cube.Pdf.App.Clip
         /// </summary>
         ///
         /// <param name="message">メッセージ</param>
+        /// <param name="buttons">Showing buttons.</param>
         ///
         /// <returns>DialogResult オブジェクト</returns>
         ///
@@ -187,24 +188,111 @@ namespace Cube.Pdf.App.Clip
 
         #region Factory methods
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMainView
+        ///
+        /// <summary>
+        /// メイン画面を生成します。
+        /// </summary>
+        ///
+        /// <returns>メイン画面</returns>
+        ///
+        /* ----------------------------------------------------------------- */
         public static MainForm CreateMainView(string[] args)
             => _factory?.CreateMainView(args);
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateOpenView
+        ///
+        /// <summary>
+        /// PDF ファイルの選択画面を生成します。
+        /// </summary>
+        ///
+        /// <returns>PDF ファイルの選択画面</returns>
+        ///
+        /* ----------------------------------------------------------------- */
         public static OpenFileDialog CreateOpenView()
             => _factory?.CreateOpenView();
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateAttachView
+        ///
+        /// <summary>
+        /// 添付ファイルの選択画面を生成します。
+        /// </summary>
+        ///
+        /// <returns>添付ファイルの選択画面</returns>
+        ///
+        /* ----------------------------------------------------------------- */
         public static OpenFileDialog CreateAttachView()
             => _factory?.CreateAttachView();
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateVersionView
+        ///
+        /// <summary>
+        /// バージョン画面を生成します。
+        /// </summary>
+        ///
+        /// <param name="version">バージョン</param>
+        /// <param name="icon">アイコン画像</param>
+        ///
+        /// <returns>バージョン画面</returns>
+        ///
+        /* ----------------------------------------------------------------- */
         public static Cube.Forms.VersionForm CreateVersionView(string version, Icon icon)
             => _factory?.CreateVersionView(version, icon);
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowMessage
+        ///
+        /// <summary>
+        /// メッセージを表示します。
+        /// </summary>
+        ///
+        /// <param name="message">メッセージ</param>
+        ///
+        /// <returns>DialogResult オブジェクト</returns>
+        ///
+        /* ----------------------------------------------------------------- */
         public static DialogResult ShowMessage(string message)
             => ShowMessage(message, MessageBoxButtons.OK);
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowMessage
+        ///
+        /// <summary>
+        /// メッセージを表示します。
+        /// </summary>
+        ///
+        /// <param name="message">メッセージ</param>
+        /// <param name="buttons">Showing buttons.</param>
+        ///
+        /// <returns>DialogResult オブジェクト</returns>
+        ///
+        /* ----------------------------------------------------------------- */
         public static DialogResult ShowMessage(string message, MessageBoxButtons buttons)
             => _factory?.ShowMessage(message, buttons) ?? DialogResult.Cancel;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShowError
+        ///
+        /// <summary>
+        /// エラーメッセージを表示します。
+        /// </summary>
+        ///
+        /// <param name="message">メッセージ</param>
+        ///
+        /// <returns>DialogResult オブジェクト</returns>
+        ///
+        /* ----------------------------------------------------------------- */
         public static DialogResult ShowError(string message)
             => _factory?.ShowError(message) ?? DialogResult.OK;
 

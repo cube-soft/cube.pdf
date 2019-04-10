@@ -93,7 +93,7 @@ namespace Cube.Pdf.App.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Value => Filter.RawPath;
+        public string Value => Filter.Source;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -146,7 +146,7 @@ namespace Cube.Pdf.App.Converter
         {
             if (!Value.HasValue()) return DefaultName;
 
-            var dest = IO.Get(Filter.EscapedPath).Name;
+            var dest = IO.Get(Filter.Result).Name;
             var key  = " - ";
             var pos  = dest.LastIndexOf(key);
             if (pos == -1) return dest;

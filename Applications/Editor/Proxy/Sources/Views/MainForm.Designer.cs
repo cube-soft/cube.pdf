@@ -36,9 +36,9 @@
             this.RefreshTimer = new System.Windows.Forms.Timer(this.components);
             this.RootLayoutPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // RootLayoutPanel
-            // 
+            //
             this.RootLayoutPanel.BackgroundImage = global::Cube.Pdf.App.Editor.Properties.Resources.Background;
             this.RootLayoutPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.RootLayoutPanel.ColumnCount = 1;
@@ -55,9 +55,9 @@
             this.RootLayoutPanel.Size = new System.Drawing.Size(500, 270);
             this.RootLayoutPanel.TabIndex = 0;
             this.RootLayoutPanel.UseWaitCursor = true;
-            // 
+            //
             // VersionLabel
-            // 
+            //
             this.VersionLabel.AutoSize = true;
             this.VersionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VersionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
@@ -69,9 +69,9 @@
             this.VersionLabel.Text = "Version 0.5.0β (x64) Microsoft .NET Framework 4.0.30319.42000";
             this.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.VersionLabel.UseWaitCursor = true;
-            // 
+            //
             // MessageLabel
-            // 
+            //
             this.MessageLabel.AutoEllipsis = true;
             this.MessageLabel.AutoSize = true;
             this.MessageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -84,13 +84,13 @@
             this.MessageLabel.Text = "Starting CubePDF Utility ...";
             this.MessageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.MessageLabel.UseWaitCursor = true;
-            // 
+            //
             // RefreshTimer
-            // 
+            //
             this.RefreshTimer.Interval = 1000;
-            // 
+            //
             // MainForm
-            // 
+            //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;

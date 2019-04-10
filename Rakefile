@@ -29,7 +29,6 @@ BRANCHES    = ['stable', 'net35']
 FRAMEWORKS  = ['net45', 'net35']
 CONFIGS     = ['Release', 'Debug']
 PLATFORMS   = ['Any CPU', 'x86', 'x64']
-PDFIUM      = [ 'PdfiumViewer.Native', 'no_v8-no_xfa', '2018.4.8.256' ]
 PACKAGES    = [
     "Libraries/#{PROJECT}.Core.nuspec",
     "Libraries/#{PROJECT}.Ghostscript.nuspec",
@@ -43,9 +42,10 @@ TESTCASES   = {
     'Cube.Pdf.Tests.Pinstaller' => 'Applications/Pinstaller/Tests'
 }
 
-# --------------------------------------------------------------------------- #
-# copy targets
-# --------------------------------------------------------------------------- #
+PDFIUM_NAME = 'pdfiumviewer.native'
+PDFIUM_KIND = 'no_v8-no_xfa'
+PDFIUM_VER  = '2018.4.8.256'
+
 CP_GS       = ['Tests', 'Applications/Converter/Tests', 'Applications/Converter/Forms']
 CP_PDFIUM   = ['Tests', 'Applications/Editor/Tests', 'Applications/Editor/Forms' ]
 
@@ -140,9 +140,9 @@ task :copy, [:framework] do |_, e|
 
         # PDFium
         CP_PDFIUM.each { |root|
-            arch = (set[1] == 'x86') ? 'x86' : 'x86_64'
-            dir  = [PDFIUM[0], arch, PDFIUM[1], PDFIUM[2]].join('.')
-            src  = [LIBRARY, dir, 'Build', set[1], 'pdfium.dll'].join('/')
+            cvt  = (pf == 'x64') ? 'x86_64' : 'x86'
+            name = [PDFIUM_NAME, cvt, PDFIUM_KIND].join('.')
+            src  = [LIBRARY, name, PDFIUM_VER, 'Build', pf, 'pdfium.dll'].join('/')
             dest = "#{root}/#{bin}"
             RakeFileUtils::mkdir_p(dest)
             RakeFileUtils::cp_r(src, dest)

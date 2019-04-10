@@ -172,24 +172,90 @@ namespace Cube.Pdf.App.Pages
     public static class Views
     {
         #region Factory methods
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// CreateAddView
+        ///
+        /// <summary>
+        /// 追加するファイルを選択するための View を生成します。
+        /// </summary>
+        ///
+        /// <returns>ファイル選択画面</returns>
+        ///
+        /* --------------------------------------------------------------------- */
         public static OpenFileDialog CreateAddView()
             => _factory?.CreateAddView();
 
+        /* --------------------------------------------------------------------- */
+        ///
+        /// CreatePasswordView
+        ///
+        /// <summary>
+        /// パスワードを入力するための View を生成します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
         public static PasswordForm CreatePasswordView(string path)
             => _factory?.CreatePasswordView(path);
 
+        /* --------------------------------------------------------------------- */
+        ///
+        /// CreateMergeView
+        ///
+        /// <summary>
+        /// 結合したファイルの保存先を選択するためのView を生成します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
         public static SaveFileDialog CreateMergeView()
             => _factory?.CreateMergeView();
 
+        /* --------------------------------------------------------------------- */
+        ///
+        /// CreateSplitView
+        ///
+        /// <summary>
+        /// 分割したファイルの保存先を選択するための View を生成します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
         public static FolderBrowserDialog CreateSplitView()
             => _factory?.CreateSplitView();
 
+        /* --------------------------------------------------------------------- */
+        ///
+        /// CreateVersionView
+        ///
+        /// <summary>
+        /// バージョン情報を表示します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
         public static void CreateVersionView(Assembly assembly)
             => _factory?.CreateVersionView(assembly);
 
+        /* --------------------------------------------------------------------- */
+        ///
+        /// ShowConfirmMessage
+        ///
+        /// <summary>
+        /// 確認メッセージを表示します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
         public static DialogResult ShowConfirmMessage(string message)
             => _factory?.ShowConfirmMessage(message) ?? DialogResult.Cancel;
 
+        /* --------------------------------------------------------------------- */
+        ///
+        /// ShowErrorMessage
+        ///
+        /// <summary>
+        /// エラーメッセージを表示します。
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
         public static DialogResult ShowErrorMessage(Exception err)
             => _factory?.ShowErrorMessage(err) ?? DialogResult.Cancel;
 
