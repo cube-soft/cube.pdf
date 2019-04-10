@@ -148,7 +148,6 @@ task :copy, [:framework] do |_, e|
             dest = "#{root}/#{bin}"
             RakeFileUtils::mkdir_p(dest)
             RakeFileUtils::cp_r(src, dest)
-            puts dest
         }
     }
 end
