@@ -84,9 +84,9 @@ test_script:
       -filter:"%TEST_FILTERS%"
 after_test:
     - xcopy /q /Y /I "Applications\Converter\Proxy\%PROJECT_BIN%" CubePdf
-    - xcopy /q /Y /I "Applications\Converter\Forms\%PROJECT_BIN%" CubePdf
+    - xcopy /q /Y /I "Applications\Converter\Main\%PROJECT_BIN%" CubePdf
     - xcopy /q /Y /I "Applications\Editor\Proxy\%PROJECT_BIN%" CubePdf.Utility
-    - xcopy /q /Y /I "Applications\Editor\Forms\%PROJECT_BIN%" CubePdf.Utility
+    - xcopy /q /Y /I "Applications\Editor\Main\%PROJECT_BIN%" CubePdf.Utility
     - xcopy /q /Y /I "Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "Applications\Converter\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "Applications\Editor\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
