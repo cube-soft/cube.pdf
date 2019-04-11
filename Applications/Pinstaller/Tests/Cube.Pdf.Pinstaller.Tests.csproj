@@ -15,8 +15,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Cli\Cube.Pdf.App.Pinstaller.Cli.csproj" />
-        <ProjectReference Include="..\Core\Cube.Pdf.App.Pinstaller.csproj" />
+        <ProjectReference Include="..\Cli\Cube.Pdf.Pinstaller.Cli.csproj" />
         <PackageReference Include="NUnit" Version="3.11.0" />
         <PackageReference Include="NUnit.ConsoleRunner" Version="3.10.0" />
         <PackageReference Include="OpenCover" Version="4.7.922" />

@@ -17,13 +17,12 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
 using Cube.Log;
-using Cube.Pdf.App.Pinstaller;
-using Cube.Pdf.App.Pinstaller.Debug;
+using Cube.Pdf.Pinstaller.Debug;
 using NUnit.Framework;
 using System;
 using System.Linq;
 
-namespace Cube.Pdf.Tests.Pinstaller
+namespace Cube.Pdf.Pinstaller.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

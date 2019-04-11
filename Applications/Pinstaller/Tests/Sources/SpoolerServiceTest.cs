@@ -15,13 +15,12 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.App.Pinstaller;
-using Cube.Pdf.App.Pinstaller.Debug;
+using Cube.Pdf.Pinstaller.Debug;
 using NUnit.Framework;
 using System;
 using System.ServiceProcess;
 
-namespace Cube.Pdf.Tests.Pinstaller
+namespace Cube.Pdf.Pinstaller.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

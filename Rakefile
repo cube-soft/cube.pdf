@@ -41,7 +41,7 @@ PACKAGES    = ['Libraries/Cube.Pdf.Core.nuspec',
 TESTCASES   = {'Cube.Pdf.Tests'            => 'Tests',
                'Cube.Pdf.Converter.Tests'  => 'Applications/Converter/Tests',
                'Cube.Pdf.Editor.Tests'     => 'Applications/Editor/Tests',
-               'Cube.Pdf.Tests.Pinstaller' => 'Applications/Pinstaller/Tests'}
+               'Cube.Pdf.Pinstaller.Tests' => 'Applications/Pinstaller/Tests'}
 
 # --------------------------------------------------------------------------- #
 # commands

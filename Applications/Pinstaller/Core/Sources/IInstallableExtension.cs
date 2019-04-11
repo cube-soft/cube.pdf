@@ -20,7 +20,7 @@ using Cube.Generics;
 using Cube.Log;
 using System;
 
-namespace Cube.Pdf.App.Pinstaller
+namespace Cube.Pdf.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///

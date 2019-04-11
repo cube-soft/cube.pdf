@@ -17,7 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Runtime.Serialization;
 
-namespace Cube.Pdf.App.Pinstaller
+namespace Cube.Pdf.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///

@@ -3,32 +3,29 @@
         <Version>2.15.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
-        <Product>CubePinstaller</Product>
-        <Description>CLI application for Installing printers and related components.</Description>
+        <Description>Library to install printer and related modules.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
-        <AssemblyName>CubePinstaller</AssemblyName>
-        <OutputType>WinExe</OutputType>
+        <PackageTags>Cube;Printer</PackageTags>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/cube-soft/Cube.Pdf</PackageProjectUrl>
+        <PackageIconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</PackageIconUrl>
+        <AssemblyName>Cube.Pdf.Pinstaller</AssemblyName>
+        <RootNamespace>Cube.Pdf.Pinstaller</RootNamespace>
         <TargetFramework>net45</TargetFramework>
         <LangVersion>latest</LangVersion>
-        <Platforms>AnyCPU;x86;x64</Platforms>
-        <IsPackable>false</IsPackable>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
-        <ApplicationIcon>App.ico</ApplicationIcon>
-        <ApplicationManifest>App.manifest</ApplicationManifest>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>..\..\..\Cube.snk</AssemblyOriginatorKeyFile>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
         <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Core\Cube.Pdf.App.Pinstaller.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
-        <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
-        <None Include="App.config" />
+        <PackageReference Include="Cube.FileSystem" version="1.15.0" />
+        <Reference Include="System.ServiceProcess" />
     </ItemGroup>
 </Project>

@@ -23,7 +23,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Cube.Pdf.App.Pinstaller
+namespace Cube.Pdf.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///

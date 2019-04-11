@@ -17,7 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
 using Cube.Iteration;
-using Cube.Pdf.App.Pinstaller.Debug;
+using Cube.Pdf.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +25,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Cube.Pdf.App.Pinstaller
+namespace Cube.Pdf.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///

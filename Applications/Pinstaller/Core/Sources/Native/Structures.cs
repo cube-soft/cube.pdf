@@ -18,7 +18,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Cube.Pdf.App.Pinstaller
+namespace Cube.Pdf.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///

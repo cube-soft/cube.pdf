@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Pdfium", "Librarie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests", "Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Clip", "Applications\Clip\Cube.Pdf.App.Clip.csproj", "{65746EF3-A052-45CE-8565-ADF0DF950DBE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter", "Applications\Converter\Main\Cube.Pdf.Converter.csproj", "{467EEF80-0390-46E8-A403-CAB70FC2D8E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter.Proxy", "Applications\Converter\Proxy\Cube.Pdf.Converter.Proxy.csproj", "{49D837DB-CD03-4BCA-8726-FD82B0769AD4}"
@@ -33,15 +31,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Editor.Proxy", "Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Editor.Tests", "Applications\Editor\Tests\Cube.Pdf.Editor.Tests.csproj", "{741CADAB-88E7-41B3-8250-D75A85580667}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Pinstaller.Core", "Applications\Pinstaller\Core\Cube.Pdf.Pinstaller.Core.csproj", "{04D5955C-2C09-45CE-8CB8-173E5E4C77C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Pinstaller.Cli", "Applications\Pinstaller\Cli\Cube.Pdf.Pinstaller.Cli.csproj", "{449EC6AB-3D9D-4AB3-B359-D278169E8ADC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Pinstaller.Tests", "Applications\Pinstaller\Tests\Cube.Pdf.Pinstaller.Tests.csproj", "{01E714D7-990C-4C0C-A9C1-5433D028209D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Clip", "Applications\Clip\Cube.Pdf.App.Clip.csproj", "{65746EF3-A052-45CE-8565-ADF0DF950DBE}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Pages", "Applications\Pages\Cube.Pdf.App.Pages.csproj", "{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Picker", "Applications\Picker\Cube.Pdf.App.Picker.csproj", "{C60D1DD1-1A53-4BFF-97F9-FD9902689336}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Pinstaller", "Applications\Pinstaller\Core\Cube.Pdf.App.Pinstaller.csproj", "{04D5955C-2C09-45CE-8CB8-173E5E4C77C1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Pinstaller.Cli", "Applications\Pinstaller\Cli\Cube.Pdf.App.Pinstaller.Cli.csproj", "{449EC6AB-3D9D-4AB3-B359-D278169E8ADC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests.Pinstaller", "Applications\Pinstaller\Tests\Cube.Pdf.Tests.Pinstaller.csproj", "{01E714D7-990C-4C0C-A9C1-5433D028209D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
