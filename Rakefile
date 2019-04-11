@@ -33,14 +33,14 @@ GS_DEST     = ['Tests', 'Applications/Converter/Tests', 'Applications/Converter/
 PDFIUM_NAME = 'pdfiumviewer.native'
 PDFIUM_KIND = 'no_v8-no_xfa'
 PDFIUM_VER  = '2018.4.8.256'
-PDFIUM_DEST = ['Tests', 'Applications/Editor/Tests', 'Applications/Editor/Forms']
+PDFIUM_DEST = ['Tests', 'Applications/Editor/Tests', 'Applications/Editor/Main']
 PACKAGES    = ['Libraries/Cube.Pdf.Core.nuspec',
                'Libraries/Cube.Pdf.Ghostscript.nuspec',
                'Libraries/Cube.Pdf.Itext.nuspec',
                'Libraries/Cube.Pdf.Pdfium.nuspec']
 TESTCASES   = {'Cube.Pdf.Tests'            => 'Tests',
                'Cube.Pdf.Converter.Tests'  => 'Applications/Converter/Tests',
-               'Cube.Pdf.Tests.Editor'     => 'Applications/Editor/Tests',
+               'Cube.Pdf.Editor.Tests'     => 'Applications/Editor/Tests',
                'Cube.Pdf.Tests.Pinstaller' => 'Applications/Pinstaller/Tests'}
 
 # --------------------------------------------------------------------------- #

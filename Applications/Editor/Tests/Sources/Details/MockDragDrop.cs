@@ -25,7 +25,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Cube.Pdf.Tests.Editor
+namespace Cube.Pdf.Editor.Tests
 {
     #region IDragInfo
 

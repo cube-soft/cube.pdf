@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.App.Editor
+﻿namespace Cube.Pdf.Editor
 {
     partial class MainForm
     {
@@ -39,7 +39,7 @@
             //
             // RootLayoutPanel
             //
-            this.RootLayoutPanel.BackgroundImage = global::Cube.Pdf.App.Editor.Properties.Resources.Background;
+            this.RootLayoutPanel.BackgroundImage = global::Cube.Pdf.Editor.Properties.Resources.Background;
             this.RootLayoutPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.RootLayoutPanel.ColumnCount = 1;
             this.RootLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));

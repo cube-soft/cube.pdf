@@ -16,11 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.App.Editor;
 using NUnit.Framework;
 using System.Linq;
 
-namespace Cube.Pdf.Tests.Editor
+namespace Cube.Pdf.Editor.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

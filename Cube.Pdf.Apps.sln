@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Itext", "Libraries
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Pdfium", "Libraries\Pdfium\Cube.Pdf.Pdfium.csproj", "{6924768E-F20A-4EA8-9D15-46F8A9890989}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests", "Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Clip", "Applications\Clip\Cube.Pdf.App.Clip.csproj", "{65746EF3-A052-45CE-8565-ADF0DF950DBE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter", "Applications\Converter\Main\Cube.Pdf.Converter.csproj", "{467EEF80-0390-46E8-A403-CAB70FC2D8E1}"
@@ -25,9 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter.Proxy", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter.Tests", "Applications\Converter\Tests\Cube.Pdf.Converter.Tests.csproj", "{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Editor", "Applications\Editor\Forms\Cube.Pdf.App.Editor.csproj", "{CA46007A-4F0F-4304-BB57-D0E22D7C936E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Editor", "Applications\Editor\Main\Cube.Pdf.Editor.csproj", "{CA46007A-4F0F-4304-BB57-D0E22D7C936E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Editor.Proxy", "Applications\Editor\Proxy\Cube.Pdf.App.Editor.Proxy.csproj", "{F1A92A05-5950-454F-AFAB-3479F3E1EC43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Editor.Proxy", "Applications\Editor\Proxy\Cube.Pdf.Editor.Proxy.csproj", "{F1A92A05-5950-454F-AFAB-3479F3E1EC43}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Editor.Tests", "Applications\Editor\Tests\Cube.Pdf.Editor.Tests.csproj", "{741CADAB-88E7-41B3-8250-D75A85580667}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Pages", "Applications\Pages\Cube.Pdf.App.Pages.csproj", "{27EADCF1-AA82-444B-B9E5-C9529FF48CA0}"
 EndProject
@@ -36,10 +40,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Pinstaller", "Applications\Pinstaller\Core\Cube.Pdf.App.Pinstaller.csproj", "{04D5955C-2C09-45CE-8CB8-173E5E4C77C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Pinstaller.Cli", "Applications\Pinstaller\Cli\Cube.Pdf.App.Pinstaller.Cli.csproj", "{449EC6AB-3D9D-4AB3-B359-D278169E8ADC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests", "Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests.Editor", "Applications\Editor\Tests\Cube.Pdf.Tests.Editor.csproj", "{741CADAB-88E7-41B3-8250-D75A85580667}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests.Pinstaller", "Applications\Pinstaller\Tests\Cube.Pdf.Tests.Pinstaller.csproj", "{01E714D7-990C-4C0C-A9C1-5433D028209D}"
 EndProject

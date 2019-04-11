@@ -20,7 +20,7 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.App.Editor
+namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///

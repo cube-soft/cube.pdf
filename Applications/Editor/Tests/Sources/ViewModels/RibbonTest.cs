@@ -16,11 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.App.Editor;
 using GalaSoft.MvvmLight.Messaging;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Tests.Editor.ViewModels
+namespace Cube.Pdf.Editor.Tests.ViewModels
 {
     /* --------------------------------------------------------------------- */
     ///

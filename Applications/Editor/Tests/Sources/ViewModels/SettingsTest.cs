@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
-using Cube.Pdf.App.Editor;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
@@ -25,7 +24,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Cube.Pdf.Tests.Editor.ViewModels
+namespace Cube.Pdf.Editor.Tests.ViewModels
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -59,7 +58,7 @@ namespace Cube.Pdf.Tests.Editor.ViewModels
             {
                 Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Tests.Editor 0.5.2β "));
+                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Editor.Tests 0.5.2β "));
                 Assert.That(e.Windows.Text,      Does.StartWith("Microsoft Windows"));
                 Assert.That(e.Framework.Text,    Does.StartWith("Microsoft .NET Framework"));
                 Assert.That(e.Link.Text,         Is.EqualTo("Copyright © 2010 CubeSoft, Inc."));

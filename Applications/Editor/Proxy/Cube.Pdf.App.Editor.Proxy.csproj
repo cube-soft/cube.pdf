@@ -8,7 +8,7 @@
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <AssemblyName>CubePdfUtilitySplash</AssemblyName>
         <AssemblyTitle>CubePDF Utility</AssemblyTitle>
-        <RootNamespace>Cube.Pdf.App.Editor</RootNamespace>
+        <RootNamespace>Cube.Pdf.Editor</RootNamespace>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net45</TargetFramework>
         <LangVersion>latest</LangVersion>

@@ -19,7 +19,6 @@
 using Cube.FileSystem;
 using Cube.FileSystem.TestService;
 using Cube.Generics;
-using Cube.Pdf.App.Editor;
 using Cube.Xui.Converters;
 using NUnit.Framework;
 using System;
@@ -29,7 +28,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Cube.Pdf.Tests.Editor.Interactions
+namespace Cube.Pdf.Editor.Tests.Interactions
 {
     /* --------------------------------------------------------------------- */
     ///
