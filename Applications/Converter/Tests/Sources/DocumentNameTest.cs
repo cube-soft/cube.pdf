@@ -17,10 +17,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Pdf.App.Converter;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Tests.Converter
+namespace Cube.Pdf.Converter.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

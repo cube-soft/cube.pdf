@@ -20,7 +20,6 @@ using Cube.Collections;
 using Cube.FileSystem.TestService;
 using Cube.Forms;
 using Cube.Generics;
-using Cube.Pdf.App.Converter;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using NUnit.Framework;
@@ -30,7 +29,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading;
 
-namespace Cube.Pdf.Tests.Converter
+namespace Cube.Pdf.Converter.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

@@ -29,7 +29,7 @@ FRAMEWORKS  = ['net45', 'net35']
 CONFIGS     = ['Release', 'Debug']
 PLATFORMS   = ['Any CPU', 'x86', 'x64']
 GS_NAME     = 'gsdll32.dll'
-GS_DEST     = ['Tests', 'Applications/Converter/Tests', 'Applications/Converter/Forms']
+GS_DEST     = ['Tests', 'Applications/Converter/Tests', 'Applications/Converter/Main']
 PDFIUM_NAME = 'pdfiumviewer.native'
 PDFIUM_KIND = 'no_v8-no_xfa'
 PDFIUM_VER  = '2018.4.8.256'
@@ -39,7 +39,7 @@ PACKAGES    = ['Libraries/Cube.Pdf.Core.nuspec',
                'Libraries/Cube.Pdf.Itext.nuspec',
                'Libraries/Cube.Pdf.Pdfium.nuspec']
 TESTCASES   = {'Cube.Pdf.Tests'            => 'Tests',
-               'Cube.Pdf.Tests.Converter'  => 'Applications/Converter/Tests',
+               'Cube.Pdf.Converter.Tests'  => 'Applications/Converter/Tests',
                'Cube.Pdf.Tests.Editor'     => 'Applications/Editor/Tests',
                'Cube.Pdf.Tests.Pinstaller' => 'Applications/Pinstaller/Tests'}
 

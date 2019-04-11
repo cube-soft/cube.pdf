@@ -51,7 +51,7 @@ test_script:
       -log:Error
       -register:user
       -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Tests.Converter.dll"
+      -targetargs:"%PROJECT_NAME%.Converter.Tests.dll"
       -targetdir:"Applications\Converter\Tests\%PROJECT_BIN%"
       -returntargetcode
       -hideskipped:All

@@ -16,11 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.App.Converter;
 using NUnit.Framework;
 using System;
 
-namespace Cube.Pdf.Tests.Converter
+namespace Cube.Pdf.Converter.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

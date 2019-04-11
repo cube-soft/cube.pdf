@@ -16,41 +16,40 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using NUnit.Framework;
-using System.Reflection;
+using System;
+using System.Text.RegularExpressions;
 
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// GlobalSetup
+    /// StringExtension
     ///
     /// <summary>
-    /// NUnit で最初に実行する処理を記述するテストです。
+    /// 文字列の拡張用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [SetUpFixture]
-    public class GlobalSetup
+    public static class StringExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OneTimeSetup
+        /// WordWrap
         ///
         /// <summary>
-        /// 一度だけ実行される初期化処理です。
+        /// 指定した文字数で折り返します。
         /// </summary>
         ///
+        /// <param name="src">元の文字列</param>
+        /// <param name="n">折り返す文字数</param>
+        ///
+        /// <returns>変換後の文字列</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            Logger.Configure();
-            Logger.ObserveTaskException();
-            Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
-        }
+        public static string WordWrap(this string src, int n)
+            => Regex.Replace(src, $@"(?<=\G.{{{n}}})(?!$)", Environment.NewLine);
 
         #endregion
     }

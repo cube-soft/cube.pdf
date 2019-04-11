@@ -18,7 +18,7 @@
 using Cube.Collections;
 using System;
 
-namespace Cube.Pdf.App.Proxy
+namespace Cube.Pdf.Converter.Proxy
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -90,14 +90,14 @@ namespace Cube.Pdf.App.Proxy
             try
             {
                 src.Options.TryGetValue("UserName", out var user);
-                return Cube.Processes.Process.StartAs(user, exec, args);
+                return Process.StartAs(user, exec, args);
             }
             catch (Exception err)
             {
                 if (!src.Options.TryGetValue("ThreadID", out var id)) throw;
                 Logger.Warn(LogType, err);
                 Logger.Info(LogType, $"Use ThreadID ({id})");
-                return Cube.Processes.Process.StartAs(uint.Parse(id), exec, args);
+                return Process.StartAs(uint.Parse(id), exec, args);
             }
         }
 

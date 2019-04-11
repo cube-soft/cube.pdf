@@ -16,41 +16,39 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using NUnit.Framework;
-using System.Reflection;
+using Cube.DataContract.Mixin;
+using Cube.Generics;
+using Cube.Log;
+using Microsoft.Win32;
+using System;
+using System.Diagnostics;
 
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// GlobalSetup
+    /// SettingsExtension
     ///
     /// <summary>
-    /// NUnit で最初に実行する処理を記述するテストです。
+    /// Provides extended methods of the SettingsFolder class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [SetUpFixture]
-    public class GlobalSetup
+    internal static class SettingsExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OneTimeSetup
+        /// GetValue
         ///
         /// <summary>
-        /// 一度だけ実行される初期化処理です。
+        /// Gets the string value from the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            Logger.Configure();
-            Logger.ObserveTaskException();
-            Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
-        }
+        public static string GetValue(this SettingsFolder src, RegistryKey root, string name) =>
+            root.GetValue<string>($@"Software\{src.Assembly.Company}\{src.Assembly.Product}", name);
 
         #endregion
     }

@@ -19,7 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Pdfium", "Librarie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Clip", "Applications\Clip\Cube.Pdf.App.Clip.csproj", "{65746EF3-A052-45CE-8565-ADF0DF950DBE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Converter", "Applications\Converter\Forms\Cube.Pdf.App.Converter.csproj", "{467EEF80-0390-46E8-A403-CAB70FC2D8E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter", "Applications\Converter\Main\Cube.Pdf.Converter.csproj", "{467EEF80-0390-46E8-A403-CAB70FC2D8E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter.Proxy", "Applications\Converter\Proxy\Cube.Pdf.Converter.Proxy.csproj", "{49D837DB-CD03-4BCA-8726-FD82B0769AD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter.Tests", "Applications\Converter\Tests\Cube.Pdf.Converter.Tests.csproj", "{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Editor", "Applications\Editor\Forms\Cube.Pdf.App.Editor.csproj", "{CA46007A-4F0F-4304-BB57-D0E22D7C936E}"
 EndProject
@@ -33,11 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Pinstaller", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Pinstaller.Cli", "Applications\Pinstaller\Cli\Cube.Pdf.App.Pinstaller.Cli.csproj", "{449EC6AB-3D9D-4AB3-B359-D278169E8ADC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.App.Proxy", "Applications\Converter\Proxy\Cube.Pdf.App.Proxy.csproj", "{49D837DB-CD03-4BCA-8726-FD82B0769AD4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests", "Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests.Converter", "Applications\Converter\Tests\Cube.Pdf.Tests.Converter.csproj", "{D0E7D96E-F1FB-4508-BF95-FBEE287BD8A2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests.Editor", "Applications\Editor\Tests\Cube.Pdf.Tests.Editor.csproj", "{741CADAB-88E7-41B3-8250-D75A85580667}"
 EndProject

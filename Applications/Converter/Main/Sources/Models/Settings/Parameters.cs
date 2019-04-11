@@ -16,42 +16,47 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using NUnit.Framework;
-using System.Reflection;
-
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// GlobalSetup
+    /// SaveOption
     ///
     /// <summary>
-    /// NUnit で最初に実行する処理を記述するテストです。
+    /// Specifies how to save when the specified path exists.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [SetUpFixture]
-    public class GlobalSetup
+    public enum SaveOption
     {
-        #region Methods
+        /// <summary>Overwrite</summary>
+        Overwrite = 0,
+        /// <summary>Merge at the beginning</summary>
+        MergeHead = 1,
+        /// <summary>Merge at the end</summary>
+        MergeTail = 2,
+        /// <summary>Rename</summary>
+        Rename = 3,
+    }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OneTimeSetup
-        ///
-        /// <summary>
-        /// 一度だけ実行される初期化処理です。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            Logger.Configure();
-            Logger.ObserveTaskException();
-            Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
-        }
-
-        #endregion
+    /* --------------------------------------------------------------------- */
+    ///
+    /// PostProcess
+    ///
+    /// <summary>
+    /// Specifies the post process.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public enum PostProcess
+    {
+        /// <summary>Open</summary>
+        Open = 0,
+        /// <summary>Open the directory that the saved file exists</summary>
+        OpenDirectory = 3,
+        /// <summary>Nothing</summary>
+        None = 1,
+        /// <summary>Executes the user specified program</summary>
+        Others = 2,
     }
 }
