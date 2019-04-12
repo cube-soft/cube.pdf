@@ -164,11 +164,10 @@ namespace Cube.Pdf.Editor
             {
                 if (Value == null) return;
 
-                var dir = IO.Get(Assembly.Location).DirectoryName;
-                var exe = IO.Combine(dir, $"UpdateChecker.exe");
+                var exe = IO.Combine(Assembly.DirectoryName, $"CubeChecker.exe");
                 var sk  = "CubePDF Utility2";
 
-                new Startup($"{Title} UpdateChecker")
+                new Startup($"cubepdf-utility-checker")
                 {
                     Command = $"{exe.Quote()} {Assembly.Product.Quote()} /subkey {sk.Quote()}",
                     Enabled = Value.CheckUpdate,
