@@ -44,13 +44,34 @@ steps:
 - task: ExtractFiles@1
   inputs:
     archiveFilePatterns: 'gs-*-x64.zip'
-    destinationFolder: '$(PROJECT_NATIVE)\x64\gs'
+    destinationFolder: 'Libraries\Tests\$(PROJECT_BIN)'
     cleanDestinationFolder: false
   displayName: 'Extract Ghostscript archives'
 
-- script: |
-    nuget rake copy["$(PROJECT_ARCH)","net45"]
-  displayName: 'Copy files'
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: 'gs-*-x64.zip'
+    destinationFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
+    cleanDestinationFolder: false
+  displayName: 'Extract Ghostscript archives'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**\*.dll'
+    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\pdfiumviewer.native.x86_64.no_v8-no_xfa'
+    targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
+    flattenFolders: true
+    overWrite: true
+  displayName: 'Copy PDFium modules'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**\*.dll'
+    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\pdfiumviewer.native.x86_64.no_v8-no_xfa'
+    targetFolder: 'Applications\Editor\Tests\$(PROJECT_BIN)'
+    flattenFolders: true
+    overWrite: true
+  displayName: 'Copy PDFium modules'
 
 - script: >
     "$(TEST_TOOL)"
