@@ -17,7 +17,7 @@ PDF 形式などの文書を作成する事のできる、とても便利なソ�
 * CubePDF ユーザーズマニュアル  
   https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Document.ja.md
 
-CubePDF を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります。
+CubePDF を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.5.2 以降を推奨）。
 .NET Framework は、以下の URL からダウンロードして下さい。
 
 * .NET Downloads for Linux, macOS, and Windows  

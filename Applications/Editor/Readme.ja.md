@@ -11,14 +11,12 @@ https://www.cube-soft.jp/cubepdfutility/
 CubPDF Utility は、既存の PDF ファイルのページ挿入や削除、文書プロパティ、
 各種セキュリティ機能などの設定を変更するためのソフトウェアです。
 
-CubePDF Utility を使用するためには、Microsoft .NET Framework 3.5 以降が
+CubePDF Utility を使用するためには、.NET Framework 3.5 以降が
 インストールされている必要があります（4.5.2 以降を推奨）。
-.NET Framework は、以下のURL からダウンロードして下さい。
+.NET Framework は、以下の URL からダウンロードして下さい。
 
-* Microsoft .NET Framework 4.5.2  
-  https://www.microsoft.com/ja-JP/download/details.aspx?id=42643
-* Microsoft .NET Framework 3.5  
-  https://www.microsoft.com/ja-jp/download/details.aspx?id=22
+* .NET Downloads for Linux, macOS, and Windows  
+  https://dotnet.microsoft.com/download
 
 ## 利用方法
 
@@ -95,6 +93,9 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2018/04/15 version 0.5.3β
+    - PDF ファイルに関連付けられたアイコンを表示する時の不都合を修正
+    - Ctrl クリックで複数の項目を選択する時の不都合を修正
 * 2018/12/10 version 0.5.2β
     - 32bit 版でパスワードで保護された PDF ファイルが開けない不都合を修正
     - プレビュー画面の表示処理を改善

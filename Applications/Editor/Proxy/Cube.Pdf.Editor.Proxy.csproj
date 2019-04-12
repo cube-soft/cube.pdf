@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>0.5.2</Version>
+        <Version>0.5.3</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePdfUtilitySplash</Product>

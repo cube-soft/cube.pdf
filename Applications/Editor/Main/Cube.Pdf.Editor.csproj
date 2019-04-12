@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>0.5.2</Version>
+        <Version>0.5.3</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePdfUtility</Product>
-        <Description>Edit PDF pages, metadata, security settings, and more.</Description>
+        <Description>GUI application for editing PDF pages, metadata, security settings, and more.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <AssemblyName>CubePdfUtility</AssemblyName>
         <AssemblyTitle>CubePDF Utility</AssemblyTitle>
