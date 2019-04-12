@@ -41,7 +41,7 @@ test_script:
       -register:user
       -target:"%TEST_CORETOOL%"
       -targetargs:"%PROJECT_NAME%.Tests.dll"
-      -targetdir:"Tests\%PROJECT_BIN%"
+      -targetdir:"Libraries\Tests\%PROJECT_BIN%"
       -returntargetcode
       -hideskipped:All
       -output:"%TEST_COVERAGE%"
@@ -91,7 +91,7 @@ after_test:
     - xcopy /q /Y /I "Applications\Pager\Main\%PROJECT_BIN%" CubePdf.Page
     - xcopy /q /Y /I "Applications\Picker\Main\%PROJECT_BIN%" CubePdf.Picker
     - xcopy /q /Y /I "Applications\Pinstaller\Cli\%PROJECT_BIN%" CubePinstaller
-    - xcopy /q /Y /I "Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
+    - xcopy /q /Y /I "Libraries\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "Applications\Converter\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "Applications\Editor\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "Applications\Pinstaller\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"

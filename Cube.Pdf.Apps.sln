@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Itext", "Libraries
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Pdfium", "Libraries\Pdfium\Cube.Pdf.Pdfium.csproj", "{6924768E-F20A-4EA8-9D15-46F8A9890989}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests", "Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests", "Libraries\Tests\Cube.Pdf.Tests.csproj", "{583ECD4D-D68F-4FBB-A8F7-5B88E744EB31}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Clip", "Applications\Clip\Main\Cube.Pdf.Clip.csproj", "{65746EF3-A052-45CE-8565-ADF0DF950DBE}"
 EndProject
