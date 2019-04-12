@@ -101,11 +101,12 @@ end
 # --------------------------------------------------------------------------- #
 desc "Build and test projects in the current branch."
 task :test => [:build] do
+    pf  = PLATFORMS[0]
     fw  = %x(git symbolic-ref --short HEAD).chomp
     fw  = 'net45' if (fw != 'net35')
-    bin = ['bin', PLATFORMS[0], CONFIGS[0], fw].join('/')
+    bin = ['bin', pf, CONFIGS[0], fw].join('/')
     Rake::Task[:copy].reenable
-    Rake::Task[:copy].invoke(fw)
+    Rake::Task[:copy].invoke(pf, fw)
     TESTCASES.each { |p, d| sh(%(#{TEST} "#{d}/#{bin}/#{p}.dll" --work="#{d}/#{bin}")) }
 end
 
@@ -113,11 +114,13 @@ end
 # Copy
 # --------------------------------------------------------------------------- #
 desc "Copy resources to the bin directories."
-task :copy, [:framework] do |_, e|
-    fw = (e.framework != nil) ? [e.framework] : FRAMEWORKS
-    fw.product(PLATFORMS, CONFIGS) { |set|
-        pf  = (set[1] == 'Any CPU') ? 'x64' : set[1]
-        bin = ['bin', set[1], set[2], set[0]].join('/')
+task :copy, [:platform, :framework] do |_, e|
+    v0 = (e.platform  != nil) ? [e.platform ] : PLATFORMS
+    v1 = (e.framework != nil) ? [e.framework] : FRAMEWORKS
+
+    v0.product(CONFIGS, v1) { |set|
+        pf  = (set[0] == 'Any CPU') ? 'x64' : set[0]
+        bin = ['bin', set[0], set[1], set[2]].join('/')
 
         GS_DEST.each { |root|
             src  = "#{NATIVE}/#{pf}/gs/#{GS_NAME}"
