@@ -1,19 +1,21 @@
-# CubePDF Page
+CubePDF Page
+====
 
-Copyright (c) 2013 CubeSoft, Inc.
-
-* License: GNU Affero General Public License version 3 (AGPLv3)
-* Mail: support@cube-soft.jp
-* Web: http://www.cube-soft.jp/cubepdfpage/
+Copyright © 2010 CubeSoft, Inc.  
+GNU Affero General Public License version 3 (AGPLv3)  
+support@cube-soft.jp  
+https://www.cube-soft.jp/cubepdfpage/
 
 ## はじめに
 
 CubePDF Page は、PDF ファイルおよび画像ファイル（BMP, JPEG, PNG, GIF, TIFF) を
 結合、または分割するためのソフトウェアです。
 
-CubePDF Page を使用するためには、Microsoft .NET Framework 3.5 以上がインストール
-されている必要があります。.NET Framework 3.5 は、以下の URL からダウンロードして下さい。
-http://www.microsoft.com/ja-jp/download/details.aspx?id=22
+CubePDF Page を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.5.2 以降を推奨）。
+.NET Framework は、以下の URL からダウンロードして下さい。
+
+* .NET Downloads for Linux, macOS, and Windows  
+  https://dotnet.microsoft.com/download
 
 ## 使用方法
 
@@ -51,16 +53,16 @@ CubePDF Page は、以下のライブラリを利用しています。
 
 * iTextSharp
     - GNU Affero General Public License
-    - http://itextpdf.com/
+    - https://itextpdf.com/
     - https://www.nuget.org/packages/iTextSharp/
 * log4net
     - Apache License, Version 2.0
-    - http://logging.apache.org/log4net/
+    - https://logging.apache.org/log4net/
     - https://www.nuget.org/packages/log4net/
-* AsyncBridge
+* AsyncBridge (.NET Framework 3.5)
     - MIT License
-    - http://omermor.github.io/AsyncBridge/
-    - https://www.nuget.org/packages/AsyncBridge.Net35
+    - https://omermor.github.io/AsyncBridge/
+    - https://www.nuget.org/packages/AsyncBridge
 
 ## バージョン履歴
 

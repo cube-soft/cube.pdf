@@ -1,19 +1,22 @@
-#  CubePDF ImagePicker
+CubePDF ImagePicker
+====
 
 Copyright (c) 2015 CubeSoft, Inc.
 
-* 開発・配布: 株式会社キューブ・ソフト
-* License: GNU Affero General Public License version 3 (AGPLv3)
-* Mail: support@cube-soft.jp
-* Web: http://www.cube-soft.jp/
+Copyright © 2010 CubeSoft, Inc.  
+GNU Affero General Public License version 3 (AGPLv3)  
+support@cube-soft.jp  
+https://www.cube-soft.jp/cubepdf/
 
 ## はじめに
 
 CubePDF ImagePicker は、PDF ファイルから画像を抽出するためのソフトウェアです。
 
-CubePDF ImagePicker を使用するためには、Microsoft .NetFramework 3.5 以上がインストールされている必要があります。
-Microsoft .NetFramework 3.5 は、以下の URL からダウンロードして下さい。
-http://www.microsoft.com/ja-jp/download/details.aspx?id=22
+CubePDF ImagePicker を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.5.2 以降を推奨）。
+.NET Framework は、以下の URL からダウンロードして下さい。
+
+* .NET Downloads for Linux, macOS, and Windows  
+  https://dotnet.microsoft.com/download
 
 ## 使用方法
 
@@ -30,16 +33,16 @@ CubePDF ImagePicker は、以下のライブラリを利用しています。
 
 * iTextSharp
     - GNU Affero General Public License
-    - http://itextpdf.com/
+    - https://itextpdf.com/
     - https://www.nuget.org/packages/iTextSharp/
 * log4net
     - Apache License, Version 2.0
-    - http://logging.apache.org/log4net/
+    - https://logging.apache.org/log4net/
     - https://www.nuget.org/packages/log4net/
-* AsyncBridge
+* AsyncBridge (.NET Framework 3.5)
     - MIT License
-    - http://omermor.github.io/AsyncBridge/
-    - https://www.nuget.org/packages/AsyncBridge.Net35
+    - https://omermor.github.io/AsyncBridge/
+    - https://www.nuget.org/packages/AsyncBridge
 
 ## バージョン履歴
 

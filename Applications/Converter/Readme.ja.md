@@ -36,10 +36,10 @@ CubePDF は、以下のライブラリを利用しています。
 
 * GPL Ghostscript
     - GNU Affero General Public License
-    - http://www.ghostscript.com/
+    - https://www.ghostscript.com/
 * iTextSharp
     - GNU Affero General Public License
-    - http://sourceforge.net/projects/itextsharp/
+    - https://itextpdf.com/
     - https://www.nuget.org/packages/iTextSharp/
 * log4net
     - Apache License, Version 2.0
