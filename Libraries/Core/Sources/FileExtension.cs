@@ -51,7 +51,7 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         public static PdfFile GetPdfFile(this IO io, string src, string password) =>
-            new PdfFile(src, password, io.GetRefreshable());
+            new PdfFile(src, password, io);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -102,7 +102,7 @@ namespace Cube.Pdf.Mixin
             var x    = image.HorizontalResolution;
             var y    = image.VerticalResolution;
 
-            return new ImageFile(src, io.GetRefreshable())
+            return new ImageFile(src, io)
             {
                 Count      = image.GetFrameCount(dim),
                 Resolution = new PointF(x, y),

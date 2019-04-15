@@ -1,36 +1,24 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>2.14.0</version>
+        <version>2.15.0</version>
         <id>Cube.Pdf.Ghostscript</id>
         <title>Cube.Pdf.Ghostscript</title>
-        <authors>CubeSoft</authors>
-        <owners>CubeSoft</owners>
+        <authors>clown,cube-soft</authors>
+        <owners>clown,cube-soft</owners>
+        <description>Wrapper library of the Ghostscript, which is available for .NET Framework 3.5, 4.5 or more.</description>
         <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
-        <description>Library to wwap Ghostscript in .NET Framework.</description>
         <tags>Cube PDF Ghostscript</tags>
         <license type="expression">AGPL-3.0-or-later</license>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
         <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
-            <group targetFramework="net45">
-                <dependency id="Cube.Core" version="1.14.0" />
-                <dependency id="Cube.FileSystem" version="1.14.0" />
-                <dependency id="Cube.Pdf" version="2.14.0" />
-            </group>
-            <group targetFramework="net35">
-                <dependency id="Cube.Backwards" version="1.5.0" />
-                <dependency id="Cube.Core" version="1.14.0" />
-                <dependency id="Cube.FileSystem" version="1.14.0" />
-                <dependency id="Cube.Pdf" version="2.14.0" />
-            </group>
+            <dependency id="Cube.Pdf" version="2.15.0" />
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\Cube.Pdf.Ghostscript.dll" target="lib\net45" />
-        <file src="bin\Release\Cube.Pdf.Ghostscript.xml" target="lib\net45" />
-        <file src="bin\net35\Release\Cube.Pdf.Ghostscript.dll" target="lib\net35" />
-        <file src="bin\net35\Release\Cube.Pdf.Ghostscript.xml" target="lib\net35" />
+        <file src="bin\Any CPU\Release\net45\Cube.Pdf.Ghostscript.*" target="lib\net45" />
+        <file src="bin\Any CPU\Release\net35\Cube.Pdf.Ghostscript.*" target="lib\net35" />
     </files>
 </package>

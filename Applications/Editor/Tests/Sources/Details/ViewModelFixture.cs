@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
 using Cube.Generics;
-using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
@@ -33,7 +32,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace Cube.Pdf.Tests.Editor
+namespace Cube.Pdf.Editor.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -314,7 +313,7 @@ namespace Cube.Pdf.Tests.Editor
             var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
             var asm   = Assembly.GetExecutingAssembly();
             var fmt   = DataContract.Format.Registry;
-            var path  = @"CubeSoft\Cube.Pdf.Tests.Editor";
+            var path  = @"CubeSoft\Cube.Pdf.Editor.Tests";
             var src   = new SettingsFolder(asm, fmt, path, IO) { AutoSave = false };
             var dest  = new MainViewModel(src);
 

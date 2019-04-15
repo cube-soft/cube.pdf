@@ -24,7 +24,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.App.Editor
+namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -51,7 +51,7 @@ namespace Cube.Pdf.App.Editor
         [STAThread]
         static void Main(string[] args)
         {
-            var mutex = new Mutex(true, Properties.Resources.SplashProgram, out var created);
+            var mutex = new Mutex(true, "CubePdfUtilitySplash", out var created);
             if (!created) return;
 
             try
@@ -62,7 +62,7 @@ namespace Cube.Pdf.App.Editor
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 var view = new MainForm();
-                view.Shown += (_, __) =>
+                view.Shown += (s, e) =>
                 {
                     try { Start(args); }
                     catch (Exception err) { view.Error(err); }
@@ -88,7 +88,7 @@ namespace Cube.Pdf.App.Editor
             var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Process.Start(new ProcessStartInfo
             {
-                FileName  = Path.Combine(dir, $"{Properties.Resources.MainProgram}.exe"),
+                FileName  = Path.Combine(dir, $"{Target}.exe"),
                 Arguments = string.Join(" ", args.Select(s => $"\"{s}\"").ToArray()),
             });
         }
@@ -105,11 +105,15 @@ namespace Cube.Pdf.App.Editor
         /* ----------------------------------------------------------------- */
         static bool IsSkip()
         {
-            var p = Process.GetProcessesByName(Properties.Resources.MainProgram);
+            var p = Process.GetProcessesByName(Target);
             var n = p?.Length ?? 0;
             return n > 0;
         }
 
+        #endregion
+
+        #region Fields
+        private static readonly string Target = "CubePdfUtility";
         #endregion
     }
 }

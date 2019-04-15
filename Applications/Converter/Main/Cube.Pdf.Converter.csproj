@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Version>1.0.0.19</Version>
+        <Authors>clown;cube-soft</Authors>
+        <Company>CubeSoft</Company>
+        <Product>CubePDF</Product>
+        <Description>GUI application for converting to PDF or other formats.</Description>
+        <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
+        <AssemblyName>CubePdf</AssemblyName>
+        <AssemblyTitle>CubePDF</AssemblyTitle>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net35</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Platforms>AnyCPU;x86;x64</Platforms>
+        <IsPackable>false</IsPackable>
+        <Optimize>true</Optimize>
+        <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
+        <ApplicationIcon>App.ico</ApplicationIcon>
+        <ApplicationManifest>App.manifest</ApplicationManifest>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+        <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
+        <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
+        <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
+        <PackageReference Include="Cube.Forms" Version="1.15.0" />
+        <Reference Include="System.Windows.Forms" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
+        <Compile Update="Sources\Views\*Form.cs" SubType="Form" />
+        <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+        <EmbeddedResource Update="Sources\Views\*Form.resx" DependentUpon="%(FIlename).cs" />
+        <EmbeddedResource Update="Sources\Views\MainForm.ja.resx" DependentUpon="MainForm.cs" />
+        <None Include="Properties\DataSources\*" />
+        <None Include="Assets\**\*" />
+        <None Include="App.config" />
+    </ItemGroup>
+</Project>

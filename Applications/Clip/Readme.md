@@ -1,19 +1,21 @@
-# CubePDF Clip
+CubePDF Clip
+====
 
-Copyright (c) 2017 CubeSoft, Inc.
-
+Copyright © 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
-http://www.cube-soft.jp/  
+https://www.cube-soft.jp/
 
 ## はじめに
 
 CubePDF Clip は、PDF ファイルにテキストファイルや画像ファイルなどの
 別のファイルを添付するためのソフトウェアです。
 
-CubePDF Clip を使用するためには、Microsoft .NET Framework 3.5 以上がインストール
-されている必要があります。.NET Framework 3.5 は、以下の URL からダウンロードして下さい。  
-http://www.microsoft.com/ja-jp/download/details.aspx?id=22
+CubePDF Clip を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.5.2 以降を推奨）。
+.NET Framework は、以下の URL からダウンロードして下さい。
+
+* .NET Downloads for Linux, macOS, and Windows  
+  https://dotnet.microsoft.com/download
 
 ## 使用方法
 
@@ -61,21 +63,20 @@ CubePDF Clip は、以下のライブラリを利用しています。
 
 * iTextSharp
     - GNU Affero General Public License
-    - http://itextpdf.com/
+    - https://itextpdf.com/
     - https://www.nuget.org/packages/iTextSharp/
 * log4net
     - Apache License, Version 2.0
-    - http://logging.apache.org/log4net/
+    - https://logging.apache.org/log4net/
     - https://www.nuget.org/packages/log4net/
-* AsyncBridge
+* AsyncBridge (.NET Framework 3.5)
     - MIT License
-    - http://omermor.github.io/AsyncBridge/
-    - https://www.nuget.org/packages/AsyncBridge.Net35
+    - https://omermor.github.io/AsyncBridge/
+    - https://www.nuget.org/packages/AsyncBridge
 
 ## バージョン履歴
 
 * 2017/04/06 version 1.0.1
     - 他のプロセスによって開かれているファイルを編集しようとした時に警告するように修正
-    
 * 2017/03/24 version 1.0.0
     - 最初の公開バージョン

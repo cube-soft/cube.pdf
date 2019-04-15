@@ -6,6 +6,7 @@ Cube.Pdf
 [![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Itext.svg?label=itext)](https://www.nuget.org/packages/Cube.Pdf.Itext/)
 [![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Pdfium.svg?label=pdfium)](https://www.nuget.org/packages/Cube.Pdf.Pdfium/)  
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
+[![Azure Pipelines](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_apis/build/status/cube-soft.Cube.Pdf?branchName=master)](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_build)
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
 
 Cube.Pdf libraries wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. We will move [CubePdfViewer](https://github.com/cube-soft/CubePdfViewer) to the repository.
@@ -92,7 +93,7 @@ See the [Readme](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Gho
 [CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application uses Ghostscript and iTextSharp.
 
 You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) (Japanese), [directly download link](https://www.cube-soft.jp/cubepdf/dl.php), or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases).
-Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
+Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter) (except for the virtual printer).
 
 ### CubePDF Utility
 
@@ -100,11 +101,11 @@ Source codes of the CubePDF are in the [Applications/Converter](https://github.c
 
 [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application uses PDFium and iTextSharp.
 
-You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) (Japanese), [directly download link](https://www.cube-soft.jp/cubepdfutility/dl.php), or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor).
+You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) (Japanese), [directly download link](https://www.cube-soft.jp/cubepdfutility/dl.php), or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor).
 
 ## Dependencies
 
-Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries) are as follows. [Applications](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications) may use some other third-party libraries.
+Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries) are as follows. [Applications](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications) may use some other third-party libraries.
 
 * [Cube.Core](https://github.com/cube-soft/Cube.Core)
 * [Cube.FileSystem](https://github.com/cube-soft/Cube.FileSystem)
@@ -130,19 +131,19 @@ Projects are respectively licensed as follows:
 
 | Name | License |
 | ---- | ------- |
-| [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Core)                    | Apache 2.0 |
-| [Cube.Pdf.Pdfium](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Pdfium)           | Apache 2.0 |
-| [Cube.Pdf.Ghostscript](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Ghostscript) | GNU AGPLv3 |
-| [Cube.Pdf.Itext](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Itext)             | GNU AGPLv3 |
+| [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core)                    | Apache 2.0 |
+| [Cube.Pdf.Pdfium](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Pdfium)           | Apache 2.0 |
+| [Cube.Pdf.Ghostscript](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript) | GNU AGPLv3 |
+| [Cube.Pdf.Itext](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Itext)             | GNU AGPLv3 |
 
 ### Applications
 
 | Name | License |
 | ---- | ------- |
-| [CubePDF](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter)          | GNU AGPLv3 |
-| [CubePDF Utility](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor)     | GNU AGPLv3 |
-| [CubePDF Clip](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Clip)          | GNU AGPLv3 |
-| [CubePDF Page](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Pages)         | GNU AGPLv3 |
-| [CubePDF ImagePicker](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Picker) | GNU AGPLv3 |
+| [CubePDF](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter)          | GNU AGPLv3 |
+| [CubePDF Utility](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor)     | GNU AGPLv3 |
+| [CubePDF Clip](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Clip)          | GNU AGPLv3 |
+| [CubePDF Page](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Pager)         | GNU AGPLv3 |
+| [CubePDF ImagePicker](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Picker) | GNU AGPLv3 |
 
 Note that trade names, trademarks, service marks, or logo images distributed in CubeSoft applications are not allowed to reuse or modify all or parts of them.

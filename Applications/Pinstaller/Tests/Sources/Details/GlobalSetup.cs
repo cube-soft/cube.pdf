@@ -18,7 +18,7 @@
 using NUnit.Framework;
 using System.Reflection;
 
-namespace Cube.Pdf.Tests.Pinstaller
+namespace Cube.Pdf.Pinstaller.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

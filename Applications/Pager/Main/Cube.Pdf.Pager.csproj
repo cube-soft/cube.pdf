@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Version>2.0.1</Version>
+        <Authors>clown;cube-soft</Authors>
+        <Company>CubeSoft</Company>
+        <Product>CubePdfPage</Product>
+        <Description>GUI application for merging or splitting PDF files.</Description>
+        <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
+        <AssemblyName>CubePdfPage</AssemblyName>
+        <AssemblyTitle>CubePDF Page</AssemblyTitle>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net35</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Platforms>AnyCPU;x86;x64</Platforms>
+        <IsPackable>false</IsPackable>
+        <Optimize>true</Optimize>
+        <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
+        <ApplicationIcon>App.ico</ApplicationIcon>
+        <ApplicationManifest>App.manifest</ApplicationManifest>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+        <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
+        <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
+        <PackageReference Include="Cube.Forms" Version="1.15.0" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="WindowsBase" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
+        <Compile Update="Sources\Views\*Form.cs" SubType="Form" />
+        <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+        <EmbeddedResource Update="Sources\Views\*Form.resx" DependentUpon="%(Filename).cs" />
+        <None Include="Assets\**\*" />
+        <None Include="App.config" />
+    </ItemGroup>
+</Project>

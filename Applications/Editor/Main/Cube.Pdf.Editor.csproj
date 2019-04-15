@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Version>0.5.3</Version>
+        <Authors>clown;cube-soft</Authors>
+        <Company>CubeSoft</Company>
+        <Product>CubePdfUtility</Product>
+        <Description>GUI application for editing PDF pages, metadata, security settings, and more.</Description>
+        <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
+        <AssemblyName>CubePdfUtility</AssemblyName>
+        <AssemblyTitle>CubePDF Utility</AssemblyTitle>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net35</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Platforms>AnyCPU;x86;x64</Platforms>
+        <IsPackable>false</IsPackable>
+        <Optimize>true</Optimize>
+        <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+        <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
+        <ApplicationIcon>App.ico</ApplicationIcon>
+        <ApplicationManifest>App.manifest</ApplicationManifest>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+        <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
+        <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
+        <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
+        <PackageReference Include="Cube.Forms" Version="1.15.0" />
+        <PackageReference Include="Cube.Xui" Version="1.15.0" />
+        <PackageReference Include="gong-wpf-dragdrop" Version="1.1.0" />
+        <Reference Include="System.Windows.Forms" />
+        <Reference Include="PresentationCore" />
+        <Reference Include="PresentationFramework" />
+        <Reference Include="WindowsBase" />
+        <Reference Include="..\..\..\..\resources\net35\RibbonControlsLibrary.dll" />
+    </ItemGroup>
+    <ItemGroup>
+        <ApplicationDefinition Include="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+        <Page Include="Views\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+        <Page Include="Themes\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+        <Compile Update="Views\**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
+        <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
+        <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+        <Resource Include="Assets\**\*" />
+        <None Include="App.config" />
+    </ItemGroup>
+</Project>

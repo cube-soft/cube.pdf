@@ -47,12 +47,10 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <param name="src">Path of the source file.</param>
-        /// <param name="refreshable">
-        /// Object to refresh file information.
-        /// </param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected File(string src, IRefreshable refreshable) : base(src, refreshable) { }
+        protected File(string src, IO io) : base(src, io.GetController()) { }
 
         #endregion
 
@@ -112,13 +110,10 @@ namespace Cube.Pdf
         ///
         /// <param name="src">Path of the PDF file.</param>
         /// <param name="password">Password to open the PDF file.</param>
-        /// <param name="refreshable">
-        /// Object to refresh file information.
-        /// </param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        internal PdfFile(string src, string password, IRefreshable refreshable) :
-            base(src, refreshable)
+        internal PdfFile(string src, string password, IO io) : base(src, io)
         {
             Password   = password;
             Resolution = new PointF(Point, Point);
@@ -198,12 +193,10 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <param name="src">Path of the image file.</param>
-        /// <param name="refreshable">
-        /// Object to refresh file information.
-        /// </param>
+        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        internal ImageFile(string src, IRefreshable refreshable) : base(src, refreshable) { }
+        protected internal ImageFile(string src, IO io) : base(src, io) { }
 
         #endregion
     }

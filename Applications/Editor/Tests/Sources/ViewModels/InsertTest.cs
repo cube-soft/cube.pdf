@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
-using Cube.Pdf.App.Editor;
 using Cube.Pdf.Pdfium;
 using Cube.Xui;
 using Cube.Xui.Mixin;
@@ -29,7 +28,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 
-namespace Cube.Pdf.Tests.Editor.ViewModels
+namespace Cube.Pdf.Editor.Tests.ViewModels
 {
     /* --------------------------------------------------------------------- */
     ///

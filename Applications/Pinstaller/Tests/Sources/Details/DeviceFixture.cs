@@ -17,12 +17,11 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
 using Cube.Log;
-using Cube.Pdf.App.Pinstaller;
 using NUnit.Framework;
 using System;
 using System.ServiceProcess;
 
-namespace Cube.Pdf.Tests.Pinstaller
+namespace Cube.Pdf.Pinstaller.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

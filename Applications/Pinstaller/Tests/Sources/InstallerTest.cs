@@ -16,12 +16,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
-using Cube.Pdf.App.Pinstaller;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace Cube.Pdf.Tests.Pinstaller
+namespace Cube.Pdf.Pinstaller.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

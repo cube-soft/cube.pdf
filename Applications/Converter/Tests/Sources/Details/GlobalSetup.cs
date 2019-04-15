@@ -19,7 +19,7 @@
 using NUnit.Framework;
 using System.Reflection;
 
-namespace Cube.Pdf.Tests.Converter
+namespace Cube.Pdf.Converter.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

@@ -1,0 +1,399 @@
+﻿<!-- **************************************************************************
+
+  Copyright (c) 2010 CubeSoft, Inc.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published
+  by the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+*************************************************************************** -->
+<UserControl
+    x:Class="Cube.Pdf.Editor.RibbonControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+    xmlns:my="clr-namespace:Cube.Pdf.Editor"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="150"
+    d:DesignWidth="800">
+
+    <!-- **********************************************************************
+      Resources
+    *********************************************************************** -->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/RibbonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/RibbonTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- **********************************************************************
+      Main
+    *********************************************************************** -->
+    <r:Ribbon>
+        <r:RibbonTab Header="{Binding Ribbon.Edit.Text}">
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  Open
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Open.Text}"
+                    SmallImageSource="{Binding Ribbon.Open.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Open.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Open.Enabled}"
+                    Command="{Binding Ribbon.Open.Command}" />
+
+                <!-- **********************************************************
+                  Save
+                *********************************************************** -->
+                <r:RibbonSplitButton
+                    Label="{Binding Ribbon.Save.Text}"
+                    SmallImageSource="{Binding Ribbon.Save.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Save.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Save.Enabled}"
+                    Command="{Binding Ribbon.Save.Command}">
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.Save.Tooltip}"
+                        Icon="{Binding Ribbon.Save.SmallIcon}"
+                        Command="{Binding Ribbon.Save.Command}" />
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.SaveAs.Tooltip}"
+                        Icon="{Binding Ribbon.SaveAs.SmallIcon}"
+                        Command="{Binding Ribbon.SaveAs.Command}" />
+                </r:RibbonSplitButton>
+
+                <!-- **********************************************************
+                  Close
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Close.Text}"
+                    SmallImageSource="{Binding Ribbon.Close.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Close.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Close.Enabled}"
+                    Command="{Binding Ribbon.Close.Command}" />
+            </r:RibbonGroup>
+
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  Undo
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Undo.Text}"
+                    SmallImageSource="{Binding Ribbon.Undo.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Undo.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Undo.Enabled}"
+                    Command="{Binding Ribbon.Undo.Command}" />
+
+                <!-- **********************************************************
+                  Redo
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Redo.Text}"
+                    SmallImageSource="{Binding Ribbon.Redo.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Redo.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Redo.Enabled}"
+                    Command="{Binding Ribbon.Redo.Command}" />
+            </r:RibbonGroup>
+
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  Select
+                *********************************************************** -->
+                <r:RibbonSplitButton
+                    Label="{Binding Ribbon.Select.Text}"
+                    SmallImageSource="{Binding Ribbon.Select.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Select.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Select.Enabled}"
+                    Command="{Binding Ribbon.Select.Command}">
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.SelectAll.Tooltip}"
+                        Icon="{Binding Ribbon.SelectAll.SmallIcon}"
+                        Command="{Binding Ribbon.SelectAll.Command}" />
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.SelectFlip.Tooltip}"
+                        Command="{Binding Ribbon.SelectFlip.Command}" />
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.SelectClear.Tooltip}"
+                        Command="{Binding Ribbon.SelectClear.Command}" />
+                </r:RibbonSplitButton>
+            </r:RibbonGroup>
+
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  Insesrt
+                *********************************************************** -->
+                <r:RibbonSplitButton
+                    Label="{Binding Ribbon.Insert.Text}"
+                    SmallImageSource="{Binding Ribbon.Insert.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Insert.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Insert.Enabled}"
+                    Command="{Binding Ribbon.Insert.Command}">
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.Insert.Tooltip}"
+                        Icon="{Binding Ribbon.Insert.SmallIcon}"
+                        Command="{Binding Ribbon.Insert.Command}" />
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.InsertFront.Tooltip}"
+                        Command="{Binding Ribbon.InsertFront.Command}" />
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.InsertBack.Tooltip}"
+                        Command="{Binding Ribbon.InsertBack.Command}" />
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.InsertOthers.Tooltip}"
+                        Icon="{Binding Ribbon.InsertOthers.SmallIcon}"
+                        Command="{Binding Ribbon.InsertOthers.Command}" />
+                </r:RibbonSplitButton>
+
+                <!-- **********************************************************
+                  Extract
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Extract.Text}"
+                    SmallImageSource="{Binding Ribbon.Extract.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Extract.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Extract.Enabled}"
+                    Command="{Binding Ribbon.Extract.Command}" />
+
+                <!-- **********************************************************
+                  Remove
+                *********************************************************** -->
+                <r:RibbonSplitButton
+                    Label="{Binding Ribbon.Remove.Text}"
+                    SmallImageSource="{Binding Ribbon.Remove.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Remove.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Remove.Enabled}"
+                    Command="{Binding Ribbon.Remove.Command}">
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.Remove.Tooltip}"
+                        Icon="{Binding Ribbon.Remove.SmallIcon}"
+                        Command="{Binding Ribbon.Remove.Command}" />
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.RemoveOthers.Tooltip}"
+                        Icon="{Binding Ribbon.RemoveOthers.SmallIcon}"
+                        Command="{Binding Ribbon.RemoveOthers.Command}" />
+                </r:RibbonSplitButton>
+            </r:RibbonGroup>
+
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  MovePrevious
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.MovePrevious.Text}"
+                    SmallImageSource="{Binding Ribbon.MovePrevious.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.MovePrevious.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.MovePrevious.Enabled}"
+                    Command="{Binding Ribbon.MovePrevious.Command}" />
+
+                <!-- **********************************************************
+                  MoveNext
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.MoveNext.Text}"
+                    SmallImageSource="{Binding Ribbon.MoveNext.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.MoveNext.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.MoveNext.Enabled}"
+                    Command="{Binding Ribbon.MoveNext.Command}" />
+            </r:RibbonGroup>
+
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  RotateLeft
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.RotateLeft.Text}"
+                    SmallImageSource="{Binding Ribbon.RotateLeft.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.RotateLeft.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.RotateLeft.Enabled}"
+                    Command="{Binding Ribbon.RotateLeft.Command}" />
+
+                <!-- **********************************************************
+                  RotateRight
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.RotateRight.Text}"
+                    SmallImageSource="{Binding Ribbon.RotateRight.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.RotateRight.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.RotateRight.Enabled}"
+                    Command="{Binding Ribbon.RotateRight.Command}" />
+            </r:RibbonGroup>
+
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  Metadata
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Metadata.Text}"
+                    SmallImageSource="{Binding Ribbon.Metadata.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Metadata.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Metadata.Enabled}"
+                    Command="{Binding Ribbon.Metadata.Command}" />
+
+                <!-- **********************************************************
+                  Encryption
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Encryption.Text}"
+                    SmallImageSource="{Binding Ribbon.Encryption.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Encryption.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Encryption.Enabled}"
+                    Command="{Binding Ribbon.Encryption.Command}" />
+            </r:RibbonGroup>
+        </r:RibbonTab>
+
+        <r:RibbonTab Header="{Binding Ribbon.Others.Text}">
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  Refresh
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Refresh.Text}"
+                    SmallImageSource="{Binding Ribbon.Refresh.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Refresh.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Refresh.Enabled}"
+                    Command="{Binding Ribbon.Refresh.Command}" />
+            </r:RibbonGroup>
+
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  ZoomIn
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.ZoomIn.Text}"
+                    SmallImageSource="{Binding Ribbon.ZoomIn.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.ZoomIn.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.ZoomIn.Enabled}"
+                    Command="{Binding Ribbon.ZoomIn.Command}" />
+
+                <!-- **********************************************************
+                  ZoomOut
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.ZoomOut.Text}"
+                    SmallImageSource="{Binding Ribbon.ZoomOut.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.ZoomOut.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.ZoomOut.Enabled}"
+                    Command="{Binding Ribbon.ZoomOut.Command}" />
+            </r:RibbonGroup>
+
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  ItemSize
+                *********************************************************** -->
+                <ComboBox
+                    ItemsSource="{Binding Data.Images.Preferences.ItemSizeOptions}"
+                    SelectedItem="{Binding Data.ItemSize.Value, Mode=TwoWay}"
+                    Style="{StaticResource RibbonItemSizeStyle}" />
+
+                <!-- **********************************************************
+                  FrameOnly
+                *********************************************************** -->
+                <CheckBox
+                    Content="{Binding Ribbon.FrameOnly.Text}"
+                    IsChecked="{Binding Ribbon.FrameOnly.Value, Mode=TwoWay}"
+                    Style="{StaticResource RibbonFrameOnlyStyle}" />
+            </r:RibbonGroup>
+
+            <r:RibbonGroup>
+                <!-- **********************************************************
+                  Settings
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Settings.Text}"
+                    SmallImageSource="{Binding Ribbon.Settings.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Settings.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Settings.Enabled}"
+                    Command="{Binding Ribbon.Settings.Command}" />
+            </r:RibbonGroup>
+        </r:RibbonTab>
+
+        <r:Ribbon.ApplicationMenu>
+            <r:RibbonApplicationMenu>
+                <!-- **********************************************************
+                  Open (ApplicationMenu)
+                *********************************************************** -->
+                <r:RibbonApplicationMenuItem
+                    Header="{Binding Ribbon.Open.Tooltip}"
+                    ImageSource="{Binding Ribbon.Open.LargeIcon}"
+                    Command="{Binding Ribbon.Open.Command}" />
+
+                <!-- **********************************************************
+                  Save (ApplicationMenu)
+                *********************************************************** -->
+                <r:RibbonApplicationMenuItem
+                    Header="{Binding Ribbon.Save.Tooltip}"
+                    ImageSource="{Binding Ribbon.Save.LargeIcon}"
+                    Command="{Binding Ribbon.Save.Command}" />
+
+                <!-- **********************************************************
+                  SaveAs (ApplicationMenu)
+                *********************************************************** -->
+                <r:RibbonApplicationMenuItem
+                    Header="{Binding Ribbon.SaveAs.Tooltip}"
+                    ImageSource="{Binding Ribbon.SaveAs.LargeIcon}"
+                    Command="{Binding Ribbon.SaveAs.Command}" />
+
+                <!-- **********************************************************
+                  Settings (ApplicationMenu)
+                *********************************************************** -->
+                <r:RibbonApplicationMenuItem
+                    Header="{Binding Ribbon.Settings.Tooltip}"
+                    ImageSource="{Binding Ribbon.Settings.LargeIcon}"
+                    Command="{Binding Ribbon.Settings.Command}" />
+
+                <!-- **********************************************************
+                  Close (ApplicationMenu)
+                *********************************************************** -->
+                <r:RibbonApplicationMenuItem
+                    Header="{Binding Ribbon.Close.Tooltip}"
+                    ImageSource="{Binding Ribbon.Close.LargeIcon}"
+                    Command="{Binding Ribbon.Close.Command}" />
+
+                <!-- **********************************************************
+                  Exit (ApplicationMenu)
+                *********************************************************** -->
+                <r:RibbonApplicationMenuItem
+                    Header="{Binding Ribbon.Exit.Tooltip}"
+                    ImageSource="{Binding Ribbon.Exit.LargeIcon}"
+                    Command="{Binding Ribbon.Exit.Command}" />
+
+                <!-- **********************************************************
+                  Recent files
+                *********************************************************** -->
+                <r:RibbonApplicationMenu.AuxiliaryPaneContent>
+                    <DockPanel Style="{StaticResource RibbonRecentMenuStyle}">
+                        <TextBlock
+                            Text="{Binding Recent.Menu.Text}"
+                            Style="{StaticResource RibbonRecentTitleStyle}"
+                            DockPanel.Dock="Top" />
+                        <ListBox
+                            ItemsSource="{Binding Recent.Items}"
+                            ItemTemplate="{StaticResource RibbonRecentItemTemplate}"
+                            ItemContainerStyle="{StaticResource RibbonRecentItemStyle}"
+                            Template="{StaticResource RibbonRecentCollectionTemplate}">
+                            <i:Interaction.Behaviors>
+                                <my:SelectionBehavior
+                                    Command="{Binding Recent.Open}"
+                                    Popup="True" />
+                            </i:Interaction.Behaviors>
+                        </ListBox>
+                    </DockPanel>
+                </r:RibbonApplicationMenu.AuxiliaryPaneContent>
+            </r:RibbonApplicationMenu>
+        </r:Ribbon.ApplicationMenu>
+    </r:Ribbon>
+</UserControl>

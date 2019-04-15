@@ -1,0 +1,246 @@
+trigger:
+    - master
+pool:
+    vmImage: 'Windows-2019'
+variables:
+    PROJECT_NAME:   'Cube.Pdf'
+    PROJECT_ARCH:   'Any CPU'
+    PROJECT_CONFIG: 'Release'
+    PROJECT_BIN:    'bin\$(PROJECT_ARCH)\$(PROJECT_CONFIG)\net45'
+    PROJECT_LIB:    '..\packages'
+    PROJECT_NATIVE: '..\resources\native'
+    TEST_TOOL:      '$(PROJECT_LIB)\OpenCover\4.7.922\tools\OpenCover.Console.exe'
+    TEST_CORETOOL:  '$(PROJECT_LIB)\NUnit.ConsoleRunner\3.10.0\tools\nunit3-console.exe'
+    TEST_FILTERS:   '+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program'
+    TEST_RESULT:    'TestResult.xml'
+    TEST_COVERAGE:  'CoverResults.xml'
+    TEST_LOG:       '$(Build.ArtifactStagingDirectory)\TestResults'
+
+steps:
+- task: NuGetToolInstaller@0
+  inputs:
+    versionSpec: '>= 4.9'
+  displayName: 'Use NuGet 4.9 or later'
+
+- script: |
+    nuget restore "$(PROJECT_NAME).Apps.sln"
+  displayName: 'Restore NuGet packages'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(PROJECT_NAME).Apps.sln'
+    platform: '$(PROJECT_ARCH)'
+    configuration: '$(PROJECT_CONFIG)'
+  displayName: 'Build solution'
+
+- task: DownloadGitHubRelease@0
+  inputs:
+    connection: 'cube-soft-ci'
+    userRepository: 'cube-soft/Cube.Pdf'
+    itemPattern: 'gs-*-x64.zip'
+    downloadPath: '$(Build.SourcesDirectory)'
+  displayName: 'Download Ghostscript archives'
+
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: 'gs-*-x64.zip'
+    destinationFolder: 'Libraries\Tests\$(PROJECT_BIN)'
+    cleanDestinationFolder: false
+  displayName: 'Extract Ghostscript archives'
+
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: 'gs-*-x64.zip'
+    destinationFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
+    cleanDestinationFolder: false
+  displayName: 'Extract Ghostscript archives'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**\*.dll'
+    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\pdfiumviewer.native.x86_64.no_v8-no_xfa'
+    targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
+    flattenFolders: true
+    overWrite: true
+  displayName: 'Copy PDFium modules'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**\*.dll'
+    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\pdfiumviewer.native.x86_64.no_v8-no_xfa'
+    targetFolder: 'Applications\Editor\Tests\$(PROJECT_BIN)'
+    flattenFolders: true
+    overWrite: true
+  displayName: 'Copy PDFium modules'
+
+- script: >
+    "$(TEST_TOOL)"
+    -log:Error
+    -register:user
+    -target:"$(TEST_CORETOOL)"
+    -targetargs:"$(PROJECT_NAME).Tests.dll"
+    -targetdir:"Libraries\Tests\$(PROJECT_BIN)"
+    -returntargetcode
+    -hideskipped:All
+    -output:"$(TEST_COVERAGE)"
+    -filter:"$(TEST_FILTERS)"
+  displayName: 'Run tests for libraries via OpenCover and NUnit'
+
+- script: >
+    "$(TEST_TOOL)"
+    -log:Error
+    -register:user
+    -target:"$(TEST_CORETOOL)"
+    -targetargs:"$(PROJECT_NAME).Converter.Tests.dll"
+    -targetdir:"Applications\Converter\Tests\$(PROJECT_BIN)"
+    -returntargetcode
+    -hideskipped:All
+    -mergeoutput
+    -output:"$(TEST_COVERAGE)"
+    -filter:"$(TEST_FILTERS)"
+  displayName: 'Run tests for CubePDF via OpenCover and NUnit'
+
+- script: >
+    "$(TEST_TOOL)"
+    -log:Error
+    -register:user
+    -target:"$(TEST_CORETOOL)"
+    -targetargs:"$(PROJECT_NAME).Editor.Tests.dll"
+    -targetdir:"Applications\Editor\Tests\$(PROJECT_BIN)"
+    -returntargetcode
+    -hideskipped:All
+    -mergeoutput
+    -output:"$(TEST_COVERAGE)"
+    -filter:"$(TEST_FILTERS)"
+  displayName: 'Run tests for CubePDF Utility via OpenCover and NUnit'
+
+- script: >
+    "$(TEST_TOOL)"
+    -log:Error
+    -register:user
+    -target:"$(TEST_CORETOOL)"
+    -targetargs:"$(PROJECT_NAME).Pinstaller.Tests.dll"
+    -targetdir:"Applications\Pinstaller\Tests\$(PROJECT_BIN)"
+    -returntargetcode
+    -hideskipped:All
+    -mergeoutput
+    -output:"$(TEST_COVERAGE)"
+    -filter:"$(TEST_FILTERS)"
+  displayName: 'Run CubePinstaller tests via OpenCover and NUnit'
+
+- script: |
+    pip install codecov
+    codecov -f "$(TEST_COVERAGE)" -t $(CODECOV_TOKEN)
+  displayName: 'Send coverage results to Codecov'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'NUnit'
+    testResultsFiles: '**\$(TEST_RESULT)'
+  displayName: 'Publish test results'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'pack'
+    packagesToPack: 'Libraries\*\$(PROJECT_NAME).csproj'
+    configuration: '$(PROJECT_CONFIG)'
+  displayName: 'Create NuGet packages'
+
+- task: ArchiveFiles@2
+  inputs:
+    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.zip'
+    rootFolderOrFile: 'Applications\Converter\Main\$(PROJECT_BIN)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    replaceExistingArchive: true
+  displayName: 'Copy CubePDF modules'
+
+- task: ArchiveFiles@2
+  inputs:
+    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Proxy.zip'
+    rootFolderOrFile: 'Applications\Converter\Proxy\$(PROJECT_BIN)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    replaceExistingArchive: true
+  displayName: 'Copy CubeProxy modules'
+
+- task: ArchiveFiles@2
+  inputs:
+    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Utility.zip'
+    rootFolderOrFile: 'Applications\Editor\Main\$(PROJECT_BIN)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    replaceExistingArchive: true
+  displayName: 'Copy CubePDF Utility modules'
+
+- task: ArchiveFiles@2
+  inputs:
+    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Utility.Proxy.zip'
+    rootFolderOrFile: 'Applications\Editor\Proxy\$(PROJECT_BIN)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    replaceExistingArchive: true
+  displayName: 'Copy CubePDF Utility Splash modules'
+
+- task: ArchiveFiles@2
+  inputs:
+    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePinstaller.zip'
+    rootFolderOrFile: 'Applications\Pinstaller\Cli\$(PROJECT_BIN)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    replaceExistingArchive: true
+  displayName: 'Copy CubePinstaller modules'
+
+- task: ArchiveFiles@2
+  inputs:
+    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Clip.zip'
+    rootFolderOrFile: 'Applications\Clip\Main\$(PROJECT_BIN)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    replaceExistingArchive: true
+  displayName: 'Copy CubePDF Clip modules'
+
+- task: ArchiveFiles@2
+  inputs:
+    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Page.zip'
+    rootFolderOrFile: 'Applications\Pager\Main\$(PROJECT_BIN)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    replaceExistingArchive: true
+  displayName: 'Copy CubePDF Page modules'
+
+- task: ArchiveFiles@2
+  inputs:
+    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Picker.zip'
+    rootFolderOrFile: 'Applications\Picker\Main\$(PROJECT_BIN)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    replaceExistingArchive: true
+  displayName: 'Copy CubePDF ImagePicker modules'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**\*.log'
+    targetFolder: '$(TEST_LOG)'
+    overWrite: true
+  displayName: 'Copy log files'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**\$(TEST_RESULT)'
+    targetFolder: '$(TEST_LOG)'
+    overWrite: true
+  displayName: 'Copy test results'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '$(TEST_COVERAGE)'
+    targetFolder: '$(TEST_LOG)'
+    overWrite: true
+  displayName: 'Copy coverage results'
+
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: '$(PROJECT_NAME)'
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Publish pipline artifacts'

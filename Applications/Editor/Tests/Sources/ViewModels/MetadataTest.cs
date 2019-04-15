@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem.TestService;
-using Cube.Pdf.App.Editor;
 using Cube.Xui;
 using Cube.Xui.Mixin;
 using NUnit.Framework;
@@ -25,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Cube.Pdf.Tests.Editor.ViewModels
+namespace Cube.Pdf.Editor.Tests.ViewModels
 {
     /* --------------------------------------------------------------------- */
     ///

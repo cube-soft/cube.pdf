@@ -10,13 +10,11 @@ https://www.cube-soft.jp/cubepdfutility/
 
 CubePDF Utility is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings through GUI.
 
-CubePDF Utility requires Microsoft .NET Framework 3.5 or more (4.5.2 or more recommended).  
-The download links are as follows:  
+CubePDF Utility requires .NET Framework 3.5 or higher (4.5.2 or higher recommended).  
+The download links are as follows:
 
-* Microsoft .NET Framework 4.5.2  
-  https://www.microsoft.com/ja-JP/download/details.aspx?id=42643
-* Microsoft .NET Framework 3.5  
-  https://www.microsoft.com/ja-jp/download/details.aspx?id=22
+* .NET Downloads for Linux, macOS, and Windows  
+  https://dotnet.microsoft.com/download
 
 ## Support
 
@@ -59,6 +57,9 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2019/04/15 version 0.5.3β
+    - Fix errors when showing icons that are associated with PDF files.
+    - Fix a problem when selecting with Ctrl-click.
 * 2018/12/10 version 0.5.2β
     - Fix a problem that encrypted PDF file cannot be opened in 32bit edition.
     - Fix the layout of the preview window.

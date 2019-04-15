@@ -18,11 +18,11 @@
 using Cube.Collections;
 using Cube.Generics;
 using Cube.Iteration;
-using Cube.Pdf.App.Pinstaller.Debug;
+using Cube.Pdf.Pinstaller.Debug;
 using System;
 using System.Reflection;
 
-namespace Cube.Pdf.App.Pinstaller
+namespace Cube.Pdf.Pinstaller
 {
     /* --------------------------------------------------------------------- */
     ///

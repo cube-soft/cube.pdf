@@ -22,7 +22,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Cube.Pdf.App.Pinstaller.Debug
+namespace Cube.Pdf.Pinstaller.Debug
 {
     /* --------------------------------------------------------------------- */
     ///

@@ -23,7 +23,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace Cube.Processes
+namespace Cube.Pdf.Converter.Proxy
 {
     /* --------------------------------------------------------------------- */
     ///

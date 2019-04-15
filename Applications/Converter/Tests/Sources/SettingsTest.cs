@@ -18,12 +18,12 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.FileSystem.TestService;
-using Cube.Pdf.App.Converter;
+using Cube.Pdf.Converter;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 using System;
 
-namespace Cube.Pdf.Tests.Converter
+namespace Cube.Pdf.Converter.Tests
 {
     /* --------------------------------------------------------------------- */
     ///

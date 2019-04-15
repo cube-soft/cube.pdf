@@ -17,13 +17,12 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Generics;
 using Cube.Log;
-using Cube.Pdf.App.Pinstaller;
-using Cube.Pdf.App.Pinstaller.Debug;
+using Cube.Pdf.Pinstaller.Debug;
 using NUnit.Framework;
 using System;
 using System.Linq;
 
-namespace Cube.Pdf.Tests.Pinstaller
+namespace Cube.Pdf.Pinstaller.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -50,7 +49,6 @@ namespace Cube.Pdf.Tests.Pinstaller
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Dummy Driver",                ExpectedResult = false)]
-        [TestCase("Microsoft Shared Fax Driver", ExpectedResult = true )]
         public bool Create(string name)
         {
             var src = new PrinterDriver(name);
