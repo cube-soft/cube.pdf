@@ -5,9 +5,9 @@ configuration: Release
 environment:
     PROJECT_NAME:   'Cube.Pdf'
     PROJECT_BIN:    'bin\%PLATFORM%\%CONFIGURATION%\net45'
-    PACKAGE_LIB:    '..\packages'
+    PROJECT_LIB:    '..\packages'
     PROJECT_NATIVE: '..\resources\native'
-    TEST_TOOL:      '$(PACKAGE_LIB)\OpenCover\4.7.922\tools\OpenCover.Console.exe'
+    TEST_TOOL:      '$(PROJECT_LIB)\OpenCover\4.7.922\tools\OpenCover.Console.exe'
     TEST_CORETOOL:  'nunit3-console.exe'
     TEST_FILTERS:   '+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program'
     TEST_RESULT:    'TestResult.xml'

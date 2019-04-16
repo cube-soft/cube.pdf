@@ -8,6 +8,7 @@
         <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
@@ -15,10 +16,10 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\Libraries\Core\Cube.Pdf.Core.csproj" />
-        <ProjectReference Include="..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
-        <ProjectReference Include="..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
-        <ProjectReference Include="..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
+        <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
+        <ProjectReference Include="..\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
+        <ProjectReference Include="..\Itext\Cube.Pdf.Itext.csproj" />
+        <ProjectReference Include="..\Pdfium\Cube.Pdf.Pdfium.csproj" />
         <PackageReference Include="NUnit" Version="3.11.0" />
         <PackageReference Include="NUnit.ConsoleRunner" Version="3.10.0" />
         <PackageReference Include="OpenCover" Version="4.7.922" />
