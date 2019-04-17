@@ -10,7 +10,7 @@ Cube.Pdf
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
 
 Cube.Pdf libraries wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party PDF libraries. The repository also has some implemented PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. We will move [CubePdfViewer](https://github.com/cube-soft/CubePdfViewer) to the repository.
-Libraries and applications are available for .NET Framework 3.5, 4.5 or more.
+Libraries and applications are available for .NET Framework 3.5, 4.5 or higher.
 Note that some projects are licensed under the GNU AGPLv3. See the License section for details.
 
 ## Libraries

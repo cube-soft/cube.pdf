@@ -54,8 +54,7 @@ namespace Cube.Pdf.Pinstaller
                 Logger.Configure();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
                 Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
-
-                foreach (var e in Printer.GetElements()) e.Log();
+                Logger.Warn(LogType, () => { foreach (var e in Printer.GetElements()) e.Log(); });
 
                 var src = new ArgumentCollection(args, '/', true);
                 var cmd = src.GetCommand();

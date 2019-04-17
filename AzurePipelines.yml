@@ -11,7 +11,7 @@ variables:
     PROJECT_NATIVE: '..\resources\native'
     TEST_TOOL:      '$(PROJECT_LIB)\OpenCover\4.7.922\tools\OpenCover.Console.exe'
     TEST_CORETOOL:  '$(PROJECT_LIB)\NUnit.ConsoleRunner\3.10.0\tools\nunit3-console.exe'
-    TEST_FILTERS:   '+[Cube*]* -[*]*NativeMethods -[*]*Properties.* -[*]*Form -[*]*.Program'
+    TEST_FILTERS:   '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.App -[*]*Form -[*]*Window -[*]*Control'
     TEST_RESULT:    'TestResult.xml'
     TEST_COVERAGE:  'CoverResults.xml'
     TEST_LOG:       '$(Build.ArtifactStagingDirectory)\TestResults'

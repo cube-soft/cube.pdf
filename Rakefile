@@ -130,8 +130,7 @@ task :copy, [:platform, :framework] do |_, e|
         }
 
         PDFIUM_DEST.each { |root|
-            cvt  = (pf == 'x64') ? 'x86_64' : 'x86'
-            name = [PDFIUM_NAME, cvt, PDFIUM_KIND].join('.')
+            name = [PDFIUM_NAME, (pf == 'x64') ? 'x86_64' : 'x86', PDFIUM_KIND].join('.')
             src  = [LIB, name, PDFIUM_VER, 'Build', pf, 'pdfium.dll'].join('/')
             dest = "#{root}/#{bin}"
             RakeFileUtils::mkdir_p(dest)
