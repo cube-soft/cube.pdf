@@ -102,7 +102,7 @@ namespace Cube.Pdf.Converter
             WorkDirectory  = GetWorkDirectory();
             Version.Digit  = 3;
             Version.Suffix = $"RC{Assembly.Version.Revision}";
-            UpdateProgram  = IO.Combine(IO.Get(Assembly.Location).DirectoryName, "UpdateChecker.exe");
+            UpdateChecker  = IO.Combine(Assembly.DirectoryName, "CubeChecker.exe");
         }
 
         #endregion
@@ -188,14 +188,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateProgram
+        /// UpdateChecker
         ///
         /// <summary>
-        /// Gets the path of the update program.
+        /// Gets the path of the update checker program.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string UpdateProgram { get; }
+        public string UpdateChecker { get; }
 
         #endregion
 
@@ -279,7 +279,7 @@ namespace Cube.Pdf.Converter
 
                 new Startup("cubepdf-checker")
                 {
-                    Command = $"{UpdateProgram.Quote()} {Assembly.Product}",
+                    Command = $"{UpdateChecker.Quote()} {Assembly.Product}",
                     Enabled = Value.CheckUpdate,
                 }.Save();
             }
