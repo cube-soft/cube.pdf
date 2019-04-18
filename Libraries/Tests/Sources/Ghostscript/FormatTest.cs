@@ -21,15 +21,16 @@ using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.Tests.Ghostscript
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ArgumentTest
+    /// FormatTest
     ///
     /// <summary>
-    /// Argument のテスト用クラスです。
+    /// Tests for the Format and Converter classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -43,7 +44,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// Convert
         ///
         /// <summary>
-        /// 指定されたフォーマットに変換するテストを実行します。
+        /// Executes tests of the Invoke method with the specified format.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -56,7 +57,28 @@ namespace Cube.Pdf.Tests.Ghostscript
             var conv = new Converter(fmt) { Resolution = 72 };
 
             conv.Invoke(src, dest);
-            Assert.That(IO.Exists(dest), Is.True);
+            Assert.That(IO.Get(dest).Length, Is.AtLeast(1));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ConvertToText
+        ///
+        /// <summary>
+        /// Executes tests to convert from PostScript to Text format.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void ConvertToText()
+        {
+            var fmt  = Format.Text;
+            var dest = GetResultsWith($"{nameof(ConvertToText)}{fmt.GetExtension()}");
+            var src  = GetExamplesWith("Sample.ps");
+            var conv = new Converter(fmt);
+
+            conv.Invoke(src, dest);
+            Assert.That(IO.Get(dest).Length, Is.AtLeast(1));
         }
 
         #endregion
@@ -68,7 +90,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// TestCases
         ///
         /// <summary>
-        /// テストケース一覧を取得します。
+        /// Gets test cases.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -76,10 +98,8 @@ namespace Cube.Pdf.Tests.Ghostscript
         {
             get
             {
-                foreach (Format src in Enum.GetValues(typeof(Format)))
-                {
-                    yield return new TestCaseData(src);
-                }
+                var v = Enum.GetValues(typeof(Format)).Cast<Format>().Where(e => e != Format.Text);
+                foreach (var src in v) yield return new TestCaseData(src);
             }
         }
 
