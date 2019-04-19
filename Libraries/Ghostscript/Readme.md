@@ -3,9 +3,10 @@ Cube.Pdf.Ghostscript
 
 [![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Ghostscript.svg)](https://www.nuget.org/packages/Cube.Pdf.Ghostscript/)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
+[![Azure Pipelines](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_apis/build/status/cube-soft.Cube.Pdf?branchName=master)](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_build)
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
 
-Cube.Pdf.Ghostscript is a wrapper library of the [Ghostscript](https://www.ghostscript.com/), which is available for .NET Framework 3.5, 4.5 or more. Note that the Cube.Pdf.Ghostscript library is available for NuGet, but you need to copy the gsdll32.dll to the executing directory manually. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or our [GitHub releases](https://github.com/cube-soft/Cube.Pdf/releases).
+Cube.Pdf.Ghostscript is a wrapper library of the [Ghostscript](https://www.ghostscript.com/), which is available for .NET Framework 3.5, 4.5 or later. Note that the Cube.Pdf.Ghostscript library is available for NuGet, but you need to copy the gsdll32.dll to the executing directory manually. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or our [GitHub releases](https://github.com/cube-soft/Cube.Pdf/releases).
 
 ## Usage
 
@@ -80,10 +81,10 @@ public class Argument
 ## Contributing
 
 1. Fork [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/fork) repository.
-2. Create a feature branch from the [stable](https://github.com/cube-soft/Cube.Pdf/tree/stable) branch (git checkout -b my-new-feature origin/stable). The [master](https://github.com/cube-soft/Cube.Pdf/tree/master) branch may refer some pre-released NuGet packages. See [AppVeyor.yml](https://github.com/cube-soft/Cube.Pdf/blob/master/AppVeyor.yml) if you want to build and commit in the master branch.
+2. Create a feature branch from the master or stable branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer some pre-released NuGet packages. Try the [rake clean](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) command when build errors occur.
 3. Commit your changes.
-4. Rebase your local changes against the stable (or master) branch.
-5. Run test suite with the [NUnit](https://nunit.org/) console or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
+4. Rebase your local changes against the master or stable branch.
+5. Run test suite with the [NUnit](http://nunit.org/) console or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
 6. Create new Pull Request.
 
 ## License
