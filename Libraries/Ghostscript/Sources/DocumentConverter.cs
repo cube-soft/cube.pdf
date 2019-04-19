@@ -125,17 +125,6 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Compression
-        ///
-        /// <summary>
-        /// Gets or sets the compression method of embedded images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Encoding Compression { get; set; } = Encoding.Flate;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Downsampling
         ///
         /// <summary>
@@ -223,18 +212,9 @@ namespace Cube.Pdf.Ghostscript
             new Argument("DownsampleColorImages", true),
             new Argument("DownsampleGrayImages",  true),
             new Argument("DownsampleMonoImages",  true),
-            new Argument("EncodeColorImages",     Compression != Encoding.None),
-            new Argument("EncodeGrayImages",      Compression != Encoding.None),
-            new Argument("EncodeMonoImages",      Compression != Encoding.None),
-            new Argument("AutoFilterColorImages", false),
-            new Argument("AutoFilterGrayImages",  false),
-            new Argument("AutoFilterMonoImages",  false),
             Downsampling.GetArgument("ColorImageDownsampleType"),
             Downsampling.GetArgument("GrayImageDownsampleType"),
             Downsampling.GetArgument("MonoImageDownsampleType"),
-            Compression.GetArgument("ColorImageFilter"),
-            Compression.GetArgument("GrayImageFilter"),
-            Compression.GetArgument("MonoImageFilter"),
         }.Compact();
 
         /* ----------------------------------------------------------------- */

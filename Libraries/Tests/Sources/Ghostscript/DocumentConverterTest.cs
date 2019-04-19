@@ -178,28 +178,27 @@ namespace Cube.Pdf.Tests.Ghostscript
                 /* --------------------------------------------------------- */
                 yield return TestCase(new PdfConverter
                 {
-                    Compression = Encoding.None,
+                    Compression     = Encoding.None,
+                    MonoCompression = Encoding.None,
                 }, "SampleMix.ps", Encoding.None);
 
                 yield return TestCase(new PdfConverter
                 {
-                    Compression = Encoding.Flate,
+                    Compression     = Encoding.Flate,
+                    MonoCompression = Encoding.Flate,
                 }, "SampleMix.ps", Encoding.Flate);
 
                 yield return TestCase(new PdfConverter
                 {
-                    Compression = Encoding.Jpeg,
+                    Compression     = Encoding.Jpeg,
+                    MonoCompression = Encoding.Fax,
                 }, "SampleMix.ps", Encoding.Jpeg);
 
                 yield return TestCase(new PdfConverter
                 {
-                    Compression = Encoding.Lzw,
+                    Compression     = Encoding.Lzw,
+                    MonoCompression = Encoding.Lzw,
                 }, "SampleMix.ps", Encoding.Lzw);
-
-                yield return TestCase(new PdfConverter
-                {
-                    Compression = Encoding.Fax,
-                }, "SampleMix.ps", Encoding.Fax);
 
                 /* --------------------------------------------------------- */
                 // Downsampling
