@@ -84,6 +84,33 @@ namespace Cube.Pdf.Tests.Ghostscript
             Assert.That(IO.Exists(dest), Is.True);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke_Throws
+        ///
+        /// <summary>
+        /// Confirms the error of invalid compression settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(Encoding.Flate,  Encoding.Jpeg)]
+        [TestCase(Encoding.Flate,  Encoding.Base85)]
+        [TestCase(Encoding.Fax,    Encoding.Fax)]
+        [TestCase(Encoding.Base85, Encoding.Fax)]
+        public void Invoke_Throws(Encoding color, Encoding mono)
+        {
+            if (Converter.Revision < 927) Assert.Ignore("Only for Ghostscript 9.27 or later.");
+
+            Assert.That(
+                () => Run(new PdfConverter
+                {
+                    Compression     = color,
+                    MonoCompression = mono,
+                }, "Sample.ps", $"{color}_{mono}"),
+                Throws.TypeOf<GsApiException>()
+            );
+        }
+
         #endregion
 
         #region TestCases

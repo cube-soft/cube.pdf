@@ -40,6 +40,22 @@ namespace Cube.Pdf.Tests.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Revision
+        ///
+        /// <summary>
+        /// Confirms the revision number of Ghostscript.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Revision()
+        {
+            Assert.That(Converter.Revision, Is.AtLeast(900));
+            Assert.That(Converter.Revision, Is.AtLeast(900));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SupportedFormats
         ///
         /// <summary>
