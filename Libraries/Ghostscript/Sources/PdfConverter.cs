@@ -105,6 +105,37 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Compression
+        ///
+        /// <summary>
+        /// Gets or sets the compression method of embedded color or gray
+        /// images.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Supported compressions are Flate, Lzw, and Jpeg.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encoding Compression { get; set; } = Encoding.Flate;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MonoCompression
+        ///
+        /// <summary>
+        /// Gets or sets the compression method of embedded mono images.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Supported compressions are Flate, Lzw, and Fax.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encoding MonoCompression { get; set; } = Encoding.Fax;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Linearization
         ///
         /// <summary>
@@ -132,7 +163,28 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Argument> OnCreateArguments() =>
             base.OnCreateArguments()
-            .Concat(new[] { CreateVersion(), CreateFastWebView() }.Compact());
+            .Concat(CreateImageArguments("Color", Compression))
+            .Concat(CreateImageArguments("Gray",  Compression))
+            .Concat(CreateImageArguments("Mono",  MonoCompression))
+            .Concat(new[] { CreateVersion(), CreateFastWebView() })
+            .Compact();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateImageArguments
+        ///
+        /// <summary>
+        /// Creates the collection of arguments representing information
+        /// related to the images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<Argument> CreateImageArguments(string key, Encoding value) => new[]
+        {
+            new Argument($"Encode{key}Images", value != Encoding.None),
+            new Argument($"AutoFilter{key}Images", false),
+            value.GetArgument($"{key}ImageFilter"),
+        };
 
         /* ----------------------------------------------------------------- */
         ///

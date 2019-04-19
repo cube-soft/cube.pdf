@@ -84,6 +84,33 @@ namespace Cube.Pdf.Tests.Ghostscript
             Assert.That(IO.Exists(dest), Is.True);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke_Throws
+        ///
+        /// <summary>
+        /// Confirms the error of invalid compression settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(Encoding.Flate,  Encoding.Jpeg)]
+        [TestCase(Encoding.Flate,  Encoding.Base85)]
+        [TestCase(Encoding.Fax,    Encoding.Fax)]
+        [TestCase(Encoding.Base85, Encoding.Fax)]
+        public void Invoke_Throws(Encoding color, Encoding mono)
+        {
+            if (Converter.Revision < 927) Assert.Ignore("Only for Ghostscript 9.27 or later.");
+
+            Assert.That(
+                () => Run(new PdfConverter
+                {
+                    Compression     = color,
+                    MonoCompression = mono,
+                }, "Sample.ps", $"{color}_{mono}"),
+                Throws.TypeOf<GsApiException>()
+            );
+        }
+
         #endregion
 
         #region TestCases
@@ -178,28 +205,27 @@ namespace Cube.Pdf.Tests.Ghostscript
                 /* --------------------------------------------------------- */
                 yield return TestCase(new PdfConverter
                 {
-                    Compression = Encoding.None,
+                    Compression     = Encoding.None,
+                    MonoCompression = Encoding.None,
                 }, "SampleMix.ps", Encoding.None);
 
                 yield return TestCase(new PdfConverter
                 {
-                    Compression = Encoding.Flate,
+                    Compression     = Encoding.Flate,
+                    MonoCompression = Encoding.Flate,
                 }, "SampleMix.ps", Encoding.Flate);
 
                 yield return TestCase(new PdfConverter
                 {
-                    Compression = Encoding.Jpeg,
+                    Compression     = Encoding.Jpeg,
+                    MonoCompression = Encoding.Fax,
                 }, "SampleMix.ps", Encoding.Jpeg);
 
                 yield return TestCase(new PdfConverter
                 {
-                    Compression = Encoding.Lzw,
+                    Compression     = Encoding.Lzw,
+                    MonoCompression = Encoding.Lzw,
                 }, "SampleMix.ps", Encoding.Lzw);
-
-                yield return TestCase(new PdfConverter
-                {
-                    Compression = Encoding.Fax,
-                }, "SampleMix.ps", Encoding.Fax);
 
                 /* --------------------------------------------------------- */
                 // Downsampling

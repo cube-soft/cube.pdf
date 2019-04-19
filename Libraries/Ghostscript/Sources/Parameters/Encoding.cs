@@ -35,12 +35,14 @@ namespace Cube.Pdf.Ghostscript
         None,
         /// <summary>Flate encoding</summary>
         Flate,
+        /// <summary>LZW encoding</summary>
+        Lzw,
         /// <summary>DCT encoding that is used in JPEG compression</summary>
         Jpeg,
         /// <summary>CCITT Fax encoding</summary>
         Fax,
-        /// <summary>LZW encoding</summary>
-        Lzw,
+        /// <summary>JBIG2 encoding</summary>
+        Jbig2,
         /// <summary>Run Length Encoding (RLE)</summary>
         Rle,
         /// <summary>PackBits RLE</summary>

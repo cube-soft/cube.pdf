@@ -14,11 +14,11 @@ PowerPoint, and more), whenever you need it.
 The converter allows you to convert the files as easy as you can print the files;
 as a matter of fact, you can do it in the same manner as you print files. 
 
-CubePDF requires .NET Framework 3.5 or higher (4.5.2 or higher recommended).  
+CubePDF requires .NET Framework 3.5 or later (4.5.2 or later recommended).  
 The download links are as follows:
 
-* .NET Downloads for Linux, macOS, and Windows  
-  https://dotnet.microsoft.com/download
+* Download .NET Framework  
+  https://dotnet.microsoft.com/download/dotnet-framework
 
 ## Support
 
