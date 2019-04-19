@@ -54,6 +54,28 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Information
+        ///
+        /// <summary>
+        /// Gets information of the currently loaded Ghostscript library.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static GsInformation Information
+        {
+            get
+            {
+                if (_info.Product == IntPtr.Zero)
+                {
+                    var status = NativeMethods.GetInformation(ref _info, Marshal.SizeOf(_info));
+                    if (status != 0) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_revision");
+                }
+                return _info;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Handle
         ///
         /// <summary>
@@ -149,11 +171,29 @@ namespace Cube.Pdf.Ghostscript
 
         #region Fields
         private static readonly GsApi _core = new GsApi();
+        private static GsInformation _info = new GsInformation();
         private IntPtr _handle;
         private readonly OnceAction _initialize;
         #endregion
     }
 
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GsInformation
+    ///
+    /// <summary>
+    /// Represents product information of the Ghostscript.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct GsInformation
+    {
+        public IntPtr Product;
+        public IntPtr Copyright;
+        public int Revision;
+        public int RevisionDate;
+    }
     /* --------------------------------------------------------------------- */
     ///
     /// NativeMethods
@@ -166,6 +206,18 @@ namespace Cube.Pdf.Ghostscript
     internal static class NativeMethods
     {
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetRevision
+        ///
+        /// <summary>
+        /// Gets information of the currently loadded Ghostscript library.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName, CharSet = CharSet.Ansi, EntryPoint = "gsapi_revision")]
+        public static extern int GetInformation(ref GsInformation dest, int length);
 
         /* ----------------------------------------------------------------- */
         ///

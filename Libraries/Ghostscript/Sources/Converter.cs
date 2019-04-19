@@ -97,6 +97,17 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Revision
+        ///
+        /// <summary>
+        /// Gets the revision number of Ghostscript.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static int Revision => GsApi.Information.Revision;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SupportedFormats
         ///
         /// <summary>
