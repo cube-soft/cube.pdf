@@ -33,24 +33,22 @@ steps:
     configuration: '$(PROJECT_CONFIG)'
   displayName: 'Build solution'
 
-- task: DownloadGitHubRelease@0
+- task: PythonScript@0
   inputs:
-    connection: 'cube-soft-ci'
-    userRepository: 'cube-soft/Cube.Pdf'
-    itemPattern: 'gs-*-x64.zip'
-    downloadPath: '$(Build.SourcesDirectory)'
+    scriptSource: 'inline'
+    script: from urllib.request import urlretrieve; urlretrieve('https://www.cube-soft.jp/archive/gs-x64.7z', 'gs-x64.7z')
   displayName: 'Download Ghostscript archives'
 
 - task: ExtractFiles@1
   inputs:
-    archiveFilePatterns: 'gs-*-x64.zip'
+    archiveFilePatterns: 'gs-x64.7z'
     destinationFolder: 'Libraries\Tests\$(PROJECT_BIN)'
     cleanDestinationFolder: false
   displayName: 'Extract Ghostscript archives'
 
 - task: ExtractFiles@1
   inputs:
-    archiveFilePatterns: 'gs-*-x64.zip'
+    archiveFilePatterns: 'gs-x64.7z'
     destinationFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
     cleanDestinationFolder: false
   displayName: 'Extract Ghostscript archives'
