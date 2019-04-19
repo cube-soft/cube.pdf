@@ -15,8 +15,8 @@ CubePDF Utility を使用するためには、.NET Framework 3.5 以降が
 インストールされている必要があります（4.5.2 以降を推奨）。
 .NET Framework は、以下の URL からダウンロードして下さい。
 
-* .NET Downloads for Linux, macOS, and Windows  
-  https://dotnet.microsoft.com/download
+* Download .NET Framework  
+  https://dotnet.microsoft.com/download/dotnet-framework
 
 ## 利用方法
 

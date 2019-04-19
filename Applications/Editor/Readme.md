@@ -13,8 +13,8 @@ CubePDF Utility is a PDF editor which can insert, remove, move, rotate pages, ad
 CubePDF Utility requires .NET Framework 3.5 or higher (4.5.2 or higher recommended).  
 The download links are as follows:
 
-* .NET Downloads for Linux, macOS, and Windows  
-  https://dotnet.microsoft.com/download
+* Download .NET Framework  
+  https://dotnet.microsoft.com/download/dotnet-framework
 
 ## Support
 

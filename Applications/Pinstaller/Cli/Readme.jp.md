@@ -12,8 +12,8 @@ CubePinstaller は、プリンタのインストールおよびアンインス�
 .NET Framework 3.5 以降がインストールされている必要があります。
 .NET Framework は、以下の URL からダウンロードして下さい。
 
-* .NET Downloads for Linux, macOS, and Windows  
-  https://dotnet.microsoft.com/download
+* Download .NET Framework  
+  https://dotnet.microsoft.com/download/dotnet-framework
 
 CubePinstaller は、**C:\ProgramData\CubeSoft\CubePDF\Log** フォルダに実行ログを
 出力しています。問題が発生した時は、これらのログを添付して support@cube-soft.jp
