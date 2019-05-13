@@ -55,6 +55,7 @@ namespace Cube.Pdf.Converter
                 Logger.Configure();
                 Logger.ObserveTaskException();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
+                Logger.Info(LogType, $"Ghostscript {Ghostscript.Converter.Revision}");
                 Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
 
                 Application.EnableVisualStyles();
