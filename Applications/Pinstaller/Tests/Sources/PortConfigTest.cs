@@ -70,7 +70,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [Test]
         public void Convert()
         {
-            var path = GetExamplesWith("Sample.json");
+            var path = GetSource("Sample.json");
             var src  = Format.Json.Deserialize<DeviceConfig>(path).Ports.ToList();
             Assert.That(src.Count,           Is.EqualTo(1));
             Assert.That(src[0].Name,         Is.EqualTo("CubePDF:"));
@@ -106,7 +106,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [Test]
         public void Convert_WithoutProxy()
         {
-            var path = GetExamplesWith("SampleDummy.json");
+            var path = GetSource("SampleDummy.json");
             var src  = Format.Json.Deserialize<DeviceConfig>(path).Ports.ToList();
             Assert.That(src.Count,           Is.EqualTo(1));
             Assert.That(src[0].Name,         Is.EqualTo("DummyPort:"));

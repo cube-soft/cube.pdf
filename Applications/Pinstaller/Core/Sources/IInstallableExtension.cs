@@ -16,8 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 using System;
 
 namespace Cube.Pdf.Pinstaller
@@ -72,7 +72,7 @@ namespace Cube.Pdf.Pinstaller
             var dest = io.Combine(to, filename);
             if (!io.Exists(src)) return;
 
-            io.LogDebug(string.Join("\t", $"[{nameof(Copy)}]", $"From:{src.Quote()}", $"To:{dest.Quote()}"));
+            io.LogDebug($"[{nameof(Copy)}]", $"From:{src.Quote()}", $"To:{dest.Quote()}");
             io.Copy(src, dest, true);
         }
 

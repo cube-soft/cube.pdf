@@ -16,7 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.Environment;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Reflection;
@@ -34,7 +35,7 @@ namespace Cube.Pdf.Converter
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class Settings : ObservableProperty
+    public class Settings : ObservableBase
     {
         #region Constructors
 
@@ -497,11 +498,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private Metadata CreateMetadata()
         {
-            var asm = Assembly.GetExecutingAssembly().GetReader();
+            var asm = Assembly.GetExecutingAssembly();
             return new Metadata
             {
-                Creator  = asm.Product,
-                Producer = asm.Product,
+                Creator  = asm.GetProduct(),
+                Producer = asm.GetProduct(),
             };
         }
 

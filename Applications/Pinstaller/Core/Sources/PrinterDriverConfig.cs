@@ -30,7 +30,7 @@ namespace Cube.Pdf.Pinstaller
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class PrinterDriverConfig : ObservableProperty
+    public class PrinterDriverConfig : ObservableBase
     {
         #region Constructors
 

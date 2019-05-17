@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.15.0</Version>
+        <Version>2.16.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>Library to install printer and related modules.</Description>
@@ -23,7 +23,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.FileSystem" version="1.15.0" />
+        <PackageReference Include="Cube.FileSystem" version="1.16.0" />
         <Reference Include="System.ServiceProcess" />
     </ItemGroup>
 </Project>

@@ -70,7 +70,7 @@ namespace Cube.Pdf.Converter.Tests
                 Assert.That(IO.Exists(vms.Destination), Is.False, vms.Destination);
 
                 // Test for SaveOption
-                if (precopy) IO.Copy(GetExamplesWith("Sample.pdf"), vms.Destination);
+                if (precopy) IO.Copy(GetSource("Sample.pdf"), vms.Destination);
 
                 vm.Messenger.MessageBox.Subscribe(SetMessage);
                 Assert.That(WaitConv(vm), Is.True, "Timeout");
@@ -137,7 +137,7 @@ namespace Cube.Pdf.Converter.Tests
             if (IO.Exists(dest)) return IO.Get(dest).Length > delta;
 
             var info = IO.Get(dest);
-            var name = $"{info.NameWithoutExtension}-01{info.Extension}";
+            var name = $"{info.BaseName}-01{info.Extension}";
             var cvt  = IO.Combine(info.DirectoryName, name);
 
             return IO.Get(cvt).Length > delta;

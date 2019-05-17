@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
+using Cube.Mixin.String;
 using System.Diagnostics;
 
 namespace Cube.Pdf.Converter

@@ -50,7 +50,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [TestCaseSource(nameof(TestCases))]
         public void Parse(IEnumerable<string> args, int id)
         {
-            var src = new ArgumentCollection(args, '/', true);
+            var src = new ArgumentCollection(args, Argument.Windows, true);
             Assert.That(src.GetTimeout(),           Is.EqualTo(300));
             Assert.That(src.GetRetryCount(),        Is.EqualTo(10));
             Assert.That(src.GetCommand(),           Is.Not.Null.And.Not.Empty);
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [Test]
         public void Parse_Empty()
         {
-            var src = new ArgumentCollection(new string[0], '/', true);
+            var src = new ArgumentCollection(new string[0], Argument.Windows, true);
             var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Assert.That(src.GetTimeout(),           Is.EqualTo(30));
             Assert.That(src.GetRetryCount(),        Is.EqualTo(1));
@@ -92,7 +92,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [Test]
         public void Parse_Absolute()
         {
-            var src = new ArgumentCollection(new[] { "Sample.json" }, '/', true);
+            var src = new ArgumentCollection(new[] { "Sample.json" }, Argument.Windows, true);
             Assert.That(src.GetConfiguration(), Is.EqualTo("Sample.json"));
         }
 
@@ -109,7 +109,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [Test]
         public void Parse_Integer()
         {
-            var src = new ArgumentCollection(new[] { "Sample.json", "/Timeout", "Dummy", "/Retry", "Dummy" }, '/', true);
+            var src = new ArgumentCollection(new[] { "Sample.json", "/Timeout", "Dummy", "/Retry", "Dummy" }, Argument.Windows, true);
             Assert.That(src.GetTimeout(),    Is.EqualTo(30));
             Assert.That(src.GetRetryCount(), Is.EqualTo(1));
         }
@@ -126,8 +126,8 @@ namespace Cube.Pdf.Pinstaller.Tests
         [Test]
         public void Replace()
         {
-            var src  = new ArgumentCollection(new string[0], '/', true);
-            var dest = new Installer(Format.Json, GetExamplesWith("SampleSkeleton.json"));
+            var src  = new ArgumentCollection(new string[0], Argument.Windows, true);
+            var dest = new Installer(Format.Json, GetSource("SampleSkeleton.json"));
 
             var s0 = dest.Config.Ports[0].Proxy;
             var c0 = src.ReplaceDirectory(s0);

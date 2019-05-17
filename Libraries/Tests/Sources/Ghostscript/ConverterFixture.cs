@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
 using Cube.Pdf.Ghostscript;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Reflection;
 
@@ -72,14 +72,14 @@ namespace Cube.Pdf.Tests.Ghostscript
         /* ----------------------------------------------------------------- */
         protected string Run(Converter cv, string src, string dest, string log)
         {
-            var asm = Assembly.GetExecutingAssembly().GetReader();
-            var sp  = GetExamplesWith(src);
-            var dp  = GetResultsWith($"{dest}{cv.Format.GetExtension()}");
+            var asm = Assembly.GetExecutingAssembly();
+            var sp  = GetSource(src);
+            var dp  = Get($"{dest}{cv.Format.GetExtension()}");
             var dir = IO.Get(asm.Location).DirectoryName;
 
-            cv.Log           = GetResultsWith($"{log}.log");
+            cv.Log           = Get($"{log}.log");
             cv.Quiet         = false;
-            cv.WorkDirectory = GetResultsWith("Tmp");
+            cv.WorkDirectory = Get("Tmp");
             cv.Resources.Add(IO.Combine(dir, "lib"));
             cv.Invoke(sp, dp);
 

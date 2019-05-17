@@ -61,7 +61,7 @@ namespace Cube.Pdf.Converter
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var src      = new ArgumentCollection(args, '/', true);
+                var src      = new ArgumentCollection(args, Argument.Windows, true);
                 var settings = CreateSettings(src);
                 settings.Load();
                 settings.Set(src);

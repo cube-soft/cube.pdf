@@ -49,7 +49,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [TestCaseSource(nameof(TestCases))]
         public void Create(Format format, string filename, DeviceConfig cmp)
         {
-            var src    = GetExamplesWith(filename);
+            var src    = GetSource(filename);
             var engine = new Installer(format, src);
             var dest   = engine.Config;
             Assert.That(engine,          Is.Not.Null);
@@ -125,7 +125,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [TestCase("SampleDummy.json")]
         public void Uninstall(string filename) => Invoke(() =>
         {
-            var src = new Installer(Format.Json, GetExamplesWith(filename));
+            var src = new Installer(Format.Json, GetSource(filename));
             src.Uninstall();
         });
 
@@ -141,7 +141,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [Test]
         public void Install_Throws()
         {
-            var src  = GetExamplesWith("SampleDummy.json");
+            var src  = GetSource("SampleDummy.json");
             var dest = new Installer(Format.Json, src)
             {
                 Reinstall         = true,

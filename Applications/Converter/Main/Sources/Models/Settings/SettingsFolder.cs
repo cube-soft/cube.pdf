@@ -18,8 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.FileSystem;
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using Microsoft.Win32;
@@ -98,11 +99,11 @@ namespace Cube.Pdf.Converter
             AutoSave       = false;
             MachineName    = Environment.MachineName;
             UserName       = Environment.UserName;
-            DocumentName   = new DocumentName(string.Empty, Assembly.Product, IO);
+            DocumentName   = new DocumentName(string.Empty, Assembly.GetProduct(), IO);
             WorkDirectory  = GetWorkDirectory();
             Version.Digit  = 3;
-            Version.Suffix = $"RC{Assembly.Version.Revision}";
-            UpdateChecker  = IO.Combine(Assembly.DirectoryName, "CubeChecker.exe");
+            Version.Suffix = $"RC{Assembly.GetVersion().Revision}";
+            UpdateChecker  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
         }
 
         #endregion
@@ -217,12 +218,12 @@ namespace Cube.Pdf.Converter
             var op = src.Options;
             if (op.TryGetValue(nameof(MachineName), out var pc)) MachineName = pc;
             if (op.TryGetValue(nameof(UserName), out var user)) UserName = user;
-            if (op.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.Product, IO);
+            if (op.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.GetProduct(), IO);
             if (op.TryGetValue(nameof(Digest), out var digest)) Digest = digest;
             if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
 
             var dest = IO.Get(IO.Combine(Value.Destination, DocumentName.Name));
-            var name = dest.NameWithoutExtension;
+            var name = dest.BaseName;
             var ext  = Value.Format.GetExtension();
 
             Value.Destination  = IO.Combine(dest.DirectoryName, $"{name}{ext}");
@@ -279,7 +280,7 @@ namespace Cube.Pdf.Converter
 
                 new Startup("cubepdf-checker")
                 {
-                    Command = $"{UpdateChecker.Quote()} {Assembly.Product}",
+                    Command = $"{UpdateChecker.Quote()} {Assembly.GetProduct()}",
                     Enabled = Value.CheckUpdate,
                 }.Save();
             }
@@ -323,7 +324,7 @@ namespace Cube.Pdf.Converter
                         str :
                         IO.Combine(
                             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                            Assembly.Company, Assembly.Product
+                            Assembly.GetCompany(), Assembly.GetProduct()
                         );
             return IO.Combine(root, Guid.NewGuid().ToString("D"));
         }

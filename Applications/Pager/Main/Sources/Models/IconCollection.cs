@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Images.Icons;
-using Cube.Log;
+using Cube.Mixin.Logging;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Forms.Bindings;
-using Cube.Log;
+using Cube.Mixin.Logging;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;

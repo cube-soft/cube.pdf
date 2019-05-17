@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.FileSystem.Mixin;
+using Cube.Mixin.IO;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
@@ -248,7 +248,7 @@ namespace Cube.Pdf.Converter
         {
             if (count <= 1) return Information.FullName;
 
-            var name  = Information.NameWithoutExtension;
+            var name  = Information.BaseName;
             var ext   = Information.Extension;
             var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
             var dest  = string.Format("{0}-{1}{2}", name, index.ToString(digit), ext);

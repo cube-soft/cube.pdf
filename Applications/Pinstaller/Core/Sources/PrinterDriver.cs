@@ -15,8 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
-using Cube.Iteration;
+using Cube.Mixin.Iteration;
+using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
@@ -326,14 +326,14 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (!Exists && CanInstall()) this.Log(() => this.Try(RetryCount, () =>
+            if (!Exists && CanInstall()) RetryCount.Try(i =>
             {
                 if (!NativeMethods.AddPrinterDriverEx(null,
                     3, ref _core,
                     0x04 /* APD_COPY_ALL_FILES */
                 )) throw new Win32Exception();
                 Exists = true;
-            }));
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -349,11 +349,11 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (Exists) this.Log(() => this.Try(RetryCount, () =>
+            if (Exists) RetryCount.Try(i =>
             {
                 if (!NativeMethods.DeletePrinterDriver(null, Environment, Name)) throw new Win32Exception();
                 Exists = false;
-            }));
+            });
         }
 
         #endregion

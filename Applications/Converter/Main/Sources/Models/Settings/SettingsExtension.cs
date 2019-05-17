@@ -16,12 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.DataContract.Mixin;
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.Registry;
 using Microsoft.Win32;
-using System;
-using System.Diagnostics;
 
 namespace Cube.Pdf.Converter
 {
@@ -48,7 +45,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public static string GetValue(this SettingsFolder src, RegistryKey root, string name) =>
-            root.GetValue<string>($@"Software\{src.Assembly.Company}\{src.Assembly.Product}", name);
+            root.GetValue<string>($@"Software\{src.Assembly.GetCompany()}\{src.Assembly.GetProduct()}", name);
 
         #endregion
     }

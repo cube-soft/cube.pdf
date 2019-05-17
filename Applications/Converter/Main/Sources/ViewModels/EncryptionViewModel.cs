@@ -153,8 +153,8 @@ namespace Cube.Pdf.Converter
             set
             {
                 Model.OpenWithPassword = value;
-                RaisePropertyChanged(nameof(EnableUserPassword));
-                RaisePropertyChanged(nameof(EnablePermission));
+                Refresh(nameof(EnableUserPassword));
+                Refresh(nameof(EnablePermission));
             }
         }
 
@@ -175,8 +175,8 @@ namespace Cube.Pdf.Converter
             {
                 if (SetProperty(ref _useOwnerPassword, value))
                 {
-                    RaisePropertyChanged(nameof(EnableUserPassword));
-                    RaisePropertyChanged(nameof(EnablePermission));
+                    Refresh(nameof(EnableUserPassword));
+                    Refresh(nameof(EnablePermission));
                 }
             }
         }
@@ -224,7 +224,7 @@ namespace Cube.Pdf.Converter
             set
             {
                 Model.Permission.Print = GetMethod(value);
-                RaisePropertyChanged(nameof(AllowPrint));
+                Refresh(nameof(AllowPrint));
             }
         }
 
@@ -243,7 +243,7 @@ namespace Cube.Pdf.Converter
             set
             {
                 Model.Permission.CopyContents = GetMethod(value);
-                RaisePropertyChanged(nameof(AllowCopy));
+                Refresh(nameof(AllowCopy));
             }
         }
 
@@ -262,7 +262,7 @@ namespace Cube.Pdf.Converter
             set
             {
                 Model.Permission.InputForm = GetMethod(value);
-                RaisePropertyChanged(nameof(AllowInputForm));
+                Refresh(nameof(AllowInputForm));
             }
         }
 
@@ -282,7 +282,7 @@ namespace Cube.Pdf.Converter
             {
                 Model.Permission.ModifyContents    = GetMethod(value);
                 Model.Permission.ModifyAnnotations = GetMethod(value);
-                RaisePropertyChanged(nameof(AllowModify));
+                Refresh(nameof(AllowModify));
             }
         }
 

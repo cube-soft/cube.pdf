@@ -16,8 +16,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.Generics;
-using Cube.Iteration;
+using Cube.Mixin.Iteration;
+using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using System;
 using System.Reflection;
@@ -56,7 +56,7 @@ namespace Cube.Pdf.Pinstaller
                 Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
                 Logger.Warn(LogType, () => { foreach (var e in Printer.GetElements()) e.Log(); });
 
-                var src = new ArgumentCollection(args, '/', true);
+                var src = new ArgumentCollection(args, Argument.Windows, true);
                 var cmd = src.GetCommand();
 
                 if (src.Count <= 0) Logger.Warn(LogType, "Configuration not found");
@@ -92,7 +92,7 @@ namespace Cube.Pdf.Pinstaller
             Logger.Debug(LogType, $"Configuration:{engine.Location.Quote()}");
             Logger.Debug(LogType, $"Resource:{engine.ResourceDirectory.Quote()}");
 
-            engine.Try(src.GetRetryCount(), i =>
+            src.GetRetryCount().Try(i =>
             {
                 engine.Reinstall = reinstall;
                 engine.Timeout   = TimeSpan.FromSeconds(sec * (i + 1));
@@ -117,7 +117,7 @@ namespace Cube.Pdf.Pinstaller
             Logger.Debug(LogType, $"Method:{nameof(Uninstall).Quote()}");
             Logger.Debug(LogType, $"Configuration:{engine.Location.Quote()}");
 
-            engine.Try(src.GetRetryCount(), i =>
+            src.GetRetryCount().Try(i =>
             {
                 engine.Timeout = TimeSpan.FromSeconds(sec * (i + 1));
                 engine.Uninstall();

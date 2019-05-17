@@ -18,8 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Forms;
-using Cube.Generics;
-using Cube.Tasks;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.String;
+using Cube.Mixin.Tasks;
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -75,9 +76,9 @@ namespace Cube.Pdf.Converter
             base(new Messenger(), context)
         {
             Model      = new MainFacade(settings);
-            Settings   = new SettingsViewModel(settings.Value, Messenger, Context);
-            Metadata   = new MetadataViewModel(settings.Value.Metadata, Messenger, Context);
-            Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger, Context);
+            Settings   = new SettingsViewModel(settings.Value, Messenger, context);
+            Metadata   = new MetadataViewModel(settings.Value.Metadata, Messenger, context);
+            Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger, context);
 
             settings.PropertyChanged += WhenPropertyChanged;
         }
@@ -131,7 +132,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Product => Model.Settings.Assembly.Product;
+        public string Product => Model.Settings.Assembly.GetProduct();
 
         /* ----------------------------------------------------------------- */
         ///

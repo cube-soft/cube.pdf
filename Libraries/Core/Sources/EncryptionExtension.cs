@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
+using Cube.Mixin.String;
 using System;
 
 namespace Cube.Pdf.Mixin
@@ -48,8 +48,7 @@ namespace Cube.Pdf.Mixin
         /* ----------------------------------------------------------------- */
         public static Encryption Copy(this Encryption src) => new Encryption
         {
-            Context          = src.Context,
-            IsSynchronous    = src.IsSynchronous,
+            Dispatcher       = src.Dispatcher,
             Enabled          = src.Enabled,
             Method           = src.Method,
             OwnerPassword    = src.OwnerPassword,

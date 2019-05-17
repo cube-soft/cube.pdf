@@ -16,7 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.FileSystem.TestService;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

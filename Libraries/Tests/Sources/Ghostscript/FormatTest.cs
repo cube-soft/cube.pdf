@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
 using Cube.Pdf.Ghostscript;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -52,8 +52,8 @@ namespace Cube.Pdf.Tests.Ghostscript
         public void Convert(Format fmt)
         {
             var name = $"{nameof(Convert)}_{fmt.ToString()}";
-            var dest = GetResultsWith($"{name}{fmt.GetExtension()}");
-            var src  = GetExamplesWith("Sample.eps");
+            var dest = Get($"{name}{fmt.GetExtension()}");
+            var src  = GetSource("Sample.eps");
             var conv = new Converter(fmt) { Resolution = 72 };
 
             conv.Invoke(src, dest);
@@ -73,8 +73,8 @@ namespace Cube.Pdf.Tests.Ghostscript
         public void ConvertToText()
         {
             var fmt  = Format.Text;
-            var dest = GetResultsWith($"{nameof(ConvertToText)}{fmt.GetExtension()}");
-            var src  = GetExamplesWith("Sample.ps");
+            var dest = Get($"{nameof(ConvertToText)}{fmt.GetExtension()}");
+            var src  = GetSource("Sample.ps");
             var conv = new Converter(fmt);
 
             conv.Invoke(src, dest);

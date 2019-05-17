@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections.Mixin;
 using Cube.FileSystem;
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;

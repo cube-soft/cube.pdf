@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
+using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

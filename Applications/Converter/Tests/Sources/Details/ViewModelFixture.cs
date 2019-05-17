@@ -17,9 +17,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.FileSystem.TestService;
+using Cube.Tests;
 using Cube.Forms;
-using Cube.Generics;
+using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using NUnit.Framework;
@@ -165,12 +165,12 @@ namespace Cube.Pdf.Converter.Tests
             var path = $@"CubeSoft\CubePDF\{GetType().Name}";
             var dest = new SettingsFolder(DataContract.Format.Registry, path, IO)
             {
-                WorkDirectory = GetResultsWith("Tmp"),
+                WorkDirectory = Get("Tmp"),
             };
 
             dest.Load();
             dest.Value.Destination = Results;
-            dest.Set(new ArgumentCollection(args, '/', true));
+            dest.Set(new ArgumentCollection(args, Collections.Argument.Windows, true));
 
             return dest;
         }
@@ -196,8 +196,8 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         protected string[] Combine(string[] args, string src)
         {
-            var tmp = GetResultsWith(Guid.NewGuid().ToString("D"));
-            IO.Copy(GetExamplesWith(src), tmp, true);
+            var tmp = Get(Guid.NewGuid().ToString("D"));
+            IO.Copy(GetSource(src), tmp, true);
 
             using (var stream = IO.OpenRead(tmp))
             {

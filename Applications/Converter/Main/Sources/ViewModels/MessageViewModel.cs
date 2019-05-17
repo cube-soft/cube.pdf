@@ -17,8 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Forms;
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;

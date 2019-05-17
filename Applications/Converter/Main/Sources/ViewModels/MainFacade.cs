@@ -18,8 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Forms;
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainFacade : IDisposable
+    public sealed class MainFacade : DisposableBase
     {
         #region Constructors
 
@@ -209,35 +209,7 @@ namespace Cube.Pdf.Converter
         {
             var fi  = IO.Get(Value.Destination);
             var ext = Value.Format.GetExtension();
-            Value.Destination = IO.Combine(fi.DirectoryName, $"{fi.NameWithoutExtension}{ext}");
-        }
-
-        #region IDisposable
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~MainFacade
-        ///
-        /// <summary>
-        /// オブジェクトを破棄します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~MainFacade() { Dispose(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// リソースを解放します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            Value.Destination = IO.Combine(fi.DirectoryName, $"{fi.BaseName}{ext}");
         }
 
         /* ----------------------------------------------------------------- */
@@ -253,17 +225,12 @@ namespace Cube.Pdf.Converter
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        private void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
-            if (_disposed) return;
-            _disposed = true;
-
             Poll(10).Wait();
             IO.TryDelete(Settings.WorkDirectory);
             if (Value.DeleteSource) IO.TryDelete(Value.Source);
         }
-
-        #endregion
 
         #endregion
 
@@ -340,7 +307,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeUnlessDisposed(Action action)
         {
-            if (!_disposed) action();
+            if (!Disposed) action();
         }
 
         /* ----------------------------------------------------------------- */
@@ -391,7 +358,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeTransfer(FileTransfer src, out IEnumerable<string> paths)
         {
-            paths = !_disposed ? src.Invoke() : new string[0];
+            paths = !Disposed ? src.Invoke() : new string[0];
             foreach (var f in paths) this.LogDebug($"Save:{f}");
         }
 
@@ -407,10 +374,6 @@ namespace Cube.Pdf.Converter
         private void InvokePostProcess(IEnumerable<string> dest) =>
             InvokeUnlessDisposed(() => new ProcessLauncher(Settings).Invoke(dest));
 
-        #endregion
-
-        #region Fields
-        private bool _disposed = false;
         #endregion
     }
 }

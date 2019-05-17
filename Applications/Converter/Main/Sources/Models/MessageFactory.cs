@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Forms;
-using Cube.Generics;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter
 {
@@ -182,7 +182,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         private static string GetFileName(string src, IO io) =>
-            src.HasValue() ? io.Get(src).NameWithoutExtension : string.Empty;
+            src.HasValue() ? io.Get(src).BaseName : string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///

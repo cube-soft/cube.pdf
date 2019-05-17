@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.0.0.19</Version>
+        <Version>1.0.0.20</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF</Product>
@@ -27,7 +27,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
-        <PackageReference Include="Cube.Forms" Version="1.15.0" />
+        <PackageReference Include="Cube.Forms" Version="1.16.0" />
         <Reference Include="System.Windows.Forms" />
     </ItemGroup>
     <ItemGroup>
