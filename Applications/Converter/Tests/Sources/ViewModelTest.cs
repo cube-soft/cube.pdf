@@ -19,6 +19,7 @@
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -76,7 +77,6 @@ namespace Cube.Pdf.Converter.Tests
         public void SettingsViewModel() => Invoke(vm =>
         {
             var vms = vm.Settings;
-            Assert.That(vms.FormatOption,       Is.EqualTo(FormatOption.Pdf17));
             Assert.That(vms.Resolution,         Is.EqualTo(600));
             Assert.That(vms.Language,           Is.EqualTo(Language.Auto));
             Assert.That(vms.IsAutoOrientation,  Is.True,  nameof(vms.IsAutoOrientation));
@@ -188,17 +188,17 @@ namespace Cube.Pdf.Converter.Tests
         {
             var done = $"{nameof(BrowseSource)}_Done.pdf";
 
-            vm.Messenger.OpenFileDialog.Subscribe(e =>
+            vm.Subscribe<OpenFileMessage>(e =>
             {
                 Assert.That(e.Title,            Is.EqualTo("入力ファイルを選択"));
-                Assert.That(e.InitialDirectory, Is.Null);
-                Assert.That(e.FileName,         Is.Not.Null.And.Not.Empty);
+                Assert.That(e.InitialDirectory, Is.Empty);
+                Assert.That(e.Value.Count(),    Is.EqualTo(1));
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
                 Assert.That(e.FilterIndex,      Is.EqualTo(0));
                 Assert.That(e.CheckPathExists,  Is.True);
 
-                e.FileName = done;
-                e.Result   = System.Windows.Forms.DialogResult.OK;
+                e.Value  = new[] { done };
+                e.Cancel = false;
             });
 
             vm.Settings.Language = Language.Japanese;
@@ -220,18 +220,18 @@ namespace Cube.Pdf.Converter.Tests
         {
             var done = $"{nameof(BrowseDestination)}_Done.pdf";
 
-            vm.Messenger.SaveFileDialog.Subscribe(e =>
+            vm.Subscribe<SaveFileMessage>(e =>
             {
                 Assert.That(e.Title,            Is.EqualTo("名前を付けて保存"));
-                Assert.That(e.InitialDirectory, Is.Null);
-                Assert.That(e.FileName,         Is.EqualTo(nameof(BrowseDestination)));
+                Assert.That(e.InitialDirectory, Is.Empty);
+                Assert.That(e.Value,            Is.EqualTo(nameof(BrowseDestination)));
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
                 Assert.That(e.FilterIndex,      Is.EqualTo(1));
                 Assert.That(e.OverwritePrompt,  Is.False);
                 Assert.That(e.CheckPathExists,  Is.False);
 
-                e.FileName = done;
-                e.Result   = System.Windows.Forms.DialogResult.OK;
+                e.Value  = done;
+                e.Cancel = false;
             });
 
             vm.Settings.Language = Language.Japanese;
@@ -253,17 +253,17 @@ namespace Cube.Pdf.Converter.Tests
         {
             var done = $"{nameof(BrowseUserProgram)}_Done.pdf";
 
-            vm.Messenger.OpenFileDialog.Subscribe(e =>
+            vm.Subscribe<OpenFileMessage>(e =>
             {
                 Assert.That(e.Title,            Is.EqualTo("変換完了時に実行するプログラムを選択"));
-                Assert.That(e.InitialDirectory, Is.Null);
-                Assert.That(e.FileName,         Is.Empty);
+                Assert.That(e.InitialDirectory, Is.Empty);
+                Assert.That(e.Value.Count(),    Is.EqualTo(0));
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
                 Assert.That(e.FilterIndex,      Is.EqualTo(0));
                 Assert.That(e.CheckPathExists,  Is.True);
 
-                e.FileName = done;
-                e.Result   = System.Windows.Forms.DialogResult.OK;
+                e.Value  = new[] { done };
+                e.Cancel = false;
             });
 
             vm.Settings.Language = Language.Japanese;
@@ -343,7 +343,7 @@ namespace Cube.Pdf.Converter.Tests
             using (Locale.Subscribe(SetUiCulture))
             using (var vm = new MainViewModel(dest, new SynchronizationContext()))
             {
-                vm.Messenger.MessageBox.Subscribe(SetMessage);
+                vm.Subscribe<DialogMessage>(SetMessage);
                 action(vm);
             }
         }

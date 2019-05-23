@@ -79,7 +79,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings Value { get; }
+        public SettingsValue Value { get; }
 
         #endregion
 

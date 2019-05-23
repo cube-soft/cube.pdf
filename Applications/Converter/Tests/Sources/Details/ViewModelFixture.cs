@@ -17,13 +17,14 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.Tests;
-using Cube.Forms;
+using Cube.Mixin.Collections;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -100,14 +101,15 @@ namespace Cube.Pdf.Converter.Tests
         /// テストケースを生成します。
         /// </summary>
         ///
+        /// <param name="id">テスト ID</param>
         /// <param name="src">設定情報</param>
         /// <param name="args">プログラム引数</param>
         ///
         /// <returns>テストケース</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData Create(Settings src, string[] args) =>
-            Create(src, args, false);
+        protected static TestCaseData Create(int id, SettingsValue src, IEnumerable<string> args) =>
+            Create(id, src, args, false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -117,6 +119,7 @@ namespace Cube.Pdf.Converter.Tests
         /// テストケースを生成します。
         /// </summary>
         ///
+        /// <param name="id">テスト ID</param>
         /// <param name="src">設定情報</param>
         /// <param name="args">プログラム引数</param>
         /// <param name="precopy">事前にコピーするかどうか</param>
@@ -124,8 +127,11 @@ namespace Cube.Pdf.Converter.Tests
         /// <returns>テストケース</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData Create(Settings src, string[] args, bool precopy) =>
-            Create(src, args, "SampleMix.ps", precopy);
+        protected static TestCaseData Create(int id,
+            SettingsValue src,
+            IEnumerable<string> args,
+            bool precopy
+        ) => Create(id, src, args, "SampleMix.ps", precopy);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -135,6 +141,7 @@ namespace Cube.Pdf.Converter.Tests
         /// テストケースを生成します。
         /// </summary>
         ///
+        /// <param name="id">テスト ID</param>
         /// <param name="src">設定情報</param>
         /// <param name="args">プログラム引数</param>
         /// <param name="filename">入力ファイル名</param>
@@ -143,9 +150,12 @@ namespace Cube.Pdf.Converter.Tests
         /// <returns>テストケース</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData Create(Settings src, string[] args,
-            string filename, bool precopy) =>
-            new TestCaseData(src, args, filename, precopy);
+        protected static TestCaseData Create(int id,
+            SettingsValue src,
+            IEnumerable<string> args,
+            string filename,
+            bool precopy
+        ) => new TestCaseData(id, src, args, filename, precopy);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -194,7 +204,7 @@ namespace Cube.Pdf.Converter.Tests
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected string[] Combine(string[] args, string src)
+        protected string[] Combine(IEnumerable<string> args, string src)
         {
             var tmp = Get(Guid.NewGuid().ToString("D"));
             IO.Copy(GetSource(src), tmp, true);
@@ -203,7 +213,7 @@ namespace Cube.Pdf.Converter.Tests
             {
                 var hash = new SHA256CryptoServiceProvider()
                            .ComputeHash(stream)
-                           .Aggregate("", (s, b) => s + $"{b:X2}");
+                           .Join("",  b => $"{b:X2}");
                 return args.Concat(new[] { "/InputFile", tmp, "/Digest", hash }).ToArray();
             }
         }
@@ -220,7 +230,7 @@ namespace Cube.Pdf.Converter.Tests
         /// <param name="src">設定内容</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Set(MainViewModel vm, Settings src)
+        protected void Set(MainViewModel vm, SettingsValue src)
         {
             Set(vm.Settings,   src);
             Set(vm.Metadata,   src.Metadata);
@@ -236,15 +246,11 @@ namespace Cube.Pdf.Converter.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void SetMessage(MessageEventArgs e)
+        protected void SetMessage(DialogMessage e)
         {
-            Assert.That(e.Icon,
-                Is.EqualTo(System.Windows.Forms.MessageBoxIcon.Error).Or
-                  .EqualTo(System.Windows.Forms.MessageBoxIcon.Warning)
-            );
-
-            Message  = e.Message;
-            e.Result = System.Windows.Forms.DialogResult.OK;
+            Assert.That(e.Icon, Is.EqualTo(DialogIcon.Error).Or.EqualTo(DialogIcon.Warning));
+            Message  = e.Value;
+            e.Status = DialogStatus.Ok;
         }
 
         /* ----------------------------------------------------------------- */
@@ -277,7 +283,7 @@ namespace Cube.Pdf.Converter.Tests
             Message = string.Empty;
 
             var closed = false;
-            vm.Messenger.Close.Subscribe(() => closed = true);
+            vm.Subscribe<CloseMessage>(e => closed = true);
             vm.Convert();
             return Wait.For(() => closed, TimeSpan.FromSeconds(10));
         }
@@ -312,7 +318,11 @@ namespace Cube.Pdf.Converter.Tests
         ///
         /* ----------------------------------------------------------------- */
         [SetUp]
-        protected void Setup() => Locale.Set(Language.Auto);
+        protected void Setup()
+        {
+            SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+            Locale.Set(Language.Auto);
+        }
 
         #endregion
 
@@ -331,11 +341,10 @@ namespace Cube.Pdf.Converter.Tests
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void Set(SettingsViewModel vm, Settings src)
+        private void Set(SettingsViewModel vm, SettingsValue src)
         {
             vm.Language          = src.Language;
             vm.Format            = src.Format;
-            vm.FormatOption      = src.FormatOption;
             vm.SaveOption        = src.SaveOption;
             vm.Resolution        = src.Resolution;
             vm.Grayscale         = src.Grayscale;

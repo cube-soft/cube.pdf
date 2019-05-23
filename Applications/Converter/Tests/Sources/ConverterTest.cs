@@ -51,7 +51,7 @@ namespace Cube.Pdf.Converter.Tests
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Invoke(Settings src, string[] args, string filename, bool precopy)
+        public void Invoke(int id, SettingsValue src, IEnumerable<string> args, string filename, bool precopy)
         {
             var dest = Create(Combine(args, filename));
 
@@ -72,7 +72,7 @@ namespace Cube.Pdf.Converter.Tests
                 // Test for SaveOption
                 if (precopy) IO.Copy(GetSource("Sample.pdf"), vms.Destination);
 
-                vm.Messenger.MessageBox.Subscribe(SetMessage);
+                vm.Subscribe<DialogMessage>(SetMessage);
                 Assert.That(WaitConv(vm), Is.True, "Timeout");
             }
 
@@ -98,8 +98,8 @@ namespace Cube.Pdf.Converter.Tests
 
             using (var vm = new MainViewModel(dest))
             {
-                vm.Messenger.MessageBox.Subscribe(SetMessage);
-                vm.Messenger.OpenFileDialog.Subscribe(e => e.FileName = exec);
+                vm.Subscribe<DialogMessage>(SetMessage);
+                vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { exec });
                 vm.Settings.PostProcess = PostProcess.Others;
 
                 Assert.That(vm.Settings.UserProgram, Is.EqualTo(exec));
@@ -108,39 +108,6 @@ namespace Cube.Pdf.Converter.Tests
             }
 
             Assert.Pass(Message);
-        }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsCreated
-        ///
-        /// <summary>
-        /// ファイルが生成されたかどうかを判別します。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 不完全なファイルが生成されたかどうかも併せて判別するため、
-        /// 1 KB 以上のファイルであれば正常に生成されたと見なしています。
-        /// また、画像形式で変換した場合、元のファイル名に連番が付与された
-        /// ファイルが生成されるため、そのチェックを実行します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsCreated(string dest)
-        {
-            var delta = 1000;
-
-            if (IO.Exists(dest)) return IO.Get(dest).Length > delta;
-
-            var info = IO.Get(dest);
-            var name = $"{info.BaseName}-01{info.Extension}";
-            var cvt  = IO.Combine(info.DirectoryName, name);
-
-            return IO.Get(cvt).Length > delta;
         }
 
         #endregion
@@ -168,8 +135,10 @@ namespace Cube.Pdf.Converter.Tests
         {
             get
             {
-                yield return Create(
-                    new Settings
+                var n = 0;
+
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = true,
@@ -179,8 +148,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PDF テスト")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -190,8 +159,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PDF テスト (Jpeg)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = true,
@@ -202,8 +171,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PDF テスト (Bicubic)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = true,
@@ -213,8 +182,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PDF テスト (Gray)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = true,
@@ -224,8 +193,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PDF テスト (NoEmbed)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -236,8 +205,8 @@ namespace Cube.Pdf.Converter.Tests
                     true // pre-copy
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -248,8 +217,8 @@ namespace Cube.Pdf.Converter.Tests
                     true // pre-copy
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -260,8 +229,8 @@ namespace Cube.Pdf.Converter.Tests
                     true // pre-copy
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -280,8 +249,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PDF テスト (Linearization)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -316,8 +285,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PDF テスト (Encryption)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Ps,
                         Grayscale        = false,
@@ -326,8 +295,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PS テスト")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Ps,
                         Grayscale        = true,
@@ -336,8 +305,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PS テスト (Gray)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Eps,
                         Grayscale        = false,
@@ -346,8 +315,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("EPS テスト")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Eps,
                         Grayscale        = true,
@@ -356,8 +325,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("EPS テスト (Gray)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Png,
                         Grayscale        = false,
@@ -366,8 +335,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PNG テスト")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Png,
                         Grayscale        = false,
@@ -376,8 +345,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PNG テスト (144 dpi)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Png,
                         Grayscale        = true,
@@ -386,8 +355,8 @@ namespace Cube.Pdf.Converter.Tests
                     CreateArgs("PNG テスト (Gray)")
                 );
 
-                yield return Create(
-                    new Settings
+                yield return Create(n++,
+                    new SettingsValue
                     {
                         Format           = Format.Png,
                         Grayscale        = true,
@@ -398,6 +367,39 @@ namespace Cube.Pdf.Converter.Tests
                     false
                 );
             }
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsCreated
+        ///
+        /// <summary>
+        /// ファイルが生成されたかどうかを判別します。
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 不完全なファイルが生成されたかどうかも併せて判別するため、
+        /// 1 KB 以上のファイルであれば正常に生成されたと見なしています。
+        /// また、画像形式で変換した場合、元のファイル名に連番が付与された
+        /// ファイルが生成されるため、そのチェックを実行します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsCreated(string dest)
+        {
+            var delta = 1000;
+
+            if (IO.Exists(dest)) return IO.Get(dest).Length > delta;
+
+            var info = IO.Get(dest);
+            var name = $"{info.BaseName}-01{info.Extension}";
+            var cvt = IO.Combine(info.DirectoryName, name);
+
+            return IO.Get(cvt).Length > delta;
         }
 
         #endregion

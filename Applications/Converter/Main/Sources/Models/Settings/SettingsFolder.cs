@@ -20,6 +20,7 @@ using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.Logging;
+using Cube.Mixin.Registry;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
@@ -39,7 +40,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsFolder : SettingsFolder<Settings>
+    public class SettingsFolder : SettingsFolder<SettingsValue>
     {
         #region Constructors
 
@@ -250,7 +251,7 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnLoaded(ValueChangedEventArgs<Settings> e)
+        protected override void OnLoaded(ValueChangedEventArgs<SettingsValue> e)
         {
             e.NewValue.Format = NormalizeFormat(e.NewValue);
             e.NewValue.Resolution = NormalizeResolution(e.NewValue);
@@ -319,9 +320,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetWorkDirectory()
         {
-            var str   = this.GetValue(Registry.LocalMachine, "LibPath");
-            var root  = str.HasValue() ?
-                        str :
+            var sk    = $@"Software\{Assembly.GetCompany()}\{Assembly.GetProduct()}";
+            var value = Registry.LocalMachine.GetValue<string>(sk, "LibPath");
+            var root  = value.HasValue() ?
+                        value :
                         IO.Combine(
                             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                             Assembly.GetCompany(), Assembly.GetProduct()
@@ -342,7 +344,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Format NormalizeFormat(Settings src) =>
+        private Format NormalizeFormat(SettingsValue src) =>
             ViewResource.Formats.Any(e => e.Value == src.Format) ?
             src.Format :
             Ghostscript.Format.Pdf;
@@ -356,7 +358,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Orientation NormalizeOrientation(Settings src) =>
+        private Orientation NormalizeOrientation(SettingsValue src) =>
             ViewResource.Orientations.Any(e => e.Value == src.Orientation) ?
             src.Orientation :
             Orientation.Auto;
@@ -370,7 +372,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private int NormalizeResolution(Settings src) =>
+        private int NormalizeResolution(SettingsValue src) =>
             src.Resolution >= 72 ?
             src.Resolution :
             600;
@@ -388,7 +390,7 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private string NormalizeDestination(Settings src)
+        private string NormalizeDestination(SettingsValue src)
         {
             var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 

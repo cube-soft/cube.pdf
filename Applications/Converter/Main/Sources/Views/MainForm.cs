@@ -33,7 +33,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.StandardForm
+    public partial class MainForm : Cube.Forms.Window
     {
         #region Constructors
 
@@ -52,11 +52,11 @@ namespace Cube.Pdf.Converter
 
             ExitButton.Click += (s, e) => Close();
 
-            new PathBehavior(SourceTextBox, PathToolTip);
-            new PathBehavior(DestinationTextBox, PathToolTip);
-            new PathBehavior(UserProgramTextBox, PathToolTip);
-            new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox);
-            new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox);
+            Behaviors.Add(new PathBehavior(SourceTextBox, PathToolTip));
+            Behaviors.Add(new PathBehavior(DestinationTextBox, PathToolTip));
+            Behaviors.Add(new PathBehavior(UserProgramTextBox, PathToolTip));
+            Behaviors.Add(new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
+            Behaviors.Add(new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox));
 
             Locale.Subscribe(e => UpdateString(e));
             SettingsPanel.ApplyButton = ApplyButton;
@@ -103,7 +103,7 @@ namespace Cube.Pdf.Converter
         /// オブジェクトを関連付けます。
         /// </summary>
         ///
-        /// <param name="vm">ViewModel オブジェクト</param>
+        /// <param name="src">ViewModel オブジェクト</param>
         ///
         /// <remarks>
         /// MainForm.Text および各種コントロールの Visible プロパティに
@@ -113,9 +113,9 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public void Bind(MainViewModel vm)
+        public override void Bind(IPresentable src)
         {
-            if (vm == null) return;
+            if (!(src is MainViewModel vm)) return;
 
             MainBindingSource.DataSource       = vm;
             SettingsBindingSource.DataSource   = vm.Settings;
@@ -134,10 +134,10 @@ namespace Cube.Pdf.Converter
             ConvertButton.Click     += (s, e) => vm.Convert();
             SettingsPanel.Apply     += (s, e) => vm.Save();
 
-            vm.Messenger.Close.Subscribe(() => Close());
-            vm.Messenger.MessageBox.Subscribe(e => new MessageBoxBehavior().Invoke(e));
-            vm.Messenger.OpenFileDialog.Subscribe(e => new OpenFileBehavior().Invoke(e));
-            vm.Messenger.SaveFileDialog.Subscribe(e => new SaveFileBehavior().Invoke(e));
+            Behaviors.Add(new CloseBehavior(src, this));
+            Behaviors.Add(new DialogBehavior(src));
+            Behaviors.Add(new OpenFileDialogBehavior(src));
+            Behaviors.Add(new SaveFileDialogBehavior(src));
 
             UpdateString(vm.Settings.Language);
         }

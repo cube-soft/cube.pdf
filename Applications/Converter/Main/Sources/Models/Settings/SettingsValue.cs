@@ -27,7 +27,7 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Settings
+    /// SettingsValue
     ///
     /// <summary>
     /// Represents the user settings.
@@ -35,20 +35,20 @@ namespace Cube.Pdf.Converter
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class Settings : ObservableBase
+    public class SettingsValue : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// SettingsValue
         ///
         /// <summary>
         /// Initializes a new instance of the Settings class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings() { Reset(); }
+        public SettingsValue() { Reset(); }
 
         #endregion
 
@@ -387,14 +387,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsBusy
+        /// Busy
         ///
         /// <summary>
         /// Gets or sets a value indicating whether the application is busy.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsBusy
+        public bool Busy
         {
             get => _busy;
             set => SetProperty(ref _busy, value);

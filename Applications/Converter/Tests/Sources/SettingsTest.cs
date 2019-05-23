@@ -63,7 +63,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.UserName,              Is.EqualTo(Environment.UserName));
             Assert.That(dest.DocumentName.Value,    Is.Empty);
             Assert.That(dest.DocumentName.Name,     Is.EqualTo("CubePDF"));
-            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.0.0RC19"));
+            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.0.0RC20"));
             Assert.That(dest.Value,                 Is.Not.Null);
         }
 
@@ -107,7 +107,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.SourceVisible,    Is.False);
             Assert.That(dest.Source,           Is.Empty);
             Assert.That(dest.Destination,      Is.EqualTo(desktop));
-            Assert.That(dest.IsBusy,           Is.False);
+            Assert.That(dest.Busy,           Is.False);
             Assert.That(dest.SkipUi,           Is.False);
 
             var md = dest.Metadata;

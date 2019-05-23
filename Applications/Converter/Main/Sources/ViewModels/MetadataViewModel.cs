@@ -16,7 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
+using Cube.Mixin.String;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Converter
@@ -26,11 +27,11 @@ namespace Cube.Pdf.Converter
     /// MetadataViewModel
     ///
     /// <summary>
-    /// 文書プロパティタブを表す ViewModel です。
+    /// Represents the viewmodel for the metadata tab in the main window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MetadataViewModel : Cube.Forms.ViewModelBase<Messenger>
+    public class MetadataViewModel : CommonViewModel
     {
         #region Constructors
 
@@ -39,16 +40,17 @@ namespace Cube.Pdf.Converter
         /// MetadataViewModel
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the MetadataViewModel class with
+        /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="model">PDF メタ情報</param>
-        /// <param name="messenger">Messenger オブジェクト</param>
-        /// <param name="context">同期用コンテキスト</param>
+        /// <param name="model">PDF metadata.</param>
+        /// <param name="aggregator">Event aggregator.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataViewModel(Metadata model, Messenger messenger,
-            SynchronizationContext context) : base(messenger, context)
+        public MetadataViewModel(Metadata model, Aggregator aggregator,
+            SynchronizationContext context) : base(aggregator, context)
         {
             Model = model;
             Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
@@ -63,7 +65,7 @@ namespace Cube.Pdf.Converter
         /// Model
         ///
         /// <summary>
-        /// PDF メタ情報を取得します。
+        /// Gets the model object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -74,7 +76,7 @@ namespace Cube.Pdf.Converter
         /// Title
         ///
         /// <summary>
-        /// タイトルを取得または設定します。
+        /// Gets or sets the title.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -89,7 +91,7 @@ namespace Cube.Pdf.Converter
         /// Author
         ///
         /// <summary>
-        /// 作成者を取得または設定します。
+        /// Gets or sets the author.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -104,7 +106,7 @@ namespace Cube.Pdf.Converter
         /// Subject
         ///
         /// <summary>
-        /// サブタイトルを取得または設定します。
+        /// Gets or sets the subject.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -119,7 +121,7 @@ namespace Cube.Pdf.Converter
         /// Keywords
         ///
         /// <summary>
-        /// キーワードを取得または設定します。
+        /// Gets or sets the keywords.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -134,7 +136,7 @@ namespace Cube.Pdf.Converter
         /// Creator
         ///
         /// <summary>
-        /// アプリケーションを取得または設定します。
+        /// Gets or sets the name of creator program.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -149,7 +151,7 @@ namespace Cube.Pdf.Converter
         /// Options
         ///
         /// <summary>
-        /// 表示オプションを取得または設定します。
+        /// Gets or sets the view options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -158,6 +160,47 @@ namespace Cube.Pdf.Converter
             get => Model.Options;
             set => Model.Options = value;
         }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ConfirmForSave
+        ///
+        /// <summary>
+        /// Confirms if the current settings are acceptable.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool ConfirmForSave()
+        {
+            var src = new[] { Title, Author, Subject, Keywords };
+            if (src.All(e => e.HasValue())) return true;
+            else return Confirm(MessageFactory.CreateWarn(Properties.Resources.MessageSave));
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
 
         #endregion
     }

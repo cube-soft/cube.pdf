@@ -17,10 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Forms;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.String;
-using Cube.Mixin.Tasks;
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -42,7 +40,7 @@ namespace Cube.Pdf.Converter
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainViewModel : ViewModelBase<Messenger>
+    public class MainViewModel : CommonViewModel
     {
         #region Constructors
 
@@ -73,14 +71,14 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel(SettingsFolder settings, SynchronizationContext context) :
-            base(new Messenger(), context)
+            base(new Aggregator(), context)
         {
-            Model      = new MainFacade(settings);
-            Settings   = new SettingsViewModel(settings.Value, Messenger, context);
-            Metadata   = new MetadataViewModel(settings.Value.Metadata, Messenger, context);
-            Encryption = new EncryptionViewModel(settings.Value.Encryption, Messenger, context);
+            Model      = new Facade(settings);
+            Settings   = new SettingsViewModel(settings, Aggregator, context);
+            Metadata   = new MetadataViewModel(settings.Value.Metadata, Aggregator, context);
+            Encryption = new EncryptionViewModel(settings.Value.Encryption, Aggregator, context);
 
-            settings.PropertyChanged += WhenPropertyChanged;
+            settings.PropertyChanged += WhenSettingsChanged;
         }
 
         #endregion
@@ -96,7 +94,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected MainFacade Model { get; }
+        protected Facade Model { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -165,7 +163,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsBusy => Model.Value.IsBusy;
+        public bool IsBusy => Model.Settings.Value.Busy;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -202,7 +200,7 @@ namespace Cube.Pdf.Converter
 
         #endregion
 
-        #region Commands
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -215,8 +213,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            Model.UpdateExtension();
-            Async(() => this.Invoke(() => Model.Convert())).Forget();
+            if (Encryption.Confirm() && Settings.Confirm()) TrackClose(() =>
+            {
+                Model.SetExtension();
+                Model.Convert();
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -228,7 +229,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => this.Save(Model);
+        public void Save()
+        {
+            if (Metadata.ConfirmForSave()) Model.Save();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -239,12 +243,9 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void BrowseSource()
-        {
-            var e = Model.Settings.CreateSourceMessage();
-            Messenger.OpenFileDialog.Publish(e);
-            Model.UpdateSource(e);
-        }
+        public void BrowseSource() =>
+            Send(Model.Settings.CreateForSource(), e => Model.SetSource(e));
+
 
         /* ----------------------------------------------------------------- */
         ///
@@ -255,12 +256,8 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void BrowseDestination()
-        {
-            var e = Model.Settings.CreateDestinationMessage();
-            Messenger.SaveFileDialog.Publish(e);
-            Model.UpdateDestination(e);
-        }
+        public void BrowseDestination() =>
+            Send(Model.Settings.CreateForDestination(), e => Model.SetDestination(e));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -271,12 +268,8 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void BrowseUserProgram()
-        {
-            var e = Model.Settings.CreateUserProgramMessage();
-            Messenger.OpenFileDialog.Publish(e);
-            Model.UpdateUserProgram(e);
-        }
+        public void BrowseUserProgram() =>
+            Send(Model.Settings.CreateForUserProgram(), e => Model.SetUserProgram(e));
 
         #endregion
 
@@ -294,24 +287,23 @@ namespace Cube.Pdf.Converter
         protected override void Dispose(bool disposing)
         {
             if (disposing) Model.Dispose();
-            base.Dispose(disposing);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenPropertyChanged
+        /// WhenSettingsChanged
         ///
         /// <summary>
-        /// プロパティの変更時に実行されるハンドラです。
+        /// Occurs when any settings are changed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void WhenSettingsChanged(object s, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case nameof(Settings.Format):
-                    Model.UpdateExtension();
+                    Model.SetExtension();
                     break;
                 case nameof(Settings.PostProcess):
                     if (Settings.PostProcess == PostProcess.Others) BrowseUserProgram();

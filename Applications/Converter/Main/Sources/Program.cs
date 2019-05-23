@@ -121,9 +121,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private static void Invoke(SettingsFolder settings)
         {
-            using (var src = new MainFacade(settings))
+            using (var src = new Facade(settings))
             {
-                src.UpdateExtension();
+                src.SetExtension();
                 src.Convert();
             }
         }

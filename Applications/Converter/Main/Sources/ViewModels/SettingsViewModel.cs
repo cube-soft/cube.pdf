@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using System.Threading;
 
@@ -27,11 +27,12 @@ namespace Cube.Pdf.Converter
     /// SettingsViewModel
     ///
     /// <summary>
-    /// 一般およびその他タブを表す ViewModel です。
+    /// Represents the viewmodel for the general and others tabs in
+    /// the main window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsViewModel : ViewModelBase<Messenger>
+    public class SettingsViewModel : CommonViewModel
     {
         #region Constructors
 
@@ -40,18 +41,20 @@ namespace Cube.Pdf.Converter
         /// SettingsViewModel
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the SettingsViewModel class with
+        /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="model">設定情報</param>
-        /// <param name="messenger">Messenger オブジェクト</param>
-        /// <param name="context">同期用コンテキスト</param>
+        /// <param name="settings">User settings.</param>
+        /// <param name="aggregator">Event aggregator.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsViewModel(Settings model, Messenger messenger,
-            SynchronizationContext context) : base(messenger, context)
+        public SettingsViewModel(SettingsFolder settings, Aggregator aggregator,
+            SynchronizationContext context) : base(aggregator, context)
         {
-            Model = model;
+            IO    = settings.IO;
+            Model = settings.Value;
             Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
@@ -64,18 +67,29 @@ namespace Cube.Pdf.Converter
         /// Model
         ///
         /// <summary>
-        /// 設定情報を取得します。
+        /// Gets the model object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected Settings Model { get; }
+        protected SettingsValue Model { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Format
         ///
         /// <summary>
-        /// 変換形式を取得または設定します。
+        /// Gets or sets the conversion format.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -85,23 +99,8 @@ namespace Cube.Pdf.Converter
             set
             {
                 Model.Format = value;
-                Refresh(nameof(EnableFormatOption));
+                RaisePropertyChanged(nameof(EnableFormatOption));
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FormatOption
-        ///
-        /// <summary>
-        /// 変換形式に関するオプションを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public FormatOption FormatOption
-        {
-            get => Model.FormatOption;
-            set => Model.FormatOption = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -109,7 +108,7 @@ namespace Cube.Pdf.Converter
         /// SaveOption
         ///
         /// <summary>
-        /// 保存オプションを取得または設定します。
+        /// Gets or sets the saving option.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -124,7 +123,7 @@ namespace Cube.Pdf.Converter
         /// PostProcess
         ///
         /// <summary>
-        /// ポストプロセスを取得または設定します。
+        /// Gets or sets the kind of port-process.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -134,7 +133,7 @@ namespace Cube.Pdf.Converter
             set
             {
                 Model.PostProcess = value;
-                Refresh(nameof(EnableUserProgram));
+                RaisePropertyChanged(nameof(EnableUserProgram));
             }
         }
 
@@ -143,7 +142,7 @@ namespace Cube.Pdf.Converter
         /// Source
         ///
         /// <summary>
-        /// 入力ファイルのパスを取得または設定します。
+        /// Gets or sets the path of the source file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -158,7 +157,7 @@ namespace Cube.Pdf.Converter
         /// Destination
         ///
         /// <summary>
-        /// 保存パスを取得または設定します。
+        /// Gets or sets the path to save.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -173,7 +172,7 @@ namespace Cube.Pdf.Converter
         /// UserProgram
         ///
         /// <summary>
-        /// ユーザプログラムのパスを取得または設定します。
+        /// Gets or sets the path of the user program.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -188,7 +187,7 @@ namespace Cube.Pdf.Converter
         /// Resolution
         ///
         /// <summary>
-        /// 解像度を取得または設定します。
+        /// Gets or sets the resolution.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -203,7 +202,8 @@ namespace Cube.Pdf.Converter
         /// IsAutoOrientation
         ///
         /// <summary>
-        /// ページの向きが自動かどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether the orientation is
+        /// equal to auto.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -215,7 +215,7 @@ namespace Cube.Pdf.Converter
                 if (value)
                 {
                     Model.Orientation = Orientation.Auto;
-                    Refresh(nameof(IsAutoOrientation));
+                    RaisePropertyChanged(nameof(IsAutoOrientation));
                 }
             }
         }
@@ -225,7 +225,8 @@ namespace Cube.Pdf.Converter
         /// IsPortrait
         ///
         /// <summary>
-        /// ページが縦向きかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether the orientation is
+        /// equal to portrait.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -237,7 +238,7 @@ namespace Cube.Pdf.Converter
                 if (value)
                 {
                     Model.Orientation = Orientation.Portrait;
-                    Refresh(nameof(IsPortrait));
+                    RaisePropertyChanged(nameof(IsPortrait));
                 }
             }
         }
@@ -247,7 +248,8 @@ namespace Cube.Pdf.Converter
         /// IsLandscape
         ///
         /// <summary>
-        /// ページが横向きかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether the orientation is
+        /// equal to landscape.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -259,7 +261,7 @@ namespace Cube.Pdf.Converter
                 if (value)
                 {
                     Model.Orientation = Orientation.Landscape;
-                    Refresh(nameof(IsLandscape));
+                    RaisePropertyChanged(nameof(IsLandscape));
                 }
             }
         }
@@ -269,7 +271,8 @@ namespace Cube.Pdf.Converter
         /// Grayscale
         ///
         /// <summary>
-        /// グレースケールかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to enable the
+        /// grayscale option.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -284,8 +287,8 @@ namespace Cube.Pdf.Converter
         /// ImageCompression
         ///
         /// <summary>
-        /// PDF 中の画像を JPEG 形式で圧縮するかどうかを示す値を取得または
-        /// 設定します。
+        /// Gets or sets a value indicating whether to compress images
+        /// embedded in the PDF.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -300,8 +303,8 @@ namespace Cube.Pdf.Converter
         /// Linearization
         ///
         /// <summary>
-        /// PDF ファイルを Web 表示用に最適化するかどうかを示す値を取得
-        /// または設定します。
+        /// Gets or sets a value indicating whether to linearize the
+        /// PDF (a.k.a PDF web optimization).
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -316,7 +319,8 @@ namespace Cube.Pdf.Converter
         /// CheckUpdate
         ///
         /// <summary>
-        /// アップデートを確認するかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to enable the checking
+        /// CubePDF updates.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -331,7 +335,7 @@ namespace Cube.Pdf.Converter
         /// Language
         ///
         /// <summary>
-        /// 表示言語を取得または設定します。
+        /// Gets or sets the displayed language.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -346,7 +350,8 @@ namespace Cube.Pdf.Converter
         /// SourceVisible
         ///
         /// <summary>
-        /// 入力ファイルを表示するかどうかを示す値を取得します。
+        /// Gets or sets a value indicating whether to display the input
+        /// form of the source file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -357,7 +362,8 @@ namespace Cube.Pdf.Converter
         /// SourceEditable
         ///
         /// <summary>
-        /// 入力ファイルを変更可能かどうかを示す値を取得します。
+        /// Gets or sets a value indicating whether the input form of
+        /// the source file is editable.
         /// </summary>
         ///
         /// <remarks>
@@ -373,7 +379,8 @@ namespace Cube.Pdf.Converter
         /// EnableFormatOption
         ///
         /// <summary>
-        /// FormatOption の項目が選択可能かどうかを示す値を取得します。
+        /// Gets or sets a value indicating whether the FormatOption
+        /// value is selectable.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -384,11 +391,52 @@ namespace Cube.Pdf.Converter
         /// EnableUserProgram
         ///
         /// <summary>
-        /// UserProgram が入力可能かどうかを示す値を取得します。
+        /// Gets or sets a value indicating whether the input form of the
+        /// user program is editable.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public bool EnableUserProgram => PostProcess == PostProcess.Others;
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Confirm
+        ///
+        /// <summary>
+        /// Confirms if the current settings are acceptable.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Confirm()
+        {
+            if (IO.Exists(Destination) && SaveOption != SaveOption.Rename) return true;
+            else return Confirm(MessageFactory.Create(Destination, SaveOption));
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
 
         #endregion
     }

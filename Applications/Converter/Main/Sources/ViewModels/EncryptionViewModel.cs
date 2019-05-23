@@ -16,8 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
+using Cube.Mixin.String;
 using Cube.Pdf.Mixin;
+using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Cube.Pdf.Converter
@@ -27,11 +29,11 @@ namespace Cube.Pdf.Converter
     /// EncryptionViewModel
     ///
     /// <summary>
-    /// セキュリティタブを表す ViewModel です。
+    /// Represents the viewmodel for the security tab in the main window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EncryptionViewModel : Cube.Forms.ViewModelBase<Messenger>
+    public class EncryptionViewModel : CommonViewModel
     {
         #region Constructors
 
@@ -40,16 +42,17 @@ namespace Cube.Pdf.Converter
         /// EncryptionViewModel
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the EncryptionViewModel class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="model">PDF 暗号化情報</param>
-        /// <param name="messenger">Messenger オブジェクト</param>
-        /// <param name="context">同期用コンテキスト</param>
+        /// <param name="model">PDF encryption information.</param>
+        /// <param name="aggregator">Event aggregator.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionViewModel(Encryption model, Messenger messenger,
-            SynchronizationContext context) : base(messenger, context)
+        public EncryptionViewModel(Encryption model, Aggregator aggregator,
+            SynchronizationContext context) : base(aggregator, context)
         {
             Model = model;
             Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
@@ -64,7 +67,7 @@ namespace Cube.Pdf.Converter
         /// Model
         ///
         /// <summary>
-        /// PDF 暗号化情報を取得します。
+        /// Gets the model object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -75,7 +78,7 @@ namespace Cube.Pdf.Converter
         /// Enabled
         ///
         /// <summary>
-        /// 暗号化を有効にするかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating to enable the security options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -90,7 +93,7 @@ namespace Cube.Pdf.Converter
         /// OwnerPassword
         ///
         /// <summary>
-        /// 管理用パスワードを取得または設定します。
+        /// Gets or sets the owner password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -105,7 +108,7 @@ namespace Cube.Pdf.Converter
         /// OwnerConfirm
         ///
         /// <summary>
-        /// 管理用パスワードの確認を取得または設定します。
+        /// Gets or sets the confirmed value of owner password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -116,7 +119,7 @@ namespace Cube.Pdf.Converter
         /// UserPassword
         ///
         /// <summary>
-        /// 閲覧用パスワードを取得または設定します。
+        /// Gets or sets the user password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -131,7 +134,7 @@ namespace Cube.Pdf.Converter
         /// UserConfirm
         ///
         /// <summary>
-        /// 閲覧用パスワードの確認を取得または設定します。
+        /// Gets or sets the confirmed value of user password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -142,8 +145,8 @@ namespace Cube.Pdf.Converter
         /// OpenWithPassword
         ///
         /// <summary>
-        /// ファイルを開く時にパスワードを要求するかどうかを示す値を取得
-        /// または設定します。
+        /// Gets or sets a value indicating whether to require password a
+        /// when opening the PDF file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -153,8 +156,8 @@ namespace Cube.Pdf.Converter
             set
             {
                 Model.OpenWithPassword = value;
-                Refresh(nameof(EnableUserPassword));
-                Refresh(nameof(EnablePermission));
+                RaisePropertyChanged(nameof(EnableUserPassword));
+                RaisePropertyChanged(nameof(EnablePermission));
             }
         }
 
@@ -163,8 +166,8 @@ namespace Cube.Pdf.Converter
         /// UseOwnerPassword
         ///
         /// <summary>
-        /// 閲覧用パスワードと管理用パスワードを共用するかどうかを示す値を
-        /// 取得または設定します。
+        /// Gets or sets a value indicating whether to share the owner
+        /// password with the user password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -175,8 +178,8 @@ namespace Cube.Pdf.Converter
             {
                 if (SetProperty(ref _useOwnerPassword, value))
                 {
-                    Refresh(nameof(EnableUserPassword));
-                    Refresh(nameof(EnablePermission));
+                    RaisePropertyChanged(nameof(EnableUserPassword));
+                    RaisePropertyChanged(nameof(EnablePermission));
                 }
             }
         }
@@ -186,7 +189,8 @@ namespace Cube.Pdf.Converter
         /// EnableUserPassword
         ///
         /// <summary>
-        /// 閲覧用パスワードを入力可能な状態かどうかを示す値を取得します。
+        /// Gets or sets a value indicating whether the user password is
+        /// enabled to input.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -197,8 +201,8 @@ namespace Cube.Pdf.Converter
         /// EnablePermission
         ///
         /// <summary>
-        /// 各種操作の許可設定を変更できるかどうかを示す値を取得または
-        /// 設定します。
+        /// Gets or sets a value indicating whether the permission values
+        /// are enabled to input.
         /// </summary>
         ///
         /// <remarks>
@@ -214,18 +218,14 @@ namespace Cube.Pdf.Converter
         /// AllowPrint
         ///
         /// <summary>
-        /// 印刷を許可するかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to allow printing.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public bool AllowPrint
         {
             get => Model.Permission.Print.IsAllowed();
-            set
-            {
-                Model.Permission.Print = GetMethod(value);
-                Refresh(nameof(AllowPrint));
-            }
+            set => Update(() => Model.Permission.Print = GetMethod(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -233,18 +233,15 @@ namespace Cube.Pdf.Converter
         /// AllowCopy
         ///
         /// <summary>
-        /// ページのコピーを許可するかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to allow copying the
+        /// PDF contents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public bool AllowCopy
         {
             get => Model.Permission.CopyContents.IsAllowed();
-            set
-            {
-                Model.Permission.CopyContents = GetMethod(value);
-                Refresh(nameof(AllowCopy));
-            }
+            set => Update(() => Model.Permission.CopyContents = GetMethod(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -252,18 +249,15 @@ namespace Cube.Pdf.Converter
         /// AllowInputForm
         ///
         /// <summary>
-        /// フォームへの入力を許可するかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to allow inputting to
+        /// the form fields.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public bool AllowInputForm
         {
             get => Model.Permission.InputForm.IsAllowed();
-            set
-            {
-                Model.Permission.InputForm = GetMethod(value);
-                Refresh(nameof(AllowInputForm));
-            }
+            set => Update(() => Model.Permission.InputForm = GetMethod(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -271,19 +265,46 @@ namespace Cube.Pdf.Converter
         /// AllowModify
         ///
         /// <summary>
-        /// コンテンツの修正を許可するかどうかを示す値を取得または設定します。
+        /// Gets or sets a value indicating whether to allow modifying
+        /// the PDF contents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public bool AllowModify
         {
             get => Model.Permission.ModifyContents.IsAllowed();
-            set
+            set => Update(() =>
             {
                 Model.Permission.ModifyContents    = GetMethod(value);
                 Model.Permission.ModifyAnnotations = GetMethod(value);
-                Refresh(nameof(AllowModify));
-            }
+            });
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Confirm
+        ///
+        /// <summary>
+        /// Confirms if the current settings are acceptable.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Confirm()
+        {
+            if (!Enabled) return true;
+
+            var owner =  OwnerPassword.FuzzyEquals(OwnerConfirm);
+            var user  = !OpenWithPassword ||
+                         UseOwnerPassword ||
+                         UserPassword.FuzzyEquals(UserConfirm);
+            if (owner && user) return true;
+
+            Send(MessageFactory.CreateError(Properties.Resources.MessagePassword));
+            return false;
         }
 
         #endregion
@@ -292,10 +313,42 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        ///
+        /// <summary>
+        /// Invokes the specified action and RaisePropertyChanged.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Update(Action action, [CallerMemberName] string name = null)
+        {
+            action();
+            RaisePropertyChanged(name);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetMethod
         ///
         /// <summary>
-        /// 真偽値に対応する PermissionMethod オブジェクトを取得します。
+        /// Gets the permission value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Forms;
+using Cube.Mixin.Collections;
 using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
@@ -27,35 +27,34 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainFacade
+    /// Facade
     ///
     /// <summary>
-    /// メイン処理を表すクラスです。
+    /// Represents the facade of converting operations.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainFacade : DisposableBase
+    public sealed class Facade : DisposableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainFacade
+        /// Facade
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the specified settings.
         /// </summary>
         ///
-        /// <param name="settings">設定情報</param>
+        /// <param name="settings">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingsFolder settings)
+        public Facade(SettingsFolder settings)
         {
             Settings = settings;
             Locale.Set(settings.Value.Language);
@@ -75,17 +74,6 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder Settings { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Settings
-        ///
-        /// <summary>
-        /// 設定情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Settings Value => Settings.Value;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -124,15 +112,15 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Convert() => Invoke(() =>
         {
-            var format = Value.Format;
-            var dest   = Value.Destination;
+            var format = Settings.Value.Format;
+            var dest   = Settings.Value.Destination;
             var work   = Settings.WorkDirectory;
 
             this.LogDebug($"{nameof(Settings.WorkDirectory)}:{work}");
 
             using (var fs = new FileTransfer(format, dest, work, IO))
             {
-                fs.AutoRename = Value.SaveOption == SaveOption.Rename;
+                fs.AutoRename = Settings.Value.SaveOption == SaveOption.Rename;
                 InvokeGhostscript(fs.Value);
                 InvokeDecorator(fs.Value);
                 InvokeTransfer(fs, out var paths);
@@ -140,9 +128,11 @@ namespace Cube.Pdf.Converter
             }
         });
 
+        #region Set
+
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateSource
+        /// SetSource
         ///
         /// <summary>
         /// Source プロパティを更新します。
@@ -151,15 +141,14 @@ namespace Cube.Pdf.Converter
         /// <param name="e">ユーザの選択結果</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void UpdateSource(FileEventArgs e)
+        public void SetSource(OpenFileMessage e)
         {
-            if (e.Result == DialogResult.Cancel) return;
-            Value.Source = e.FileName;
+            if (!e.Cancel) Settings.Value.Source = e.Value.First();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateDestination
+        /// SetDestination
         ///
         /// <summary>
         /// Destination および Format プロパティを更新します。
@@ -168,20 +157,20 @@ namespace Cube.Pdf.Converter
         /// <param name="e">ユーザの選択結果</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void UpdateDestination(FileEventArgs e)
+        public void SetDestination(SaveFileMessage e)
         {
-            if (e.Result == DialogResult.Cancel) return;
+            if (e.Cancel) return;
 
             Debug.Assert(e.FilterIndex > 0);
             Debug.Assert(e.FilterIndex <= ViewResource.Formats.Count);
 
-            Value.Destination = e.FileName;
-            Value.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
+            Settings.Value.Destination = e.Value;
+            Settings.Value.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateUserProgram
+        /// SetUserProgram
         ///
         /// <summary>
         /// UserProgram プロパティを更新します。
@@ -190,27 +179,32 @@ namespace Cube.Pdf.Converter
         /// <param name="e">ユーザの選択結果</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void UpdateUserProgram(FileEventArgs e)
+        public void SetUserProgram(OpenFileMessage e)
         {
-            if (e.Result == DialogResult.Cancel) return;
-            Value.UserProgram = e.FileName;
+            if (!e.Cancel) Settings.Value.UserProgram = e.Value.First();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateExtension
+        /// SetExtension
         ///
         /// <summary>
         /// Destination の拡張子を Format に応じて更新します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void UpdateExtension()
+        public void SetExtension()
         {
-            var fi  = IO.Get(Value.Destination);
-            var ext = Value.Format.GetExtension();
-            Value.Destination = IO.Combine(fi.DirectoryName, $"{fi.BaseName}{ext}");
+            var fi  = IO.Get(Settings.Value.Destination);
+            var ext = Settings.Value.Format.GetExtension();
+            Settings.Value.Destination = IO.Combine(fi.DirectoryName, $"{fi.BaseName}{ext}");
         }
+
+        #endregion
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -229,12 +223,8 @@ namespace Cube.Pdf.Converter
         {
             Poll(10).Wait();
             IO.TryDelete(Settings.WorkDirectory);
-            if (Value.DeleteSource) IO.TryDelete(Value.Source);
+            if (Settings.Value.DeleteSource) IO.TryDelete(Settings.Value.Source);
         }
-
-        #endregion
-
-        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -250,8 +240,8 @@ namespace Cube.Pdf.Converter
             using (var stream = IO.OpenRead(src))
             {
                 return new SHA256CryptoServiceProvider()
-                       .ComputeHash(stream)
-                       .Aggregate("", (s, b) => s + $"{b:x2}");
+                    .ComputeHash(stream)
+                    .Join("", b => $"{b:x2}");
             }
         }
 
@@ -268,10 +258,12 @@ namespace Cube.Pdf.Converter
         {
             for (var i = 0; i < sec; ++i)
             {
-                if (!Value.IsBusy) return;
+                if (!Settings.Value.Busy) return;
                 await Task.Delay(1000).ConfigureAwait(false);
             }
         }
+
+        #region Invoke
 
         /* ----------------------------------------------------------------- */
         ///
@@ -290,10 +282,10 @@ namespace Cube.Pdf.Converter
         {
             try
             {
-                Value.IsBusy = true;
+                Settings.Value.Busy = true;
                 action();
             }
-            finally { Value.IsBusy = false; }
+            finally { Settings.Value.Busy = false; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -321,11 +313,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeGhostscript(string dest) => InvokeUnlessDisposed(() =>
         {
-            var cmp = GetDigest(Value.Source);
+            var cmp = GetDigest(Settings.Value.Source);
             if (!Settings.Digest.FuzzyEquals(cmp)) throw new CryptographicException();
 
             var gs = GhostscriptFactory.Create(Settings);
-            gs.Invoke(Value.Source, dest);
+            gs.Invoke(Settings.Value.Source, dest);
             gs.LogDebug();
         });
 
@@ -373,6 +365,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokePostProcess(IEnumerable<string> dest) =>
             InvokeUnlessDisposed(() => new ProcessLauncher(Settings).Invoke(dest));
+
+        #endregion
 
         #endregion
     }
