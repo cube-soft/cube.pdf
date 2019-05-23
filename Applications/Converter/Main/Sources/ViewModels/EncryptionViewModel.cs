@@ -54,24 +54,13 @@ namespace Cube.Pdf.Converter
         public EncryptionViewModel(Encryption model, Aggregator aggregator,
             SynchronizationContext context) : base(aggregator, context)
         {
-            Model = model;
-            Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            _model = model;
+            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model
-        ///
-        /// <summary>
-        /// Gets the model object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected Encryption Model { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -84,8 +73,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Enabled
         {
-            get => Model.Enabled;
-            set => Model.Enabled = value;
+            get => _model.Enabled;
+            set => _model.Enabled = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -99,8 +88,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string OwnerPassword
         {
-            get => Model.OwnerPassword;
-            set => Model.OwnerPassword = value;
+            get => _model.OwnerPassword;
+            set => _model.OwnerPassword = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -125,8 +114,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string UserPassword
         {
-            get => Model.UserPassword;
-            set => Model.UserPassword = value;
+            get => _model.UserPassword;
+            set => _model.UserPassword = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -152,10 +141,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool OpenWithPassword
         {
-            get => Model.OpenWithPassword;
+            get => _model.OpenWithPassword;
             set
             {
-                Model.OpenWithPassword = value;
+                _model.OpenWithPassword = value;
                 RaisePropertyChanged(nameof(EnableUserPassword));
                 RaisePropertyChanged(nameof(EnablePermission));
             }
@@ -224,8 +213,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowPrint
         {
-            get => Model.Permission.Print.IsAllowed();
-            set => Update(() => Model.Permission.Print = GetMethod(value));
+            get => _model.Permission.Print.IsAllowed();
+            set => Update(() => _model.Permission.Print = GetMethod(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -240,8 +229,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowCopy
         {
-            get => Model.Permission.CopyContents.IsAllowed();
-            set => Update(() => Model.Permission.CopyContents = GetMethod(value));
+            get => _model.Permission.CopyContents.IsAllowed();
+            set => Update(() => _model.Permission.CopyContents = GetMethod(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -256,8 +245,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowInputForm
         {
-            get => Model.Permission.InputForm.IsAllowed();
-            set => Update(() => Model.Permission.InputForm = GetMethod(value));
+            get => _model.Permission.InputForm.IsAllowed();
+            set => Update(() => _model.Permission.InputForm = GetMethod(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -272,11 +261,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowModify
         {
-            get => Model.Permission.ModifyContents.IsAllowed();
+            get => _model.Permission.ModifyContents.IsAllowed();
             set => Update(() =>
             {
-                Model.Permission.ModifyContents    = GetMethod(value);
-                Model.Permission.ModifyAnnotations = GetMethod(value);
+                _model.Permission.ModifyContents    = GetMethod(value);
+                _model.Permission.ModifyAnnotations = GetMethod(value);
             });
         }
 
@@ -313,23 +302,6 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Update
         ///
         /// <summary>
@@ -358,6 +330,7 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Fields
+        private readonly Encryption _model;
         private bool _useOwnerPassword;
         #endregion
     }

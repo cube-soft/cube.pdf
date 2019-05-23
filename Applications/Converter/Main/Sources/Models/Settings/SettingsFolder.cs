@@ -19,14 +19,13 @@
 using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
-using Cube.Mixin.Logging;
+using Cube.Mixin.Environment;
 using Cube.Mixin.Registry;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using Microsoft.Win32;
 using System;
-using System.ComponentModel;
 using System.Linq;
 
 namespace Cube.Pdf.Converter
@@ -49,36 +48,30 @@ namespace Cube.Pdf.Converter
         /// SettingsFolder
         ///
         /// <summary>
-        /// Initializes static fields.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        static SettingsFolder()
-        {
-            Locale.Configure(e =>
-            {
-                var src = e.ToCultureInfo();
-                var cmp = Properties.Resources.Culture?.Name;
-                if (cmp.HasValue() && cmp.FuzzyEquals(src.Name)) return false;
-                Properties.Resources.Culture = src;
-                return true;
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingsFolder
-        ///
-        /// <summary>
         /// Initializes a new instance of the SettingsFolder class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public SettingsFolder() : this(
             Cube.DataContract.Format.Registry,
-            @"CubeSoft\CubePDF\v2",
-            new IO()
+            @"CubeSoft\CubePDF\v2"
         ) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingsFolder
+        ///
+        /// <summary>
+        /// Initializes a new instance of the SettingsFolder class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="format">Serialization format.</param>
+        /// <param name="path">Path to save settings.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsFolder(Cube.DataContract.Format format, string path) :
+            this(format, path, new IO()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -98,13 +91,10 @@ namespace Cube.Pdf.Converter
             base(System.Reflection.Assembly.GetExecutingAssembly(), format, path, io)
         {
             AutoSave       = false;
-            MachineName    = Environment.MachineName;
-            UserName       = Environment.UserName;
-            DocumentName   = new DocumentName(string.Empty, Assembly.GetProduct(), IO);
-            WorkDirectory  = GetWorkDirectory();
+            Document       = GetDocumentName(string.Empty);
+            Temp           = GetTemp();
             Version.Digit  = 3;
-            Version.Suffix = $"RC{Assembly.GetVersion().Revision}";
-            UpdateChecker  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
+            Version.Suffix = "";
         }
 
         #endregion
@@ -124,56 +114,29 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DocumentName
+        /// Document
         ///
         /// <summary>
-        /// Gets the document name.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 主に仮想プリンタ経由時に指定されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentName DocumentName { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MachineName
-        ///
-        /// <summary>
-        /// Gets the machine name.
+        /// Gets the document name object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string MachineName { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MachineName
-        ///
-        /// <summary>
-        /// Gets the user name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string UserName { get; set; }
+        public DocumentName Document { get; private set; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Digest
         ///
         /// <summary>
-        /// Gets or sets the SHA-256 message digest of the source file that
-        /// specified at command line.
+        /// Gets the SHA-256 message digest of the source file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Digest { get; set; }
+        public string Digest { get; private set; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WorkDirectory
+        /// Temp
         ///
         /// <summary>
         /// Gets or sets the path of the working directory.
@@ -186,18 +149,7 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public string WorkDirectory { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpdateChecker
-        ///
-        /// <summary>
-        /// Gets or sets the path of the update checker program.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string UpdateChecker { get; }
+        public string Temp { get; set; }
 
         #endregion
 
@@ -217,13 +169,11 @@ namespace Cube.Pdf.Converter
         public void Set(ArgumentCollection src)
         {
             var op = src.Options;
-            if (op.TryGetValue(nameof(MachineName), out var pc)) MachineName = pc;
-            if (op.TryGetValue(nameof(UserName), out var user)) UserName = user;
-            if (op.TryGetValue(nameof(DocumentName), out var doc)) DocumentName = new DocumentName(doc, Assembly.GetProduct(), IO);
-            if (op.TryGetValue(nameof(Digest), out var digest)) Digest = digest;
+            if (op.TryGetValue("DocumentName", out var doc)) Document = GetDocumentName(doc);
             if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
+            if (op.TryGetValue("Digest", out var digest)) Digest = digest;
 
-            var dest = IO.Get(IO.Combine(Value.Destination, DocumentName.Name));
+            var dest = IO.Get(IO.Combine(Value.Destination, Document.Name));
             var name = dest.BaseName;
             var ext  = Value.Format.GetExtension();
 
@@ -257,7 +207,6 @@ namespace Cube.Pdf.Converter
             e.NewValue.Resolution = NormalizeResolution(e.NewValue);
             e.NewValue.Orientation = NormalizeOrientation(e.NewValue);
             e.NewValue.Destination = NormalizeDestination(e.NewValue);
-            e.NewValue.Metadata.Version = e.NewValue.FormatOption.GetVersion();
             e.NewValue.Encryption.Deny();
             e.NewValue.Encryption.Permission.Accessibility = PermissionValue.Allow;
 
@@ -279,59 +228,51 @@ namespace Cube.Pdf.Converter
             {
                 if (Value == null) return;
 
-                new Startup("cubepdf-checker")
+                var name = "cubepdf-checker";
+                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
+                var args = Assembly.GetProduct().Quote();
+                var dest = new Startup(name)
                 {
-                    Command = $"{UpdateChecker.Quote()} {Assembly.GetProduct()}",
-                    Enabled = Value.CheckUpdate,
-                }.Save();
+                    Command = $"{exe.Quote()} {args}",
+                    Enabled = Value.CheckUpdate && !IO.Exists(exe),
+                };
+
+                dest.Save();
             }
             finally { base.OnSaved(e); }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnPropertyChanged
-        ///
-        /// <summary>
-        /// Occurs when the PropertyChanged event is fired.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            try
-            {
-                if (e.PropertyName != nameof(Value.FormatOption)) return;
-                Value.Metadata.Version = Value.FormatOption.GetVersion();
-            }
-            finally { base.OnPropertyChanged(e); }
-        }
-
-        #region Get
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetWorkDirectory
+        /// GetTemp
         ///
         /// <summary>
         /// Gets the path of the working directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetWorkDirectory()
+        private string GetTemp()
         {
             var sk    = $@"Software\{Assembly.GetCompany()}\{Assembly.GetProduct()}";
             var value = Registry.LocalMachine.GetValue<string>(sk, "LibPath");
             var root  = value.HasValue() ?
                         value :
-                        IO.Combine(
-                            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                            Assembly.GetCompany(), Assembly.GetProduct()
-                        );
+                        IO.Combine(Environment.SpecialFolder.CommonApplicationData.GetName(),
+                            Assembly.GetCompany(), Assembly.GetProduct());
             return IO.Combine(root, Guid.NewGuid().ToString("D"));
         }
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetDocumentName
+        ///
+        /// <summary>
+        /// Gets an instance of the DocumentName class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private DocumentName GetDocumentName(string src) =>
+            new DocumentName(src, Assembly.GetProduct(), IO);
 
         #region Normalize
 
@@ -373,9 +314,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         private int NormalizeResolution(SettingsValue src) =>
-            src.Resolution >= 72 ?
-            src.Resolution :
-            600;
+            src.Resolution >= 72 ? src.Resolution : 600;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -392,7 +331,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string NormalizeDestination(SettingsValue src)
         {
-            var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            var desktop = Environment.SpecialFolder.Desktop.GetName();
 
             try
             {
@@ -400,11 +339,7 @@ namespace Cube.Pdf.Converter
                 var dest = IO.Get(src.Destination);
                 return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
             }
-            catch (Exception err)
-            {
-                this.LogWarn(err);
-                return desktop;
-            }
+            catch { return desktop; }
         }
 
         #endregion

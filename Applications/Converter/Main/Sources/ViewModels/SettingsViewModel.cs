@@ -53,36 +53,14 @@ namespace Cube.Pdf.Converter
         public SettingsViewModel(SettingsFolder settings, Aggregator aggregator,
             SynchronizationContext context) : base(aggregator, context)
         {
-            IO    = settings.IO;
-            Model = settings.Value;
-            Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            _io    = settings.IO;
+            _model = settings.Value;
+            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model
-        ///
-        /// <summary>
-        /// Gets the model object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected SettingsValue Model { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -95,10 +73,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Format Format
         {
-            get => Model.Format;
+            get => _model.Format;
             set
             {
-                Model.Format = value;
+                _model.Format = value;
                 RaisePropertyChanged(nameof(EnableFormatOption));
             }
         }
@@ -114,8 +92,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public SaveOption SaveOption
         {
-            get => Model.SaveOption;
-            set => Model.SaveOption = value;
+            get => _model.SaveOption;
+            set => _model.SaveOption = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,10 +107,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public PostProcess PostProcess
         {
-            get => Model.PostProcess;
+            get => _model.PostProcess;
             set
             {
-                Model.PostProcess = value;
+                _model.PostProcess = value;
                 RaisePropertyChanged(nameof(EnableUserProgram));
             }
         }
@@ -148,8 +126,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Source
         {
-            get => Model.Source;
-            set => Model.Source = value;
+            get => _model.Source;
+            set => _model.Source = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -163,8 +141,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Destination
         {
-            get => Model.Destination;
-            set => Model.Destination = value;
+            get => _model.Destination;
+            set => _model.Destination = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -178,8 +156,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string UserProgram
         {
-            get => Model.UserProgram;
-            set => Model.UserProgram = value;
+            get => _model.UserProgram;
+            set => _model.UserProgram = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -193,8 +171,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public int Resolution
         {
-            get => Model.Resolution;
-            set => Model.Resolution = value;
+            get => _model.Resolution;
+            set => _model.Resolution = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -209,12 +187,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool IsAutoOrientation
         {
-            get => Model.Orientation == Orientation.Auto;
+            get => _model.Orientation == Orientation.Auto;
             set
             {
                 if (value)
                 {
-                    Model.Orientation = Orientation.Auto;
+                    _model.Orientation = Orientation.Auto;
                     RaisePropertyChanged(nameof(IsAutoOrientation));
                 }
             }
@@ -232,12 +210,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool IsPortrait
         {
-            get => Model.Orientation == Orientation.Portrait;
+            get => _model.Orientation == Orientation.Portrait;
             set
             {
                 if (value)
                 {
-                    Model.Orientation = Orientation.Portrait;
+                    _model.Orientation = Orientation.Portrait;
                     RaisePropertyChanged(nameof(IsPortrait));
                 }
             }
@@ -255,12 +233,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool IsLandscape
         {
-            get => Model.Orientation == Orientation.Landscape;
+            get => _model.Orientation == Orientation.Landscape;
             set
             {
                 if (value)
                 {
-                    Model.Orientation = Orientation.Landscape;
+                    _model.Orientation = Orientation.Landscape;
                     RaisePropertyChanged(nameof(IsLandscape));
                 }
             }
@@ -278,8 +256,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Grayscale
         {
-            get => Model.Grayscale;
-            set => Model.Grayscale = value;
+            get => _model.Grayscale;
+            set => _model.Grayscale = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -294,8 +272,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool ImageCompression
         {
-            get => Model.ImageCompression;
-            set => Model.ImageCompression = value;
+            get => _model.ImageCompression;
+            set => _model.ImageCompression = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -310,8 +288,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Linearization
         {
-            get => Model.Linearization;
-            set => Model.Linearization = value;
+            get => _model.Linearization;
+            set => _model.Linearization = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -326,8 +304,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool CheckUpdate
         {
-            get => Model.CheckUpdate;
-            set => Model.CheckUpdate = value;
+            get => _model.CheckUpdate;
+            set => _model.CheckUpdate = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -341,8 +319,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Language Language
         {
-            get => Model.Language;
-            set => Model.Language = value;
+            get => _model.Language;
+            set => _model.Language = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -355,7 +333,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool SourceVisible => Model.SourceVisible;
+        public bool SourceVisible => _model.SourceVisible;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -372,7 +350,7 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public bool SourceEditable => !Model.DeleteSource;
+        public bool SourceEditable => !_model.DeleteSource;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -413,31 +391,15 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Confirm()
         {
-            if (IO.Exists(Destination) && SaveOption != SaveOption.Rename) return true;
+            if (_io.Exists(Destination) && SaveOption != SaveOption.Rename) return true;
             else return Confirm(MessageFactory.Create(Destination, SaveOption));
         }
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
-
+        #region Fields
+        private readonly SettingsValue _model;
+        private readonly IO _io;
         #endregion
     }
 }

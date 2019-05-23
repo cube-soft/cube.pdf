@@ -52,24 +52,13 @@ namespace Cube.Pdf.Converter
         public MetadataViewModel(Metadata model, Aggregator aggregator,
             SynchronizationContext context) : base(aggregator, context)
         {
-            Model = model;
-            Model.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            _model = model;
+            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model
-        ///
-        /// <summary>
-        /// Gets the model object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected Metadata Model { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,8 +71,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Title
         {
-            get => Model.Title;
-            set => Model.Title = value;
+            get => _model.Title;
+            set => _model.Title = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -97,8 +86,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Author
         {
-            get => Model.Author;
-            set => Model.Author = value;
+            get => _model.Author;
+            set => _model.Author = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -112,8 +101,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Subject
         {
-            get => Model.Subject;
-            set => Model.Subject = value;
+            get => _model.Subject;
+            set => _model.Subject = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -127,8 +116,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Keywords
         {
-            get => Model.Keywords;
-            set => Model.Keywords = value;
+            get => _model.Keywords;
+            set => _model.Keywords = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -142,8 +131,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Creator
         {
-            get => Model.Creator;
-            set => Model.Creator = value;
+            get => _model.Creator;
+            set => _model.Creator = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -157,8 +146,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public ViewerOptions Options
         {
-            get => Model.Options;
-            set => Model.Options = value;
+            get => _model.Options;
+            set => _model.Options = value;
         }
 
         #endregion
@@ -183,25 +172,8 @@ namespace Cube.Pdf.Converter
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
-
+        #region Fields
+        private readonly Metadata _model;
         #endregion
     }
 }

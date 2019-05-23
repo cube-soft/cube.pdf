@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.Mixin.Assembly;
+using Cube.Mixin.Environment;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using NUnit.Framework;
@@ -55,16 +56,15 @@ namespace Cube.Pdf.Converter.Tests
 
             Assert.That(dest.Format,                Is.EqualTo(Cube.DataContract.Format.Registry));
             Assert.That(dest.Location,              Is.EqualTo(@"CubeSoft\CubePDF\v2"));
-            Assert.That(dest.WorkDirectory,         Is.Not.Null.And.Not.Empty);
+            Assert.That(dest.Temp,                  Is.Not.Null.And.Not.Empty);
             Assert.That(dest.AutoSave,              Is.False);
             Assert.That(dest.Assembly.GetCompany(), Is.EqualTo("CubeSoft"));
             Assert.That(dest.Assembly.GetProduct(), Is.EqualTo("CubePDF"));
-            Assert.That(dest.MachineName,           Is.EqualTo(Environment.MachineName));
-            Assert.That(dest.UserName,              Is.EqualTo(Environment.UserName));
-            Assert.That(dest.DocumentName.Value,    Is.Empty);
-            Assert.That(dest.DocumentName.Name,     Is.EqualTo("CubePDF"));
-            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.0.0RC20"));
+            Assert.That(dest.Document.Value,        Is.Empty);
+            Assert.That(dest.Document.Name,         Is.EqualTo("CubePDF"));
+            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.0.0"));
             Assert.That(dest.Value,                 Is.Not.Null);
+            Assert.That(dest.Digest,                Is.Null);
         }
 
         /* ----------------------------------------------------------------- */
@@ -79,7 +79,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Load()
         {
-            var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            var desktop = Environment.SpecialFolder.Desktop.GetName();
             var src     = new SettingsFolder(
                 Cube.DataContract.Format.Registry,
                 $@"CubeSoft\CubePDF\{nameof(SettingsTest)}",
@@ -107,7 +107,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.SourceVisible,    Is.False);
             Assert.That(dest.Source,           Is.Empty);
             Assert.That(dest.Destination,      Is.EqualTo(desktop));
-            Assert.That(dest.Busy,           Is.False);
+            Assert.That(dest.Busy,             Is.False);
             Assert.That(dest.SkipUi,           Is.False);
 
             var md = dest.Metadata;
@@ -157,8 +157,6 @@ namespace Cube.Pdf.Converter.Tests
                 @"C:\WINDOWS\CubePDF\PS3AEE.tmp",
                 "/MachineName",
                 @"\\APOLLON",
-                "/ThreadID",
-                "15180",
                 "/UserName",
                 "clown",
                 "/Exec",
@@ -170,13 +168,12 @@ namespace Cube.Pdf.Converter.Tests
 
             var path = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                System.IO.Path.ChangeExtension(dest.DocumentName.Name, ".pdf")
+                System.IO.Path.ChangeExtension(dest.Document.Name, ".pdf")
             );
 
-            Assert.That(dest.MachineName,        Is.EqualTo(@"\\APOLLON"));
-            Assert.That(dest.UserName,           Is.EqualTo("clown"));
-            Assert.That(dest.DocumentName.Value, Is.EqualTo("(234)?File.txt - Sample Application"));
-            Assert.That(dest.DocumentName.Name,  Is.EqualTo("(234)_File.txt"));
+            Assert.That(dest.Digest,             Is.Null);
+            Assert.That(dest.Document.Value,     Is.EqualTo("(234)?File.txt - Sample Application"));
+            Assert.That(dest.Document.Name,      Is.EqualTo("(234)_File.txt"));
             Assert.That(dest.Value.DeleteSource, Is.True);
             Assert.That(dest.Value.SkipUi,       Is.True);
             Assert.That(dest.Value.Source,       Is.EqualTo(@"C:\WINDOWS\CubePDF\PS3AEE.tmp"));
@@ -198,9 +195,8 @@ namespace Cube.Pdf.Converter.Tests
             var dest = new SettingsFolder();
             dest.Set(new ArgumentCollection(new string[0], Collections.Argument.Windows, true));
 
-            Assert.That(dest.MachineName,        Is.EqualTo(Environment.MachineName));
-            Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));
-            Assert.That(dest.DocumentName.Name,  Is.EqualTo("CubePDF"));
+            Assert.That(dest.Digest,             Is.Null);
+            Assert.That(dest.Document.Name,      Is.EqualTo("CubePDF"));
             Assert.That(dest.Value.DeleteSource, Is.False);
             Assert.That(dest.Value.Source,       Is.Empty);
         }

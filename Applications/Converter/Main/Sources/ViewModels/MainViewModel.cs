@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.String;
 using System;
@@ -73,7 +72,7 @@ namespace Cube.Pdf.Converter
         public MainViewModel(SettingsFolder settings, SynchronizationContext context) :
             base(new Aggregator(), context)
         {
-            Model      = new Facade(settings);
+            _model     = new Facade(settings);
             Settings   = new SettingsViewModel(settings, Aggregator, context);
             Metadata   = new MetadataViewModel(settings.Value.Metadata, Aggregator, context);
             Encryption = new EncryptionViewModel(settings.Value.Encryption, Aggregator, context);
@@ -87,28 +86,6 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model
-        ///
-        /// <summary>
-        /// Model オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected Facade Model { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// I/O オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO => Model.IO;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Title
         ///
         /// <summary>
@@ -117,8 +94,8 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public string Title =>
-            Model.Settings.DocumentName.Value.HasValue() ?
-            $"{Model.Settings.DocumentName.Value} - {Product} {Version}" :
+            _model.Settings.Document.Value.HasValue() ?
+            $"{_model.Settings.Document.Value} - {Product} {Version}" :
             $"{Product} {Version}";
 
         /* ----------------------------------------------------------------- */
@@ -130,7 +107,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Product => Model.Settings.Assembly.GetProduct();
+        public string Product => _model.Settings.Assembly.GetProduct();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,7 +118,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Version => Model.Settings.Version.ToString(true);
+        public string Version => _model.Settings.Version.ToString(true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -152,7 +129,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri => Model.Settings.Uri;
+        public Uri Uri => _model.Settings.Uri;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -163,7 +140,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsBusy => Model.Settings.Value.Busy;
+        public bool IsBusy => _model.Settings.Value.Busy;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -215,8 +192,8 @@ namespace Cube.Pdf.Converter
         {
             if (Encryption.Confirm() && Settings.Confirm()) TrackClose(() =>
             {
-                Model.SetExtension();
-                Model.Convert();
+                _model.SetExtension();
+                _model.Convert();
             });
         }
 
@@ -231,7 +208,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Save()
         {
-            if (Metadata.ConfirmForSave()) Model.Save();
+            if (Metadata.ConfirmForSave()) _model.Save();
         }
 
         /* ----------------------------------------------------------------- */
@@ -244,7 +221,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void BrowseSource() =>
-            Send(Model.Settings.CreateForSource(), e => Model.SetSource(e));
+            Send(_model.Settings.CreateForSource(), e => _model.SetSource(e));
 
 
         /* ----------------------------------------------------------------- */
@@ -257,7 +234,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void BrowseDestination() =>
-            Send(Model.Settings.CreateForDestination(), e => Model.SetDestination(e));
+            Send(_model.Settings.CreateForDestination(), e => _model.SetDestination(e));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -269,11 +246,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void BrowseUserProgram() =>
-            Send(Model.Settings.CreateForUserProgram(), e => Model.SetUserProgram(e));
-
-        #endregion
-
-        #region Implementations
+            Send(_model.Settings.CreateForUserProgram(), e => _model.SetUserProgram(e));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -292,8 +265,13 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (disposing) Model.Dispose();
+            try { if (disposing) _model.Dispose(); }
+            finally { base.Dispose(disposing); }
         }
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -309,7 +287,7 @@ namespace Cube.Pdf.Converter
             switch (e.PropertyName)
             {
                 case nameof(Settings.Format):
-                    Model.SetExtension();
+                    _model.SetExtension();
                     break;
                 case nameof(Settings.PostProcess):
                     if (Settings.PostProcess == PostProcess.Others) BrowseUserProgram();
@@ -323,6 +301,10 @@ namespace Cube.Pdf.Converter
             }
         }
 
+        #endregion
+
+        #region Fields
+        private readonly Facade _model;
         #endregion
     }
 }

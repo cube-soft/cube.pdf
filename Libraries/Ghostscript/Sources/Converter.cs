@@ -198,7 +198,7 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WorkDirectory
+        /// Temp
         ///
         /// <summary>
         /// Gets or sets the path of the working directory.
@@ -210,7 +210,7 @@ namespace Cube.Pdf.Ghostscript
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public string WorkDirectory { get; set; } = string.Empty;
+        public string Temp { get; set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -470,10 +470,10 @@ namespace Cube.Pdf.Ghostscript
                 var info = IO.Get(dest);
                 if (!IO.Exists(info.DirectoryName)) IO.CreateDirectory(info.DirectoryName);
 
-                if (WorkDirectory.HasValue())
+                if (Temp.HasValue())
                 {
-                    if (!IO.Exists(WorkDirectory)) IO.CreateDirectory(WorkDirectory);
-                    SetVariable(name, WorkDirectory);
+                    if (!IO.Exists(Temp)) IO.CreateDirectory(Temp);
+                    SetVariable(name, Temp);
                 }
                 action();
             }

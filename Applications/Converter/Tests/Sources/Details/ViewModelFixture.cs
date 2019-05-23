@@ -175,7 +175,7 @@ namespace Cube.Pdf.Converter.Tests
             var path = $@"CubeSoft\CubePDF\{GetType().Name}";
             var dest = new SettingsFolder(DataContract.Format.Registry, path, IO)
             {
-                WorkDirectory = Get("Tmp"),
+                Temp = Get("Tmp"),
             };
 
             dest.Load();

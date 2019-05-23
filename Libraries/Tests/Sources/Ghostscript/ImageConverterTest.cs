@@ -56,7 +56,7 @@ namespace Cube.Pdf.Tests.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create_Throws
+        /// Create_NotSupportedException
         ///
         /// <summary>
         /// Confirms the behavior when an unsupported format is set.
@@ -64,7 +64,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create_Throws()
+        public void Create_NotSupportedException()
         {
             Assert.That(() => new ImageConverter(Format.Pdf), Throws.TypeOf<NotSupportedException>());
             Assert.That(() => new JpegConverter(Format.Png),  Throws.TypeOf<NotSupportedException>());
@@ -80,10 +80,10 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Invoke(Converter cv, string srcname, string destname)
+        public void Invoke(int id, Converter cv, string srcname, string destname)
         {
             var dest = Run(cv, srcname, destname);
-            Assert.That(IO.Exists(dest), Is.True);
+            Assert.That(IO.Exists(dest), Is.True, $"No.{id}");
         }
 
         #endregion
@@ -103,16 +103,18 @@ namespace Cube.Pdf.Tests.Ghostscript
         {
             get
             {
+                var n = 0;
+
                 /* --------------------------------------------------------- */
                 // AntiAlias
                 /* --------------------------------------------------------- */
-                yield return TestCase(new ImageConverter(Format.Png)
+                yield return TestCase(n++, new ImageConverter(Format.Png)
                 {
                     AntiAlias  = true,
                     Resolution = 72,
                 }, "Sample.ps", "AntiAlias_True");
 
-                yield return TestCase(new ImageConverter(Format.Png)
+                yield return TestCase(n++, new ImageConverter(Format.Png)
                 {
                     AntiAlias  = false,
                     Resolution = 72,
@@ -121,17 +123,17 @@ namespace Cube.Pdf.Tests.Ghostscript
                 /* --------------------------------------------------------- */
                 // ColorMode
                 /* --------------------------------------------------------- */
-                yield return TestCase(new ImageConverter(Format.Jpeg24bppRgb)
+                yield return TestCase(n++, new ImageConverter(Format.Jpeg24bppRgb)
                 {
                     Resolution = 300,
                 }, "SampleMix.ps", Format.Jpeg24bppRgb);
 
-                yield return TestCase(new ImageConverter(Format.Jpeg32bppCmyk)
+                yield return TestCase(n++, new ImageConverter(Format.Jpeg32bppCmyk)
                 {
                     Resolution = 300,
                 }, "SampleMix.ps", Format.Jpeg32bppCmyk);
 
-                yield return TestCase(new ImageConverter(Format.Jpeg8bppGrayscale)
+                yield return TestCase(n++, new ImageConverter(Format.Jpeg8bppGrayscale)
                 {
                     Resolution = 300,
                 }, "SampleMix.ps", Format.Jpeg8bppGrayscale);
@@ -139,27 +141,27 @@ namespace Cube.Pdf.Tests.Ghostscript
                 /* --------------------------------------------------------- */
                 // Quality
                 /* --------------------------------------------------------- */
-                yield return TestCase(new JpegConverter(Format.Jpeg)
+                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
                 {
                     Quality = 1,
                 }, "Sample600dpi.ps", "Quality_1");
 
-                yield return TestCase(new JpegConverter(Format.Jpeg)
+                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
                 {
                     Quality = 25,
                 }, "Sample600dpi.ps", "Quality_25");
 
-                yield return TestCase(new JpegConverter(Format.Jpeg)
+                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
                 {
                     Quality = 50,
                 }, "Sample600dpi.ps", "Quality_50");
 
-                yield return TestCase(new JpegConverter(Format.Jpeg)
+                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
                 {
                     Quality = 75,
                 }, "Sample600dpi.ps", "Quality_75");
 
-                yield return TestCase(new JpegConverter(Format.Jpeg)
+                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
                 {
                     Quality = 100,
                 }, "Sample600dpi.ps", "Quality_100");

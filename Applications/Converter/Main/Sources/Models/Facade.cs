@@ -101,11 +101,11 @@ namespace Cube.Pdf.Converter
         {
             var format = Settings.Value.Format;
             var dest   = Settings.Value.Destination;
-            var work   = Settings.WorkDirectory;
+            var temp   = Settings.Temp;
 
-            this.LogDebug($"{nameof(Settings.WorkDirectory)}:{work}");
+            this.LogDebug($"{nameof(Settings.Temp)}:{temp}");
 
-            using (var fs = new FileTransfer(format, dest, work, IO))
+            using (var fs = new FileTransfer(format, dest, temp, IO))
             {
                 fs.AutoRename = Settings.Value.SaveOption == SaveOption.Rename;
                 InvokeGhostscript(fs.Value);
@@ -148,7 +148,7 @@ namespace Cube.Pdf.Converter
         protected override void Dispose(bool disposing)
         {
             Poll(10).Wait();
-            IO.TryDelete(Settings.WorkDirectory);
+            IO.TryDelete(Settings.Temp);
             if (Settings.Value.DeleteSource) IO.TryDelete(Settings.Value.Source);
         }
 
@@ -239,8 +239,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeGhostscript(string dest) => InvokeUnlessDisposed(() =>
         {
+            var src = Settings.Digest;
             var cmp = GetDigest(Settings.Value.Source);
-            if (!Settings.Digest.FuzzyEquals(cmp)) throw new CryptographicException();
+            if (src.HasValue() && !src.FuzzyEquals(cmp)) throw new CryptographicException();
 
             var gs = GhostscriptFactory.Create(Settings);
             gs.Invoke(Settings.Value.Source, dest);

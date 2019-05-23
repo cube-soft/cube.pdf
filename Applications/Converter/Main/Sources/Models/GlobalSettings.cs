@@ -16,51 +16,40 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Tests;
-using NUnit.Framework;
+using Cube.Mixin.String;
 
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FacadeTest
+    /// GlobalSettings
     ///
     /// <summary>
-    /// Tests the Facade class.
+    /// Represents the global settings of the application.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class FacadeTest : FileFixture
+    internal static class GlobalSettings
     {
-        #region Tests
-
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// GlobalSettings
         ///
         /// <summary>
-        /// Tests the Convert method.
+        /// Invokes the global settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [Test]
-        public void Convert()
+        static GlobalSettings()
         {
-            using (var e = new Facade(new SettingsFolder()))
+            Locale.Configure(e =>
             {
-                var dest = Get($"{nameof(Convert)}.pdf");
-
-                e.Settings.Value.Source = GetSource("Sample.pdf");
-                e.Settings.Value.Destination = dest;
-                e.Settings.Value.PostProcess = PostProcess.None;
-                e.Convert();
-
-                Assert.That(e.Settings.Value.Busy, Is.False);
-                Assert.That(IO.Exists(dest), Is.True);
-            }
+                var src = e.ToCultureInfo();
+                var cmp = Properties.Resources.Culture?.Name;
+                if (cmp.HasValue() && cmp.FuzzyEquals(src.Name)) return false;
+                Properties.Resources.Culture = src;
+                return true;
+            });
         }
-
-        #endregion
     }
 }
