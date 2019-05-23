@@ -102,7 +102,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private static void Show(SettingsFolder settings)
         {
-            var view = new MainForm();
+            var view = new MainWindow();
             using (var vm = new MainViewModel(settings))
             {
                 view.Bind(vm);

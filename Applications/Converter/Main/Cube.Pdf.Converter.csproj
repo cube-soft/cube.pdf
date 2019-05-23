@@ -32,10 +32,10 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
-        <Compile Update="Sources\Views\*Form.cs" SubType="Form" />
+        <Compile Update="Sources\Views\*Window.cs" SubType="Form" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
-        <EmbeddedResource Update="Sources\Views\*Form.resx" DependentUpon="%(FIlename).cs" />
-        <EmbeddedResource Update="Sources\Views\MainForm.ja.resx" DependentUpon="MainForm.cs" />
+        <EmbeddedResource Update="Sources\Views\*Window.resx" DependentUpon="%(FIlename).cs" />
+        <EmbeddedResource Update="Sources\Views\MainWindow.ja.resx" DependentUpon="MainWindow.cs" />
         <None Include="Properties\DataSources\*" />
         <None Include="Assets\**\*" />
         <None Include="App.config" />

@@ -1,6 +1,6 @@
 ﻿namespace Cube.Pdf.Converter
 {
-    partial class MainForm
+    partial class MainWindow
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
             this.SettingsPanel = new Cube.Forms.SettingsControl();
             this.SettingsTabControl = new System.Windows.Forms.TabControl();
@@ -377,7 +377,6 @@
             //
             // FormatOptionComboBox
             //
-            this.FormatOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "FormatOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.FormatOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "EnableFormatOption", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             resources.ApplyResources(this.FormatOptionComboBox, "FormatOptionComboBox");
             this.FormatOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;

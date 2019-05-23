@@ -26,27 +26,27 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainForm
+    /// MainWindow
     ///
     /// <summary>
     /// CubePDF メイン画面を表示するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Cube.Forms.Window
+    public partial class MainWindow : Cube.Forms.Window
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainForm
+        /// MainWindow
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainForm()
+        public MainWindow()
         {
             InitializeComponent();
 
