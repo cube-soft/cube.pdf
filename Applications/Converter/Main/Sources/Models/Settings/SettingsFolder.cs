@@ -23,10 +23,8 @@ using Cube.Mixin.Environment;
 using Cube.Mixin.Registry;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
-using Cube.Pdf.Mixin;
 using Microsoft.Win32;
 using System;
-using System.Linq;
 
 namespace Cube.Pdf.Converter
 {
@@ -188,33 +186,6 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnLoaded
-        ///
-        /// <summary>
-        /// Occurs when the settings are loaded.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 1.0.0RC12 より Resolution を ComboBox のインデックスに対応
-        /// する値から直接の値に変更しました。これに伴い、インデックスを
-        /// 指していると予想される値を初期値にリセットしています。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnLoaded(ValueChangedEventArgs<SettingsValue> e)
-        {
-            e.NewValue.Format = NormalizeFormat(e.NewValue);
-            e.NewValue.Resolution = NormalizeResolution(e.NewValue);
-            e.NewValue.Orientation = NormalizeOrientation(e.NewValue);
-            e.NewValue.Destination = NormalizeDestination(e.NewValue);
-            e.NewValue.Encryption.Deny();
-            e.NewValue.Encryption.Permission.Accessibility = PermissionValue.Allow;
-
-            base.OnLoaded(e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// OnSaved
         ///
         /// <summary>
@@ -273,76 +244,6 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private DocumentName GetDocumentName(string src) =>
             new DocumentName(src, Assembly.GetProduct(), IO);
-
-        #region Normalize
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NormalizeFormat
-        ///
-        /// <summary>
-        /// Normalizes the specified Format value.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Format NormalizeFormat(SettingsValue src) =>
-            ViewResource.Formats.Any(e => e.Value == src.Format) ?
-            src.Format :
-            Ghostscript.Format.Pdf;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NormalizeOrientation
-        ///
-        /// <summary>
-        /// Normalizes the specified Orientation value.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Orientation NormalizeOrientation(SettingsValue src) =>
-            ViewResource.Orientations.Any(e => e.Value == src.Orientation) ?
-            src.Orientation :
-            Orientation.Auto;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NormalizeResolution
-        ///
-        /// <summary>
-        /// Normalizes the specified Resolution value.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private int NormalizeResolution(SettingsValue src) =>
-            src.Resolution >= 72 ? src.Resolution : 600;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// NormalizeDestination
-        ///
-        /// <summary>
-        /// Normalizes the path of serialized data.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// パスにファイル名が残っている場合、ファイル名部分を除去します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string NormalizeDestination(SettingsValue src)
-        {
-            var desktop = Environment.SpecialFolder.Desktop.GetName();
-
-            try
-            {
-                if (!src.Destination.HasValue()) return desktop;
-                var dest = IO.Get(src.Destination);
-                return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
-            }
-            catch { return desktop; }
-        }
-
-        #endregion
 
         #endregion
     }

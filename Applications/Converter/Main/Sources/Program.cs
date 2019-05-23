@@ -61,10 +61,11 @@ namespace Cube.Pdf.Converter
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var src      = new ArgumentCollection(args, Argument.Windows, true);
-                var settings = CreateSettings(src);
+                var collection = new ArgumentCollection(args, Argument.Windows, true);
+                var settings   = CreateSettings(collection);
                 settings.Load();
-                settings.Set(src);
+                settings.Normalize();
+                settings.Set(collection);
 
                 if (settings.Value.SkipUi) Invoke(settings);
                 else Show(settings);

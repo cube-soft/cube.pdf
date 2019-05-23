@@ -53,7 +53,6 @@ namespace Cube.Pdf.Converter.Tests
         public void Create()
         {
             var dest = new SettingsFolder();
-
             Assert.That(dest.Format,                Is.EqualTo(Cube.DataContract.Format.Registry));
             Assert.That(dest.Location,              Is.EqualTo(@"CubeSoft\CubePDF\v2"));
             Assert.That(dest.Temp,                  Is.Not.Null.And.Not.Empty);
@@ -87,8 +86,8 @@ namespace Cube.Pdf.Converter.Tests
             );
 
             src.Load();
-            var dest = src.Value;
 
+            var dest = src.Value;
             Assert.That(dest.Format,           Is.EqualTo(Format.Pdf));
             Assert.That(dest.FormatOption,     Is.EqualTo(FormatOption.Pdf17));
             Assert.That(dest.SaveOption,       Is.EqualTo(SaveOption.Overwrite));
@@ -128,11 +127,41 @@ namespace Cube.Pdf.Converter.Tests
 
             var pm = dest.Encryption.Permission;
             Assert.That(pm.Accessibility,      Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));
-            Assert.That(pm.CopyContents,       Is.EqualTo(PermissionValue.Deny),  nameof(pm.CopyContents));
-            Assert.That(pm.InputForm,          Is.EqualTo(PermissionValue.Deny),  nameof(pm.InputForm));
-            Assert.That(pm.ModifyAnnotations,  Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyAnnotations));
-            Assert.That(pm.ModifyContents,     Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyContents));
-            Assert.That(pm.Print,              Is.EqualTo(PermissionValue.Deny),  nameof(pm.Print));
+            Assert.That(pm.CopyContents,       Is.EqualTo(PermissionValue.Allow), nameof(pm.CopyContents));
+            Assert.That(pm.InputForm,          Is.EqualTo(PermissionValue.Allow), nameof(pm.InputForm));
+            Assert.That(pm.ModifyAnnotations,  Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyAnnotations));
+            Assert.That(pm.ModifyContents,     Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyContents));
+            Assert.That(pm.Print,              Is.EqualTo(PermissionValue.Allow), nameof(pm.Print));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Normalize
+        ///
+        /// <summary>
+        /// Tests the Normalize extended method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Normalize()
+        {
+            var src = new SettingsFolder();
+            src.Normalize();
+
+            var dest = src.Value;
+            Assert.That(dest.Format,      Is.EqualTo(Format.Pdf));
+            Assert.That(dest.Resolution,  Is.EqualTo(600));
+            Assert.That(dest.Orientation, Is.EqualTo(Orientation.Auto));
+            Assert.That(dest.Destination, Is.Not.Null.And.Not.Empty);
+
+            var pm = dest.Encryption.Permission;
+            Assert.That(pm.Accessibility,     Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));
+            Assert.That(pm.CopyContents,      Is.EqualTo(PermissionValue.Deny),  nameof(pm.CopyContents));
+            Assert.That(pm.InputForm,         Is.EqualTo(PermissionValue.Deny),  nameof(pm.InputForm));
+            Assert.That(pm.ModifyAnnotations, Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyAnnotations));
+            Assert.That(pm.ModifyContents,    Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyContents));
+            Assert.That(pm.Print,             Is.EqualTo(PermissionValue.Deny),  nameof(pm.Print));
         }
 
         /* ----------------------------------------------------------------- */
