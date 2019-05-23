@@ -129,7 +129,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri => _model.Settings.Uri;
+        public Uri Uri => GlobalSettings.Uri;
 
         /* ----------------------------------------------------------------- */
         ///

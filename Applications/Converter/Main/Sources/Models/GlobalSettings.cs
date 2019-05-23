@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.String;
+using System;
 
 namespace Cube.Pdf.Converter
 {
@@ -51,5 +52,16 @@ namespace Cube.Pdf.Converter
                 return true;
             });
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uri
+        ///
+        /// <summary>
+        /// Gets the URL of the Web page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdf/");
     }
 }
