@@ -40,7 +40,7 @@ namespace Cube.Pdf.Converter
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainViewModel : CommonViewModel
+    public sealed class MainViewModel : CommonViewModel
     {
         #region Constructors
 
@@ -280,8 +280,14 @@ namespace Cube.Pdf.Converter
         /// Dispose
         ///
         /// <summary>
-        /// リソースを解放します。
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
         /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)

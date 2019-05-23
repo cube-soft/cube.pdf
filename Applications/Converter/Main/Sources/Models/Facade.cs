@@ -20,10 +20,8 @@ using Cube.FileSystem;
 using Cube.Mixin.Collections;
 using Cube.Mixin.Logging;
 using Cube.Mixin.String;
-using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -69,7 +67,7 @@ namespace Cube.Pdf.Converter
         /// Settings
         ///
         /// <summary>
-        /// 設定情報を取得します。
+        /// Gets the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -80,7 +78,7 @@ namespace Cube.Pdf.Converter
         /// IO
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します。
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -92,21 +90,10 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Save
-        ///
-        /// <summary>
-        /// 設定を保存します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Save() => Settings.Save();
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Convert
         ///
         /// <summary>
-        /// 変換処理を実行します。
+        /// Invokes the conversion with the provided settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -128,79 +115,16 @@ namespace Cube.Pdf.Converter
             }
         });
 
-        #region Set
-
         /* ----------------------------------------------------------------- */
         ///
-        /// SetSource
+        /// Save
         ///
         /// <summary>
-        /// Source プロパティを更新します。
-        /// </summary>
-        ///
-        /// <param name="e">ユーザの選択結果</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void SetSource(OpenFileMessage e)
-        {
-            if (!e.Cancel) Settings.Value.Source = e.Value.First();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetDestination
-        ///
-        /// <summary>
-        /// Destination および Format プロパティを更新します。
-        /// </summary>
-        ///
-        /// <param name="e">ユーザの選択結果</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void SetDestination(SaveFileMessage e)
-        {
-            if (e.Cancel) return;
-
-            Debug.Assert(e.FilterIndex > 0);
-            Debug.Assert(e.FilterIndex <= ViewResource.Formats.Count);
-
-            Settings.Value.Destination = e.Value;
-            Settings.Value.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetUserProgram
-        ///
-        /// <summary>
-        /// UserProgram プロパティを更新します。
-        /// </summary>
-        ///
-        /// <param name="e">ユーザの選択結果</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void SetUserProgram(OpenFileMessage e)
-        {
-            if (!e.Cancel) Settings.Value.UserProgram = e.Value.First();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetExtension
-        ///
-        /// <summary>
-        /// Destination の拡張子を Format に応じて更新します。
+        /// Saves the current settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SetExtension()
-        {
-            var fi  = IO.Get(Settings.Value.Destination);
-            var ext = Settings.Value.Format.GetExtension();
-            Settings.Value.Destination = IO.Combine(fi.DirectoryName, $"{fi.BaseName}{ext}");
-        }
-
-        #endregion
+        public void Save() => Settings.Save();
 
         #endregion
 
@@ -211,11 +135,13 @@ namespace Cube.Pdf.Converter
         /// Dispose
         ///
         /// <summary>
-        /// リソースを解放します。
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
         /// </summary>
         ///
         /// <param name="disposing">
-        /// マネージリソースを解放するかどうか
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
@@ -250,7 +176,7 @@ namespace Cube.Pdf.Converter
         /// Poll
         ///
         /// <summary>
-        /// 実行が終了するまで非同期で待機します。
+        /// Waits until the any operations are terminated.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -293,7 +219,7 @@ namespace Cube.Pdf.Converter
         /// InvokeUnlessDisposed
         ///
         /// <summary>
-        /// Dispose 前に限り処理を実行します。
+        /// Invokes the specified action unless the object is not Disposed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -307,7 +233,7 @@ namespace Cube.Pdf.Converter
         /// InvokeGhostscript
         ///
         /// <summary>
-        /// Ghostscript API を実行します。
+        /// Invokes the Ghostscript API.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -326,8 +252,8 @@ namespace Cube.Pdf.Converter
         /// InvokeDecorator
         ///
         /// <summary>
-        /// Ghostscript API で生成されたファイルに対して付随的な処理を
-        /// 実行します。
+        /// Invokes additional operations against the file generated by
+        /// Ghostscript API.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -339,7 +265,7 @@ namespace Cube.Pdf.Converter
         /// InvokeTransfer
         ///
         /// <summary>
-        /// 作業フォルダに生成されたファイルの移動処理を実行します。
+        /// Moves files from the working directory.
         /// </summary>
         ///
         /// <remarks>
@@ -350,7 +276,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeTransfer(FileTransfer src, out IEnumerable<string> paths)
         {
-            paths = !Disposed ? src.Invoke() : new string[0];
+            paths = !Disposed ? src.Invoke() : Enumerable.Empty<string>();
             foreach (var f in paths) this.LogDebug($"Save:{f}");
         }
 
@@ -359,7 +285,7 @@ namespace Cube.Pdf.Converter
         /// InvokePostProcess
         ///
         /// <summary>
-        /// ポストプロセスを実行します。
+        /// Invokes the post process.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

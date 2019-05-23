@@ -33,7 +33,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EncryptionViewModel : CommonViewModel
+    public sealed class EncryptionViewModel : CommonViewModel
     {
         #region Constructors
 

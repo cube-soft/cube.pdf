@@ -32,7 +32,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsViewModel : CommonViewModel
+    public sealed class SettingsViewModel : CommonViewModel
     {
         #region Constructors
 
