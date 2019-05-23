@@ -27,21 +27,19 @@ namespace Cube.Pdf.Converter.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewModelTest
+    /// OtherViewModelTest
     ///
     /// <summary>
-    /// 各種 ViewModel のテスト用クラスです。
+    /// Tests properties and methods of ViewModel classes.
     /// </summary>
     ///
     /// <remarks>
     /// 変換処理を含むテストは ConverterTest で実行しています。
     /// </remarks>
     ///
-    /// <see cref="ConverterTest" />
-    ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class ViewModelTest : ViewModelFixture
+    class OtherViewModelTest : ViewModelFixture
     {
         #region Tests
 

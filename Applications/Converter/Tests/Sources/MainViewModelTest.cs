@@ -24,7 +24,7 @@ namespace Cube.Pdf.Converter.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ConverterTest
+    /// MainViewModelTest
     ///
     /// <summary>
     /// CubePDF による変換処理をテストするためのクラスです。
@@ -32,7 +32,7 @@ namespace Cube.Pdf.Converter.Tests
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class ConverterTest : ViewModelFixture
+    class MainViewModelTest : ViewModelFixture
     {
         #region Tests
 

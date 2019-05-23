@@ -104,7 +104,7 @@ namespace Cube.Pdf.Converter
             catch (Exception err)
             {
                 this.LogError(err);
-                Confirm(MessageFactory.Create(err));
+                Send(MessageFactory.Create(err));
             }
             finally { Post<CloseMessage>(); }
         });

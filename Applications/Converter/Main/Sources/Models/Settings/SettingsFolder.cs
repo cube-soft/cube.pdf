@@ -135,7 +135,7 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentName DocumentName { get; private set; }
+        public DocumentName DocumentName { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -146,7 +146,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string MachineName { get; private set; }
+        public string MachineName { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -157,26 +157,26 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string UserName { get; private set; }
+        public string UserName { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Digest
         ///
         /// <summary>
-        /// Gets the SHA-256 message digest of the source file that
+        /// Gets or sets the SHA-256 message digest of the source file that
         /// specified at command line.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Digest { get; private set; }
+        public string Digest { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// WorkDirectory
         ///
         /// <summary>
-        /// Gets the path of the working directory.
+        /// Gets or sets the path of the working directory.
         /// </summary>
         ///
         /// <remarks>
@@ -193,7 +193,7 @@ namespace Cube.Pdf.Converter
         /// UpdateChecker
         ///
         /// <summary>
-        /// Gets the path of the update checker program.
+        /// Gets or sets the path of the update checker program.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
