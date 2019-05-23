@@ -16,9 +16,12 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Iteration;
 using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.Pinstaller
 {
@@ -74,6 +77,25 @@ namespace Cube.Pdf.Pinstaller
 
             io.LogDebug($"[{nameof(Copy)}]", $"From:{src.Quote()}", $"To:{dest.Quote()}");
             io.Copy(src, dest, true);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Try
+        ///
+        /// <summary>
+        /// Tries the specified action.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="action">Action to be invoked.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Try(this IInstallable src, Action<int> action)
+        {
+            var errors = new List<Exception>();
+            src.RetryCount.Try(i => action(i), errors);
+            if (errors.Any()) throw errors.Last();
         }
 
         #endregion

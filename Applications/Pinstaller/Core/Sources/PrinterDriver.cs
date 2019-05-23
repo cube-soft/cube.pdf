@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Iteration;
 using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using System;
@@ -326,7 +325,7 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (!Exists && CanInstall()) RetryCount.Try(i =>
+            if (!Exists && CanInstall()) this.Try(i =>
             {
                 if (!NativeMethods.AddPrinterDriverEx(null,
                     3, ref _core,
@@ -349,7 +348,7 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (Exists) RetryCount.Try(i =>
+            if (Exists) this.Try(i =>
             {
                 if (!NativeMethods.DeletePrinterDriver(null, Environment, Name)) throw new Win32Exception();
                 Exists = false;

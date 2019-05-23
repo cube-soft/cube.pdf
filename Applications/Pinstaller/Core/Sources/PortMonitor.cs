@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Environment;
-using Cube.Mixin.Iteration;
 using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using System;
@@ -245,7 +244,7 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (!Exists && CanInstall()) RetryCount.Try(i =>
+            if (!Exists && CanInstall()) this.Try(i =>
             {
                 if (!NativeMethods.AddMonitor(null, 2u, ref _core)) throw new Win32Exception();
                 Exists = true;
@@ -265,7 +264,7 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (Exists) RetryCount.Try(i =>
+            if (Exists) this.Try(i =>
             {
                 if (!NativeMethods.DeleteMonitor(null, Environment, Name)) throw new Win32Exception();
                 Exists = false;

@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
-using Cube.Mixin.Iteration;
 using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using Microsoft.Win32;
@@ -291,7 +290,7 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (CanInstall()) RetryCount.Try(i =>
+            if (CanInstall()) this.Try(i =>
             {
                 if (!Exists) Register(MonitorName, Name);
                 Exists = true;
@@ -312,7 +311,7 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (Exists) RetryCount.Try(i =>
+            if (Exists) this.Try(i =>
             {
                 using (var k = Open(GetName(MonitorName, "Ports"), true))
                 {
