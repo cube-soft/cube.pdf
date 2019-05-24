@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Tests", "Libraries
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Clip", "Applications\Clip\Main\Cube.Pdf.Clip.csproj", "{65746EF3-A052-45CE-8565-ADF0DF950DBE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter", "Applications\Converter\Main\Cube.Pdf.Converter.csproj", "{467EEF80-0390-46E8-A403-CAB70FC2D8E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter.Main", "Applications\Converter\Main\Cube.Pdf.Converter.Main.csproj", "{467EEF80-0390-46E8-A403-CAB70FC2D8E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cube.Pdf.Converter.Proxy", "Applications\Converter\Proxy\Cube.Pdf.Converter.Proxy.csproj", "{49D837DB-CD03-4BCA-8726-FD82B0769AD4}"
 EndProject
