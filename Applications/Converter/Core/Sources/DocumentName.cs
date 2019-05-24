@@ -27,7 +27,7 @@ namespace Cube.Pdf.Converter
     /// DocumentName
     ///
     /// <summary>
-    /// Provides functionality to use the specified document name as a
+    /// Provides functionality to use the provided document name as a
     /// filename.
     /// </summary>
     ///

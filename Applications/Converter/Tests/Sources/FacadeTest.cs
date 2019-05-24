@@ -19,6 +19,7 @@
 using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
+using System.Reflection;
 
 namespace Cube.Pdf.Converter.Tests
 {
@@ -48,7 +49,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Convert()
         {
-            using (var e = new Facade(new SettingsFolder()))
+            using (var e = new Facade(Assembly.GetExecutingAssembly()))
             {
                 var dest = Get($"{nameof(Convert)}.pdf");
 
@@ -82,7 +83,7 @@ namespace Cube.Pdf.Converter.Tests
             var dest = Get($"{nameof(Convert)}_{so}.pdf");
             IO.Copy(GetSource("Sample.pdf"), dest, true);
 
-            using (var e = new Facade(new SettingsFolder()))
+            using (var e = new Facade(Assembly.GetExecutingAssembly()))
             {
                 e.Settings.Value.Source = GetSource("Sample.ps");
                 e.Settings.Value.Destination = dest;

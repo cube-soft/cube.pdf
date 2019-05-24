@@ -4,7 +4,7 @@
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF</Product>
-        <Description>Converts to PDF or other formats.</Description>
+        <Description>GUI application to Convert to PDF or other formats.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <AssemblyName>CubePdf</AssemblyName>
         <AssemblyTitle>CubePDF</AssemblyTitle>
@@ -26,8 +26,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
-        <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
+        <ProjectReference Include="..\Core\Cube.Pdf.Converter.csproj" />
         <PackageReference Include="Cube.Forms" Version="1.16.0" />
         <Reference Include="System.Windows.Forms" />
     </ItemGroup>

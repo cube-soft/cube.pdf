@@ -23,6 +23,7 @@ using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
@@ -40,6 +41,19 @@ namespace Cube.Pdf.Converter
     public sealed class Facade : DisposableBase
     {
         #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Facade
+        ///
+        /// <summary>
+        /// Initializes a new instance of the specified assembly.
+        /// </summary>
+        ///
+        /// <param name="assembly">Assembly object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Facade(Assembly assembly) : this(new SettingsFolder(assembly)) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,7 +113,7 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<string> Results { get; private set; }
+        public IEnumerable<string> Results { get; private set; } = Enumerable.Empty<string>();
 
         #endregion
 

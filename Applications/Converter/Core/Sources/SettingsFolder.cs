@@ -22,6 +22,7 @@ using Cube.Mixin.Assembly;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using System;
+using System.Reflection;
 
 namespace Cube.Pdf.Converter
 {
@@ -46,9 +47,12 @@ namespace Cube.Pdf.Converter
         /// Initializes a new instance of the SettingsFolder class.
         /// </summary>
         ///
+        /// <param name="assembly">Assembly object.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder() : this(
-            Cube.DataContract.Format.Registry,
+        public SettingsFolder(Assembly assembly) : this(
+            assembly,
+            DataContract.Format.Registry,
             @"CubeSoft\CubePDF\v2"
         ) { }
 
@@ -61,12 +65,13 @@ namespace Cube.Pdf.Converter
         /// specified arguments.
         /// </summary>
         ///
+        /// <param name="assembly">Assembly object.</param>
         /// <param name="format">Serialization format.</param>
         /// <param name="path">Path to save settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Cube.DataContract.Format format, string path) :
-            this(format, path, new IO()) { }
+        public SettingsFolder(Assembly assembly, DataContract.Format format, string path) :
+            this(assembly, format, path, new IO()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,13 +82,14 @@ namespace Cube.Pdf.Converter
         /// specified arguments.
         /// </summary>
         ///
+        /// <param name="assembly">Assembly object.</param>
         /// <param name="format">Serialization format.</param>
         /// <param name="path">Path to save settings.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Cube.DataContract.Format format, string path, IO io) :
-            base(System.Reflection.Assembly.GetExecutingAssembly(), format, path, io)
+        public SettingsFolder(Assembly assembly, DataContract.Format format, string path, IO io) :
+            base(assembly, format, path, io)
         {
             AutoSave       = false;
             Document       = GetDocumentName(string.Empty);

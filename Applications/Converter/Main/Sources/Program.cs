@@ -62,7 +62,7 @@ namespace Cube.Pdf.Converter
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 var args     = new ArgumentCollection(raw, Argument.Windows, true);
-                var settings = CreateSettings(args);
+                var settings = CreateSettings(args, Assembly.GetExecutingAssembly());
                 settings.Load();
                 settings.Normalize();
                 settings.Set(args);
@@ -87,10 +87,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static SettingsFolder CreateSettings(ArgumentCollection src) =>
+        private static SettingsFolder CreateSettings(ArgumentCollection src, Assembly asm) =>
             src.Options.TryGetValue("Settings", out var subkey) ?
-            new SettingsFolder(Format.Registry, subkey, new IO()) :
-            new SettingsFolder();
+            new SettingsFolder(asm, Format.Registry, subkey, new IO()) :
+            new SettingsFolder(asm);
 
         /* ----------------------------------------------------------------- */
         ///

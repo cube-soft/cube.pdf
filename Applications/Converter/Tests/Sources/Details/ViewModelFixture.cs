@@ -172,9 +172,10 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         protected SettingsFolder Create(string[] args)
         {
+            var asm  = Assembly.GetExecutingAssembly();
             var fmt  = Cube.DataContract.Format.Registry;
             var path = $@"CubeSoft\CubePDF\{GetType().Name}";
-            var dest = new SettingsFolder(fmt, path, IO);
+            var dest = new SettingsFolder(asm, fmt, path, IO);
 
             dest.Load();
             dest.Normalize();
