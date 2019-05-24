@@ -286,8 +286,8 @@ namespace Cube.Pdf.Converter
         {
             if (!Enabled) return true;
 
-            var owner =  OwnerPassword.FuzzyEquals(OwnerConfirm);
-            var user  = !OpenWithPassword ||
+            var owner = OwnerPassword.FuzzyEquals(OwnerConfirm);
+            var user = !OpenWithPassword ||
                          UseOwnerPassword ||
                          UserPassword.FuzzyEquals(UserConfirm);
             if (owner && user) return true;

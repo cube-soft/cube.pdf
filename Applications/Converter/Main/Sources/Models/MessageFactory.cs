@@ -21,7 +21,6 @@ using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security.Cryptography;
 
 namespace Cube.Pdf.Converter
@@ -263,14 +262,12 @@ namespace Cube.Pdf.Converter
         private static string GetWarnMessage(string src, SaveOption option)
         {
             var s0 = string.Format(Properties.Resources.MessageExists, src);
-            var ok = new Dictionary<SaveOption, string>
+            new Dictionary<SaveOption, string>
             {
                 { SaveOption.Overwrite, Properties.Resources.MessageOverwrite },
                 { SaveOption.MergeHead, Properties.Resources.MessageMergeHead },
                 { SaveOption.MergeTail, Properties.Resources.MessageMergeTail },
             }.TryGetValue(option, out var s1);
-
-            Debug.Assert(ok);
             return $"{s0} {s1}";
         }
 

@@ -83,7 +83,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         protected bool Confirm(DialogMessage message)
         {
-            Confirm(message);
+            Send(message);
             return message.Status != DialogStatus.Ok;
         }
 

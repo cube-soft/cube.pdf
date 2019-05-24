@@ -263,8 +263,8 @@ namespace Cube.Pdf.Converter
             if (src.HasValue() && !src.FuzzyEquals(cmp)) throw new CryptographicException();
 
             var gs = GhostscriptFactory.Create(Settings);
-            gs.Invoke(Settings.Value.Source, dest);
-            gs.LogDebug();
+            try { gs.Invoke(Settings.Value.Source, dest); }
+            finally { gs.LogDebug(); }
         });
 
         /* ----------------------------------------------------------------- */

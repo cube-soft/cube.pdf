@@ -391,7 +391,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Confirm()
         {
-            if (_io.Exists(Destination) && SaveOption != SaveOption.Rename) return true;
+            if (!_io.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
             else return Confirm(MessageFactory.Create(Destination, SaveOption));
         }
 

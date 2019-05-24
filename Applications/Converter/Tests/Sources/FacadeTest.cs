@@ -51,8 +51,39 @@ namespace Cube.Pdf.Converter.Tests
             {
                 var dest = Get($"{nameof(Convert)}.pdf");
 
-                e.Settings.Value.Source = GetSource("Sample.pdf");
+                e.Settings.Value.Source = GetSource("Sample.ps");
                 e.Settings.Value.Destination = dest;
+                e.Settings.Value.PostProcess = PostProcess.None;
+                e.Convert();
+
+                Assert.That(e.Settings.Value.Busy, Is.False);
+                Assert.That(IO.Exists(dest), Is.True);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_SaveOption
+        ///
+        /// <summary>
+        /// Tests the Convert method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(SaveOption.Overwrite)]
+        [TestCase(SaveOption.MergeHead)]
+        [TestCase(SaveOption.MergeTail)]
+        [TestCase(SaveOption.Rename)]
+        public void Convert_SaveOption(SaveOption so)
+        {
+            var dest = Get($"{nameof(Convert)}_{so}.pdf");
+            IO.Copy(GetSource("Sample.pdf"), dest, true);
+
+            using (var e = new Facade(new SettingsFolder()))
+            {
+                e.Settings.Value.Source = GetSource("Sample.ps");
+                e.Settings.Value.Destination = dest;
+                e.Settings.Value.SaveOption  = so;
                 e.Settings.Value.PostProcess = PostProcess.None;
                 e.Convert();
 
