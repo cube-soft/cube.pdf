@@ -49,17 +49,17 @@ namespace Cube.Pdf.Converter
         ///
         /// <param name="format">Target format.</param>
         /// <param name="dest">Path to save.</param>
-        /// <param name="work">Working directory.</param>
+        /// <param name="temp">Working directory.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileTransfer(Format format, string dest, string work, IO io)
+        public FileTransfer(Format format, string dest, string temp, IO io)
         {
-            IO            = io;
-            Format        = format;
-            Information   = io.Get(dest);
-            WorkDirectory = GetWorkDirectory(work);
-            Value         = IO.Combine(WorkDirectory, GetName());
+            IO          = io;
+            Format      = format;
+            Information = io.Get(dest);
+            Temp        = GetTempDirectory(temp);
+            Value       = IO.Combine(Temp, GetName());
         }
 
         #endregion
@@ -125,7 +125,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected string WorkDirectory { get; }
+        protected string Temp { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -153,7 +153,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public IEnumerable<string> Invoke()
         {
-            var src   = IO.GetFiles(WorkDirectory);
+            var src   = IO.GetFiles(Temp);
             var dest  = new List<string>();
 
             for (var i = 0; i < src.Length; ++i)
@@ -184,7 +184,7 @@ namespace Cube.Pdf.Converter
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) => IO.TryDelete(WorkDirectory);
+        protected override void Dispose(bool disposing) => IO.TryDelete(Temp);
 
         #endregion
 
@@ -194,14 +194,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetWorkDirectory
+        /// GetTempDirectory
         ///
         /// <summary>
         /// Gets the path of the working directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetWorkDirectory(string src) =>
+        private string GetTempDirectory(string src) =>
             Enumerable.Range(1, int.MaxValue)
                       .Select(e => IO.Combine(src, e.ToString()))
                       .First(e => !IO.Get(e).Exists);

@@ -56,7 +56,6 @@ namespace Cube.Pdf.Converter.Tests
             var dest = new SettingsFolder();
             Assert.That(dest.Format,                Is.EqualTo(Cube.DataContract.Format.Registry));
             Assert.That(dest.Location,              Is.EqualTo(@"CubeSoft\CubePDF\v2"));
-            Assert.That(dest.Temp,                  Is.Not.Null.And.Not.Empty);
             Assert.That(dest.AutoSave,              Is.False);
             Assert.That(dest.Assembly.GetCompany(), Is.EqualTo("CubeSoft"));
             Assert.That(dest.Assembly.GetProduct(), Is.EqualTo("CubePDF"));
@@ -79,6 +78,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Load()
         {
+            var temp    = IO.Combine(Environment.SpecialFolder.CommonApplicationData.GetName(), @"CubeSoft\CubePDF");
             var desktop = Environment.SpecialFolder.Desktop.GetName();
             var src     = new SettingsFolder(
                 Cube.DataContract.Format.Registry,
@@ -107,6 +107,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.SourceVisible,    Is.False);
             Assert.That(dest.Source,           Is.Empty);
             Assert.That(dest.Destination,      Is.EqualTo(desktop));
+            Assert.That(dest.Temp,             Is.EqualTo(temp));
             Assert.That(dest.Busy,             Is.False);
 
             var md = dest.Metadata;

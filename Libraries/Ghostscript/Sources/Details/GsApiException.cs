@@ -61,7 +61,7 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="status">Status code.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public GsApiException(GsApiStatus status) : this(status, status.ToString()) { }
+        public GsApiException(GsApiStatus status) : this(status, $"{status} ({status.ToString("D")})") { }
 
         /* ----------------------------------------------------------------- */
         ///

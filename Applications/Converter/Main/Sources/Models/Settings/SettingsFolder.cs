@@ -19,11 +19,8 @@
 using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
-using Cube.Mixin.Environment;
-using Cube.Mixin.Registry;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
-using Microsoft.Win32;
 using System;
 
 namespace Cube.Pdf.Converter
@@ -90,7 +87,6 @@ namespace Cube.Pdf.Converter
         {
             AutoSave       = false;
             Document       = GetDocumentName(string.Empty);
-            Temp           = GetTemp();
             Version.Digit  = 3;
             Version.Suffix = "";
         }
@@ -98,6 +94,17 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uid
+        ///
+        /// <summary>
+        /// Gets the unique ID of the instance.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Guid Uid { get; } = Guid.NewGuid();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -120,23 +127,6 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public string Digest { get; private set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Temp
-        ///
-        /// <summary>
-        /// Gets or sets the path of the working directory.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Ghostscript はパスにマルチバイト文字が含まれる場合、処理に
-        /// 失敗する場合があります。そのため、マルチバイト文字の含まれない
-        /// ディレクトリに移動して処理を実行します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Temp { get; set; }
 
         #endregion
 
@@ -199,26 +189,6 @@ namespace Cube.Pdf.Converter
                 dest.Save();
             }
             finally { base.OnSaved(e); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetTemp
-        ///
-        /// <summary>
-        /// Gets the path of the working directory.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetTemp()
-        {
-            var sk    = $@"Software\{Assembly.GetCompany()}\{Assembly.GetProduct()}";
-            var value = Registry.LocalMachine.GetValue<string>(sk, "LibPath");
-            var root  = value.HasValue() ?
-                        value :
-                        IO.Combine(Environment.SpecialFolder.CommonApplicationData.GetName(),
-                            Assembly.GetCompany(), Assembly.GetProduct());
-            return IO.Combine(root, Guid.NewGuid().ToString("D"));
         }
 
         /* ----------------------------------------------------------------- */

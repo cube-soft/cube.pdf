@@ -351,6 +351,28 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Temp
+        ///
+        /// <summary>
+        /// Gets or sets the path of the temp directory.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Ghostscript はパスにマルチバイト文字が含まれる場合、処理に
+        /// 失敗する場合があります。そのため、マルチバイト文字の含まれない
+        /// ディレクトリに移動して処理を実行します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Temp
+        {
+            get => _temp;
+            set => SetProperty(ref _temp, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Metadata
         ///
         /// <summary>
@@ -458,6 +480,7 @@ namespace Cube.Pdf.Converter
             _sourceVisible    = false;
             _checkUpdate      = true;
             _explicit         = false;
+            _temp             = $@"{Environment.SpecialFolder.CommonApplicationData.GetName()}\CubeSoft\CubePDF";
             _source           = string.Empty;
             _destination      = Environment.SpecialFolder.Desktop.GetName();
             _userProgram      = string.Empty;
@@ -497,6 +520,7 @@ namespace Cube.Pdf.Converter
         private bool _sourceVisible;
         private bool _checkUpdate;
         private bool _explicit;
+        private string _temp;
         private string _source;
         private string _destination;
         private string _userProgram;

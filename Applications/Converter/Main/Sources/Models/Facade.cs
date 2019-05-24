@@ -102,11 +102,8 @@ namespace Cube.Pdf.Converter
         {
             var format = Settings.Value.Format;
             var dest   = Settings.Value.Destination;
-            var temp   = Settings.Temp;
 
-            this.LogDebug($"{nameof(Settings.Temp)}:{temp}");
-
-            using (var fs = new FileTransfer(format, dest, temp, IO))
+            using (var fs = new FileTransfer(format, dest, GetTemp(), IO))
             {
                 fs.AutoRename = Settings.Value.SaveOption == SaveOption.Rename;
                 InvokeGhostscript(fs.Value);
@@ -167,9 +164,20 @@ namespace Cube.Pdf.Converter
         protected override void Dispose(bool disposing)
         {
             Poll(10).Wait();
-            IO.TryDelete(Settings.Temp);
+            IO.TryDelete(GetTemp());
             if (Settings.Value.DeleteSource) IO.TryDelete(Settings.Value.Source);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTemp
+        ///
+        /// <summary>
+        /// Gets the temp directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetTemp() => IO.Combine(Settings.Value.Temp, Settings.Uid.ToString("D"));
 
         /* ----------------------------------------------------------------- */
         ///

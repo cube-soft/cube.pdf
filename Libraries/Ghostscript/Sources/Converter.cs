@@ -300,7 +300,7 @@ namespace Cube.Pdf.Ghostscript
                 .Concat(sources)
                 .Where(e => { this.LogDebug(e); return true; }) // for debug
                 .ToArray()
-            ), dest);
+            , Temp, IO), dest);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -462,39 +462,10 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action, string dest)
         {
-            var name = "TEMP";
-            var prev = Environment.GetEnvironmentVariable(name);
-
-            try
-            {
-                var info = IO.Get(dest);
-                if (!IO.Exists(info.DirectoryName)) IO.CreateDirectory(info.DirectoryName);
-
-                if (Temp.HasValue())
-                {
-                    if (!IO.Exists(Temp)) IO.CreateDirectory(Temp);
-                    SetVariable(name, Temp);
-                }
-                action();
-            }
-            finally { SetVariable(name, prev); }
+            var info = IO.Get(dest);
+            if (!IO.Exists(info.DirectoryName)) IO.CreateDirectory(info.DirectoryName);
+            action();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetVariable
-        ///
-        /// <summary>
-        /// Sets the environment variable with the specified key and value.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 設定された環境変数は実行プロセス中でのみ有効です。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetVariable(string key, string value) =>
-            Environment.SetEnvironmentVariable(key, value, EnvironmentVariableTarget.Process);
 
         #endregion
     }

@@ -66,8 +66,8 @@ namespace Cube.Pdf.Converter
                        CreateImageConverter(src);
 
             dest.Quiet       = false;
-            dest.Temp        = src.Temp;
-            dest.Log         = src.IO.Combine(src.Temp, "console.log");
+            dest.Temp        = src.Value.Temp;
+            dest.Log         = src.IO.Combine(src.Value.Temp, src.Uid.ToString("D"), "console.log");
             dest.Resolution  = src.Value.Resolution;
             dest.Orientation = src.Value.Orientation;
             dest.Resources.Add(src.IO.Combine(dir, "lib"));
