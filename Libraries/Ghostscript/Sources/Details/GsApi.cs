@@ -17,6 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.Ghostscript
@@ -98,14 +100,15 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Invoke(string[] args)
+        public static void Invoke(IEnumerable<string> args)
         {
             lock (_core)
             {
                 _core.Initialize();
                 if (_core.Handle == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
 
-                var code = NativeMethods.InitWithArgs(_core.Handle, args.Length, args);
+                var array = args.ToArray();
+                var code  = NativeMethods.InitWithArgs(_core.Handle, array.Length, array);
                 NativeMethods.Exit(_core.Handle);
                 if (IsError(code)) throw new GsApiException(code);
             }

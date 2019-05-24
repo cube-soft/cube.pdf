@@ -176,7 +176,7 @@ namespace Cube.Pdf.Ghostscript
                 new Argument("GraphicsAlphaBits", 4),
                 new Argument("TextAlphaBits", 4),
             } :
-            new Argument[0];
+            Enumerable.Empty<Argument>();
 
         #endregion
     }

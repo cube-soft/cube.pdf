@@ -213,7 +213,7 @@ namespace Cube.Pdf.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<Printer> GetElements()
         {
-            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return new Printer[0];
+            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return Enumerable.Empty<Printer>();
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var ptr = Marshal.AllocHGlobal((int)bytes);

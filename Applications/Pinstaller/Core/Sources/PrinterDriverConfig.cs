@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Cube.Pdf.Pinstaller
@@ -211,7 +212,7 @@ namespace Cube.Pdf.Pinstaller
             _config       = string.Empty;
             _data         = string.Empty;
             _help         = string.Empty;
-            _dependencies = new string[0];
+            _dependencies = Enumerable.Empty<string>();
             _repository   = string.Empty;
         }
 

@@ -292,10 +292,10 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> sources, string dest) =>
             Invoke(() => GsApi.Invoke(Create()
-                .Concat(new[] { new Argument('s', "OutputFile", dest) })
+                .Concat(new Argument('s', "OutputFile", dest))
                 .Concat(OnCreateArguments())
                 .Concat(CreateCodes())
-                .Concat(new[] { new Argument('f') })
+                .Concat(new Argument('f'))
                 .Select(e => e.ToString())
                 .Concat(sources)
                 .Where(e => { this.LogDebug(e); return true; }) // for debug
@@ -363,7 +363,7 @@ namespace Cube.Pdf.Ghostscript
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<Argument> Create() => new[] { Argument.Dummy };
+        private IEnumerable<Argument> Create() { yield return Argument.Dummy; }
 
         /* ----------------------------------------------------------------- */
         ///

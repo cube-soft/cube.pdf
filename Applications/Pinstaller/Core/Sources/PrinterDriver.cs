@@ -283,7 +283,7 @@ namespace Cube.Pdf.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<PrinterDriver> GetElements()
         {
-            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return new PrinterDriver[0];
+            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return Enumerable.Empty<PrinterDriver>();
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var ptr = Marshal.AllocHGlobal((int)bytes);

@@ -20,6 +20,7 @@ using Cube.DataContract;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Cube.Pdf.Pinstaller.Tests
@@ -71,7 +72,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [Test]
         public void Parse_Empty()
         {
-            var src = new ArgumentCollection(new string[0], Argument.Windows, true);
+            var src = new ArgumentCollection(Enumerable.Empty<string>(), Argument.Windows, true);
             var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Assert.That(src.GetTimeout(),           Is.EqualTo(30));
             Assert.That(src.GetRetryCount(),        Is.EqualTo(1));
@@ -126,7 +127,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [Test]
         public void Replace()
         {
-            var src  = new ArgumentCollection(new string[0], Argument.Windows, true);
+            var src  = new ArgumentCollection(Enumerable.Empty<string>(), Argument.Windows, true);
             var dest = new Installer(Format.Json, GetSource("SampleSkeleton.json"));
 
             var s0 = dest.Config.Ports[0].Proxy;

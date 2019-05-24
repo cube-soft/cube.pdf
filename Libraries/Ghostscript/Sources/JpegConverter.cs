@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,7 +132,7 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Argument> OnCreateArguments() =>
             base.OnCreateArguments()
-            .Concat(new[] { new Argument("JPEGQ", Math.Min(Math.Max(Quality, 1), 100)) });
+            .Concat(new Argument("JPEGQ", Math.Min(Math.Max(Quality, 1), 100)));
 
         #endregion
     }

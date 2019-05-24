@@ -23,6 +23,7 @@ using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using NUnit.Framework;
 using System;
+using System.Linq;
 
 namespace Cube.Pdf.Converter.Tests
 {
@@ -228,7 +229,7 @@ namespace Cube.Pdf.Converter.Tests
         public void Set_Empty()
         {
             var dest = new SettingsFolder();
-            dest.Set(new ArgumentCollection(new string[0], Collections.Argument.Windows, true));
+            dest.Set(new ArgumentCollection(Enumerable.Empty<string>(), Collections.Argument.Windows, true));
 
             Assert.That(dest.Digest,             Is.Null);
             Assert.That(dest.Document.Name,      Is.EqualTo("CubePDF"));
