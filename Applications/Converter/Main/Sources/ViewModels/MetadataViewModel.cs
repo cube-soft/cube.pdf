@@ -171,14 +171,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ConfirmForSave
+        /// ConfirmWhenSave
         ///
         /// <summary>
         /// Confirms if the current settings are acceptable.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool ConfirmForSave()
+        public bool ConfirmWhenSave()
         {
             var src = new[] { Title, Author, Subject, Keywords };
             if (src.All(e => !e.HasValue())) return true;

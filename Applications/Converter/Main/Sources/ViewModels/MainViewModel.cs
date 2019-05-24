@@ -72,6 +72,8 @@ namespace Cube.Pdf.Converter
         public MainViewModel(SettingsFolder settings, SynchronizationContext context) :
             base(new Aggregator(), context)
         {
+            Locale.Set(settings.Value.Language);
+
             _model     = new Facade(settings);
             Settings   = new SettingsViewModel(settings, Aggregator, context);
             Metadata   = new MetadataViewModel(settings.Value.Metadata, Aggregator, context);
@@ -208,7 +210,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Save()
         {
-            if (Metadata.ConfirmForSave()) _model.Save();
+            if (Metadata.ConfirmWhenSave()) _model.Save();
         }
 
         /* ----------------------------------------------------------------- */

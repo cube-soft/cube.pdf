@@ -65,11 +65,7 @@ namespace Cube.Pdf.Converter
         /// <param name="settings">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Facade(SettingsFolder settings)
-        {
-            Settings = settings;
-            Locale.Set(settings.Value.Language);
-        }
+        public Facade(SettingsFolder settings) { Settings = settings; }
 
         #endregion
 
