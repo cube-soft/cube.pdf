@@ -102,7 +102,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.CheckUpdate,      Is.True);
             Assert.That(dest.Linearization,    Is.False);
             Assert.That(dest.Language,         Is.EqualTo(Language.Auto));
-            Assert.That(dest.PostProcess,      Is.EqualTo(PostProcess.Open));
+            Assert.That(dest.PostProcess,      Is.EqualTo(PostProcess.None));
             Assert.That(dest.UserProgram,      Is.Empty);
             Assert.That(dest.DeleteSource,     Is.False);
             Assert.That(dest.SourceVisible,    Is.False);

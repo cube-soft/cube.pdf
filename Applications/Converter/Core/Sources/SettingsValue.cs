@@ -447,7 +447,7 @@ namespace Cube.Pdf.Converter
             _saveOption       = SaveOption.Overwrite;
             _orientation      = Orientation.Auto;
             _downsampling     = Downsampling.None;
-            _postProcess      = PostProcess.Open;
+            _postProcess      = PostProcess.None;
             _language         = Language.Auto;
             _resolution       = 600;
             _grayscale        = false;

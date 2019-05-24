@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
@@ -89,17 +88,6 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO => Settings.IO;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Results
         ///
         /// <summary>
@@ -169,10 +157,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void ChangeExtension()
         {
-            var src = IO.Get(Settings.Value.Destination);
+            var io  = Settings.IO;
+            var src = io.Get(Settings.Value.Destination);
             var ext = Settings.Value.Format.GetExtension();
             if (src.Extension.FuzzyEquals(ext)) return;
-            Settings.Value.Destination = IO.Combine(src.DirectoryName, $"{src.BaseName}{ext}");
+            Settings.Value.Destination = io.Combine(src.DirectoryName, $"{src.BaseName}{ext}");
         }
 
         #endregion
@@ -197,8 +186,9 @@ namespace Cube.Pdf.Converter
         protected override void Dispose(bool disposing)
         {
             Poll(10).Wait();
-            IO.TryDelete(GetTemp());
-            if (Settings.Value.DeleteSource) IO.TryDelete(Settings.Value.Source);
+            Settings.IO.TryDelete(GetTemp());
+            if (!Settings.Value.DeleteSource) return;
+            Settings.IO.TryDelete(Settings.Value.Source);
         }
 
         /* ----------------------------------------------------------------- */
@@ -241,7 +231,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetTemp() => IO.Combine(Settings.Value.Temp, Settings.Uid.ToString("D"));
+        private string GetTemp() => Settings.IO.Combine(Settings.Value.Temp, Settings.Uid.ToString("D"));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -254,7 +244,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetDigest(string src)
         {
-            using (var stream = IO.OpenRead(src))
+            using (var stream = Settings.IO.OpenRead(src))
             {
                 return new SHA256CryptoServiceProvider()
                     .ComputeHash(stream)
