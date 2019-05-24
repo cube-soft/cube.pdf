@@ -280,7 +280,6 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         protected bool WaitConv(MainViewModel vm)
         {
-            Logger.Debug(GetType(), nameof(WaitConv));
             Message = string.Empty;
 
             var closed = false;

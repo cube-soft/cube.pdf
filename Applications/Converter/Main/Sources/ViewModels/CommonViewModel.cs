@@ -77,14 +77,14 @@ namespace Cube.Pdf.Converter
         ///
         /// <summary>
         /// Sends the specified dialog message and determines if the status
-        /// is OK.
+        /// is not Cancel.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         protected bool Confirm(DialogMessage message)
         {
             Send(message);
-            return message.Status != DialogStatus.Ok;
+            return message.Status != DialogStatus.Cancel;
         }
 
         /* ----------------------------------------------------------------- */
