@@ -72,28 +72,6 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FormatOption
-        ///
-        /// <summary>
-        /// Gets or sets a value that represents format options.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 旧 CubePDF で PDFVersion と呼んでいたものを汎用化した形で定義
-        /// しています。RC18 以降、Metadata の内容も設定を保存の対象となった
-        /// ため、このプロパティの扱いを要検討。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public FormatOption FormatOption
-        {
-            get => _formatOption;
-            set => SetProperty(ref _formatOption, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// SaveOption
         ///
         /// <summary>
@@ -466,7 +444,6 @@ namespace Cube.Pdf.Converter
         private void Reset()
         {
             _format           = Format.Pdf;
-            _formatOption     = FormatOption.Pdf17;
             _saveOption       = SaveOption.Overwrite;
             _orientation      = Orientation.Auto;
             _downsampling     = Downsampling.None;
@@ -506,7 +483,6 @@ namespace Cube.Pdf.Converter
 
         #region Fields
         private Format _format;
-        private FormatOption _formatOption;
         private SaveOption _saveOption;
         private Orientation _orientation;
         private Downsampling _downsampling;

@@ -103,7 +103,7 @@ namespace Cube.Pdf.Converter.Tests
                 vm.Settings.PostProcess = PostProcess.Others;
 
                 Assert.That(vm.Settings.UserProgram, Is.EqualTo(exec));
-                Assert.That(vm.IsBusy, Is.False);
+                Assert.That(vm.Busy, Is.False);
                 Assert.That(WaitMessage(vm), Is.True, "Timeout (error)");
             }
 

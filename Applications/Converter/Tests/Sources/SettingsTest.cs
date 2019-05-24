@@ -92,7 +92,6 @@ namespace Cube.Pdf.Converter.Tests
 
             var dest = src.Value;
             Assert.That(dest.Format,           Is.EqualTo(Format.Pdf));
-            Assert.That(dest.FormatOption,     Is.EqualTo(FormatOption.Pdf17));
             Assert.That(dest.SaveOption,       Is.EqualTo(SaveOption.Overwrite));
             Assert.That(dest.Grayscale,        Is.False);
             Assert.That(dest.EmbedFonts,       Is.True);

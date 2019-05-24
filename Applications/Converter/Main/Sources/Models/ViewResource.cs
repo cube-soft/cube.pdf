@@ -40,43 +40,41 @@ namespace Cube.Pdf.Converter
         /// Formats
         ///
         /// <summary>
-        /// 表示文字列と Format の対応関係を取得します。
+        /// Gets a collection in which each item consists of a display
+        /// string and a Format pair.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, Format>> Formats => _formats ?? (
-            _formats = new []
-            {
-                Pair("PDF",  Format.Pdf),
-                Pair("PS",   Format.Ps),
-                Pair("EPS",  Format.Eps),
-                Pair("PNG",  Format.Png),
-                Pair("JPEG", Format.Jpeg),
-                Pair("BMP",  Format.Bmp),
-                Pair("TIFF", Format.Tiff),
-            }
-        );
+        public static IList<KeyValuePair<string, Format>> Formats { get; } = new[]
+        {
+            Pair("PDF",  Format.Pdf),
+            Pair("PS",   Format.Ps),
+            Pair("EPS",  Format.Eps),
+            Pair("PNG",  Format.Png),
+            Pair("JPEG", Format.Jpeg),
+            Pair("BMP",  Format.Bmp),
+            Pair("TIFF", Format.Tiff),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FormatOptions
+        /// PdfVersions
         ///
         /// <summary>
-        /// 表示文字列と FormatOption の対応関係を取得します。
+        /// Gets a collection in which each item consists of a display
+        /// string and a minor number of PDF version.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, FormatOption>> FormatOptions =>
-            _formatOptions ?? (_formatOptions = new []
-            {
-                Pair("PDF 1.7", FormatOption.Pdf17),
-                Pair("PDF 1.6", FormatOption.Pdf16),
-                Pair("PDF 1.5", FormatOption.Pdf15),
-                Pair("PDF 1.4", FormatOption.Pdf14),
-                Pair("PDF 1.3", FormatOption.Pdf13),
-                Pair("PDF 1.2", FormatOption.Pdf12),
-            }
-        );
+        public static IList<KeyValuePair<string, int>> PdfVersions { get; } = new[]
+        {
+            Pair("PDF 1.7", 7),
+            Pair("PDF 1.6", 6),
+            Pair("PDF 1.5", 5),
+            Pair("PDF 1.4", 4),
+            Pair("PDF 1.3", 3),
+            Pair("PDF 1.2", 2),
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -231,11 +229,6 @@ namespace Cube.Pdf.Converter
         private static KeyValuePair<K, V> Pair<K, V>(K key, V value) =>
             new KeyValuePair<K, V>(key, value);
 
-        #endregion
-
-        #region Fields
-        private static IList<KeyValuePair<string, Format>> _formats;
-        private static IList<KeyValuePair<string, FormatOption>> _formatOptions;
         #endregion
     }
 }

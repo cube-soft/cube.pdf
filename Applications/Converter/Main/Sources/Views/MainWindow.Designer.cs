@@ -59,7 +59,7 @@
             this.DestinationButton = new System.Windows.Forms.Button();
             this.DestinationTextBox = new System.Windows.Forms.TextBox();
             this.FormatPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.FormatOptionComboBox = new System.Windows.Forms.ComboBox();
+            this.PdfVersionComboBox = new System.Windows.Forms.ComboBox();
             this.FormatComboBox = new System.Windows.Forms.ComboBox();
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -371,17 +371,18 @@
             // FormatPanel
             //
             resources.ApplyResources(this.FormatPanel, "FormatPanel");
-            this.FormatPanel.Controls.Add(this.FormatOptionComboBox, 0, 0);
+            this.FormatPanel.Controls.Add(this.PdfVersionComboBox, 0, 0);
             this.FormatPanel.Controls.Add(this.FormatComboBox, 0, 0);
             this.FormatPanel.Name = "FormatPanel";
             //
-            // FormatOptionComboBox
+            // PdfVersionComboBox
             //
-            this.FormatOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "EnableFormatOption", true, System.Windows.Forms.DataSourceUpdateMode.Never));
-            resources.ApplyResources(this.FormatOptionComboBox, "FormatOptionComboBox");
-            this.FormatOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.FormatOptionComboBox.FormattingEnabled = true;
-            this.FormatOptionComboBox.Name = "FormatOptionComboBox";
+            this.PdfVersionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "Version", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.PdfVersionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "IsPdf", true, System.Windows.Forms.DataSourceUpdateMode.Never));
+            resources.ApplyResources(this.PdfVersionComboBox, "PdfVersionComboBox");
+            this.PdfVersionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PdfVersionComboBox.FormattingEnabled = true;
+            this.PdfVersionComboBox.Name = "PdfVersionComboBox";
             //
             // FormatComboBox
             //
@@ -808,7 +809,7 @@
             this.MainToolTip.InitialDelay = 100;
             this.MainToolTip.ReshowDelay = 100;
             //
-            // MainForm
+            // MainWindow
             //
             this.AcceptButton = this.ConvertButton;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -816,7 +817,7 @@
             resources.ApplyResources(this, "$this");
             this.Controls.Add(this.RootPanel);
             this.MaximizeBox = false;
-            this.Name = "MainForm";
+            this.Name = "MainWindow";
             this.RootPanel.ResumeLayout(false);
             this.SettingsPanel.ResumeLayout(false);
             this.SettingsTabControl.ResumeLayout(false);
@@ -929,7 +930,7 @@
         private System.Windows.Forms.CheckBox ImageCompressionCheckBox;
         private System.Windows.Forms.CheckBox LinearizationCheckBox;
         private System.Windows.Forms.TableLayoutPanel FormatPanel;
-        private System.Windows.Forms.ComboBox FormatOptionComboBox;
+        private System.Windows.Forms.ComboBox PdfVersionComboBox;
         private System.Windows.Forms.ComboBox FormatComboBox;
         private System.Windows.Forms.Label OptionsLabel;
         private System.Windows.Forms.ComboBox SaveOptionComboBox;

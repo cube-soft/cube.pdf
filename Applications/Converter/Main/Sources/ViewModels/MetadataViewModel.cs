@@ -137,6 +137,21 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Version
+        ///
+        /// <summary>
+        /// Gets or sets the PDF version.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Version
+        {
+            get => _model.Version.Minor;
+            set => _model.Version = new PdfVersion(1, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Options
         ///
         /// <summary>
@@ -166,7 +181,7 @@ namespace Cube.Pdf.Converter
         public bool ConfirmForSave()
         {
             var src = new[] { Title, Author, Subject, Keywords };
-            if (src.All(e => e.HasValue())) return true;
+            if (src.All(e => !e.HasValue())) return true;
             else return Confirm(MessageFactory.CreateWarn(Properties.Resources.MessageSave));
         }
 

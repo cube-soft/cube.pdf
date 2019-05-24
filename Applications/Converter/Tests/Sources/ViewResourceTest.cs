@@ -91,17 +91,17 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void FormatOptions() => Create(vm =>
         {
-            var v = ViewResource.FormatOptions;
+            var v = ViewResource.PdfVersions;
             Assert.That(v.Count,    Is.EqualTo(6));
-            Assert.That(v[0].Value, Is.EqualTo(FormatOption.Pdf17));
-            Assert.That(v[1].Value, Is.EqualTo(FormatOption.Pdf16));
-            Assert.That(v[2].Value, Is.EqualTo(FormatOption.Pdf15));
-            Assert.That(v[3].Value, Is.EqualTo(FormatOption.Pdf14));
-            Assert.That(v[4].Value, Is.EqualTo(FormatOption.Pdf13));
-            Assert.That(v[5].Value, Is.EqualTo(FormatOption.Pdf12));
+            Assert.That(v[0].Value, Is.EqualTo(7));
+            Assert.That(v[1].Value, Is.EqualTo(6));
+            Assert.That(v[2].Value, Is.EqualTo(5));
+            Assert.That(v[3].Value, Is.EqualTo(4));
+            Assert.That(v[4].Value, Is.EqualTo(3));
+            Assert.That(v[5].Value, Is.EqualTo(2));
 
             vm.Settings.Language = Language.English;
-            var en = ViewResource.FormatOptions;
+            var en = ViewResource.PdfVersions;
             Assert.That(v[0].Key, Is.EqualTo("PDF 1.7"));
             Assert.That(v[1].Key, Is.EqualTo("PDF 1.6"));
             Assert.That(v[2].Key, Is.EqualTo("PDF 1.5"));
@@ -110,7 +110,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(v[5].Key, Is.EqualTo("PDF 1.2"));
 
             vm.Settings.Language = Language.Japanese;
-            var ja = ViewResource.FormatOptions;
+            var ja = ViewResource.PdfVersions;
             Assert.That(v[0].Key, Is.EqualTo("PDF 1.7"));
             Assert.That(v[1].Key, Is.EqualTo("PDF 1.6"));
             Assert.That(v[2].Key, Is.EqualTo("PDF 1.5"));

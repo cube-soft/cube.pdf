@@ -77,7 +77,7 @@ namespace Cube.Pdf.Converter
             set
             {
                 _model.Format = value;
-                RaisePropertyChanged(nameof(EnableFormatOption));
+                RaisePropertyChanged(nameof(IsPdf));
             }
         }
 
@@ -354,15 +354,15 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EnableFormatOption
+        /// IsPdf
         ///
         /// <summary>
-        /// Gets or sets a value indicating whether the FormatOption
-        /// value is selectable.
+        /// Gets or sets a value indicating whether the current format is
+        /// PDF.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool EnableFormatOption => Format == Format.Pdf;
+        public bool IsPdf => Format == Format.Pdf;
 
         /* ----------------------------------------------------------------- */
         ///

@@ -855,28 +855,28 @@
   <data name="FormatPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="FormatOptionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="PdfVersionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="FormatOptionComboBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="PdfVersionComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>203, 3</value>
   </data>
-  <data name="FormatOptionComboBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="PdfVersionComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 23</value>
   </data>
-  <data name="FormatOptionComboBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="PdfVersionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;FormatOptionComboBox.Name" xml:space="preserve">
-    <value>FormatOptionComboBox</value>
+  <data name="&gt;&gt;PdfVersionComboBox.Name" xml:space="preserve">
+    <value>PdfVersionComboBox</value>
   </data>
-  <data name="&gt;&gt;FormatOptionComboBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;PdfVersionComboBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;FormatOptionComboBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;PdfVersionComboBox.Parent" xml:space="preserve">
     <value>FormatPanel</value>
   </data>
-  <data name="&gt;&gt;FormatOptionComboBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;PdfVersionComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="FormatComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -934,7 +934,7 @@
     <value>12</value>
   </data>
   <data name="FormatPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="FormatOptionComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,60,Percent,40" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="PdfVersionComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,60,Percent,40" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="GeneralPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -3348,9 +3348,9 @@
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MainForm</value>
+    <value>MainWindow</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.StandardForm, Cube.Forms, Version=1.16.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Window, Cube.Forms, Version=1.16.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
 </root>

@@ -68,7 +68,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsBusy
+        /// Busy
         ///
         /// <summary>
         /// 実行中かどうかを示す値を取得または設定します。
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public bool IsBusy
+        public bool Busy
         {
             get => _busy;
             set
@@ -125,8 +125,8 @@ namespace Cube.Pdf.Converter
             // see remarks
             SourceLabel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
             SourcePanel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
-            DataBindings.Add("Text",   MainBindingSource, "Title",  false, DataSourceUpdateMode.Never);
-            DataBindings.Add("IsBusy", MainBindingSource, "IsBusy", false, DataSourceUpdateMode.OnPropertyChanged);
+            DataBindings.Add("Text", MainBindingSource, "Title", false, DataSourceUpdateMode.Never);
+            DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
 
             SourceButton.Click      += (s, e) => vm.BrowseSource();
             DestinationButton.Click += (s, e) => vm.BrowseDestination();
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Converter
             MainToolTip.SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));
 
             FormatComboBox.Bind(ViewResource.Formats);
-            FormatOptionComboBox.Bind(ViewResource.FormatOptions);
+            PdfVersionComboBox.Bind(ViewResource.PdfVersions);
             SaveOptionComboBox.Bind(ViewResource.SaveOptions);
             ViewerPreferencesComboBox.Bind(ViewResource.ViewerOptions);
             PostProcessComboBox.Bind(ViewResource.PostProcesses);

@@ -139,7 +139,7 @@ namespace Cube.Pdf.Converter
         private static PdfConverter CreatePdfConverter(SettingsFolder src) =>
             new PdfConverter(src.IO)
             {
-                Version     = src.Value.FormatOption.GetVersion(),
+                Version     = src.Value.Metadata.Version,
                 Compression = src.Value.ImageCompression ? Encoding.Jpeg : Encoding.Flate,
             };
 

@@ -84,13 +84,13 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(vms.ImageCompression,   Is.True,  nameof(vms.ImageCompression));
             Assert.That(vms.Linearization,      Is.False, nameof(vms.Linearization));
             Assert.That(vms.CheckUpdate,        Is.True,  nameof(vms.CheckUpdate));
-            Assert.That(vms.EnableFormatOption, Is.True,  nameof(vms.EnableFormatOption));
+            Assert.That(vms.IsPdf,              Is.True,  nameof(vms.IsPdf));
             Assert.That(vms.EnableUserProgram,  Is.False, nameof(vms.EnableUserProgram));
             Assert.That(vms.SourceEditable,     Is.False, nameof(vms.SourceEditable));
             Assert.That(vms.SourceVisible,      Is.False, nameof(vms.SourceVisible));
 
             vms.Format = Format.Png;
-            Assert.That(vms.EnableFormatOption, Is.False, nameof(vms.EnableFormatOption));
+            Assert.That(vms.IsPdf, Is.False, nameof(vms.IsPdf));
 
             vms.PostProcess = PostProcess.Others;
             Assert.That(vms.EnableUserProgram,  Is.True,  nameof(vms.EnableUserProgram));
