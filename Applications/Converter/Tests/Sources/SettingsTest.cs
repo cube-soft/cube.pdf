@@ -113,7 +113,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(md.Author,             Is.Empty);
             Assert.That(md.Subject,            Is.Empty);
             Assert.That(md.Keywords,           Is.Empty);
-            Assert.That(md.Creator,            Is.EqualTo("CubePDF"));
+            Assert.That(md.Creator,            Is.Empty);
             Assert.That(md.Version.Major,      Is.EqualTo(1));
             Assert.That(md.Version.Minor,      Is.EqualTo(7));
 
@@ -153,6 +153,15 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Resolution,  Is.EqualTo(600));
             Assert.That(dest.Orientation, Is.EqualTo(Orientation.Auto));
             Assert.That(dest.Destination, Is.Not.Null.And.Not.Empty);
+
+            var md = dest.Metadata;
+            Assert.That(md.Title,         Is.Empty);
+            Assert.That(md.Author,        Is.Empty);
+            Assert.That(md.Subject,       Is.Empty);
+            Assert.That(md.Keywords,      Is.Empty);
+            Assert.That(md.Creator,       Is.EqualTo("CubePDF"));
+            Assert.That(md.Version.Major, Is.EqualTo(1));
+            Assert.That(md.Version.Minor, Is.EqualTo(7));
 
             var pm = dest.Encryption.Permission;
             Assert.That(pm.Accessibility,     Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));

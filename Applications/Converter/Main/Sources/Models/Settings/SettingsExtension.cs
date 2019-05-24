@@ -17,12 +17,14 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Assembly;
 using Cube.Mixin.Environment;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Mixin;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace Cube.Pdf.Converter
 {
@@ -60,10 +62,12 @@ namespace Cube.Pdf.Converter
         {
             var value = src.Value;
 
-            value.Format      = GetFormat(value);
-            value.Resolution  = GetResolution(value);
-            value.Orientation = GetOrientation(value);
-            value.Destination = GetDestination(value, src.IO);
+            value.Format            = GetFormat(value);
+            value.Resolution        = GetResolution(value);
+            value.Orientation       = GetOrientation(value);
+            value.Destination       = GetDestination(value, src.IO);
+            value.Metadata.Creator  = GetCreator(value);
+            value.Metadata.Producer = GetCreator(value);
             value.Encryption.Deny();
             value.Encryption.Permission.Accessibility = PermissionValue.Allow;
         }
@@ -133,6 +137,20 @@ namespace Cube.Pdf.Converter
             }
             catch { return desktop; }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetCreator
+        ///
+        /// <summary>
+        /// Gets the normalized creator.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetCreator(SettingsValue src) =>
+            src.Metadata.Creator.HasValue() ?
+            src.Metadata.Creator :
+            Assembly.GetExecutingAssembly().GetProduct();
 
         #endregion
     }
