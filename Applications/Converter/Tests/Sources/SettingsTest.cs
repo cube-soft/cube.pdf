@@ -107,7 +107,6 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Source,           Is.Empty);
             Assert.That(dest.Destination,      Is.EqualTo(desktop));
             Assert.That(dest.Busy,             Is.False);
-            Assert.That(dest.SkipUi,           Is.False);
 
             var md = dest.Metadata;
             Assert.That(md.Title,              Is.Empty);
@@ -179,7 +178,6 @@ namespace Cube.Pdf.Converter.Tests
             var src = new[]
             {
                 "/DeleteOnClose",
-                "/SkipUI",
                 "/DocumentName",
                 "(234)?File.txt - Sample Application",
                 "/InputFile",
@@ -204,7 +202,6 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Document.Value,     Is.EqualTo("(234)?File.txt - Sample Application"));
             Assert.That(dest.Document.Name,      Is.EqualTo("(234)_File.txt"));
             Assert.That(dest.Value.DeleteSource, Is.True);
-            Assert.That(dest.Value.SkipUi,       Is.True);
             Assert.That(dest.Value.Source,       Is.EqualTo(@"C:\WINDOWS\CubePDF\PS3AEE.tmp"));
             Assert.That(dest.Value.Destination,  Is.EqualTo(path));
         }

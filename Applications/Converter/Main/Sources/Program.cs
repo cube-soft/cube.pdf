@@ -48,7 +48,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args)
+        static void Main(string[] raw)
         {
             try
             {
@@ -56,18 +56,18 @@ namespace Cube.Pdf.Converter
                 Logger.ObserveTaskException();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
                 Logger.Info(LogType, $"Ghostscript {Ghostscript.Converter.Revision}");
-                Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
+                Logger.Info(LogType, $"[ {string.Join(" ", raw)} ]");
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var collection = new ArgumentCollection(args, Argument.Windows, true);
-                var settings   = CreateSettings(collection);
+                var args     = new ArgumentCollection(raw, Argument.Windows, true);
+                var settings = CreateSettings(args);
                 settings.Load();
                 settings.Normalize();
-                settings.Set(collection);
+                settings.Set(args);
 
-                if (settings.Value.SkipUi) Invoke(settings);
+                if (args.Options.ContainsKey("SkipUI")) Invoke(settings);
                 else Show(settings);
             }
             catch (Exception err) { Logger.Error(LogType, err); }
@@ -124,7 +124,7 @@ namespace Cube.Pdf.Converter
         {
             using (var src = new Facade(settings))
             {
-                src.SetExtension();
+                src.ChangeExtension();
                 src.Convert();
             }
         }

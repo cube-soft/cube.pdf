@@ -16,11 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Assembly;
 using Cube.Mixin.Environment;
 using Cube.Pdf.Ghostscript;
 using System;
-using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace Cube.Pdf.Converter
@@ -371,22 +369,6 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SkipUi
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether to skip displaying the
-        /// main window.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool SkipUi
-        {
-            get => _skipUi;
-            set => SetProperty(ref _skipUi, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Busy
         ///
         /// <summary>
@@ -479,31 +461,10 @@ namespace Cube.Pdf.Converter
             _source           = string.Empty;
             _destination      = Environment.SpecialFolder.Desktop.GetName();
             _userProgram      = string.Empty;
-            _metadata         = CreateMetadata();
+            _metadata         = new Metadata();
             _encryption       = new Encryption();
-            _skipUi           = false;
             _busy             = false;
             _deleteSource     = false;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateMetadata
-        ///
-        /// <summary>
-        /// Creates a new instance of the Metadata class with default
-        /// values.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Metadata CreateMetadata()
-        {
-            var asm = Assembly.GetExecutingAssembly();
-            return new Metadata
-            {
-                Creator  = asm.GetProduct(),
-                Producer = asm.GetProduct(),
-            };
         }
 
         /* ----------------------------------------------------------------- */
@@ -541,7 +502,6 @@ namespace Cube.Pdf.Converter
         private string _userProgram;
         private Metadata _metadata;
         private Encryption _encryption;
-        private bool _skipUi;
         private bool _busy;
         private bool _deleteSource;
         #endregion
