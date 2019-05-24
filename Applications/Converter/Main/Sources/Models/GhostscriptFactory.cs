@@ -113,7 +113,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Ghostscript.DocumentConverter CreateDocumentConverter(SettingsFolder src)
+        private static DocumentConverter CreateDocumentConverter(SettingsFolder src)
         {
             var dest = PdfConverter.SupportedFormats.Contains(src.Value.Format) ?
                        CreatePdfConverter(src) :
@@ -136,7 +136,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Ghostscript.PdfConverter CreatePdfConverter(SettingsFolder src) =>
+        private static PdfConverter CreatePdfConverter(SettingsFolder src) =>
             new PdfConverter(src.IO)
             {
                 Version     = src.Value.FormatOption.GetVersion(),
@@ -156,19 +156,13 @@ namespace Cube.Pdf.Converter
         private static Ghostscript.Converter CreateImageConverter(SettingsFolder src)
         {
             var key = KeyValuePair.Create(src.Value.Format, src.Value.Grayscale);
-            var map = GetFormatMap();
-
-            Debug.Assert(map.ContainsKey(key));
-
-            return new ImageConverter(GetFormatMap()[key], src.IO)
-            {
-                AntiAlias = true,
-            };
+            Debug.Assert(FormatMap.ContainsKey(key));
+            return new ImageConverter(FormatMap[key], src.IO) { AntiAlias = true };
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetFormatMap
+        /// FormatMap
         ///
         /// <summary>
         /// Gets the Format collection.
@@ -179,8 +173,8 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private static IDictionary<KeyValuePair<Format, bool>, Format> GetFormatMap() => _formats ?? (
-            _formats = new Dictionary<KeyValuePair<Format, bool>, Format>
+        private static readonly IDictionary<KeyValuePair<Format, bool>, Format> FormatMap =
+            new Dictionary<KeyValuePair<Format, bool>, Format>
             {
                 { KeyValuePair.Create(Format.Jpeg, false), Format.Jpeg24bppRgb      },
                 { KeyValuePair.Create(Format.Jpeg, true ), Format.Jpeg8bppGrayscale },
@@ -190,13 +184,8 @@ namespace Cube.Pdf.Converter
                 { KeyValuePair.Create(Format.Bmp,  true ), Format.Bmp8bppGrayscale  },
                 { KeyValuePair.Create(Format.Tiff, false), Format.Tiff24bppRgb      },
                 { KeyValuePair.Create(Format.Tiff, true ), Format.Tiff8bppGrayscale },
-            }
-        );
+            };
 
-        #endregion
-
-        #region Fields
-        private static IDictionary<KeyValuePair<Format, bool>, Format> _formats;
         #endregion
     }
 }

@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.Collections;
-using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using System;
@@ -85,6 +84,23 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public IO IO => Settings.IO;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Results
+        ///
+        /// <summary>
+        /// Gets the collectioin of created files.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 変換形式に PNG などを指定した場合、複数のファイルを生成する関係で
+        /// 保存パスとして指定したものとは異なる名前のファイルが生成される事が
+        /// あります。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<string> Results { get; private set; }
+
         #endregion
 
         #region Methods
@@ -98,20 +114,23 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Convert() => Invoke(() =>
+        public void Convert()
         {
-            var format = Settings.Value.Format;
-            var dest   = Settings.Value.Destination;
-
-            using (var fs = new FileTransfer(format, dest, GetTemp(), IO))
+            try
             {
-                fs.AutoRename = Settings.Value.SaveOption == SaveOption.Rename;
-                InvokeGhostscript(fs.Value);
-                InvokeDecorator(fs.Value);
-                InvokeTransfer(fs, out var paths);
-                InvokePostProcess(paths);
+                Settings.Value.Busy = true;
+                var dest = new List<string>();
+                using (var fs = new FileTransfer(Settings, GetTemp()))
+                {
+                    InvokeGhostscript(fs.Value);
+                    Invoke(() => new FileDecorator(Settings).Invoke(fs.Value));
+                    Invoke(() => fs.Invoke(dest));
+                    Invoke(() => new ProcessLauncher(Settings).Invoke(dest));
+                }
+                Results = dest;
             }
-        });
+            finally { Settings.Value.Busy = false; }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -170,6 +189,37 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action unless the object is not Disposed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Action action) { if (!Disposed) action(); }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// InvokeGhostscript
+        ///
+        /// <summary>
+        /// Invokes the Ghostscript API.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void InvokeGhostscript(string dest) => Invoke(() =>
+        {
+            var src = Settings.Digest;
+            var cmp = GetDigest(Settings.Value.Source);
+            if (src.HasValue() && !src.FuzzyEquals(cmp)) throw new CryptographicException();
+
+            var gs = GhostscriptFactory.Create(Settings);
+            try { gs.Invoke(Settings.Value.Source, dest); }
+            finally { gs.LogDebug(); }
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetTemp
         ///
         /// <summary>
@@ -215,112 +265,6 @@ namespace Cube.Pdf.Converter
                 await Task.Delay(1000).ConfigureAwait(false);
             }
         }
-
-        #region Invoke
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// 処理を実行します。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 処理中は IsBusy プロパティが true に設定されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Invoke(Action action)
-        {
-            try
-            {
-                Settings.Value.Busy = true;
-                action();
-            }
-            finally { Settings.Value.Busy = false; }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InvokeUnlessDisposed
-        ///
-        /// <summary>
-        /// Invokes the specified action unless the object is not Disposed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InvokeUnlessDisposed(Action action)
-        {
-            if (!Disposed) action();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InvokeGhostscript
-        ///
-        /// <summary>
-        /// Invokes the Ghostscript API.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InvokeGhostscript(string dest) => InvokeUnlessDisposed(() =>
-        {
-            var src = Settings.Digest;
-            var cmp = GetDigest(Settings.Value.Source);
-            if (src.HasValue() && !src.FuzzyEquals(cmp)) throw new CryptographicException();
-
-            var gs = GhostscriptFactory.Create(Settings);
-            try { gs.Invoke(Settings.Value.Source, dest); }
-            finally { gs.LogDebug(); }
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InvokeDecorator
-        ///
-        /// <summary>
-        /// Invokes additional operations against the file generated by
-        /// Ghostscript API.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InvokeDecorator(string dest) =>
-            InvokeUnlessDisposed(() => new FileDecorator(Settings).Invoke(dest));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InvokeTransfer
-        ///
-        /// <summary>
-        /// Moves files from the working directory.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// out 引数の都合で、このメソッドのみ InvokeUnlessDisposed に
-        /// 相当する処理を直接記述しています。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InvokeTransfer(FileTransfer src, out IEnumerable<string> paths)
-        {
-            paths = !Disposed ? src.Invoke() : Enumerable.Empty<string>();
-            foreach (var f in paths) this.LogDebug($"Save:{f}");
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InvokePostProcess
-        ///
-        /// <summary>
-        /// Invokes the post process.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InvokePostProcess(IEnumerable<string> dest) =>
-            InvokeUnlessDisposed(() => new ProcessLauncher(Settings).Invoke(dest));
-
-        #endregion
 
         #endregion
     }

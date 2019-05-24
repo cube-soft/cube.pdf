@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Tests;
 using NUnit.Framework;
+using System.Linq;
 
 namespace Cube.Pdf.Converter.Tests
 {
@@ -57,7 +58,9 @@ namespace Cube.Pdf.Converter.Tests
                 e.Convert();
 
                 Assert.That(e.Settings.Value.Busy, Is.False);
-                Assert.That(IO.Exists(dest), Is.True);
+                Assert.That(e.Results.Count(),     Is.EqualTo(1));
+                Assert.That(e.Results.First(),     Is.EqualTo(dest));
+                Assert.That(IO.Exists(dest),       Is.True);
             }
         }
 
@@ -88,7 +91,8 @@ namespace Cube.Pdf.Converter.Tests
                 e.Convert();
 
                 Assert.That(e.Settings.Value.Busy, Is.False);
-                Assert.That(IO.Exists(dest), Is.True);
+                Assert.That(e.Results.Count(),     Is.EqualTo(1));
+                Assert.That(IO.Exists(dest),       Is.True);
             }
         }
 

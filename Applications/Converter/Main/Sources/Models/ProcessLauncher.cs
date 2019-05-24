@@ -53,6 +53,12 @@ namespace Cube.Pdf.Converter
         {
             IO    = settings.IO;
             Value = settings.Value;
+            _map  = new Dictionary<PostProcess, Action<IEnumerable<string>>>
+            {
+                { PostProcess.Open,          Open          },
+                { PostProcess.OpenDirectory, OpenDirectory },
+                { PostProcess.Others,        InvokeCore    },
+            };
         }
 
         #endregion
@@ -98,7 +104,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> src)
         {
-            if (GetProcessMap().TryGetValue(Value.PostProcess, out var dest)) dest(src);
+            if (_map.TryGetValue(Value.PostProcess, out var dest)) dest(src);
         }
 
         #endregion
@@ -176,28 +182,10 @@ namespace Cube.Pdf.Converter
             WindowStyle     = ProcessWindowStyle.Normal,
         };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetProcessMap
-        ///
-        /// <summary>
-        /// ポストプロセスと実行内容の対応関係一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IDictionary<PostProcess, Action<IEnumerable<string>>> GetProcessMap() =>
-            _processes ?? (_processes = new Dictionary<PostProcess, Action<IEnumerable<string>>>
-            {
-                { PostProcess.Open,          Open          },
-                { PostProcess.OpenDirectory, OpenDirectory },
-                { PostProcess.Others,        InvokeCore    },
-            }
-        );
-
         #endregion
 
         #region Fields
-        private IDictionary<PostProcess, Action<IEnumerable<string>>> _processes;
+        private readonly IDictionary<PostProcess, Action<IEnumerable<string>>> _map;
         #endregion
     }
 }

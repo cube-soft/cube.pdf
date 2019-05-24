@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.IO;
+using Cube.Mixin.Logging;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
@@ -47,19 +48,18 @@ namespace Cube.Pdf.Converter
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="format">Target format.</param>
-        /// <param name="dest">Path to save.</param>
-        /// <param name="temp">Working directory.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="src">User settings.</param>
+        /// <param name="temp">Temp directory.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileTransfer(Format format, string dest, string temp, IO io)
+        public FileTransfer(SettingsFolder src, string temp)
         {
-            IO          = io;
-            Format      = format;
-            Information = io.Get(dest);
+            IO          = src.IO;
+            Format      = src.Value.Format;
+            Information = IO.Get(src.Value.Destination);
             Temp        = GetTempDirectory(temp);
             Value       = IO.Combine(Temp, GetName());
+            AutoRename  = src.Value.SaveOption == SaveOption.Rename;
         }
 
         #endregion
@@ -118,10 +118,10 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WorkDirectory
+        /// Temp
         ///
         /// <summary>
-        /// Gets the path of the working directory.
+        /// Gets the path of the temp directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -151,19 +151,16 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<string> Invoke()
+        public void Invoke(IList<string> dest)
         {
-            var src   = IO.GetFiles(Temp);
-            var dest  = new List<string>();
-
+            var src = IO.GetFiles(Temp);
             for (var i = 0; i < src.Length; ++i)
             {
                 var path = GetDestination(i + 1, src.Length);
                 IO.Move(src[i], path, true);
                 dest.Add(path);
+                this.LogDebug($"Save:{path}");
             }
-
-            return dest;
         }
 
         #region IDisposable
