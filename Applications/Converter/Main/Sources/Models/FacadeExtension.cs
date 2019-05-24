@@ -16,9 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Ghostscript;
-using System.Linq;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Cube.Pdf.Converter
 {
@@ -90,24 +89,6 @@ namespace Cube.Pdf.Converter
         public static void SetUserProgram(this Facade src, OpenFileMessage e)
         {
             if (!e.Cancel) src.Settings.Value.UserProgram = e.Value.First();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetExtension
-        ///
-        /// <summary>
-        /// Destination の拡張子を Format に応じて更新します。
-        /// </summary>
-        ///
-        /// <param name="src">Source facade.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void SetExtension(this Facade src)
-        {
-            var fi = src.IO.Get(src.Settings.Value.Destination);
-            var ext = src.Settings.Value.Format.GetExtension();
-            src.Settings.Value.Destination = src.IO.Combine(fi.DirectoryName, $"{fi.BaseName}{ext}");
         }
 
         #endregion

@@ -20,6 +20,7 @@ using Cube.FileSystem;
 using Cube.Mixin.Collections;
 using Cube.Mixin.Logging;
 using Cube.Mixin.String;
+using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,6 +126,24 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void Save() => Settings.Save();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ChangeExtension
+        ///
+        /// <summary>
+        /// Changes the extension of the Destination property based on the
+        /// Format property.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ChangeExtension()
+        {
+            var src = IO.Get(Settings.Value.Destination);
+            var ext = Settings.Value.Format.GetExtension();
+            if (src.Extension.FuzzyEquals(ext)) return;
+            Settings.Value.Destination = IO.Combine(src.DirectoryName, $"{src.BaseName}{ext}");
+        }
 
         #endregion
 

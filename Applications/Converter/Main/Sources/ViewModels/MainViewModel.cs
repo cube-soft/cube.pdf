@@ -192,7 +192,7 @@ namespace Cube.Pdf.Converter
         {
             if (Encryption.Confirm() && Settings.Confirm()) TrackClose(() =>
             {
-                _model.SetExtension();
+                _model.ChangeExtension();
                 _model.Convert();
             });
         }
@@ -287,7 +287,7 @@ namespace Cube.Pdf.Converter
             switch (e.PropertyName)
             {
                 case nameof(Settings.Format):
-                    _model.SetExtension();
+                    _model.ChangeExtension();
                     break;
                 case nameof(Settings.PostProcess):
                     if (Settings.PostProcess == PostProcess.Others) BrowseUserProgram();
