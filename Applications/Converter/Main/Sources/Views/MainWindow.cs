@@ -29,7 +29,7 @@ namespace Cube.Pdf.Converter
     /// MainWindow
     ///
     /// <summary>
-    /// CubePDF メイン画面を表示するクラスです。
+    /// Represents the main windows of CubePDF.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,7 +42,7 @@ namespace Cube.Pdf.Converter
         /// MainWindow
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the MainWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Converter
         /// Busy
         ///
         /// <summary>
-        /// 実行中かどうかを示す値を取得または設定します。
+        /// Gets a value indicating whether it is busy.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -100,10 +100,10 @@ namespace Cube.Pdf.Converter
         /// Bind
         ///
         /// <summary>
-        /// オブジェクトを関連付けます。
+        /// Binds the specified object.
         /// </summary>
         ///
-        /// <param name="src">ViewModel オブジェクト</param>
+        /// <param name="src">ViewModel object.</param>
         ///
         /// <remarks>
         /// MainForm.Text および各種コントロールの Visible プロパティに
@@ -169,7 +169,7 @@ namespace Cube.Pdf.Converter
         /// UpdateString
         ///
         /// <summary>
-        /// 表示言語に関わる文字列を更新します。
+        /// Updates displayed string.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
