@@ -369,17 +369,32 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Busy
+        /// Encryption
         ///
         /// <summary>
-        /// Gets or sets a value indicating whether the application is busy.
+        /// Gets or sets the encryption information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Busy
+        public Encryption Encryption
         {
-            get => _busy;
-            set => SetProperty(ref _busy, value);
+            get => _encryption;
+            set => SetProperty(ref _encryption, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Source
+        ///
+        /// <summary>
+        /// Gets or sets the path of the source file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Source
+        {
+            get => _source;
+            set => SetProperty(ref _source, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -400,32 +415,17 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Source
+        /// Busy
         ///
         /// <summary>
-        /// Gets or sets the path of the source file.
+        /// Gets or sets a value indicating whether the application is busy.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Source
+        public bool Busy
         {
-            get => _source;
-            set => SetProperty(ref _source, value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Encryption
-        ///
-        /// <summary>
-        /// Gets or sets the encryption information.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Encryption Encryption
-        {
-            get => _encryption;
-            set => SetProperty(ref _encryption, value);
+            get => _busy;
+            set => SetProperty(ref _busy, value);
         }
 
         #endregion
@@ -463,8 +463,8 @@ namespace Cube.Pdf.Converter
             _userProgram    = string.Empty;
             _metadata       = new Metadata();
             _encryption     = new Encryption();
-            _busy           = false;
             _deleteSource   = false;
+            _busy           = false;
         }
 
         /* ----------------------------------------------------------------- */
@@ -502,8 +502,8 @@ namespace Cube.Pdf.Converter
         private string _userProgram;
         private Metadata _metadata;
         private Encryption _encryption;
-        private bool _busy;
         private bool _deleteSource;
+        private bool _busy;
         #endregion
     }
 }
