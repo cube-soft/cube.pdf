@@ -34,7 +34,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class MessageFactory
+    public static class MessageFactory
     {
         #region DialogMessage
 
@@ -117,21 +117,6 @@ namespace Cube.Pdf.Converter
             Buttons = DialogButtons.OkCancel,
         };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateWarn
-        ///
-        /// <summary>
-        /// Create a message to show a DialogBox with a warning icon
-        /// and OK/Cancel buttons.
-        /// </summary>
-        ///
-        /// <returns>DialogMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static DialogMessage CreateSaveWarn() =>
-            CreateWarn(Properties.Resources.MessageSave);
-
         #endregion
 
         #region OpenOrSaveFileMessage
@@ -159,8 +144,8 @@ namespace Cube.Pdf.Converter
                 Title       = Properties.Resources.TitleBrowseSource,
                 Value       = GetFileNames(path, io),
                 Multiselect = false,
-                Filter      = ViewResource.SourceFilters.GetFilter(),
-                FilterIndex = ViewResource.SourceFilters.GetFilterIndex(path, io),
+                Filter      = ViewResources.SourceFilters.GetFilter(),
+                FilterIndex = ViewResources.SourceFilters.GetFilterIndex(path, io),
             };
 
             if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
@@ -190,8 +175,8 @@ namespace Cube.Pdf.Converter
                 Title           = Properties.Resources.TitleBroseDestination,
                 Value           = GetFileName(path, io),
                 OverwritePrompt = false,
-                Filter          = ViewResource.DestinationFilters.GetFilter(),
-                FilterIndex     = ViewResource.DestinationFilters.GetFilterIndex(path, io),
+                Filter          = ViewResources.DestinationFilters.GetFilter(),
+                FilterIndex     = ViewResources.DestinationFilters.GetFilterIndex(path, io),
             };
 
             if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
@@ -221,7 +206,7 @@ namespace Cube.Pdf.Converter
                 Title       = Properties.Resources.TitleBroseUserProgram,
                 Value       = GetFileNames(path, io),
                 Multiselect = false,
-                Filter      = ViewResource.UserProgramFilters.GetFilter(),
+                Filter      = ViewResources.UserProgramFilters.GetFilter(),
             };
 
             if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);

@@ -74,7 +74,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void SettingsViewModel() => Invoke(vm =>
         {
-            var vms = vm.Settings;
+            var vms = vm.General;
             Assert.That(vms.Resolution,         Is.EqualTo(600));
             Assert.That(vms.Language,           Is.EqualTo(Language.Auto));
             Assert.That(vms.IsAutoOrientation,  Is.True,  nameof(vms.IsAutoOrientation));
@@ -199,9 +199,9 @@ namespace Cube.Pdf.Converter.Tests
                 e.Cancel = false;
             });
 
-            vm.Settings.Language = Language.Japanese;
+            vm.General.Language = Language.Japanese;
             vm.BrowseSource();
-            Assert.That(vm.Settings.Source, Is.EqualTo(done));
+            Assert.That(vm.General.Source, Is.EqualTo(done));
         });
 
         /* ----------------------------------------------------------------- */
@@ -232,9 +232,9 @@ namespace Cube.Pdf.Converter.Tests
                 e.Cancel = false;
             });
 
-            vm.Settings.Language = Language.Japanese;
+            vm.General.Language = Language.Japanese;
             vm.BrowseDestination();
-            Assert.That(vm.Settings.Destination, Is.EqualTo(done));
+            Assert.That(vm.General.Destination, Is.EqualTo(done));
         });
 
         /* ----------------------------------------------------------------- */
@@ -264,9 +264,9 @@ namespace Cube.Pdf.Converter.Tests
                 e.Cancel = false;
             });
 
-            vm.Settings.Language = Language.Japanese;
+            vm.General.Language = Language.Japanese;
             vm.BrowseUserProgram();
-            Assert.That(vm.Settings.UserProgram, Is.EqualTo(done));
+            Assert.That(vm.General.UserProgram, Is.EqualTo(done));
         });
 
         /* ----------------------------------------------------------------- */
@@ -281,7 +281,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Validate_OwnerPassword() => Invoke(vm =>
         {
-            vm.Settings.Language        = Language.English;
+            vm.General.Language        = Language.English;
             vm.Encryption.Enabled       = true;
             vm.Encryption.OwnerPassword = nameof(Validate_OwnerPassword);
 
@@ -305,7 +305,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Validate_UserPassword() => Invoke(vm =>
         {
-            vm.Settings.Language           = Language.English;
+            vm.General.Language           = Language.English;
             vm.Encryption.Enabled          = true;
             vm.Encryption.OwnerPassword    = nameof(Validate_OwnerPassword);
             vm.Encryption.OwnerConfirm     = nameof(Validate_OwnerPassword);

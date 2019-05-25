@@ -16,10 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Collections;
 using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 
 namespace Cube.Pdf.Converter.Tests
 {
@@ -94,6 +96,33 @@ namespace Cube.Pdf.Converter.Tests
                 Assert.That(e.Settings.Value.Busy, Is.False);
                 Assert.That(e.Results.Count(),     Is.EqualTo(1));
                 Assert.That(IO.Exists(dest),       Is.True);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert_CryptographicException
+        ///
+        /// <summary>
+        /// Tests the Convert method with the invalid digest.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Convert_CryptographicException()
+        {
+            var dest = Get($"{nameof(Convert_CryptographicException)}.pdf");
+            var args = new ArgumentCollection(new[] { "-Digest", "dummy" }, Argument.Windows, true);
+            var settings = new SettingsFolder(Assembly.GetExecutingAssembly());
+
+            settings.Value.Source = GetSource("Sample.ps");
+            settings.Value.Destination = dest;
+            settings.Value.PostProcess = PostProcess.None;
+            settings.Set(args);
+
+            using (var e = new Facade(settings))
+            {
+                Assert.That(() => e.Convert(), Throws.TypeOf<CryptographicException>());
             }
         }
 

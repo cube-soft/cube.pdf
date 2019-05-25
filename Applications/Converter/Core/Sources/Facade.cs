@@ -16,14 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Cube.Pdf.Converter
@@ -120,6 +118,7 @@ namespace Cube.Pdf.Converter
                 var dest = new List<string>();
                 using (var fs = new FileTransfer(Settings, GetTemp()))
                 {
+                    Invoke(() => new DigestChecker(Settings).Invoke());
                     InvokeGhostscript(fs.Value);
                     Invoke(() => new FileDecorator(Settings).Invoke(fs.Value));
                     Invoke(() => fs.Invoke(dest));
@@ -209,10 +208,6 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeGhostscript(string dest) => Invoke(() =>
         {
-            var src = Settings.Digest;
-            var cmp = GetDigest(Settings.Value.Source);
-            if (src.HasValue() && !src.FuzzyEquals(cmp)) throw new CryptographicException();
-
             var gs = GhostscriptFactory.Create(Settings);
             try { gs.Invoke(Settings.Value.Source, dest); }
             finally { gs.LogDebug(); }
@@ -228,25 +223,6 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         private string GetTemp() => Settings.IO.Combine(Settings.Value.Temp, Settings.Uid.ToString("D"));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetDigest
-        ///
-        /// <summary>
-        /// Gets the message digest of the specified file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetDigest(string src)
-        {
-            using (var stream = Settings.IO.OpenRead(src))
-            {
-                return new SHA256CryptoServiceProvider()
-                    .ComputeHash(stream)
-                    .Join("", b => $"{b:x2}");
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///

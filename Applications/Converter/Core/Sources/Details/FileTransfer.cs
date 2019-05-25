@@ -35,7 +35,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class FileTransfer : DisposableBase
+    internal sealed class FileTransfer : DisposableBase
     {
         #region Constructors
 
@@ -54,12 +54,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public FileTransfer(SettingsFolder src, string temp)
         {
-            IO          = src.IO;
-            Format      = src.Value.Format;
-            Information = IO.Get(src.Value.Destination);
-            Temp        = GetTempDirectory(temp);
-            Value       = IO.Combine(Temp, GetName());
-            AutoRename  = src.Value.SaveOption == SaveOption.Rename;
+            Settings = src;
+            Temp     = GetTempDirectory(temp);
+            Target   = Settings.IO.Get(src.Value.Destination);
+            Value    = Settings.IO.Combine(Temp, GetName());
         }
 
         #endregion
@@ -68,49 +66,37 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
+        /// Settings
         ///
         /// <summary>
-        /// Gets the I/O hander.
+        /// Gets the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IO IO { get; }
+        public SettingsFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Format
+        /// Target
         ///
         /// <summary>
-        /// Gets the target format.
+        /// Gets a value that represents the path to save the file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Format Format { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AutoRename
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether to rename files
-        /// automatically when the specified file exists.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool AutoRename { get; set; } = false;
+        public Information Target { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Value
         ///
         /// <summary>
-        /// Gets the path to save the file.
+        /// Gets the path to save, which represents the temporary filename.
         /// </summary>
         ///
         /// <remarks>
-        /// ユーザプログラムは Value で指定されたパスに保存した後、
-        /// Invoke メソッドを用いてファイルの移動を実行します。
+        /// ユーザプログラムでは Value で指定されたパスに保存した後、Invoke
+        /// メソッドを用いて本来保存すべきファイルへの移動を実行して下さい。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -125,18 +111,19 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected string Temp { get; }
+        public string Temp { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Information
+        /// AutoRename
         ///
         /// <summary>
-        /// Gets a value that represents the path to save the file.
+        /// Gets or a value indicating whether to rename files automatically
+        /// when the specified file exists.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected Information Information { get; }
+        public bool AutoRename => Settings.Value.SaveOption == SaveOption.Rename;
 
         #endregion
 
@@ -153,11 +140,13 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Invoke(IList<string> dest)
         {
-            var src = IO.GetFiles(Temp);
+            var io  = Settings.IO;
+            var src = io.GetFiles(Temp);
+
             for (var i = 0; i < src.Length; ++i)
             {
                 var path = GetDestination(i + 1, src.Length);
-                IO.Move(src[i], path, true);
+                io.Move(src[i], path, true);
                 dest.Add(path);
                 this.LogDebug($"Save:{path}");
             }
@@ -181,7 +170,7 @@ namespace Cube.Pdf.Converter
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) => IO.TryDelete(Temp);
+        protected override void Dispose(bool disposing) => Settings.IO.TryDelete(Temp);
 
         #endregion
 
@@ -200,8 +189,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetTempDirectory(string src) =>
             Enumerable.Range(1, int.MaxValue)
-                      .Select(e => IO.Combine(src, e.ToString()))
-                      .First(e => !IO.Get(e).Exists);
+                      .Select(e => Settings.IO.Combine(src, e.ToString()))
+                      .First(e => !Settings.IO.Get(e).Exists);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -213,9 +202,9 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         private string GetName() =>
-            DocumentConverter.SupportedFormats.Contains(Format) ?
-            $"tmp{Information.Extension}" :
-            $"tmp-%08d{Information.Extension}";
+            DocumentConverter.SupportedFormats.Contains(Settings.Value.Format) ?
+            $"tmp{Target.Extension}" :
+            $"tmp-%08d{Target.Extension}";
 
         /* ----------------------------------------------------------------- */
         ///
@@ -228,8 +217,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetDestination(int index, int count)
         {
+            var io   = Settings.IO;
             var dest = GetDestinationCore(index, count);
-            return (AutoRename && IO.Exists(dest)) ? IO.GetUniqueName(dest) : dest;
+            return (AutoRename && io.Exists(dest)) ? io.GetUniqueName(dest) : dest;
         }
 
         /* ----------------------------------------------------------------- */
@@ -243,14 +233,14 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetDestinationCore(int index, int count)
         {
-            if (count <= 1) return Information.FullName;
+            if (count <= 1) return Target.FullName;
 
-            var name  = Information.BaseName;
-            var ext   = Information.Extension;
+            var name  = Target.BaseName;
+            var ext   = Target.Extension;
             var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
             var dest  = string.Format("{0}-{1}{2}", name, index.ToString(digit), ext);
 
-            return IO.Combine(Information.DirectoryName, dest);
+            return Settings.IO.Combine(Target.DirectoryName, dest);
         }
 
         #endregion

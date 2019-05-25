@@ -63,7 +63,7 @@ namespace Cube.Pdf.Converter.Tests
             {
                 Set(vm, src);
 
-                var vms = vm.Settings;
+                var vms = vm.General;
                 Assert.That(vms.Destination, Does.EndWith(vms.Format.GetExtension()));
 
                 Assert.That(IO.Exists(vms.Source),      Is.True,  vms.Source);
@@ -100,9 +100,9 @@ namespace Cube.Pdf.Converter.Tests
             {
                 vm.Subscribe<DialogMessage>(SetMessage);
                 vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { exec });
-                vm.Settings.PostProcess = PostProcess.Others;
+                vm.General.PostProcess = PostProcess.Others;
 
-                Assert.That(vm.Settings.UserProgram, Is.EqualTo(exec));
+                Assert.That(vm.General.UserProgram, Is.EqualTo(exec));
                 Assert.That(vm.Busy, Is.False);
                 Assert.That(WaitMessage(vm), Is.True, "Timeout (error)");
             }

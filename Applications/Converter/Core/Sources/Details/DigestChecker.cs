@@ -16,96 +16,103 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Diagnostics;
+using Cube.Mixin.Collections;
+using Cube.Mixin.String;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FacadeExtension
+    /// DigestChecker
     ///
     /// <summary>
-    /// Provides extended methods of the Facade class.
+    /// Provides functionality to check the provided digest.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class FacadeExtension
+    internal sealed class DigestChecker
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DigestChecker
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DigestChecker class with the
+        /// specified settings.
+        /// </summary>
+        ///
+        /// <param name="src">User settings.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DigestChecker(SettingsFolder src) { Settings = src; }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        ///
+        /// <summary>
+        /// Gets the user settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsFolder Settings { get; }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Execute
+        /// Invoke
         ///
         /// <summary>
-        /// Executes the conversion.
+        /// Invokes the checking.
         /// </summary>
         ///
-        /// <param name="src">Source facade.</param>
+        /// <remarks>
+        /// コマンドラインから入力ファイルに対する SHA-256 の値を指定された時のみ
+        /// チェックし、それ以外の場合は何もせずに終了します。
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Execute(this Facade src)
+        public void Invoke()
         {
-            src.ChangeExtension();
-            src.Convert();
+            var src = Settings.Digest;
+            if (!src.HasValue()) return;
+
+            var cmp = Compute(Settings.Value.Source);
+            if (!src.FuzzyEquals(cmp)) throw new CryptographicException();
         }
 
+        #endregion
+
+        #region Implementations
+
         /* ----------------------------------------------------------------- */
         ///
-        /// SetSource
+        /// Compute
         ///
         /// <summary>
-        /// Source プロパティを更新します。
+        /// Computes the SHA-256 hash of the specified file.
         /// </summary>
         ///
-        /// <param name="src">Source facade.</param>
-        /// <param name="e">Result message.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public static void SetSource(this Facade src, OpenFileMessage e)
+        private string Compute(string src)
         {
-            if (!e.Cancel) src.Settings.Value.Source = e.Value.First();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetDestination
-        ///
-        /// <summary>
-        /// Destination および Format プロパティを更新します。
-        /// </summary>
-        ///
-        /// <param name="src">Source facade.</param>
-        /// <param name="e">Result message.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void SetDestination(this Facade src, SaveFileMessage e)
-        {
-            if (e.Cancel) return;
-
-            Debug.Assert(e.FilterIndex > 0);
-            Debug.Assert(e.FilterIndex <= ViewResources.Formats.Count);
-
-            src.Settings.Value.Destination = e.Value;
-            src.Settings.Value.Format = ViewResources.Formats[e.FilterIndex - 1].Value;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetUserProgram
-        ///
-        /// <summary>
-        /// UserProgram プロパティを更新します。
-        /// </summary>
-        ///
-        /// <param name="src">Source facade.</param>
-        /// <param name="e">Result message.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void SetUserProgram(this Facade src, OpenFileMessage e)
-        {
-            if (!e.Cancel) src.Settings.Value.UserProgram = e.Value.First();
+            using (var stream = Settings.IO.OpenRead(src))
+            {
+                return new SHA256CryptoServiceProvider()
+                    .ComputeHash(stream)
+                    .Join("", b => $"{b:x2}");
+            }
         }
 
         #endregion

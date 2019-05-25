@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
@@ -34,7 +33,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class FileDecorator
+    internal sealed class FileDecorator
     {
         #region Constructors
 
@@ -47,39 +46,14 @@ namespace Cube.Pdf.Converter
         /// specified settings.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
+        /// <param name="src">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileDecorator(SettingsFolder settings)
-        {
-            Settings = settings;
-        }
+        public FileDecorator(SettingsFolder src) { Settings = src; }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO => Settings.IO;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Value
-        ///
-        /// <summary>
-        /// Gets the settings value.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingsValue Value => Settings.Value;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -90,7 +64,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected SettingsFolder Settings { get; }
+        public SettingsFolder Settings { get; }
 
         #endregion
 
@@ -109,7 +83,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Invoke(string src)
         {
-            if (Value.Format != Format.Pdf) return;
+            if (Settings.Value.Format != Format.Pdf) return;
 
             InvokeItext(src);
             InvokeLinearization(src);
@@ -130,20 +104,22 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeItext(string src)
         {
-            var tmp = IO.Combine(IO.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
+            var io    = Settings.IO;
+            var value = Settings.Value;
+            var tmp   = io.Combine(io.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
 
-            using (var writer = new DocumentWriter(IO))
+            using (var writer = new DocumentWriter(io))
             {
-                Value.Encryption.Method = GetEncryptionMethod(Value.Metadata.Version);
-                writer.Set(Value.Metadata);
-                writer.Set(Value.Encryption);
-                Add(writer, Value.Destination, SaveOption.MergeTail);
-                writer.Add(new DocumentReader(src, string.Empty, false, IO));
-                Add(writer, Value.Destination, SaveOption.MergeHead);
+                value.Encryption.Method = GetEncryptionMethod(value.Metadata.Version);
+                writer.Set(value.Metadata);
+                writer.Set(value.Encryption);
+                Add(writer, value.Destination, SaveOption.MergeTail);
+                writer.Add(new DocumentReader(src, string.Empty, false, io));
+                Add(writer, value.Destination, SaveOption.MergeHead);
                 writer.Save(tmp);
             }
 
-            IO.Move(tmp, src, true);
+            io.Move(tmp, src, true);
         }
 
         /* ----------------------------------------------------------------- */
@@ -157,16 +133,17 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeLinearization(string src)
         {
-            if (!Value.Linearization || Value.Encryption.Enabled) return;
+            var io    = Settings.IO;
+            var value = Settings.Value;
 
-            var tmp = IO.Combine(IO.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
-            var gs  = GhostscriptFactory.Create(Settings);
+            if (!value.Linearization || value.Encryption.Enabled) return;
 
-            if (gs is PdfConverter pdf)
+            if (GhostscriptFactory.Create(Settings) is PdfConverter gs)
             {
-                pdf.Linearization = Value.Linearization;
-                pdf.Invoke(src, tmp);
-                IO.Move(tmp, src, true);
+                var tmp = io.Combine(io.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
+                gs.Linearization = value.Linearization;
+                gs.Invoke(src, tmp);
+                io.Move(tmp, src, true);
             }
         }
 
@@ -179,15 +156,18 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Add(DocumentWriter src, string path, SaveOption condition)
+        private void Add(DocumentWriter src, string path, SaveOption so)
         {
-            if (Value.SaveOption != condition || !IO.Exists(path)) return;
+            var io    = Settings.IO;
+            var value = Settings.Value;
 
-            var password = Value.Encryption.Enabled ?
-                           Value.Encryption.OwnerPassword :
+            if (value.SaveOption != so || !io.Exists(path)) return;
+
+            var password = value.Encryption.Enabled ?
+                           value.Encryption.OwnerPassword :
                            string.Empty;
 
-            src.Add(new DocumentReader(path, password, true, IO));
+            src.Add(new DocumentReader(path, password, true, io));
         }
 
         /* ----------------------------------------------------------------- */

@@ -18,20 +18,22 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
+using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewResource
+    /// ViewResources
     ///
     /// <summary>
-    /// 表示時に使用するリソースを定義したクラスです。
+    /// Provides resources for display.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class ViewResource
+    public static class ViewResources
     {
         #region Properties
 
@@ -47,13 +49,13 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, Format>> Formats { get; } = new[]
         {
-            Pair("PDF",  Format.Pdf),
-            Pair("PS",   Format.Ps),
-            Pair("EPS",  Format.Eps),
-            Pair("PNG",  Format.Png),
-            Pair("JPEG", Format.Jpeg),
-            Pair("BMP",  Format.Bmp),
-            Pair("TIFF", Format.Tiff),
+            Make("PDF",  Format.Pdf),
+            Make("PS",   Format.Ps),
+            Make("EPS",  Format.Eps),
+            Make("PNG",  Format.Png),
+            Make("JPEG", Format.Jpeg),
+            Make("BMP",  Format.Bmp),
+            Make("TIFF", Format.Tiff),
         };
 
         /* ----------------------------------------------------------------- */
@@ -68,12 +70,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, int>> PdfVersions { get; } = new[]
         {
-            Pair("PDF 1.7", 7),
-            Pair("PDF 1.6", 6),
-            Pair("PDF 1.5", 5),
-            Pair("PDF 1.4", 4),
-            Pair("PDF 1.3", 3),
-            Pair("PDF 1.2", 2),
+            Make("PDF 1.7", 7),
+            Make("PDF 1.6", 6),
+            Make("PDF 1.5", 5),
+            Make("PDF 1.4", 4),
+            Make("PDF 1.3", 3),
+            Make("PDF 1.2", 2),
         };
 
         /* ----------------------------------------------------------------- */
@@ -81,35 +83,37 @@ namespace Cube.Pdf.Converter
         /// SaveOptions
         ///
         /// <summary>
-        /// 表示文字列と SaveOption の対応関係を取得します。
+        /// Gets a collection in which each item consists of a display
+        /// string and a SaveOption pair.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, SaveOption>> SaveOptions => new []
         {
-            Pair(Properties.Resources.MenuOverwrite, SaveOption.Overwrite),
-            Pair(Properties.Resources.MenuMergeHead, SaveOption.MergeHead),
-            Pair(Properties.Resources.MenuMergeTail, SaveOption.MergeTail),
-            Pair(Properties.Resources.MenuRename,    SaveOption.Rename),
+            Make(Properties.Resources.MenuOverwrite, SaveOption.Overwrite),
+            Make(Properties.Resources.MenuMergeHead, SaveOption.MergeHead),
+            Make(Properties.Resources.MenuMergeTail, SaveOption.MergeTail),
+            Make(Properties.Resources.MenuRename,    SaveOption.Rename),
         };
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewerPreferences
+        /// ViewerOptions
         ///
         /// <summary>
-        /// 表示文字列と ViewerPreferences の対応関係を取得します。
+        /// Gets a collection in which each item consists of a display
+        /// string and a ViewerOptions pair.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, ViewerOptions>> ViewerOptions => new []
         {
-            Pair(Properties.Resources.MenuSinglePage,     Pdf.ViewerOptions.SinglePage),
-            Pair(Properties.Resources.MenuOneColumn,      Pdf.ViewerOptions.OneColumn),
-            Pair(Properties.Resources.MenuTwoPageLeft,    Pdf.ViewerOptions.TwoPageLeft),
-            Pair(Properties.Resources.MenuTwoPageRight,   Pdf.ViewerOptions.TwoPageRight),
-            Pair(Properties.Resources.MenuTwoColumnLeft,  Pdf.ViewerOptions.TwoColumnLeft),
-            Pair(Properties.Resources.MenuTwoColumnRight, Pdf.ViewerOptions.TwoColumnRight),
+            Make(Properties.Resources.MenuSinglePage,     Pdf.ViewerOptions.SinglePage),
+            Make(Properties.Resources.MenuOneColumn,      Pdf.ViewerOptions.OneColumn),
+            Make(Properties.Resources.MenuTwoPageLeft,    Pdf.ViewerOptions.TwoPageLeft),
+            Make(Properties.Resources.MenuTwoPageRight,   Pdf.ViewerOptions.TwoPageRight),
+            Make(Properties.Resources.MenuTwoColumnLeft,  Pdf.ViewerOptions.TwoColumnLeft),
+            Make(Properties.Resources.MenuTwoColumnRight, Pdf.ViewerOptions.TwoColumnRight),
         };
 
         /* ----------------------------------------------------------------- */
@@ -117,16 +121,17 @@ namespace Cube.Pdf.Converter
         /// PostProcesses
         ///
         /// <summary>
-        /// 表示文字列と PostProcess の対応関係を取得します。
+        /// Gets a collection in which each item consists of a display
+        /// string and a PostProcess pair.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, PostProcess>> PostProcesses => new []
         {
-            Pair(Properties.Resources.MenuOpen,          PostProcess.Open),
-            Pair(Properties.Resources.MenuOpenDirectory, PostProcess.OpenDirectory),
-            Pair(Properties.Resources.MenuNone,          PostProcess.None),
-            Pair(Properties.Resources.MenuOthers,        PostProcess.Others),
+            Make(Properties.Resources.MenuOpen,          PostProcess.Open),
+            Make(Properties.Resources.MenuOpenDirectory, PostProcess.OpenDirectory),
+            Make(Properties.Resources.MenuNone,          PostProcess.None),
+            Make(Properties.Resources.MenuOthers,        PostProcess.Others),
         };
 
         /* ----------------------------------------------------------------- */
@@ -134,15 +139,16 @@ namespace Cube.Pdf.Converter
         /// Orientations
         ///
         /// <summary>
-        /// 表示文字列と Orientation の対応関係を取得します。
+        /// Gets a collection in which each item consists of a display
+        /// string and a Orientation pair.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, Orientation>> Orientations => new []
         {
-            Pair(Properties.Resources.MenuPortrait,  Orientation.Portrait),
-            Pair(Properties.Resources.MenuLandscape, Orientation.Landscape),
-            Pair(Properties.Resources.MenuAuto,      Orientation.Auto),
+            Make(Properties.Resources.MenuPortrait,  Orientation.Portrait),
+            Make(Properties.Resources.MenuLandscape, Orientation.Landscape),
+            Make(Properties.Resources.MenuAuto,      Orientation.Auto),
         };
 
         /* ----------------------------------------------------------------- */
@@ -150,15 +156,16 @@ namespace Cube.Pdf.Converter
         /// Languages
         ///
         /// <summary>
-        /// 表示文字列と Language の対応関係を取得します。
+        /// Gets a collection in which each item consists of a display
+        /// string and a Language pair.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, Language>> Languages => new []
         {
-            Pair(Properties.Resources.MenuAuto,     Language.Auto),
-            Pair(Properties.Resources.MenuEnglish,  Language.English),
-            Pair(Properties.Resources.MenuJapanese, Language.Japanese),
+            Make(Properties.Resources.MenuAuto,     Language.Auto),
+            Make(Properties.Resources.MenuEnglish,  Language.English),
+            Make(Properties.Resources.MenuJapanese, Language.Japanese),
         };
 
         /* ----------------------------------------------------------------- */
@@ -166,7 +173,7 @@ namespace Cube.Pdf.Converter
         /// SourceFilters
         ///
         /// <summary>
-        /// 入力ファイルのフィルタ一覧を取得します。
+        /// Gets a collection of OpenFileDialog filters.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -183,7 +190,7 @@ namespace Cube.Pdf.Converter
         /// DestinationFilters
         ///
         /// <summary>
-        /// 保存パスのフィルタ一覧を取得します。
+        /// Gets a collection of SaveFileDialog filters.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -203,7 +210,7 @@ namespace Cube.Pdf.Converter
         /// UserProgramFilters
         ///
         /// <summary>
-        /// ユーザプログラムのフィルタ一覧を取得します。
+        /// Gets a collection of OpenFileDialog filters.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -215,18 +222,39 @@ namespace Cube.Pdf.Converter
 
         #endregion
 
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WordWrap
+        ///
+        /// <summary>
+        /// Inserts a new line and splits words.
+        /// </summary>
+        ///
+        /// <param name="src">Source string.</param>
+        /// <param name="n">Number of characters to split words.</param>
+        ///
+        /// <returns>Converted string.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string WordWrap(this string src, int n) =>
+            Regex.Replace(src, $@"(?<=\G.{{{n}}})(?!$)", Environment.NewLine);
+
+        #endregion
+
         #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Pair(T, U)
+        /// Make(T, U)
         ///
         /// <summary>
-        /// KeyValuePair(T, U) を生成します。
+        /// Creates a new instance of the KeyValuePair(T, U) class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static KeyValuePair<K, V> Pair<K, V>(K key, V value) =>
+        private static KeyValuePair<K, V> Make<K, V>(K key, V value) =>
             new KeyValuePair<K, V>(key, value);
 
         #endregion

@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
@@ -30,11 +29,11 @@ namespace Cube.Pdf.Converter
     /// ProcessLauncher
     ///
     /// <summary>
-    /// ポストプロセスを実行するためのクラスです。
+    /// Provides functionality to execute the provided post process.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class ProcessLauncher
+    internal sealed class ProcessLauncher
     {
         #region Constructors
 
@@ -43,21 +42,21 @@ namespace Cube.Pdf.Converter
         /// ProcessLauncher
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ProcessLauncher class with
+        /// the specified settings.
         /// </summary>
         ///
-        /// <param name="settings">設定情報</param>
+        /// <param name="src">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ProcessLauncher(SettingsFolder settings)
+        public ProcessLauncher(SettingsFolder src)
         {
-            IO    = settings.IO;
-            Value = settings.Value;
-            _map  = new Dictionary<PostProcess, Action<IEnumerable<string>>>
+            Settings  = src;
+            _handlers = new Dictionary<PostProcess, Action<IEnumerable<string>>>
             {
-                { PostProcess.Open,          Open          },
-                { PostProcess.OpenDirectory, OpenDirectory },
-                { PostProcess.Others,        InvokeCore    },
+                { PostProcess.Open,          Open           },
+                { PostProcess.OpenDirectory, OpenDirectory  },
+                { PostProcess.Others,        RunUserProgram },
             };
         }
 
@@ -67,25 +66,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
-        ///
-        /// <summary>
-        /// I/O オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Settings
         ///
         /// <summary>
-        /// 設定情報を取得します。
+        /// Gets the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue Value { get; }
+        public SettingsFolder Settings { get; }
 
         #endregion
 
@@ -96,15 +84,15 @@ namespace Cube.Pdf.Converter
         /// Invoke
         ///
         /// <summary>
-        /// ポストプロセスを実行します。
+        /// Executes the post process with the specified files.
         /// </summary>
         ///
-        /// <param name="src">変換されたファイル一覧</param>
+        /// <param name="src">Source files.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> src)
         {
-            if (_map.TryGetValue(Value.PostProcess, out var dest)) dest(src);
+            if (_handlers.TryGetValue(Settings.Value.PostProcess, out var dest)) dest(src);
         }
 
         #endregion
@@ -116,59 +104,59 @@ namespace Cube.Pdf.Converter
         /// Open
         ///
         /// <summary>
-        /// ファイルを開きます。
+        /// Opens the specified files with the associated program.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Open(IEnumerable<string> src) => InvokeCore(Create(src.First(), string.Empty));
+        private void Open(IEnumerable<string> src) => Start(Create(src.First(), string.Empty));
 
         /* ----------------------------------------------------------------- */
         ///
         /// OpenDirectory
         ///
         /// <summary>
-        /// ディレクトリを開きます。
+        /// Opens the directory at which the specified files are located.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void OpenDirectory(IEnumerable<string> src) => InvokeCore(Create(
+        private void OpenDirectory(IEnumerable<string> src) => Start(Create(
             "explorer.exe",
-            IO.Get(src.First()).DirectoryName.Quote()
+            Settings.IO.Get(src.First()).DirectoryName.Quote()
         ));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InvokeCore
+        /// RunUserProgram
         ///
         /// <summary>
-        /// ユーザプログラムを実行します。
+        /// Executes the specified program.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InvokeCore(IEnumerable<string> src)
+        private void RunUserProgram(IEnumerable<string> src)
         {
-            if (!Value.UserProgram.HasValue()) return;
-            InvokeCore(Create(Value.UserProgram, src.First().Quote()));
+            if (!Settings.Value.UserProgram.HasValue()) return;
+            Start(Create(Settings.Value.UserProgram, src.First().Quote()));
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InvokeCore
+        /// Start
         ///
         /// <summary>
-        /// プロセスを実行します。
+        /// Executes the process.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InvokeCore(ProcessStartInfo src) =>
-            new Process { StartInfo = src }.Start();
+        private void Start(ProcessStartInfo src) => new Process { StartInfo = src }.Start();
 
         /* ----------------------------------------------------------------- */
         ///
         /// Create
         ///
         /// <summary>
-        /// プロセスを実行するためのオブジェクトを生成します。
+        /// Creates a new instance of the ProcessStartInfo class with the
+        /// specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -185,7 +173,7 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Fields
-        private readonly IDictionary<PostProcess, Action<IEnumerable<string>>> _map;
+        private readonly IDictionary<PostProcess, Action<IEnumerable<string>>> _handlers;
         #endregion
     }
 }

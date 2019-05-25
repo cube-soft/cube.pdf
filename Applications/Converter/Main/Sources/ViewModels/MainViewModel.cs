@@ -74,17 +74,50 @@ namespace Cube.Pdf.Converter
         {
             Locale.Set(settings.Value.Language);
 
-            _model     = new Facade(settings);
-            Settings   = new SettingsViewModel(settings, Aggregator, context);
+            General    = new SettingsViewModel(settings, Aggregator, context);
             Metadata   = new MetadataViewModel(settings.Value.Metadata, Aggregator, context);
             Encryption = new EncryptionViewModel(settings.Value.Encryption, Aggregator, context);
 
-            settings.PropertyChanged += WhenSettingsChanged;
+            _model = new Facade(settings);
+            _model.Settings.PropertyChanged += Observe;
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// General
+        ///
+        /// <summary>
+        /// 一般およびその他タブを表す ViewModel を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingsViewModel General { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// 文書プロパティ・タブを表す ViewModel を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MetadataViewModel Metadata { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// セキュリティ・タブを表す ViewModel を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EncryptionViewModel Encryption { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -144,39 +177,6 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Busy => _model.Settings.Value.Busy;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Settings
-        ///
-        /// <summary>
-        /// 一般およびその他タブを表す ViewModel を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingsViewModel Settings { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Metadata
-        ///
-        /// <summary>
-        /// 文書プロパティ・タブを表す ViewModel を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public MetadataViewModel Metadata { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Encryption
-        ///
-        /// <summary>
-        /// セキュリティ・タブを表す ViewModel を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EncryptionViewModel Encryption { get; }
-
         #endregion
 
         #region Methods
@@ -192,11 +192,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            if (Encryption.Confirm() && Settings.Confirm()) TrackClose(() =>
-            {
-                _model.ChangeExtension();
-                _model.Convert();
-            });
+            if (Encryption.Confirm() && General.Confirm()) TrackClose(() => _model.Execute());
         }
 
         /* ----------------------------------------------------------------- */
@@ -225,7 +221,6 @@ namespace Cube.Pdf.Converter
         public void BrowseSource() =>
             Send(_model.Settings.CreateForSource(), e => _model.SetSource(e));
 
-
         /* ----------------------------------------------------------------- */
         ///
         /// BrowseDestination
@@ -250,6 +245,10 @@ namespace Cube.Pdf.Converter
         public void BrowseUserProgram() =>
             Send(_model.Settings.CreateForUserProgram(), e => _model.SetUserProgram(e));
 
+        #endregion
+
+        #region Implementations
+
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
@@ -271,33 +270,31 @@ namespace Cube.Pdf.Converter
             finally { base.Dispose(disposing); }
         }
 
-        #endregion
-
-        #region Implementations
-
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenSettingsChanged
+        /// Observe
         ///
         /// <summary>
         /// Occurs when any settings are changed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenSettingsChanged(object s, PropertyChangedEventArgs e)
+        private void Observe(object s, PropertyChangedEventArgs e)
         {
+            var value = _model.Settings.Value;
+
             switch (e.PropertyName)
             {
-                case nameof(Settings.Format):
+                case nameof(value.Format):
                     _model.ChangeExtension();
                     break;
-                case nameof(Settings.PostProcess):
-                    if (Settings.PostProcess == PostProcess.Others) BrowseUserProgram();
+                case nameof(value.PostProcess):
+                    if (value.PostProcess == PostProcess.Others) BrowseUserProgram();
                     break;
-                case nameof(Settings.Language):
-                    Locale.Set(Settings.Language);
+                case nameof(value.Language):
+                    Locale.Set(value.Language);
                     break;
-                default:
+                case nameof(value.Busy):
                     OnPropertyChanged(e);
                     break;
             }

@@ -61,13 +61,13 @@ namespace Cube.Pdf.Converter
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var args     = new ArgumentCollection(raw, Argument.Windows, true);
+                var args = new ArgumentCollection(raw, Argument.Windows, true);
                 var settings = CreateSettings(args, Assembly.GetExecutingAssembly());
                 settings.Load();
                 settings.Normalize();
                 settings.Set(args);
 
-                if (args.Options.ContainsKey("SkipUI")) Invoke(settings);
+                if (args.Options.ContainsKey("SkipUI")) Execute(settings);
                 else Show(settings);
             }
             catch (Exception err) { Logger.Error(LogType, err); }
@@ -104,29 +104,22 @@ namespace Cube.Pdf.Converter
         private static void Show(SettingsFolder settings)
         {
             var view = new MainWindow();
-            using (var vm = new MainViewModel(settings))
-            {
-                view.Bind(vm);
-                Application.Run(view);
-            }
+            view.Bind(new MainViewModel(settings));
+            Application.Run(view);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Execute
         ///
         /// <summary>
-        /// Invokes the conversion directly.
+        /// Executes the conversion directly.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Invoke(SettingsFolder settings)
+        private static void Execute(SettingsFolder settings)
         {
-            using (var src = new Facade(settings))
-            {
-                src.ChangeExtension();
-                src.Convert();
-            }
+            using (var src = new Facade(settings)) src.Execute();
         }
 
         #endregion

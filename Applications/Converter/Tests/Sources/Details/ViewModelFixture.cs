@@ -228,7 +228,7 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         protected void Set(MainViewModel vm, SettingsValue src)
         {
-            Set(vm.Settings,   src);
+            Set(vm.General,   src);
             Set(vm.Metadata,   src.Metadata);
             Set(vm.Encryption, src.Encryption);
         }

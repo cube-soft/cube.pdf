@@ -115,10 +115,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public override void Bind(IPresentable src)
         {
+            base.Bind(src);
             if (!(src is MainViewModel vm)) return;
 
             MainBindingSource.DataSource       = vm;
-            SettingsBindingSource.DataSource   = vm.Settings;
+            SettingsBindingSource.DataSource   = vm.General;
             MetadataBindingSource.DataSource   = vm.Metadata;
             EncryptionBindingSource.DataSource = vm.Encryption;
 
@@ -139,7 +140,7 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new OpenFileDialogBehavior(src));
             Behaviors.Add(new SaveFileDialogBehavior(src));
 
-            UpdateString(vm.Settings.Language);
+            UpdateString(vm.General.Language);
         }
 
         #endregion
@@ -180,12 +181,12 @@ namespace Cube.Pdf.Converter
             MainToolTip.SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
             MainToolTip.SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));
 
-            FormatComboBox.Bind(ViewResource.Formats);
-            PdfVersionComboBox.Bind(ViewResource.PdfVersions);
-            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
-            ViewerPreferencesComboBox.Bind(ViewResource.ViewerOptions);
-            PostProcessComboBox.Bind(ViewResource.PostProcesses);
-            LanguageComboBox.Bind(ViewResource.Languages);
+            FormatComboBox.Bind(ViewResources.Formats);
+            PdfVersionComboBox.Bind(ViewResources.PdfVersions);
+            SaveOptionComboBox.Bind(ViewResources.SaveOptions);
+            ViewerPreferencesComboBox.Bind(ViewResources.ViewerOptions);
+            PostProcessComboBox.Bind(ViewResources.PostProcesses);
+            LanguageComboBox.Bind(ViewResources.Languages);
         }
 
         #endregion
