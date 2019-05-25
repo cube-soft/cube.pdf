@@ -81,7 +81,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(vms.IsPortrait,         Is.False, nameof(vms.IsPortrait));
             Assert.That(vms.IsLandscape,        Is.False, nameof(vms.IsLandscape));
             Assert.That(vms.Grayscale,          Is.False, nameof(vms.Grayscale));
-            Assert.That(vms.ImageCompression,   Is.True,  nameof(vms.ImageCompression));
+            Assert.That(vms.ImageFilter,        Is.True,  nameof(vms.ImageFilter));
             Assert.That(vms.Linearization,      Is.False, nameof(vms.Linearization));
             Assert.That(vms.CheckUpdate,        Is.True,  nameof(vms.CheckUpdate));
             Assert.That(vms.IsPdf,              Is.True,  nameof(vms.IsPdf));
@@ -335,7 +335,7 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         private void Invoke(Action<MainViewModel> action, [CallerMemberName] string name = null)
         {
-            var args = CreateArgs(name);
+            var args = GetArgs(name);
             var dest = Create(Combine(args, "Sample.ps"));
 
             using (Locale.Subscribe(SetUiCulture))

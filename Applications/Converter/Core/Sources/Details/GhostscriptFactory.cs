@@ -140,7 +140,7 @@ namespace Cube.Pdf.Converter
             new PdfConverter(src.IO)
             {
                 Version     = src.Value.Metadata.Version,
-                Compression = src.Value.ImageCompression ? Encoding.Jpeg : Encoding.Flate,
+                Compression = src.Value.ImageFilter ? Encoding.Jpeg : Encoding.Flate,
             };
 
         /* ----------------------------------------------------------------- */

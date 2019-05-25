@@ -50,7 +50,7 @@ namespace Cube.Pdf.Converter.Tests
         /// Message
         ///
         /// <summary>
-        /// エラーメッセージを取得します。
+        /// Gets the message displayed in a common dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -62,23 +62,18 @@ namespace Cube.Pdf.Converter.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateArgs
+        /// GetArgs
         ///
         /// <summary>
-        /// プログラム引数を生成します。
+        /// Gets the program arguments.
         /// </summary>
         ///
-        /// <param name="docName">ドキュメント名</param>
+        /// <param name="docName">Document name.</param>
         ///
-        /// <returns>プログラム引数一覧</returns>
-        ///
-        /// <remarks>
-        /// /ThreadID, /Exec オプションは CubePDF メインプログラムでは
-        /// 使用されません。テストではダミー値を設定しています。
-        /// </remarks>
+        /// <returns>Collection of arguments.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static string[] CreateArgs(string docName) => new[]
+        protected static IEnumerable<string> GetArgs(string docName) => new[]
         {
             "/DeleteOnClose",
             "/DocumentName",
@@ -170,7 +165,7 @@ namespace Cube.Pdf.Converter.Tests
         /// <returns>SettingsFolder</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected SettingsFolder Create(string[] args)
+        protected SettingsFolder Create(IEnumerable<string> args)
         {
             var asm  = Assembly.GetExecutingAssembly();
             var fmt  = Cube.DataContract.Format.Registry;
@@ -205,7 +200,7 @@ namespace Cube.Pdf.Converter.Tests
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected string[] Combine(IEnumerable<string> args, string src)
+        protected IEnumerable<string> Combine(IEnumerable<string> args, string src)
         {
             var tmp = Get(Guid.NewGuid().ToString("D"));
             IO.Copy(GetSource(src), tmp, true);
@@ -215,7 +210,7 @@ namespace Cube.Pdf.Converter.Tests
                 var hash = new SHA256CryptoServiceProvider()
                            .ComputeHash(stream)
                            .Join("",  b => $"{b:X2}");
-                return args.Concat(new[] { "/InputFile", tmp, "/Digest", hash }).ToArray();
+                return args.Concat("/InputFile", tmp, "/Digest", hash).ToList();
             }
         }
 
@@ -349,7 +344,7 @@ namespace Cube.Pdf.Converter.Tests
             vm.SaveOption        = src.SaveOption;
             vm.Resolution        = src.Resolution;
             vm.Grayscale         = src.Grayscale;
-            vm.ImageCompression  = src.ImageCompression;
+            vm.ImageFilter       = src.ImageFilter;
             vm.IsAutoOrientation = src.Orientation == Orientation.Auto;
             vm.IsLandscape       = src.Orientation == Orientation.Landscape;
             vm.IsPortrait        = src.Orientation == Orientation.Portrait;

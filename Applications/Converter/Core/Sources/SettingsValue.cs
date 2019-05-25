@@ -178,7 +178,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ImageCompression
+        /// ImageFilter
         ///
         /// <summary>
         /// Gets or sets a value indicating whether to compress embedded
@@ -186,11 +186,11 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember(Name = "ImageFilter")]
-        public bool ImageCompression
+        [DataMember]
+        public bool ImageFilter
         {
-            get => _imageCompression;
-            set => SetProperty(ref _imageCompression, value);
+            get => _imageFilter;
+            set => SetProperty(ref _imageFilter, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -199,7 +199,7 @@ namespace Cube.Pdf.Converter
         ///
         /// <summary>
         /// Gets or sets a value indicating whether to apply the
-        /// linearization option (aka: Web optimization).
+        /// linearization option (a.k.a Web optimization).
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -220,7 +220,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember(Name = "SelectInputFile")]
+        [DataMember]
         public bool SourceVisible
         {
             get => _sourceVisible;
@@ -443,28 +443,28 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void Reset()
         {
-            _format           = Format.Pdf;
-            _saveOption       = SaveOption.Overwrite;
-            _orientation      = Orientation.Auto;
-            _downsampling     = Downsampling.None;
-            _postProcess      = PostProcess.None;
-            _language         = Language.Auto;
-            _resolution       = 600;
-            _grayscale        = false;
-            _embedFonts       = true;
-            _imageCompression = true;
-            _linearization    = false;
-            _sourceVisible    = false;
-            _checkUpdate      = true;
-            _explicit         = false;
-            _temp             = $@"{Environment.SpecialFolder.CommonApplicationData.GetName()}\CubeSoft\CubePDF";
-            _source           = string.Empty;
-            _destination      = Environment.SpecialFolder.Desktop.GetName();
-            _userProgram      = string.Empty;
-            _metadata         = new Metadata();
-            _encryption       = new Encryption();
-            _busy             = false;
-            _deleteSource     = false;
+            _format         = Format.Pdf;
+            _saveOption     = SaveOption.Overwrite;
+            _orientation    = Orientation.Auto;
+            _downsampling   = Downsampling.None;
+            _postProcess    = PostProcess.None;
+            _language       = Language.Auto;
+            _resolution     = 600;
+            _grayscale      = false;
+            _embedFonts     = true;
+            _imageFilter    = true;
+            _linearization  = false;
+            _sourceVisible  = false;
+            _checkUpdate    = true;
+            _explicit       = false;
+            _temp           = $@"{Environment.SpecialFolder.CommonApplicationData.GetName()}\CubeSoft\CubePDF";
+            _source         = string.Empty;
+            _destination    = Environment.SpecialFolder.Desktop.GetName();
+            _userProgram    = string.Empty;
+            _metadata       = new Metadata();
+            _encryption     = new Encryption();
+            _busy           = false;
+            _deleteSource   = false;
         }
 
         /* ----------------------------------------------------------------- */
@@ -491,7 +491,7 @@ namespace Cube.Pdf.Converter
         private int _resolution;
         private bool _grayscale;
         private bool _embedFonts;
-        private bool _imageCompression;
+        private bool _imageFilter;
         private bool _linearization;
         private bool _sourceVisible;
         private bool _checkUpdate;

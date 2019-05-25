@@ -398,7 +398,7 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         private void Create(Action<MainViewModel> action)
         {
-            var src = Create(Combine(CreateArgs(nameof(ViewResourceTest)), "Sample.ps"));
+            var src = Create(Combine(GetArgs(nameof(ViewResourceTest)), "Sample.ps"));
 
             using (Locale.Subscribe(SetUiCulture))
             using (var vm = new MainViewModel(src))

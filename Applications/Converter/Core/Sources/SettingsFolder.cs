@@ -189,7 +189,7 @@ namespace Cube.Pdf.Converter
                 var dest = new Startup(name)
                 {
                     Command = $"{exe.Quote()} {args}",
-                    Enabled = Value.CheckUpdate && !IO.Exists(exe),
+                    Enabled = Value.CheckUpdate && IO.Exists(exe),
                 };
 
                 dest.Save();

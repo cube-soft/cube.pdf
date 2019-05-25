@@ -235,7 +235,7 @@
   <data name="OptionsLabel.Text" xml:space="preserve">
     <value>オプション</value>
   </data>
-  <data name="ImageCompressionCheckBox.Text" xml:space="preserve">
+  <data name="ImageFilterCheckBox.Text" xml:space="preserve">
     <value>PDF ファイル中の画像を JPEG 形式で圧縮する</value>
   </data>
   <data name="LinearizationCheckBox.Text" xml:space="preserve">

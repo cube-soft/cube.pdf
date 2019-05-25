@@ -73,7 +73,7 @@ namespace Cube.Pdf.Converter.Tests
                 if (precopy) IO.Copy(GetSource("Sample.pdf"), vms.Destination);
 
                 vm.Subscribe<DialogMessage>(SetMessage);
-                Assert.That(WaitConv(vm), Is.True, "Timeout");
+                Assert.That(WaitConv(vm), Is.True, $"Timeout (No.{id})");
             }
 
             Assert.That(IO.Exists(dest.Value.Source),      Is.False, dest.Value.Source);
@@ -93,7 +93,7 @@ namespace Cube.Pdf.Converter.Tests
         public void UserProgram_Error()
         {
             var exec = "NotFound.exe";
-            var args = CreateArgs(nameof(UserProgram_Error));
+            var args = GetArgs(nameof(UserProgram_Error));
             var dest = Create(Combine(args, "Sample.ps"));
 
             using (var vm = new MainViewModel(dest))
@@ -140,35 +140,35 @@ namespace Cube.Pdf.Converter.Tests
                 yield return Create(n++,
                     new SettingsValue
                     {
-                        Format           = Format.Pdf,
-                        Grayscale        = true,
-                        Resolution       = 72,
-                        ImageCompression = false,
+                        Format          = Format.Pdf,
+                        Grayscale       = true,
+                        Resolution      = 72,
+                        ImageFilter     = false,
                     },
-                    CreateArgs("PDF テスト")
+                    GetArgs("PDF テスト")
                 );
 
                 yield return Create(n++,
                     new SettingsValue
                     {
-                        Format           = Format.Pdf,
-                        Grayscale        = false,
-                        Resolution       = 72,
-                        ImageCompression = true,
+                        Format          = Format.Pdf,
+                        Grayscale       = false,
+                        Resolution      = 72,
+                        ImageFilter     = true,
                     },
-                    CreateArgs("PDF テスト (Jpeg)")
+                    GetArgs("PDF テスト (Jpeg)")
                 );
 
                 yield return Create(n++,
                     new SettingsValue
                     {
-                        Format           = Format.Pdf,
-                        Grayscale        = true,
-                        Resolution       = 72,
-                        ImageCompression = false,
-                        Downsampling     = Downsampling.Bicubic,
+                        Format          = Format.Pdf,
+                        Grayscale       = true,
+                        Resolution      = 72,
+                        ImageFilter     = false,
+                        Downsampling    = Downsampling.Bicubic,
                     },
-                    CreateArgs("PDF テスト (Bicubic)")
+                    GetArgs("PDF テスト (Bicubic)")
                 );
 
                 yield return Create(n++,
@@ -179,7 +179,7 @@ namespace Cube.Pdf.Converter.Tests
                         Resolution       = 72,
                         PostProcess      = PostProcess.Others,
                     },
-                    CreateArgs("PDF テスト (Gray)")
+                    GetArgs("PDF テスト (Gray)")
                 );
 
                 yield return Create(n++,
@@ -190,7 +190,7 @@ namespace Cube.Pdf.Converter.Tests
                         Resolution       = 72,
                         EmbedFonts       = false,
                     },
-                    CreateArgs("PDF テスト (NoEmbed)")
+                    GetArgs("PDF テスト (NoEmbed)")
                 );
 
                 yield return Create(n++,
@@ -201,7 +201,7 @@ namespace Cube.Pdf.Converter.Tests
                         Resolution       = 72,
                         SaveOption       = SaveOption.MergeHead,
                     },
-                    CreateArgs("PDF テスト (MergeHead)"),
+                    GetArgs("PDF テスト (MergeHead)"),
                     true // pre-copy
                 );
 
@@ -213,7 +213,7 @@ namespace Cube.Pdf.Converter.Tests
                         Resolution       = 72,
                         SaveOption       = SaveOption.MergeTail,
                     },
-                    CreateArgs("PDF テスト (MergeTail)"),
+                    GetArgs("PDF テスト (MergeTail)"),
                     true // pre-copy
                 );
 
@@ -225,7 +225,7 @@ namespace Cube.Pdf.Converter.Tests
                         Resolution       = 72,
                         SaveOption       = SaveOption.Rename,
                     },
-                    CreateArgs("PDF テスト (Rename)"),
+                    GetArgs("PDF テスト (Rename)"),
                     true // pre-copy
                 );
 
@@ -246,7 +246,7 @@ namespace Cube.Pdf.Converter.Tests
                             Options  = ViewerOptions.SinglePage,
                         }
                     },
-                    CreateArgs("PDF テスト (Linearization)")
+                    GetArgs("PDF テスト (Linearization)")
                 );
 
                 yield return Create(n++,
@@ -282,7 +282,7 @@ namespace Cube.Pdf.Converter.Tests
                             Options  = ViewerOptions.SinglePage,
                         }
                     },
-                    CreateArgs("PDF テスト (Encryption)")
+                    GetArgs("PDF テスト (Encryption)")
                 );
 
                 yield return Create(n++,
@@ -292,7 +292,7 @@ namespace Cube.Pdf.Converter.Tests
                         Grayscale        = false,
                         Resolution       = 72,
                     },
-                    CreateArgs("PS テスト")
+                    GetArgs("PS テスト")
                 );
 
                 yield return Create(n++,
@@ -302,7 +302,7 @@ namespace Cube.Pdf.Converter.Tests
                         Grayscale        = true,
                         Resolution       = 72,
                     },
-                    CreateArgs("PS テスト (Gray)")
+                    GetArgs("PS テスト (Gray)")
                 );
 
                 yield return Create(n++,
@@ -312,7 +312,7 @@ namespace Cube.Pdf.Converter.Tests
                         Grayscale        = false,
                         Resolution       = 72,
                     },
-                    CreateArgs("EPS テスト")
+                    GetArgs("EPS テスト")
                 );
 
                 yield return Create(n++,
@@ -322,7 +322,7 @@ namespace Cube.Pdf.Converter.Tests
                         Grayscale        = true,
                         Resolution       = 72,
                     },
-                    CreateArgs("EPS テスト (Gray)")
+                    GetArgs("EPS テスト (Gray)")
                 );
 
                 yield return Create(n++,
@@ -332,7 +332,7 @@ namespace Cube.Pdf.Converter.Tests
                         Grayscale        = false,
                         Resolution       = 72,
                     },
-                    CreateArgs("PNG テスト")
+                    GetArgs("PNG テスト")
                 );
 
                 yield return Create(n++,
@@ -342,7 +342,7 @@ namespace Cube.Pdf.Converter.Tests
                         Grayscale        = false,
                         Resolution       = 144,
                     },
-                    CreateArgs("PNG テスト (144 dpi)")
+                    GetArgs("PNG テスト (144 dpi)")
                 );
 
                 yield return Create(n++,
@@ -352,7 +352,7 @@ namespace Cube.Pdf.Converter.Tests
                         Grayscale        = true,
                         Resolution       = 72,
                     },
-                    CreateArgs("PNG テスト (Gray)")
+                    GetArgs("PNG テスト (Gray)")
                 );
 
                 yield return Create(n++,
@@ -362,7 +362,7 @@ namespace Cube.Pdf.Converter.Tests
                         Grayscale        = true,
                         Resolution       = 72,
                     },
-                    CreateArgs("PNG テスト (複数ファイル)"),
+                    GetArgs("PNG テスト (複数ファイル)"),
                     "SampleCjk.ps",
                     false
                 );

@@ -95,7 +95,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.SaveOption,       Is.EqualTo(SaveOption.Overwrite));
             Assert.That(dest.Grayscale,        Is.False);
             Assert.That(dest.EmbedFonts,       Is.True);
-            Assert.That(dest.ImageCompression, Is.True);
+            Assert.That(dest.ImageFilter,      Is.True);
             Assert.That(dest.Downsampling,     Is.EqualTo(Downsampling.None));
             Assert.That(dest.Resolution,       Is.AtLeast(72));
             Assert.That(dest.Orientation,      Is.EqualTo(Orientation.Auto));

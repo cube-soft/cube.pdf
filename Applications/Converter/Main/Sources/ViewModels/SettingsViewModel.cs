@@ -262,7 +262,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ImageCompression
+        /// ImageFilter
         ///
         /// <summary>
         /// Gets or sets a value indicating whether to compress images
@@ -270,10 +270,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool ImageCompression
+        public bool ImageFilter
         {
-            get => _model.ImageCompression;
-            set => _model.ImageCompression = value;
+            get => _model.ImageFilter;
+            set => _model.ImageFilter = value;
         }
 
         /* ----------------------------------------------------------------- */

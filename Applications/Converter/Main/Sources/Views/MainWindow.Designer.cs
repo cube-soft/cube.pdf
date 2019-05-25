@@ -104,7 +104,7 @@
             this.LanguageLabel = new System.Windows.Forms.Label();
             this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
             this.OptionsLabel = new System.Windows.Forms.Label();
-            this.ImageCompressionCheckBox = new System.Windows.Forms.CheckBox();
+            this.ImageFilterCheckBox = new System.Windows.Forms.CheckBox();
             this.LinearizationCheckBox = new System.Windows.Forms.CheckBox();
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
@@ -664,7 +664,7 @@
             this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 6);
             this.OthersPanel.Controls.Add(this.GrayscaleCheckBox, 1, 0);
             this.OthersPanel.Controls.Add(this.OptionsLabel, 0, 0);
-            this.OthersPanel.Controls.Add(this.ImageCompressionCheckBox, 1, 1);
+            this.OthersPanel.Controls.Add(this.ImageFilterCheckBox, 1, 1);
             this.OthersPanel.Controls.Add(this.LinearizationCheckBox, 1, 2);
             this.OthersPanel.Controls.Add(this.UpdateCheckBox, 1, 5);
             this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 6);
@@ -689,12 +689,12 @@
             resources.ApplyResources(this.OptionsLabel, "OptionsLabel");
             this.OptionsLabel.Name = "OptionsLabel";
             //
-            // ImageCompressionCheckBox
+            // ImageFilterCheckBox
             //
-            resources.ApplyResources(this.ImageCompressionCheckBox, "ImageCompressionCheckBox");
-            this.ImageCompressionCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "ImageCompression", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.ImageCompressionCheckBox.Name = "ImageCompressionCheckBox";
-            this.ImageCompressionCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.ImageFilterCheckBox, "ImageFilterCheckBox");
+            this.ImageFilterCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "ImageFilter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.ImageFilterCheckBox.Name = "ImageFilterCheckBox";
+            this.ImageFilterCheckBox.UseVisualStyleBackColor = true;
             //
             // LinearizationCheckBox
             //
@@ -927,7 +927,7 @@
         private System.Windows.Forms.RadioButton LandscapeRadioButton;
         private System.Windows.Forms.RadioButton AutoRadioButton;
         private System.Windows.Forms.CheckBox UpdateCheckBox;
-        private System.Windows.Forms.CheckBox ImageCompressionCheckBox;
+        private System.Windows.Forms.CheckBox ImageFilterCheckBox;
         private System.Windows.Forms.CheckBox LinearizationCheckBox;
         private System.Windows.Forms.TableLayoutPanel FormatPanel;
         private System.Windows.Forms.ComboBox PdfVersionComboBox;
