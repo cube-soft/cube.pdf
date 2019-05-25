@@ -206,7 +206,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Save()
         {
-            if (Metadata.ConfirmWhenSave()) _model.Save();
+            if (Metadata.ConfirmWhenSave()) _model.Settings.Save();
         }
 
         /* ----------------------------------------------------------------- */
