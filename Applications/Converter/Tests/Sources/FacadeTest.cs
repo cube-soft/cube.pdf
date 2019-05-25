@@ -69,6 +69,36 @@ namespace Cube.Pdf.Converter.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Convert_Png
+        ///
+        /// <summary>
+        /// Tests the Convert method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Convert_Png()
+        {
+            using (var e = new Facade(Assembly.GetExecutingAssembly()))
+            {
+                var dest = Get($"{nameof(Convert)}.png");
+
+                e.Settings.Value.Source = GetSource("SampleCjk.ps");
+                e.Settings.Value.Destination = dest;
+                e.Settings.Value.PostProcess = PostProcess.None;
+                e.Settings.Value.Format      = Ghostscript.Format.Png;
+                e.Settings.Value.Resolution  = 72;
+                e.Convert();
+
+                Assert.That(e.Settings.Value.Busy, Is.False);
+                Assert.That(e.Results.Count(),     Is.EqualTo(5));
+                Assert.That(e.Results.First(),     Does.EndWith($"{nameof(Convert)}-01.png"));
+                Assert.That(IO.Exists(dest),       Is.False);
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Convert_SaveOption
         ///
         /// <summary>
