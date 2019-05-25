@@ -111,12 +111,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            try
+            lock (_lock)
             {
-                Settings.Value.Busy = true;
-
-                lock (_lock)
+                try
                 {
+                    Settings.Value.Busy = true;
                     var dest = new List<string>();
                     using (var fs = new FileTransfer(Settings, GetTemp()))
                     {
@@ -128,8 +127,8 @@ namespace Cube.Pdf.Converter
                     }
                     Results = dest;
                 }
+                finally { Settings.Value.Busy = false; }
             }
-            finally { Settings.Value.Busy = false; }
         }
 
         /* ----------------------------------------------------------------- */
