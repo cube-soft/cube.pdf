@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Cube.Pdf.Converter
 {
@@ -115,16 +114,20 @@ namespace Cube.Pdf.Converter
             try
             {
                 Settings.Value.Busy = true;
-                var dest = new List<string>();
-                using (var fs = new FileTransfer(Settings, GetTemp()))
+
+                lock (_lock)
                 {
-                    Invoke(() => new DigestChecker(Settings).Invoke());
-                    InvokeGhostscript(fs.Value);
-                    Invoke(() => new FileDecorator(Settings).Invoke(fs.Value));
-                    Invoke(() => fs.Invoke(dest));
-                    Invoke(() => new ProcessLauncher(Settings).Invoke(dest));
+                    var dest = new List<string>();
+                    using (var fs = new FileTransfer(Settings, GetTemp()))
+                    {
+                        Invoke(() => new DigestChecker(Settings).Invoke());
+                        InvokeGhostscript(fs.Value);
+                        Invoke(() => new FileDecorator(Settings).Invoke(fs.Value));
+                        Invoke(() => fs.Invoke(dest));
+                        Invoke(() => new ProcessLauncher(Settings).Invoke(dest));
+                    }
+                    Results = dest;
                 }
-                Results = dest;
             }
             finally { Settings.Value.Busy = false; }
         }
@@ -177,13 +180,20 @@ namespace Cube.Pdf.Converter
         /// false to release only unmanaged resources.
         /// </param>
         ///
+        /// <remarks>
+        /// 別スレッドで変換処理中の場合、一時ファイルの削除に失敗する可能性が
+        /// あるので Convert および Dispose において排他処理を行っています。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            Poll(10).Wait();
-            Settings.IO.TryDelete(GetTemp());
-            if (!Settings.Value.DeleteSource) return;
-            Settings.IO.TryDelete(Settings.Value.Source);
+            lock (_lock)
+            {
+                Settings.IO.TryDelete(GetTemp());
+                if (!Settings.Value.DeleteSource) return;
+                Settings.IO.TryDelete(Settings.Value.Source);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -224,24 +234,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetTemp() => Settings.IO.Combine(Settings.Value.Temp, Settings.Uid.ToString("D"));
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Poll
-        ///
-        /// <summary>
-        /// Waits until the any operations are terminated.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private async Task Poll(int sec)
-        {
-            for (var i = 0; i < sec; ++i)
-            {
-                if (!Settings.Value.Busy) return;
-                await Task.Delay(1000).ConfigureAwait(false);
-            }
-        }
+        #endregion
 
+        #region Fields
+        private readonly object _lock = new object();
         #endregion
     }
 }
