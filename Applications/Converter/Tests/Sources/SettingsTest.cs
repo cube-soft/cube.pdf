@@ -60,8 +60,8 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.AutoSave,              Is.False);
             Assert.That(dest.Assembly.GetCompany(), Is.EqualTo("CubeSoft"));
             Assert.That(dest.Assembly.GetProduct(), Is.EqualTo("Cube.Pdf.Converter.Tests"));
-            Assert.That(dest.Document.Value,        Is.Empty);
-            Assert.That(dest.Document.Name,         Is.EqualTo("Cube.Pdf.Converter.Tests"));
+            Assert.That(dest.DocumentName.Source,   Is.Empty);
+            Assert.That(dest.DocumentName.Value,    Is.EqualTo("Cube.Pdf.Converter.Tests"));
             Assert.That(dest.Version.ToString(),    Is.EqualTo("1.0.0"));
             Assert.That(dest.Value,                 Is.Not.Null);
             Assert.That(dest.Digest,                Is.Null);
@@ -207,15 +207,15 @@ namespace Cube.Pdf.Converter.Tests
 
             var path = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                System.IO.Path.ChangeExtension(dest.Document.Name, ".pdf")
+                System.IO.Path.ChangeExtension(dest.DocumentName.Value, ".pdf")
             );
 
-            Assert.That(dest.Digest,             Is.Null);
-            Assert.That(dest.Document.Value,     Is.EqualTo("(234)?File.txt - Sample Application"));
-            Assert.That(dest.Document.Name,      Is.EqualTo("(234)_File.txt"));
-            Assert.That(dest.Value.DeleteSource, Is.True);
-            Assert.That(dest.Value.Source,       Is.EqualTo(@"C:\WINDOWS\CubePDF\PS3AEE.tmp"));
-            Assert.That(dest.Value.Destination,  Is.EqualTo(path));
+            Assert.That(dest.Digest,              Is.Null);
+            Assert.That(dest.DocumentName.Source, Is.EqualTo("(234)?File.txt - Sample Application"));
+            Assert.That(dest.DocumentName.Value,  Is.EqualTo("(234)_File.txt"));
+            Assert.That(dest.Value.DeleteSource,  Is.True);
+            Assert.That(dest.Value.Source,        Is.EqualTo(@"C:\WINDOWS\CubePDF\PS3AEE.tmp"));
+            Assert.That(dest.Value.Destination,   Is.EqualTo(path));
         }
 
         /* ----------------------------------------------------------------- */
@@ -234,7 +234,7 @@ namespace Cube.Pdf.Converter.Tests
             dest.Set(new ArgumentCollection(Enumerable.Empty<string>(), Collections.Argument.Windows, true));
 
             Assert.That(dest.Digest,             Is.Null);
-            Assert.That(dest.Document.Name,      Is.EqualTo("Cube.Pdf.Converter.Tests"));
+            Assert.That(dest.DocumentName.Value, Is.EqualTo("Cube.Pdf.Converter.Tests"));
             Assert.That(dest.Value.DeleteSource, Is.False);
             Assert.That(dest.Value.Source,       Is.Empty);
         }

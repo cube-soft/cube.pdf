@@ -92,7 +92,7 @@ namespace Cube.Pdf.Converter
             base(assembly, format, path, io)
         {
             AutoSave       = false;
-            Document       = GetDocumentName(string.Empty);
+            DocumentName   = GetDocumentName(string.Empty);
             Version.Digit  = 3;
             Version.Suffix = "";
         }
@@ -114,14 +114,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Document
+        /// DocumentName
         ///
         /// <summary>
-        /// Gets the document name object.
+        /// Gets the normalized document name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentName Document { get; private set; }
+        public DocumentName DocumentName { get; private set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -152,11 +152,11 @@ namespace Cube.Pdf.Converter
         public void Set(ArgumentCollection src)
         {
             var op = src.Options;
-            if (op.TryGetValue("DocumentName", out var doc)) Document = GetDocumentName(doc);
+            if (op.TryGetValue("DocumentName", out var doc)) DocumentName = GetDocumentName(doc);
             if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
             if (op.TryGetValue("Digest", out var digest)) Digest = digest;
 
-            var dest = IO.Get(IO.Combine(Value.Destination, Document.Name));
+            var dest = IO.Get(IO.Combine(Value.Destination, DocumentName.Value));
             var name = dest.BaseName;
             var ext  = Value.Format.GetExtension();
 

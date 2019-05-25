@@ -129,8 +129,8 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public string Title =>
-            _model.Settings.Document.Value.HasValue() ?
-            $"{_model.Settings.Document.Value} - {Product} {Version}" :
+            _model.Settings.DocumentName.Source.HasValue() ?
+            $"{_model.Settings.DocumentName.Source} - {Product} {Version}" :
             $"{Product} {Version}";
 
         /* ----------------------------------------------------------------- */

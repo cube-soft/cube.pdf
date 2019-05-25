@@ -77,7 +77,7 @@ namespace Cube.Pdf.Converter.Tests
             }
 
             Assert.That(IO.Exists(dest.Value.Source),      Is.False, dest.Value.Source);
-            Assert.That(IsCreated(dest.Value.Destination), Is.True,  dest.Document.Value);
+            Assert.That(IsCreated(dest.Value.Destination), Is.True,  dest.DocumentName.Source);
         }
 
         /* ----------------------------------------------------------------- */

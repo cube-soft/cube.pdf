@@ -37,7 +37,7 @@ namespace Cube.Pdf.Converter
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentName
+    public sealed class DocumentName
     {
         #region Constructors
 
@@ -50,16 +50,16 @@ namespace Cube.Pdf.Converter
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="src">Document name.</param>
+        /// <param name="src">Original document name.</param>
         /// <param name="alternate">Default filename.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         public DocumentName(string src, string alternate, IO io)
         {
-            IO          = io;
-            DefaultName = alternate;
-            Filter      = new PathFilter(src)
+            IO           = io;
+            DefaultValue = alternate;
+            _filter      = new PathFilter(src)
             {
                 AllowCurrentDirectory = false,
                 AllowDriveLetter      = false,
@@ -75,6 +75,40 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Source
+        ///
+        /// <summary>
+        /// Gets the original document name.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Source => _filter.Source;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Value
+        ///
+        /// <summary>
+        /// Gets a name that can be used as a filename.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Value => GetValue();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DefaultValue
+        ///
+        /// <summary>
+        /// Gets a name that is used when the specified document name
+        /// cannot be used as a filename.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string DefaultValue { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// IO
         ///
         /// <summary>
@@ -84,69 +118,24 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public IO IO { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Value
-        ///
-        /// <summary>
-        /// Gets the original document name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Value => Filter.Source;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Name
-        ///
-        /// <summary>
-        /// Gets a name that can be used as a filename.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Name => GetName();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DefaultName
-        ///
-        /// <summary>
-        /// Gets a name that is used when the specified document name
-        /// cannot be used as a filename.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string DefaultName { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Filter
-        ///
-        /// <summary>
-        /// Gets the path filter object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected PathFilter Filter { get; }
-
         #endregion
 
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetName
+        /// GetValue
         ///
         /// <summary>
         /// Gets a name that is used as a filename.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetName()
+        private string GetValue()
         {
-            if (!Value.HasValue()) return DefaultName;
+            if (!Source.HasValue()) return DefaultValue;
 
-            var dest = IO.Get(Filter.Result).Name;
+            var dest = IO.Get(_filter.Result).Name;
             var key  = " - ";
             var pos  = dest.LastIndexOf(key);
             if (pos == -1) return dest;
@@ -163,6 +152,10 @@ namespace Cube.Pdf.Converter
             return dest;
         }
 
+        #endregion
+
+        #region Fields
+        private readonly PathFilter _filter;
         #endregion
     }
 }
