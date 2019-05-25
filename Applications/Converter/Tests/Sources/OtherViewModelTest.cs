@@ -200,7 +200,7 @@ namespace Cube.Pdf.Converter.Tests
             });
 
             vm.General.Language = Language.Japanese;
-            vm.BrowseSource();
+            vm.SelectSource();
             Assert.That(vm.General.Source, Is.EqualTo(done));
         });
 
@@ -233,7 +233,7 @@ namespace Cube.Pdf.Converter.Tests
             });
 
             vm.General.Language = Language.Japanese;
-            vm.BrowseDestination();
+            vm.SelectDestination();
             Assert.That(vm.General.Destination, Is.EqualTo(done));
         });
 
@@ -265,7 +265,7 @@ namespace Cube.Pdf.Converter.Tests
             });
 
             vm.General.Language = Language.Japanese;
-            vm.BrowseUserProgram();
+            vm.SelectUserProgram();
             Assert.That(vm.General.UserProgram, Is.EqualTo(done));
         });
 

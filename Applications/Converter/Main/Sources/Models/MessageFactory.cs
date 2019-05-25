@@ -141,7 +141,7 @@ namespace Cube.Pdf.Converter
             var path = src.Value.Source;
             var dest = new OpenFileMessage
             {
-                Title       = Properties.Resources.TitleBrowseSource,
+                Title       = Properties.Resources.TitleSelectSource,
                 Value       = GetFileNames(path, io),
                 Multiselect = false,
                 Filter      = ViewResources.SourceFilters.GetFilter(),
@@ -172,7 +172,7 @@ namespace Cube.Pdf.Converter
             var path = src.Value.Destination;
             var dest = new SaveFileMessage
             {
-                Title           = Properties.Resources.TitleBroseDestination,
+                Title           = Properties.Resources.TitleSelectDestination,
                 Value           = GetFileName(path, io),
                 OverwritePrompt = false,
                 Filter          = ViewResources.DestinationFilters.GetFilter(),
@@ -203,7 +203,7 @@ namespace Cube.Pdf.Converter
             var path = src.Value.UserProgram;
             var dest = new OpenFileMessage
             {
-                Title       = Properties.Resources.TitleBroseUserProgram,
+                Title       = Properties.Resources.TitleSelectUserProgram,
                 Value       = GetFileNames(path, io),
                 Multiselect = false,
                 Filter      = ViewResources.UserProgramFilters.GetFilter(),

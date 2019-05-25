@@ -129,9 +129,9 @@ namespace Cube.Pdf.Converter
             DataBindings.Add("Text", MainBindingSource, "Title", false, DataSourceUpdateMode.Never);
             DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            SourceButton.Click      += (s, e) => vm.BrowseSource();
-            DestinationButton.Click += (s, e) => vm.BrowseDestination();
-            UserProgramButton.Click += (s, e) => vm.BrowseUserProgram();
+            SourceButton.Click      += (s, e) => vm.SelectSource();
+            DestinationButton.Click += (s, e) => vm.SelectDestination();
+            UserProgramButton.Click += (s, e) => vm.SelectUserProgram();
             ConvertButton.Click     += (s, e) => vm.Convert();
             SettingsPanel.Apply     += (s, e) => vm.Save();
 

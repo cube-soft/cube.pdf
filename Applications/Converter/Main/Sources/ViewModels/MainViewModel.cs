@@ -48,10 +48,11 @@ namespace Cube.Pdf.Converter
         /// MainViewModel
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Intializes a new instance of the MainViewModel class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">設定情報</param>
+        /// <param name="settings">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel(SettingsFolder settings) :
@@ -62,11 +63,12 @@ namespace Cube.Pdf.Converter
         /// MainViewModel
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Intializes a new instance of the MainViewModel class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">設定情報</param>
-        /// <param name="context">同期用コンテキスト</param>
+        /// <param name="settings">User settings.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel(SettingsFolder settings, SynchronizationContext context) :
@@ -91,7 +93,8 @@ namespace Cube.Pdf.Converter
         /// General
         ///
         /// <summary>
-        /// 一般およびその他タブを表す ViewModel を取得します。
+        /// Gets the ViewModel object that represents General and Others
+        /// tabs.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -102,7 +105,7 @@ namespace Cube.Pdf.Converter
         /// Metadata
         ///
         /// <summary>
-        /// 文書プロパティ・タブを表す ViewModel を取得します。
+        /// Gets the ViewModel object that represents a Metadata tab.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -113,7 +116,7 @@ namespace Cube.Pdf.Converter
         /// Encryption
         ///
         /// <summary>
-        /// セキュリティ・タブを表す ViewModel を取得します。
+        /// Gets the ViewModel object that represents an Encryption tab.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -124,7 +127,7 @@ namespace Cube.Pdf.Converter
         /// Title
         ///
         /// <summary>
-        /// タイトルを取得します。
+        /// Gets the title of the window.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -138,7 +141,7 @@ namespace Cube.Pdf.Converter
         /// Product
         ///
         /// <summary>
-        /// 製品名を取得します。
+        /// Gets the product name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -149,7 +152,7 @@ namespace Cube.Pdf.Converter
         /// Version
         ///
         /// <summary>
-        /// バージョンを表す文字列を取得します。
+        /// Gets the version of the application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -160,7 +163,7 @@ namespace Cube.Pdf.Converter
         /// Uri
         ///
         /// <summary>
-        /// Web ページの URL を取得します。
+        /// Gets the URL of the application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -171,7 +174,7 @@ namespace Cube.Pdf.Converter
         /// Busy
         ///
         /// <summary>
-        /// 処理中かどうかを示す値を取得します。
+        /// Gets a value indicating whether it is busy.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -186,7 +189,7 @@ namespace Cube.Pdf.Converter
         /// Convert
         ///
         /// <summary>
-        /// 変換処理を実行するコマンドです。
+        /// Executes the conversion.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -200,7 +203,7 @@ namespace Cube.Pdf.Converter
         /// Save
         ///
         /// <summary>
-        /// 設定を保存するコマンドです。
+        /// Saves the current settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -211,38 +214,41 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// BrowseSource
+        /// SelectSource
         ///
         /// <summary>
-        /// 入力ファイルの選択画面を表示するコマンドです。
+        /// Shows an OpenFileDialog dialog and set the selected path to
+        /// the Source property.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void BrowseSource() =>
+        public void SelectSource() =>
             Send(_model.Settings.CreateForSource(), e => _model.SetSource(e));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// BrowseDestination
+        /// SelectDestination
         ///
         /// <summary>
-        /// 保存パスの選択画面を表示するコマンドです。
+        /// Shows an SaveFileDialog dialog and set the selected path to
+        /// the Destination property.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void BrowseDestination() =>
+        public void SelectDestination() =>
             Send(_model.Settings.CreateForDestination(), e => _model.SetDestination(e));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// BrowseUserProgram
+        /// SelectUserProgram
         ///
         /// <summary>
-        /// ユーザプログラムの選択画面を表示するコマンドです。
+        /// Shows an OpenFileDialog dialog and set the selected path to
+        /// the UserProgram property.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void BrowseUserProgram() =>
+        public void SelectUserProgram() =>
             Send(_model.Settings.CreateForUserProgram(), e => _model.SetUserProgram(e));
 
         #endregion
@@ -289,7 +295,7 @@ namespace Cube.Pdf.Converter
                     _model.ChangeExtension();
                     break;
                 case nameof(value.PostProcess):
-                    if (value.PostProcess == PostProcess.Others) BrowseUserProgram();
+                    if (value.PostProcess == PostProcess.Others) SelectUserProgram();
                     break;
                 case nameof(value.Language):
                     Locale.Set(value.Language);

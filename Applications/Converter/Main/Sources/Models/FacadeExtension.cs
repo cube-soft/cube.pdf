@@ -56,7 +56,7 @@ namespace Cube.Pdf.Converter
         /// SetSource
         ///
         /// <summary>
-        /// Source プロパティを更新します。
+        /// Sets the message result to the Source property.
         /// </summary>
         ///
         /// <param name="src">Source facade.</param>
@@ -73,7 +73,8 @@ namespace Cube.Pdf.Converter
         /// SetDestination
         ///
         /// <summary>
-        /// Destination および Format プロパティを更新します。
+        /// Sets the message result to the Destination and Format
+        /// properties.
         /// </summary>
         ///
         /// <param name="src">Source facade.</param>
@@ -96,7 +97,7 @@ namespace Cube.Pdf.Converter
         /// SetUserProgram
         ///
         /// <summary>
-        /// UserProgram プロパティを更新します。
+        /// Sets the message result to the UserProgram property.
         /// </summary>
         ///
         /// <param name="src">Source facade.</param>

@@ -19,7 +19,7 @@ namespace Cube.Pdf.Converter.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -441,38 +441,38 @@ namespace Cube.Pdf.Converter.Properties {
         }
 
         /// <summary>
-        ///   Save as に類似しているローカライズされた文字列を検索します。
+        ///   CubePDF error に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TitleBroseDestination {
+        internal static string TitleError {
             get {
-                return ResourceManager.GetString("TitleBroseDestination", resourceCulture);
+                return ResourceManager.GetString("TitleError", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Select user program に類似しているローカライズされた文字列を検索します。
+        ///   Save as に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TitleBroseUserProgram {
+        internal static string TitleSelectDestination {
             get {
-                return ResourceManager.GetString("TitleBroseUserProgram", resourceCulture);
+                return ResourceManager.GetString("TitleSelectDestination", resourceCulture);
             }
         }
 
         /// <summary>
         ///   Select source file に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TitleBrowseSource {
+        internal static string TitleSelectSource {
             get {
-                return ResourceManager.GetString("TitleBrowseSource", resourceCulture);
+                return ResourceManager.GetString("TitleSelectSource", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   CubePDF error に類似しているローカライズされた文字列を検索します。
+        ///   Select user program に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TitleError {
+        internal static string TitleSelectUserProgram {
             get {
-                return ResourceManager.GetString("TitleError", resourceCulture);
+                return ResourceManager.GetString("TitleSelectUserProgram", resourceCulture);
             }
         }
 
