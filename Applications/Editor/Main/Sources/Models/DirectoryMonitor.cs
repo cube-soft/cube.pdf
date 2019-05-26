@@ -56,9 +56,9 @@ namespace Cube.Pdf.Editor
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DirectoryMonitor(string directory, string filter, IO io, IDispatcher dispatcher)
+        public DirectoryMonitor(string directory, string filter, IO io, IDispatcher dispatcher) :
+            base(dispatcher)
         {
-            Dispatcher = dispatcher;
             Directory  = directory;
             Filter     = filter;
             IO         = io;
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Editor
 
         #region Fields
         private readonly System.IO.FileSystemWatcher _core;
-        private IEnumerable<Information> _items = new Information[0];
+        private IEnumerable<Information> _items = Enumerable.Empty<Information>();
         #endregion
     }
 }
