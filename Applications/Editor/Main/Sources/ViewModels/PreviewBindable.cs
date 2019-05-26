@@ -47,18 +47,21 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="file">Information of the PDF file.</param>
         /// <param name="page">Page object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable(Information file, Page page)
+        public PreviewBindable(Information file, Page page, IDispatcher dispatcher)
         {
             var size  = page.GetViewSize().Value;
             var magic = 14.0; // Scrollbar width
             var ratio = size.Width / size.Height;
             var diff  = size.Width > size.Height ? magic * ratio : -(magic * ratio);
 
-            File   = new Bindable<Information>(file);
-            Width  = new Bindable<int>((int)size.Width);
-            Height = new Bindable<int>((int)(size.Height + diff));
+            File   = new Bindable<Information>(file, dispatcher);
+            Image  = new Bindable<ImageSource>(dispatcher);
+            Width  = new Bindable<int>((int)size.Width, dispatcher);
+            Height = new Bindable<int>((int)(size.Height + diff), dispatcher);
+            Busy   = new Bindable<bool>(false, dispatcher);
         }
 
         #endregion
@@ -85,7 +88,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<ImageSource> Image { get; } = new Bindable<ImageSource>();
+        public Bindable<ImageSource> Image { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -118,7 +121,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> Busy { get; } = new Bindable<bool>(false);
+        public Bindable<bool> Busy { get; }
 
         #endregion
     }

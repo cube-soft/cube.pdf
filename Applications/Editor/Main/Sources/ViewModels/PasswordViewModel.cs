@@ -17,9 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
+using Cube.Mixin.String;
 using Cube.Xui;
-using GalaSoft.MvvmLight.Messaging;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -51,16 +50,16 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PasswordViewModel(QueryEventArgs<string> src, IO io, SynchronizationContext context) :
-            base(() => Properties.Resources.TitlePassword, new Messenger(), context)
+        public PasswordViewModel(QueryMessage<string, string> src, IO io, SynchronizationContext context) :
+            base(() => Properties.Resources.TitlePassword, new Aggregator(), context)
         {
             var fi = io.Get(src.Query);
 
             Password = new BindableElement<string>(
-                () => src.Result,
-                e  => { src.Result = e; return true; },
-                () => string.Format(Properties.Resources.MessagePassword, fi.Name)
-            );
+                () => src.Value,
+                e  => { src.Value = e; return true; },
+                () => string.Format(Properties.Resources.MessagePassword, fi.Name),
+                Dispatcher);
 
             OK.Command = new BindableCommand(
                 () => { src.Cancel = false; Send<CloseMessage>(); },

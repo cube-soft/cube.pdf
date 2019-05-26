@@ -17,9 +17,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.Collections.Mixin;
-using Cube.Log;
-using Cube.Tasks;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Logging;
+using Cube.Mixin.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,7 +41,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCollection : ObservableBase<ImageItem>, IReadOnlyList<ImageItem>, IDisposable
+    public class ImageCollection : ObservableBase<ImageItem>, IReadOnlyList<ImageItem>
     {
         #region Constructors
 
@@ -55,15 +55,14 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="getter">Function to get the renderer.</param>
-        /// <param name="context">Synchronization context.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageCollection(Func<string, IDocumentRenderer> getter, SynchronizationContext context)
+        public ImageCollection(Func<string, IDocumentRenderer> getter, IDispatcher dispatcher)
         {
             ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName).Create(e);
             void update(string s) { if (s == nameof(Preferences.VisibleLast)) Reschedule(null); };
 
-            _dispose = new OnceAction<bool>(Dispose);
             _inner   = new ObservableCollection<ImageItem>();
             _cache   = new CacheCollection<ImageItem, ImageSource>(create);
 
@@ -71,9 +70,9 @@ namespace Cube.Pdf.Editor
             _cache.Created += (s, e) => e.Key.Refresh();
             _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
-            Context     = context;
-            Selection   = new ImageSelection   { Context = context };
-            Preferences = new ImagePreferences { Context = context };
+            Dispatcher  = dispatcher;
+            Selection   = new ImageSelection   { Dispatcher = dispatcher };
+            Preferences = new ImagePreferences { Dispatcher = dispatcher };
 
             Create = (i, r) =>
             {
@@ -340,33 +339,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public override IEnumerator<ImageItem> GetEnumerator() => _inner.GetEnumerator();
 
-        #region IDisposable
+        #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~ImageCollection
-        ///
-        /// <summary>
-        /// Finalizes the ImageCollection
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~ImageCollection() => _dispose.Invoke(false);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the ImageCollection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -384,13 +359,7 @@ namespace Cube.Pdf.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing) { if (disposing) Clear(); }
-
-        #endregion
-
-        #endregion
-
-        #region Implementations
+        protected override void Dispose(bool disposing) { if (disposing) Clear(); }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -437,7 +406,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Reschedule(Action before)
         {
-            if (_dispose.Invoked) return;
+            if (Disposed) return;
 
             var cts = new CancellationTokenSource();
             Interlocked.Exchange(ref _task, cts)?.Cancel();
@@ -450,7 +419,7 @@ namespace Cube.Pdf.Editor
             {
                 for (var i = min; i < max; ++i)
                 {
-                    if (_dispose.Invoked || cts.Token.IsCancellationRequested) return;
+                    if (Disposed || cts.Token.IsCancellationRequested) return;
                     _cache.GetOrCreate(_inner[i]);
                 }
             }).Forget();
@@ -459,7 +428,6 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private readonly OnceAction<bool> _dispose;
         private readonly ObservableCollection<ImageItem> _inner;
         private readonly CacheCollection<ImageItem, ImageSource> _cache;
         private CancellationTokenSource _task;

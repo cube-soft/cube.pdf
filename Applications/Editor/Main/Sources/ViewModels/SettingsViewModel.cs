@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Assembly;
 using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -53,14 +53,16 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingsViewModel(SettingsFolder src, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleSettings, new Messenger(), context)
+            base(() => Properties.Resources.TitleSettings, new Aggregator(), context)
         {
-            var asm = Assembly.GetExecutingAssembly().GetReader();
+            var asm = Assembly.GetExecutingAssembly();
 
-            Language = this.Create(() => src.Value.Language,    e  => src.Value.Language    = e, () => Properties.Resources.MenuLanguage);
-            Update   = this.Create(() => src.Value.CheckUpdate, e  => src.Value.CheckUpdate = e, () => Properties.Resources.MenuUpdate  );
-            Version  = this.Create(() => $"{src.Title} {src.Version.ToString(true)}", () => Properties.Resources.MenuVersion);
-            Link     = this.Create(() => src.Value.Uri, () => asm.Copyright);
+            Language  = this.Create(() => src.Value.Language, e => src.Value.Language = e, () => Properties.Resources.MenuLanguage, Dispatcher);
+            Update    = this.Create(() => src.Value.CheckUpdate, e  => src.Value.CheckUpdate = e, () => Properties.Resources.MenuUpdate, Dispatcher);
+            Version   = this.Create(() => $"{src.Title} {src.Version.ToString(true)}", () => Properties.Resources.MenuVersion, Dispatcher);
+            Link      = this.Create(() => src.Value.Uri, () => asm.GetCopyright(), Dispatcher);
+            Windows   = new BindableElement(() => $"{Environment.OSVersion}", Dispatcher);
+            Framework = new BindableElement(() => $"Microsoft .NET Framework {Environment.Version}", Dispatcher);
 
             Link.Command = new RelayCommand(() => Post(Link.Value));
             OK.Command   = new RelayCommand(() =>
@@ -128,8 +130,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Windows { get; } =
-            new BindableElement(() => $"{Environment.OSVersion}");
+        public BindableElement Windows { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -140,8 +141,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Framework { get; } =
-            new BindableElement(() => $"Microsoft .NET Framework {Environment.Version}");
+        public BindableElement Framework { get; }
 
         /* ----------------------------------------------------------------- */
         ///

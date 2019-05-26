@@ -16,11 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Commands;
 using Cube.Xui;
-using Cube.Xui.Mixin;
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace Cube.Pdf.Editor
@@ -47,12 +46,13 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="text">Function to get text.</param>
         /// <param name="name">Name of icons.</param>
+        /// <param name="text">Function to get text.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement(Getter<string> text, [CallerMemberName] string name = null) :
-            this(text, text, name) { }
+        public RibbonElement(string name, Getter<string> text, IDispatcher dispatcher) :
+            this(name, text, text, dispatcher) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -63,13 +63,14 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
+        /// <param name="name">Name of icons.</param>
         /// <param name="text">Function to get text.</param>
         /// <param name="tooltip">Function to get tooltip.</param>
-        /// <param name="name">Name of icons.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement(Getter<string> text, Getter<string> tooltip,
-            [CallerMemberName] string name = null) : this(text, tooltip, null, name) { }
+        public RibbonElement(string name, Getter<string> text, Getter<string> tooltip,
+            IDispatcher dispatcher) : this(name, text, tooltip, null, dispatcher) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -80,19 +81,20 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
+        /// <param name="name">Name of icons.</param>
         /// <param name="text">Function to get text.</param>
         /// <param name="tooltip">Function to get tooltip.</param>
         /// <param name="enabled">Function to get value.</param>
-        /// <param name="name">Name of icons.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement(Getter<string> text, Getter<string> tooltip,
-            Getter<bool> enabled, [CallerMemberName] string name = null) : base(text)
+        public RibbonElement(string name, Getter<string> text, Getter<string> tooltip,
+            Getter<bool> enabled, IDispatcher dispatcher) : base(text, dispatcher)
         {
             Name = name;
             _getTooltip = tooltip;
             _getEnabled = enabled;
-            _locale     = Locale.Subscribe(z => RaisePropertyChanged(nameof(Tooltip)));
+            _locale     = Locale.Subscribe(z => Refresh(nameof(Tooltip)));
         }
 
         #endregion
@@ -241,9 +243,9 @@ namespace Cube.Pdf.Editor
         {
             void action(object s, EventArgs e)
             {
-                RaisePropertyChanged(nameof(Enabled));
-                RaisePropertyChanged(nameof(SmallIcon));
-                RaisePropertyChanged(nameof(LargeIcon));
+                Refresh(nameof(Enabled));
+                Refresh(nameof(SmallIcon));
+                Refresh(nameof(LargeIcon));
             };
 
             src.CanExecuteChanged -= action;

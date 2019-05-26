@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Xui;
-using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -57,12 +56,22 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public InsertViewModel(Action<int, IEnumerable<FileItem>> callback,
             int i, int n, IO io, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleInsert, new Messenger(), context)
+            base(() => Properties.Resources.TitleInsert, new Aggregator(), context)
         {
-            Model    = new InsertFacade(i, n, io, context);
-            Position = new InsertPosition(Data);
-            DragMove = new InsertDropTarget((f, t) => Model.Move(f, t));
-            DragAdd  = new BindableCommand<string[]>(e => Model.Add(e), e => true);
+            Model         = new InsertFacade(i, n, io, Dispatcher);
+            Position      = new InsertPosition(Data, Dispatcher);
+            DragMove      = new InsertDropTarget((f, t) => Model.Move(f, t));
+            DragAdd       = new BindableCommand<string[]>(e => Model.Add(e), e => true);
+            Preview       = new BindableElement(() => Properties.Resources.MenuPreview, Dispatcher);
+            Add           = new BindableElement(() => Properties.Resources.MenuAdd, Dispatcher);
+            Remove        = new BindableElement(() => Properties.Resources.MenuRemove, Dispatcher);
+            Clear         = new BindableElement(() => Properties.Resources.MenuClear, Dispatcher);
+            Up            = new BindableElement(() => Properties.Resources.MenuUp, Dispatcher);
+            Down          = new BindableElement(() => Properties.Resources.MenuDown, Dispatcher);
+            FileName      = new BindableElement(() => Properties.Resources.MenuFilename, Dispatcher);
+            FileType      = new BindableElement(() => Properties.Resources.MenuFiletype, Dispatcher);
+            FileLength    = new BindableElement(() => Properties.Resources.MenuFilesize, Dispatcher);
+            LastWriteTime = new BindableElement(() => Properties.Resources.MenuLastWriteTime, Dispatcher);
             SetCommands(callback);
         }
 
@@ -147,9 +156,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Preview { get; } = new BindableElement(
-            () => Properties.Resources.MenuPreview
-        );
+        public BindableElement Preview { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -160,9 +167,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Add { get; } = new BindableElement(
-            () => Properties.Resources.MenuAdd
-        );
+        public BindableElement Add { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -173,9 +178,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Remove { get; } = new BindableElement(
-            () => Properties.Resources.MenuRemove
-        );
+        public BindableElement Remove { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -186,9 +189,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Clear { get; } = new BindableElement(
-            () => Properties.Resources.MenuClear
-        );
+        public BindableElement Clear { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -199,9 +200,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Up { get; } = new BindableElement(
-            () => Properties.Resources.MenuUp
-        );
+        public BindableElement Up { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -212,9 +211,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Down { get; } = new BindableElement(
-            () => Properties.Resources.MenuDown
-        );
+        public BindableElement Down { get; }
 
         #endregion
 
@@ -229,9 +226,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement FileName { get; } = new BindableElement(
-            () => Properties.Resources.MenuFilename
-        );
+        public BindableElement FileName { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -242,9 +237,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement FileType { get; } = new BindableElement(
-            () => Properties.Resources.MenuFiletype
-        );
+        public BindableElement FileType { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -255,9 +248,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement FileLength { get; } = new BindableElement(
-            () => Properties.Resources.MenuFilesize
-        );
+        public BindableElement FileLength { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -268,15 +259,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement LastWriteTime { get; } = new BindableElement(
-            () => Properties.Resources.MenuLastWriteTime
-        );
+        public BindableElement LastWriteTime { get; }
 
         #endregion
-
-        #endregion
-
-        #region Commands
 
         #endregion
 
@@ -301,13 +286,13 @@ namespace Cube.Pdf.Editor
             () => Data.Files.Count > 0,
             Data.Files);
 
-            SelectClear     = Any(() => Send(() => Model.SelectClear()));
-            Preview.Command = IsItem(() => Post(() => Model.Preview()));
+            SelectClear     = Any(() => TrackSync(() => Model.SelectClear()));
+            Preview.Command = IsItem(() => Track(() => Model.Preview()));
             Add.Command     = Any(() => SendOpen());
-            Clear.Command   = Any(() => Send(() => Model.Clear()));
-            Remove.Command  = IsItem(() => Send(() => Model.Remove()));
-            Up.Command      = IsItem(() => Send(() => Model.Move(-1)));
-            Down.Command    = IsItem(() => Send(() => Model.Move(1)));
+            Clear.Command   = Any(() => TrackSync(() => Model.Clear()));
+            Remove.Command  = IsItem(() => TrackSync(() => Model.Remove()));
+            Up.Command      = IsItem(() => TrackSync(() => Model.Move(-1)));
+            Down.Command    = IsItem(() => TrackSync(() => Model.Move(1)));
         }
 
         #region Factory
@@ -344,6 +329,17 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// TrackSync
+        ///
+        /// <summary>
+        /// Executes the Track method as a synchronous manner.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void TrackSync(Action action) => Track(action, DialogMessage.Create, true);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SendOpen
         ///
         /// <summary>
@@ -358,10 +354,12 @@ namespace Cube.Pdf.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void SendOpen() => Send(Factory.InsertMessage(e => Send(() =>
+        private void SendOpen()
         {
-            if (e.Result) Model.Add(e.FileNames);
-        })));
+            var msg = Factory.InsertMessage();
+            Send(msg);
+            if (!msg.Cancel) Model.Add(msg.Value);
+        }
 
         #endregion
 

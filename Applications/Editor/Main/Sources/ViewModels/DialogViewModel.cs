@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -32,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DialogViewModel : MessengerViewModel
+    public abstract class DialogViewModel : PresentableBase
     {
         #region Constructors
 
@@ -46,15 +45,19 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="title">Title for the dialog.</param>
-        /// <param name="messenger">Messenger object.</param>
+        /// <param name="aggregator">Messenger object.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected DialogViewModel(Getter<string> title, IMessenger messenger,
-            SynchronizationContext context) : base(messenger, context)
+        protected DialogViewModel(Getter<string> title, Aggregator aggregator,
+            SynchronizationContext context) : base(aggregator, context)
         {
-            Title = new BindableElement(title);
-            Cancel.Command = new RelayCommand(() => Send<CloseMessage>());
+            Title  = new BindableElement(title, Dispatcher);
+            OK     = new BindableElement(() => Properties.Resources.MenuOk, Dispatcher);
+            Cancel = new BindableElement(() => Properties.Resources.MenuCancel, Dispatcher)
+            {
+                Command = new RelayCommand(() => Send<CloseMessage>()),
+            };
         }
 
         #endregion
@@ -81,9 +84,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement OK { get; set; } = new BindableElement(
-            () => Properties.Resources.MenuOk
-        );
+        public BindableElement OK { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -94,9 +95,28 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Cancel { get; set; } = new BindableElement(
-            () => Properties.Resources.MenuCancel
-        );
+        public BindableElement Cancel { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the MainViewModel
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
 
         #endregion
     }

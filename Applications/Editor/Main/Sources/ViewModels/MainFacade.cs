@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections.Mixin;
-using Cube.Generics;
+using Cube.Mixin.Collections;
+using Cube.Mixin.String;
 using Cube.Pdf.Mixin;
 using System;
 using System.Collections.Generic;
@@ -51,14 +51,14 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="src">User settings.</param>
         /// <param name="query">Password query.</param>
-        /// <param name="context">Synchronization context.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingsFolder src, IQuery<string> query, SynchronizationContext context)
+        public MainFacade(SettingsFolder src, IQuery<string> query, IDispatcher dispatcher)
         {
             _core    = new DocumentCollection(query, src.IO);
             Backup   = new Backup(src.IO);
-            Bindable = new MainBindable(new ImageCollection(e => _core?.GetOrAdd(e), context), src, query);
+            Bindable = new MainBindable(new ImageCollection(e => _core?.GetOrAdd(e), dispatcher), src, query);
 
             Settings = src;
             Settings.Load();

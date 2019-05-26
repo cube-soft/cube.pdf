@@ -17,8 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.FileSystem.TestService;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 
@@ -70,8 +70,8 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         [TestCase("Sample.pdf", 2, false)]
         public void Close(string filename, int n, bool modify) => Create(vm =>
         {
-            var fi = IO.Get(GetExamplesWith(filename));
-            Source = Path(Args(fi.NameWithoutExtension, modify));
+            var fi = IO.Get(GetSource(filename));
+            Source = Path(Args(fi.BaseName, modify));
             IO.Copy(fi.FullName, Source, true);
             vm.Ribbon.Open.Command.Execute();
             Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Open)");

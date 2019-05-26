@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
-using GalaSoft.MvvmLight;
 using System;
 
 namespace Cube.Pdf.Editor
@@ -46,13 +45,14 @@ namespace Cube.Pdf.Editor
         /// <param name="src">ViewModel object.</param>
         /// <param name="getter">Function to get value.</param>
         /// <param name="gettext">Function to get text.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /// <returns>BindableElement(T) object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static BindableElement<T> Create<T>(this ViewModelBase src,
-            Getter<T> getter, Getter<string> gettext) =>
-            new BindableElement<T>(getter, gettext);
+        public static BindableElement<T> Create<T>(this PresentableBase src,
+            Getter<T> getter, Getter<string> gettext, IDispatcher dispatcher) =>
+            new BindableElement<T>(getter, gettext, dispatcher);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,13 +66,14 @@ namespace Cube.Pdf.Editor
         /// <param name="getter">Function to get value.</param>
         /// <param name="setter">Action to set value.</param>
         /// <param name="gettext">Function to get text.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /// <returns>BindableElement(T) object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static BindableElement<T> Create<T>(this ViewModelBase src,
-            Getter<T> getter, Action<T> setter, Getter<string> gettext) =>
-            new BindableElement<T>(getter, e => { setter(e); return true; }, gettext);
+        public static BindableElement<T> Create<T>(this PresentableBase src,
+            Getter<T> getter, Action<T> setter, Getter<string> gettext, IDispatcher dispatcher) =>
+            new BindableElement<T>(getter, e => { setter(e); return true; }, gettext, dispatcher);
 
         #endregion
     }

@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Linq;

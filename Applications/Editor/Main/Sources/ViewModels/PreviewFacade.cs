@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Tasks;
+using Cube.Mixin.Tasks;
 using System.Threading.Tasks;
 
 namespace Cube.Pdf.Editor
@@ -44,13 +44,17 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
+        /// <param name="src">Source images.</param>
+        /// <param name="file">Target file information.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public PreviewFacade(ImageCollection src, Information file)
+        public PreviewFacade(ImageCollection src, Information file, IDispatcher dispatcher)
         {
             var index = src.Selection.First;
 
             Images   = src;
-            Bindable = new PreviewBindable(file, src[index].RawObject);
+            Bindable = new PreviewBindable(file, src[index].RawObject, dispatcher);
 
             Task.Run(() => Setup(index)).Forget();
         }

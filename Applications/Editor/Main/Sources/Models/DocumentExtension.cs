@@ -17,8 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
 using Cube.Images;
+using Cube.Mixin.String;
 using Cube.Pdf.Mixin;
 using Cube.Xui.Converters;
 using System;
@@ -124,7 +124,7 @@ namespace Cube.Pdf.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static Itext.DocumentReader GetItexReader(this Information src, IQuery<string> query, IO io)
+        public static Itext.DocumentReader GetItexReader(this Information src, IQuery<string, string> query, IO io)
         {
             var pass = (src as PdfFile)?.Password;
             return pass.HasValue() ?

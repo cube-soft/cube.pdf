@@ -16,10 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
+using Cube.Mixin.Commands;
 using Cube.Pdf.Pdfium;
-using Cube.Xui;
-using Cube.Xui.Mixin;
+using Cube.Tests;
 using GongSolutions.Wpf.DragDrop;
 using NUnit.Framework;
 using System;
@@ -60,7 +59,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         public void Insert(string filename, int n) => Create("SampleRotation.pdf", "", 9, vm =>
         {
             vm.Data.Images.Skip(2).First().IsSelected = true;
-            Source = GetExamplesWith(filename);
+            Source = GetSource(filename);
             Assert.That(vm.Ribbon.Insert.Command.CanExecute(), Is.True);
             vm.Ribbon.Insert.Command.Execute();
             Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Insert)");
@@ -89,12 +88,11 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         [Test]
         public void InsertOthers() => Create("SampleRotation.pdf", "", 9, vm =>
         {
-            vm.Register<InsertViewModel>(this, ivm =>
+            vm.Subscribe<InsertViewModel>(ivm =>
             {
-                ivm.Register<OpenFileMessage>(this, e => {
-                    e.FileNames = new[] { GetExamplesWith("Sample.pdf") };
-                    e.Result    = true;
-                    e.Callback.Invoke(e);
+                ivm.Subscribe<OpenFileMessage>(e => {
+                    e.Value  = new[] { GetSource("Sample.pdf") };
+                    e.Cancel = false;
                 });
                 ivm.Add.Command.Execute();
                 ivm.OK.Command.Execute();
@@ -118,7 +116,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         [Test]
         public void Inser_DragDrop() => Create("SampleRotation.pdf", "", 9, vm =>
         {
-            var f = GetExamplesWith("Sample.pdf");
+            var f = GetSource("Sample.pdf");
             var pages = new List<Page>();
             using (var r = new DocumentReader(f)) pages.AddRange(r.Pages);
 
@@ -396,18 +394,17 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             Action<InsertViewModel> action) => Create(filename, password, n, vm =>
         {
             var cts = new CancellationTokenSource();
-            vm.Register<InsertViewModel>(this, ivm =>
+            vm.Subscribe<InsertViewModel>(ivm =>
             {
-                ivm.Register<OpenFileMessage>(this, e => {
-                    e.Result    = true;
-                    e.FileNames = new[]
+                ivm.Subscribe<OpenFileMessage>(e => {
+                    e.Cancel = false;
+                    e.Value  = new[]
                     {
-                        GetExamplesWith("Sample.pdf"),
-                        GetExamplesWith("SampleAes128.pdf"),
-                        GetExamplesWith("Sample.jpg"),
-                        GetExamplesWith("Loading.png"),
+                        GetSource("Sample.pdf"),
+                        GetSource("SampleAes128.pdf"),
+                        GetSource("Sample.jpg"),
+                        GetSource("Loading.png"),
                     };
-                    e.Callback.Invoke(e);
                 });
                 ivm.Add.Command.Execute();
                 action(ivm);

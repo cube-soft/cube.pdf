@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections.Mixin;
 using Cube.FileSystem;
-using Cube.Generics;
+using Cube.Mixin.Collections;
+using Cube.Mixin.String;
 using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;

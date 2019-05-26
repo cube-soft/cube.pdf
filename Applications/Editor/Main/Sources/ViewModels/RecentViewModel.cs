@@ -18,8 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows.Input;
 
 namespace Cube.Pdf.Editor
@@ -34,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RecentViewModel : MessengerViewModel
+    public class RecentViewModel : PresentableBase
     {
         #region Constructors
 
@@ -48,13 +48,18 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="items">Recently used PDF files.</param>
-        /// <param name="messenger">Messenger object.</param>
+        /// <param name="Aggregator">Messenger object.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RecentViewModel(DirectoryMonitor items, IMessenger messenger) : base(messenger)
+        public RecentViewModel(DirectoryMonitor items, Aggregator Aggregator,
+            SynchronizationContext context) : base(Aggregator, context)
         {
             Items = items;
-            Menu.Command = new RelayCommand(() => Post(() => Process.Start(Items.Directory)));
+            Menu  = new BindableElement(() => Properties.Resources.MenuRecent, Dispatcher)
+            {
+                Command = new RelayCommand(() => Track(() => Process.Start(Items.Directory)))
+            };
         }
 
         #endregion
@@ -81,9 +86,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Menu { get; } = new BindableElement(
-            () => Properties.Resources.MenuRecent
-        );
+        public BindableElement Menu { get; }
 
         #endregion
 
@@ -99,6 +102,27 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand Open { get; set; }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the MainViewModel
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
 
         #endregion
     }

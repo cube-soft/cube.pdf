@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.Generics;
+using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,6 +108,24 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the
+        /// ImageCollection and optionally releases the managed
+        /// resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
 
         /* ----------------------------------------------------------------- */
         ///

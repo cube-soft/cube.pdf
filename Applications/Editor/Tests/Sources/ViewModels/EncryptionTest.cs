@@ -16,10 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
+using Cube.Mixin.Commands;
 using Cube.Pdf.Mixin;
-using Cube.Xui;
-using Cube.Xui.Mixin;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -82,10 +81,10 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         public void Cancel() => Create("Sample.pdf", "", 2, vm =>
         {
             var cts = new CancellationTokenSource();
-            vm.Register<EncryptionViewModel>(this, e =>
+            vm.Subscribe<EncryptionViewModel>(e =>
             {
                 e.OwnerPassword.Value = "dummy";
-                e.Register<CloseMessage>(this, z => cts.Cancel());
+                e.Subscribe<CloseMessage>(z => cts.Cancel());
                 Assert.That(e.Cancel.Command.CanExecute(), Is.True);
                 e.Cancel.Command.Execute();
             });
@@ -143,7 +142,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         private IDisposable Register(MainViewModel vm, Encryption src, bool share) =>
-            vm.Register<EncryptionViewModel>(this, e =>
+            vm.Subscribe<EncryptionViewModel>(e =>
         {
             e.Enabled.Value            = src.Enabled;
             e.OwnerPassword.Value      = src.OwnerPassword;

@@ -17,16 +17,17 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
+using Cube.Mixin.Environment;
+using Cube.Mixin.Generics;
+using Cube.Mixin.String;
 using Cube.Pdf.Mixin;
 using Cube.Xui;
-using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
+using System.Threading;
 using System.Windows.Input;
 
 namespace Cube.Pdf.Editor
@@ -40,7 +41,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainViewModel : MessengerViewModel
+    public class MainViewModel : PresentableBase
     {
         #region Constructors
 
@@ -54,7 +55,8 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel() : this (
-            new SettingsFolder(Assembly.GetExecutingAssembly(), new IO()) { AutoSave = true }
+            new SettingsFolder(Assembly.GetExecutingAssembly(), new IO()) { AutoSave = true },
+            SynchronizationContext.Current
         ) { }
 
         /* ----------------------------------------------------------------- */
@@ -67,21 +69,24 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingsFolder src) : base(new Messenger())
+        public MainViewModel(SettingsFolder src, SynchronizationContext context) :
+            base(new Aggregator(), context)
         {
-            var recent   = Environment.SpecialFolder.Recent.GetName();
-            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO);
-            var password = new Query<string>(e => Send(new PasswordViewModel(e, src.IO, Context)));
+            _context = context;
 
-            Model  = new MainFacade(src, password, Context);
-            Ribbon = new RibbonViewModel(Model.Bindable, MessengerInstance);
-            Recent = new RecentViewModel(mon, MessengerInstance);
+            var recent   = Environment.SpecialFolder.Recent.GetName();
+            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO, Dispatcher);
+            var password = new Query<string>(e => Send(new PasswordViewModel(e, src.IO, context)));
+
+            Model  = new MainFacade(src, password, Dispatcher);
+            Ribbon = new RibbonViewModel(Model.Bindable, Aggregator, context);
+            Recent = new RecentViewModel(mon, Aggregator, context);
 
             Data.Source.PropertyChanged += (s, e) => Ribbon.Raise();
             Data.Busy.PropertyChanged   += (s, e) => Ribbon.Raise();
 
             SetCommands();
-            Post(() => Model.Setup(App.Arguments));
+            Track(() => Model.Setup(App.Arguments));
         }
 
         #endregion
@@ -202,31 +207,31 @@ namespace Cube.Pdf.Editor
             Recent.Open                  = IsLink();
             Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
             Ribbon.Close.Command         = Close();
-            Ribbon.Save.Command          = IsOpen(() => Post(() => Model.Overwrite()));
+            Ribbon.Save.Command          = IsOpen(() => Track(() => Model.Overwrite()));
             Ribbon.SaveAs.Command        = IsOpen(() => PostSave(e => Model.Save(e)));
             Ribbon.Preview.Command       = IsItem(() => PostPreview());
-            Ribbon.Select.Command        = IsOpen(() => Send(() => Model.Select()));
-            Ribbon.SelectAll.Command     = IsOpen(() => Send(() => Model.Select(true)));
-            Ribbon.SelectFlip.Command    = IsOpen(() => Send(() => Model.Flip()));
-            Ribbon.SelectClear.Command   = IsOpen(() => Send(() => Model.Select(false)));
+            Ribbon.Select.Command        = IsOpen(() => TrackSync(() => Model.Select()));
+            Ribbon.SelectAll.Command     = IsOpen(() => TrackSync(() => Model.Select(true)));
+            Ribbon.SelectFlip.Command    = IsOpen(() => TrackSync(() => Model.Flip()));
+            Ribbon.SelectClear.Command   = IsOpen(() => TrackSync(() => Model.Select(false)));
             Ribbon.Insert.Command        = IsItem(() => PostInsert(e => Model.Insert(e)));
             Ribbon.InsertFront.Command   = IsOpen(() => PostInsert(e => Model.Insert(0, e)));
             Ribbon.InsertBack.Command    = IsOpen(() => PostInsert(e => Model.Insert(int.MaxValue, e)));
             Ribbon.InsertOthers.Command  = IsOpen(() => PostInsert());
             Ribbon.Extract.Command       = IsItem(() => PostSave(e => Model.Extract(e)));
-            Ribbon.Remove.Command        = IsItem(() => Send(() => Model.Remove()));
+            Ribbon.Remove.Command        = IsItem(() => TrackSync(() => Model.Remove()));
             Ribbon.RemoveOthers.Command  = IsOpen(() => PostRemove());
-            Ribbon.MovePrevious.Command  = IsItem(() => Send(() => Model.Move(-1)));
-            Ribbon.MoveNext.Command      = IsItem(() => Send(() => Model.Move(1)));
-            Ribbon.RotateLeft.Command    = IsItem(() => Send(() => Model.Rotate(-90)));
-            Ribbon.RotateRight.Command   = IsItem(() => Send(() => Model.Rotate(90)));
+            Ribbon.MovePrevious.Command  = IsItem(() => TrackSync(() => Model.Move(-1)));
+            Ribbon.MoveNext.Command      = IsItem(() => TrackSync(() => Model.Move(1)));
+            Ribbon.RotateLeft.Command    = IsItem(() => TrackSync(() => Model.Rotate(-90)));
+            Ribbon.RotateRight.Command   = IsItem(() => TrackSync(() => Model.Rotate(90)));
             Ribbon.Metadata.Command      = IsOpen(() => PostMetadata());
             Ribbon.Encryption.Command    = IsOpen(() => PostEncryption());
-            Ribbon.Refresh.Command       = IsOpen(() => Send(() => Model.Refresh()));
+            Ribbon.Refresh.Command       = IsOpen(() => TrackSync(() => Model.Refresh()));
             Ribbon.Undo.Command          = IsUndo();
             Ribbon.Redo.Command          = IsRedo();
-            Ribbon.ZoomIn.Command        = Any(() => Send(() => Model.Zoom(1)));
-            Ribbon.ZoomOut.Command       = Any(() => Send(() => Model.Zoom(-1)));
+            Ribbon.ZoomIn.Command        = Any(() => TrackSync(() => Model.Zoom(1)));
+            Ribbon.ZoomOut.Command       = Any(() => TrackSync(() => Model.Zoom(-1)));
             Ribbon.Settings.Command      = Any(() => PostSettings());
             Ribbon.Exit.Command          = Any(() => Send<CloseMessage>());
         }
@@ -258,8 +263,13 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private ICommand Close() => new BindableCommand<CancelEventArgs>(
             e => {
-                if (!Data.Modified.Value) Send(() => Model.Close(false));
-                else Send(Factory.CloseMessage(m => PostClose(e, m.Result)));
+                if (!Data.Modified.Value) TrackSync(() => Model.Close(false));
+                else
+                {
+                    var msg = Factory.CloseMessage();
+                    Send(msg);
+                    PostClose(e, msg.Status);
+                }
             },
             e => Data.IsOpen() && (e != null || !Data.Busy.Value),
             Data.Busy, Data.Source
@@ -334,7 +344,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsLink() => new BindableCommand<object>(
-            e => Post(() => Model.OpenLink(e as Information)),
+            e => Track(() => Model.OpenLink(e as Information)),
             e => !Data.Busy.Value && e is Information,
             Data.Busy
         );
@@ -349,7 +359,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsDragMove() => new BindableCommand<DragDropObject>(
-            e => Post(() => Model.InsertOrMove(e)),
+            e => Track(() => Model.InsertOrMove(e)),
             e => !Data.Busy.Value && Data.IsOpen() &&
                  (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0),
             Data.Busy, Data.Source
@@ -365,7 +375,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsDrop() => new BindableCommand<string[]>(
-            e => Post(() => Model.Open(e)),
+            e => Track(() => Model.Open(e)),
             e => !Data.Busy.Value && Model.GetFirst(e).HasValue(),
             Data.Busy
         );
@@ -373,6 +383,18 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Send or Post
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TrackSync
+        ///
+        /// <summary>
+        /// Invokes the Track method as a synchronous manner.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void TrackSync(Action action) =>
+            Track(action, DialogMessage.Create, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -385,9 +407,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostOpen(Action<string> action) => Send(Factory.OpenMessage(e =>
-            Post(() => { if (e.Result) action(e.FileName); })
-        ));
+        private void PostOpen(Action<string> action)
+        {
+            var msg = Factory.OpenMessage();
+            Send(msg);
+            Track(() => { if (!msg.Cancel) action(msg.Value.First()); });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -400,9 +425,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostSave(Action<string> action) => Send(Factory.SaveMessage(e =>
-            Post(() => { if (e.Result) action(e.FileName); })
-        ));
+        private void PostSave(Action<string> action)
+        {
+            var msg = Factory.SaveMessage();
+            Send(msg);
+            Track(() => { if (!msg.Cancel) action(msg.Value); });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -415,9 +443,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostInsert(Action<IEnumerable<string>> action) => Send(Factory.InsertMessage(e =>
-            Post(() => { if (e.Result) action(e.FileNames); })
-        ));
+        private void PostInsert(Action<IEnumerable<string>> action)
+        {
+            var msg = Factory.InsertMessage();
+            Send(msg);
+            Track(() => { if (!msg.Cancel) action(msg.Value); });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -428,15 +459,15 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostClose(CancelEventArgs src, MessageBoxResult m)
+        private void PostClose(CancelEventArgs src, DialogStatus m)
         {
             var e = src ?? new CancelEventArgs();
-            e.Cancel = (m == MessageBoxResult.Cancel);
+            e.Cancel = m == DialogStatus.Cancel;
             if (e.Cancel) return;
 
-            void close() => Model.Close(m == MessageBoxResult.Yes);
-            if (src != null) Send(close);
-            else Post(close);
+            void close() => Model.Close(m == DialogStatus.Yes);
+            if (src != null) Track(close, DialogMessage.Create, true);
+            else Track(close);
         }
 
         /* ----------------------------------------------------------------- */
@@ -450,7 +481,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void PostPreview() => Post(new PreviewViewModel(
-            Data.Images, Data.Source.Value, Context
+            Data.Images, Data.Source.Value, _context
         ));
 
         /* ----------------------------------------------------------------- */
@@ -464,8 +495,8 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void PostInsert() => Post(new InsertViewModel(
-            (i, v) => Post(() => Model.Insert(i + 1, v.Select(e => e.FullName))),
-            Data.Images.Selection.First, Data.Count.Value, Data.IO, Context
+            (i, v) => Track(() => Model.Insert(i + 1, v.Select(e => e.FullName))),
+            Data.Images.Selection.First, Data.Count.Value, Data.IO, _context
         ));
 
         /* ----------------------------------------------------------------- */
@@ -479,7 +510,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void PostRemove() => Post(new RemoveViewModel(
-            e => Model.Remove(e), Data.Count.Value, Context
+            e => Model.Remove(e), Data.Count.Value, _context
         ));
 
         /* ----------------------------------------------------------------- */
@@ -492,10 +523,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostMetadata() => Post(() =>
+        private void PostMetadata() => Track(() =>
         {
             var m = Data.Metadata.Copy();
-            Post(new MetadataViewModel(e => Model.Update(e), m, Data.Source.Value, Context));
+            Post(new MetadataViewModel(e => Model.Update(e), m, Data.Source.Value, _context));
         });
 
         /* ----------------------------------------------------------------- */
@@ -508,10 +539,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostEncryption() => Post(() =>
+        private void PostEncryption() => Track(() =>
         {
             var m = Data.Encryption.Copy();
-            Post(new EncryptionViewModel(e => Model.Update(e), m, Context));
+            Post(new EncryptionViewModel(e => Model.Update(e), m, _context));
         });
 
         /* ----------------------------------------------------------------- */
@@ -524,10 +555,14 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostSettings() => Post(new SettingsViewModel(Model.Settings, Context));
+        private void PostSettings() => Post(new SettingsViewModel(Model.Settings, _context));
 
         #endregion
 
+        #endregion
+
+        #region Fields
+        private readonly SynchronizationContext _context;
         #endregion
     }
 }

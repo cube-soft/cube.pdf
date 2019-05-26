@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class Settings : ObservableProperty
+    public class Settings : ObservableBase
     {
         #region Constructors
 

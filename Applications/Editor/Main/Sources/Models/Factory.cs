@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Images.Icons;
-using Cube.Xui;
+using Cube.Mixin.Assembly;
 using Cube.Xui.Converters;
 using System.Reflection;
 using System.Windows.Media.Imaging;
@@ -46,15 +46,10 @@ namespace Cube.Pdf.Editor
         /// Creates a message to show the OpenFileDialog.
         /// </summary>
         ///
-        /// <param name="callback">
-        /// Callback action when terminating the user operation.
-        /// </param>
-        ///
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage OpenMessage(OpenFileCallback callback) =>
-            new OpenFileMessage(callback)
+        public static OpenFileMessage OpenMessage() => new OpenFileMessage
         {
             Title           = Properties.Resources.TitleOpen,
             CheckPathExists = true,
@@ -74,15 +69,10 @@ namespace Cube.Pdf.Editor
         /// Creates a message to show the OpenFileDialog.
         /// </summary>
         ///
-        /// <param name="callback">
-        /// Callback action when terminating the user operation.
-        /// </param>
-        ///
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage InsertMessage(OpenFileCallback callback) =>
-            new OpenFileMessage(callback)
+        public static OpenFileMessage InsertMessage() => new OpenFileMessage
         {
             Title           = Properties.Resources.TitleOpen,
             CheckPathExists = true,
@@ -102,15 +92,10 @@ namespace Cube.Pdf.Editor
         /// Creates a message to show the SaveFileDialog.
         /// </summary>
         ///
-        /// <param name="callback">
-        /// Callback action when terminating the user operation.
-        /// </param>
-        ///
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage SaveMessage(SaveFileCallback callback) =>
-            new SaveFileMessage(callback)
+        public static SaveFileMessage SaveMessage() => new SaveFileMessage
         {
             Title           = Properties.Resources.TitleSaveAs,
             OverwritePrompt = true,
@@ -131,19 +116,15 @@ namespace Cube.Pdf.Editor
         /// confirmation.
         /// </summary>
         ///
-        /// <param name="callback">
-        /// Callback action when terminating the user operation.
-        /// </param>
-        ///
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage CloseMessage(DialogCallback callback) =>
-            new DialogMessage(Properties.Resources.MessageOverwrite,
-            Assembly.GetExecutingAssembly(), callback)
+        public static DialogMessage CloseMessage() => new DialogMessage
         {
-            Buttons = System.Windows.MessageBoxButton.YesNoCancel,
-            Image   = System.Windows.MessageBoxImage.Information,
+            Value   = Properties.Resources.MessageOverwrite,
+            Title   = Assembly.GetExecutingAssembly().GetTitle(),
+            Buttons = DialogButtons.YesNoCancel,
+            Icon    = DialogIcon.Warning,
         };
 
         #endregion

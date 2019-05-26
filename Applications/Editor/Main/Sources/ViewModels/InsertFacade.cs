@@ -16,13 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections.Mixin;
 using Cube.FileSystem;
+using Cube.Mixin.Collections;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
@@ -52,13 +51,13 @@ namespace Cube.Pdf.Editor
         /// <param name="i">Selected index.</param>
         /// <param name="n">Number of pages.</param>
         /// <param name="io">I/O handler</param>
-        /// <param name="context">Synchronization context.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertFacade(int i, int n, IO io, SynchronizationContext context)
+        public InsertFacade(int i, int n, IO io, IDispatcher dispatcher)
         {
             IO       = io;
-            Bindable = new InsertBindable(i, n, context);
+            Bindable = new InsertBindable(i, n, dispatcher);
         }
 
         #endregion

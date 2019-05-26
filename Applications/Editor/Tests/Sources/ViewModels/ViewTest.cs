@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading;
@@ -53,7 +53,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         public Task Preview() => CreateAsync("Sample.pdf", "", 2, async (vm) =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Register<PreviewViewModel>(this, e =>
+            var dp  = vm.Subscribe<PreviewViewModel>(e =>
             {
                 Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Data.File.Value,   Is.Not.Null);

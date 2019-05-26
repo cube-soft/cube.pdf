@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Generics;
+using Cube.Mixin.Commands;
+using Cube.Mixin.String;
+using Cube.Tests;
 using Cube.Xui;
-using Cube.Xui.Mixin;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Editor.Tests
@@ -141,7 +140,7 @@ namespace Cube.Pdf.Editor.Tests
         protected void Create(string filename, string password, int n,
             Action<MainViewModel> action) => Create(vm =>
         {
-            Source   = GetExamplesWith(filename);
+            Source   = GetSource(filename);
             Password = password;
             Execute(vm, vm.Ribbon.Open);
             Assert.That(Wait.For(() => vm.Data.Images.Count == n), "Timeout (Open)");
@@ -189,7 +188,7 @@ namespace Cube.Pdf.Editor.Tests
         protected Task CreateAsync(string filename, string password, int n,
             Func<MainViewModel, Task> callback) => CreateAsync(async (vm) =>
         {
-            Source   = GetExamplesWith(filename);
+            Source   = GetSource(filename);
             Password = password;
 
             Assert.That(vm.Ribbon.Open.Command.CanExecute(), Is.True);
@@ -273,7 +272,7 @@ namespace Cube.Pdf.Editor.Tests
         ///
         /* ----------------------------------------------------------------- */
         protected string Path(object[] parts, [CallerMemberName] string name = null) =>
-           GetResultsWith($"{name}_{string.Join("_", parts)}.pdf");
+           Get($"{name}_{string.Join("_", parts)}.pdf");
 
         #endregion
 
@@ -309,12 +308,12 @@ namespace Cube.Pdf.Editor.Tests
         /* ----------------------------------------------------------------- */
         private MainViewModel Create()
         {
-            var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
+            var dummy = new BitmapImage(new Uri(GetSource("Loading.png")));
             var asm   = Assembly.GetExecutingAssembly();
             var fmt   = DataContract.Format.Registry;
             var path  = @"CubeSoft\Cube.Pdf.Editor.Tests";
             var src   = new SettingsFolder(asm, fmt, path, IO) { AutoSave = false };
-            var dest  = new MainViewModel(src);
+            var dest  = new MainViewModel(src, new SynchronizationContext());
 
             dest.Data.Images.Preferences.Dummy = dummy;
             dest.Data.Images.Preferences.VisibleFirst = 0;
@@ -332,14 +331,14 @@ namespace Cube.Pdf.Editor.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private MessageBoxResult Select(MessageBoxButton src)
+        private DialogStatus Select(DialogButtons src)
         {
-            var dic = new Dictionary<MessageBoxButton, MessageBoxResult>
+            var dic = new Dictionary<DialogButtons, DialogStatus>
             {
-                { MessageBoxButton.OK,          MessageBoxResult.OK  },
-                { MessageBoxButton.OKCancel,    MessageBoxResult.OK  },
-                { MessageBoxButton.YesNo,       MessageBoxResult.Yes },
-                { MessageBoxButton.YesNoCancel, MessageBoxResult.Yes },
+                { DialogButtons.Ok,          DialogStatus.Ok  },
+                { DialogButtons.OkCancel,    DialogStatus.Ok  },
+                { DialogButtons.YesNo,       DialogStatus.Yes },
+                { DialogButtons.YesNoCancel, DialogStatus.Yes },
             };
 
             var check = dic.TryGetValue(src, out var dest);
@@ -356,27 +355,23 @@ namespace Cube.Pdf.Editor.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<IDisposable> Register(IMessengerRegistrar src)
+        private IEnumerable<IDisposable> Register(IPresentable src)
         {
             void dialog(DialogMessage e)
             {
-                e.Result = Select(e.Buttons);
-                e.Callback?.Invoke(e);
+                e.Status = Select(e.Buttons);
             }
 
             void open(OpenFileMessage e)
             {
-                e.FileName  = Source;
-                e.FileNames = new[] { Source };
-                e.Result    = true;
-                e.Callback.Invoke(e);
+                e.Value  = new[] { Source };
+                e.Cancel = false;
             }
 
             void save(SaveFileMessage e)
             {
-                e.FileName = Destination;
-                e.Result   = true;
-                e.Callback.Invoke(e);
+                e.Value  = Destination;
+                e.Cancel = false;
             }
 
             void pass(PasswordViewModel e)
@@ -389,10 +384,10 @@ namespace Cube.Pdf.Editor.Tests
 
             return new List<IDisposable>
             {
-                src.Register<DialogMessage>(this, dialog),
-                src.Register<OpenFileMessage>(this, open),
-                src.Register<SaveFileMessage>(this, save),
-                src.Register<PasswordViewModel>(this, pass),
+                src.Subscribe<DialogMessage>(dialog),
+                src.Subscribe<OpenFileMessage>(open),
+                src.Subscribe<SaveFileMessage>(save),
+                src.Subscribe<PasswordViewModel>(pass),
             };
         }
 

@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Commands;
 using Cube.Xui.Behaviors;
-using Cube.Xui.Mixin;
 using System.Windows.Controls;
 using System.Windows.Input;
 

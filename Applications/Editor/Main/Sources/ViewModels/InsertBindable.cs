@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
 using System;
-using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
@@ -46,17 +45,17 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="i">Selected index.</param>
         /// <param name="n">Number of pages.</param>
-        /// <param name="context">Synchronization context.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable(int i, int n, SynchronizationContext context)
+        public InsertBindable(int i, int n, IDispatcher dispatcher)
         {
-            Files              = new BindableCollection<FileItem> { Context = context };
-            Selection          = new Selection<FileItem> { Context = context };
+            Files              = new BindableCollection<FileItem>(dispatcher);
+            Selection          = new Selection<FileItem> { Dispatcher = dispatcher };
             Count              = n;
             SelectedIndex      = i;
-            Index              = new Bindable<int>(Math.Max(i, 0)) { Context = context };
-            UserSpecifiedIndex = new Bindable<int>(Math.Max(i, 0)) { Context = context };
+            Index              = new Bindable<int>(Math.Max(i, 0), dispatcher);
+            UserSpecifiedIndex = new Bindable<int>(Math.Max(i, 0), dispatcher);
             UserSpecifiedIndex.PropertyChanged += (s, e) => Index.Value = UserSpecifiedIndex.Value;
         }
 

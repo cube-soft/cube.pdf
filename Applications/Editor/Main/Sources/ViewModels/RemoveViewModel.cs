@@ -16,9 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
+using Cube.Mixin.String;
 using Cube.Xui;
-using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,15 +53,22 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public RemoveViewModel(Action<IEnumerable<int>> callback, int n, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleRemove, new Messenger(), context)
+            base(() => Properties.Resources.TitleRemove, new Aggregator(), context)
         {
+            Range = new Bindable<string>(string.Empty, Dispatcher);
+
+            RangeCaption = new BindableElement<string>(
+                () => Properties.Resources.MessageRemoveRange,
+                () => Properties.Resources.MenuRemoveRange,
+                Dispatcher);
+
             PageCaption = new BindableElement<string>(
                 () => string.Format(Properties.Resources.MessagePage, n),
-                () => Properties.Resources.MenuPageCount
-            );
+                () => Properties.Resources.MenuPageCount,
+                Dispatcher);
 
             OK.Command = new BindableCommand(
-                () => Post(() => Execute(callback, n)),
+                () => Track(() => Execute(callback, n)),
                 () => Range.Value.HasValue(),
                 Range
             );
@@ -81,7 +87,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<string> Range { get; } = new Bindable<string>(string.Empty);
+        public Bindable<string> Range { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -93,10 +99,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> RangeCaption { get; } = new BindableElement<string>(
-            () => Properties.Resources.MessageRemoveRange,
-            () => Properties.Resources.MenuRemoveRange
-        );
+        public BindableElement<string> RangeCaption { get; }
 
         /* ----------------------------------------------------------------- */
         ///

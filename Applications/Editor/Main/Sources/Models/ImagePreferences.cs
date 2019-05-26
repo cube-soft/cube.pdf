@@ -32,7 +32,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImagePreferences : ObservableProperty
+    public class ImagePreferences : ObservableBase
     {
         #region Properties
 
@@ -65,8 +65,7 @@ namespace Cube.Pdf.Editor
             set
             {
                 var index = Math.Min(Math.Max(value, 0), ItemSizeOptions.Count - 1);
-                if (!SetProperty(ref _itemSizeIndex, index)) return;
-                RaisePropertyChanged(nameof(ItemSize));
+                if (SetProperty(ref _itemSizeIndex, index)) Refresh(nameof(ItemSize));
             }
         }
 

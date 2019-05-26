@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using GalaSoft.MvvmLight.Messaging;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -50,9 +49,9 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public PreviewViewModel(ImageCollection src, Information file, SynchronizationContext context) :
-            base(() => GetTitle(src, file), new Messenger(), context)
+            base(() => GetTitle(src, file), new Aggregator(), context)
         {
-            Model = new PreviewFacade(src, file);
+            Model = new PreviewFacade(src, file, Dispatcher);
         }
 
         #endregion

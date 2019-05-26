@@ -43,26 +43,32 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
+        /// <param name="data">Data object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public InsertPosition(InsertBindable data) :
-            base(() => Properties.Resources.MenuInsertPosition)
+        public InsertPosition(InsertBindable data, IDispatcher dispatcher) :
+            base(() => Properties.Resources.MenuInsertPosition, dispatcher)
         {
             Command = new RelayCommand<int>(e => data.Index.Value = e);
 
+            First = new BindableElement(() => Properties.Resources.MenuPositionFirst, Dispatcher);
+            Last  = new BindableElement(() => Properties.Resources.MenuPositionLast, Dispatcher);
+
             Selected = new BindableElement<bool>(
                 () => data.SelectedIndex >= 0,
-                () => Properties.Resources.MenuPositionSelected
-            );
+                () => Properties.Resources.MenuPositionSelected,
+                Dispatcher);
 
             UserSpecified = new BindableElement<int>(
                 () => data.UserSpecifiedIndex.Value + 1,
                 e => { data.UserSpecifiedIndex.Value = e - 1; return true; },
-                () => Properties.Resources.MenuPositionSpecified
-            );
+                () => Properties.Resources.MenuPositionSpecified,
+                Dispatcher);
 
-            UserSpecifiedSuffix = new BindableElement(() => string.Format(
-                $"/ {Properties.Resources.MessagePage}", data.Count
-            ));
+            UserSpecifiedSuffix = new BindableElement(
+                () => string.Format($"/ {Properties.Resources.MessagePage}", data.Count),
+                Dispatcher);
         }
 
         #endregion
@@ -78,9 +84,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement First { get; } = new BindableElement(
-            () => Properties.Resources.MenuPositionFirst
-        );
+        public BindableElement First { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -91,9 +95,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Last { get; } = new BindableElement(
-            () => Properties.Resources.MenuPositionLast
-        );
+        public BindableElement Last { get; }
 
         /* ----------------------------------------------------------------- */
         ///

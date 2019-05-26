@@ -17,7 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.String;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -93,7 +94,7 @@ namespace Cube.Pdf.Editor
         public SettingsFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
             base(assembly, format, location, io)
         {
-            Title          = Assembly.Title;
+            Title          = Assembly.GetTitle();
             AutoSave       = false;
             Version.Digit  = 3;
             Version.Suffix = Properties.Resources.VersionSuffix;
@@ -164,13 +165,15 @@ namespace Cube.Pdf.Editor
             {
                 if (Value == null) return;
 
-                var exe = IO.Combine(Assembly.DirectoryName, $"CubeChecker.exe");
-                var sk  = "CubePDF Utility2";
+                var name = "cubepdf-utility-checker";
+                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
+                var sk   = "CubePDF Utility2";
+                var args = $"{Assembly.GetNameString().Quote()} /subkey {sk.Quote()}";
 
-                new Startup($"cubepdf-utility-checker")
+                new Startup(name)
                 {
-                    Command = $"{exe.Quote()} {Assembly.Product.Quote()} /subkey {sk.Quote()}",
-                    Enabled = Value.CheckUpdate,
+                    Command = $"{exe.Quote()} {args}",
+                    Enabled = Value.CheckUpdate && IO.Exists(exe),
                 }.Save();
             }
             finally { base.OnSaved(e); }
