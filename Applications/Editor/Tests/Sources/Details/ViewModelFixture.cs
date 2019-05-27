@@ -240,9 +240,9 @@ namespace Cube.Pdf.Editor.Tests
                 cts.Cancel();
             }
 
-            Assert.That(vm.Data.Busy.Value, Is.False);
+            Assert.That(vm.Data.Busy.Value, Is.False, $"Busy ({src.Text})");
             vm.Data.Busy.PropertyChanged += action;
-            Assert.That(src.Command.CanExecute(), Is.True);
+            Assert.That(src.Command.CanExecute(), Is.True, $"CanExecute ({src.Text})");
             src.Command.Execute();
 
             var done = await Wait.ForAsync(cts.Token).ConfigureAwait(false);

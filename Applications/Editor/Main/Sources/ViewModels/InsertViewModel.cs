@@ -58,20 +58,20 @@ namespace Cube.Pdf.Editor
             int i, int n, IO io, SynchronizationContext context) :
             base(() => Properties.Resources.TitleInsert, new Aggregator(), context)
         {
-            Model         = new InsertFacade(i, n, io, Dispatcher);
-            Position      = new InsertPosition(Data, Dispatcher);
+            Model         = new InsertFacade(i, n, io, GetDispatcher(false));
+            Position      = new InsertPosition(Data, GetDispatcher(false));
             DragMove      = new InsertDropTarget((f, t) => Model.Move(f, t));
             DragAdd       = new BindableCommand<string[]>(e => Model.Add(e), e => true);
-            Preview       = new BindableElement(() => Properties.Resources.MenuPreview, Dispatcher);
-            Add           = new BindableElement(() => Properties.Resources.MenuAdd, Dispatcher);
-            Remove        = new BindableElement(() => Properties.Resources.MenuRemove, Dispatcher);
-            Clear         = new BindableElement(() => Properties.Resources.MenuClear, Dispatcher);
-            Up            = new BindableElement(() => Properties.Resources.MenuUp, Dispatcher);
-            Down          = new BindableElement(() => Properties.Resources.MenuDown, Dispatcher);
-            FileName      = new BindableElement(() => Properties.Resources.MenuFilename, Dispatcher);
-            FileType      = new BindableElement(() => Properties.Resources.MenuFiletype, Dispatcher);
-            FileLength    = new BindableElement(() => Properties.Resources.MenuFilesize, Dispatcher);
-            LastWriteTime = new BindableElement(() => Properties.Resources.MenuLastWriteTime, Dispatcher);
+            Preview       = new BindableElement(() => Properties.Resources.MenuPreview, GetDispatcher(false));
+            Add           = new BindableElement(() => Properties.Resources.MenuAdd, GetDispatcher(false));
+            Remove        = new BindableElement(() => Properties.Resources.MenuRemove, GetDispatcher(false));
+            Clear         = new BindableElement(() => Properties.Resources.MenuClear, GetDispatcher(false));
+            Up            = new BindableElement(() => Properties.Resources.MenuUp, GetDispatcher(false));
+            Down          = new BindableElement(() => Properties.Resources.MenuDown, GetDispatcher(false));
+            FileName      = new BindableElement(() => Properties.Resources.MenuFilename, GetDispatcher(false));
+            FileType      = new BindableElement(() => Properties.Resources.MenuFiletype, GetDispatcher(false));
+            FileLength    = new BindableElement(() => Properties.Resources.MenuFilesize, GetDispatcher(false));
+            LastWriteTime = new BindableElement(() => Properties.Resources.MenuLastWriteTime, GetDispatcher(false));
             SetCommands(callback);
         }
 

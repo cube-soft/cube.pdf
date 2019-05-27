@@ -72,13 +72,11 @@ namespace Cube.Pdf.Editor
         public MainViewModel(SettingsFolder src, SynchronizationContext context) :
             base(new Aggregator(), context)
         {
-            _context = context;
-
             var recent   = Environment.SpecialFolder.Recent.GetName();
-            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO, Dispatcher);
+            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO, GetDispatcher(false));
             var password = new Query<string>(e => Send(new PasswordViewModel(e, src.IO, context)));
 
-            Model  = new MainFacade(src, password, Dispatcher);
+            Model  = new MainFacade(src, password, context);
             Ribbon = new RibbonViewModel(Model.Bindable, Aggregator, context);
             Recent = new RecentViewModel(mon, Aggregator, context);
 
@@ -314,7 +312,8 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsUndo() => new BindableCommand(() => Model.Undo(),
+        private ICommand IsUndo() => new BindableCommand(
+            () => TrackSync(() => Model.Undo()),
             () => !Data.Busy.Value && Data.History.Undoable,
             Data.Busy, Data.History
         );
@@ -329,7 +328,8 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsRedo() => new BindableCommand(() => Model.Redo(),
+        private ICommand IsRedo() => new BindableCommand(
+            () => TrackSync(() => Model.Redo()),
             () => !Data.Busy.Value && Data.History.Redoable,
             Data.Busy, Data.History
         );
@@ -393,8 +393,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void TrackSync(Action action) =>
-            Track(action, DialogMessage.Create, true);
+        private void TrackSync(Action action) => Track(action, DialogMessage.Create, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -481,7 +480,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void PostPreview() => Post(new PreviewViewModel(
-            Data.Images, Data.Source.Value, _context
+            Data.Images, Data.Source.Value, Context
         ));
 
         /* ----------------------------------------------------------------- */
@@ -496,7 +495,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void PostInsert() => Post(new InsertViewModel(
             (i, v) => Track(() => Model.Insert(i + 1, v.Select(e => e.FullName))),
-            Data.Images.Selection.First, Data.Count.Value, Data.IO, _context
+            Data.Images.Selection.First, Data.Count.Value, Data.IO, Context
         ));
 
         /* ----------------------------------------------------------------- */
@@ -510,7 +509,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void PostRemove() => Post(new RemoveViewModel(
-            e => Model.Remove(e), Data.Count.Value, _context
+            e => Model.Remove(e), Data.Count.Value, Context
         ));
 
         /* ----------------------------------------------------------------- */
@@ -526,7 +525,7 @@ namespace Cube.Pdf.Editor
         private void PostMetadata() => Track(() =>
         {
             var m = Data.Metadata.Copy();
-            Post(new MetadataViewModel(e => Model.Update(e), m, Data.Source.Value, _context));
+            Post(new MetadataViewModel(e => Model.Update(e), m, Data.Source.Value, Context));
         });
 
         /* ----------------------------------------------------------------- */
@@ -542,7 +541,7 @@ namespace Cube.Pdf.Editor
         private void PostEncryption() => Track(() =>
         {
             var m = Data.Encryption.Copy();
-            Post(new EncryptionViewModel(e => Model.Update(e), m, _context));
+            Post(new EncryptionViewModel(e => Model.Update(e), m, Context));
         });
 
         /* ----------------------------------------------------------------- */
@@ -555,14 +554,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostSettings() => Post(new SettingsViewModel(Model.Settings, _context));
+        private void PostSettings() => Post(new SettingsViewModel(Model.Settings, Context));
 
         #endregion
 
-        #endregion
-
-        #region Fields
-        private readonly SynchronizationContext _context;
         #endregion
     }
 }

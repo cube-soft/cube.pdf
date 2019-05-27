@@ -53,144 +53,144 @@ namespace Cube.Pdf.Editor
         {
             File = new RibbonElement(nameof(File),
                 () => Properties.Resources.MenuFile,
-                Dispatcher);
+                GetDispatcher(false));
 
             Edit = new RibbonElement(nameof(Edit),
                 () => Properties.Resources.MenuEdit,
-                Dispatcher);
+                GetDispatcher(false));
 
             Others = new RibbonElement(nameof(Others),
                 () => Properties.Resources.MenuOthers,
-                Dispatcher);
+                GetDispatcher(false));
 
             Preview = new BindableElement(
                 () => Properties.Resources.MenuPreview,
-                Dispatcher);
+                GetDispatcher(false));
 
             Open = new RibbonElement(nameof(Open),
                 () => Properties.Resources.MenuOpen,
-                Dispatcher);
+                GetDispatcher(false));
 
             Save = new RibbonElement(nameof(Save),
                 () => Properties.Resources.MenuSave,
                 () => Properties.Resources.TooltipSave,
-                Dispatcher);
+                GetDispatcher(false));
 
             SaveAs = new RibbonElement(nameof(SaveAs),
                 () => Properties.Resources.MenuSaveAs,
-                Dispatcher);
+                GetDispatcher(false));
 
             Close = new RibbonElement(nameof(Close),
                 () => Properties.Resources.MenuClose,
-                Dispatcher);
+                GetDispatcher(false));
 
             Exit = new RibbonElement(nameof(Exit),
                 () => Properties.Resources.MenuExit,
-                Dispatcher);
+                GetDispatcher(false));
 
             Undo = new RibbonElement(nameof(Undo),
                 () => Properties.Resources.MenuUndo,
-                Dispatcher);
+                GetDispatcher(false));
 
             Redo = new RibbonElement(nameof(Redo),
                 () => Properties.Resources.MenuRedo,
-                Dispatcher);
+                GetDispatcher(false));
 
             Select = new RibbonElement(nameof(Select),
                 () => Properties.Resources.MenuSelect,
-                Dispatcher);
+                GetDispatcher(false));
 
             SelectAll = new RibbonElement(nameof(Select),
                 () => Properties.Resources.MenuSelectAll,
-                Dispatcher);
+                GetDispatcher(false));
 
             SelectFlip = new RibbonElement(nameof(Select),
                 () => Properties.Resources.MenuSelectFlip,
-                Dispatcher);
+                GetDispatcher(false));
 
             SelectClear = new RibbonElement(nameof(Select),
                 () => Properties.Resources.MenuSelectClear,
-                Dispatcher);
+                GetDispatcher(false));
 
             Insert = new RibbonElement(nameof(Insert),
                 () => Properties.Resources.MenuInsert,
                 () => Properties.Resources.TooltipInsert,
                 () => !src.Busy.Value && src.IsOpen(),
-                Dispatcher);
+                GetDispatcher(false));
 
             InsertFront = new RibbonElement(nameof(Insert),
                 () => Properties.Resources.MenuInsertFront,
-                Dispatcher);
+                GetDispatcher(false));
 
             InsertBack = new RibbonElement(nameof(Insert),
                 () => Properties.Resources.MenuInsertBack,
-                Dispatcher);
+                GetDispatcher(false));
 
             InsertOthers = new RibbonElement(nameof(InsertOthers),
                 () => Properties.Resources.MenuInsertOthers,
-                Dispatcher);
+                GetDispatcher(false));
 
             Extract = new RibbonElement(nameof(Extract),
                 () => Properties.Resources.MenuExtract,
                 () => Properties.Resources.TooltipExtract,
-                Dispatcher);
+                GetDispatcher(false));
 
             Remove = new RibbonElement(nameof(Remove),
                 () => Properties.Resources.MenuRemove,
                 () => Properties.Resources.TooltipRemove,
                 () => !src.Busy.Value && src.IsOpen(),
-                Dispatcher);
+                GetDispatcher(false));
 
             RemoveOthers = new RibbonElement(nameof(RemoveOthers),
                 () => Properties.Resources.MenuRemoveOthers,
-                Dispatcher);
+                GetDispatcher(false));
 
             MoveNext = new RibbonElement(nameof(MoveNext),
                 () => Properties.Resources.MenuMoveNext,
-                Dispatcher);
+                GetDispatcher(false));
 
             MovePrevious = new RibbonElement(nameof(MovePrevious),
                 () => Properties.Resources.MenuMovePrevious,
-                Dispatcher);
+                GetDispatcher(false));
 
             RotateLeft = new RibbonElement(nameof(RotateLeft),
                 () => Properties.Resources.MenuRotateLeft,
-                Dispatcher);
+                GetDispatcher(false));
 
             RotateRight = new RibbonElement(nameof(RotateRight),
                 () => Properties.Resources.MenuRotateRight,
-                Dispatcher);
+                GetDispatcher(false));
 
             Metadata = new RibbonElement(nameof(Metadata),
                 () => Properties.Resources.MenuMetadata,
                 () => Properties.Resources.TooltipMetadata,
-                Dispatcher);
+                GetDispatcher(false));
 
             Encryption = new RibbonElement(nameof(Encryption),
                 () => Properties.Resources.MenuEncryption,
-                Dispatcher);
+                GetDispatcher(false));
 
             Refresh = new RibbonElement(nameof(Refresh),
                 () => Properties.Resources.MenuRefresh,
-                Dispatcher);
+                GetDispatcher(false));
 
             ZoomIn = new RibbonElement(nameof(ZoomIn),
                 () => Properties.Resources.MenuZoomIn,
-                Dispatcher);
+                GetDispatcher(false));
 
             ZoomOut = new RibbonElement(nameof(ZoomOut),
                 () => Properties.Resources.MenuZoomOut,
-                Dispatcher);
+                GetDispatcher(false));
 
             Settings = new RibbonElement(nameof(Settings),
                 () => Properties.Resources.MenuSettings,
-                Dispatcher);
+                GetDispatcher(false));
 
             FrameOnly = new BindableElement<bool>(
                 () => src.Settings.FrameOnly,
                 e  => src.Settings.FrameOnly = e,
                 () => Properties.Resources.MenuFrameOnly,
-                Dispatcher);
+                GetDispatcher(false));
         }
 
         #endregion

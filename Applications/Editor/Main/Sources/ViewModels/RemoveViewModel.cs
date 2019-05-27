@@ -55,17 +55,17 @@ namespace Cube.Pdf.Editor
         public RemoveViewModel(Action<IEnumerable<int>> callback, int n, SynchronizationContext context) :
             base(() => Properties.Resources.TitleRemove, new Aggregator(), context)
         {
-            Range = new Bindable<string>(string.Empty, Dispatcher);
+            Range = new Bindable<string>(string.Empty, GetDispatcher(false));
 
             RangeCaption = new BindableElement<string>(
                 () => Properties.Resources.MessageRemoveRange,
                 () => Properties.Resources.MenuRemoveRange,
-                Dispatcher);
+                GetDispatcher(false));
 
             PageCaption = new BindableElement<string>(
                 () => string.Format(Properties.Resources.MessagePage, n),
                 () => Properties.Resources.MenuPageCount,
-                Dispatcher);
+                GetDispatcher(false));
 
             OK.Command = new BindableCommand(
                 () => Track(() => Execute(callback, n)),

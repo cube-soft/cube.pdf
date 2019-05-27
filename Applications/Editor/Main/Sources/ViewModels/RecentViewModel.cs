@@ -56,7 +56,7 @@ namespace Cube.Pdf.Editor
             SynchronizationContext context) : base(Aggregator, context)
         {
             Items = items;
-            Menu  = new BindableElement(() => Properties.Resources.MenuRecent, Dispatcher)
+            Menu  = new BindableElement(() => Properties.Resources.MenuRecent, GetDispatcher(false))
             {
                 Command = new RelayCommand(() => Track(() => Process.Start(Items.Directory)))
             };

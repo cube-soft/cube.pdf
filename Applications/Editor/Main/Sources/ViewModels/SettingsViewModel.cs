@@ -57,12 +57,12 @@ namespace Cube.Pdf.Editor
         {
             var asm = Assembly.GetExecutingAssembly();
 
-            Language  = this.Create(() => src.Value.Language, e => src.Value.Language = e, () => Properties.Resources.MenuLanguage, Dispatcher);
-            Update    = this.Create(() => src.Value.CheckUpdate, e  => src.Value.CheckUpdate = e, () => Properties.Resources.MenuUpdate, Dispatcher);
-            Version   = this.Create(() => $"{src.Title} {src.Version.ToString(true)}", () => Properties.Resources.MenuVersion, Dispatcher);
-            Link      = this.Create(() => src.Value.Uri, () => asm.GetCopyright(), Dispatcher);
-            Windows   = new BindableElement(() => $"{Environment.OSVersion}", Dispatcher);
-            Framework = new BindableElement(() => $"Microsoft .NET Framework {Environment.Version}", Dispatcher);
+            Language  = this.Create(() => src.Value.Language, e => src.Value.Language = e, () => Properties.Resources.MenuLanguage, GetDispatcher(false));
+            Update    = this.Create(() => src.Value.CheckUpdate, e  => src.Value.CheckUpdate = e, () => Properties.Resources.MenuUpdate, GetDispatcher(false));
+            Version   = this.Create(() => $"{src.Title} {src.Version.ToString(true)}", () => Properties.Resources.MenuVersion, GetDispatcher(false));
+            Link      = this.Create(() => src.Value.Uri, () => asm.GetCopyright(), GetDispatcher(false));
+            Windows   = new BindableElement(() => $"{Environment.OSVersion}", GetDispatcher(false));
+            Framework = new BindableElement(() => $"Microsoft .NET Framework {Environment.Version}", GetDispatcher(false));
 
             Link.Command = new RelayCommand(() => Post(Link.Value));
             OK.Command   = new RelayCommand(() =>

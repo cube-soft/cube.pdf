@@ -48,19 +48,21 @@ namespace Cube.Pdf.Editor
         /// <param name="images">Image collection.</param>
         /// <param name="settings">Settings object.</param>
         /// <param name="query">Password query.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable(ImageCollection images, SettingsFolder settings, IQuery<string> query)
+        public MainBindable(ImageCollection images, SettingsFolder settings,
+            IQuery<string> query, IDispatcher dispatcher)
         {
             _settings = settings;
             Images    = images;
             Query     = query;
-            History   = new History(images.Dispatcher);
-            Source    = new Bindable<Information>(images.Dispatcher);
-            Message   = new Bindable<string>(string.Empty, images.Dispatcher);
-            Busy      = new Bindable<bool>(() => _busy, images.Dispatcher);
-            Modified  = new Bindable<bool>(() => History.Undoable, images.Dispatcher);
-            Count     = new Bindable<int>(() => Images.Count, images.Dispatcher);
+            History   = new History(dispatcher);
+            Source    = new Bindable<Information>(dispatcher);
+            Message   = new Bindable<string>(string.Empty, dispatcher);
+            Busy      = new Bindable<bool>(() => _busy, dispatcher);
+            Modified  = new Bindable<bool>(() => History.Undoable, dispatcher);
+            Count     = new Bindable<int>(() => Images.Count, dispatcher);
             ItemSize  = new Bindable<int>(
                 () => Settings.ItemSize,
                 e =>
@@ -69,7 +71,7 @@ namespace Cube.Pdf.Editor
                     Settings.ItemSize = e;
                     return true;
                 },
-                images.Dispatcher
+                dispatcher
             );
         }
 

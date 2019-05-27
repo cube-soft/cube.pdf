@@ -52,9 +52,9 @@ namespace Cube.Pdf.Editor
         protected DialogViewModel(Getter<string> title, Aggregator aggregator,
             SynchronizationContext context) : base(aggregator, context)
         {
-            Title  = new BindableElement(title, Dispatcher);
-            OK     = new BindableElement(() => Properties.Resources.MenuOk, Dispatcher);
-            Cancel = new BindableElement(() => Properties.Resources.MenuCancel, Dispatcher)
+            Title  = new BindableElement(title, GetDispatcher(false));
+            OK     = new BindableElement(() => Properties.Resources.MenuOk, GetDispatcher(false));
+            Cancel = new BindableElement(() => Properties.Resources.MenuCancel, GetDispatcher(false))
             {
                 Command = new RelayCommand(() => Send<CloseMessage>()),
             };

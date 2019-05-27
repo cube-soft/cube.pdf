@@ -51,7 +51,7 @@ namespace Cube.Pdf.Editor
         public PreviewViewModel(ImageCollection src, Information file, SynchronizationContext context) :
             base(() => GetTitle(src, file), new Aggregator(), context)
         {
-            Model = new PreviewFacade(src, file, Dispatcher);
+            Model = new PreviewFacade(src, file, GetDispatcher(false));
         }
 
         #endregion

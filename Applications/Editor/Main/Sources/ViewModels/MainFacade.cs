@@ -51,14 +51,17 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="src">User settings.</param>
         /// <param name="query">Password query.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingsFolder src, IQuery<string> query, IDispatcher dispatcher)
+        public MainFacade(SettingsFolder src, IQuery<string> query, SynchronizationContext context)
         {
+            var images = new ImageCollection(e => _core?.GetOrAdd(e), new Dispatcher(context, true));
+            var post   = new Dispatcher(context, false);
+
             _core    = new DocumentCollection(query, src.IO);
             Backup   = new Backup(src.IO);
-            Bindable = new MainBindable(new ImageCollection(e => _core?.GetOrAdd(e), dispatcher), src, query);
+            Bindable = new MainBindable(images, src, query, post);
 
             Settings = src;
             Settings.Load();

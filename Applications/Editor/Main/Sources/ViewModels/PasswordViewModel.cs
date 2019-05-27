@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editor
                 () => src.Value,
                 e  => { src.Value = e; return true; },
                 () => string.Format(Properties.Resources.MessagePassword, fi.Name),
-                Dispatcher);
+                GetDispatcher(false));
 
             OK.Command = new BindableCommand(
                 () => { src.Cancel = false; Send<CloseMessage>(); },

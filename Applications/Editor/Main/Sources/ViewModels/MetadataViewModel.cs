@@ -57,22 +57,22 @@ namespace Cube.Pdf.Editor
         public MetadataViewModel(Action<Metadata> callback, Metadata src, Information file, SynchronizationContext context) :
             base(() => Properties.Resources.TitleMetadata, new Aggregator(), context)
         {
-            Filename      = this.Create(() => file.Name, () => Properties.Resources.MenuFilename, Dispatcher);
-            Producer      = this.Create(() => src.Producer, () => Properties.Resources.MenuProducer, Dispatcher);
-            Length        = this.Create(() => file.Length, () => Properties.Resources.MenuFilesize, Dispatcher);
-            CreationTime  = this.Create(() => file.CreationTime, () => Properties.Resources.MenuCreationTime, Dispatcher);
-            LastWriteTime = this.Create(() => file.LastWriteTime, () => Properties.Resources.MenuLastWriteTime, Dispatcher);
+            Filename      = this.Create(() => file.Name, () => Properties.Resources.MenuFilename, GetDispatcher(false));
+            Producer      = this.Create(() => src.Producer, () => Properties.Resources.MenuProducer, GetDispatcher(false));
+            Length        = this.Create(() => file.Length, () => Properties.Resources.MenuFilesize, GetDispatcher(false));
+            CreationTime  = this.Create(() => file.CreationTime, () => Properties.Resources.MenuCreationTime, GetDispatcher(false));
+            LastWriteTime = this.Create(() => file.LastWriteTime, () => Properties.Resources.MenuLastWriteTime, GetDispatcher(false));
 
-            Document = this.Create(() => src.Title, e => src.Title = e, () => Properties.Resources.MenuTitle, Dispatcher);
-            Author   = this.Create(() => src.Author, e => src.Author = e, () => Properties.Resources.MenuAuthor, Dispatcher);
-            Subject  = this.Create(() => src.Subject, e => src.Subject = e, () => Properties.Resources.MenuSubject, Dispatcher);
-            Keywords = this.Create(() => src.Keywords, e => src.Keywords = e, () => Properties.Resources.MenuKeywords, Dispatcher);
-            Creator  = this.Create(() => src.Creator, e => src.Creator = e, () => Properties.Resources.MenuCreator, Dispatcher);
+            Document = this.Create(() => src.Title, e => src.Title = e, () => Properties.Resources.MenuTitle, GetDispatcher(false));
+            Author   = this.Create(() => src.Author, e => src.Author = e, () => Properties.Resources.MenuAuthor, GetDispatcher(false));
+            Subject  = this.Create(() => src.Subject, e => src.Subject = e, () => Properties.Resources.MenuSubject, GetDispatcher(false));
+            Keywords = this.Create(() => src.Keywords, e => src.Keywords = e, () => Properties.Resources.MenuKeywords, GetDispatcher(false));
+            Creator  = this.Create(() => src.Creator, e => src.Creator = e, () => Properties.Resources.MenuCreator, GetDispatcher(false));
             Version  = CreateVersion(src);
             Options  = CreateViewerOptions(src);
 
-            Summary = new BindableElement(() => Properties.Resources.MenuSummary, Dispatcher);
-            Details = new BindableElement(() => Properties.Resources.MenuDetails, Dispatcher);
+            Summary = new BindableElement(() => Properties.Resources.MenuSummary, GetDispatcher(false));
+            Details = new BindableElement(() => Properties.Resources.MenuDetails, GetDispatcher(false));
 
             OK.Command = new RelayCommand(() => { Send<CloseMessage>(); callback(src); });
         }
@@ -304,7 +304,7 @@ namespace Cube.Pdf.Editor
         {
             src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
                           Versions.First();
-            return this.Create(() => src.Version, e => src.Version = e, () => Properties.Resources.MenuVersion, Dispatcher);
+            return this.Create(() => src.Version, e => src.Version = e, () => Properties.Resources.MenuVersion, GetDispatcher(false));
         }
 
         /* ----------------------------------------------------------------- */
@@ -319,7 +319,7 @@ namespace Cube.Pdf.Editor
         private BindableElement<ViewerOptions> CreateViewerOptions(Metadata src)
         {
             if (src.Options == Pdf.ViewerOptions.None) src.Options = Pdf.ViewerOptions.OneColumn;
-            return this.Create(() => src.Options, e => src.Options = e, () => Properties.Resources.MenuLayout, Dispatcher);
+            return this.Create(() => src.Options, e => src.Options = e, () => Properties.Resources.MenuLayout, GetDispatcher(false));
         }
 
         #endregion
