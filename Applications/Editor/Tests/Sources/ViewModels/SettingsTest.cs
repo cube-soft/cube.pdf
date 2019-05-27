@@ -51,7 +51,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public Task Cancel() => CreateAsync("Sample.pdf", "", 2, async (vm) =>
+        public void Cancel() => Create("Sample.pdf", "", 2, vm =>
         {
             var cts = new CancellationTokenSource();
             var dp  = vm.Subscribe<SettingsViewModel>(e =>
@@ -77,8 +77,8 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             });
 
             Assert.That(vm.Ribbon.Settings.Command.CanExecute(), Is.True);
-            vm.Ribbon.Settings.Command.Execute();
-            await Wait.ForAsync(cts.Token);
+            Task.Run(() => vm.Ribbon.Settings.Command.Execute());
+            Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Cancel)");
             dp.Dispose();
         });
 

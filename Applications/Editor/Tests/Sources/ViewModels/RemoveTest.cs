@@ -72,7 +72,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public Task RemoveOthers() => CreateAsync("SampleRotation.pdf", "", 9, async (vm) =>
+        public void RemoveOthers() => Create("SampleRotation.pdf", "", 9, vm =>
         {
             var cts = new CancellationTokenSource();
             var dp  = vm.Subscribe<RemoveViewModel>(e =>
@@ -94,8 +94,8 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             });
 
             Assert.That(vm.Ribbon.RemoveOthers.Command.CanExecute(), Is.True);
-            vm.Ribbon.RemoveOthers.Command.Execute();
-            await Wait.ForAsync(cts.Token);
+            Task.Run(() => vm.Ribbon.RemoveOthers.Command.Execute());
+            Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Remove)");
             dp.Dispose();
         });
 

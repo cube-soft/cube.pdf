@@ -27,7 +27,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Editor.Tests
@@ -147,58 +146,6 @@ namespace Cube.Pdf.Editor.Tests
             action(vm);
         });
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateAsync
-        ///
-        /// <summary>
-        /// Gets a new instance of the MainViewModel class and execute
-        /// the specified callback as an asynchronous operation.
-        /// </summary>
-        ///
-        /// <param name="callback">User action.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected async Task CreateAsync(Func<MainViewModel, Task> callback)
-        {
-            using (var src = Create())
-            {
-                var dps = Register(src);
-                await callback(src);
-                foreach (var e in dps) e.Dispose();
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateAsync
-        ///
-        /// <summary>
-        /// Gets a new instance of the MainViewModel class, executes
-        /// the Open command, and runs the specified action as an
-        /// asynchronous operation.
-        /// </summary>
-        ///
-        /// <param name="filename">Filename of the source.</param>
-        /// <param name="password">Password of the source.</param>
-        /// <param name="n">Number of pages.</param>
-        /// <param name="callback">User action.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected Task CreateAsync(string filename, string password, int n,
-            Func<MainViewModel, Task> callback) => CreateAsync(async (vm) =>
-        {
-            Source   = GetSource(filename);
-            Password = password;
-
-            Assert.That(vm.Ribbon.Open.Command.CanExecute(), Is.True);
-            vm.Ribbon.Open.Command.Execute();
-            var done = await Wait.ForAsync(() => vm.Data.Images.Count == n).ConfigureAwait(false);
-            Assert.That(done, "Timeout (Open)");
-
-            await callback(vm).ConfigureAwait(false);
-        });
-
         #endregion
 
         #region Execute
@@ -215,27 +162,12 @@ namespace Cube.Pdf.Editor.Tests
         /// <param name="src">Bindable element.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Execute(MainViewModel vm, BindableElement src) =>
-            ExecuteAsync(vm, src).Wait();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ExecuteAsync
-        ///
-        /// <summary>
-        /// Execute the specified command as an asynchronous operation.
-        /// </summary>
-        ///
-        /// <param name="vm">MainViewModel instance.</param>
-        /// <param name="src">Bindable element.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected async Task ExecuteAsync(MainViewModel vm, BindableElement src)
+        protected void Execute(MainViewModel vm, BindableElement src)
         {
             var cts = new CancellationTokenSource();
             void action(object s, EventArgs e)
             {
-                if (!vm.Data.Busy.Value) return;
+                if (vm.Data.Busy.Value) return;
                 vm.Data.Busy.PropertyChanged -= action;
                 cts.Cancel();
             }
@@ -244,9 +176,7 @@ namespace Cube.Pdf.Editor.Tests
             vm.Data.Busy.PropertyChanged += action;
             Assert.That(src.Command.CanExecute(), Is.True, $"CanExecute ({src.Text})");
             src.Command.Execute();
-
-            var done = await Wait.ForAsync(cts.Token).ConfigureAwait(false);
-            Assert.That(done, $"Timeout ({src.Text})");
+            Assert.That(Wait.For(cts.Token), $"Timeout ({src.Text})");
         }
 
         #endregion

@@ -50,7 +50,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public Task Preview() => CreateAsync("Sample.pdf", "", 2, async (vm) =>
+        public void Preview() => Create("Sample.pdf", "", 2, vm =>
         {
             var cts = new CancellationTokenSource();
             var dp  = vm.Subscribe<PreviewViewModel>(e =>
@@ -67,10 +67,10 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
                 cts.Cancel(); // done
             });
 
-            await ExecuteAsync(vm, vm.Ribbon.Select);
+            Execute(vm, vm.Ribbon.Select);
             Assert.That(vm.Ribbon.Preview.Command.CanExecute(), Is.True);
-            vm.Ribbon.Preview.Command.Execute();
-            await Wait.ForAsync(cts.Token);
+            Task.Run(() => vm.Ribbon.Preview.Command.Execute());
+            Assert.That(Wait.For(cts.Token), "Timeout (Preview)");
             dp.Dispose();
         });
 
