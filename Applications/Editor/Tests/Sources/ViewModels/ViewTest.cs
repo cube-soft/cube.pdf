@@ -67,7 +67,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
                 cts.Cancel(); // done
             });
 
-            Execute(vm, vm.Ribbon.Select);
+            vm.Test(vm.Ribbon.Select);
             Assert.That(vm.Ribbon.Preview.Command.CanExecute(), Is.True);
             Task.Run(() => vm.Ribbon.Preview.Command.Execute());
             Assert.That(Wait.For(cts.Token), "Timeout (Preview)");
@@ -101,17 +101,17 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             Assert.That(dest.Count, Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(0), nameof(dest.Last));
 
-            Execute(vm, vm.Ribbon.SelectFlip);
+            vm.Test(vm.Ribbon.SelectFlip);
             Assert.That(changed,    Is.EqualTo(10 * unit));
             Assert.That(dest.Count, Is.EqualTo(8), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
 
-            Execute(vm, vm.Ribbon.Select); // SelectAll
+            vm.Test(vm.Ribbon.Select); // SelectAll
             Assert.That(changed,    Is.EqualTo(11 * unit));
             Assert.That(dest.Count, Is.EqualTo(9), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
 
-            Execute(vm, vm.Ribbon.Select); // SelectClear
+            vm.Test(vm.Ribbon.Select); // SelectClear
             Assert.That(changed, Is.EqualTo(20 * unit));
             Assert.That(dest.Count, Is.EqualTo(0));
         });

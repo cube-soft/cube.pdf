@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             var src = vm.Data.Images.ToList();
             src[3].IsSelected = true;
             src[5].IsSelected = true;
-            Execute(vm, vm.Ribbon.Remove);
+            vm.Test(vm.Ribbon.Remove);
 
             var dest = vm.Data.Images.ToList();
             Assert.That(dest.Count, Is.EqualTo(7));
