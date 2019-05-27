@@ -56,10 +56,11 @@ namespace Cube.Pdf.Editor
             var fi = io.Get(src.Query);
 
             Password = new BindableElement<string>(
+                () => string.Format(Properties.Resources.MessagePassword, fi.Name),
                 () => src.Value,
                 e  => { src.Value = e; return true; },
-                () => string.Format(Properties.Resources.MessagePassword, fi.Name),
-                GetDispatcher(false));
+                GetDispatcher(false)
+            );
 
             OK.Command = new BindableCommand(
                 () => { src.Cancel = false; Send<CloseMessage>(); },

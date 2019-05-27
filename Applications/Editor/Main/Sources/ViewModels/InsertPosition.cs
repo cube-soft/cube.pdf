@@ -56,19 +56,22 @@ namespace Cube.Pdf.Editor
             Last  = new BindableElement(() => Properties.Resources.MenuPositionLast, Dispatcher);
 
             Selected = new BindableElement<bool>(
-                () => data.SelectedIndex >= 0,
                 () => Properties.Resources.MenuPositionSelected,
-                Dispatcher);
+                () => data.SelectedIndex >= 0,
+                Dispatcher
+            );
 
             UserSpecified = new BindableElement<int>(
-                () => data.UserSpecifiedIndex.Value + 1,
-                e => { data.UserSpecifiedIndex.Value = e - 1; return true; },
                 () => Properties.Resources.MenuPositionSpecified,
-                Dispatcher);
+                () => data.UserSpecifiedIndex.Value + 1,
+                e  => { data.UserSpecifiedIndex.Value = e - 1; return true; },
+                Dispatcher
+            );
 
             UserSpecifiedSuffix = new BindableElement(
                 () => string.Format($"/ {Properties.Resources.MessagePage}", data.Count),
-                Dispatcher);
+                Dispatcher
+            );
         }
 
         #endregion

@@ -57,22 +57,100 @@ namespace Cube.Pdf.Editor
         public MetadataViewModel(Action<Metadata> callback, Metadata src, Information file, SynchronizationContext context) :
             base(() => Properties.Resources.TitleMetadata, new Aggregator(), context)
         {
-            Filename      = this.Create(() => file.Name, () => Properties.Resources.MenuFilename, GetDispatcher(false));
-            Producer      = this.Create(() => src.Producer, () => Properties.Resources.MenuProducer, GetDispatcher(false));
-            Length        = this.Create(() => file.Length, () => Properties.Resources.MenuFilesize, GetDispatcher(false));
-            CreationTime  = this.Create(() => file.CreationTime, () => Properties.Resources.MenuCreationTime, GetDispatcher(false));
-            LastWriteTime = this.Create(() => file.LastWriteTime, () => Properties.Resources.MenuLastWriteTime, GetDispatcher(false));
+            // Normalize
+            src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
+                          Versions.First();
+            if (src.Options == Pdf.ViewerOptions.None) src.Options = Pdf.ViewerOptions.OneColumn;
 
-            Document = this.Create(() => src.Title, e => src.Title = e, () => Properties.Resources.MenuTitle, GetDispatcher(false));
-            Author   = this.Create(() => src.Author, e => src.Author = e, () => Properties.Resources.MenuAuthor, GetDispatcher(false));
-            Subject  = this.Create(() => src.Subject, e => src.Subject = e, () => Properties.Resources.MenuSubject, GetDispatcher(false));
-            Keywords = this.Create(() => src.Keywords, e => src.Keywords = e, () => Properties.Resources.MenuKeywords, GetDispatcher(false));
-            Creator  = this.Create(() => src.Creator, e => src.Creator = e, () => Properties.Resources.MenuCreator, GetDispatcher(false));
-            Version  = CreateVersion(src);
-            Options  = CreateViewerOptions(src);
+            // Create
+            Filename = new BindableElement<string>(
+                () => Properties.Resources.MenuFilename,
+                () => file.Name,
+                GetDispatcher(false)
+            );
 
-            Summary = new BindableElement(() => Properties.Resources.MenuSummary, GetDispatcher(false));
-            Details = new BindableElement(() => Properties.Resources.MenuDetails, GetDispatcher(false));
+            Producer = new BindableElement<string>(
+                () => Properties.Resources.MenuProducer,
+                () => src.Producer,
+                GetDispatcher(false)
+            );
+
+            Length = new BindableElement<long>(
+                () => Properties.Resources.MenuFilesize,
+                () => file.Length,
+                GetDispatcher(false)
+            );
+
+            CreationTime = new BindableElement<DateTime>(
+                () => Properties.Resources.MenuCreationTime,
+                () => file.CreationTime,
+                GetDispatcher(false)
+            );
+
+            LastWriteTime = new BindableElement<DateTime>(
+                () => Properties.Resources.MenuLastWriteTime,
+                () => file.LastWriteTime,
+                GetDispatcher(false)
+            );
+
+            Document = new BindableElement<string>(
+                () => Properties.Resources.MenuTitle,
+                () => src.Title,
+                e  => { src.Title = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Author = new BindableElement<string>(
+                () => Properties.Resources.MenuAuthor,
+                () => src.Author,
+                e => { src.Author = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Subject = new BindableElement<string>(
+                () => Properties.Resources.MenuSubject,
+                () => src.Subject,
+                e  => { src.Subject = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Keywords = new BindableElement<string>(
+                () => Properties.Resources.MenuKeywords,
+                () => src.Keywords,
+                e  => { src.Keywords = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Creator = new BindableElement<string>(
+                () => Properties.Resources.MenuCreator,
+                () => src.Creator,
+                e  => { src.Creator = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Version = new BindableElement<PdfVersion>(
+                () => Properties.Resources.MenuVersion,
+                () => src.Version,
+                e => { src.Version = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Options = new BindableElement<ViewerOptions>(
+                () => Properties.Resources.MenuLayout,
+                () => src.Options,
+                e => { src.Options = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Summary = new BindableElement(
+                () => Properties.Resources.MenuSummary,
+                GetDispatcher(false)
+            );
+
+            Details = new BindableElement(
+                () => Properties.Resources.MenuDetails,
+                GetDispatcher(false)
+            );
 
             OK.Command = new RelayCommand(() => { Send<CloseMessage>(); callback(src); });
         }
@@ -223,8 +301,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<DateTime> LastWriteTime { get; }
 
-        #region Texts
-
         /* ----------------------------------------------------------------- */
         ///
         /// Summary
@@ -284,43 +360,6 @@ namespace Cube.Pdf.Editor
             Pdf.ViewerOptions.TwoPageLeft,
             Pdf.ViewerOptions.TwoPageRight,
         };
-
-        #endregion
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateVersion
-        ///
-        /// <summary>
-        /// Creates a new menu for the Version property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private BindableElement<PdfVersion> CreateVersion(Metadata src)
-        {
-            src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
-                          Versions.First();
-            return this.Create(() => src.Version, e => src.Version = e, () => Properties.Resources.MenuVersion, GetDispatcher(false));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateViewerPreferences
-        ///
-        /// <summary>
-        /// Creates a new menu for the ViewerPreferences property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private BindableElement<ViewerOptions> CreateViewerOptions(Metadata src)
-        {
-            if (src.Options == Pdf.ViewerOptions.None) src.Options = Pdf.ViewerOptions.OneColumn;
-            return this.Create(() => src.Options, e => src.Options = e, () => Properties.Resources.MenuLayout, GetDispatcher(false));
-        }
 
         #endregion
     }

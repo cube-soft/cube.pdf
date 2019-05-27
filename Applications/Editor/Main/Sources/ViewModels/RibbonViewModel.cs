@@ -187,10 +187,11 @@ namespace Cube.Pdf.Editor
                 GetDispatcher(false));
 
             FrameOnly = new BindableElement<bool>(
-                () => src.Settings.FrameOnly,
-                e  => src.Settings.FrameOnly = e,
                 () => Properties.Resources.MenuFrameOnly,
-                GetDispatcher(false));
+                () => src.Settings.FrameOnly,
+                e  => { src.Settings.FrameOnly = e; return true; },
+                GetDispatcher(false)
+            );
         }
 
         #endregion

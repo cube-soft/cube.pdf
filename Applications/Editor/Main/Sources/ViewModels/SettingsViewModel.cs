@@ -57,12 +57,41 @@ namespace Cube.Pdf.Editor
         {
             var asm = Assembly.GetExecutingAssembly();
 
-            Language  = this.Create(() => src.Value.Language, e => src.Value.Language = e, () => Properties.Resources.MenuLanguage, GetDispatcher(false));
-            Update    = this.Create(() => src.Value.CheckUpdate, e  => src.Value.CheckUpdate = e, () => Properties.Resources.MenuUpdate, GetDispatcher(false));
-            Version   = this.Create(() => $"{src.Title} {src.Version.ToString(true)}", () => Properties.Resources.MenuVersion, GetDispatcher(false));
-            Link      = this.Create(() => src.Value.Uri, () => asm.GetCopyright(), GetDispatcher(false));
-            Windows   = new BindableElement(() => $"{Environment.OSVersion}", GetDispatcher(false));
-            Framework = new BindableElement(() => $"Microsoft .NET Framework {Environment.Version}", GetDispatcher(false));
+            Language = new BindableElement<Language>(
+                () => Properties.Resources.MenuLanguage,
+                () => src.Value.Language,
+                e  => { src.Value.Language = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Update = new BindableElement<bool>(
+                () => Properties.Resources.MenuUpdate,
+                () => src.Value.CheckUpdate,
+                e  => { src.Value.CheckUpdate = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Version = new BindableElement<string>(
+                () => Properties.Resources.MenuVersion,
+                () => $"{src.Title} {src.Version.ToString(true)}",
+                GetDispatcher(false)
+            );
+
+            Link = new BindableElement<Uri>(
+                () => asm.GetCopyright(),
+                () => src.Value.Uri,
+                GetDispatcher(false)
+            );
+
+            Windows = new BindableElement(
+                () => $"{Environment.OSVersion}",
+                GetDispatcher(false)
+            );
+
+            Framework = new BindableElement(
+                () => $"Microsoft .NET Framework {Environment.Version}",
+                GetDispatcher(false)
+            );
 
             Link.Command = new RelayCommand(() => Post(Link.Value));
             OK.Command   = new RelayCommand(() =>

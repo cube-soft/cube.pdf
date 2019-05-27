@@ -58,42 +58,112 @@ namespace Cube.Pdf.Editor
             if (src.Method == EncryptionMethod.Unknown) src.Method = EncryptionMethod.Aes256;
 
             IsSharePassword = CreateShare(src);
-            Enabled         = this.Create(() => src.Enabled, e => src.Enabled = e, () => Properties.Resources.MenuEncryptionEnabled, GetDispatcher(false));
-            Method          = this.Create(() => src.Method, e => src.Method = e, () => Properties.Resources.MenuEncryptionMethod, GetDispatcher(false));
-            OwnerPassword   = this.Create(() => src.OwnerPassword, e => src.OwnerPassword = e, () => Properties.Resources.MenuOwnerPassword, GetDispatcher(false));
-            OwnerConfirm    = new BindableElement<string>(() => Properties.Resources.MenuConfirmPassword, GetDispatcher(false));
-            UserPassword    = this.Create(() => src.UserPassword, e => src.UserPassword = e, () => Properties.Resources.MenuUserPassword, GetDispatcher(false));
-            UserConfirm     = new BindableElement<string>(() => Properties.Resources.MenuConfirmPassword, GetDispatcher(false));
-            IsSharePassword = new BindableElement<bool>(() => Properties.Resources.MenuSharePassword, GetDispatcher(false));
-            IsOpenPassword  = this.Create(() => src.OpenWithPassword, e => src.OpenWithPassword = e, () => Properties.Resources.MenuOpenWithPassword, GetDispatcher(false));
-            Operation       = this.Create(() => !IsOpenPassword.Value || !IsSharePassword.Value, () => Properties.Resources.MenuOperations, GetDispatcher(false));
+
+            Enabled = new BindableElement<bool>(
+                () => Properties.Resources.MenuEncryptionEnabled,
+                () => src.Enabled,
+                e  => { src.Enabled = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Method = new BindableElement<EncryptionMethod>(
+                () => Properties.Resources.MenuEncryptionMethod,
+                () => src.Method,
+                e  => { src.Method = e; return true; },
+                GetDispatcher(false)
+            );
+
+            OwnerPassword = new BindableElement<string>(
+                () => Properties.Resources.MenuOwnerPassword,
+                () => src.OwnerPassword,
+                e  => { src.OwnerPassword = e; return true; },
+                GetDispatcher(false)
+            );
+
+            OwnerConfirm = new BindableElement<string>(
+                () => Properties.Resources.MenuConfirmPassword,
+                new Accessor<string>(),
+                GetDispatcher(false)
+            );
+
+            UserPassword = new BindableElement<string>(
+                () => Properties.Resources.MenuUserPassword,
+                () => src.UserPassword,
+                e  => { src.UserPassword = e; return true; },
+                GetDispatcher(false)
+            );
+
+            UserConfirm = new BindableElement<string>(
+                () => Properties.Resources.MenuConfirmPassword,
+                new Accessor<string>(),
+                GetDispatcher(false)
+            );
+
+            IsSharePassword = new BindableElement<bool>(
+                () => Properties.Resources.MenuSharePassword,
+                new Accessor<bool>(),
+                GetDispatcher(false)
+            );
+
+            IsOpenPassword = new BindableElement<bool>(
+                () => Properties.Resources.MenuOpenWithPassword,
+                () => src.OpenWithPassword,
+                e  => { src.OpenWithPassword = e; return true; },
+                GetDispatcher(false)
+            );
+
+            Operation = new BindableElement<bool>(
+                () => Properties.Resources.MenuOperations,
+                () => !IsOpenPassword.Value || !IsSharePassword.Value,
+                GetDispatcher(false)
+            );
 
             IsOpenPassword.PropertyChanged  += (s, e) => Operation.Refresh("Value");
             IsSharePassword.PropertyChanged += (s, e) => Operation.Refresh("Value");
 
             var pm = src.Permission;
 
-            AllowPrint = this.Create(() => pm.Print.IsAllowed(),
-                e  => pm.Print = Convert(e),
+            AllowPrint = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowPrint,
-                GetDispatcher(false));
-            AllowCopy = this.Create(() => pm.CopyContents.IsAllowed(),
-                e  => pm.CopyContents = Convert(e),
+                () => pm.Print.IsAllowed(),
+                e  => { pm.Print = Convert(e); return true; },
+                GetDispatcher(false)
+            );
+
+            AllowCopy = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowCopy,
-                GetDispatcher(false));
-            AllowAccessibility = this.Create(() => pm.Accessibility.IsAllowed(),
-                e  => pm.Accessibility = Convert(e),
+                () => pm.CopyContents.IsAllowed(),
+                e  => { pm.CopyContents = Convert(e); return true; },
+                GetDispatcher(false)
+            );
+
+            AllowAccessibility = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowAccessibility,
-                GetDispatcher(false));
-            AllowForm = this.Create(() => pm.InputForm.IsAllowed(),
-                e  => pm.InputForm = Convert(e),
+                () => pm.Accessibility.IsAllowed(),
+                e  => { pm.Accessibility = Convert(e); return true; },
+                GetDispatcher(false)
+            );
+
+            AllowForm = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowForm,
-                GetDispatcher(false));
-            AllowAnnotation = this.Create(() => pm.ModifyAnnotations.IsAllowed(),
-                e  => pm.ModifyAnnotations = Convert(e),
+                () => pm.InputForm.IsAllowed(),
+                e  => { pm.InputForm = Convert(e); return true; },
+                GetDispatcher(false)
+            );
+
+            AllowAnnotation = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowAnnotation,
-                GetDispatcher(false));
-            AllowModify = CreateModify(pm);
+                () => pm.ModifyAnnotations.IsAllowed(),
+                e  => { pm.ModifyAnnotations = Convert(e); return true; },
+                GetDispatcher(false)
+            );
+
+            AllowModify = new BindableElement<bool>(
+                () => Properties.Resources.MenuAllowAssemble,
+                () => pm.ModifyContents.IsAllowed(),
+                e  => { pm.ModifyContents = Convert(e); return true; },
+                GetDispatcher(false)
+            );
 
             OK.Command = new BindableCommand(
                 () => Execute(callback, src),
@@ -360,22 +430,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateModify
-        ///
-        /// <summary>
-        /// Creates a new menu with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private BindableElement<bool> CreateModify(Permission src) => this.Create(
-            () => src.ModifyContents.IsAllowed(),
-            e  => src.ModifyContents = Convert(e),
-            () => Properties.Resources.MenuAllowAssemble,
-            GetDispatcher(false)
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// CreateShare
         ///
         /// <summary>
@@ -385,9 +439,15 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private BindableElement<bool> CreateShare(Encryption src)
         {
-            var value = src.OwnerPassword.HasValue() && src.OwnerPassword.FuzzyEquals(src.UserPassword);
+            var value = src.OwnerPassword.HasValue() &&
+                        src.OwnerPassword.FuzzyEquals(src.UserPassword);
             if (value) src.UserPassword = string.Empty;
-            return new BindableElement<bool>(value, () => Properties.Resources.MenuSharePassword, GetDispatcher(false));
+
+            return new BindableElement<bool>(
+                () => Properties.Resources.MenuSharePassword,
+                () => value,
+                GetDispatcher(false)
+            );
         }
 
         #endregion
