@@ -56,7 +56,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         [TestCase("Sample.pdf",  11)]
         [TestCase("Loading.png", 10)]
         [TestCase("Sample.jpg",  10)]
-        public void Insert(string filename, int n) => Create("SampleRotation.pdf", "", 9, vm =>
+        public void Insert(string filename, int n) => Open("SampleRotation.pdf", "", vm =>
         {
             vm.Data.Images.Skip(2).First().IsSelected = true;
             Source = GetSource(filename);
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             Assert.That(dest[3].RawObject.Number, Is.EqualTo(1)); // Insert
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
 
-            Destination = Path(Args(filename.Replace('.', '_')));
+            Destination = Get(MakeArgs(filename.Replace('.', '_')));
             vm.Ribbon.SaveAs.Command.Execute();
             Assert.That(Wait.For(() => IO.Exists(Destination)), "Timeout (Save)");
         });
@@ -86,7 +86,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void InsertOthers() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void InsertOthers() => Open("SampleRotation.pdf", "", vm =>
         {
             vm.Subscribe<InsertViewModel>(ivm =>
             {
@@ -114,7 +114,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Inser_DragDrop() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void Inser_DragDrop() => Open("SampleRotation.pdf", "", vm =>
         {
             var f = GetSource("Sample.pdf");
             var pages = new List<Page>();
@@ -391,7 +391,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         private void CreateIvm(string filename, string password, int n,
-            Action<InsertViewModel> action) => Create(filename, password, n, vm =>
+            Action<InsertViewModel> action) => Open(filename, password, vm =>
         {
             var cts = new CancellationTokenSource();
             vm.Subscribe<InsertViewModel>(ivm =>

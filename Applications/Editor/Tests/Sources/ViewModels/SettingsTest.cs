@@ -51,7 +51,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => Create("Sample.pdf", "", 2, vm =>
+        public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
             var dp  = vm.Subscribe<SettingsViewModel>(e =>

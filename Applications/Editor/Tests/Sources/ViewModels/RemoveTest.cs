@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Remove() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void Remove() => Open("SampleRotation.pdf", "", vm =>
         {
             var src = vm.Data.Images.ToList();
             src[3].IsSelected = true;
@@ -72,7 +72,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void RemoveOthers() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void RemoveOthers() => Open("SampleRotation.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
             var dp  = vm.Subscribe<RemoveViewModel>(e =>

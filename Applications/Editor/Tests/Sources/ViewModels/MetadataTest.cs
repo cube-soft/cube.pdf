@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Set(int id, Metadata cmp) => Create("Sample.pdf", "", 2, vm =>
+        public void Set(int id, Metadata cmp) => Open("Sample.pdf", "", vm =>
         {
             Register(vm, cmp);
 
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => Create("Sample.pdf", "", 2, vm =>
+        public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
             vm.Subscribe<MetadataViewModel>(e =>

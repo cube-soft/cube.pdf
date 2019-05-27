@@ -50,7 +50,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Preview() => Create("Sample.pdf", "", 2, vm =>
+        public void Preview() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
             var dp  = vm.Subscribe<PreviewViewModel>(e =>
@@ -84,7 +84,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Select() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void Select() => Open("SampleRotation.pdf", "", vm =>
         {
             var unit    = 3; // Number of PropertyChanged events per action.
             var changed = 0;
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Zoom() => Create("Sample.pdf", "", 2, vm =>
+        public void Zoom() => Open("Sample.pdf", "", vm =>
         {
             var ip = vm.Data.Images.Preferences;
             Assert.That(ip.ItemSizeOptions.Count, Is.EqualTo(9));
@@ -150,7 +150,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void FrameOnly() => Create("Sample.pdf", "", 2, vm =>
+        public void FrameOnly() => Open("Sample.pdf", "", vm =>
         {
             Assert.That(vm.Ribbon.FrameOnly.Value, Is.False);
             vm.Ribbon.FrameOnly.Value = true;

@@ -23,7 +23,7 @@ using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -113,14 +113,12 @@ namespace Cube.Pdf.Editor.Tests
             Password    = string.Empty;
         }
 
-        #region Create
-
         /* ----------------------------------------------------------------- */
         ///
         /// Create
         ///
         /// <summary>
-        /// Gets a new instance of the MainViewModel class and execute
+        /// Creates a new instance of the MainViewModel class and execute
         /// the specified action.
         /// </summary>
         ///
@@ -131,62 +129,57 @@ namespace Cube.Pdf.Editor.Tests
         {
             using (var src = CreateMainViewModel())
             {
-                var dps = Register(src);
+                var behaviors = Subscribe(src);
                 callback(src);
-                foreach (var e in dps) e.Dispose();
+                foreach (var e in behaviors) e.Dispose();
             }
         }
 
-
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Open
         ///
         /// <summary>
-        /// Gets a new instance of the MainViewModel class, executes
+        /// Creates a new instance of the MainViewModel class, executes
         /// the Open command, and runs the specified action.
         /// </summary>
         ///
         /// <param name="filename">Filename of the source.</param>
         /// <param name="password">Password of the source.</param>
-        /// <param name="n">Number of pages.</param>
-        /// <param name="action">User action.</param>
+        /// <param name="callback">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Create(string filename, string password, int n,
-            Action<MainViewModel> action) => Create(vm =>
+        protected void Open(string filename, string password, Action<MainViewModel> callback) => Create(vm =>
         {
             Source   = GetSource(filename);
             Password = password;
             vm.Test(vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.Images.Count == n), "Timeout (Open)");
-            action(vm);
+            callback(vm);
         });
 
-        #endregion
-
         /* ----------------------------------------------------------------- */
         ///
-        /// Args
+        /// Get
         ///
         /// <summary>
-        /// Converts params to an object array.
+        /// Gets a path with the specified arguments and the Results
+        /// directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected object[] Args(params object[] src) => src;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Path
-        ///
-        /// <summary>
-        /// Creates the path by using the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected string Path(object[] parts, [CallerMemberName] string name = null) =>
+        protected string Get(IEnumerable<object> parts, [CallerMemberName] string name = null) =>
            Get($"{name}_{parts.Join("_", e => e.ToString())}.pdf");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MakeArgs
+        ///
+        /// <summary>
+        /// Creates a collection with the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IEnumerable<object> MakeArgs(params object[] src) => src;
 
         #endregion
 
@@ -224,6 +217,29 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Subscribe
+        ///
+        /// <summary>
+        /// Sets some dummy callbacks to the specified Messenger.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<IDisposable> Subscribe(IPresentable src) => new[]
+        {
+            src.Subscribe<DialogMessage    >(e => e.Status = Select(e.Buttons)),
+            src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { Source }),
+            src.Subscribe<SaveFileMessage  >(e => e.Value = Destination),
+            src.Subscribe<PasswordViewModel>(e =>
+            {
+                e.Password.Value = Password;
+                var dest = Password.HasValue() ? e.OK : e.Cancel;
+                Assert.That(dest.Command.CanExecute(), Is.True, dest.Text);
+                dest.Command.Execute();
+            }),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Select
         ///
         /// <summary>
@@ -233,62 +249,16 @@ namespace Cube.Pdf.Editor.Tests
         /* ----------------------------------------------------------------- */
         private DialogStatus Select(DialogButtons src)
         {
-            var dic = new Dictionary<DialogButtons, DialogStatus>
+            var found = new Dictionary<DialogButtons, DialogStatus>
             {
                 { DialogButtons.Ok,          DialogStatus.Ok  },
                 { DialogButtons.OkCancel,    DialogStatus.Ok  },
                 { DialogButtons.YesNo,       DialogStatus.Yes },
                 { DialogButtons.YesNoCancel, DialogStatus.Yes },
-            };
+            }.TryGetValue(src, out var dest);
 
-            var check = dic.TryGetValue(src, out var dest);
-            Debug.Assert(check);
+            Assert.That(found, Is.True, $"{src}");
             return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Register
-        ///
-        /// <summary>
-        /// Sets some dummy callbacks to the specified Messenger.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<IDisposable> Register(IPresentable src)
-        {
-            void dialog(DialogMessage e)
-            {
-                e.Status = Select(e.Buttons);
-            }
-
-            void open(OpenFileMessage e)
-            {
-                e.Value  = new[] { Source };
-                e.Cancel = false;
-            }
-
-            void save(SaveFileMessage e)
-            {
-                e.Value  = Destination;
-                e.Cancel = false;
-            }
-
-            void pass(PasswordViewModel e)
-            {
-                e.Password.Value = Password;
-                var dest = Password.HasValue() ? e.OK : e.Cancel;
-                Assert.That(dest.Command.CanExecute(), $"{dest.Text} (Password)");
-                dest.Command.Execute();
-            }
-
-            return new List<IDisposable>
-            {
-                src.Subscribe<DialogMessage>(dialog),
-                src.Subscribe<OpenFileMessage>(open),
-                src.Subscribe<SaveFileMessage>(save),
-                src.Subscribe<PasswordViewModel>(pass),
-            };
         }
 
         #endregion

@@ -52,10 +52,10 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         [TestCase("SampleRc40.pdf",     "password", 2)]
         [TestCase("SampleRc40Open.pdf", "password", 2)]
         public void SaveAs(string filename, string password, int n) =>
-            Create(filename, password, n, vm =>
+            Open(filename, password, vm =>
         {
             var fi = IO.Get(Source);
-            Destination = Path(Args(fi.BaseName));
+            Destination = Get(MakeArgs(fi.BaseName));
             Password    = string.Empty;
             Assert.That(IO.Exists(Destination), Is.False);
 
@@ -78,7 +78,8 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         public void Overwrite(string filename, string password, int n) => Create(vm =>
         {
             var fi = IO.Get(GetSource(filename));
-            Source = Path(Args(fi.BaseName));
+            Source   = Get(MakeArgs(fi.BaseName));
+            Password = password;
             IO.Copy(fi.FullName, Source, true);
             vm.Ribbon.Open.Command.Execute();
             Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Open)");

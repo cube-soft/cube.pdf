@@ -50,7 +50,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Set(int index, Encryption cmp) => Create("Sample.pdf", "", 2, vm =>
+        public void Set(int id, Encryption cmp) => Open("Sample.pdf", "", vm =>
         {
             Register(vm, cmp, false);
 
@@ -63,7 +63,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             Assert.That(vm.Data.Encryption, Is.Not.Null);
             Assert.That(vm.Ribbon.Encryption.Command.CanExecute(), Is.True);
             vm.Ribbon.Encryption.Command.Execute();
-            Assert.That(Wait.For(cts.Token), $"Timeout");
+            Assert.That(Wait.For(cts.Token), $"Timeout (No.{id})");
             AssertEncryption(vm.Data.Encryption, cmp);
         });
 
@@ -78,7 +78,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => Create("Sample.pdf", "", 2, vm =>
+        public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
             vm.Subscribe<EncryptionViewModel>(e =>

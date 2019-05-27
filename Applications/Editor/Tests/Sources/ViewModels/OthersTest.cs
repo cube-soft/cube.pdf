@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         public void Close(string filename, int n, bool modify) => Create(vm =>
         {
             var fi = IO.Get(GetSource(filename));
-            Source = Path(Args(fi.BaseName, modify));
+            Source = Get(MakeArgs(fi.BaseName, modify));
             IO.Copy(fi.FullName, Source, true);
             vm.Ribbon.Open.Command.Execute();
             Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Open)");
@@ -97,9 +97,9 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Extract() => Create("Sample.pdf", "", 2, vm =>
+        public void Extract() => Open("Sample.pdf", "", vm =>
         {
-            Destination = Path(Args("Sample"));
+            Destination = Get(MakeArgs("Sample"));
             Assert.That(IO.Exists(Destination), Is.False);
 
             Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.False);
@@ -120,7 +120,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Rotate() => Create("Sample.pdf", "", 2, vm =>
+        public void Rotate() => Open("Sample.pdf", "", vm =>
         {
             var images = vm.Data.Images.ToList();
             var dest   = images[0];
@@ -158,7 +158,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Undo() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void Undo() => Open("SampleRotation.pdf", "", vm =>
         {
             vm.Test(vm.Ribbon.Select);
             vm.Test(vm.Ribbon.Remove);
