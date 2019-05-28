@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Collections;
 using Cube.Mixin.Commands;
+using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 using Cube.Tests;
 using NUnit.Framework;
@@ -42,21 +43,6 @@ namespace Cube.Pdf.Editor.Tests
     /* --------------------------------------------------------------------- */
     public abstract class ViewModelFixture : FileFixture
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewModelFixture
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ViewModelFixture class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected ViewModelFixture() { }
-
-        #endregion
-
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -226,7 +212,7 @@ namespace Cube.Pdf.Editor.Tests
         /* ----------------------------------------------------------------- */
         private IEnumerable<IDisposable> Subscribe(IPresentable src) => new[]
         {
-            src.Subscribe<DialogMessage    >(e => e.Status = Select(e.Buttons)),
+            src.Subscribe<DialogMessage    >(e => Select(e)),
             src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { Source }),
             src.Subscribe<SaveFileMessage  >(e => e.Value = Destination),
             src.Subscribe<PasswordViewModel>(e =>
@@ -247,7 +233,7 @@ namespace Cube.Pdf.Editor.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DialogStatus Select(DialogButtons src)
+        private void Select(DialogMessage src)
         {
             var found = new Dictionary<DialogButtons, DialogStatus>
             {
@@ -255,10 +241,11 @@ namespace Cube.Pdf.Editor.Tests
                 { DialogButtons.OkCancel,    DialogStatus.Ok  },
                 { DialogButtons.YesNo,       DialogStatus.Yes },
                 { DialogButtons.YesNoCancel, DialogStatus.Yes },
-            }.TryGetValue(src, out var dest);
+            }.TryGetValue(src.Buttons, out var dest);
 
-            Assert.That(found, Is.True, $"{src}");
-            return dest;
+            this.LogDebug($"{src.Value.Quote()} ({found})");
+            Assert.That(found, Is.True, $"{src.Buttons}");
+            src.Status = dest;
         }
 
         #endregion
