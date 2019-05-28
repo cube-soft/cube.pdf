@@ -79,8 +79,8 @@ namespace Cube.Pdf.Tests
 
             Assert.That(dest.FullName,     Is.EqualTo(src));
             Assert.That(dest.Length,       Is.EqualTo(3765));
-            Assert.That(dest.Resolution.X, Is.EqualTo(96.0f));
-            Assert.That(dest.Resolution.Y, Is.EqualTo(96.0f));
+            Assert.That(dest.Resolution.X, Is.AtLeast(72.0f));
+            Assert.That(dest.Resolution.Y, Is.AtLeast(96.0f));
             Assert.That(dest.Count,        Is.EqualTo(1));
         }
 
