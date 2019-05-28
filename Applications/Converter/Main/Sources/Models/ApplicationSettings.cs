@@ -22,28 +22,34 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// GlobalSettings
+    /// ApplicationSettings
     ///
     /// <summary>
     /// Represents the global settings of the application.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class GlobalSettings
+    public sealed class ApplicationSettings
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// GlobalSettings
+        /// ApplicationSettings
         ///
         /// <summary>
-        /// Invokes the global settings.
+        /// Initializes a new instance of the ApplicationSettings class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        static GlobalSettings()
+        private ApplicationSettings()
         {
             Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo());
         }
+
+        #endregion
+
+        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
@@ -55,5 +61,26 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public static Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdf/");
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Configure
+        ///
+        /// <summary>
+        /// Configures global settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Configure() => _core.Invoke();
+
+        #endregion
+
+        #region Fields
+        private static readonly OnceAction _core = new OnceAction(() => new ApplicationSettings());
+        #endregion
     }
 }

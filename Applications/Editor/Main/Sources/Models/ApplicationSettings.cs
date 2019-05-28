@@ -20,27 +20,27 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// GlobalSettings
+    /// ApplicationSettings
     ///
     /// <summary>
     /// Represents the global settings of the application.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class GlobalSettings
+    public sealed class ApplicationSettings
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GlobalSettings
+        /// ApplicationSettings
         ///
         /// <summary>
-        /// Initializes a new instance of the GlobalSettings class.
+        /// Initializes a new instance of the ApplicationSettings class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private GlobalSettings()
+        private ApplicationSettings()
         {
             Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo());
         }
@@ -63,7 +63,7 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private static readonly OnceAction _core = new OnceAction(() => new GlobalSettings());
+        private static readonly OnceAction _core = new OnceAction(() => new ApplicationSettings());
         #endregion
     }
 }

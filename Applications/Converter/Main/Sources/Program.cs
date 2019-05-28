@@ -58,6 +58,7 @@ namespace Cube.Pdf.Converter
                 Logger.Info(LogType, $"Ghostscript {Ghostscript.Converter.Revision}");
                 Logger.Info(LogType, $"[ {string.Join(" ", raw)} ]");
 
+                ApplicationSettings.Configure();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 

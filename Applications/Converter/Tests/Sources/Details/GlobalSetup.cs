@@ -50,6 +50,7 @@ namespace Cube.Pdf.Converter.Tests
             Logger.Configure();
             Logger.ObserveTaskException();
             Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
+            ApplicationSettings.Configure();
         }
 
         #endregion

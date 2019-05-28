@@ -84,15 +84,15 @@ namespace Cube.Pdf.Editor
         protected override void OnStartup(StartupEventArgs e)
         {
             Logger.Configure();
-            Logger.Info(GetType(), Assembly.GetExecutingAssembly());
+            this.LogInfo(Assembly.GetExecutingAssembly());
 
             _observer.Add(Logger.ObserveTaskException());
             _observer.Add(this.ObserveUiException());
 
-            GlobalSettings.Configure();
             Arguments = e.Args ?? Enumerable.Empty<string>();
-            Logger.Info(GetType(), $"Arguments:{Arguments.Join(" ")}");
+            this.LogInfo($"Arguments:{Arguments.Join(" ")}");
 
+            ApplicationSettings.Configure();
             base.OnStartup(e);
         }
 

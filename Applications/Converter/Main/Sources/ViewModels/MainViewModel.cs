@@ -167,7 +167,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri => GlobalSettings.Uri;
+        public Uri Uri => ApplicationSettings.Uri;
 
         /* ----------------------------------------------------------------- */
         ///
