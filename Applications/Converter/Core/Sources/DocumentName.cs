@@ -65,9 +65,7 @@ namespace Cube.Pdf.Converter
                 AllowUnc              = false,
             };
 
-            IO           = io;
-            DefaultValue = alternate;
-            Value        = GetValue();
+            Value = GetValue(alternate, io);
         }
 
         #endregion
@@ -96,29 +94,6 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Value { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DefaultValue
-        ///
-        /// <summary>
-        /// Gets a name that is used when the specified document name
-        /// cannot be used as a filename.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string DefaultValue { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
-
         #endregion
 
         #region Methods
@@ -132,11 +107,11 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetValue()
+        private string GetValue(string alternate, IO io)
         {
-            if (!Source.HasValue()) return DefaultValue;
+            if (!Source.HasValue()) return alternate;
 
-            var dest = IO.Get(_filter.Result).Name;
+            var dest = io.Get(_filter.Result).Name;
             var key  = " - ";
             var pos  = dest.LastIndexOf(key);
             if (pos == -1) return dest;
