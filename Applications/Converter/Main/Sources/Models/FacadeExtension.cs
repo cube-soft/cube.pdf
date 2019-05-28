@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.String;
+using Cube.Pdf.Ghostscript;
 using System.Diagnostics;
 using System.Linq;
 
@@ -36,19 +38,38 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Execute
+        /// InvokeEx
         ///
         /// <summary>
-        /// Executes the conversion.
+        /// Invokes main and some additional operations.
         /// </summary>
         ///
         /// <param name="src">Source facade.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Execute(this Facade src)
+        public static void InvokeEx(this Facade src)
         {
             src.ChangeExtension();
-            src.Convert();
+            src.Invoke();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ChangeExtension
+        ///
+        /// <summary>
+        /// Changes the extension of the Destination property based on the
+        /// Format property.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void ChangeExtension(this Facade src)
+        {
+            var io   = src.Settings.IO;
+            var prev = io.Get(src.Settings.Value.Destination);
+            var ext  = src.Settings.Value.Format.GetExtension();
+            if (prev.Extension.FuzzyEquals(ext)) return;
+            src.Settings.Value.Destination = io.Combine(prev.DirectoryName, $"{prev.BaseName}{ext}");
         }
 
         /* ----------------------------------------------------------------- */

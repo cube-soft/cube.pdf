@@ -58,7 +58,7 @@ namespace Cube.Pdf.Converter.Tests
                 e.Settings.Value.Source = GetSource("Sample.ps");
                 e.Settings.Value.Destination = dest;
                 e.Settings.Value.PostProcess = PostProcess.None;
-                e.Convert();
+                e.Invoke();
 
                 Assert.That(e.Settings.Value.Busy, Is.False);
                 Assert.That(e.Results.Count(),     Is.EqualTo(1));
@@ -88,7 +88,7 @@ namespace Cube.Pdf.Converter.Tests
                 e.Settings.Value.PostProcess = PostProcess.None;
                 e.Settings.Value.Format      = Ghostscript.Format.Png;
                 e.Settings.Value.Resolution  = 72;
-                e.Convert();
+                e.Invoke();
 
                 Assert.That(e.Settings.Value.Busy, Is.False);
                 Assert.That(e.Results.Count(),     Is.EqualTo(5));
@@ -121,7 +121,7 @@ namespace Cube.Pdf.Converter.Tests
                 e.Settings.Value.Destination = dest;
                 e.Settings.Value.SaveOption  = so;
                 e.Settings.Value.PostProcess = PostProcess.None;
-                e.Convert();
+                e.Invoke();
 
                 Assert.That(e.Settings.Value.Busy, Is.False);
                 Assert.That(e.Results.Count(),     Is.EqualTo(1));
@@ -152,7 +152,7 @@ namespace Cube.Pdf.Converter.Tests
 
             using (var e = new Facade(settings))
             {
-                Assert.That(() => e.Convert(), Throws.TypeOf<CryptographicException>());
+                Assert.That(() => e.Invoke(), Throws.TypeOf<CryptographicException>());
             }
         }
 

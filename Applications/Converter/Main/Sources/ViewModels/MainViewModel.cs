@@ -195,7 +195,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            if (Encryption.Confirm() && General.Confirm()) TrackClose(() => _model.Execute());
+            if (Encryption.Confirm() && General.Confirm()) TrackClose(() => _model.InvokeEx());
         }
 
         /* ----------------------------------------------------------------- */

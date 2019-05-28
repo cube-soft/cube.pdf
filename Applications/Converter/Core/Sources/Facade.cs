@@ -16,8 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
-using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +28,7 @@ namespace Cube.Pdf.Converter
     /// Facade
     ///
     /// <summary>
-    /// Represents the facade of converting operations.
+    /// Represents the facade of operations in the CubePDF.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -102,14 +100,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// Invoke
         ///
         /// <summary>
-        /// Invokes the conversion with the provided settings.
+        /// Invokes operations with the provided settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Convert()
+        public void Invoke()
         {
             lock (_lock)
             {
@@ -119,35 +117,16 @@ namespace Cube.Pdf.Converter
                     var dest = new List<string>();
                     using (var fs = new FileTransfer(Settings, GetTemp()))
                     {
-                        Invoke(() => new DigestChecker(Settings).Invoke());
-                        InvokeGhostscript(fs.Value);
-                        Invoke(() => new FileDecorator(Settings).Invoke(fs.Value));
-                        Invoke(() => fs.Invoke(dest));
-                        Invoke(() => new ProcessLauncher(Settings).Invoke(dest));
+                        Run(() => new DigestChecker(Settings).Invoke());
+                        RunGhostscript(fs.Value);
+                        Run(() => new FileDecorator(Settings).Invoke(fs.Value));
+                        Run(() => fs.Invoke(dest));
+                        Run(() => new ProcessLauncher(Settings).Invoke(dest));
                     }
                     Results = dest;
                 }
                 finally { Settings.Value.Busy = false; }
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ChangeExtension
-        ///
-        /// <summary>
-        /// Changes the extension of the Destination property based on the
-        /// Format property.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void ChangeExtension()
-        {
-            var io  = Settings.IO;
-            var src = io.Get(Settings.Value.Destination);
-            var ext = Settings.Value.Format.GetExtension();
-            if (src.Extension.FuzzyEquals(ext)) return;
-            Settings.Value.Destination = io.Combine(src.DirectoryName, $"{src.BaseName}{ext}");
         }
 
         #endregion
@@ -170,7 +149,7 @@ namespace Cube.Pdf.Converter
         ///
         /// <remarks>
         /// 別スレッドで変換処理中の場合、一時ファイルの削除に失敗する可能性が
-        /// あるので Convert および Dispose において排他処理を行っています。
+        /// あるので Invoke と Dispose との間で排他制御を挿入しています。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -186,25 +165,25 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Run
         ///
         /// <summary>
         /// Invokes the specified action unless the object is not Disposed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Invoke(Action action) { if (!Disposed) action(); }
+        private void Run(Action action) { if (!Disposed) action(); }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InvokeGhostscript
+        /// RunGhostscript
         ///
         /// <summary>
         /// Invokes the Ghostscript API.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void InvokeGhostscript(string dest) => Invoke(() =>
+        private void RunGhostscript(string dest) => Run(() =>
         {
             var gs = GhostscriptFactory.Create(Settings);
             try { gs.Invoke(Settings.Value.Source, dest); }
