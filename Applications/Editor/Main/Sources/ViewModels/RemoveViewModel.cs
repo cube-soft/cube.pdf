@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// RemoveViewModel
     ///
     /// <summary>
-    /// Represents the ViewModel for a RemoveWindow instance.
+    /// Represents the ViewModel associated with the RemoveWindow class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -52,23 +52,19 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RemoveViewModel(Action<IEnumerable<int>> callback, int n, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleRemove, new Aggregator(), context)
+        public RemoveViewModel(Action<IEnumerable<int>> callback,
+            int n,
+            SynchronizationContext context
+        ) : base(() => Properties.Resources.TitleRemove, new Aggregator(), context)
         {
+            _count = n;
             Range = new Bindable<string>(string.Empty, GetDispatcher(false));
-
-            RangeCaption = new BindableElement<string>(
-                () => Properties.Resources.MessageRemoveRange,
-                () => Properties.Resources.MenuRemoveRange,
-                GetDispatcher(false));
-
-            PageCaption = new BindableElement<string>(
-                () => string.Format(Properties.Resources.MessagePage, n),
-                () => Properties.Resources.MenuPageCount,
-                GetDispatcher(false));
-
             OK.Command = new BindableCommand(
-                () => Track(() => Execute(callback, n)),
+                () => Track(() =>
+                {
+                    callback(new Range(Range.Value, _count).Select(i => i - 1));
+                    Send<CloseMessage>();
+                }),
                 () => Range.Value.HasValue(),
                 Range
             );
@@ -94,44 +90,35 @@ namespace Cube.Pdf.Editor
         /// RangeCaption
         ///
         /// <summary>
-        /// Gets the menu that represents the caption of the removal
-        /// range.
+        /// Gets a menu that represents the caption of the removal range.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> RangeCaption { get; }
+        public BindableElement<string> RangeCaption => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MessageRemoveRange,
+            () => Properties.Resources.MenuRemoveRange,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// PageCaption
         ///
         /// <summary>
-        /// Gets the menu that represents the number of pages.
+        /// Gets a menu that represents the number of pages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> PageCaption { get; }
+        public BindableElement<string> PageCaption => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuPageCount,
+            () => string.Format(Properties.Resources.MessagePage, _count),
+            GetDispatcher(false)
+        ));
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Execute
-        ///
-        /// <summary>
-        /// Executes the main command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Execute(Action<IEnumerable<int>> callback, int n)
-        {
-            var dest = new Range(Range.Value, n).Select(i => i - 1);
-            callback(dest);
-            Send<CloseMessage>();
-        }
-
+        #region Fields
+        private readonly int _count;
         #endregion
     }
 }
