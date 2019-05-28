@@ -177,7 +177,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Add(IEnumerable<Page> items)
         {
-            foreach (var item in items) _inner.Add(this.CreateEntry(Count, item));
+            foreach (var item in items) _inner.Add(this.NewItem(Count, item));
         }
 
         /* ----------------------------------------------------------------- */
@@ -197,7 +197,7 @@ namespace Cube.Pdf.Editor
             var pos = index;
             foreach (var item in items)
             {
-                _inner.Insert(pos, this.CreateEntry(pos, item));
+                _inner.Insert(pos, this.NewItem(pos, item));
                 ++pos;
             }
             return KeyValuePair.Create(pos, Count);

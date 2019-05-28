@@ -17,39 +17,100 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Images.Icons;
 using Cube.Mixin.Assembly;
-using Cube.Xui.Converters;
+using System;
 using System.Reflection;
-using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Factory
+    /// MessageFactory
     ///
     /// <summary>
-    /// Provides functionality to create objects.
+    /// Provides functionality to create message objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class Factory
+    internal static class MessageFactory
     {
-        #region Messages
+        #region DialogMessage
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OpenMessage
+        /// Create
         ///
         /// <summary>
-        /// Creates a message to show the OpenFileDialog.
+        /// Create a message to show a DialogBox with an error icon
+        /// and OK button.
+        /// </summary>
+        ///
+        /// <param name="src">Occurred exception.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogMessage Create(Exception src) =>
+            CreateError($"{src.Message} ({src.GetType().Name})");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateOverwriteWarn
+        ///
+        /// <summary>
+        /// Creates a message to show a MessageBox of overwriting
+        /// confirmation.
+        /// </summary>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogMessage CreateOverwriteWarn() => new DialogMessage
+        {
+            Value   = Properties.Resources.MessageOverwrite,
+            Title   = Assembly.GetExecutingAssembly().GetTitle(),
+            Buttons = DialogButtons.YesNoCancel,
+            Icon    = DialogIcon.Warning,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateError
+        ///
+        /// <summary>
+        /// Create a message to show a DialogBox with an error icon
+        /// and OK button.
+        /// </summary>
+        ///
+        /// <param name="src">Error message.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogMessage CreateError(string src) => new DialogMessage
+        {
+            Value   = src,
+            Title   = Assembly.GetExecutingAssembly().GetTitle(),
+            Icon    = DialogIcon.Error,
+            Buttons = DialogButtons.Ok,
+        };
+
+        #endregion
+
+        #region OpenOrSaveMessage
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateForOpen
+        ///
+        /// <summary>
+        /// Creates a message to show an OpenFileDialog dialog.
         /// </summary>
         ///
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage OpenMessage() => new OpenFileMessage
+        public static OpenFileMessage CreateForOpen() => new OpenFileMessage
         {
             Title           = Properties.Resources.TitleOpen,
             CheckPathExists = true,
@@ -63,16 +124,16 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InsertMessage
+        /// CreateForInsert
         ///
         /// <summary>
-        /// Creates a message to show the OpenFileDialog.
+        /// Creates a message to show an OpenFileDialog dialog.
         /// </summary>
         ///
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage InsertMessage() => new OpenFileMessage
+        public static OpenFileMessage CreateForInsert() => new OpenFileMessage
         {
             Title           = Properties.Resources.TitleOpen,
             CheckPathExists = true,
@@ -86,16 +147,16 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveMessage
+        /// CreateForSave
         ///
         /// <summary>
-        /// Creates a message to show the SaveFileDialog.
+        /// Creates a message to show a SaveFileDialog dialog.
         /// </summary>
         ///
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage SaveMessage() => new SaveFileMessage
+        public static SaveFileMessage CreateForSave() => new SaveFileMessage
         {
             Title           = Properties.Resources.TitleSaveAs,
             OverwritePrompt = true,
@@ -106,47 +167,6 @@ namespace Cube.Pdf.Editor
                 new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CloseMessage
-        ///
-        /// <summary>
-        /// Creates a message to show the MessageBox of overwriting
-        /// confirmation.
-        /// </summary>
-        ///
-        /// <returns>DialogMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static DialogMessage CloseMessage() => new DialogMessage
-        {
-            Value   = Properties.Resources.MessageOverwrite,
-            Title   = Assembly.GetExecutingAssembly().GetTitle(),
-            Buttons = DialogButtons.YesNoCancel,
-            Icon    = DialogIcon.Warning,
-        };
-
-        #endregion
-
-        #region Images
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IconImage
-        ///
-        /// <summary>
-        /// Creates a icon from the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">File information.</param>
-        /// <param name="size">Icon size.</param>
-        ///
-        /// <returns>Bitmap of the requested icon.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static BitmapImage IconImage(this Information src, IconSize size) =>
-            src.GetIcon(size)?.ToBitmap().ToBitmapImage(true);
 
         #endregion
     }
