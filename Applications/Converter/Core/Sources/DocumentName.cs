@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.String;
-using System.Diagnostics;
 
 namespace Cube.Pdf.Converter
 {
@@ -57,9 +56,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public DocumentName(string src, string alternate, IO io)
         {
-            IO           = io;
-            DefaultValue = alternate;
-            _filter      = new PathFilter(src)
+            _filter = new PathFilter(src)
             {
                 AllowCurrentDirectory = false,
                 AllowDriveLetter      = false,
@@ -67,6 +64,10 @@ namespace Cube.Pdf.Converter
                 AllowParentDirectory  = false,
                 AllowUnc              = false,
             };
+
+            IO           = io;
+            DefaultValue = alternate;
+            Value        = GetValue();
         }
 
         #endregion
@@ -93,7 +94,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Value => GetValue();
+        public string Value { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -143,13 +144,9 @@ namespace Cube.Pdf.Converter
             var head = dest.Substring(0, pos);
             var tail = dest.Substring(pos);
 
-            if (System.IO.Path.HasExtension(head)) return head;
-            if (System.IO.Path.HasExtension(tail))
-            {
-                Debug.Assert(tail.StartsWith(key));
-                return tail.Substring(key.Length);
-            }
-            return dest;
+            return System.IO.Path.HasExtension(head) ? head :
+                   System.IO.Path.HasExtension(tail) ? tail.Substring(key.Length) :
+                   dest;
         }
 
         #endregion
