@@ -64,7 +64,7 @@ namespace Cube.Pdf.Editor
             UserSpecified = new BindableElement<int>(
                 () => Properties.Resources.MenuPositionSpecified,
                 () => data.UserSpecifiedIndex.Value + 1,
-                e  => { data.UserSpecifiedIndex.Value = e - 1; return true; },
+                e  => data.UserSpecifiedIndex.Value = e - 1,
                 Dispatcher
             );
 

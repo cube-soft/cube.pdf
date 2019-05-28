@@ -16,76 +16,54 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.String;
-using Cube.Xui;
-using System.Threading;
-
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PasswordViewModel
+    /// GlobalSettings
     ///
     /// <summary>
-    /// Provides binding properties and commands for the PasswordWindow
-    /// class.
+    /// Represents the global settings of the application.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PasswordViewModel : DialogViewModel
+    public class GlobalSettings
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PasswordViewModel
+        /// GlobalSettings
         ///
         /// <summary>
-        /// Initializes a new instance of the PasswordViewModel class.
+        /// Initializes a new instance of the GlobalSettings class.
         /// </summary>
         ///
-        /// <param name="src">Query for password.</param>
-        /// <param name="io">I/O handler</param>
-        /// <param name="context">Synchronization context.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public PasswordViewModel(QueryMessage<string, string> src, IO io, SynchronizationContext context) :
-            base(() => Properties.Resources.TitlePassword, new Aggregator(), context)
+        private GlobalSettings()
         {
-            var fi = io.Get(src.Query);
-
-            Password = new BindableElement<string>(
-                () => string.Format(Properties.Resources.MessagePassword, fi.Name),
-                () => src.Value,
-                e  => src.Value = e,
-                GetDispatcher(false)
-            );
-
-            OK.Command = new BindableCommand(
-                () => { src.Cancel = false; Send<CloseMessage>(); },
-                () => Password.Value.HasValue(),
-                Password
-            );
-
-            src.Cancel = true;
+            Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo());
         }
 
         #endregion
 
-        #region Properties
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Password
+        /// Configure
         ///
         /// <summary>
-        /// Gets the password menu.
+        /// Configures global settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Password { get; }
+        public static void Configure() => _core.Invoke();
 
+        #endregion
+
+        #region Fields
+        private static readonly OnceAction _core = new OnceAction(() => new GlobalSettings());
         #endregion
     }
 }

@@ -16,9 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Collections;
 using Cube.Mixin.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 
@@ -87,8 +89,9 @@ namespace Cube.Pdf.Editor
             _observer.Add(Logger.ObserveTaskException());
             _observer.Add(this.ObserveUiException());
 
-            Arguments = e.Args ?? new string[0];
-            Logger.Info(GetType(), $"Arguments:{string.Join(" ", Arguments)}");
+            GlobalSettings.Configure();
+            Arguments = e.Args ?? Enumerable.Empty<string>();
+            Logger.Info(GetType(), $"Arguments:{Arguments.Join(" ")}");
 
             base.OnStartup(e);
         }

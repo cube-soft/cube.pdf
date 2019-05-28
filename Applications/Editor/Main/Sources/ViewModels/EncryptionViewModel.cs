@@ -62,21 +62,21 @@ namespace Cube.Pdf.Editor
             Enabled = new BindableElement<bool>(
                 () => Properties.Resources.MenuEncryptionEnabled,
                 () => src.Enabled,
-                e  => { src.Enabled = e; return true; },
+                e  => src.Enabled = e,
                 GetDispatcher(false)
             );
 
             Method = new BindableElement<EncryptionMethod>(
                 () => Properties.Resources.MenuEncryptionMethod,
                 () => src.Method,
-                e  => { src.Method = e; return true; },
+                e  => src.Method = e,
                 GetDispatcher(false)
             );
 
             OwnerPassword = new BindableElement<string>(
                 () => Properties.Resources.MenuOwnerPassword,
                 () => src.OwnerPassword,
-                e  => { src.OwnerPassword = e; return true; },
+                e  => src.OwnerPassword = e,
                 GetDispatcher(false)
             );
 
@@ -89,7 +89,7 @@ namespace Cube.Pdf.Editor
             UserPassword = new BindableElement<string>(
                 () => Properties.Resources.MenuUserPassword,
                 () => src.UserPassword,
-                e  => { src.UserPassword = e; return true; },
+                e  => src.UserPassword = e,
                 GetDispatcher(false)
             );
 
@@ -108,7 +108,7 @@ namespace Cube.Pdf.Editor
             IsOpenPassword = new BindableElement<bool>(
                 () => Properties.Resources.MenuOpenWithPassword,
                 () => src.OpenWithPassword,
-                e  => { src.OpenWithPassword = e; return true; },
+                e  => src.OpenWithPassword = e,
                 GetDispatcher(false)
             );
 
@@ -126,42 +126,42 @@ namespace Cube.Pdf.Editor
             AllowPrint = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowPrint,
                 () => pm.Print.IsAllowed(),
-                e  => { pm.Print = Convert(e); return true; },
+                e  => pm.Print = Convert(e),
                 GetDispatcher(false)
             );
 
             AllowCopy = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowCopy,
                 () => pm.CopyContents.IsAllowed(),
-                e  => { pm.CopyContents = Convert(e); return true; },
+                e  => pm.CopyContents = Convert(e),
                 GetDispatcher(false)
             );
 
             AllowAccessibility = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowAccessibility,
                 () => pm.Accessibility.IsAllowed(),
-                e  => { pm.Accessibility = Convert(e); return true; },
+                e  => pm.Accessibility = Convert(e),
                 GetDispatcher(false)
             );
 
             AllowForm = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowForm,
                 () => pm.InputForm.IsAllowed(),
-                e  => { pm.InputForm = Convert(e); return true; },
+                e  => pm.InputForm = Convert(e),
                 GetDispatcher(false)
             );
 
             AllowAnnotation = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowAnnotation,
                 () => pm.ModifyAnnotations.IsAllowed(),
-                e  => { pm.ModifyAnnotations = Convert(e); return true; },
+                e  => pm.ModifyAnnotations = Convert(e),
                 GetDispatcher(false)
             );
 
             AllowModify = new BindableElement<bool>(
                 () => Properties.Resources.MenuAllowAssemble,
                 () => pm.ModifyContents.IsAllowed(),
-                e  => { pm.ModifyContents = Convert(e); return true; },
+                e  => pm.ModifyContents = Convert(e),
                 GetDispatcher(false)
             );
 

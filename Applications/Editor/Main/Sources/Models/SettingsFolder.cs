@@ -44,27 +44,6 @@ namespace Cube.Pdf.Editor
         /// SettingsFolder
         ///
         /// <summary>
-        /// Initializes static fields.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        static SettingsFolder()
-        {
-            Locale.Configure(e =>
-            {
-                var src = e.ToCultureInfo();
-                var cmp = Properties.Resources.Culture?.Name;
-                if (cmp.HasValue() && cmp.FuzzyEquals(src.Name)) return false;
-                Properties.Resources.Culture = src;
-                return true;
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingsFolder
-        ///
-        /// <summary>
         /// Initializes a new instance of the SettingsFolder with the
         /// specified parameters.
         /// </summary>

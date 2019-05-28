@@ -60,14 +60,14 @@ namespace Cube.Pdf.Editor
             Language = new BindableElement<Language>(
                 () => Properties.Resources.MenuLanguage,
                 () => src.Value.Language,
-                e  => { src.Value.Language = e; return true; },
+                e  => src.Value.Language = e,
                 GetDispatcher(false)
             );
 
             Update = new BindableElement<bool>(
                 () => Properties.Resources.MenuUpdate,
                 () => src.Value.CheckUpdate,
-                e  => { src.Value.CheckUpdate = e; return true; },
+                e  => src.Value.CheckUpdate = e,
                 GetDispatcher(false)
             );
 

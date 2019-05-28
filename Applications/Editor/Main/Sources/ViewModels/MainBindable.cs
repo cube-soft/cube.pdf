@@ -65,12 +65,7 @@ namespace Cube.Pdf.Editor
             Count     = new Bindable<int>(() => Images.Count, dispatcher);
             ItemSize  = new Bindable<int>(
                 () => Settings.ItemSize,
-                e =>
-                {
-                    if (Settings.ItemSize == e) return false;
-                    Settings.ItemSize = e;
-                    return true;
-                },
+                e  => Settings.ItemSize = e,
                 dispatcher
             );
         }

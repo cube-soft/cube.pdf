@@ -96,49 +96,49 @@ namespace Cube.Pdf.Editor
             Document = new BindableElement<string>(
                 () => Properties.Resources.MenuTitle,
                 () => src.Title,
-                e  => { src.Title = e; return true; },
+                e  => src.Title = e,
                 GetDispatcher(false)
             );
 
             Author = new BindableElement<string>(
                 () => Properties.Resources.MenuAuthor,
                 () => src.Author,
-                e => { src.Author = e; return true; },
+                e  => src.Author = e,
                 GetDispatcher(false)
             );
 
             Subject = new BindableElement<string>(
                 () => Properties.Resources.MenuSubject,
                 () => src.Subject,
-                e  => { src.Subject = e; return true; },
+                e  => src.Subject = e,
                 GetDispatcher(false)
             );
 
             Keywords = new BindableElement<string>(
                 () => Properties.Resources.MenuKeywords,
                 () => src.Keywords,
-                e  => { src.Keywords = e; return true; },
+                e  => src.Keywords = e,
                 GetDispatcher(false)
             );
 
             Creator = new BindableElement<string>(
                 () => Properties.Resources.MenuCreator,
                 () => src.Creator,
-                e  => { src.Creator = e; return true; },
+                e  => src.Creator = e,
                 GetDispatcher(false)
             );
 
             Version = new BindableElement<PdfVersion>(
                 () => Properties.Resources.MenuVersion,
                 () => src.Version,
-                e => { src.Version = e; return true; },
+                e  => src.Version = e,
                 GetDispatcher(false)
             );
 
             Options = new BindableElement<ViewerOptions>(
                 () => Properties.Resources.MenuLayout,
                 () => src.Options,
-                e => { src.Options = e; return true; },
+                e  => src.Options = e,
                 GetDispatcher(false)
             );
 

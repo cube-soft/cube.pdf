@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
 using System;
 
 namespace Cube.Pdf.Converter
@@ -43,14 +42,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         static GlobalSettings()
         {
-            Locale.Configure(e =>
-            {
-                var src = e.ToCultureInfo();
-                var cmp = Properties.Resources.Culture?.Name;
-                if (cmp.HasValue() && cmp.FuzzyEquals(src.Name)) return false;
-                Properties.Resources.Culture = src;
-                return true;
-            });
+            Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo());
         }
 
         /* ----------------------------------------------------------------- */
