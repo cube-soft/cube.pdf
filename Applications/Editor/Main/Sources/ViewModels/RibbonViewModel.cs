@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
+using System;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -26,11 +27,11 @@ namespace Cube.Pdf.Editor
     /// RibbonViewModel
     ///
     /// <summary>
-    /// Ribbon の ViewModel クラスです。
+    /// Represents the ViewModel of Ribbon menu items.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RibbonViewModel : PresentableBase
+    public sealed class RibbonViewModel : CommonViewModel
     {
         #region Constructors
 
@@ -48,150 +49,18 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonViewModel(MainBindable src, Aggregator aggregator, SynchronizationContext context) :
-            base(aggregator, context)
+        public RibbonViewModel(MainBindable src,
+            Aggregator aggregator,
+            SynchronizationContext context
+        ) : base(aggregator, context)
         {
-            File = new RibbonElement(nameof(File),
-                () => Properties.Resources.MenuFile,
-                GetDispatcher(false));
+            if (src != null)
+            {
+                src.Source.PropertyChanged += WhenPropertyChanged;
+                src.Busy.PropertyChanged   += WhenPropertyChanged;
+            }
 
-            Edit = new RibbonElement(nameof(Edit),
-                () => Properties.Resources.MenuEdit,
-                GetDispatcher(false));
-
-            Others = new RibbonElement(nameof(Others),
-                () => Properties.Resources.MenuOthers,
-                GetDispatcher(false));
-
-            Preview = new BindableElement(
-                () => Properties.Resources.MenuPreview,
-                GetDispatcher(false));
-
-            Open = new RibbonElement(nameof(Open),
-                () => Properties.Resources.MenuOpen,
-                GetDispatcher(false));
-
-            Save = new RibbonElement(nameof(Save),
-                () => Properties.Resources.MenuSave,
-                () => Properties.Resources.TooltipSave,
-                GetDispatcher(false));
-
-            SaveAs = new RibbonElement(nameof(SaveAs),
-                () => Properties.Resources.MenuSaveAs,
-                GetDispatcher(false));
-
-            Close = new RibbonElement(nameof(Close),
-                () => Properties.Resources.MenuClose,
-                GetDispatcher(false));
-
-            Exit = new RibbonElement(nameof(Exit),
-                () => Properties.Resources.MenuExit,
-                GetDispatcher(false));
-
-            Undo = new RibbonElement(nameof(Undo),
-                () => Properties.Resources.MenuUndo,
-                GetDispatcher(false));
-
-            Redo = new RibbonElement(nameof(Redo),
-                () => Properties.Resources.MenuRedo,
-                GetDispatcher(false));
-
-            Select = new RibbonElement(nameof(Select),
-                () => Properties.Resources.MenuSelect,
-                GetDispatcher(false));
-
-            SelectAll = new RibbonElement(nameof(Select),
-                () => Properties.Resources.MenuSelectAll,
-                GetDispatcher(false));
-
-            SelectFlip = new RibbonElement(nameof(Select),
-                () => Properties.Resources.MenuSelectFlip,
-                GetDispatcher(false));
-
-            SelectClear = new RibbonElement(nameof(Select),
-                () => Properties.Resources.MenuSelectClear,
-                GetDispatcher(false));
-
-            Insert = new RibbonElement(nameof(Insert),
-                () => Properties.Resources.MenuInsert,
-                () => Properties.Resources.TooltipInsert,
-                () => !src.Busy.Value && src.IsOpen(),
-                GetDispatcher(false));
-
-            InsertFront = new RibbonElement(nameof(Insert),
-                () => Properties.Resources.MenuInsertFront,
-                GetDispatcher(false));
-
-            InsertBack = new RibbonElement(nameof(Insert),
-                () => Properties.Resources.MenuInsertBack,
-                GetDispatcher(false));
-
-            InsertOthers = new RibbonElement(nameof(InsertOthers),
-                () => Properties.Resources.MenuInsertOthers,
-                GetDispatcher(false));
-
-            Extract = new RibbonElement(nameof(Extract),
-                () => Properties.Resources.MenuExtract,
-                () => Properties.Resources.TooltipExtract,
-                GetDispatcher(false));
-
-            Remove = new RibbonElement(nameof(Remove),
-                () => Properties.Resources.MenuRemove,
-                () => Properties.Resources.TooltipRemove,
-                () => !src.Busy.Value && src.IsOpen(),
-                GetDispatcher(false));
-
-            RemoveOthers = new RibbonElement(nameof(RemoveOthers),
-                () => Properties.Resources.MenuRemoveOthers,
-                GetDispatcher(false));
-
-            MoveNext = new RibbonElement(nameof(MoveNext),
-                () => Properties.Resources.MenuMoveNext,
-                GetDispatcher(false));
-
-            MovePrevious = new RibbonElement(nameof(MovePrevious),
-                () => Properties.Resources.MenuMovePrevious,
-                GetDispatcher(false));
-
-            RotateLeft = new RibbonElement(nameof(RotateLeft),
-                () => Properties.Resources.MenuRotateLeft,
-                GetDispatcher(false));
-
-            RotateRight = new RibbonElement(nameof(RotateRight),
-                () => Properties.Resources.MenuRotateRight,
-                GetDispatcher(false));
-
-            Metadata = new RibbonElement(nameof(Metadata),
-                () => Properties.Resources.MenuMetadata,
-                () => Properties.Resources.TooltipMetadata,
-                GetDispatcher(false));
-
-            Encryption = new RibbonElement(nameof(Encryption),
-                () => Properties.Resources.MenuEncryption,
-                GetDispatcher(false));
-
-            Refresh = new RibbonElement(nameof(Refresh),
-                () => Properties.Resources.MenuRefresh,
-                GetDispatcher(false));
-
-            ZoomIn = new RibbonElement(nameof(ZoomIn),
-                () => Properties.Resources.MenuZoomIn,
-                GetDispatcher(false));
-
-            ZoomOut = new RibbonElement(nameof(ZoomOut),
-                () => Properties.Resources.MenuZoomOut,
-                GetDispatcher(false));
-
-            Settings = new RibbonElement(nameof(Settings),
-                () => Properties.Resources.MenuSettings,
-                GetDispatcher(false));
-
-            FrameOnly = new BindableElement<bool>(
-                () => Properties.Resources.MenuFrameOnly,
-                () => src.Settings.FrameOnly,
-                e  => src.Settings.FrameOnly = e,
-                GetDispatcher(false)
-            );
+            _model = src;
         }
 
         #endregion
@@ -209,7 +78,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement File { get; }
+        public RibbonElement File => Get(() => new RibbonElement(
+            nameof(File),
+            () => Properties.Resources.MenuFile,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -220,7 +93,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Edit { get; }
+        public RibbonElement Edit => Get(() => new RibbonElement(
+            nameof(Edit),
+            () => Properties.Resources.MenuEdit,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -231,7 +108,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Others { get; }
+        public RibbonElement Others => Get(() => new RibbonElement(
+            nameof(Others),
+            () => Properties.Resources.MenuOthers,
+            GetDispatcher(false)
+        ));
 
         #endregion
 
@@ -242,328 +123,441 @@ namespace Cube.Pdf.Editor
         /// Preview
         ///
         /// <summary>
-        /// Gets the menu that provides functionality to show the preview
-        /// dialog.
+        /// Gets a menu show a preview dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Preview { get; }
+        public BindableElement Preview => Get(() => new BindableElement(
+            () => Properties.Resources.MenuPreview,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Open
         ///
         /// <summary>
-        /// 開くメニューを取得します。
+        /// Gets an Open menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Open { get; }
+        public RibbonElement Open => Get(() => new RibbonElement(
+            nameof(Open),
+            () => Properties.Resources.MenuOpen,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Save
         ///
         /// <summary>
-        /// 保存メニューを取得します。
+        /// Gets a Save menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Save { get; }
+        public RibbonElement Save => Get(() => new RibbonElement(
+            nameof(Save),
+            () => Properties.Resources.MenuSave,
+            () => Properties.Resources.TooltipSave,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// SaveAs
         ///
         /// <summary>
-        /// 名前を付けて保存メニューを取得します。
+        /// Gets a SaveAs menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement SaveAs { get; }
+        public RibbonElement SaveAs => Get(() => new RibbonElement(
+            nameof(SaveAs),
+            () => Properties.Resources.MenuSaveAs,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Close
         ///
         /// <summary>
-        /// 閉じるメニューを取得します。
+        /// Gets a menu to closes the current PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Close { get; }
+        public RibbonElement Close => Get(() => new RibbonElement(
+            nameof(Close),
+            () => Properties.Resources.MenuClose,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Exit
         ///
         /// <summary>
-        /// 終了メニューを取得します。
+        /// Gets a menu to terminate the application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Exit { get; }
+        public RibbonElement Exit => Get(() => new RibbonElement(
+            nameof(Exit),
+            () => Properties.Resources.MenuExit,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Undo
         ///
         /// <summary>
-        /// 元に戻すメニューを取得します。
+        /// Gets an Undo menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Undo { get; }
+        public RibbonElement Undo => Get(() => new RibbonElement(
+            nameof(Undo),
+            () => Properties.Resources.MenuUndo,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Redo
         ///
         /// <summary>
-        /// やり直しメニューを取得します。
+        /// Gets a Redo menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Redo { get; }
+        public RibbonElement Redo => Get(() => new RibbonElement(
+            nameof(Redo),
+            () => Properties.Resources.MenuRedo,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Select
         ///
         /// <summary>
-        /// 選択メニューを取得します。
+        /// Gets a Select menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Select { get; }
+        public RibbonElement Select => Get(() => new RibbonElement(
+            nameof(Select),
+            () => Properties.Resources.MenuSelect,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// SelectAll
         ///
         /// <summary>
-        /// すべて選択メニューを取得します。
+        /// Gets a menu to select all items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement SelectAll { get; }
+        public RibbonElement SelectAll => Get(() => new RibbonElement(
+            nameof(Select),
+            () => Properties.Resources.MenuSelectAll,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// SelectFlip
         ///
         /// <summary>
-        /// 選択の切り替えメニューを取得します。
+        /// Gets a menu to flip the current selection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement SelectFlip { get; }
+        public RibbonElement SelectFlip => Get(() => new RibbonElement(
+            nameof(Select),
+            () => Properties.Resources.MenuSelectFlip,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// SelectClear
         ///
         /// <summary>
-        /// 選択を解除メニューを取得します。
+        /// Gets a menu to clear the current selection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement SelectClear { get; }
+        public RibbonElement SelectClear => Get(() => new RibbonElement(
+            nameof(Select),
+            () => Properties.Resources.MenuSelectClear,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Insert
         ///
         /// <summary>
-        /// 挿入メニューを取得します。
+        /// Gets an Insert menu.
         /// </summary>
         ///
-        /// <remarks>
-        /// コンストラクタで初期化します。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Insert { get; }
+        public RibbonElement Insert => Get(() => new RibbonElement(
+            nameof(Insert),
+            () => Properties.Resources.MenuInsert,
+            () => Properties.Resources.TooltipInsert,
+            () => !_model.Busy.Value && _model.IsOpen(),
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// InsertFront
         ///
         /// <summary>
-        /// 先頭に挿入メニューを取得します。
+        /// Gets a menu to insert other files at the beginning.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement InsertFront { get; }
+        public RibbonElement InsertFront => Get(() => new RibbonElement(
+            nameof(Insert),
+            () => Properties.Resources.MenuInsertFront,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// InsertBack
         ///
         /// <summary>
-        /// 末尾に挿入メニューを取得します。
+        /// Gets a menu to insert other files at the end.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement InsertBack { get; }
+        public RibbonElement InsertBack => Get(() => new RibbonElement(
+            nameof(Insert),
+            () => Properties.Resources.MenuInsertBack,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// InsertOthers
         ///
         /// <summary>
-        /// 詳細を設定して挿入メニューを取得します。
+        /// Gets a menu to show an insert dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement InsertOthers { get; }
+        public RibbonElement InsertOthers => Get(() => new RibbonElement(
+            nameof(InsertOthers),
+            () => Properties.Resources.MenuInsertOthers,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Extract
         ///
         /// <summary>
-        /// 抽出メニューを取得します。
+        /// Gets an Extract menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Extract { get; }
+        public RibbonElement Extract => Get(() => new RibbonElement(
+            nameof(Extract),
+            () => Properties.Resources.MenuExtract,
+            () => Properties.Resources.TooltipExtract,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Remove
         ///
         /// <summary>
-        /// 削除メニューを取得します。
+        /// Gets a Remove menu.
         /// </summary>
         ///
-        /// <remarks>
-        /// コンストラクタで初期化します。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Remove { get; }
+        public RibbonElement Remove => Get(() => new RibbonElement(
+            nameof(Remove),
+            () => Properties.Resources.MenuRemove,
+            () => Properties.Resources.TooltipRemove,
+            () => !_model.Busy.Value && _model.IsOpen(),
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// RemoveOthers
         ///
         /// <summary>
-        /// 範囲を指定して削除メニューを取得します。
+        /// Gets a menu to show a remove dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement RemoveOthers { get; }
+        public RibbonElement RemoveOthers => Get(() => new RibbonElement(
+            nameof(RemoveOthers),
+            () => Properties.Resources.MenuRemoveOthers,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// MoveNext
         ///
         /// <summary>
-        /// 後ろのページへ移動するメニューを取得します。
+        /// Gets a menu to move the selected page to the next.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement MoveNext { get; }
+        public RibbonElement MoveNext => Get(() => new RibbonElement(
+            nameof(MoveNext),
+            () => Properties.Resources.MenuMoveNext,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// MovePrevious
         ///
         /// <summary>
-        /// 前のページへ移動するメニューを取得します。
+        /// Gets a menu to move the selected page to the previous.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement MovePrevious { get; }
+        public RibbonElement MovePrevious => Get(() => new RibbonElement(
+            nameof(MovePrevious),
+            () => Properties.Resources.MenuMovePrevious,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// RotateLeft
         ///
         /// <summary>
-        /// 左 90 度回転メニューを取得します。
+        /// Gets a menu to rotate 90 degrees left.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement RotateLeft { get; }
+        public RibbonElement RotateLeft => Get(() => new RibbonElement(
+            nameof(RotateLeft),
+            () => Properties.Resources.MenuRotateLeft,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// RotateRight
         ///
         /// <summary>
-        /// 右 90 度回転メニューを取得します。
+        /// Gets a menu to rotate 90 degrees right.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement RotateRight { get; }
+        public RibbonElement RotateRight => Get(() => new RibbonElement(
+            nameof(RotateRight),
+            () => Properties.Resources.MenuRotateRight,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Metadata
         ///
         /// <summary>
-        /// メタ情報メニューを取得します。
+        /// Gets a menu to show a metadata dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Metadata { get; }
+        public RibbonElement Metadata => Get(() => new RibbonElement(
+            nameof(Metadata),
+            () => Properties.Resources.MenuMetadata,
+            () => Properties.Resources.TooltipMetadata,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Encryption
         ///
         /// <summary>
-        /// セキュリティメニューを取得します。
+        /// Gets a menu to show an encryption dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Encryption { get; }
+        public RibbonElement Encryption => Get(() => new RibbonElement(
+            nameof(Encryption),
+            () => Properties.Resources.MenuEncryption,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Refresh
         ///
         /// <summary>
-        /// 更新メニューを取得します。
+        /// Gets a Refresh menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Refresh { get; }
+        public RibbonElement Refresh => Get(() => new RibbonElement(
+            nameof(Refresh),
+            () => Properties.Resources.MenuRefresh,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// ZoomIn
         ///
         /// <summary>
-        /// 拡大メニューを取得します。
+        /// Gets a ZoomIn menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement ZoomIn { get; }
+        public RibbonElement ZoomIn => Get(() => new RibbonElement(
+            nameof(ZoomIn),
+            () => Properties.Resources.MenuZoomIn,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// ZoomOut
         ///
         /// <summary>
-        /// 縮小メニューを取得します。
+        /// Gets a ZoomOut menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement ZoomOut { get; }
+        public RibbonElement ZoomOut => Get(() => new RibbonElement(
+            nameof(ZoomOut),
+            () => Properties.Resources.MenuZoomOut,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Settings
         ///
         /// <summary>
-        /// Gets the settings ribbon menu.
+        /// Gets a menu to show a settings dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Settings { get; }
+        public RibbonElement Settings => Get(() => new RibbonElement(
+            nameof(Settings),
+            () => Properties.Resources.MenuSettings,
+            GetDispatcher(false)
+        ));
 
         #endregion
 
@@ -572,32 +566,16 @@ namespace Cube.Pdf.Editor
         /// FrameOnly
         ///
         /// <summary>
-        /// Gets the frame only menu.
+        /// Gets a menu to determine whether to show only the frame.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<bool> FrameOnly { get; }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Raise
-        ///
-        /// <summary>
-        /// Raises the event that Enabled property is changed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Raise()
-        {
-            foreach (var e in new[] { Insert, Extract, Remove })
-            {
-                e.Refresh(nameof(RibbonElement.Enabled));
-            }
-        }
+        public BindableElement<bool> FrameOnly => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuFrameOnly,
+            () => _model.Settings.FrameOnly,
+            e  => _model.Settings.FrameOnly = e,
+            GetDispatcher(false)
+        ));
 
         #endregion
 
@@ -605,21 +583,23 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Dispose
+        /// WhenPropertyChanged
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the MainViewModel
-        /// and optionally releases the managed resources.
+        /// Occurs when the PropertyChanged is fired.
         /// </summary>
         ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
+        private void WhenPropertyChanged(object s, EventArgs e)
+        {
+            var src = new[] { Insert, Extract, Remove };
+            foreach (var re in src) re.Refresh(nameof(RibbonElement.Enabled));
+        }
 
+        #endregion
+
+        #region Fields
+        private readonly MainBindable _model;
         #endregion
     }
 }

@@ -148,19 +148,19 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             e.OwnerPassword.Value      = src.OwnerPassword;
             e.OwnerConfirm.Value       = src.OwnerPassword;
             e.Method.Value             = src.Method;
-            e.IsOpenPassword.Value     = src.OpenWithPassword;
-            e.IsSharePassword.Value    = share;
+            e.OpenPassword.Value       = src.OpenWithPassword;
+            e.SharePassword.Value      = share;
             e.UserPassword.Value       = src.UserPassword;
 
-            var p = src.Permission;
+            var pm = src.Permission;
 
             e.UserConfirm.Value        = src.UserPassword;
-            e.AllowPrint.Value         = p.Print.IsAllowed();
-            e.AllowCopy.Value          = p.CopyContents.IsAllowed();
-            e.AllowModify.Value        = p.ModifyContents.IsAllowed();
-            e.AllowAnnotation.Value    = p.ModifyAnnotations.IsAllowed();
-            e.AllowForm.Value          = p.InputForm.IsAllowed();
-            e.AllowAccessibility.Value = p.Accessibility.IsAllowed();
+            e.AllowPrint.Value         = pm.Print.IsAllowed();
+            e.AllowCopy.Value          = pm.CopyContents.IsAllowed();
+            e.AllowModify.Value        = pm.ModifyContents.IsAllowed();
+            e.AllowAnnotation.Value    = pm.ModifyAnnotations.IsAllowed();
+            e.AllowForm.Value          = pm.InputForm.IsAllowed();
+            e.AllowAccessibility.Value = pm.Accessibility.IsAllowed();
 
             Assert.That(e.OK.Command.CanExecute(), Is.True);
             e.OK.Command.Execute();

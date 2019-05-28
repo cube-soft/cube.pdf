@@ -34,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EncryptionViewModel : DialogViewModel
+    public sealed class EncryptionViewModel : DialogViewModel
     {
         #region Constructors
 
@@ -47,123 +47,25 @@ namespace Cube.Pdf.Editor
         /// with the specified argumetns.
         /// </summary>
         ///
-        /// <param name="callback">Callback method when applied.</param>
+        /// <param name="callback">Callback when applied.</param>
         /// <param name="src">Encryption object.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionViewModel(Action<Encryption> callback, Encryption src, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleEncryption, new Aggregator(), context)
+        public EncryptionViewModel(Action<Encryption> callback,
+            Encryption src,
+            SynchronizationContext context
+        ) : base(() => Properties.Resources.TitleEncryption, new Aggregator(), context)
         {
+            // TODO: EncryptionFacade を追加して処理を移譲
             if (src.Method == EncryptionMethod.Unknown) src.Method = EncryptionMethod.Aes256;
+            _share = new Accessor<bool>(src.OwnerPassword.HasValue() && src.OwnerPassword.FuzzyEquals(src.UserPassword));
+            if (_share.Get()) src.UserPassword = string.Empty;
 
-            IsSharePassword = CreateShare(src);
+            _model = src;
 
-            Enabled = new BindableElement<bool>(
-                () => Properties.Resources.MenuEncryptionEnabled,
-                () => src.Enabled,
-                e  => src.Enabled = e,
-                GetDispatcher(false)
-            );
-
-            Method = new BindableElement<EncryptionMethod>(
-                () => Properties.Resources.MenuEncryptionMethod,
-                () => src.Method,
-                e  => src.Method = e,
-                GetDispatcher(false)
-            );
-
-            OwnerPassword = new BindableElement<string>(
-                () => Properties.Resources.MenuOwnerPassword,
-                () => src.OwnerPassword,
-                e  => src.OwnerPassword = e,
-                GetDispatcher(false)
-            );
-
-            OwnerConfirm = new BindableElement<string>(
-                () => Properties.Resources.MenuConfirmPassword,
-                new Accessor<string>(),
-                GetDispatcher(false)
-            );
-
-            UserPassword = new BindableElement<string>(
-                () => Properties.Resources.MenuUserPassword,
-                () => src.UserPassword,
-                e  => src.UserPassword = e,
-                GetDispatcher(false)
-            );
-
-            UserConfirm = new BindableElement<string>(
-                () => Properties.Resources.MenuConfirmPassword,
-                new Accessor<string>(),
-                GetDispatcher(false)
-            );
-
-            IsSharePassword = new BindableElement<bool>(
-                () => Properties.Resources.MenuSharePassword,
-                new Accessor<bool>(),
-                GetDispatcher(false)
-            );
-
-            IsOpenPassword = new BindableElement<bool>(
-                () => Properties.Resources.MenuOpenWithPassword,
-                () => src.OpenWithPassword,
-                e  => src.OpenWithPassword = e,
-                GetDispatcher(false)
-            );
-
-            Operation = new BindableElement<bool>(
-                () => Properties.Resources.MenuOperations,
-                () => !IsOpenPassword.Value || !IsSharePassword.Value,
-                GetDispatcher(false)
-            );
-
-            IsOpenPassword.PropertyChanged  += (s, e) => Operation.Refresh("Value");
-            IsSharePassword.PropertyChanged += (s, e) => Operation.Refresh("Value");
-
-            var pm = src.Permission;
-
-            AllowPrint = new BindableElement<bool>(
-                () => Properties.Resources.MenuAllowPrint,
-                () => pm.Print.IsAllowed(),
-                e  => pm.Print = Convert(e),
-                GetDispatcher(false)
-            );
-
-            AllowCopy = new BindableElement<bool>(
-                () => Properties.Resources.MenuAllowCopy,
-                () => pm.CopyContents.IsAllowed(),
-                e  => pm.CopyContents = Convert(e),
-                GetDispatcher(false)
-            );
-
-            AllowAccessibility = new BindableElement<bool>(
-                () => Properties.Resources.MenuAllowAccessibility,
-                () => pm.Accessibility.IsAllowed(),
-                e  => pm.Accessibility = Convert(e),
-                GetDispatcher(false)
-            );
-
-            AllowForm = new BindableElement<bool>(
-                () => Properties.Resources.MenuAllowForm,
-                () => pm.InputForm.IsAllowed(),
-                e  => pm.InputForm = Convert(e),
-                GetDispatcher(false)
-            );
-
-            AllowAnnotation = new BindableElement<bool>(
-                () => Properties.Resources.MenuAllowAnnotation,
-                () => pm.ModifyAnnotations.IsAllowed(),
-                e  => pm.ModifyAnnotations = Convert(e),
-                GetDispatcher(false)
-            );
-
-            AllowModify = new BindableElement<bool>(
-                () => Properties.Resources.MenuAllowAssemble,
-                () => pm.ModifyContents.IsAllowed(),
-                e  => pm.ModifyContents = Convert(e),
-                GetDispatcher(false)
-            );
+            OpenPassword.PropertyChanged  += (s, e) => Operation.Refresh("Value");
+            SharePassword.PropertyChanged += (s, e) => Operation.Refresh("Value");
 
             OK.Command = new BindableCommand(
                 () => Execute(callback, src),
@@ -171,8 +73,8 @@ namespace Cube.Pdf.Editor
                 Enabled,
                 OwnerPassword,
                 OwnerConfirm,
-                IsOpenPassword,
-                IsSharePassword,
+                OpenPassword,
+                SharePassword,
                 UserPassword,
                 UserConfirm
             );
@@ -184,180 +86,10 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Enabled
-        ///
-        /// <summary>
-        /// Gets the menu that encryption is enabled.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> Enabled { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Method
-        ///
-        /// <summary>
-        /// Gets the encryption method menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<EncryptionMethod> Method { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OwnerPassword
-        ///
-        /// <summary>
-        /// Gets the owner password menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<string> OwnerPassword { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OwnerConfirm
-        ///
-        /// <summary>
-        /// Gets the confirmed owner password menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<string> OwnerConfirm { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UserPassword
-        ///
-        /// <summary>
-        /// Gets the user password menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<string> UserPassword { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UserConfirm
-        ///
-        /// <summary>
-        /// Gets the confirmed user password menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<string> UserConfirm { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsOpenPassword
-        ///
-        /// <summary>
-        /// Gets the menu that user password is enabled.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> IsOpenPassword { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsSharePassword
-        ///
-        /// <summary>
-        /// Gets the menu of sharing user password with owner password.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> IsSharePassword { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Operation
-        ///
-        /// <summary>
-        /// Gets the operation menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> Operation { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AllowPrint
-        ///
-        /// <summary>
-        /// Gets the menu indicating whether printing is allowed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> AllowPrint { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AllowCopy
-        ///
-        /// <summary>
-        /// Gets the menu indicating whether copying texts and images is
-        /// allowed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> AllowCopy { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AllowModify
-        ///
-        /// <summary>
-        /// Gets the menu indicating whether inserting, rotating, and
-        /// removing pages is allowed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> AllowModify { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AllowAccessibility
-        ///
-        /// <summary>
-        /// Gets the menu indicating whether extracting contents for
-        /// accessibility is allowed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> AllowAccessibility { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AllowForm
-        ///
-        /// <summary>
-        /// Gets the menu indicating whether filling in form fields is
-        /// allowed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> AllowForm { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AllowAnnotation
-        ///
-        /// <summary>
-        /// Gets the menu indicating whether creating and editing
-        /// annotation is allowed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> AllowAnnotation { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Methods
         ///
         /// <summary>
-        /// Gets the collection of encryption methods.
+        /// Gets a collection of encryption methods.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -368,6 +100,251 @@ namespace Cube.Pdf.Editor
             EncryptionMethod.Aes128,
             EncryptionMethod.Aes256,
         };
+
+        #region Elements
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Enabled
+        ///
+        /// <summary>
+        /// Gets a menu that encryption is enabled.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> Enabled => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuEncryptionEnabled,
+            () => _model.Enabled,
+            e  => _model.Enabled = e,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Operation
+        ///
+        /// <summary>
+        /// Gets a menu to determine whether that permissions are settable.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> Operation => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuOperations,
+            () => !OpenPassword.Value || !SharePassword.Value,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Method
+        ///
+        /// <summary>
+        /// Gets a menu of encryption method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<EncryptionMethod> Method => Get(() => new BindableElement<EncryptionMethod>(
+            () => Properties.Resources.MenuEncryptionMethod,
+            () => _model.Method,
+            e  => _model.Method = e,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OwnerPassword
+        ///
+        /// <summary>
+        /// Gets a menu of owner password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<string> OwnerPassword => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuOwnerPassword,
+            () => _model.OwnerPassword,
+            e  => _model.OwnerPassword = e,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OwnerConfirm
+        ///
+        /// <summary>
+        /// Gets a menu of owner password confirmation.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<string> OwnerConfirm => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuConfirmPassword,
+            new Accessor<string>(),
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserPassword
+        ///
+        /// <summary>
+        /// Gets a menu of user password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<string> UserPassword => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuUserPassword,
+            () => _model.UserPassword,
+            e  => _model.UserPassword = e,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserConfirm
+        ///
+        /// <summary>
+        /// Gets a menu of user password confirmation.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<string> UserConfirm => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuConfirmPassword,
+            new Accessor<string>(),
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OpenPassword
+        ///
+        /// <summary>
+        /// Gets a menu to determine whether to enable user password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> OpenPassword => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuOpenWithPassword,
+            () => _model.OpenWithPassword,
+            e  => _model.OpenWithPassword = e,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SharePassword
+        ///
+        /// <summary>
+        /// Gets a menu to determine whether to share the user password
+        /// with the onwer password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> SharePassword => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuSharePassword,
+            _share,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowPrint
+        ///
+        /// <summary>
+        /// Gets a menu indicating whether to allow print.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> AllowPrint => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuAllowPrint,
+            () => _model.Permission.Print.IsAllowed(),
+            e  => _model.Permission.Print = GetValue(e),
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowCopy
+        ///
+        /// <summary>
+        /// Gets a menu indicating whether to allow copying of text and
+        /// images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> AllowCopy => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuAllowCopy,
+            () => _model.Permission.CopyContents.IsAllowed(),
+            e  => _model.Permission.CopyContents = GetValue(e),
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowModify
+        ///
+        /// <summary>
+        /// Gets a menu indicating whether to allow page insertion,
+        /// rotation, or deletion.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> AllowModify => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuAllowAssemble,
+            () => _model.Permission.ModifyContents.IsAllowed(),
+            e  => _model.Permission.ModifyContents = GetValue(e),
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowAccessibility
+        ///
+        /// <summary>
+        /// Gets a menu indicating whether to allow content extraction
+        /// for accessibility.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> AllowAccessibility => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuAllowAccessibility,
+            () => _model.Permission.Accessibility.IsAllowed(),
+            e  => _model.Permission.Accessibility = GetValue(e),
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowForm
+        ///
+        /// <summary>
+        /// Gets a menu indicating whether to allow input to form fields.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> AllowForm => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuAllowForm,
+            () => _model.Permission.InputForm.IsAllowed(),
+            e  => _model.Permission.InputForm = GetValue(e),
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowAnnotation
+        ///
+        /// <summary>
+        /// Gets a menu indicating whether to allow creation or editing of
+        /// annotations.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> AllowAnnotation => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuAllowAnnotation,
+            () => _model.Permission.ModifyAnnotations.IsAllowed(),
+            e  => _model.Permission.ModifyAnnotations = GetValue(e),
+            GetDispatcher(false)
+        ));
+
+        #endregion
 
         #endregion
 
@@ -385,7 +362,7 @@ namespace Cube.Pdf.Editor
         private void Execute(Action<Encryption> callback, Encryption src)
         {
             Send<CloseMessage>();
-            if (IsSharePassword.Value) src.UserPassword = src.OwnerPassword;
+            if (SharePassword.Value) src.UserPassword = src.OwnerPassword;
             callback(src);
         }
 
@@ -406,9 +383,9 @@ namespace Cube.Pdf.Editor
             var oc    = OwnerConfirm.Value;
             if (!owner.HasValue() || !owner.FuzzyEquals(oc)) return false;
 
-            if (!IsOpenPassword.Value) return true;
+            if (!OpenPassword.Value) return true;
 
-            var share = IsSharePassword.Value;
+            var share = SharePassword.Value;
             var user  = UserPassword.Value;
             var uc    = UserConfirm.Value;
             if (!share && (!user.HasValue() || !user.FuzzyEquals(uc))) return false;
@@ -418,38 +395,21 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// GetValue
         ///
         /// <summary>
-        /// Converts the specified value to the PermissionMethod.
+        /// Gets a value of the PermissionValue enum from the specified
+        /// boolean value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PermissionValue Convert(bool src) =>
-            src ? PermissionValue.Allow : PermissionValue.Deny;
+        private PermissionValue GetValue(bool src) => src ? PermissionValue.Allow : PermissionValue.Deny;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateShare
-        ///
-        /// <summary>
-        /// Creates a new menu with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private BindableElement<bool> CreateShare(Encryption src)
-        {
-            var value = src.OwnerPassword.HasValue() &&
-                        src.OwnerPassword.FuzzyEquals(src.UserPassword);
-            if (value) src.UserPassword = string.Empty;
+        #endregion
 
-            return new BindableElement<bool>(
-                () => Properties.Resources.MenuSharePassword,
-                () => value,
-                GetDispatcher(false)
-            );
-        }
-
+        #region Fields
+        private readonly Encryption _model;
+        private readonly Accessor<bool> _share;
         #endregion
     }
 }

@@ -80,9 +80,6 @@ namespace Cube.Pdf.Editor
             Ribbon = new RibbonViewModel(Model.Bindable, Aggregator, context);
             Recent = new RecentViewModel(mon, Aggregator, context);
 
-            Data.Source.PropertyChanged += (s, e) => Ribbon.Raise();
-            Data.Busy.PropertyChanged   += (s, e) => Ribbon.Raise();
-
             SetCommands();
             Track(() => Model.Setup(App.Arguments));
         }
@@ -264,7 +261,7 @@ namespace Cube.Pdf.Editor
                 if (!Data.Modified.Value) TrackSync(() => Model.Close(false));
                 else
                 {
-                    var msg = Factory.CloseMessage();
+                    var msg = MessageFactory.CreateOverwriteWarn();
                     Send(msg);
                     PostClose(e, msg.Status);
                 }
@@ -408,7 +405,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void PostOpen(Action<string> action)
         {
-            var msg = Factory.OpenMessage();
+            var msg = MessageFactory.CreateForOpen();
             Send(msg);
             Track(() => { if (!msg.Cancel) action(msg.Value.First()); });
         }
@@ -426,7 +423,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void PostSave(Action<string> action)
         {
-            var msg = Factory.SaveMessage();
+            var msg = MessageFactory.CreateForSave();
             Send(msg);
             Track(() => { if (!msg.Cancel) action(msg.Value); });
         }
@@ -444,7 +441,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void PostInsert(Action<IEnumerable<string>> action)
         {
-            var msg = Factory.InsertMessage();
+            var msg = MessageFactory.CreateForInsert();
             Send(msg);
             Track(() => { if (!msg.Cancel) action(msg.Value); });
         }

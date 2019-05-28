@@ -30,11 +30,11 @@ namespace Cube.Pdf.Editor
     /// InsertViewModel
     ///
     /// <summary>
-    /// Represents the ViewModel for a InsertWindow instance.
+    /// Represents the ViewModel associated with a InsertWindow object.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertViewModel : DialogViewModel
+    public sealed class InsertViewModel : DialogViewModel
     {
         #region Constructors
 
@@ -58,21 +58,18 @@ namespace Cube.Pdf.Editor
             int i, int n, IO io, SynchronizationContext context) :
             base(() => Properties.Resources.TitleInsert, new Aggregator(), context)
         {
-            Model         = new InsertFacade(i, n, io, GetDispatcher(false));
-            Position      = new InsertPosition(Data, GetDispatcher(false));
-            DragMove      = new InsertDropTarget((f, t) => Model.Move(f, t));
-            DragAdd       = new BindableCommand<string[]>(e => Model.Add(e), e => true);
-            Preview       = new BindableElement(() => Properties.Resources.MenuPreview, GetDispatcher(false));
-            Add           = new BindableElement(() => Properties.Resources.MenuAdd, GetDispatcher(false));
-            Remove        = new BindableElement(() => Properties.Resources.MenuRemove, GetDispatcher(false));
-            Clear         = new BindableElement(() => Properties.Resources.MenuClear, GetDispatcher(false));
-            Up            = new BindableElement(() => Properties.Resources.MenuUp, GetDispatcher(false));
-            Down          = new BindableElement(() => Properties.Resources.MenuDown, GetDispatcher(false));
-            FileName      = new BindableElement(() => Properties.Resources.MenuFilename, GetDispatcher(false));
-            FileType      = new BindableElement(() => Properties.Resources.MenuFiletype, GetDispatcher(false));
-            FileLength    = new BindableElement(() => Properties.Resources.MenuFilesize, GetDispatcher(false));
-            LastWriteTime = new BindableElement(() => Properties.Resources.MenuLastWriteTime, GetDispatcher(false));
-            SetCommands(callback);
+            _model = new InsertFacade(i, n, io, GetDispatcher(false));
+
+            DragMove   = new InsertDropTarget((f, t) => _model.Move(f, t));
+            OK.Command = new BindableCommand(
+                () =>
+                {
+                    Send<CloseMessage>();
+                    callback?.Invoke(Data.Index.Value, Data.Files);
+                },
+                () => Data.Files.Count > 0,
+                Data.Files
+            );
         }
 
         #endregion
@@ -81,36 +78,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model
-        ///
-        /// <summary>
-        /// Gets the model object of the ViewModel.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected InsertFacade Model { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Data
         ///
         /// <summary>
-        /// Gets data for binding to the InsertWindow.
+        /// Gets data object associated with the ViewModel.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable Data => Model.Bindable;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Position
-        ///
-        /// <summary>
-        /// Gets the label that represents the insert position.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public InsertPosition Position { get; }
+        public InsertBindable Data => _model.Bindable;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -132,7 +107,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand DragAdd { get; }
+        public ICommand DragAdd => Get(() => new BindableCommand<string[]>(e => _model.Add(e), e => true));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -143,157 +118,169 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand SelectClear { get; private set; }
+        public ICommand SelectClear => Get(() => Any(() => TrackSync(() => _model.SelectClear())));
 
-        #region Buttons
+        #region Elements
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Position
+        ///
+        /// <summary>
+        /// Gets a label of insertion position.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public InsertPosition Position => Get(() => new InsertPosition(
+            Data,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Preview
         ///
         /// <summary>
-        /// Gets the menu that represents the preview button.
+        /// Gets a menu of the preview button.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Preview { get; }
+        public BindableElement Preview => Get(() => new BindableElement(
+            () => Properties.Resources.MenuPreview,
+            GetDispatcher(false)
+        ) { Command = IsItem(() => Track(() => _model.Preview())) });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Add
         ///
         /// <summary>
-        /// Gets the menu that represents the add button.
+        /// Gets an Add button.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Add { get; }
+        public BindableElement Add => Get(() => new BindableElement(
+            () => Properties.Resources.MenuAdd,
+            GetDispatcher(false)
+        ) { Command = Any(() => SendOpen()) });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Remove
         ///
         /// <summary>
-        /// Gets the menu that represents the remove button.
+        /// Gets a Remove button.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Remove { get; }
+        public BindableElement Remove => Get(() => new BindableElement(
+            () => Properties.Resources.MenuRemove,
+            GetDispatcher(false)
+        ) { Command = IsItem(() => TrackSync(() => _model.Remove())) });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Clear
         ///
         /// <summary>
-        /// Gets the menu that represents the clear button.
+        /// Gets a Clear button.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Clear { get; }
+        public BindableElement Clear => Get(() => new BindableElement(
+            () => Properties.Resources.MenuClear,
+            GetDispatcher(false)
+        ) { Command = Any(() => TrackSync(() => _model.Clear())) });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Up
         ///
         /// <summary>
-        /// Gets the menu that represents the up button.
+        /// Gets an Up button.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Up { get; }
+        public BindableElement Up => Get(() => new BindableElement(
+            () => Properties.Resources.MenuUp,
+            GetDispatcher(false)
+        ) { Command = IsItem(() => TrackSync(() => _model.Move(-1))) });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Down
         ///
         /// <summary>
-        /// Gets the menu that represents the down button.
+        /// Gets a Down button.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Down { get; }
-
-        #endregion
-
-        #region Contents
+        public BindableElement Down => Get(() => new BindableElement(
+            () => Properties.Resources.MenuDown,
+            GetDispatcher(false)
+        ) { Command = IsItem(() => TrackSync(() => _model.Move(1))) });
 
         /* ----------------------------------------------------------------- */
         ///
         /// FileName
         ///
         /// <summary>
-        /// Gets the menu that represents the FileName column.
+        /// Gets a menu of the FileName column.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement FileName { get; }
+        public BindableElement FileName => Get(() => new BindableElement(
+            () => Properties.Resources.MenuFilename,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// FileType
         ///
         /// <summary>
-        /// Gets the menu that represents the FileType column.
+        /// Gets a menu of the FileType column.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement FileType { get; }
+        public BindableElement FileType => Get(() => new BindableElement(
+            () => Properties.Resources.MenuFiletype,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// FileLength
         ///
         /// <summary>
-        /// Gets the menu that represents the FileLength column.
+        /// Gets a menu of the FileLength column.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement FileLength { get; }
+        public BindableElement FileLength => Get(() => new BindableElement(
+            () => Properties.Resources.MenuFilesize,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
         /// LastWriteTime
         ///
         /// <summary>
-        /// Gets the menu that represents the LastWriteTime column.
+        /// Gets a menu of the LastWriteTime column.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement LastWriteTime { get; }
+        public BindableElement LastWriteTime => Get(() => new BindableElement(
+            () => Properties.Resources.MenuLastWriteTime,
+            GetDispatcher(false)
+        ));
 
         #endregion
 
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetCommands
-        ///
-        /// <summary>
-        /// Sets commands of the InsertWindow.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetCommands(Action<int, IEnumerable<FileItem>> callback)
-        {
-            OK.Command = new BindableCommand(() =>
-            {
-                Send<CloseMessage>();
-                callback?.Invoke(Data.Index.Value, Data.Files);
-            },
-            () => Data.Files.Count > 0,
-            Data.Files);
-
-            SelectClear     = Any(() => TrackSync(() => Model.SelectClear()));
-            Preview.Command = IsItem(() => Track(() => Model.Preview()));
-            Add.Command     = Any(() => SendOpen());
-            Clear.Command   = Any(() => TrackSync(() => Model.Clear()));
-            Remove.Command  = IsItem(() => TrackSync(() => Model.Remove()));
-            Up.Command      = IsItem(() => TrackSync(() => Model.Move(-1)));
-            Down.Command    = IsItem(() => TrackSync(() => Model.Move(1)));
-        }
 
         #region Factory
 
@@ -356,13 +343,17 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SendOpen()
         {
-            var msg = Factory.InsertMessage();
+            var msg = MessageFactory.CreateForInsert();
             Send(msg);
-            if (!msg.Cancel) Model.Add(msg.Value);
+            if (!msg.Cancel) _model.Add(msg.Value);
         }
 
         #endregion
 
+        #endregion
+
+        #region Fields
+        private readonly InsertFacade _model;
         #endregion
     }
 }
