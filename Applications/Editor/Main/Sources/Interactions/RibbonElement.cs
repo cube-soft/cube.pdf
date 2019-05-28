@@ -47,12 +47,14 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="name">Name of icons.</param>
-        /// <param name="text">Function to get text.</param>
+        /// <param name="getText">Function to get text.</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement(string name, Getter<string> text, IDispatcher dispatcher) :
-            this(name, text, text, dispatcher) { }
+        public RibbonElement(string name,
+            Getter<string> getText,
+            IDispatcher dispatcher
+        ) : this(name, getText, getText, dispatcher) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,13 +66,16 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="name">Name of icons.</param>
-        /// <param name="text">Function to get text.</param>
-        /// <param name="tooltip">Function to get tooltip.</param>
+        /// <param name="getText">Function to get text.</param>
+        /// <param name="getTooltip">Function to get tooltip.</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement(string name, Getter<string> text, Getter<string> tooltip,
-            IDispatcher dispatcher) : this(name, text, tooltip, null, dispatcher) { }
+        public RibbonElement(string name,
+            Getter<string> getText,
+            Getter<string> getTooltip,
+            IDispatcher dispatcher
+        ) : this(name, getText, getTooltip, null, dispatcher) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,19 +87,22 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="name">Name of icons.</param>
-        /// <param name="text">Function to get text.</param>
-        /// <param name="tooltip">Function to get tooltip.</param>
-        /// <param name="enabled">Function to get value.</param>
+        /// <param name="getText">Function to get text.</param>
+        /// <param name="getTooltip">Function to get tooltip.</param>
+        /// <param name="getEnabled">Function to get enabled value.</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement(string name, Getter<string> text, Getter<string> tooltip,
-            Getter<bool> enabled, IDispatcher dispatcher) : base(text, dispatcher)
+        public RibbonElement(string name,
+            Getter<string> getText,
+            Getter<string> getTooltip,
+            Getter<bool> getEnabled,
+            IDispatcher dispatcher
+        ) : base(getText, dispatcher)
         {
             Name = name;
-            _getTooltip = tooltip;
-            _getEnabled = enabled;
-            _locale     = Locale.Subscribe(z => Refresh(nameof(Tooltip)));
+            _getTooltip = getTooltip;
+            _getEnabled = getEnabled;
         }
 
         #endregion
@@ -199,11 +207,22 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                _canExecute?.Dispose();
-                _locale.Dispose();
-            }
+            if (disposing) _canExecute?.Dispose();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnLanguageChanged
+        ///
+        /// <summary>
+        /// Occurs when the current language is changed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnLanguageChanged(Language e)
+        {
+            base.OnLanguageChanged(e);
+            Refresh(nameof(Tooltip));
         }
 
         /* ----------------------------------------------------------------- */
@@ -259,7 +278,6 @@ namespace Cube.Pdf.Editor
         #region Fields
         private readonly Getter<string> _getTooltip;
         private readonly Getter<bool> _getEnabled;
-        private readonly IDisposable _locale;
         private IDisposable _canExecute;
         #endregion
     }
