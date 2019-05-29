@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Assembly;
 using Cube.Xui;
-using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -35,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsViewModel : DialogViewModel
+    public sealed class SettingsViewModel : DialogViewModel
     {
         #region Constructors
 
@@ -55,122 +54,17 @@ namespace Cube.Pdf.Editor
         public SettingsViewModel(SettingsFolder src, SynchronizationContext context) :
             base(() => Properties.Resources.TitleSettings, new Aggregator(), context)
         {
-            var asm = Assembly.GetExecutingAssembly();
-
-            Language = new BindableElement<Language>(
-                () => Properties.Resources.MenuLanguage,
-                () => src.Value.Language,
-                e  => src.Value.Language = e,
-                GetDispatcher(false)
-            );
-
-            Update = new BindableElement<bool>(
-                () => Properties.Resources.MenuUpdate,
-                () => src.Value.CheckUpdate,
-                e  => src.Value.CheckUpdate = e,
-                GetDispatcher(false)
-            );
-
-            Version = new BindableElement<string>(
-                () => Properties.Resources.MenuVersion,
-                () => $"{src.Title} {src.Version.ToString(true)}",
-                GetDispatcher(false)
-            );
-
-            Link = new BindableElement<Uri>(
-                () => asm.GetCopyright(),
-                () => src.Value.Uri,
-                GetDispatcher(false)
-            );
-
-            Windows = new BindableElement(
-                () => $"{Environment.OSVersion}",
-                GetDispatcher(false)
-            );
-
-            Framework = new BindableElement(
-                () => $"Microsoft .NET Framework {Environment.Version}",
-                GetDispatcher(false)
-            );
-
-            Link.Command = new RelayCommand(() => Post(Link.Value));
-            OK.Command   = new RelayCommand(() =>
+            _model = src;
+            OK.Command = new BindableCommand(() =>
             {
                 Send<UpdateSourcesMessage>();
                 Send<CloseMessage>();
-            });
+            }, () => true);
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Version
-        ///
-        /// <summary>
-        /// Gets the version menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<string> Version { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Link
-        ///
-        /// <summary>
-        /// Gets the link menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<Uri> Link { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Language
-        ///
-        /// <summary>
-        /// Gets the language menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<Language> Language { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Update
-        ///
-        /// <summary>
-        /// Gets the menu indicating whether checking software update
-        /// at launching process.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<bool> Update { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Windows
-        ///
-        /// <summary>
-        /// Gets the menu of Windows version.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement Windows { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Framework
-        ///
-        /// <summary>
-        /// Gets the menu of .NET Framework version.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement Framework { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -188,6 +82,101 @@ namespace Cube.Pdf.Editor
             Cube.Language.Japanese,
         };
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Language
+        ///
+        /// <summary>
+        /// Gets the language menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<Language> Language => Get(() => new BindableElement<Language>(
+            () => Properties.Resources.MenuLanguage,
+            () => _model.Value.Language,
+            e  => _model.Value.Language = e,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version
+        ///
+        /// <summary>
+        /// Gets the version menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<string> Version => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuVersion,
+            () => $"{_model.Title} {_model.Version.ToString(true)}",
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Link
+        ///
+        /// <summary>
+        /// Gets the link menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<Uri> Link => Get(() => new BindableElement<Uri>(
+            () => Assembly.GetExecutingAssembly().GetCopyright(),
+            () => _model.Value.Uri,
+            GetDispatcher(false)
+        ) { Command = new BindableCommand(() => Post(Link.Value), () => true) });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Update
+        ///
+        /// <summary>
+        /// Gets the menu indicating whether checking software update
+        /// at launching process.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<bool> Update => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuUpdate,
+            () => _model.Value.CheckUpdate,
+            e  => _model.Value.CheckUpdate = e,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Windows
+        ///
+        /// <summary>
+        /// Gets the menu of Windows version.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement Windows => Get(() => new BindableElement(
+            () => $"{Environment.OSVersion}",
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Framework
+        ///
+        /// <summary>
+        /// Gets the menu of .NET Framework version.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement Framework => Get(() => new BindableElement(
+            () => $"Microsoft .NET Framework {Environment.Version}",
+            GetDispatcher(false)
+        ));
+
+        #endregion
+
+        #region Fields
+        private readonly SettingsFolder _model;
         #endregion
     }
 }
