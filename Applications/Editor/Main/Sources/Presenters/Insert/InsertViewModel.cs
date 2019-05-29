@@ -60,6 +60,7 @@ namespace Cube.Pdf.Editor
         {
             _model = new InsertFacade(i, n, io, GetDispatcher(false));
 
+            Position   = new InsertPosViewModel(Data, Aggregator, context);
             DragMove   = new InsertDropTarget((f, t) => _model.Move(f, t));
             OK.Command = new BindableCommand(
                 () =>
@@ -75,6 +76,17 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Position
+        ///
+        /// <summary>
+        /// Gets a ViewModel of the insertion position menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public InsertPosViewModel Position { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -121,20 +133,6 @@ namespace Cube.Pdf.Editor
         public ICommand SelectClear => Get(() => Any(() => TrackSync(() => _model.SelectClear())));
 
         #region Elements
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Position
-        ///
-        /// <summary>
-        /// Gets a label of insertion position.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public InsertPosition Position => Get(() => new InsertPosition(
-            Data,
-            GetDispatcher(false)
-        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -281,6 +279,27 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            try { if (disposing) Position.Dispose(); }
+            finally { base.Dispose(disposing); }
+        }
 
         #region Factory
 

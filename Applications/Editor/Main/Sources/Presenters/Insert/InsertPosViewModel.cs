@@ -17,20 +17,20 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
-using GalaSoft.MvvmLight.Command;
+using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// InsertPosition
+    /// InsertPosViewModel
     ///
     /// <summary>
-    /// Represents insert position menus of the InsertWindow.
+    /// Represents the ViewModel of the insertion position menu.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertPosition : BindableElement
+    public sealed class InsertPosViewModel : ViewModelBase
     {
         #region Constructors
 
@@ -43,40 +43,33 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="data">Data object.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="src">Source data.</param>
+        /// <param name="aggregator">Message aggregator.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertPosition(InsertBindable data, IDispatcher dispatcher) :
-            base(() => Properties.Resources.MenuInsertPosition, dispatcher)
-        {
-            Command = new RelayCommand<int>(e => data.Index.Value = e);
-
-            First = new BindableElement(() => Properties.Resources.MenuPositionFirst, Dispatcher);
-            Last  = new BindableElement(() => Properties.Resources.MenuPositionLast, Dispatcher);
-
-            Selected = new BindableElement<bool>(
-                () => Properties.Resources.MenuPositionSelected,
-                () => data.SelectedIndex >= 0,
-                Dispatcher
-            );
-
-            UserSpecified = new BindableElement<int>(
-                () => Properties.Resources.MenuPositionSpecified,
-                () => data.UserSpecifiedIndex.Value + 1,
-                e  => data.UserSpecifiedIndex.Value = e - 1,
-                Dispatcher
-            );
-
-            UserSpecifiedSuffix = new BindableElement(
-                () => string.Format($"/ {Properties.Resources.MessagePage}", data.Count),
-                Dispatcher
-            );
-        }
+        public InsertPosViewModel(InsertBindable src,
+            Aggregator aggregator,
+            SynchronizationContext context
+        ) : base(aggregator, context) { _model = src; }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Main
+        ///
+        /// <summary>
+        /// Gets a menu to execute main operations.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement Main => Get(() => new BindableElement(
+            () => Properties.Resources.MenuInsertPosition,
+            GetDispatcher(false)
+        ) { Command = new BindableCommand<int>(e => _model.Index.Value = e, e => true) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -87,7 +80,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement First { get; }
+        public BindableElement First => Get(() => new BindableElement(
+            () => Properties.Resources.MenuPositionFirst,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -98,7 +94,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Last { get; }
+        public BindableElement Last => Get(() => new BindableElement(
+            () => Properties.Resources.MenuPositionLast,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -110,7 +109,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<bool> Selected { get; }
+        public BindableElement<bool> Selected => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuPositionSelected,
+            () => _model.SelectedIndex >= 0,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -122,7 +125,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<int> UserSpecified { get; }
+        public BindableElement<int> UserSpecified => Get(() => new BindableElement<int>(
+            () => Properties.Resources.MenuPositionSpecified,
+            () => _model.UserSpecifiedIndex.Value + 1,
+            e  => _model.UserSpecifiedIndex.Value = e - 1,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -134,8 +142,15 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement UserSpecifiedSuffix { get; }
+        public BindableElement UserSpecifiedSuffix => Get(() => new BindableElement(
+            () => string.Format($"/ {Properties.Resources.MessagePage}", _model.Count),
+            GetDispatcher(false)
+        ));
 
+        #endregion
+
+        #region Fields
+        private readonly InsertBindable _model;
         #endregion
     }
 }

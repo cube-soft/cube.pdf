@@ -187,8 +187,8 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             Assert.That(src.IsSelected,         Is.False);
 
             var pos = ivm.Position;
-            Assert.That(pos.Text,                     Is.EqualTo("Insert position"));
-            Assert.That(pos.Command,                  Is.Not.Null);
+            Assert.That(pos.Main.Text,                Is.EqualTo("Insert position"));
+            Assert.That(pos.Main.Command,             Is.Not.Null);
             Assert.That(pos.First.Text,               Is.EqualTo("Beginning"));
             Assert.That(pos.Last.Text,                Is.EqualTo("End"));
             Assert.That(pos.Selected.Text,            Is.EqualTo("Selected position"));
