@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using Cube.Pdf.Pdfium;
 using NUnit.Framework;
 using System.Drawing.Imaging;

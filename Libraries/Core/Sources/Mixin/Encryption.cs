@@ -16,9 +16,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.String;
+using Cube.Pdf;
 using System;
 
-namespace Cube.Pdf.Mixin
+namespace Cube.Mixin.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -82,36 +83,6 @@ namespace Cube.Pdf.Mixin
         ///
         /* ----------------------------------------------------------------- */
         public static void Allow(this Encryption src) => src.Set(PermissionValue.Allow);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsAllowed
-        ///
-        /// <summary>
-        /// Determines whether the specified operation is allowed.
-        /// </summary>
-        ///
-        /// <param name="src">PermissionMethod object.</param>
-        ///
-        /// <returns>true for allowed.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static bool IsAllowed(this PermissionValue src) => src == PermissionValue.Allow;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsDenid
-        ///
-        /// <summary>
-        /// Determines whether the specified operation is denied.
-        /// </summary>
-        ///
-        /// <param name="src">PermissionMethod object.</param>
-        ///
-        /// <returns>true for denied.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static bool IsDenid(this PermissionValue src) => src == PermissionValue.Deny;
 
         /* ----------------------------------------------------------------- */
         ///

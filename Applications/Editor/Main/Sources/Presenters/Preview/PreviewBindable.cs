@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using Cube.Xui;
 using System.Windows.Media;
 

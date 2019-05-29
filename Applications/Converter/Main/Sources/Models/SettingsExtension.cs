@@ -21,7 +21,7 @@ using Cube.Mixin.Assembly;
 using Cube.Mixin.Environment;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using System;
 using System.Linq;
 using System.Reflection;

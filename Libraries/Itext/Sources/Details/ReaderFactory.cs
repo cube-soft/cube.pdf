@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.String;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 using System;

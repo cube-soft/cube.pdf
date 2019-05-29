@@ -20,7 +20,7 @@ using Cube.FileSystem;
 using Cube.Mixin.Environment;
 using Cube.Mixin.Generics;
 using Cube.Mixin.String;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;

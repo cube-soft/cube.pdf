@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.String;
 using Cube.Pdf.Itext;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using Cube.Tests;
 using NUnit.Framework;
 using System.Collections.Generic;

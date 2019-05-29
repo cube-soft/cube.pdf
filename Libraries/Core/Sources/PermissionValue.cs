@@ -19,6 +19,8 @@ using System;
 
 namespace Cube.Pdf
 {
+    #region PermissionValue
+
     /* --------------------------------------------------------------------- */
     ///
     /// PermissionValue
@@ -38,6 +40,56 @@ namespace Cube.Pdf
         /// <summary>Operation is allowed.</summary>
         Allow,
     }
+
+    #endregion
+
+    #region PermissionValueExtension
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// PermissionValueExtension
+    ///
+    /// <summary>
+    /// Provides extended methods of the PermissionValue enum.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static class PermissionValueExtension
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsAllowed
+        ///
+        /// <summary>
+        /// Determines whether the specified operation is allowed.
+        /// </summary>
+        ///
+        /// <param name="src">PermissionMethod object.</param>
+        ///
+        /// <returns>true for allowed.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsAllowed(this PermissionValue src) => src == PermissionValue.Allow;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsDenid
+        ///
+        /// <summary>
+        /// Determines whether the specified operation is denied.
+        /// </summary>
+        ///
+        /// <param name="src">PermissionMethod object.</param>
+        ///
+        /// <returns>true for denied.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsDenid(this PermissionValue src) => src == PermissionValue.Deny;
+    }
+
+    #endregion
+
+    #region PermissionFlags
 
     /* --------------------------------------------------------------------- */
     ///
@@ -111,4 +163,6 @@ namespace Cube.Pdf
         /// </summary>
         Assemble = 0x00000400,
     }
+
+    #endregion
 }

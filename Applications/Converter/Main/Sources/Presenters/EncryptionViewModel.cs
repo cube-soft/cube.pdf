@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.String;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;

@@ -15,53 +15,48 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
-using System.Linq;
+using Cube.Pdf;
 
-namespace Cube.Pdf.Mixin
+namespace Cube.Mixin.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IDocumentReaderExtension
+    /// MetadataExtension
     ///
     /// <summary>
-    /// Provides extended methods of the IDocumentReader class.
+    /// Describes extended methods for the Metadata class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class IDocumentReaderExtension
+    public static class MetadataExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetPage
+        /// Copy
         ///
         /// <summary>
-        /// Gets information corresponding to the specified page number.
+        /// Gets the copied Metadata object.
         /// </summary>
         ///
-        /// <param name="src">IDocumentReader object.</param>
-        /// <param name="pagenum">
-        /// Page number; 1 for the first page.
-        /// </param>
+        /// <param name="src">Original object.</param>
         ///
-        /// <returns>Page object.</returns>
-        ///
-        /// <remarks>
-        /// IDocumentReader.Pages が IList(Page) または IReadOnlyList(Page)
-        /// を実装している場合は O(1) で Page オブジェクトを取得します。
-        /// それ以外の場合は O(n) の時間を要します。
-        /// </remarks>
+        /// <returns>Copied object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetPage(this IDocumentReader src, int pagenum)
+        public static Metadata Copy(this Metadata src) => new Metadata
         {
-            var index = pagenum - 1;
-            if (src.Pages is IReadOnlyList<Page> l0) return l0[index];
-            if (src.Pages is IList<Page> l1) return l1[index];
-            return src.Pages.Skip(index).First();
-        }
+            Dispatcher     = src.Dispatcher,
+            Title          = src.Title,
+            Author         = src.Author,
+            Subject        = src.Subject,
+            Keywords       = src.Keywords,
+            Version        = src.Version,
+            Creator        = src.Creator,
+            Producer       = src.Producer,
+            Options        = src.Options,
+        };
 
         #endregion
     }

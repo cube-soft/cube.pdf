@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Linq;

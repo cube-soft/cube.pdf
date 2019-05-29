@@ -15,84 +15,74 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Mixin
+using Cube.Pdf;
+using System.Drawing;
+
+namespace Cube.Mixin.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IDocumentWriterExtension
+    /// DocumentRendererExtension
     ///
     /// <summary>
-    /// Provides extended methods of the IDocumentWriter class.
+    /// Describes extended methods for the IDocumentRenderer interface.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class IDocumentWriterExtension
+    public static class DocumentRendererExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Add
+        /// Render
         ///
         /// <summary>
-        /// Adds a new page.
+        /// Renders the Page content to the Graphics object.
         /// </summary>
         ///
-        /// <param name="src">IDocumentWriter object.</param>
-        /// <param name="page">Page information.</param>
+        /// <param name="src">Renderer object.</param>
+        /// <param name="dest">Graphics object.</param>
+        /// <param name="page">Page object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Add(this IDocumentWriter src, Page page) =>
-            src.Add(new[] { page });
+        public static void Render(this IDocumentRenderer src, Graphics dest, Page page) =>
+            src.Render(dest, page, new PointF(0, 0), dest.VisibleClipBounds.Size);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Add
+        /// Render
         ///
         /// <summary>
-        /// Adds a new page.
+        /// Gets an Image object in which the Page content is rendered.
         /// </summary>
         ///
-        /// <param name="src">IDocumentWriter object.</param>
-        /// <param name="page">Page information.</param>
-        /// <param name="hint">
-        /// Document reader object to get more detailed information about
-        /// the specified pages.
-        /// </param>
+        /// <param name="src">Renderer object.</param>
+        /// <param name="page">Page object.</param>
+        ///
+        /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Add(this IDocumentWriter src, Page page, IDocumentReader hint) =>
-            src.Add(new[] { page }, hint);
+        public static Image Render(this IDocumentRenderer src, Page page) =>
+            src.Render(page, 1.0);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Add
+        /// GetImage
         ///
         /// <summary>
-        /// Adds all pages of the specified document.
+        /// Gets an Image object in which the Page content is rendered.
         /// </summary>
         ///
-        /// <param name="src">IDocumentWriter object.</param>
-        /// <param name="reader">IDocumentReader object.</param>
+        /// <param name="src">Renderer object.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="scale">Scale factor.</param>
+        ///
+        /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Add(this IDocumentWriter src, IDocumentReader reader) =>
-            src.Add(reader.Pages, reader);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attach
-        ///
-        /// <summary>
-        /// Adds a new attached file.
-        /// </summary>
-        ///
-        /// <param name="src">IDocumentWriter object.</param>
-        /// <param name="file">Attached file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Attach(this IDocumentWriter src, Attachment file) =>
-            src.Add(new[] { file });
+        public static Image Render(this IDocumentRenderer src, Page page, double scale) =>
+            src.Render(page, page.GetViewSize(scale).Value);
 
         #endregion
     }

@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Itext;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using System;
 
 namespace Cube.Pdf.Converter

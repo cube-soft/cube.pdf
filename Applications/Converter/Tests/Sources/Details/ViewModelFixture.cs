@@ -20,7 +20,7 @@ using Cube.Collections;
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using Cube.Tests;
 using NUnit.Framework;
 using System;

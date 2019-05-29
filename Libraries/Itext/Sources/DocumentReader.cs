@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext

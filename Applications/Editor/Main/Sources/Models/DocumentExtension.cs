@@ -19,7 +19,7 @@
 using Cube.FileSystem;
 using Cube.Images;
 using Cube.Mixin.String;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using Cube.Xui.Converters;
 using System;
 using System.Drawing;

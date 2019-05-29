@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Commands;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using Cube.Tests;
 using NUnit.Framework;
 using System;

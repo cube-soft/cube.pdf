@@ -15,12 +15,12 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
+using Cube.Pdf;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Cube.Pdf.Mixin
+namespace Cube.Mixin.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -50,7 +50,7 @@ namespace Cube.Pdf.Mixin
         /// <returns>PdfFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfFile GetPdfFile(this IO io, string src, string password) =>
+        public static PdfFile GetPdfFile(this FileSystem.IO io, string src, string password) =>
             new PdfFile(src, password, io);
 
         /* ----------------------------------------------------------------- */
@@ -67,7 +67,7 @@ namespace Cube.Pdf.Mixin
         /// <returns>ImageFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageFile GetImageFile(this IO io, string src)
+        public static ImageFile GetImageFile(this FileSystem.IO io, string src)
         {
             using (var ss = io.OpenRead(src))
             using (var image = Image.FromStream(ss))
@@ -91,7 +91,7 @@ namespace Cube.Pdf.Mixin
         /// <returns>ImageFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageFile GetImageFile(this IO io, string src, Image image)
+        public static ImageFile GetImageFile(this FileSystem.IO io, string src, Image image)
         {
             Debug.Assert(image != null);
             Debug.Assert(image.FrameDimensionsList != null);

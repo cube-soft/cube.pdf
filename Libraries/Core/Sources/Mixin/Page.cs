@@ -15,21 +15,21 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
+using Cube.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Cube.Pdf.Mixin
+namespace Cube.Mixin.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
     /// PageExtension
     ///
     /// <summary>
-    /// Describes extended methods for the Page class.
+    /// Provides extended methods for the Page class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -53,7 +53,7 @@ namespace Cube.Pdf.Mixin
         /// <returns>Page collection.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Page> GetImagePages(this IO io, string src)
+        public static IEnumerable<Page> GetImagePages(this FileSystem.IO io, string src)
         {
             using (var ss = io.OpenRead(src))
             using (var image = Image.FromStream(ss))
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Mixin
         /// <returns>Page collection.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Page> GetImagePages(this IO io, string src, Image image)
+        public static IEnumerable<Page> GetImagePages(this FileSystem.IO io, string src, Image image)
         {
             Debug.Assert(image != null);
             Debug.Assert(image.FrameDimensionsList != null);
@@ -109,7 +109,7 @@ namespace Cube.Pdf.Mixin
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetImagePage(this IO io, string src, int index)
+        public static Page GetImagePage(this FileSystem.IO io, string src, int index)
         {
             using (var ss = io.OpenRead(src))
             using (var image = Image.FromStream(ss))
@@ -134,7 +134,7 @@ namespace Cube.Pdf.Mixin
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetImagePage(this IO io, string src, Image image, int index)
+        public static Page GetImagePage(this FileSystem.IO io, string src, Image image, int index)
         {
             Debug.Assert(image != null);
             Debug.Assert(image.FrameDimensionsList != null);
@@ -153,7 +153,7 @@ namespace Cube.Pdf.Mixin
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Page GetImagePage(this IO io, string src, Image image, int index, FrameDimension dim)
+        private static Page GetImagePage(this FileSystem.IO io, string src, Image image, int index, FrameDimension dim)
         {
             image.SelectActiveFrame(dim, index);
 

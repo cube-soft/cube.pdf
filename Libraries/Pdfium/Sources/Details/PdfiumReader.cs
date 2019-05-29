@@ -16,7 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
