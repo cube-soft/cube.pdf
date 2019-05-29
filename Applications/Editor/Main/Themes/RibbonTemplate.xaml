@@ -246,7 +246,7 @@
                 Stretch="Uniform" />
 
             <TextBlock
-                Text="{Binding NameWithoutExtension}"
+                Text="{Binding BaseName}"
                 TextWrapping="NoWrap"
                 TextTrimming="CharacterEllipsis"
                 Grid.Column="2" />

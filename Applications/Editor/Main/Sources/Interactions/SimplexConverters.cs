@@ -16,10 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Conversions;
 using Cube.FileSystem;
-using Cube.Generics;
 using Cube.Images.Icons;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.ByteFormat;
+using Cube.Mixin.Generics;
 using Cube.Xui.Converters;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public object Convert(object[] values, Type target, object parameter, CultureInfo culture)
         {
-            var app = Assembly.GetExecutingAssembly().GetReader().Title;
+            var app = Assembly.GetExecutingAssembly().GetTitle();
             if (values.Length < 2) return app;
 
             var m = values[1].TryCast<bool>() ? "*" : "";
@@ -112,7 +113,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IconConverter() : base(e => (e as Information)?.IconImage(IconSize.Small)) { }
+        public IconConverter() : base(e => (e as Information)?.GetIconImage(IconSize.Small)) { }
     }
 
     #endregion

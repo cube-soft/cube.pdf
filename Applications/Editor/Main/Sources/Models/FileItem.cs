@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileItem : ObservableProperty, IListItem, IDisposable
+    public class FileItem : ObservableBase, IListItem, IDisposable
     {
         #region Constructors
 
@@ -60,7 +60,7 @@ namespace Cube.Pdf.Editor
             FullName      = info.FullName;
             Length        = info.Length;
             LastWriteTime = info.LastWriteTime;
-            Icon          = info.IconImage(IconSize.Small);
+            Icon          = info.GetIconImage(IconSize.Small);
         }
 
         #endregion

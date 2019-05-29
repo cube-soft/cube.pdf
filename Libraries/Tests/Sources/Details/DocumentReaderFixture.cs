@@ -16,7 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.FileSystem.TestService;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -61,11 +61,21 @@ namespace Cube.Pdf.Tests
         /// <returns>生成ルール一覧</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static IDictionary<string, Func<string, IQuery<string>, IO, IDocumentReader>> GetFactory() =>
-            new Dictionary<string, Func<string, IQuery<string>, IO, IDocumentReader>>
+        protected static IDictionary<string, Func<string, object, IO, IDocumentReader>> GetFactory() =>
+            new Dictionary<string, Func<string, object, IO, IDocumentReader>>
             {
-                { nameof(Cube.Pdf.Itext),  (s, q, io) => new Cube.Pdf.Itext.DocumentReader(s, q, io) },
-                { nameof(Cube.Pdf.Pdfium), (s, q, io) => new Cube.Pdf.Pdfium.DocumentReader(s, q, io) },
+                {
+                    nameof(Pdf.Itext), (s, q, io) =>
+                        q is string ?
+                        new Pdf.Itext.DocumentReader(s, q as string, io) :
+                        new Pdf.Itext.DocumentReader(s, q as IQuery<string, string>, io)
+                },
+                {
+                    nameof(Pdf.Pdfium), (s, q, io) =>
+                        q is string ?
+                        new Pdf.Pdfium.DocumentReader(s, q as string, io) :
+                        new Pdf.Pdfium.DocumentReader(s, q as IQuery<string, string>, io)
+                },
             };
 
         /* ----------------------------------------------------------------- */
@@ -83,8 +93,11 @@ namespace Cube.Pdf.Tests
         /// <returns>IDocumentReader オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected IDocumentReader Create(string klass, string src, string password) =>
-            Create(klass, src, new QueryValue<string>(password));
+        protected IDocumentReader Create(string klass, string src, string password)
+        {
+            Assert.That(GetFactory().TryGetValue(klass, out var factory), Is.True);
+            return factory(src, password, IO);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,7 +114,7 @@ namespace Cube.Pdf.Tests
         /// <returns>IDocumentReader オブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected IDocumentReader Create(string klass, string src, IQuery<string> query)
+        protected IDocumentReader Create(string klass, string src, IQuery<string, string> query)
         {
             Assert.That(GetFactory().TryGetValue(klass, out var factory), Is.True);
             return factory(src, query, IO);

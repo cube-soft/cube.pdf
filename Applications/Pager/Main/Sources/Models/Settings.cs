@@ -29,7 +29,7 @@ namespace Cube.Pdf.Pager
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Settings : Cube.ObservableProperty
+    public class Settings : ObservableBase
     {
         #region Constructors
 

@@ -16,19 +16,18 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Generics;
-using Cube.Xui;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Commands;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Editor.Tests
@@ -44,21 +43,6 @@ namespace Cube.Pdf.Editor.Tests
     /* --------------------------------------------------------------------- */
     public abstract class ViewModelFixture : FileFixture
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewModelFixture
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ViewModelFixture class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected ViewModelFixture() { }
-
-        #endregion
-
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -98,187 +82,6 @@ namespace Cube.Pdf.Editor.Tests
 
         #region Methods
 
-        #region Create
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Gets a new instance of the MainViewModel class and execute
-        /// the specified action.
-        /// </summary>
-        ///
-        /// <param name="callback">User action.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void Create(Action<MainViewModel> callback)
-        {
-            using (var src = Create())
-            {
-                var dps = Register(src);
-                callback(src);
-                foreach (var e in dps) e.Dispose();
-            }
-        }
-
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Gets a new instance of the MainViewModel class, executes
-        /// the Open command, and runs the specified action.
-        /// </summary>
-        ///
-        /// <param name="filename">Filename of the source.</param>
-        /// <param name="password">Password of the source.</param>
-        /// <param name="n">Number of pages.</param>
-        /// <param name="action">User action.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void Create(string filename, string password, int n,
-            Action<MainViewModel> action) => Create(vm =>
-        {
-            Source   = GetExamplesWith(filename);
-            Password = password;
-            Execute(vm, vm.Ribbon.Open);
-            Assert.That(Wait.For(() => vm.Data.Images.Count == n), "Timeout (Open)");
-            action(vm);
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateAsync
-        ///
-        /// <summary>
-        /// Gets a new instance of the MainViewModel class and execute
-        /// the specified callback as an asynchronous operation.
-        /// </summary>
-        ///
-        /// <param name="callback">User action.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected async Task CreateAsync(Func<MainViewModel, Task> callback)
-        {
-            using (var src = Create())
-            {
-                var dps = Register(src);
-                await callback(src);
-                foreach (var e in dps) e.Dispose();
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateAsync
-        ///
-        /// <summary>
-        /// Gets a new instance of the MainViewModel class, executes
-        /// the Open command, and runs the specified action as an
-        /// asynchronous operation.
-        /// </summary>
-        ///
-        /// <param name="filename">Filename of the source.</param>
-        /// <param name="password">Password of the source.</param>
-        /// <param name="n">Number of pages.</param>
-        /// <param name="callback">User action.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected Task CreateAsync(string filename, string password, int n,
-            Func<MainViewModel, Task> callback) => CreateAsync(async (vm) =>
-        {
-            Source   = GetExamplesWith(filename);
-            Password = password;
-
-            Assert.That(vm.Ribbon.Open.Command.CanExecute(), Is.True);
-            vm.Ribbon.Open.Command.Execute();
-            var done = await Wait.ForAsync(() => vm.Data.Images.Count == n).ConfigureAwait(false);
-            Assert.That(done, "Timeout (Open)");
-
-            await callback(vm).ConfigureAwait(false);
-        });
-
-        #endregion
-
-        #region Execute
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Execute
-        ///
-        /// <summary>
-        /// Execute the specified command.
-        /// </summary>
-        ///
-        /// <param name="vm">MainViewModel instance.</param>
-        /// <param name="src">Bindable element.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void Execute(MainViewModel vm, BindableElement src) =>
-            ExecuteAsync(vm, src).Wait();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ExecuteAsync
-        ///
-        /// <summary>
-        /// Execute the specified command as an asynchronous operation.
-        /// </summary>
-        ///
-        /// <param name="vm">MainViewModel instance.</param>
-        /// <param name="src">Bindable element.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected async Task ExecuteAsync(MainViewModel vm, BindableElement src)
-        {
-            var cts = new CancellationTokenSource();
-            void action(object s, EventArgs e)
-            {
-                if (!vm.Data.Busy.Value) return;
-                vm.Data.Busy.PropertyChanged -= action;
-                cts.Cancel();
-            }
-
-            Assert.That(vm.Data.Busy.Value, Is.False);
-            vm.Data.Busy.PropertyChanged += action;
-            Assert.That(src.Command.CanExecute(), Is.True);
-            src.Command.Execute();
-
-            var done = await Wait.ForAsync(cts.Token).ConfigureAwait(false);
-            Assert.That(done, $"Timeout ({src.Text})");
-        }
-
-        #endregion
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Args
-        ///
-        /// <summary>
-        /// Converts params to an object array.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected object[] Args(params object[] src) => src;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Path
-        ///
-        /// <summary>
-        /// Creates the path by using the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected string Path(object[] parts, [CallerMemberName] string name = null) =>
-           GetResultsWith($"{name}_{string.Join("_", parts)}.pdf");
-
-        #endregion
-
-        #region Implementations
-
         /* ----------------------------------------------------------------- */
         ///
         /// Setup
@@ -301,20 +104,95 @@ namespace Cube.Pdf.Editor.Tests
         /// Create
         ///
         /// <summary>
-        /// Gets a new instance of the MainViewModel class.
+        /// Creates a new instance of the MainViewModel class and execute
+        /// the specified action.
+        /// </summary>
+        ///
+        /// <param name="callback">User action.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Create(Action<MainViewModel> callback)
+        {
+            using (var src = CreateMainViewModel())
+            {
+                var behaviors = Subscribe(src);
+                callback(src);
+                foreach (var e in behaviors) e.Dispose();
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// Creates a new instance of the MainViewModel class, executes
+        /// the Open command, and runs the specified action.
+        /// </summary>
+        ///
+        /// <param name="filename">Filename of the source.</param>
+        /// <param name="password">Password of the source.</param>
+        /// <param name="callback">User action.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Open(string filename, string password, Action<MainViewModel> callback) => Create(vm =>
+        {
+            Source   = GetSource(filename);
+            Password = password;
+            vm.Test(vm.Ribbon.Open);
+            callback(vm);
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Get
+        ///
+        /// <summary>
+        /// Gets a path with the specified arguments and the Results
+        /// directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected string Get(IEnumerable<object> parts, [CallerMemberName] string name = null) =>
+           Get($"{name}_{parts.Join("_", e => e.ToString())}.pdf");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MakeArgs
+        ///
+        /// <summary>
+        /// Creates a collection with the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IEnumerable<object> MakeArgs(params object[] src) => src;
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateMainViewModel
+        ///
+        /// <summary>
+        /// Creates a new instance of the MainViewModel class.
         /// </summary>
         ///
         /// <returns>MainViewModel object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        private MainViewModel Create()
+        private MainViewModel CreateMainViewModel()
         {
-            var dummy = new BitmapImage(new Uri(GetExamplesWith("Loading.png")));
-            var asm   = Assembly.GetExecutingAssembly();
-            var fmt   = DataContract.Format.Registry;
-            var path  = @"CubeSoft\Cube.Pdf.Editor.Tests";
-            var src   = new SettingsFolder(asm, fmt, path, IO) { AutoSave = false };
-            var dest  = new MainViewModel(src);
+            var src = new SettingsFolder(
+                Assembly.GetExecutingAssembly(),
+                DataContract.Format.Registry,
+                @"CubeSoft\Cube.Pdf.Editor.Tests",
+                IO
+            ) { AutoSave = false };
+
+            var dest  = new MainViewModel(src, new SynchronizationContext());
+            var dummy = new BitmapImage(new Uri(GetSource("Loading.png")));
 
             dest.Data.Images.Preferences.Dummy = dummy;
             dest.Data.Images.Preferences.VisibleFirst = 0;
@@ -325,6 +203,29 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Subscribe
+        ///
+        /// <summary>
+        /// Sets some dummy callbacks to the specified Messenger.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<IDisposable> Subscribe(IPresentable src) => new[]
+        {
+            src.Subscribe<DialogMessage    >(e => Select(e)),
+            src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { Source }),
+            src.Subscribe<SaveFileMessage  >(e => e.Value = Destination),
+            src.Subscribe<PasswordViewModel>(e =>
+            {
+                e.Password.Value = Password;
+                var dest = Password.HasValue() ? e.OK : e.Cancel;
+                Assert.That(dest.Command.CanExecute(), Is.True, dest.Text);
+                dest.Command.Execute();
+            }),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Select
         ///
         /// <summary>
@@ -332,68 +233,19 @@ namespace Cube.Pdf.Editor.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private MessageBoxResult Select(MessageBoxButton src)
+        private void Select(DialogMessage src)
         {
-            var dic = new Dictionary<MessageBoxButton, MessageBoxResult>
+            var found = new Dictionary<DialogButtons, DialogStatus>
             {
-                { MessageBoxButton.OK,          MessageBoxResult.OK  },
-                { MessageBoxButton.OKCancel,    MessageBoxResult.OK  },
-                { MessageBoxButton.YesNo,       MessageBoxResult.Yes },
-                { MessageBoxButton.YesNoCancel, MessageBoxResult.Yes },
-            };
+                { DialogButtons.Ok,          DialogStatus.Ok  },
+                { DialogButtons.OkCancel,    DialogStatus.Ok  },
+                { DialogButtons.YesNo,       DialogStatus.Yes },
+                { DialogButtons.YesNoCancel, DialogStatus.Yes },
+            }.TryGetValue(src.Buttons, out var dest);
 
-            var check = dic.TryGetValue(src, out var dest);
-            Debug.Assert(check);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Register
-        ///
-        /// <summary>
-        /// Sets some dummy callbacks to the specified Messenger.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<IDisposable> Register(IMessengerRegistrar src)
-        {
-            void dialog(DialogMessage e)
-            {
-                e.Result = Select(e.Buttons);
-                e.Callback?.Invoke(e);
-            }
-
-            void open(OpenFileMessage e)
-            {
-                e.FileName  = Source;
-                e.FileNames = new[] { Source };
-                e.Result    = true;
-                e.Callback.Invoke(e);
-            }
-
-            void save(SaveFileMessage e)
-            {
-                e.FileName = Destination;
-                e.Result   = true;
-                e.Callback.Invoke(e);
-            }
-
-            void pass(PasswordViewModel e)
-            {
-                e.Password.Value = Password;
-                var dest = Password.HasValue() ? e.OK : e.Cancel;
-                Assert.That(dest.Command.CanExecute(), $"{dest.Text} (Password)");
-                dest.Command.Execute();
-            }
-
-            return new List<IDisposable>
-            {
-                src.Register<DialogMessage>(this, dialog),
-                src.Register<OpenFileMessage>(this, open),
-                src.Register<SaveFileMessage>(this, save),
-                src.Register<PasswordViewModel>(this, pass),
-            };
+            this.LogDebug($"{src.Value.Quote()} ({found})");
+            Assert.That(found, Is.True, $"{src.Buttons}");
+            src.Status = dest;
         }
 
         #endregion

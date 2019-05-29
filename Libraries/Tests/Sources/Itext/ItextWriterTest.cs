@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Generics;
+using Cube.Mixin.String;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +58,7 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleAes256.pdf",     "password",  90, ExpectedResult = 9)]
         public int Save(string filename, string password, int degree)
         {
-            var src  = GetExamplesWith(filename);
+            var src  = GetSource(filename);
             var dest = Path(Args(filename));
 
             using (var w = new DocumentWriter(IO))
@@ -87,7 +87,7 @@ namespace Cube.Pdf.Tests.Itext
         public int Overwrite(string filename, string password, int degree)
         {
             var dest = Path(Args(filename));
-            IO.Copy(GetExamplesWith(filename), dest, true);
+            IO.Copy(GetSource(filename), dest, true);
 
             var r = new DocumentReader(dest, password, false, IO);
             using (var w = new DocumentWriter(IO))
@@ -114,9 +114,9 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("Sample.pdf", "Sample.pdf",          0, ExpectedResult =  4)]
         public int Merge(string f0, string f1, int degree)
         {
-            var r0   = new DocumentReader(GetExamplesWith(f0), "", false, IO);
-            var r1   = new DocumentReader(GetExamplesWith(f1), "", false, IO);
-            var dest = Path(Args(r0.File.NameWithoutExtension, r1.File.NameWithoutExtension));
+            var r0   = new DocumentReader(GetSource(f0), "", false, IO);
+            var r1   = new DocumentReader(GetSource(f1), "", false, IO);
+            var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
 
             using (var w = new DocumentWriter(IO))
             {
@@ -139,14 +139,14 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleBookmark.pdf", "SampleImage01.png", 90, ExpectedResult = 10)]
         public int Merge_Image(string doc, string image, int degree)
         {
-            var r0   = new DocumentReader(GetExamplesWith(doc), "", false, IO);
-            var dest = Path(Args(r0.File.NameWithoutExtension, IO.Get(image).NameWithoutExtension));
+            var r0   = new DocumentReader(GetSource(doc), "", false, IO);
+            var dest = Path(Args(r0.File.BaseName, IO.Get(image).BaseName));
 
             using (var w = new DocumentWriter(IO))
-            using (var r = new DocumentReader(GetExamplesWith(doc), "", false, IO))
+            using (var r = new DocumentReader(GetSource(doc), "", false, IO))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
-                w.Add(Rotate(IO.GetImagePages(GetExamplesWith(image)), degree));
+                w.Add(Rotate(IO.GetImagePages(GetSource(image)), degree));
                 w.Save(dest);
             }
             return Count(dest, "", degree);
@@ -165,9 +165,9 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleRc128.pdf",    "password", ExpectedResult = 2)]
         public int Split(string filename, string password)
         {
-            var src  = GetExamplesWith(filename);
+            var src  = GetSource(filename);
             var info = IO.Get(src);
-            var name = info.NameWithoutExtension;
+            var name = info.BaseName;
             var ext  = info.Extension;
             var dest = Path(Args(name));
 
@@ -204,10 +204,10 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleAttachment.pdf", "日本語のサンプル.md", ExpectedResult = 3)]
         public int Attach(string doc, string file)
         {
-            var src  = GetExamplesWith(doc);
+            var src  = GetSource(doc);
             var r0   = new DocumentReader(src, "", false, IO);
-            var r1   = IO.Get(GetExamplesWith(file));
-            var dest = Path(Args(r0.File.NameWithoutExtension, r1.NameWithoutExtension));
+            var r1   = IO.Get(GetSource(file));
+            var dest = Path(Args(r0.File.BaseName, r1.BaseName));
 
             using (var w = new DocumentWriter())
             {
@@ -240,7 +240,7 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("日本語のテスト")]
         public void SetMetadata(string value)
         {
-            var src  = GetExamplesWith("Sample.pdf");
+            var src  = GetSource("Sample.pdf");
             var dest = Path(Args(value));
             var cmp  = new Metadata
             {
@@ -288,7 +288,7 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase(EncryptionMethod.Aes128, 0xfffff0c0L)]
         public void SetEncryption(EncryptionMethod method, long permission)
         {
-            var src  = GetExamplesWith("Sample.pdf");
+            var src  = GetSource("Sample.pdf");
             var dest = Path(Args(method, permission));
             var cmp  = new Encryption
             {
@@ -341,7 +341,7 @@ namespace Cube.Pdf.Tests.Itext
         [Test]
         public void Rotate_Failed()
         {
-            var src    = GetExamplesWith("Sample.pdf");
+            var src    = GetSource("Sample.pdf");
             var dest   = Path(Args("Sample"));
             var degree = 90;
 
@@ -387,7 +387,7 @@ namespace Cube.Pdf.Tests.Itext
         ///
         /* ----------------------------------------------------------------- */
         private string Path(object[] parts, [CallerMemberName] string name = null) =>
-           GetResultsWith($"{name}_{string.Join("_", parts)}.pdf");
+           Get($"{name}_{string.Join("_", parts)}.pdf");
 
         /* ----------------------------------------------------------------- */
         ///

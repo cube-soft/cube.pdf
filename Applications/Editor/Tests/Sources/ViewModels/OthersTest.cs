@@ -17,8 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.FileSystem.TestService;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 
@@ -70,18 +70,19 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         [TestCase("Sample.pdf", 2, false)]
         public void Close(string filename, int n, bool modify) => Create(vm =>
         {
-            var fi = IO.Get(GetExamplesWith(filename));
-            Source = Path(Args(fi.NameWithoutExtension, modify));
+            var fi = IO.Get(GetSource(filename));
+            Source = Get(MakeArgs(fi.BaseName, modify));
             IO.Copy(fi.FullName, Source, true);
             vm.Ribbon.Open.Command.Execute();
             Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Open)");
 
             if (modify)
             {
-                Execute(vm, vm.Ribbon.Select);
-                Execute(vm, vm.Ribbon.RotateLeft);
+                vm.Test(vm.Ribbon.Select);
+                vm.Test(vm.Ribbon.RotateLeft);
             }
-            Execute(vm, vm.Ribbon.Close);
+
+            vm.Test(vm.Ribbon.Close);
             Assert.That(Wait.For(() => !vm.Data.IsOpen()), "Timeout (Close)");
         });
 
@@ -96,16 +97,16 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Extract() => Create("Sample.pdf", "", 2, vm =>
+        public void Extract() => Open("Sample.pdf", "", vm =>
         {
-            Destination = Path(Args("Sample"));
+            Destination = Get(MakeArgs("Sample"));
             Assert.That(IO.Exists(Destination), Is.False);
 
             Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.False);
             vm.Data.Images.First().IsSelected = true;
             Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
 
-            Execute(vm, vm.Ribbon.Extract);
+            vm.Test(vm.Ribbon.Extract);
             Assert.That(Wait.For(() => IO.Exists(Destination)), "Timeout (Extract)");
         });
 
@@ -119,7 +120,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Rotate() => Create("Sample.pdf", "", 2, vm =>
+        public void Rotate() => Open("Sample.pdf", "", vm =>
         {
             var images = vm.Data.Images.ToList();
             var dest   = images[0];
@@ -136,12 +137,12 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             dest.IsSelected = true;
             dest.PropertyChanged += (s, e) => ++count;
 
-            Execute(vm, vm.Ribbon.RotateLeft);
+            vm.Test(vm.Ribbon.RotateLeft);
             Assert.That(Wait.For(() => dest.Image != dummy), "Timeout (Left)");
             Assert.That(dest.Width,  Is.Not.EqualTo(width),  nameof(width));
             Assert.That(dest.Height, Is.Not.EqualTo(height), nameof(height));
 
-            Execute(vm, vm.Ribbon.RotateRight);
+            vm.Test(vm.Ribbon.RotateRight);
             Assert.That(Wait.For(() => dest.Image != dummy), "Timeout (Right)");
             Assert.That(dest.Width,  Is.EqualTo(width),  nameof(width));
             Assert.That(dest.Height, Is.EqualTo(height), nameof(height));
@@ -157,22 +158,22 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Undo() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void Undo() => Open("SampleRotation.pdf", "", vm =>
         {
-            Execute(vm, vm.Ribbon.Select);
-            Execute(vm, vm.Ribbon.Remove);
+            vm.Test(vm.Ribbon.Select);
+            vm.Test(vm.Ribbon.Remove);
 
             Assert.That(vm.Data.Images.Count, Is.EqualTo(0));
             Assert.That(vm.Data.History.Undoable, Is.True);
             Assert.That(vm.Data.History.Redoable, Is.False);
 
-            Execute(vm, vm.Ribbon.Undo);
+            vm.Test(vm.Ribbon.Undo);
 
             Assert.That(vm.Data.Images.Count, Is.EqualTo(9));
             Assert.That(vm.Data.History.Undoable, Is.False);
             Assert.That(vm.Data.History.Redoable, Is.True);
 
-            Execute(vm, vm.Ribbon.Redo);
+            vm.Test(vm.Ribbon.Redo);
 
             Assert.That(vm.Data.Images.Count, Is.EqualTo(0));
             Assert.That(vm.Data.History.Undoable, Is.True);

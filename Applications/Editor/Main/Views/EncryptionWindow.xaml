@@ -139,13 +139,13 @@
                   UserPassword
                 *********************************************************** -->
                 <CheckBox
-                    Content="{Binding IsOpenPassword.Text}"
-                    IsChecked="{Binding IsOpenPassword.Value}"
+                    Content="{Binding OpenPassword.Text}"
+                    IsChecked="{Binding OpenPassword.Value}"
                     Grid.Column="1"
                     Grid.Row="3" />
 
                 <Grid
-                    IsEnabled="{Binding IsOpenPassword.Value}"
+                    IsEnabled="{Binding OpenPassword.Value}"
                     Grid.Column="1"
                     Grid.Row="4">
                     <Grid.ColumnDefinitions>
@@ -164,7 +164,7 @@
                         Grid.Column="0"
                         Grid.Row="0" />
                     <PasswordBox
-                        IsEnabled="{Binding IsSharePassword.Value, Converter={xc:Inverse}}"
+                        IsEnabled="{Binding SharePassword.Value, Converter={xc:Inverse}}"
                         Grid.Column="1"
                         Grid.Row="0">
                         <i:Interaction.Behaviors>
@@ -177,7 +177,7 @@
                         Grid.Column="0"
                         Grid.Row="1" />
                     <PasswordBox
-                        IsEnabled="{Binding IsSharePassword.Value, Converter={xc:Inverse}}"
+                        IsEnabled="{Binding SharePassword.Value, Converter={xc:Inverse}}"
                         Grid.Column="1"
                         Grid.Row="1">
                         <i:Interaction.Behaviors>
@@ -186,8 +186,8 @@
                     </PasswordBox>
 
                     <CheckBox
-                        Content="{Binding IsSharePassword.Text}"
-                        IsChecked="{Binding IsSharePassword.Value}"
+                        Content="{Binding SharePassword.Text}"
+                        IsChecked="{Binding SharePassword.Value}"
                         Grid.Column="1"
                         Grid.Row="2" />
                 </Grid>

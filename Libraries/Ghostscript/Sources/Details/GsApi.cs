@@ -16,7 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
+using Cube.Mixin.String;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.Ghostscript
@@ -30,26 +34,8 @@ namespace Cube.Pdf.Ghostscript
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class GsApi : DisposableBase
+    internal static class GsApi
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GsApi
-        ///
-        /// <summary>
-        /// Initializes a new instance of the GsApi class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private GsApi()
-        {
-            _initialize = new OnceAction(() => NativeMethods.NewInstance(out _handle, IntPtr.Zero));
-        }
-
-        #endregion
-
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -67,23 +53,12 @@ namespace Cube.Pdf.Ghostscript
             {
                 if (_info.Product == IntPtr.Zero)
                 {
-                    var status = NativeMethods.GetInformation(ref _info, Marshal.SizeOf(_info));
-                    if (status != 0) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_revision");
+                    var code = NativeMethods.GetInformation(ref _info, Marshal.SizeOf(_info));
+                    if (code != 0) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_revision");
                 }
                 return _info;
             }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Handle
-        ///
-        /// <summary>
-        /// Gets the core object for Ghostscript APIs.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IntPtr Handle => _handle;
 
         #endregion
 
@@ -98,60 +73,76 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Invoke(string[] args)
+        public static void Invoke(IEnumerable<string> args, string tmp, IO io)
         {
-            lock (_core)
+            lock (_lock)
             {
-                _core.Initialize();
-                if (_core.Handle == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
+                SetTemp(tmp, io, () =>
+                {
+                    NativeMethods.NewInstance(out var core, IntPtr.Zero);
+                    if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
 
-                var code = NativeMethods.InitWithArgs(_core.Handle, args.Length, args);
-                NativeMethods.Exit(_core.Handle);
-                if (IsError(code)) throw new GsApiException(code);
+                    try
+                    {
+                        var array = args.ToArray();
+                        var code = NativeMethods.InitWithArgs(core, array.Length, array);
+                        if (IsError(code)) throw new GsApiException(code);
+                    }
+                    finally
+                    {
+                        NativeMethods.Exit(core);
+                        NativeMethods.DeleteInstance(core);
+                    }
+                });
             }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Initialize
+        /// Invoke
         ///
         /// <summary>
-        /// Initializes the Ghostscript APIs.
+        /// Sets the working directory and invokes the specified action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Initialize()
+        private static void SetTemp(string tmp, IO io, Action callback)
         {
-            if (!_initialize.Invoked) _initialize.Invoke();
+            var name = "Temp";
+            var prev = Environment.GetEnvironmentVariable(name);
+
+            try
+            {
+                if (tmp.HasValue())
+                {
+                    if (!io.Exists(tmp)) io.CreateDirectory(tmp);
+                    SetVariable(name, tmp);
+                    Logger.Debug(typeof(GsApi), $"{name}:{prev.Quote()} -> {tmp.Quote()}");
+                }
+                callback();
+            }
+            finally { SetVariable(name, prev); }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetVariable
+        ///
+        /// <summary>
+        /// Sets the environment variable with the specified key and value.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// 設定された環境変数は実行プロセス中でのみ有効です。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void SetVariable(string key, string value) =>
+            Environment.SetEnvironmentVariable(key, value, EnvironmentVariableTarget.Process);
 
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the GsApi
-        /// and optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing)
-        {
-            if (_handle != IntPtr.Zero)
-            {
-                NativeMethods.DeleteInstance(_handle);
-                _handle = IntPtr.Zero;
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -170,10 +161,8 @@ namespace Cube.Pdf.Ghostscript
         #endregion
 
         #region Fields
-        private static readonly GsApi _core = new GsApi();
+        private static readonly object _lock = new object();
         private static GsInformation _info = new GsInformation();
-        private readonly OnceAction _initialize;
-        private IntPtr _handle;
         #endregion
     }
 }

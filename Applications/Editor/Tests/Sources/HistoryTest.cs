@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Cube.Pdf.Editor.Tests
 {
@@ -48,7 +49,8 @@ namespace Cube.Pdf.Editor.Tests
         public void Undo()
         {
             var src = Create();
-            var history = new History();
+            var dispatcher = new Dispatcher(new SynchronizationContext(), false);
+            var history = new History(dispatcher);
 
             Assert.That(src.Count, Is.EqualTo(10));
             Assert.That(history.Undoable, Is.False);
@@ -92,7 +94,8 @@ namespace Cube.Pdf.Editor.Tests
         public void Redo()
         {
             var src = Create();
-            var history = new History();
+            var dispatcher = new Dispatcher(new SynchronizationContext(), false);
+            var history = new History(dispatcher);
 
             Remove(src, 0, history);
             Remove(src, 3, history);

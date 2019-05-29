@@ -16,8 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
-using Cube.Generics;
-using Cube.Iteration;
+using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using Microsoft.Win32;
 using System;
@@ -291,12 +290,12 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (CanInstall()) this.Log(() => this.Try(RetryCount, () =>
+            if (CanInstall()) this.Try(i =>
             {
                 if (!Exists) Register(MonitorName, Name);
                 Exists = true;
                 using (var k = Open(GetName(MonitorName, "Ports", Name), true)) k.Serialize(_core);
-            }));
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -312,7 +311,7 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (Exists) this.Log(() => this.Try(RetryCount, () =>
+            if (Exists) this.Try(i =>
             {
                 using (var k = Open(GetName(MonitorName, "Ports"), true))
                 {
@@ -320,7 +319,7 @@ namespace Cube.Pdf.Pinstaller
                     if (names.Any(e => e.FuzzyEquals(Name))) k.DeleteSubKeyTree(Name);
                     Exists = false;
                 }
-            }));
+            });
         }
 
         #endregion

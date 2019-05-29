@@ -48,14 +48,11 @@ namespace Cube.Pdf.Tests
         [TestCaseSource(nameof(TestCases))]
         public void Get(string klass, string filename, string password, bool fullaccess)
         {
-            var src = GetExamplesWith(filename);
-
-            using (var reader = Create(klass, src, password))
+            using (var src = Create(klass, GetSource(filename), password))
             {
-                var dest = reader.File as PdfFile;
-
+                var dest = (PdfFile)src.File;
                 Assert.That(dest.Name,         Is.EqualTo(filename));
-                Assert.That(dest.FullName,     Is.EqualTo(GetExamplesWith(filename)));
+                Assert.That(dest.FullName,     Is.EqualTo(GetSource(filename)));
                 Assert.That(dest.Password,     Is.EqualTo(password));
                 Assert.That(dest.FullAccess,   Is.EqualTo(fullaccess));
                 Assert.That(dest.Length,       Is.AtLeast(1));
@@ -77,13 +74,13 @@ namespace Cube.Pdf.Tests
         [Test]
         public void Get_Image()
         {
-            var src  = GetExamplesWith("SampleImage02.png");
+            var src  = GetSource("SampleImage02.png");
             var dest = IO.GetImageFile(src);
 
             Assert.That(dest.FullName,     Is.EqualTo(src));
             Assert.That(dest.Length,       Is.EqualTo(3765));
-            Assert.That(dest.Resolution.X, Is.EqualTo(96.0f));
-            Assert.That(dest.Resolution.Y, Is.EqualTo(96.0f));
+            Assert.That(dest.Resolution.X, Is.AtLeast(72.0f));
+            Assert.That(dest.Resolution.Y, Is.AtLeast(96.0f));
             Assert.That(dest.Count,        Is.EqualTo(1));
         }
 
@@ -98,14 +95,15 @@ namespace Cube.Pdf.Tests
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestClasses))]
-        public void Open_BadPassword_Throws(string klass) => Assert.That(() =>
+        public void Open_BadPassword_Throws(string klass)
+        {
+            var src = GetSource("SampleRc40.pdf");
+            var password = "bad-password-string";
+            Assert.That(() =>
             {
-                var src      = GetExamplesWith("SampleRc40.pdf");
-                var password = "bad-password-string";
-                using (Create(klass, src, password)) { /* Not reached */ }
-            },
-            Throws.TypeOf<EncryptionException>()
-        );
+                using (Create(klass, src, password)) { }
+            }, Throws.TypeOf<EncryptionException>());
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -118,14 +116,15 @@ namespace Cube.Pdf.Tests
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestClasses))]
-        public void Open_PasswordCancel_Throws(string klass) => Assert.That(() =>
+        public void Open_PasswordCancel_Throws(string klass)
+        {
+            var src = GetSource("SampleRc40.pdf");
+            var query = new Query<string>(e => e.Cancel = true);
+            Assert.That(() =>
             {
-                var src   = GetExamplesWith("SampleRc40.pdf");
-                var query = new Query<string>(e => e.Cancel = true);
                 using (Create(klass, src, query)) { /* Not reached */ }
-            },
-            Throws.TypeOf<OperationCanceledException>()
-        );
+            }, Throws.TypeOf<OperationCanceledException>());
+        }
 
         #endregion
 

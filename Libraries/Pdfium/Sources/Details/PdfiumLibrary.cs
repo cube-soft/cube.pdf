@@ -61,9 +61,9 @@ namespace Cube.Pdf.Pdfium
         #endregion
 
         #region Fields
-        private static readonly OnceInitializer _core = new OnceInitializer(
+        private static readonly DisposableOnceAction _core = new DisposableOnceAction(
             () => PdfiumApi.FPDF_InitLibrary(),
-            () => PdfiumApi.FPDF_DestroyLibrary()
+            e => PdfiumApi.FPDF_DestroyLibrary()
         );
         #endregion
     }

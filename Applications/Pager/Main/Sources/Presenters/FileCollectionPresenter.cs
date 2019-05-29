@@ -17,7 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Forms.Controls;
-using Cube.Log;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,9 +67,8 @@ namespace Cube.Pdf.Pager
 
             Model.PasswordRequired  += Model_PasswordRequired;
 
-            var reader = new AssemblyReader(Settings.Assembly);
             Model.Metadata.Version = new PdfVersion(1, 7);
-            Model.Metadata.Creator = reader.Product;
+            Model.Metadata.Creator = Settings.Assembly.GetProduct();
         }
 
         #endregion

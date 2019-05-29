@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading;
@@ -49,12 +49,12 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Remove() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void Remove() => Open("SampleRotation.pdf", "", vm =>
         {
             var src = vm.Data.Images.ToList();
             src[3].IsSelected = true;
             src[5].IsSelected = true;
-            Execute(vm, vm.Ribbon.Remove);
+            vm.Test(vm.Ribbon.Remove);
 
             var dest = vm.Data.Images.ToList();
             Assert.That(dest.Count, Is.EqualTo(7));
@@ -72,10 +72,10 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public Task RemoveOthers() => CreateAsync("SampleRotation.pdf", "", 9, async (vm) =>
+        public void RemoveOthers() => Open("SampleRotation.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Register<RemoveViewModel>(this, e =>
+            var dp  = vm.Subscribe<RemoveViewModel>(e =>
             {
                 Assert.That(e.Title.Text,         Is.Not.Null.And.Not.Empty);
                 Assert.That(e.PageCaption.Text,   Is.Not.Null.And.Not.Empty);
@@ -94,8 +94,8 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             });
 
             Assert.That(vm.Ribbon.RemoveOthers.Command.CanExecute(), Is.True);
-            vm.Ribbon.RemoveOthers.Command.Execute();
-            await Wait.ForAsync(cts.Token);
+            Task.Run(() => vm.Ribbon.RemoveOthers.Command.Execute());
+            Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Remove)");
             dp.Dispose();
         });
 

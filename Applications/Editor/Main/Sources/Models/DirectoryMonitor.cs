@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.FileSystem;
-using Cube.Tasks;
+using Cube.Mixin.Tasks;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -53,14 +53,15 @@ namespace Cube.Pdf.Editor
         /// <param name="directory">Target directory.</param>
         /// <param name="filter">Filter string.</param>
         /// <param name="io">I/O handler</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DirectoryMonitor(string directory, string filter, IO io)
+        public DirectoryMonitor(string directory, string filter, IO io, IDispatcher dispatcher) :
+            base(dispatcher)
         {
-            Context   = SynchronizationContext.Current;
-            Directory = directory;
-            Filter    = filter;
-            IO        = io;
+            Directory  = directory;
+            Filter     = filter;
+            IO         = io;
 
             _core = new System.IO.FileSystemWatcher
             {
@@ -143,6 +144,23 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Refresh
         ///
         /// <summary>
@@ -163,7 +181,7 @@ namespace Cube.Pdf.Editor
 
         #region Fields
         private readonly System.IO.FileSystemWatcher _core;
-        private IEnumerable<Information> _items = new Information[0];
+        private IEnumerable<Information> _items = Enumerable.Empty<Information>();
         #endregion
     }
 }

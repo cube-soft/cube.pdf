@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageItem : ObservableProperty, IListItem, IDisposable
+    public class ImageItem : ObservableBase, IListItem, IDisposable
     {
         #region Constructors
 
@@ -201,8 +201,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Refresh()
         {
-            RaisePropertyChanged(nameof(Stretch));
-            RaisePropertyChanged(nameof(Image));
+            Refresh(nameof(Stretch));
+            Refresh(nameof(Image));
         }
 
         /* ----------------------------------------------------------------- */

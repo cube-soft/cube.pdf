@@ -16,10 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
+using Cube.Mixin.Commands;
 using Cube.Pdf.Mixin;
-using Cube.Xui;
-using Cube.Xui.Mixin;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -51,7 +50,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Set(int index, Encryption cmp) => Create("Sample.pdf", "", 2, vm =>
+        public void Set(int id, Encryption cmp) => Open("Sample.pdf", "", vm =>
         {
             Register(vm, cmp, false);
 
@@ -64,7 +63,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             Assert.That(vm.Data.Encryption, Is.Not.Null);
             Assert.That(vm.Ribbon.Encryption.Command.CanExecute(), Is.True);
             vm.Ribbon.Encryption.Command.Execute();
-            Assert.That(Wait.For(cts.Token), $"Timeout");
+            Assert.That(Wait.For(cts.Token), $"Timeout (No.{id})");
             AssertEncryption(vm.Data.Encryption, cmp);
         });
 
@@ -79,13 +78,13 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => Create("Sample.pdf", "", 2, vm =>
+        public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            vm.Register<EncryptionViewModel>(this, e =>
+            vm.Subscribe<EncryptionViewModel>(e =>
             {
                 e.OwnerPassword.Value = "dummy";
-                e.Register<CloseMessage>(this, z => cts.Cancel());
+                e.Subscribe<CloseMessage>(z => cts.Cancel());
                 Assert.That(e.Cancel.Command.CanExecute(), Is.True);
                 e.Cancel.Command.Execute();
             });
@@ -143,25 +142,25 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         private IDisposable Register(MainViewModel vm, Encryption src, bool share) =>
-            vm.Register<EncryptionViewModel>(this, e =>
+            vm.Subscribe<EncryptionViewModel>(e =>
         {
             e.Enabled.Value            = src.Enabled;
             e.OwnerPassword.Value      = src.OwnerPassword;
             e.OwnerConfirm.Value       = src.OwnerPassword;
             e.Method.Value             = src.Method;
-            e.IsOpenPassword.Value     = src.OpenWithPassword;
-            e.IsSharePassword.Value    = share;
+            e.OpenPassword.Value       = src.OpenWithPassword;
+            e.SharePassword.Value      = share;
             e.UserPassword.Value       = src.UserPassword;
 
-            var p = src.Permission;
+            var pm = src.Permission;
 
             e.UserConfirm.Value        = src.UserPassword;
-            e.AllowPrint.Value         = p.Print.IsAllowed();
-            e.AllowCopy.Value          = p.CopyContents.IsAllowed();
-            e.AllowModify.Value        = p.ModifyContents.IsAllowed();
-            e.AllowAnnotation.Value    = p.ModifyAnnotations.IsAllowed();
-            e.AllowForm.Value          = p.InputForm.IsAllowed();
-            e.AllowAccessibility.Value = p.Accessibility.IsAllowed();
+            e.AllowPrint.Value         = pm.Print.IsAllowed();
+            e.AllowCopy.Value          = pm.CopyContents.IsAllowed();
+            e.AllowModify.Value        = pm.ModifyContents.IsAllowed();
+            e.AllowAnnotation.Value    = pm.ModifyAnnotations.IsAllowed();
+            e.AllowForm.Value          = pm.InputForm.IsAllowed();
+            e.AllowAccessibility.Value = pm.Accessibility.IsAllowed();
 
             Assert.That(e.OK.Command.CanExecute(), Is.True);
             e.OK.Command.Execute();

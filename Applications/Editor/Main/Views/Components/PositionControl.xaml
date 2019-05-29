@@ -26,7 +26,7 @@
       Main
     *********************************************************************** -->
     <GroupBox
-        Header="{Binding Position.Text}"
+        Header="{Binding Position.Main.Text}"
         Margin="{StaticResource VerticalFirst}"
         Grid.Row="0">
         <StackPanel Orientation="Horizontal">
@@ -38,7 +38,7 @@
                 IsEnabled="{Binding Position.Selected.Value}">
                 <i:Interaction.Behaviors>
                     <my:InsertPositionBehavior
-                        Command="{Binding Position.Command}"
+                        Command="{Binding Position.Main.Command}"
                         CommandParameter="{Binding Data.SelectedIndex}" />
                 </i:Interaction.Behaviors>
             </RadioButton>
@@ -49,7 +49,7 @@
             <RadioButton Content="{Binding Position.First.Text}">
                 <i:Interaction.Behaviors>
                     <my:InsertPositionBehavior
-                        Command="{Binding Position.Command}"
+                        Command="{Binding Position.Main.Command}"
                         CommandParameter="{StaticResource NegativeOne}" />
                 </i:Interaction.Behaviors>
             </RadioButton>
@@ -60,7 +60,7 @@
             <RadioButton Content="{Binding Position.Last.Text}">
                 <i:Interaction.Behaviors>
                     <my:InsertPositionBehavior
-                        Command="{Binding Position.Command}"
+                        Command="{Binding Position.Main.Command}"
                         CommandParameter="{Binding Data.Count}" />
                 </i:Interaction.Behaviors>
             </RadioButton>
@@ -74,7 +74,7 @@
                 IsChecked="True">
                 <i:Interaction.Behaviors>
                     <my:InsertPositionBehavior
-                        Command="{Binding Position.Command}"
+                        Command="{Binding Position.Main.Command}"
                         CommandParameter="{Binding Data.UserSpecifiedIndex.Value}" />
                 </i:Interaction.Behaviors>
             </RadioButton>

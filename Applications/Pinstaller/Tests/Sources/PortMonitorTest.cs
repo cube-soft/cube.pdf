@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
+using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using NUnit.Framework;
 using System;
@@ -75,7 +75,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         public void CreateForce()
         {
             var name = "Dummy Port";
-            var src  = new PortMonitor(name, new PortMonitor[0]);
+            var src  = new PortMonitor(name, Enumerable.Empty<PortMonitor>());
             Assert.That(src.Name,                       Is.EqualTo(name));
             Assert.That(src.Exists,                     Is.False, nameof(src.Exists));
             Assert.That(src.CanInstall(),               Is.False, nameof(src.CanInstall));

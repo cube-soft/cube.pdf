@@ -244,13 +244,13 @@
   <data name="MessagePassword" xml:space="preserve">
     <value>入力されたパスワードが一致しません。パスワード欄およびパスワード確認欄を再度ご確認下さい。</value>
   </data>
-  <data name="TitleBroseDestination" xml:space="preserve">
+  <data name="TitleSelectDestination" xml:space="preserve">
     <value>名前を付けて保存</value>
   </data>
-  <data name="TitleBroseUserProgram" xml:space="preserve">
+  <data name="TitleSelectUserProgram" xml:space="preserve">
     <value>変換完了時に実行するプログラムを選択</value>
   </data>
-  <data name="TitleBrowseSource" xml:space="preserve">
+  <data name="TitleSelectSource" xml:space="preserve">
     <value>入力ファイルを選択</value>
   </data>
   <data name="TitleError" xml:space="preserve">

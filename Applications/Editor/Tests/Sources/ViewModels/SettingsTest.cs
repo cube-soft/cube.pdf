@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -51,10 +51,10 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public Task Cancel() => CreateAsync("Sample.pdf", "", 2, async (vm) =>
+        public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Register<SettingsViewModel>(this, e =>
+            var dp  = vm.Subscribe<SettingsViewModel>(e =>
             {
                 Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
@@ -77,8 +77,8 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             });
 
             Assert.That(vm.Ribbon.Settings.Command.CanExecute(), Is.True);
-            vm.Ribbon.Settings.Command.Execute();
-            await Wait.ForAsync(cts.Token);
+            Task.Run(() => vm.Ribbon.Settings.Command.Execute());
+            Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Cancel)");
             dp.Dispose();
         });
 

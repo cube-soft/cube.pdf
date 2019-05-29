@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Images.BuiltIn;
+using Cube.Mixin.Drawing;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;

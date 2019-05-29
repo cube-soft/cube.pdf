@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading;
@@ -50,10 +50,10 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public Task Preview() => CreateAsync("Sample.pdf", "", 2, async (vm) =>
+        public void Preview() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Register<PreviewViewModel>(this, e =>
+            var dp  = vm.Subscribe<PreviewViewModel>(e =>
             {
                 Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Data.File.Value,   Is.Not.Null);
@@ -67,10 +67,10 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
                 cts.Cancel(); // done
             });
 
-            await ExecuteAsync(vm, vm.Ribbon.Select);
+            vm.Test(vm.Ribbon.Select);
             Assert.That(vm.Ribbon.Preview.Command.CanExecute(), Is.True);
-            vm.Ribbon.Preview.Command.Execute();
-            await Wait.ForAsync(cts.Token);
+            Task.Run(() => vm.Ribbon.Preview.Command.Execute());
+            Assert.That(Wait.For(cts.Token), "Timeout (Preview)");
             dp.Dispose();
         });
 
@@ -84,7 +84,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Select() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void Select() => Open("SampleRotation.pdf", "", vm =>
         {
             var unit    = 3; // Number of PropertyChanged events per action.
             var changed = 0;
@@ -101,17 +101,17 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             Assert.That(dest.Count, Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(0), nameof(dest.Last));
 
-            Execute(vm, vm.Ribbon.SelectFlip);
+            vm.Test(vm.Ribbon.SelectFlip);
             Assert.That(changed,    Is.EqualTo(10 * unit));
             Assert.That(dest.Count, Is.EqualTo(8), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
 
-            Execute(vm, vm.Ribbon.Select); // SelectAll
+            vm.Test(vm.Ribbon.Select); // SelectAll
             Assert.That(changed,    Is.EqualTo(11 * unit));
             Assert.That(dest.Count, Is.EqualTo(9), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
 
-            Execute(vm, vm.Ribbon.Select); // SelectClear
+            vm.Test(vm.Ribbon.Select); // SelectClear
             Assert.That(changed, Is.EqualTo(20 * unit));
             Assert.That(dest.Count, Is.EqualTo(0));
         });
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Zoom() => Create("Sample.pdf", "", 2, vm =>
+        public void Zoom() => Open("Sample.pdf", "", vm =>
         {
             var ip = vm.Data.Images.Preferences;
             Assert.That(ip.ItemSizeOptions.Count, Is.EqualTo(9));
@@ -150,7 +150,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void FrameOnly() => Create("Sample.pdf", "", 2, vm =>
+        public void FrameOnly() => Open("Sample.pdf", "", vm =>
         {
             Assert.That(vm.Ribbon.FrameOnly.Value, Is.False);
             vm.Ribbon.FrameOnly.Value = true;

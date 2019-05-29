@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
+using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using NUnit.Framework;
 using System;
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         public void CreateForce()
         {
             var name = "Dummy Printer";
-            var src  = new Printer(name, new Printer[0]);
+            var src  = new Printer(name, Enumerable.Empty<Printer>());
             Assert.That(src.Name,                   Is.EqualTo(name));
             Assert.That(src.ShareName,              Is.EqualTo(name));
             Assert.That(src.Exists,                 Is.False, nameof(src.Exists));

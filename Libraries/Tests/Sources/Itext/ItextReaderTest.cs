@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
 using Cube.Pdf.Itext;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -107,12 +107,12 @@ namespace Cube.Pdf.Tests.Itext
         {
             using (var reader = Create(filename))
             {
-                var name = IO.Get(filename).NameWithoutExtension;
+                var name = IO.Get(filename).BaseName;
                 var dest = reader.GetEmbeddedImages(n).ToList();
 
                 for (var i = 0; i < dest.Count; ++i)
                 {
-                    var path = GetResultsWith($"{name}-{n}-{i}.png");
+                    var path = Get($"{name}-{n}-{i}.png");
                     dest[i].Save(path, ImageFormat.Png);
                 }
                 return dest.Count;
@@ -144,7 +144,7 @@ namespace Cube.Pdf.Tests.Itext
         ///
         /* ----------------------------------------------------------------- */
         private DocumentReader Create(string filename, string password) =>
-            new DocumentReader(GetExamplesWith(filename), password, true, IO);
+            new DocumentReader(GetSource(filename), password, true, IO);
 
         #endregion
     }

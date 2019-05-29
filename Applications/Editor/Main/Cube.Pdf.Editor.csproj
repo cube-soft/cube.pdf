@@ -26,8 +26,8 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Cube.Forms" Version="1.15.0" />
-        <PackageReference Include="Cube.Xui" Version="1.15.0" />
+        <PackageReference Include="Cube.Forms" Version="1.16.0" />
+        <PackageReference Include="Cube.Xui" Version="1.16.0" />
         <PackageReference Include="ControlzEx" Version="3.0.2.4" />
         <PackageReference Include="Fluent.Ribbon" Version="6.1.0.326" />
         <PackageReference Include="gong-wpf-dragdrop" Version="1.1.0" />

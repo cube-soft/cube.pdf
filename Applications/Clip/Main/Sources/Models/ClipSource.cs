@@ -33,7 +33,7 @@ namespace Cube.Pdf.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ClipSource : ObservableProperty, IDisposable
+    public class ClipSource : ObservableBase, IDisposable
     {
         #region Properties
 

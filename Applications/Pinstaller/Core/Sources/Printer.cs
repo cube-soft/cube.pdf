@@ -15,8 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
-using Cube.Iteration;
+using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;
@@ -214,7 +213,7 @@ namespace Cube.Pdf.Pinstaller
         /* ----------------------------------------------------------------- */
         public static IEnumerable<Printer> GetElements()
         {
-            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return new Printer[0];
+            if (GetEnumApi(IntPtr.Zero, 0, out var bytes, out _)) return Enumerable.Empty<Printer>();
             if (Marshal.GetLastWin32Error() != 122) throw new Win32Exception();
 
             var ptr = Marshal.AllocHGlobal((int)bytes);
@@ -250,13 +249,13 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (!Exists) this.Log(() => this.Try(RetryCount, () =>
+            if (!Exists) this.Try(i =>
             {
                 var dest = NativeMethods.AddPrinter(null, 2, ref _core);
                 if (dest == IntPtr.Zero) throw new Win32Exception();
                 NativeMethods.ClosePrinter(dest);
                 Exists = true;
-            }));
+            });
         }
 
         /* ----------------------------------------------------------------- */
@@ -272,7 +271,7 @@ namespace Cube.Pdf.Pinstaller
         {
             this.Log();
 
-            if (Exists) this.Log(() => this.Try(RetryCount, () =>
+            if (Exists) this.Try(i =>
             {
                 var mask = AccessMask.PrinterAccessAll.Create();
                 if (!NativeMethods.OpenPrinter(Name, out var src, ref mask)) throw new Win32Exception();
@@ -283,7 +282,7 @@ namespace Cube.Pdf.Pinstaller
                     Exists = false;
                 }
                 finally { NativeMethods.ClosePrinter(src); }
-            }));
+            });
         }
 
         #endregion

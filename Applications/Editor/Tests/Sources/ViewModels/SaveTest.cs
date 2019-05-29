@@ -17,8 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.FileSystem.TestService;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 
@@ -52,10 +52,10 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         [TestCase("SampleRc40.pdf",     "password", 2)]
         [TestCase("SampleRc40Open.pdf", "password", 2)]
         public void SaveAs(string filename, string password, int n) =>
-            Create(filename, password, n, vm =>
+            Open(filename, password, vm =>
         {
             var fi = IO.Get(Source);
-            Destination = Path(Args(fi.NameWithoutExtension));
+            Destination = Get(MakeArgs(fi.BaseName));
             Password    = string.Empty;
             Assert.That(IO.Exists(Destination), Is.False);
 
@@ -77,8 +77,9 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         [TestCase("Sample.pdf", "", 2)]
         public void Overwrite(string filename, string password, int n) => Create(vm =>
         {
-            var fi = IO.Get(GetExamplesWith(filename));
-            Source = Path(Args(fi.NameWithoutExtension));
+            var fi = IO.Get(GetSource(filename));
+            Source   = Get(MakeArgs(fi.BaseName));
+            Password = password;
             IO.Copy(fi.FullName, Source, true);
             vm.Ribbon.Open.Command.Execute();
             Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Open)");

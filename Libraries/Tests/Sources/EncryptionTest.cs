@@ -54,7 +54,7 @@ namespace Cube.Pdf.Tests
         [TestCaseSource(nameof(TestCases))]
         public void Get(string klass, string filename, string password, Encryption cmp)
         {
-            using (var r = Create(klass, GetExamplesWith(filename), password))
+            using (var r = Create(klass, GetSource(filename), password))
             {
                 var dest = r.Encryption;
 

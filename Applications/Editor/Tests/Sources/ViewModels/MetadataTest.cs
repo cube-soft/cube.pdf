@@ -16,9 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Xui;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -50,7 +49,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Set(int index, Metadata cmp) => Create("Sample.pdf", "", 2, vm =>
+        public void Set(int id, Metadata cmp) => Open("Sample.pdf", "", vm =>
         {
             Register(vm, cmp);
 
@@ -63,7 +62,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             Assert.That(vm.Data.Metadata, Is.Not.Null);
             Assert.That(vm.Ribbon.Metadata.Command.CanExecute(), Is.True);
             vm.Ribbon.Metadata.Command.Execute();
-            Assert.That(Wait.For(cts.Token), $"Timeout");
+            Assert.That(Wait.For(cts.Token), $"Timeout (No.{id})");
             AssertMetadata(vm.Data.Metadata, cmp);
         });
 
@@ -78,13 +77,13 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => Create("Sample.pdf", "", 2, vm =>
+        public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            vm.Register<MetadataViewModel>(this, e =>
+            vm.Subscribe<MetadataViewModel>(e =>
             {
                 e.Document.Value = "dummy";
-                e.Register<CloseMessage>(this, z => cts.Cancel());
+                e.Subscribe<CloseMessage>(z => cts.Cancel());
                 Assert.That(e.Cancel.Command.CanExecute(), Is.True);
                 e.Cancel.Command.Execute();
             });
@@ -158,7 +157,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         private IDisposable Register(MainViewModel vm, Metadata src) =>
-            vm.Register<MetadataViewModel>(this, e =>
+            vm.Subscribe<MetadataViewModel>(e =>
         {
             Assert.That(e.Filename.Value,      Is.Not.Null.And.Not.Empty);
             Assert.That(e.Producer.Value,      Is.Not.Null.And.Not.Empty);

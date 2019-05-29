@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
+using Cube.Mixin.String;
 using System;
 
 namespace Cube.Pdf.Mixin
@@ -48,8 +48,7 @@ namespace Cube.Pdf.Mixin
         /* ----------------------------------------------------------------- */
         public static Encryption Copy(this Encryption src) => new Encryption
         {
-            Context          = src.Context,
-            IsSynchronous    = src.IsSynchronous,
+            Dispatcher       = src.Dispatcher,
             Enabled          = src.Enabled,
             Method           = src.Method,
             OwnerPassword    = src.OwnerPassword,
@@ -134,14 +133,13 @@ namespace Cube.Pdf.Mixin
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static QueryEventArgs<string> RequestPassword(this IQuery<string> query, string src)
+        public static QueryMessage<string, string> RequestPassword(this IQuery<string, string> query, string src)
         {
-            var dest = QueryEventArgs.Create(src);
-
             try
             {
+                var dest = Query.NewMessage(src);
                 query.Request(dest);
-                if (dest.Cancel || dest.Result.HasValue()) return dest;
+                if (dest.Cancel || dest.Value.HasValue()) return dest;
                 else throw new ArgumentException("Password is empty.");
             }
             catch (Exception err) { throw Convert(err); }

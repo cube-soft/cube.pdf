@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections.Mixin;
 using Cube.FileSystem;
+using Cube.Mixin.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -151,7 +151,7 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Argument> OnCreateArguments() =>
             base.OnCreateArguments()
-            .Concat(new[] { ColorMode.GetArgument() })
+            .Concat(ColorMode.GetArgument())
             .Concat(CreateFontArguments())
             .Concat(CreateImageArguments());
 
@@ -169,7 +169,8 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Code> OnCreateCodes() =>
             base.OnCreateCodes()
-            .Concat(new[] { CreateEmbedFontsCode() }.Compact());
+            .Concat(CreateEmbedFontsCode())
+            .Compact();
 
         /* ----------------------------------------------------------------- */
         ///

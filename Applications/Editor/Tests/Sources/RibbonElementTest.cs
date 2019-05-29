@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using NUnit.Framework;
+using System.Threading;
 
 namespace Cube.Pdf.Editor.Tests
 {
@@ -48,8 +49,9 @@ namespace Cube.Pdf.Editor.Tests
         {
             var name = nameof(Properties);
             var text = "GetText";
+            var dispatcher = new Dispatcher(new SynchronizationContext(), false);
 
-            using (var dest = new RibbonElement(() => text))
+            using (var dest = new RibbonElement(name, () => text, dispatcher))
             {
                 Assert.That(dest.Name,      Is.EqualTo(name));
                 Assert.That(dest.Text,      Is.EqualTo(text));

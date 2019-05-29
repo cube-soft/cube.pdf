@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Xui.Mixin;
+using Cube.Mixin.Commands;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MoveNext() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void MoveNext() => Open("SampleRotation.pdf", "", vm =>
         {
             var src = vm.Data.Images.ToList();
             src[1].IsSelected = true;
@@ -81,7 +81,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MovePrevious() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void MovePrevious() => Open("SampleRotation.pdf", "", vm =>
         {
             var src = vm.Data.Images.ToList();
             src[0].IsSelected = true;
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MoveNext_DragDrop() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void MoveNext_DragDrop() => Open("SampleRotation.pdf", "", vm =>
         {
             var src = vm.Data.Images.ToList();
             var obj = new DragDropObject(1) { DropIndex = 4 };
@@ -147,7 +147,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MovePrevious_DragDrop() => Create("SampleRotation.pdf", "", 9, vm =>
+        public void MovePrevious_DragDrop() => Open("SampleRotation.pdf", "", vm =>
         {
             var src = vm.Data.Images.ToList();
             var obj = new DragDropObject(6) { DropIndex = 3 };

@@ -51,10 +51,10 @@ namespace Cube.Pdf.Tests.Pdfium
         [TestCase("SampleRotation.pdf", 4, 0.5, 421, 297)]
         public void Render(string filename, int pagenum, double ratio, int width, int height)
         {
-            var src  = GetExamplesWith(filename);
-            var dest = GetResultsWith($"{IO.Get(src).NameWithoutExtension}-{pagenum}.png");
+            var src  = GetSource(filename);
+            var dest = Get($"{IO.Get(src).BaseName}-{pagenum}.png");
 
-            using (var reader = new DocumentReader(src))
+            using (var reader = new DocumentReader(GetSource(filename)))
             {
                 var page = reader.GetPage(pagenum);
                 using (var image = reader.Render(page, ratio))

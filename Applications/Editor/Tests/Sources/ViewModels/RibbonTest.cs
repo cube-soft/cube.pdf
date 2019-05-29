@@ -16,8 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using GalaSoft.MvvmLight.Messaging;
+using Cube.FileSystem;
 using NUnit.Framework;
+using System.Reflection;
+using System.Threading;
 
 namespace Cube.Pdf.Editor.Tests.ViewModels
 {
@@ -263,7 +265,11 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private RibbonViewModel Create() => new RibbonViewModel(null, new Messenger());
+        private RibbonViewModel Create()
+        {
+            new SettingsFolder(Assembly.GetExecutingAssembly(), new IO()); // Locale.Configure
+            return new RibbonViewModel(null, new Aggregator(), new SynchronizationContext());
+        }
 
         #endregion
     }

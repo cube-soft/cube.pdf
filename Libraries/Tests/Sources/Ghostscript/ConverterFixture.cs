@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
 using Cube.Pdf.Ghostscript;
+using Cube.Tests;
 using NUnit.Framework;
 using System.Reflection;
 
@@ -72,14 +72,14 @@ namespace Cube.Pdf.Tests.Ghostscript
         /* ----------------------------------------------------------------- */
         protected string Run(Converter cv, string src, string dest, string log)
         {
-            var asm = Assembly.GetExecutingAssembly().GetReader();
-            var sp  = GetExamplesWith(src);
-            var dp  = GetResultsWith($"{dest}{cv.Format.GetExtension()}");
+            var asm = Assembly.GetExecutingAssembly();
+            var sp  = GetSource(src);
+            var dp  = Get($"{dest}{cv.Format.GetExtension()}");
             var dir = IO.Get(asm.Location).DirectoryName;
 
-            cv.Log           = GetResultsWith($"{log}.log");
-            cv.Quiet         = false;
-            cv.WorkDirectory = GetResultsWith("Tmp");
+            cv.Quiet = false;
+            cv.Log   = Get($"{log}.log");
+            cv.Temp  = Get("Tmp");
             cv.Resources.Add(IO.Combine(dir, "lib"));
             cv.Invoke(sp, dp);
 
@@ -94,6 +94,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// テストケースを生成します。
         /// </summary>
         ///
+        /// <param name="id">テスト ID</param>
         /// <param name="cv">Converter オブジェクト</param>
         /// <param name="src">入力ファイル名</param>
         /// <param name="obj">出力ファイル名を決定するオブジェクト</param>
@@ -101,10 +102,10 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// <returns>テストケースオブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData TestCase<T>(Converter cv, string src, T obj)
+        protected static TestCaseData TestCase<T>(int id, Converter cv, string src, T obj)
         {
             var cvt = $"{obj.GetType().Name}_{obj.ToString()}";
-            return TestCase(cv, src, cvt);
+            return TestCase(id, cv, src, cvt);
         }
 
         /* ----------------------------------------------------------------- */
@@ -115,6 +116,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// テストケースを生成します。
         /// </summary>
         ///
+        /// <param name="id">テスト ID</param>
         /// <param name="cv">Converter オブジェクト</param>
         /// <param name="src">入力ファイル名</param>
         /// <param name="dest">拡張子を含まない出力ファイル名</param>
@@ -122,8 +124,8 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// <returns>テストケースオブジェクト</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData TestCase(Converter cv, string src, string dest) =>
-            new TestCaseData(cv, src, dest);
+        protected static TestCaseData TestCase(int id, Converter cv, string src, string dest) =>
+            new TestCaseData(id, cv, src, dest);
 
         #endregion
     }

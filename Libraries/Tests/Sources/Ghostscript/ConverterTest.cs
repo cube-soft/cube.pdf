@@ -64,10 +64,10 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void SupportedFormats() => Assert.That(
-            Converter.SupportedFormats.Count(),
-            Is.EqualTo(34)
-        );
+        public void SupportedFormats()
+        {
+            Assert.That(Converter.SupportedFormats.Count(), Is.EqualTo(34));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -79,8 +79,10 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Invoke(Converter cv, string srcname, string destname) =>
-            Assert.That(IO.Exists(Run(cv, srcname, destname)), Is.True);
+        public void Invoke(int id, Converter cv, string srcname, string destname)
+        {
+            Assert.That(IO.Exists(Run(cv, srcname, destname)), Is.True, $"No.{id}");
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -98,20 +100,17 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Invoke_Cjk_Failed() => Assert.That(
-            () =>
+        public void Invoke_Cjk_Failed()
+        {
+            Assert.That(() =>
             {
                 var dest = Run(new Converter(Format.Pdf),
                     "Sample.eps",
                     "日本語のファイル",
-                    "Invoke_Cjk_Failed"
-                );
-
+                    "Invoke_Cjk_Failed");
                 if (!IO.Exists(dest)) throw new FileNotFoundException("ErrorTest");
-            },
-            Throws.TypeOf<FileNotFoundException>().Or
-                  .TypeOf<GsApiException>()
-        );
+            }, Throws.TypeOf<FileNotFoundException>().Or.TypeOf<GsApiException>());
+        }
 
         #endregion
 
@@ -136,25 +135,27 @@ namespace Cube.Pdf.Tests.Ghostscript
         {
             get
             {
+                var n = 0;
+
                 /* --------------------------------------------------------- */
                 // Orientation
                 /* --------------------------------------------------------- */
-                yield return TestCase(new Converter(Format.Pdf)
+                yield return TestCase(n++, new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.Portrait,
                 }, "Sample.ps", Orientation.Portrait);
 
-                yield return TestCase(new Converter(Format.Pdf)
+                yield return TestCase(n++, new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.UpsideDown,
                 }, "Sample.ps", Orientation.UpsideDown);
 
-                yield return TestCase(new Converter(Format.Pdf)
+                yield return TestCase(n++, new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.Landscape,
                 }, "Sample.ps", Orientation.Landscape);
 
-                yield return TestCase(new Converter(Format.Pdf)
+                yield return TestCase(n++, new Converter(Format.Pdf)
                 {
                     Orientation = Orientation.Seascape,
                 }, "Sample.ps", Orientation.Seascape);
@@ -162,17 +163,17 @@ namespace Cube.Pdf.Tests.Ghostscript
                 /* --------------------------------------------------------- */
                 // Paper
                 /* --------------------------------------------------------- */
-                yield return TestCase(new Converter(Format.Pdf)
+                yield return TestCase(n++, new Converter(Format.Pdf)
                 {
                     Paper = Paper.IsoB4,
                 }, "Sample.ps", Paper.IsoB4);
 
-                yield return TestCase(new Converter(Format.Pdf)
+                yield return TestCase(n++, new Converter(Format.Pdf)
                 {
                     Paper = Paper.JisB4,
                 }, "Sample.ps", Paper.JisB4);
 
-                yield return TestCase(new Converter(Format.Pdf)
+                yield return TestCase(n++, new Converter(Format.Pdf)
                 {
                     Paper = Paper.Letter,
                 }, "Sample.ps", Paper.Letter);

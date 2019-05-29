@@ -143,7 +143,7 @@ namespace Cube.Pdf.Picker
         /* ----------------------------------------------------------------- */
         public void Save(string directory)
         {
-            var basename = IO.Get(Path).NameWithoutExtension;
+            var basename = IO.Get(Path).BaseName;
             for (var index = 0; index < Items.Count; ++index)
             {
                 Save(Items[index], directory, basename, index);
@@ -161,7 +161,7 @@ namespace Cube.Pdf.Picker
         /* ----------------------------------------------------------------- */
         public void Save(string directory, IEnumerable<int> indices)
         {
-            var basename = IO.Get(Path).NameWithoutExtension;
+            var basename = IO.Get(Path).BaseName;
             foreach (var index in indices)
             {
                 if (index < 0 || index >= Items.Count) continue;
@@ -273,7 +273,7 @@ namespace Cube.Pdf.Picker
         {
             try
             {
-                var name = IO.Get(Path).NameWithoutExtension;
+                var name = IO.Get(Path).BaseName;
                 progress.Report(Create(
                     -1,
                     string.Format(Properties.Resources.MessageBegin, name)
@@ -329,7 +329,7 @@ namespace Cube.Pdf.Picker
         private void ExtractImages(DocumentReader src, IProgress<ProgressEventArgs<string>> progress)
         {
             var count = src.Pages.Count();
-            var name  = IO.Get(Path).NameWithoutExtension;
+            var name = IO.Get(Path).BaseName;
 
             for (var i = 0; i < count; ++i)
             {
