@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
 using Cube.Pdf.Mixin;
 using Cube.Xui;
 using System;
@@ -57,19 +56,19 @@ namespace Cube.Pdf.Editor
             SynchronizationContext context
         ) : base(() => Properties.Resources.TitleEncryption, new Aggregator(), context)
         {
-            // TODO: EncryptionFacade を追加して処理を移譲
-            if (src.Method == EncryptionMethod.Unknown) src.Method = EncryptionMethod.Aes256;
-            _share = new Accessor<bool>(src.OwnerPassword.HasValue() && src.OwnerPassword.FuzzyEquals(src.UserPassword));
-            if (_share.Get()) src.UserPassword = string.Empty;
-
-            _model = src;
+            _model = new EncryptionFacade(src);
 
             OpenPassword.PropertyChanged  += (s, e) => Operation.Refresh("Value");
             SharePassword.PropertyChanged += (s, e) => Operation.Refresh("Value");
 
             OK.Command = new BindableCommand(
-                () => Execute(callback, src),
-                () => CanExecute(),
+                () =>
+                {
+                    Send<CloseMessage>();
+                    _model.Normalize();
+                    callback(_model.Value);
+                },
+                () => _model.IsAcceptable(),
                 Enabled,
                 OwnerPassword,
                 OwnerConfirm,
@@ -93,13 +92,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<EncryptionMethod> Methods { get; } = new[]
-        {
-            EncryptionMethod.Standard40,
-            EncryptionMethod.Standard128,
-            EncryptionMethod.Aes128,
-            EncryptionMethod.Aes256,
-        };
+        public IEnumerable<EncryptionMethod> Methods => EncryptionFacade.Methods;
 
         #region Elements
 
@@ -114,8 +107,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<bool> Enabled => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuEncryptionEnabled,
-            () => _model.Enabled,
-            e  => _model.Enabled = e,
+            () => _model.Value.Enabled,
+            e  => _model.Value.Enabled = e,
             GetDispatcher(false)
         ));
 
@@ -145,8 +138,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<EncryptionMethod> Method => Get(() => new BindableElement<EncryptionMethod>(
             () => Properties.Resources.MenuEncryptionMethod,
-            () => _model.Method,
-            e  => _model.Method = e,
+            () => _model.Value.Method,
+            e  => _model.Value.Method = e,
             GetDispatcher(false)
         ));
 
@@ -161,8 +154,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<string> OwnerPassword => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuOwnerPassword,
-            () => _model.OwnerPassword,
-            e  => _model.OwnerPassword = e,
+            () => _model.Value.OwnerPassword,
+            e  => _model.Value.OwnerPassword = e,
             GetDispatcher(false)
         ));
 
@@ -177,7 +170,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<string> OwnerConfirm => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuConfirmPassword,
-            new Accessor<string>(),
+            () => _model.OwnerConfirm,
+            e  => _model.OwnerConfirm = e,
             GetDispatcher(false)
         ));
 
@@ -192,8 +186,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<string> UserPassword => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuUserPassword,
-            () => _model.UserPassword,
-            e  => _model.UserPassword = e,
+            () => _model.Value.UserPassword,
+            e  => _model.Value.UserPassword = e,
             GetDispatcher(false)
         ));
 
@@ -208,7 +202,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<string> UserConfirm => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuConfirmPassword,
-            new Accessor<string>(),
+            () => _model.UserConfirm,
+            e  => _model.UserConfirm = e,
             GetDispatcher(false)
         ));
 
@@ -223,8 +218,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<bool> OpenPassword => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuOpenWithPassword,
-            () => _model.OpenWithPassword,
-            e  => _model.OpenWithPassword = e,
+            () => _model.Value.OpenWithPassword,
+            e  => _model.Value.OpenWithPassword = e,
             GetDispatcher(false)
         ));
 
@@ -240,7 +235,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<bool> SharePassword => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuSharePassword,
-            _share,
+            () => _model.SharePassword,
+            e  => _model.SharePassword = e,
             GetDispatcher(false)
         ));
 
@@ -255,8 +251,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<bool> AllowPrint => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuAllowPrint,
-            () => _model.Permission.Print.IsAllowed(),
-            e  => _model.Permission.Print = GetValue(e),
+            () => _model.Value.Permission.Print.IsAllowed(),
+            e  => _model.Value.Permission.Print = _model.GetPermission(e),
             GetDispatcher(false)
         ));
 
@@ -272,8 +268,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<bool> AllowCopy => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuAllowCopy,
-            () => _model.Permission.CopyContents.IsAllowed(),
-            e  => _model.Permission.CopyContents = GetValue(e),
+            () => _model.Value.Permission.CopyContents.IsAllowed(),
+            e  => _model.Value.Permission.CopyContents = _model.GetPermission(e),
             GetDispatcher(false)
         ));
 
@@ -289,8 +285,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<bool> AllowModify => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuAllowAssemble,
-            () => _model.Permission.ModifyContents.IsAllowed(),
-            e  => _model.Permission.ModifyContents = GetValue(e),
+            () => _model.Value.Permission.ModifyContents.IsAllowed(),
+            e  => _model.Value.Permission.ModifyContents = _model.GetPermission(e),
             GetDispatcher(false)
         ));
 
@@ -306,8 +302,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<bool> AllowAccessibility => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuAllowAccessibility,
-            () => _model.Permission.Accessibility.IsAllowed(),
-            e  => _model.Permission.Accessibility = GetValue(e),
+            () => _model.Value.Permission.Accessibility.IsAllowed(),
+            e  => _model.Value.Permission.Accessibility = _model.GetPermission(e),
             GetDispatcher(false)
         ));
 
@@ -322,8 +318,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<bool> AllowForm => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuAllowForm,
-            () => _model.Permission.InputForm.IsAllowed(),
-            e  => _model.Permission.InputForm = GetValue(e),
+            () => _model.Value.Permission.InputForm.IsAllowed(),
+            e  => _model.Value.Permission.InputForm = _model.GetPermission(e),
             GetDispatcher(false)
         ));
 
@@ -339,8 +335,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement<bool> AllowAnnotation => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuAllowAnnotation,
-            () => _model.Permission.ModifyAnnotations.IsAllowed(),
-            e  => _model.Permission.ModifyAnnotations = GetValue(e),
+            () => _model.Value.Permission.ModifyAnnotations.IsAllowed(),
+            e  => _model.Value.Permission.ModifyAnnotations = _model.GetPermission(e),
             GetDispatcher(false)
         ));
 
@@ -348,68 +344,8 @@ namespace Cube.Pdf.Editor
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Execute
-        ///
-        /// <summary>
-        /// Executes the specified callback method.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Execute(Action<Encryption> callback, Encryption src)
-        {
-            Send<CloseMessage>();
-            if (SharePassword.Value) src.UserPassword = src.OwnerPassword;
-            callback(src);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CanExecute
-        ///
-        /// <summary>
-        /// Gets the value indicating whether the OK button can be clicked.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool CanExecute()
-        {
-            if (!Enabled.Value) return true;
-
-            var owner = OwnerPassword.Value;
-            var oc    = OwnerConfirm.Value;
-            if (!owner.HasValue() || !owner.FuzzyEquals(oc)) return false;
-
-            if (!OpenPassword.Value) return true;
-
-            var share = SharePassword.Value;
-            var user  = UserPassword.Value;
-            var uc    = UserConfirm.Value;
-            if (!share && (!user.HasValue() || !user.FuzzyEquals(uc))) return false;
-
-            return true;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetValue
-        ///
-        /// <summary>
-        /// Gets a value of the PermissionValue enum from the specified
-        /// boolean value.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private PermissionValue GetValue(bool src) => src ? PermissionValue.Allow : PermissionValue.Deny;
-
-        #endregion
-
         #region Fields
-        private readonly Encryption _model;
-        private readonly Accessor<bool> _share;
+        private readonly EncryptionFacade _model;
         #endregion
     }
 }
