@@ -35,7 +35,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsFolder : SettingsFolder<Settings>
+    public class SettingsFolder : SettingsFolder<SettingsValue>
     {
         #region Constructors
 
@@ -123,7 +123,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnLoaded(ValueChangedEventArgs<Settings> e)
+        protected override void OnLoaded(ValueChangedEventArgs<SettingsValue> e)
         {
             try { Locale.Set(e.NewValue.Language); }
             finally { base.OnLoaded(e); }

@@ -28,23 +28,23 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// CommonViewModel
+    /// ViewModelBase
     ///
     /// <summary>
     /// Represents the base class of ViewModels.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class CommonViewModel : PresentableBase
+    public abstract class ViewModelBase : PresentableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CommonViewModel
+        /// ViewModelBase
         ///
         /// <summary>
-        /// Initializes a new instance of the CommonViewModel class with
+        /// Initializes a new instance of the ViewModelBase class with
         /// the specified argumetns.
         /// </summary>
         ///
@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected CommonViewModel(Aggregator aggregator, SynchronizationContext context) :
+        protected ViewModelBase(Aggregator aggregator, SynchronizationContext context) :
             base(aggregator, context) { }
 
         #endregion

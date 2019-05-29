@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class RibbonViewModel : CommonViewModel
+    public sealed class RibbonViewModel : ViewModelBase
     {
         #region Constructors
 

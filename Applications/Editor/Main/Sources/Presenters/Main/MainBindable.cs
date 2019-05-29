@@ -94,7 +94,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings Settings => _settings.Value;
+        public SettingsValue Settings => _settings.Value;
 
         /* ----------------------------------------------------------------- */
         ///

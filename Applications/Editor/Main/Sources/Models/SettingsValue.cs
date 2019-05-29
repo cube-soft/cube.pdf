@@ -23,7 +23,7 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Settings
+    /// SettingsValue
     ///
     /// <summary>
     /// ユーザ設定を保持するためのクラスです。
@@ -31,20 +31,20 @@ namespace Cube.Pdf.Editor
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class Settings : ObservableBase
+    public class SettingsValue : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// SettingsValue
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings() { Reset(); }
+        public SettingsValue() { Reset(); }
 
         #endregion
 
