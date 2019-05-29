@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PasswordViewModel : DialogViewModel
+    public sealed class PasswordViewModel : DialogViewModel
     {
         #region Constructors
 

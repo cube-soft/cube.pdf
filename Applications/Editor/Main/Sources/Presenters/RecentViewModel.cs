@@ -34,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RecentViewModel : PresentableBase
+    public class RecentViewModel : ViewModelBase
     {
         #region Constructors
 
@@ -56,10 +56,6 @@ namespace Cube.Pdf.Editor
             SynchronizationContext context) : base(Aggregator, context)
         {
             Items = items;
-            Menu  = new BindableElement(() => Properties.Resources.MenuRecent, GetDispatcher(false))
-            {
-                Command = new RelayCommand(() => Track(() => Process.Start(Items.Directory)))
-            };
         }
 
         #endregion
@@ -86,7 +82,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Menu { get; }
+        public BindableElement Menu => Get(() => new BindableElement(
+            () => Properties.Resources.MenuRecent, GetDispatcher(false)
+        ) { Command = new RelayCommand(() => Track(() => Process.Start(Items.Directory))) });
 
         #endregion
 
@@ -102,27 +100,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand Open { get; set; }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the MainViewModel
-        /// and optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
 
         #endregion
     }
