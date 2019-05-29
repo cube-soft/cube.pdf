@@ -152,7 +152,9 @@ namespace Cube.Pdf.Converter
             }
         }
 
-        #region IDisposable
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -171,12 +173,6 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) => Settings.IO.TryDelete(Temp);
-
-        #endregion
-
-        #endregion
-
-        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
