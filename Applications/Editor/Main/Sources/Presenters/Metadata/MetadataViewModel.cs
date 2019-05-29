@@ -18,10 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Xui;
-using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -54,110 +52,41 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataViewModel(Action<Metadata> callback, Metadata src, Information file, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleMetadata, new Aggregator(), context)
+        public MetadataViewModel(Action<Metadata> callback,
+            Metadata src,
+            Information file,
+            SynchronizationContext context
+        ) : base(() => Properties.Resources.TitleMetadata, new Aggregator(), context)
         {
-            // Normalize
-            src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
-                          Versions.First();
-            if (src.Options == Pdf.ViewerOptions.None) src.Options = Pdf.ViewerOptions.OneColumn;
-
-            // Create
-            Filename = new BindableElement<string>(
-                () => Properties.Resources.MenuFilename,
-                () => file.Name,
-                GetDispatcher(false)
-            );
-
-            Producer = new BindableElement<string>(
-                () => Properties.Resources.MenuProducer,
-                () => src.Producer,
-                GetDispatcher(false)
-            );
-
-            Length = new BindableElement<long>(
-                () => Properties.Resources.MenuFilesize,
-                () => file.Length,
-                GetDispatcher(false)
-            );
-
-            CreationTime = new BindableElement<DateTime>(
-                () => Properties.Resources.MenuCreationTime,
-                () => file.CreationTime,
-                GetDispatcher(false)
-            );
-
-            LastWriteTime = new BindableElement<DateTime>(
-                () => Properties.Resources.MenuLastWriteTime,
-                () => file.LastWriteTime,
-                GetDispatcher(false)
-            );
-
-            Document = new BindableElement<string>(
-                () => Properties.Resources.MenuTitle,
-                () => src.Title,
-                e  => src.Title = e,
-                GetDispatcher(false)
-            );
-
-            Author = new BindableElement<string>(
-                () => Properties.Resources.MenuAuthor,
-                () => src.Author,
-                e  => src.Author = e,
-                GetDispatcher(false)
-            );
-
-            Subject = new BindableElement<string>(
-                () => Properties.Resources.MenuSubject,
-                () => src.Subject,
-                e  => src.Subject = e,
-                GetDispatcher(false)
-            );
-
-            Keywords = new BindableElement<string>(
-                () => Properties.Resources.MenuKeywords,
-                () => src.Keywords,
-                e  => src.Keywords = e,
-                GetDispatcher(false)
-            );
-
-            Creator = new BindableElement<string>(
-                () => Properties.Resources.MenuCreator,
-                () => src.Creator,
-                e  => src.Creator = e,
-                GetDispatcher(false)
-            );
-
-            Version = new BindableElement<PdfVersion>(
-                () => Properties.Resources.MenuVersion,
-                () => src.Version,
-                e  => src.Version = e,
-                GetDispatcher(false)
-            );
-
-            Options = new BindableElement<ViewerOptions>(
-                () => Properties.Resources.MenuLayout,
-                () => src.Options,
-                e  => src.Options = e,
-                GetDispatcher(false)
-            );
-
-            Summary = new BindableElement(
-                () => Properties.Resources.MenuSummary,
-                GetDispatcher(false)
-            );
-
-            Details = new BindableElement(
-                () => Properties.Resources.MenuDetails,
-                GetDispatcher(false)
-            );
-
-            OK.Command = new RelayCommand(() => { Send<CloseMessage>(); callback(src); });
+            _model = new MetadataFacade(src, file);
+            OK.Command = new BindableCommand(() => { Send<CloseMessage>(); callback(src); }, () => true);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Versions
+        ///
+        /// <summary>
+        /// Gets the collection of PDF version numbers.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<PdfVersion> Versions => MetadataFacade.Versions;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ViewerPreferences
+        ///
+        /// <summary>
+        /// Gets the collection of viewer preferences.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<ViewerOptions> ViewerOptions => MetadataFacade.ViewerOptions;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -168,7 +97,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Filename { get; }
+        public BindableElement<string> Filename => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuFilename,
+            () => _model.File.Name,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -180,7 +113,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Document { get; }
+        public BindableElement<string> Document => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuTitle,
+            () => _model.Value.Title,
+            e  => _model.Value.Title = e,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -192,7 +130,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Author { get; }
+        public BindableElement<string> Author => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuAuthor,
+            () => _model.Value.Author,
+            e  => _model.Value.Author = e,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -204,7 +147,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Subject { get; }
+        public BindableElement<string> Subject => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuSubject,
+            () => _model.Value.Subject,
+            e  => _model.Value.Subject = e,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -216,31 +164,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Keywords { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Version
-        ///
-        /// <summary>
-        /// Gets the menu that represents the PDF version of the specified
-        /// document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<PdfVersion> Version { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewerOptions
-        ///
-        /// <summary>
-        /// Gets the menu that represents the viewer options of the
-        /// PDF document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableElement<ViewerOptions> Options { get; }
+        public BindableElement<string> Keywords => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuKeywords,
+            () => _model.Value.Keywords,
+            e  => _model.Value.Keywords = e,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -252,7 +181,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Creator { get; }
+        public BindableElement<string> Creator => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuCreator,
+            () => _model.Value.Creator,
+            e  => _model.Value.Creator = e,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -264,7 +198,45 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Producer { get; }
+        public BindableElement<string> Producer => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuProducer,
+            () => _model.Value.Producer,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version
+        ///
+        /// <summary>
+        /// Gets the menu that represents the PDF version of the specified
+        /// document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<PdfVersion> Version => Get(() => new BindableElement<PdfVersion>(
+            () => Properties.Resources.MenuVersion,
+            () => _model.Value.Version,
+            e  => _model.Value.Version = e,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Options
+        ///
+        /// <summary>
+        /// Gets the menu that represents the viewer options of the
+        /// PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindableElement<ViewerOptions> Options => Get(() => new BindableElement<ViewerOptions>(
+            () => Properties.Resources.MenuLayout,
+            () => _model.Value.Options,
+            e  => _model.Value.Options = e,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -275,7 +247,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<long> Length { get; }
+        public BindableElement<long> Length => Get(() => new BindableElement<long>(
+            () => Properties.Resources.MenuFilesize,
+            () => _model.File.Length,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -287,7 +263,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<DateTime> CreationTime { get; }
+        public BindableElement<DateTime> CreationTime => Get(() => new BindableElement<DateTime>(
+            () => Properties.Resources.MenuCreationTime,
+            () => _model.File.CreationTime,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -299,7 +279,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<DateTime> LastWriteTime { get; }
+        public BindableElement<DateTime> LastWriteTime => Get(() => new BindableElement<DateTime>(
+            () => Properties.Resources.MenuLastWriteTime,
+            () => _model.File.LastWriteTime,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -310,7 +294,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Summary { get; }
+        public BindableElement Summary => Get(() => new BindableElement(
+            () => Properties.Resources.MenuSummary,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -321,46 +308,15 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Details { get; }
+        public BindableElement Details => Get(() => new BindableElement(
+            () => Properties.Resources.MenuDetails,
+            GetDispatcher(false)
+        ));
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Versions
-        ///
-        /// <summary>
-        /// Gets the collection of PDF version numbers.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<PdfVersion> Versions { get; } = new[]
-        {
-            new PdfVersion(1, 7),
-            new PdfVersion(1, 6),
-            new PdfVersion(1, 5),
-            new PdfVersion(1, 4),
-            new PdfVersion(1, 3),
-            new PdfVersion(1, 2),
-        };
+        #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ViewerPreferences
-        ///
-        /// <summary>
-        /// Gets the collection of viewer preferences.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<ViewerOptions> ViewerOptions { get; } = new[]
-        {
-            Pdf.ViewerOptions.SinglePage,
-            Pdf.ViewerOptions.OneColumn,
-            Pdf.ViewerOptions.TwoColumnLeft,
-            Pdf.ViewerOptions.TwoColumnRight,
-            Pdf.ViewerOptions.TwoPageLeft,
-            Pdf.ViewerOptions.TwoPageRight,
-        };
-
+        #region Fields
+        private readonly MetadataFacade _model;
         #endregion
     }
 }
