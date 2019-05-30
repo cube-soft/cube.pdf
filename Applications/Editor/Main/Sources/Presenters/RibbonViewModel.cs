@@ -592,7 +592,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void WhenPropertyChanged(object s, EventArgs e)
         {
-            if (Disposed) return;
             var src = new[] { Insert, Extract, Remove };
             foreach (var re in src) re.Refresh(nameof(RibbonElement.Enabled));
         }
