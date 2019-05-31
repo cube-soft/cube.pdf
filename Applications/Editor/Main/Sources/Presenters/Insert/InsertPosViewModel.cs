@@ -69,7 +69,7 @@ namespace Cube.Pdf.Editor
         public BindableElement Main => Get(() => new BindableElement(
             () => Properties.Resources.MenuInsertPosition,
             GetDispatcher(false)
-        ) { Command = new BindableCommand<int>(e => _model.Index.Value = e, e => true) });
+        ) { Command = new BindableCommand<int>(e => _model.Index.Value = e) });
 
         /* ----------------------------------------------------------------- */
         ///

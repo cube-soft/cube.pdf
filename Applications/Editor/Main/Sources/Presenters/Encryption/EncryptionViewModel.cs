@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Pdf;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;
@@ -68,15 +67,14 @@ namespace Cube.Pdf.Editor
                     _model.Normalize();
                     callback(_model.Value);
                 },
-                () => _model.IsAcceptable(),
-                Enabled,
-                OwnerPassword,
-                OwnerConfirm,
-                OpenPassword,
-                SharePassword,
-                UserPassword,
-                UserConfirm
-            );
+                () => _model.IsAcceptable())
+            .Observe(Enabled)
+            .Observe(OwnerPassword)
+            .Observe(OwnerConfirm)
+            .Observe(OpenPassword)
+            .Observe(SharePassword)
+            .Observe(UserPassword)
+            .Observe(UserConfirm);
         }
 
         #endregion

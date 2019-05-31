@@ -68,9 +68,8 @@ namespace Cube.Pdf.Editor
                     Send<CloseMessage>();
                     callback?.Invoke(Data.Index.Value, Data.Files);
                 },
-                () => Data.Files.Count > 0,
-                Data.Files
-            );
+                () => Data.Files.Count > 0
+            ).Observe(Data.Files);
         }
 
         #endregion
@@ -119,7 +118,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand DragAdd => Get(() => new BindableCommand<string[]>(e => _model.Add(e), e => true));
+        public ICommand DragAdd => Get(() => new BindableCommand<string[]>(e => _model.Add(e)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -312,7 +311,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand Any(Action action) => new BindableCommand(action, () => true);
+        private ICommand Any(Action action) => new BindableCommand(action);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -325,9 +324,8 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsItem(Action action) => new BindableCommand(action,
-            () => Data.Selection.Count > 0,
-            Data.Selection
-        );
+            () => Data.Selection.Count > 0
+        ).Observe(Data.Selection);
 
         #endregion
 

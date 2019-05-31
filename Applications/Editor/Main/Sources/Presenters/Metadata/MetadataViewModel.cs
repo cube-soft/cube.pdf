@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editor
         ) : base(() => Properties.Resources.TitleMetadata, new Aggregator(), context)
         {
             _model = new MetadataFacade(src, file);
-            OK.Command = new BindableCommand(() => { Send<CloseMessage>(); callback(src); }, () => true);
+            OK.Command = new BindableCommand(() => { Send<CloseMessage>(); callback(src); });
         }
 
         #endregion

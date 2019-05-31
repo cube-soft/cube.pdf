@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
-using GalaSoft.MvvmLight.Command;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Input;
@@ -84,7 +83,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement Menu => Get(() => new BindableElement(
             () => Properties.Resources.MenuRecent, GetDispatcher(false)
-        ) { Command = new RelayCommand(() => Track(() => Process.Start(Items.Directory))) });
+        ) { Command = new BindableCommand(() => Track(() => Process.Start(Items.Directory))) });
 
         #endregion
 

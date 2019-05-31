@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
-using GalaSoft.MvvmLight.Command;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -96,7 +95,7 @@ namespace Cube.Pdf.Editor
         public BindableElement Cancel => Get(() => new BindableElement(
             () => Properties.Resources.MenuCancel, GetDispatcher(false))
         {
-            Command = new RelayCommand(() => Send<CloseMessage>())
+            Command = new BindableCommand(() => Send<CloseMessage>())
         });
 
         #endregion

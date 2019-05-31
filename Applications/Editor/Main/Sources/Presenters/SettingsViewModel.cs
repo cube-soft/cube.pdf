@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editor
             {
                 Send<UpdateSourcesMessage>();
                 Send<CloseMessage>();
-            }, () => true);
+            });
         }
 
         #endregion
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Editor
             () => Assembly.GetExecutingAssembly().GetCopyright(),
             () => _model.Value.Uri,
             GetDispatcher(false)
-        ) { Command = new BindableCommand(() => Post(Link.Value), () => true) });
+        ) { Command = new BindableCommand(() => Post(Link.Value)) });
 
         /* ----------------------------------------------------------------- */
         ///

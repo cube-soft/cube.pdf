@@ -65,9 +65,8 @@ namespace Cube.Pdf.Editor
                     callback(new Range(Range.Value, _count).Select(i => i - 1));
                     Send<CloseMessage>();
                 }),
-                () => Range.Value.HasValue(),
-                Range
-            );
+                () => Range.Value.HasValue()
+            ).Observe(Range);
         }
 
         #endregion

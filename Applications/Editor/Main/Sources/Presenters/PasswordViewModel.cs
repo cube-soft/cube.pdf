@@ -64,9 +64,8 @@ namespace Cube.Pdf.Editor
 
             OK.Command = new BindableCommand(
                 () => { src.Cancel = false; Send<CloseMessage>(); },
-                () => Password.Value.HasValue(),
-                Password
-            );
+                () => Password.Value.HasValue()
+            ).Observe(Password);
 
             src.Cancel = true;
         }
