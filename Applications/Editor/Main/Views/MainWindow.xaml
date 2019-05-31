@@ -101,6 +101,7 @@
         <xb:UriBehavior />
         <xb:CloseBehavior />
         <xb:ClosingBehavior Command="{Binding Ribbon.Close.Command}" />
+        <xb:DisposeBehavior />
         <my:PasswordWindowBehavior />
         <my:PreviewWindowBehavior />
         <my:InsertWindowBehavior />
@@ -110,12 +111,6 @@
         <my:SettingsWindowBehavior />
         <my:MouseOpenBehavior Command="{Binding Open}" />
     </i:Interaction.Behaviors>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closed">
-            <xb:DisposeAction />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
     <!-- **********************************************************************
       Main
