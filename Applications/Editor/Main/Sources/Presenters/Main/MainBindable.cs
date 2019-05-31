@@ -32,7 +32,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainBindable : ObservableBase
+    public class MainBindable : DisposableObservable
     {
         #region Constructors
 
@@ -313,6 +313,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Invoke(Action action)
         {
+            if (Disposed) return;
+
             try
             {
                 _busy = true;
@@ -366,6 +368,23 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
 
         /* ----------------------------------------------------------------- */
         ///

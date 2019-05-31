@@ -73,8 +73,8 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             var fi = IO.Get(GetSource(filename));
             Source = Get(MakeArgs(fi.BaseName, modify));
             IO.Copy(fi.FullName, Source, true);
-            vm.Ribbon.Open.Command.Execute();
-            Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Open)");
+            vm.Test(vm.Ribbon.Open);
+            Assert.That(vm.Data.Count.Value, Is.EqualTo(n));
 
             if (modify)
             {
@@ -83,7 +83,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             }
 
             vm.Test(vm.Ribbon.Close);
-            Assert.That(Wait.For(() => !vm.Data.IsOpen()), "Timeout (Close)");
+            Assert.That(vm.Data.IsOpen(), Is.False);
         });
 
         /* ----------------------------------------------------------------- */
@@ -107,7 +107,7 @@ namespace Cube.Pdf.Editor.Tests.ViewModels
             Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
 
             vm.Test(vm.Ribbon.Extract);
-            Assert.That(Wait.For(() => IO.Exists(Destination)), "Timeout (Extract)");
+            Assert.That(IO.Exists(Destination), Is.True);
         });
 
         /* ----------------------------------------------------------------- */
