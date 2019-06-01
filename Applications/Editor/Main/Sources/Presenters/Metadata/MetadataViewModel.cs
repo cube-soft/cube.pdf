@@ -97,7 +97,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Filename => Get(() => new BindableElement<string>(
+        public IElement<string> Filename => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuFilename,
             () => _model.File.Name,
             GetDispatcher(false)
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Document => Get(() => new BindableElement<string>(
+        public IElement<string> Document => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuTitle,
             () => _model.Value.Title,
             e  => _model.Value.Title = e,
@@ -130,7 +130,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Author => Get(() => new BindableElement<string>(
+        public IElement<string> Author => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuAuthor,
             () => _model.Value.Author,
             e  => _model.Value.Author = e,
@@ -147,7 +147,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Subject => Get(() => new BindableElement<string>(
+        public IElement<string> Subject => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuSubject,
             () => _model.Value.Subject,
             e  => _model.Value.Subject = e,
@@ -164,7 +164,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Keywords => Get(() => new BindableElement<string>(
+        public IElement<string> Keywords => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuKeywords,
             () => _model.Value.Keywords,
             e  => _model.Value.Keywords = e,
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Creator => Get(() => new BindableElement<string>(
+        public IElement<string> Creator => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuCreator,
             () => _model.Value.Creator,
             e  => _model.Value.Creator = e,
@@ -198,7 +198,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> Producer => Get(() => new BindableElement<string>(
+        public IElement<string> Producer => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuProducer,
             () => _model.Value.Producer,
             GetDispatcher(false)
@@ -214,7 +214,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<PdfVersion> Version => Get(() => new BindableElement<PdfVersion>(
+        public IElement<PdfVersion> Version => Get(() => new BindableElement<PdfVersion>(
             () => Properties.Resources.MenuVersion,
             () => _model.Value.Version,
             e  => _model.Value.Version = e,
@@ -231,7 +231,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<ViewerOptions> Options => Get(() => new BindableElement<ViewerOptions>(
+        public IElement<ViewerOptions> Options => Get(() => new BindableElement<ViewerOptions>(
             () => Properties.Resources.MenuLayout,
             () => _model.Value.Options,
             e  => _model.Value.Options = e,
@@ -247,7 +247,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<long> Length => Get(() => new BindableElement<long>(
+        public IElement<long> Length => Get(() => new BindableElement<long>(
             () => Properties.Resources.MenuFilesize,
             () => _model.File.Length,
             GetDispatcher(false)
@@ -263,7 +263,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<DateTime> CreationTime => Get(() => new BindableElement<DateTime>(
+        public IElement<DateTime> CreationTime => Get(() => new BindableElement<DateTime>(
             () => Properties.Resources.MenuCreationTime,
             () => _model.File.CreationTime,
             GetDispatcher(false)
@@ -279,7 +279,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<DateTime> LastWriteTime => Get(() => new BindableElement<DateTime>(
+        public IElement<DateTime> LastWriteTime => Get(() => new BindableElement<DateTime>(
             () => Properties.Resources.MenuLastWriteTime,
             () => _model.File.LastWriteTime,
             GetDispatcher(false)
@@ -294,7 +294,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Summary => Get(() => new BindableElement(
+        public IElement Summary => Get(() => new BindableElement(
             () => Properties.Resources.MenuSummary,
             GetDispatcher(false)
         ));
@@ -308,7 +308,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Details => Get(() => new BindableElement(
+        public IElement Details => Get(() => new BindableElement(
             () => Properties.Resources.MenuDetails,
             GetDispatcher(false)
         ));

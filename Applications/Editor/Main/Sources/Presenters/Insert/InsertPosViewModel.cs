@@ -66,7 +66,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Main => Get(() => new BindableElement(
+        public IElement Main => Get(() => new BindableElement(
             () => Properties.Resources.MenuInsertPosition,
             GetDispatcher(false)
         ) { Command = new DelegateCommand<int>(e => _model.Index.Value = e) });
@@ -80,7 +80,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement First => Get(() => new BindableElement(
+        public IElement First => Get(() => new BindableElement(
             () => Properties.Resources.MenuPositionFirst,
             GetDispatcher(false)
         ));
@@ -94,7 +94,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Last => Get(() => new BindableElement(
+        public IElement Last => Get(() => new BindableElement(
             () => Properties.Resources.MenuPositionLast,
             GetDispatcher(false)
         ));
@@ -109,7 +109,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<bool> Selected => Get(() => new BindableElement<bool>(
+        public IElement<bool> Selected => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuPositionSelected,
             () => _model.SelectedIndex >= 0,
             GetDispatcher(false)
@@ -125,7 +125,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<int> UserSpecified => Get(() => new BindableElement<int>(
+        public IElement<int> UserSpecified => Get(() => new BindableElement<int>(
             () => Properties.Resources.MenuPositionSpecified,
             () => _model.UserSpecifiedIndex.Value + 1,
             e  => _model.UserSpecifiedIndex.Value = e - 1,
@@ -142,7 +142,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement UserSpecifiedSuffix => Get(() => new BindableElement(
+        public IElement UserSpecifiedSuffix => Get(() => new BindableElement(
             () => string.Format($"/ {Properties.Resources.MessagePage}", _model.Count),
             GetDispatcher(false)
         ));

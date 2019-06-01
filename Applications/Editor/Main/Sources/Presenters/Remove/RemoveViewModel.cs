@@ -94,7 +94,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> RangeCaption => Get(() => new BindableElement<string>(
+        public IElement<string> RangeCaption => Get(() => new BindableElement<string>(
             () => Properties.Resources.MessageRemoveRange,
             () => Properties.Resources.MenuRemoveRange,
             GetDispatcher(false)
@@ -109,7 +109,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<string> PageCaption => Get(() => new BindableElement<string>(
+        public IElement<string> PageCaption => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuPageCount,
             () => string.Format(Properties.Resources.MessagePage, _count),
             GetDispatcher(false)

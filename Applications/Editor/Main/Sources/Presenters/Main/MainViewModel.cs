@@ -42,7 +42,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainViewModel : PresentableBase
+    public class MainViewModel : ViewModelBase
     {
         #region Constructors
 
@@ -146,7 +146,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand Open { get; private set; }
+        public ICommand Open => Get(() => new DelegateCommand<string[]>(
+            e => Track(() => Model.Open(e)),
+            e => !Data.Busy.Value && Model.GetFirst(e).HasValue()
+        ).Associate(Data.Busy));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -157,7 +160,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand InsertOrMove { get; private set; }
+        public ICommand InsertOrMove => Get(() => new DelegateCommand<DragDropObject>(
+            e => Track(() => Model.InsertOrMove(e)),
+            e => !Data.Busy.Value && Data.IsOpen() &&
+                 (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0)
+        ).Associate(Data.Busy).Associate(Data.Source));
 
         #endregion
 
@@ -198,8 +205,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SetCommands()
         {
-            Open                         = IsDrop();
-            InsertOrMove                 = IsDragMove();
             Recent.Open                  = IsLink();
             Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
             Ribbon.Close.Command         = Close();
@@ -349,37 +354,6 @@ namespace Cube.Pdf.Editor
         private ICommand IsLink() => new DelegateCommand<object>(
             e => Track(() => Model.OpenLink(e as Information)),
             e => !Data.Busy.Value && e is Information
-        ).Associate(Data.Busy);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsDragMove
-        ///
-        /// <summary>
-        /// Creates a Drag&amp;Drop command to move items.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand IsDragMove() => new DelegateCommand<DragDropObject>(
-            e => Track(() => Model.InsertOrMove(e)),
-            e => !Data.Busy.Value && Data.IsOpen() &&
-                 (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0)
-        )
-        .Associate(Data.Busy)
-        .Associate(Data.Source);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsDrop
-        ///
-        /// <summary>
-        /// Creates a command that can execute when an item is dropped.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand IsDrop() => new DelegateCommand<string[]>(
-            e => Track(() => Model.Open(e)),
-            e => !Data.Busy.Value && Model.GetFirst(e).HasValue()
         ).Associate(Data.Busy);
 
         #endregion

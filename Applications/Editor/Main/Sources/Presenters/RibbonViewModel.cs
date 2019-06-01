@@ -570,7 +570,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement<bool> FrameOnly => Get(() => new BindableElement<bool>(
+        public IElement<bool> FrameOnly => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuFrameOnly,
             () => _model.Settings.FrameOnly,
             e  => _model.Settings.FrameOnly = e,

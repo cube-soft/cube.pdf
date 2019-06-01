@@ -143,7 +143,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Preview => Get(() => new BindableElement(
+        public IElement Preview => Get(() => new BindableElement(
             () => Properties.Resources.MenuPreview,
             GetDispatcher(false)
         ) { Command = IsItem(() => Track(() => _model.Preview())) });
@@ -157,7 +157,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Add => Get(() => new BindableElement(
+        public IElement Add => Get(() => new BindableElement(
             () => Properties.Resources.MenuAdd,
             GetDispatcher(false)
         ) { Command = Any(() => SendOpen()) });
@@ -171,7 +171,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Remove => Get(() => new BindableElement(
+        public IElement Remove => Get(() => new BindableElement(
             () => Properties.Resources.MenuRemove,
             GetDispatcher(false)
         ) { Command = IsItem(() => TrackSync(() => _model.Remove())) });
@@ -185,7 +185,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Clear => Get(() => new BindableElement(
+        public IElement Clear => Get(() => new BindableElement(
             () => Properties.Resources.MenuClear,
             GetDispatcher(false)
         ) { Command = Any(() => TrackSync(() => _model.Clear())) });
@@ -199,7 +199,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Up => Get(() => new BindableElement(
+        public IElement Up => Get(() => new BindableElement(
             () => Properties.Resources.MenuUp,
             GetDispatcher(false)
         ) { Command = IsItem(() => TrackSync(() => _model.Move(-1))) });
@@ -213,7 +213,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Down => Get(() => new BindableElement(
+        public IElement Down => Get(() => new BindableElement(
             () => Properties.Resources.MenuDown,
             GetDispatcher(false)
         ) { Command = IsItem(() => TrackSync(() => _model.Move(1))) });
@@ -227,7 +227,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement FileName => Get(() => new BindableElement(
+        public IElement FileName => Get(() => new BindableElement(
             () => Properties.Resources.MenuFilename,
             GetDispatcher(false)
         ));
@@ -241,7 +241,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement FileType => Get(() => new BindableElement(
+        public IElement FileType => Get(() => new BindableElement(
             () => Properties.Resources.MenuFiletype,
             GetDispatcher(false)
         ));
@@ -255,7 +255,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement FileLength => Get(() => new BindableElement(
+        public IElement FileLength => Get(() => new BindableElement(
             () => Properties.Resources.MenuFilesize,
             GetDispatcher(false)
         ));
@@ -269,7 +269,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement LastWriteTime => Get(() => new BindableElement(
+        public IElement LastWriteTime => Get(() => new BindableElement(
             () => Properties.Resources.MenuLastWriteTime,
             GetDispatcher(false)
         ));

@@ -66,8 +66,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Title => Get(() => new BindableElement(
-            _getTitle, GetDispatcher(false)
+        public IElement Title => Get(() => new BindableElement(
+            _getTitle,
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -80,7 +81,8 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public BindableElement OK => Get(() => new BindableElement(
-            () => Properties.Resources.MenuOk, GetDispatcher(false)
+            () => Properties.Resources.MenuOk,
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -92,11 +94,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement Cancel => Get(() => new BindableElement(
-            () => Properties.Resources.MenuCancel, GetDispatcher(false))
-        {
-            Command = new DelegateCommand(() => Send<CloseMessage>())
-        });
+        public IElement Cancel => Get(() => new BindableElement(
+            () => Properties.Resources.MenuCancel,
+            GetDispatcher(false)
+        ) { Command = new DelegateCommand(() => Send<CloseMessage>()) });
 
         #endregion
 
