@@ -55,7 +55,7 @@ namespace Cube.Pdf.Editor
             base(() => Properties.Resources.TitleSettings, new Aggregator(), context)
         {
             _model = src;
-            OK.Command = new BindableCommand(() =>
+            OK.Command = new DelegateCommand(() =>
             {
                 Send<UpdateSourcesMessage>();
                 Send<CloseMessage>();
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Editor
             () => Assembly.GetExecutingAssembly().GetCopyright(),
             () => _model.Value.Uri,
             GetDispatcher(false)
-        ) { Command = new BindableCommand(() => Post(Link.Value)) });
+        ) { Command = new DelegateCommand(() => Post(Link.Value)) });
 
         /* ----------------------------------------------------------------- */
         ///

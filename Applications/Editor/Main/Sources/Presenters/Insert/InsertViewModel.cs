@@ -62,7 +62,7 @@ namespace Cube.Pdf.Editor
 
             Position   = new InsertPosViewModel(Data, Aggregator, context);
             DragMove   = new InsertDropTarget((f, t) => _model.Move(f, t));
-            OK.Command = new BindableCommand(
+            OK.Command = new DelegateCommand(
                 () =>
                 {
                     Send<CloseMessage>();
@@ -118,7 +118,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand DragAdd => Get(() => new BindableCommand<string[]>(e => _model.Add(e)));
+        public ICommand DragAdd => Get(() => new DelegateCommand<string[]>(e => _model.Add(e)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -311,7 +311,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand Any(Action action) => new BindableCommand(action);
+        private ICommand Any(Action action) => new DelegateCommand(action);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -323,7 +323,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsItem(Action action) => new BindableCommand(action,
+        private ICommand IsItem(Action action) => new DelegateCommand(action,
             () => Data.Selection.Count > 0
         ).Observe(Data.Selection);
 

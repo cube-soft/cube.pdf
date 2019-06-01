@@ -60,7 +60,7 @@ namespace Cube.Pdf.Editor
             OpenPassword.PropertyChanged  += (s, e) => Operation.Refresh("Value");
             SharePassword.PropertyChanged += (s, e) => Operation.Refresh("Value");
 
-            OK.Command = new BindableCommand(
+            OK.Command = new DelegateCommand(
                 () =>
                 {
                     Send<CloseMessage>();

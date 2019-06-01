@@ -313,8 +313,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Invoke(Action action)
         {
-            if (Disposed) return;
-
             try
             {
                 _busy = true;

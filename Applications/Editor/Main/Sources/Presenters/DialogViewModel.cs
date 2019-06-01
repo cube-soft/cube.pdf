@@ -95,7 +95,7 @@ namespace Cube.Pdf.Editor
         public BindableElement Cancel => Get(() => new BindableElement(
             () => Properties.Resources.MenuCancel, GetDispatcher(false))
         {
-            Command = new BindableCommand(() => Send<CloseMessage>())
+            Command = new DelegateCommand(() => Send<CloseMessage>())
         });
 
         #endregion

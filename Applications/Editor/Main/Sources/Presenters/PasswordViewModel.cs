@@ -62,7 +62,7 @@ namespace Cube.Pdf.Editor
                 GetDispatcher(false)
             );
 
-            OK.Command = new BindableCommand(
+            OK.Command = new DelegateCommand(
                 () => { src.Cancel = false; Send<CloseMessage>(); },
                 () => Password.Value.HasValue()
             ).Observe(Password);

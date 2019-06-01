@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editor
         {
             _count = n;
             Range = new Bindable<string>(string.Empty, GetDispatcher(false));
-            OK.Command = new BindableCommand(
+            OK.Command = new DelegateCommand(
                 () => Track(() =>
                 {
                     callback(new Range(Range.Value, _count).Select(i => i - 1));

@@ -242,7 +242,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand Any(Action action) => new BindableCommand(action,
+        private ICommand Any(Action action) => new DelegateCommand(action,
             () => !Data.Busy.Value
         ).Observe(Data.Busy);
 
@@ -255,7 +255,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand Close() => new BindableCommand<CancelEventArgs>(
+        private ICommand Close() => new DelegateCommand<CancelEventArgs>(
             e => {
                 if (!Data.Modified.Value) TrackSync(() => Model.Close(false));
                 else
@@ -279,7 +279,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsOpen(Action action) => new BindableCommand(action,
+        private ICommand IsOpen(Action action) => new DelegateCommand(action,
             () => !Data.Busy.Value && Data.IsOpen()
         )
         .Observe(Data.Busy)
@@ -295,7 +295,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsItem(Action action) => new BindableCommand(action,
+        private ICommand IsItem(Action action) => new DelegateCommand(action,
             () => !Data.Busy.Value && Data.IsOpen() && Data.Images.Selection.Count > 0
         )
         .Observe(Data.Busy)
@@ -312,7 +312,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsUndo() => new BindableCommand(
+        private ICommand IsUndo() => new DelegateCommand(
             () => TrackSync(() => Model.Undo()),
             () => !Data.Busy.Value && Data.History.Undoable
         )
@@ -329,7 +329,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsRedo() => new BindableCommand(
+        private ICommand IsRedo() => new DelegateCommand(
             () => TrackSync(() => Model.Redo()),
             () => !Data.Busy.Value && Data.History.Redoable
         )
@@ -345,7 +345,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsLink() => new BindableCommand<object>(
+        private ICommand IsLink() => new DelegateCommand<object>(
             e => Track(() => Model.OpenLink(e as Information)),
             e => !Data.Busy.Value && e is Information
         ).Observe(Data.Busy);
@@ -359,7 +359,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsDragMove() => new BindableCommand<DragDropObject>(
+        private ICommand IsDragMove() => new DelegateCommand<DragDropObject>(
             e => Track(() => Model.InsertOrMove(e)),
             e => !Data.Busy.Value && Data.IsOpen() &&
                  (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0)
@@ -376,7 +376,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsDrop() => new BindableCommand<string[]>(
+        private ICommand IsDrop() => new DelegateCommand<string[]>(
             e => Track(() => Model.Open(e)),
             e => !Data.Busy.Value && Model.GetFirst(e).HasValue()
         ).Observe(Data.Busy);
