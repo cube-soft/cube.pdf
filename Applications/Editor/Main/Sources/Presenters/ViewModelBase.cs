@@ -20,6 +20,7 @@ using Cube.Xui;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Input;
@@ -77,7 +78,7 @@ namespace Cube.Pdf.Editor
         protected override void Dispose(bool disposing)
         {
             if (!disposing) return;
-            foreach (var kv in _elements) kv.Value.Dispose();
+            foreach (var obj in _elements.Values.OfType<IDisposable>()) obj.Dispose();
             _elements.Clear();
             // TODO: _commands の開放処理
         }
@@ -130,7 +131,7 @@ namespace Cube.Pdf.Editor
 
         #region Fields
         private readonly ConcurrentDictionary<string, ICommand> _commands = new ConcurrentDictionary<string, ICommand>();
-        private readonly ConcurrentDictionary<string, BindableElement> _elements = new ConcurrentDictionary<string, BindableElement>();
+        private readonly ConcurrentDictionary<string, IElement> _elements = new ConcurrentDictionary<string, IElement>();
         #endregion
     }
 }
