@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Observer;
 using Cube.Mixin.String;
 using Cube.Xui;
 using System.Threading;
@@ -65,7 +66,7 @@ namespace Cube.Pdf.Editor
             OK.Command = new DelegateCommand(
                 () => { src.Cancel = false; Send<CloseMessage>(); },
                 () => Password.Value.HasValue()
-            ).Observe(Password);
+            ).Associate(Password);
 
             src.Cancel = true;
         }

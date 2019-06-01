@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Observer;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,7 @@ namespace Cube.Pdf.Editor
                     callback?.Invoke(Data.Index.Value, Data.Files);
                 },
                 () => Data.Files.Count > 0
-            ).Observe(Data.Files);
+            ).Associate(Data.Files);
         }
 
         #endregion
@@ -325,7 +326,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private ICommand IsItem(Action action) => new DelegateCommand(action,
             () => Data.Selection.Count > 0
-        ).Observe(Data.Selection);
+        ).Associate(Data.Selection);
 
         #endregion
 

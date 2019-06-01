@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Observer;
 using Cube.Mixin.String;
 using Cube.Xui;
 using System;
@@ -66,7 +67,7 @@ namespace Cube.Pdf.Editor
                     Send<CloseMessage>();
                 }),
                 () => Range.Value.HasValue()
-            ).Observe(Range);
+            ).Associate(Range);
         }
 
         #endregion

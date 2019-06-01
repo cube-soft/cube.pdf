@@ -212,16 +212,16 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnLanguageChanged
+        /// React
         ///
         /// <summary>
-        /// Occurs when the current language is changed.
+        /// Occurs when any states are changed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnLanguageChanged(Language e)
+        protected override void React()
         {
-            base.OnLanguageChanged(e);
+            base.React();
             Refresh(nameof(Tooltip));
         }
 

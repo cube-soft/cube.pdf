@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Observer;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;
@@ -68,13 +69,13 @@ namespace Cube.Pdf.Editor
                     callback(_model.Value);
                 },
                 () => _model.IsAcceptable())
-            .Observe(Enabled)
-            .Observe(OwnerPassword)
-            .Observe(OwnerConfirm)
-            .Observe(OpenPassword)
-            .Observe(SharePassword)
-            .Observe(UserPassword)
-            .Observe(UserConfirm);
+            .Associate(Enabled)
+            .Associate(OwnerPassword)
+            .Associate(OwnerConfirm)
+            .Associate(OpenPassword)
+            .Associate(SharePassword)
+            .Associate(UserPassword)
+            .Associate(UserConfirm);
         }
 
         #endregion
