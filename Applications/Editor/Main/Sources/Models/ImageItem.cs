@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageItem : DisposableObservable, IListItem
+    public class ImageItem : ObservableBase, IListItem
     {
         #region Constructors
 

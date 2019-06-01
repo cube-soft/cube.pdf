@@ -33,7 +33,7 @@ namespace Cube.Pdf.Converter
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class SettingsValue : ObservableBase
+    public class SettingsValue : SerializableBase
     {
         #region Constructors
 

@@ -30,7 +30,7 @@ namespace Cube.Pdf.Pinstaller
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class DeviceConfig : ObservableBase
+    public class DeviceConfig : SerializableBase
     {
         #region Constructors
 

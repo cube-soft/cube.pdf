@@ -31,7 +31,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public class Permission : ObservableBase
+    public class Permission : SerializableBase
     {
         #region Constructors
 

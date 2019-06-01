@@ -29,7 +29,7 @@ namespace Cube.Pdf.Pinstaller
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class PrinterConfig : ObservableBase
+    public class PrinterConfig : SerializableBase
     {
         #region Constructors
 

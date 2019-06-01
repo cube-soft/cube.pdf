@@ -29,7 +29,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public class Encryption : ObservableBase
+    public class Encryption : SerializableBase
     {
         #region Properties
 

@@ -32,7 +32,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainBindable : DisposableObservable
+    public class MainBindable : ObservableBase
     {
         #region Constructors
 
@@ -363,10 +363,6 @@ namespace Cube.Pdf.Editor
         public void SetMessage(string format, params object[] args) =>
             Message.Value = string.Format(format, args);
 
-        #endregion
-
-        #region Implementations
-
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
@@ -383,6 +379,10 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
