@@ -22,7 +22,7 @@ using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 
-namespace Cube.Pdf.Editor.Tests.ViewModels
+namespace Cube.Pdf.Editor.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///

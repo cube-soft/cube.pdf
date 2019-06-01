@@ -23,7 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Cube.Pdf.Editor.Tests.ViewModels
+namespace Cube.Pdf.Editor.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///

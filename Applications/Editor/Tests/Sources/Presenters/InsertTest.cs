@@ -27,7 +27,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 
-namespace Cube.Pdf.Editor.Tests.ViewModels
+namespace Cube.Pdf.Editor.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///

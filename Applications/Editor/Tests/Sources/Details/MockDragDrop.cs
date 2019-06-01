@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using GongSolutions.Wpf.DragDrop;
-using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Windows;
@@ -253,78 +252,6 @@ namespace Cube.Pdf.Editor.Tests
         public RelativeInsertPosition InsertPosition => throw new NotImplementedException();
         public DragDropKeyStates KeyStates => throw new NotImplementedException();
         public bool IsSameDragDropContextAsSource => throw new NotImplementedException();
-        #endregion
-    }
-
-    #endregion
-
-    #region MockDragDropTest
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// MockDragDropTest
-    ///
-    /// <summary>
-    /// Tests for MockDragInfo and MockDropInfo classes.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    class MockDragDropTest
-    {
-        #region Tests
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Drag
-        ///
-        /// <summary>
-        /// Confirms unimplemented properties.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Drag()
-        {
-            var obj = new MockDragInfo(new object(), 0);
-            Assert.That(() => obj.DragStartPosition,         Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.PositionInDraggedItem,     Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.MouseButton,               Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.SourceCollection,          Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.SourceItems,               Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.SourceGroup,               Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.VisualSource,              Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.VisualSourceItem,          Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.VisualSourceFlowDirection, Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.DragDropCopyKeyState,      Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.DataObject,                Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.DataObject = null,         Throws.TypeOf<NotImplementedException>());
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Drop
-        ///
-        /// <summary>
-        /// Confirms unimplemented properties.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Drop()
-        {
-            var obj = new MockDropInfo();
-            Assert.That(() => obj.DropPosition,                  Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.TargetCollection,              Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.TargetGroup,                   Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.VisualTarget,                  Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.VisualTargetItem,              Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.VisualTargetOrientation,       Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.VisualTargetFlowDirection,     Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.InsertPosition,                Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.KeyStates,                     Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.IsSameDragDropContextAsSource, Throws.TypeOf<NotImplementedException>());
-        }
-
         #endregion
     }
 
