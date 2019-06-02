@@ -51,8 +51,10 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PasswordViewModel(QueryMessage<string, string> src, IO io, SynchronizationContext context) :
-            base(() => Properties.Resources.TitlePassword, new Aggregator(), context)
+        public PasswordViewModel(QueryMessage<string, string> src,
+            IO io,
+            SynchronizationContext context
+        ) : base(() => Properties.Resources.TitlePassword, new Aggregator(), context)
         {
             var fi = io.Get(src.Query);
 

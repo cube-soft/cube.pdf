@@ -51,7 +51,10 @@ namespace Cube.Pdf.Editor
         protected DialogViewModel(Getter<string> getTitle,
             Aggregator aggregator,
             SynchronizationContext context
-        ) : base(aggregator, context) { _getTitle = getTitle; }
+        ) : base(aggregator, context)
+        {
+            Title = Get(() => new BindableElement(getTitle, GetDispatcher(false)), nameof(Title));
+        }
 
         #endregion
 
@@ -66,10 +69,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement Title => Get(() => new BindableElement(
-            _getTitle,
-            GetDispatcher(false)
-        ));
+        public IElement Title { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -80,7 +80,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableElement OK => Get(() => new BindableElement(
+        public IElement OK => Get(() => new BindableElement(
             () => Properties.Resources.MenuOk,
             GetDispatcher(false)
         ));
@@ -99,10 +99,6 @@ namespace Cube.Pdf.Editor
             GetDispatcher(false)
         ) { Command = new DelegateCommand(() => Send<CloseMessage>()) });
 
-        #endregion
-
-        #region Fields
-        private readonly Getter<string> _getTitle;
         #endregion
     }
 }

@@ -51,11 +51,10 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RecentViewModel(DirectoryMonitor items, Aggregator Aggregator,
-            SynchronizationContext context) : base(Aggregator, context)
-        {
-            Items = items;
-        }
+        public RecentViewModel(DirectoryMonitor items,
+            Aggregator Aggregator,
+            SynchronizationContext context
+        ) : base(Aggregator, context) { Items = items; }
 
         #endregion
 
