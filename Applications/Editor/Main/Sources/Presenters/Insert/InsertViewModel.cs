@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Mixin.Observer;
+using Cube.Mixin.Observing;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;

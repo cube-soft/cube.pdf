@@ -19,7 +19,7 @@
 using Cube.FileSystem;
 using Cube.Mixin.Environment;
 using Cube.Mixin.Generics;
-using Cube.Mixin.Observer;
+using Cube.Mixin.Observing;
 using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using Cube.Xui;
