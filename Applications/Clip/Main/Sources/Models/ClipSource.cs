@@ -33,7 +33,7 @@ namespace Cube.Pdf.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ClipSource : ObservableProperty, IDisposable
+    public class ClipSource : ObservableBase
     {
         #region Properties
 
@@ -269,30 +269,6 @@ namespace Cube.Pdf.Clip
             Clips.RemoveAt(index);
         }
 
-        #region IDisposable
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// リソースを開放します。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// クリーンアップコードを Dispose(bool) に記述します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-
-            // TODO: ファイナライザーがオーバーライドされる場合は、
-            // 次の行のコメントを解除してください。
-            // GC.SuppressFinalize(this);
-        }
-
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
@@ -306,16 +282,7 @@ namespace Cube.Pdf.Clip
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing) Close();
-                _disposed = true;
-            }
-        }
-
-        #endregion
+        protected override void Dispose(bool disposing) => Close();
 
         #endregion
 
@@ -364,7 +331,6 @@ namespace Cube.Pdf.Clip
         #endregion
 
         #region Fields
-        private bool _disposed = false;
         private IDocumentReader _source = null;
         #endregion
     }

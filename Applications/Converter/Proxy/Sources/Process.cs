@@ -15,8 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -369,7 +368,6 @@ namespace Cube.Pdf.Converter.Proxy
         {
             var handle = IntPtr.Zero;
             var buffer = IntPtr.Zero;
-            var result = 0u;
 
             try
             {
@@ -378,7 +376,7 @@ namespace Cube.Pdf.Converter.Proxy
                            (int)id,
                            WTS_INFO_CLASS.WTSUserName,
                            out buffer,
-                           out result
+                           out _
                        ) ? Marshal.PtrToStringAnsi(buffer) : string.Empty;
             }
             finally { WtsApi32.NativeMethods.WTSFreeMemory(buffer); }

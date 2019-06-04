@@ -16,7 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,14 +84,15 @@ namespace Cube.Pdf.Editor
         protected override void OnStartup(StartupEventArgs e)
         {
             Logger.Configure();
-            Logger.Info(GetType(), Assembly.GetExecutingAssembly());
+            this.LogInfo(Assembly.GetExecutingAssembly());
 
             _observer.Add(Logger.ObserveTaskException());
             _observer.Add(this.ObserveUiException());
 
-            Arguments = e.Args ?? new string[0];
-            Logger.Info(GetType(), $"Arguments:{string.Join(" ", Arguments.ToArray())}");
+            Arguments = e.Args ?? Enumerable.Empty<string>();
+            this.LogInfo($"Arguments:{Arguments.Join(" ")}");
 
+            ApplicationSettings.Configure();
             base.OnStartup(e);
         }
 

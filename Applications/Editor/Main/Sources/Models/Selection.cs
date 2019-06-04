@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Selection<T> : ObservableProperty, IEnumerable<T>
+    public class Selection<T> : ObservableBase, IEnumerable<T>
     {
         #region Properties
 
@@ -76,7 +76,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Add(T src)
         {
-            if (RawObject.TryAdd(src, 0)) RaisePropertyChanged(nameof(Count));
+            if (RawObject.TryAdd(src, 0)) Refresh(nameof(Count));
         }
 
         /* ----------------------------------------------------------------- */
@@ -92,7 +92,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Remove(T src)
         {
-            if (RawObject.TryRemove(src, out _)) RaisePropertyChanged(nameof(Count));
+            if (RawObject.TryRemove(src, out _)) Refresh(nameof(Count));
         }
 
         #region IEnumerable<T>
@@ -125,6 +125,23 @@ namespace Cube.Pdf.Editor
 
         #endregion
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
+        
         #endregion
     }
 
@@ -194,8 +211,8 @@ namespace Cube.Pdf.Editor
             base.OnPropertyChanged(e);
 
             if (e.PropertyName != nameof(Count)) return;
-            RaisePropertyChanged(nameof(Last));
-            RaisePropertyChanged(nameof(Indices));
+            Refresh(nameof(Last));
+            Refresh(nameof(Indices));
         }
 
         #endregion

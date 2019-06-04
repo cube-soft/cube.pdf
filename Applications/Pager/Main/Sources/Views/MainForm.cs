@@ -235,7 +235,7 @@ namespace Cube.Pdf.Pager
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnReceived(EnumerableEventArgs<string> e)
+        protected override void OnReceived(CollectionEventArgs<string> e)
         {
             try
             {

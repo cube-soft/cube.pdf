@@ -17,8 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.String;
+using Cube.Mixin.Pdf;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 using System;
@@ -66,24 +66,23 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">PDF document path.</param>
-        /// <param name="query">Password query.</param>
+        /// <param name="qv">Password string or query.</param>
         /// <param name="fullaccess">Requires full access.</param>
         /// <param name="partial">Partial mode.</param>
-        /// <param name="password">Password input by user.</param>
         ///
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader Create(string src, IQuery<string> query,
-            bool fullaccess, bool partial, out string password)
-        {
-            password = (query as QueryValue<string>)?.Value ?? string.Empty;
-
+        public static PdfReader Create(string src,
+            QueryMessage<IQuery<string, string>, string> qv,
+            bool fullaccess,
+            bool partial
+        ) {
             while (true)
             {
                 try
                 {
-                    var bytes  = password.HasValue() ? Encoding.UTF8.GetBytes(password) : null;
+                    var bytes  = qv.Value.HasValue() ? Encoding.UTF8.GetBytes(qv.Value) : null;
                     var dest   = new PdfReader(src, bytes, partial);
                     var denied = fullaccess && !dest.IsOpenedWithFullPermissions;
                     if (denied)
@@ -93,11 +92,10 @@ namespace Cube.Pdf.Itext
                     }
                     else return dest;
                 }
-                catch (BadPasswordException err)
+                catch (BadPasswordException)
                 {
-                    if (query is QueryValue<string>) throw new EncryptionException(err.Message, err);
-                    var args = query.RequestPassword(src);
-                    if (!args.Cancel) password = args.Result;
+                    var args = qv.Query.RequestPassword(src);
+                    if (!args.Cancel) qv.Value = args.Value;
                     else throw new OperationCanceledException();
                 }
             }

@@ -17,11 +17,14 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.FileSystem.TestService;
-using Cube.Pdf.Converter;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.Environment;
 using Cube.Pdf.Ghostscript;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace Cube.Pdf.Converter.Tests
 {
@@ -51,20 +54,17 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Create()
         {
-            var dest = new SettingsFolder();
-
-            Assert.That(dest.Format,             Is.EqualTo(Cube.DataContract.Format.Registry));
-            Assert.That(dest.Location,           Is.EqualTo(@"CubeSoft\CubePDF\v2"));
-            Assert.That(dest.WorkDirectory,      Is.Not.Null.And.Not.Empty);
-            Assert.That(dest.AutoSave,           Is.False);
-            Assert.That(dest.Assembly.Company,   Is.EqualTo("CubeSoft"));
-            Assert.That(dest.Assembly.Product,   Is.EqualTo("CubePDF"));
-            Assert.That(dest.MachineName,        Is.EqualTo(Environment.MachineName));
-            Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));
-            Assert.That(dest.DocumentName.Value, Is.Empty);
-            Assert.That(dest.DocumentName.Name,  Is.EqualTo("CubePDF"));
-            Assert.That(dest.Version.ToString(), Is.EqualTo("1.0.0RC19"));
-            Assert.That(dest.Value,              Is.Not.Null);
+            var dest = new SettingsFolder(Assembly.GetExecutingAssembly());
+            Assert.That(dest.Format,                Is.EqualTo(Cube.DataContract.Format.Registry));
+            Assert.That(dest.Location,              Is.EqualTo(@"CubeSoft\CubePDF\v2"));
+            Assert.That(dest.AutoSave,              Is.False);
+            Assert.That(dest.Assembly.GetCompany(), Is.EqualTo("CubeSoft"));
+            Assert.That(dest.Assembly.GetProduct(), Is.EqualTo("Cube.Pdf.Converter.Tests"));
+            Assert.That(dest.DocumentName.Source,   Is.Empty);
+            Assert.That(dest.DocumentName.Value,    Is.EqualTo("Cube.Pdf.Converter.Tests"));
+            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.0.0"));
+            Assert.That(dest.Value,                 Is.Not.Null);
+            Assert.That(dest.Digest,                Is.Null);
         }
 
         /* ----------------------------------------------------------------- */
@@ -79,43 +79,44 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Load()
         {
-            var desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            var temp    = IO.Combine(Environment.SpecialFolder.CommonApplicationData.GetName(), @"CubeSoft\CubePDF");
+            var desktop = Environment.SpecialFolder.Desktop.GetName();
             var src     = new SettingsFolder(
+                Assembly.GetExecutingAssembly(),
                 Cube.DataContract.Format.Registry,
                 $@"CubeSoft\CubePDF\{nameof(SettingsTest)}",
                 IO
             );
 
             src.Load();
-            var dest = src.Value;
 
+            var dest = src.Value;
             Assert.That(dest.Format,           Is.EqualTo(Format.Pdf));
-            Assert.That(dest.FormatOption,     Is.EqualTo(FormatOption.Pdf17));
             Assert.That(dest.SaveOption,       Is.EqualTo(SaveOption.Overwrite));
             Assert.That(dest.Grayscale,        Is.False);
             Assert.That(dest.EmbedFonts,       Is.True);
-            Assert.That(dest.ImageCompression, Is.True);
+            Assert.That(dest.ImageFilter,      Is.True);
             Assert.That(dest.Downsampling,     Is.EqualTo(Downsampling.None));
             Assert.That(dest.Resolution,       Is.AtLeast(72));
             Assert.That(dest.Orientation,      Is.EqualTo(Orientation.Auto));
             Assert.That(dest.CheckUpdate,      Is.True);
             Assert.That(dest.Linearization,    Is.False);
             Assert.That(dest.Language,         Is.EqualTo(Language.Auto));
-            Assert.That(dest.PostProcess,      Is.EqualTo(PostProcess.Open));
+            Assert.That(dest.PostProcess,      Is.EqualTo(PostProcess.None));
             Assert.That(dest.UserProgram,      Is.Empty);
             Assert.That(dest.DeleteSource,     Is.False);
             Assert.That(dest.SourceVisible,    Is.False);
             Assert.That(dest.Source,           Is.Empty);
             Assert.That(dest.Destination,      Is.EqualTo(desktop));
-            Assert.That(dest.IsBusy,           Is.False);
-            Assert.That(dest.SkipUi,           Is.False);
+            Assert.That(dest.Temp,             Is.EqualTo(temp));
+            Assert.That(dest.Busy,             Is.False);
 
             var md = dest.Metadata;
             Assert.That(md.Title,              Is.Empty);
             Assert.That(md.Author,             Is.Empty);
             Assert.That(md.Subject,            Is.Empty);
             Assert.That(md.Keywords,           Is.Empty);
-            Assert.That(md.Creator,            Is.EqualTo("CubePDF"));
+            Assert.That(md.Creator,            Is.Empty);
             Assert.That(md.Version.Major,      Is.EqualTo(1));
             Assert.That(md.Version.Minor,      Is.EqualTo(7));
 
@@ -128,11 +129,50 @@ namespace Cube.Pdf.Converter.Tests
 
             var pm = dest.Encryption.Permission;
             Assert.That(pm.Accessibility,      Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));
-            Assert.That(pm.CopyContents,       Is.EqualTo(PermissionValue.Deny),  nameof(pm.CopyContents));
-            Assert.That(pm.InputForm,          Is.EqualTo(PermissionValue.Deny),  nameof(pm.InputForm));
-            Assert.That(pm.ModifyAnnotations,  Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyAnnotations));
-            Assert.That(pm.ModifyContents,     Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyContents));
-            Assert.That(pm.Print,              Is.EqualTo(PermissionValue.Deny),  nameof(pm.Print));
+            Assert.That(pm.CopyContents,       Is.EqualTo(PermissionValue.Allow), nameof(pm.CopyContents));
+            Assert.That(pm.InputForm,          Is.EqualTo(PermissionValue.Allow), nameof(pm.InputForm));
+            Assert.That(pm.ModifyAnnotations,  Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyAnnotations));
+            Assert.That(pm.ModifyContents,     Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyContents));
+            Assert.That(pm.Print,              Is.EqualTo(PermissionValue.Allow), nameof(pm.Print));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Normalize
+        ///
+        /// <summary>
+        /// Tests the Normalize extended method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Normalize()
+        {
+            var src = new SettingsFolder(Assembly.GetExecutingAssembly());
+            src.Normalize();
+
+            var dest = src.Value;
+            Assert.That(dest.Format,      Is.EqualTo(Format.Pdf));
+            Assert.That(dest.Resolution,  Is.EqualTo(600));
+            Assert.That(dest.Orientation, Is.EqualTo(Orientation.Auto));
+            Assert.That(dest.Destination, Is.Not.Null.And.Not.Empty);
+
+            var md = dest.Metadata;
+            Assert.That(md.Title,         Is.Empty);
+            Assert.That(md.Author,        Is.Empty);
+            Assert.That(md.Subject,       Is.Empty);
+            Assert.That(md.Keywords,      Is.Empty);
+            Assert.That(md.Creator,       Is.EqualTo("CubePDF"));
+            Assert.That(md.Version.Major, Is.EqualTo(1));
+            Assert.That(md.Version.Minor, Is.EqualTo(7));
+
+            var pm = dest.Encryption.Permission;
+            Assert.That(pm.Accessibility,     Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));
+            Assert.That(pm.CopyContents,      Is.EqualTo(PermissionValue.Deny),  nameof(pm.CopyContents));
+            Assert.That(pm.InputForm,         Is.EqualTo(PermissionValue.Deny),  nameof(pm.InputForm));
+            Assert.That(pm.ModifyAnnotations, Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyAnnotations));
+            Assert.That(pm.ModifyContents,    Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyContents));
+            Assert.That(pm.Print,             Is.EqualTo(PermissionValue.Deny),  nameof(pm.Print));
         }
 
         /* ----------------------------------------------------------------- */
@@ -150,37 +190,32 @@ namespace Cube.Pdf.Converter.Tests
             var src = new[]
             {
                 "/DeleteOnClose",
-                "/SkipUI",
                 "/DocumentName",
                 "(234)?File.txt - Sample Application",
                 "/InputFile",
                 @"C:\WINDOWS\CubePDF\PS3AEE.tmp",
                 "/MachineName",
                 @"\\APOLLON",
-                "/ThreadID",
-                "15180",
                 "/UserName",
                 "clown",
                 "/Exec",
                 @"C:\Program Files\CubePDF\cubepdf.exe",
             };
 
-            var dest = new SettingsFolder();
-            dest.Set(new ArgumentCollection(src, '/', true));
+            var dest = new SettingsFolder(Assembly.GetExecutingAssembly());
+            dest.Set(new ArgumentCollection(src, Collections.Argument.Windows, true));
 
             var path = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                System.IO.Path.ChangeExtension(dest.DocumentName.Name, ".pdf")
+                System.IO.Path.ChangeExtension(dest.DocumentName.Value, ".pdf")
             );
 
-            Assert.That(dest.MachineName,        Is.EqualTo(@"\\APOLLON"));
-            Assert.That(dest.UserName,           Is.EqualTo("clown"));
-            Assert.That(dest.DocumentName.Value, Is.EqualTo("(234)?File.txt - Sample Application"));
-            Assert.That(dest.DocumentName.Name,  Is.EqualTo("(234)_File.txt"));
-            Assert.That(dest.Value.DeleteSource, Is.True);
-            Assert.That(dest.Value.SkipUi,       Is.True);
-            Assert.That(dest.Value.Source,       Is.EqualTo(@"C:\WINDOWS\CubePDF\PS3AEE.tmp"));
-            Assert.That(dest.Value.Destination,  Is.EqualTo(path));
+            Assert.That(dest.Digest,              Is.Null);
+            Assert.That(dest.DocumentName.Source, Is.EqualTo("(234)?File.txt - Sample Application"));
+            Assert.That(dest.DocumentName.Value,  Is.EqualTo("(234)_File.txt"));
+            Assert.That(dest.Value.DeleteSource,  Is.True);
+            Assert.That(dest.Value.Source,        Is.EqualTo(@"C:\WINDOWS\CubePDF\PS3AEE.tmp"));
+            Assert.That(dest.Value.Destination,   Is.EqualTo(path));
         }
 
         /* ----------------------------------------------------------------- */
@@ -195,12 +230,11 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Set_Empty()
         {
-            var dest = new SettingsFolder();
-            dest.Set(new ArgumentCollection(new string[0], '/', true));
+            var dest = new SettingsFolder(Assembly.GetExecutingAssembly());
+            dest.Set(new ArgumentCollection(Enumerable.Empty<string>(), Collections.Argument.Windows, true));
 
-            Assert.That(dest.MachineName,        Is.EqualTo(Environment.MachineName));
-            Assert.That(dest.UserName,           Is.EqualTo(Environment.UserName));
-            Assert.That(dest.DocumentName.Name,  Is.EqualTo("CubePDF"));
+            Assert.That(dest.Digest,             Is.Null);
+            Assert.That(dest.DocumentName.Value, Is.EqualTo("Cube.Pdf.Converter.Tests"));
             Assert.That(dest.Value.DeleteSource, Is.False);
             Assert.That(dest.Value.Source,       Is.Empty);
         }

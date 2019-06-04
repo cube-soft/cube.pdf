@@ -15,8 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -58,7 +58,7 @@ namespace Cube.Pdf.Pinstaller.Debug
 
             try { action(); }
             catch { status = "Failed"; throw; }
-            finally { src.Put($"[{method}]", $"{status}", $"({sw.Elapsed})"); }
+            finally { src.LogDebug($"[{method}]", $"{status}", $"({sw.Elapsed})"); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -74,7 +74,7 @@ namespace Cube.Pdf.Pinstaller.Debug
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this PortMonitor src,
-            [CallerMemberName] string method = null) => src.Put(
+            [CallerMemberName] string method = null) => src.LogDebug(
             $"[{method}]",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
@@ -98,7 +98,7 @@ namespace Cube.Pdf.Pinstaller.Debug
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this Port src,
-            [CallerMemberName] string method = null) => src.Put(
+            [CallerMemberName] string method = null) => src.LogDebug(
             $"[{method}]",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Pinstaller.Debug
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this PrinterDriver src,
-            [CallerMemberName] string method = null) => src.Put(
+            [CallerMemberName] string method = null) => src.LogDebug(
             $"[{method}]",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
@@ -155,7 +155,7 @@ namespace Cube.Pdf.Pinstaller.Debug
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this Printer src,
-            [CallerMemberName] string method = null) => src.Put(
+            [CallerMemberName] string method = null) => src.LogDebug(
             $"[{method}]",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Exists)}:{src.Exists}",
@@ -179,7 +179,7 @@ namespace Cube.Pdf.Pinstaller.Debug
         ///
         /* ----------------------------------------------------------------- */
         public static void Log(this SpoolerService src,
-            [CallerMemberName] string method = null) => src.Put(
+            [CallerMemberName] string method = null) => src.LogDebug(
             $"[{method}]",
             $"{nameof(src.Name)}:{src.Name.Quote()}",
             $"{nameof(src.Status)}:{src.Status}",
@@ -208,24 +208,8 @@ namespace Cube.Pdf.Pinstaller.Debug
             var prev = src.Status;
             var sw   = Stopwatch.StartNew();
             action();
-            src.Put($"[{method}]", $"{prev} -> {src.Status}", $"({sw.Elapsed})");
+            src.LogDebug($"[{method}]", $"{prev} -> {src.Status}", $"({sw.Elapsed})");
         }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Put
-        ///
-        /// <summary>
-        /// Puts debug information to the log file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Put<T>(this T src, params string[] args) =>
-            src.LogDebug(string.Join("\t", args));
 
         #endregion
     }

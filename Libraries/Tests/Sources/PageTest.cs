@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Drawing;
@@ -39,7 +39,7 @@ namespace Cube.Pdf.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Get
+        /// GetPage
         ///
         /// <summary>
         /// Executes the test for getting page information of the
@@ -48,14 +48,11 @@ namespace Cube.Pdf.Tests
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Get(string klass, string filename, int n, float w, float h, int degree)
+        public void GetPage(string klass, string filename, int n, float w, float h, int degree)
         {
-            var src = GetExamplesWith(filename);
-
-            using (var reader = Create(klass, src, ""))
+            using (var src = Create(klass, GetSource(filename), ""))
             {
-                var dest = reader.GetPage(n);
-
+                var dest = src.GetPage(n);
                 Assert.That(dest.Resolution.X,    Is.EqualTo(72.0f));
                 Assert.That(dest.Resolution.Y,    Is.EqualTo(72.0f));
                 Assert.That(dest.Size.Width,      Is.EqualTo(w));
@@ -70,18 +67,17 @@ namespace Cube.Pdf.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Get_Image
+        /// GetImagePage
         ///
         /// <summary>
-        /// Executes the test for getting page information of the
-        /// specified image file.
+        /// Tests to get page information of the specified image file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Get_Image()
+        public void GetImagePage()
         {
-            var src  = GetExamplesWith("SampleImage02.png");
+            var src  = GetSource("SampleImage02.png");
             var dest = IO.GetImagePage(src, 0);
 
             Assert.That(dest.Resolution.X,    Is.EqualTo(96.0f));
@@ -93,19 +89,19 @@ namespace Cube.Pdf.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Get_Image_Throws
+        /// GetImagePage_ExternalException
         ///
         /// <summary>
-        /// Executes the test for confirming the result when the specified
-        /// index is wrong.
+        /// Tests to confirm the result when the specified index is wrong.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Get_Image_Throws() => Assert.That(
-            () => IO.GetImagePage(GetExamplesWith("SampleImage02.png"), 10),
-            Throws.TypeOf<ExternalException>()
-        );
+        public void GetImagePage_ExternalException()
+        {
+            var src = GetSource("SampleImage02.png");
+            Assert.That(() => IO.GetImagePage(src, 10), Throws.TypeOf<ExternalException>());
+        }
 
         /* ----------------------------------------------------------------- */
         ///

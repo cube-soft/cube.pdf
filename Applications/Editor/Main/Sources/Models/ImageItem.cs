@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using Cube.Xui;
 using System;
 using System.ComponentModel;
@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageItem : ObservableProperty, IListItem, IDisposable
+    public class ImageItem : ObservableBase, IListItem
     {
         #region Constructors
 
@@ -54,7 +54,6 @@ namespace Cube.Pdf.Editor
         public ImageItem(Func<ImageItem, ImageSource> image,
             ImageSelection selection, ImagePreferences preferences)
         {
-            _dispose     = new OnceAction<bool>(Dispose);
             _image       = image;
             _selection   = selection;
             _preferences = preferences;
@@ -201,8 +200,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Refresh()
         {
-            RaisePropertyChanged(nameof(Stretch));
-            RaisePropertyChanged(nameof(Image));
+            Refresh(nameof(Stretch));
+            Refresh(nameof(Image));
         }
 
         /* ----------------------------------------------------------------- */
@@ -222,33 +221,9 @@ namespace Cube.Pdf.Editor
             UpdateSize();
         }
 
-        #region IDisposable
+        #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~ImageItem
-        ///
-        /// <summary>
-        /// Finalizes the ImageEntry.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~ImageItem() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the ImageItem.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -265,7 +240,7 @@ namespace Cube.Pdf.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
@@ -277,12 +252,6 @@ namespace Cube.Pdf.Editor
                 _selection   = null;
             }
         }
-
-        #endregion
-
-        #endregion
-
-        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -332,7 +301,6 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private readonly OnceAction<bool> _dispose;
         private Func<ImageItem, ImageSource> _image;
         private ImagePreferences _preferences;
         private ImageSelection _selection;

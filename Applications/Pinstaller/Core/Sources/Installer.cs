@@ -17,7 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.DataContract;
 using Cube.FileSystem;
-using Cube.FileSystem.Mixin;
+using Cube.Mixin.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

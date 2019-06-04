@@ -32,7 +32,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImagePreferences : ObservableProperty
+    public class ImagePreferences : ObservableBase
     {
         #region Properties
 
@@ -65,8 +65,7 @@ namespace Cube.Pdf.Editor
             set
             {
                 var index = Math.Min(Math.Max(value, 0), ItemSizeOptions.Count - 1);
-                if (!SetProperty(ref _itemSizeIndex, index)) return;
-                RaisePropertyChanged(nameof(ItemSize));
+                if (SetProperty(ref _itemSizeIndex, index)) Refresh(nameof(ItemSize));
             }
         }
 
@@ -166,6 +165,23 @@ namespace Cube.Pdf.Editor
 
         #region Implementations
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
+        
         /* ----------------------------------------------------------------- */
         ///
         /// GetDummyImage

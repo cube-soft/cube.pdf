@@ -17,7 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.String;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -34,30 +35,9 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsFolder : SettingsFolder<Settings>
+    public class SettingsFolder : SettingsFolder<SettingsValue>
     {
         #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingsFolder
-        ///
-        /// <summary>
-        /// Initializes static fields.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        static SettingsFolder()
-        {
-            Locale.Configure(e =>
-            {
-                var src = e.ToCultureInfo();
-                var cmp = Properties.Resources.Culture?.Name;
-                if (cmp.HasValue() && cmp.FuzzyEquals(src.Name)) return false;
-                Properties.Resources.Culture = src;
-                return true;
-            });
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -93,7 +73,7 @@ namespace Cube.Pdf.Editor
         public SettingsFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
             base(assembly, format, location, io)
         {
-            Title          = Assembly.Title;
+            Title          = Assembly.GetTitle();
             AutoSave       = false;
             Version.Digit  = 3;
             Version.Suffix = Properties.Resources.VersionSuffix;
@@ -143,7 +123,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnLoaded(ValueChangedEventArgs<Settings> e)
+        protected override void OnLoaded(ValueChangedEventArgs<SettingsValue> e)
         {
             try { Locale.Set(e.NewValue.Language); }
             finally { base.OnLoaded(e); }
@@ -164,13 +144,15 @@ namespace Cube.Pdf.Editor
             {
                 if (Value == null) return;
 
-                var exe = IO.Combine(Assembly.DirectoryName, $"CubeChecker.exe");
-                var sk  = "CubePDF Utility2";
+                var name = "cubepdf-utility-checker";
+                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
+                var sk   = "CubePDF Utility2";
+                var args = $"{Assembly.GetNameString().Quote()} /subkey {sk.Quote()}";
 
-                new Startup($"cubepdf-utility-checker")
+                new Startup(name)
                 {
-                    Command = $"{exe.Quote()} {Assembly.Product.Quote()} /subkey {sk.Quote()}",
-                    Enabled = Value.CheckUpdate,
+                    Command = $"{exe.Quote()} {args}",
+                    Enabled = Value.CheckUpdate && IO.Exists(exe),
                 }.Save();
             }
             finally { base.OnSaved(e); }

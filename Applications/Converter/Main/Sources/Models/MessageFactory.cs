@@ -17,8 +17,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Forms;
-using Cube.Generics;
+using Cube.Mixin.String;
+using Cube.Pdf.Ghostscript;
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace Cube.Pdf.Converter
 {
@@ -31,146 +34,227 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class MessageFactory
+    public static class MessageFactory
     {
-        #region Methods
+        #region DialogMessage
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateSourceMessage
+        /// Create
         ///
         /// <summary>
-        /// Creates a message to show the OpenFileDialog.
-        /// </summary>
-        ///
-        /// <param name="src">User settings.</param>
-        ///
-        /// <returns>OpenFileEventArgs object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static OpenFileEventArgs CreateSourceMessage(this SettingsFolder src)
-        {
-            var io   = src.IO;
-            var path = src.Value.Source;
-            var dest = new OpenFileEventArgs
-            {
-                Title       = Properties.Resources.TitleBrowseSource,
-                FileName    = GetFileName(path, io),
-                Multiselect = false,
-                Filter      = ViewResource.SourceFilters.GetFilter(),
-                FilterIndex = ViewResource.SourceFilters.GetFilterIndex(path, io),
-            };
-
-            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateDestination
-        ///
-        /// <summary>
-        /// Creates a message to show the SaveFileDialog.
-        /// </summary>
-        ///
-        /// <param name="src">User settings.</param>
-        ///
-        /// <returns>SaveFileEventArgs object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static SaveFileEventArgs CreateDestinationMessage(this SettingsFolder src)
-        {
-            var io   = src.IO;
-            var path = src.Value.Destination;
-            var dest = new SaveFileEventArgs
-            {
-                Title           = Properties.Resources.TitleBroseDestination,
-                FileName        = GetFileName(path, io),
-                OverwritePrompt = false,
-                Filter          = ViewResource.DestinationFilters.GetFilter(),
-                FilterIndex     = ViewResource.DestinationFilters.GetFilterIndex(path, io),
-            };
-
-            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateUserProgramMessage
-        ///
-        /// <summary>
-        /// Creates a message to show the OpenFileDialog.
-        /// </summary>
-        ///
-        /// <param name="src">User settings.</param>
-        ///
-        /// <returns>OpenFileEventArgs object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static OpenFileEventArgs CreateUserProgramMessage(this SettingsFolder src)
-        {
-            var io   = src.IO;
-            var path = src.Value.UserProgram;
-            var dest = new OpenFileEventArgs
-            {
-                Title       = Properties.Resources.TitleBroseUserProgram,
-                FileName    = GetFileName(path, io),
-                Multiselect = false,
-                Filter      = ViewResource.UserProgramFilters.GetFilter(),
-            };
-
-            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateWarningMessage
-        ///
-        /// <summary>
-        /// Create a message to show the DialogBox with a warning icon
-        /// and OK/Cancel buttons.
-        /// </summary>
-        ///
-        /// <param name="src">Description to be shown.</param>
-        ///
-        /// <returns>MessageEventArgs object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static MessageEventArgs CreateWarningMessage(string src) =>
-            new MessageEventArgs(
-                src,
-                Properties.Resources.TitleWarning,
-                System.Windows.Forms.MessageBoxButtons.OKCancel,
-                System.Windows.Forms.MessageBoxIcon.Warning
-            );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateErrorMessage
-        ///
-        /// <summary>
-        /// Create a message to show the DialogBox with an error icon
+        /// Create a message to show a DialogBox with an error icon
         /// and OK button.
         /// </summary>
         ///
-        /// <param name="src">Description to be shown.</param>
+        /// <param name="src">Occurred exception.</param>
         ///
-        /// <returns>MessageEventArgs object.</returns>
+        /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static MessageEventArgs CreateErrorMessage(string src) =>
-            new MessageEventArgs(
-                src,
-                Properties.Resources.TitleError,
-                System.Windows.Forms.MessageBoxButtons.OK,
-                System.Windows.Forms.MessageBoxIcon.Error
-            );
+        public static DialogMessage Create(Exception src) =>
+            CreateError(GetErrorMessage(src));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Create a message to show a DialogBox with a warning icon
+        /// and OK/Cancel buttons.
+        /// </summary>
+        ///
+        /// <param name="src">Path to save.</param>
+        /// <param name="option">Save option.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogMessage Create(string src, SaveOption option) =>
+            CreateWarn(GetWarnMessage(src, option));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateError
+        ///
+        /// <summary>
+        /// Create a message to show a DialogBox with an error icon
+        /// and OK button.
+        /// </summary>
+        ///
+        /// <param name="src">Error message.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogMessage CreateError(string src) => new DialogMessage
+        {
+            Value   = src,
+            Title   = Properties.Resources.TitleError,
+            Icon    = DialogIcon.Error,
+            Buttons = DialogButtons.Ok,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateWarn
+        ///
+        /// <summary>
+        /// Create a message to show a DialogBox with a warning icon
+        /// and OK/Cancel buttons.
+        /// </summary>
+        ///
+        /// <param name="src">Warning message.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogMessage CreateWarn(string src) => new DialogMessage
+        {
+            Value   = src,
+            Title   = Properties.Resources.TitleWarning,
+            Icon    = DialogIcon.Warning,
+            Buttons = DialogButtons.OkCancel,
+        };
+
+        #endregion
+
+        #region OpenOrSaveFileMessage
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateForSource
+        ///
+        /// <summary>
+        /// Creates a message to show an OpenFileDialog dialog for
+        /// selecting the source path.
+        /// </summary>
+        ///
+        /// <param name="src">User settings.</param>
+        ///
+        /// <returns>OpenFileMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static OpenFileMessage CreateForSource(this SettingsFolder src)
+        {
+            var io   = src.IO;
+            var path = src.Value.Source;
+            var dest = new OpenFileMessage
+            {
+                Title       = Properties.Resources.TitleSelectSource,
+                Value       = GetFileNames(path, io),
+                Multiselect = false,
+                Filter      = ViewResources.SourceFilters.GetFilter(),
+                FilterIndex = ViewResources.SourceFilters.GetFilterIndex(path, io),
+            };
+
+            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateForDestination
+        ///
+        /// <summary>
+        /// Creates a message to show an OpenFileDialog dialog for
+        /// selecting the destination path.
+        /// </summary>
+        ///
+        /// <param name="src">User settings.</param>
+        ///
+        /// <returns>SaveFileMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static SaveFileMessage CreateForDestination(this SettingsFolder src)
+        {
+            var io   = src.IO;
+            var path = src.Value.Destination;
+            var dest = new SaveFileMessage
+            {
+                Title           = Properties.Resources.TitleSelectDestination,
+                Value           = GetFileName(path, io),
+                OverwritePrompt = false,
+                Filter          = ViewResources.DestinationFilters.GetFilter(),
+                FilterIndex     = ViewResources.DestinationFilters.GetFilterIndex(path, io),
+            };
+
+            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateForUserProgram
+        ///
+        /// <summary>
+        /// Creates a message to show an OpenFileDialog dialog for
+        /// selecting the user program.
+        /// </summary>
+        ///
+        /// <param name="src">User settings.</param>
+        ///
+        /// <returns>OpenFileMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static OpenFileMessage CreateForUserProgram(this SettingsFolder src)
+        {
+            var io   = src.IO;
+            var path = src.Value.UserProgram;
+            var dest = new OpenFileMessage
+            {
+                Title       = Properties.Resources.TitleSelectUserProgram,
+                Value       = GetFileNames(path, io),
+                Multiselect = false,
+                Filter      = ViewResources.UserProgramFilters.GetFilter(),
+            };
+
+            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
+            return dest;
+        }
 
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetErrorMessage
+        ///
+        /// <summary>
+        /// Gets an error message from the specified exception.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetErrorMessage(Exception src)
+        {
+            if (src is CryptographicException) return Properties.Resources.MessageDigest;
+            if (src is EncryptionException) return Properties.Resources.MessageMergePassword;
+            if (src is GsApiException gs) return string.Format(Properties.Resources.MessageGhostscript, gs.Status);
+            if (src is ArgumentException e) return e.Message;
+            return $"{src.Message} ({src.GetType().Name})";
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetWarnMessage
+        ///
+        /// <summary>
+        /// Gets an warning message from the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetWarnMessage(string src, SaveOption option)
+        {
+            var s0 = string.Format(Properties.Resources.MessageExists, src);
+            new Dictionary<SaveOption, string>
+            {
+                { SaveOption.Overwrite, Properties.Resources.MessageOverwrite },
+                { SaveOption.MergeHead, Properties.Resources.MessageMergeHead },
+                { SaveOption.MergeTail, Properties.Resources.MessageMergeTail },
+            }.TryGetValue(option, out var s1);
+            return $"{s0} {s1}";
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -182,7 +266,21 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         private static string GetFileName(string src, IO io) =>
-            src.HasValue() ? io.Get(src).NameWithoutExtension : string.Empty;
+            src.HasValue() ? io.Get(src).BaseName : string.Empty;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetFileNames
+        ///
+        /// <summary>
+        /// Gets a sequence of filenames.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static IEnumerable<string> GetFileNames(string src, IO io)
+        {
+            if (src.HasValue()) yield return io.Get(src).BaseName;
+        }
 
         /* ----------------------------------------------------------------- */
         ///

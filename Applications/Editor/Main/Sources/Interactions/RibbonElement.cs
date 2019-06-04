@@ -16,11 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Commands;
 using Cube.Xui;
-using Cube.Xui.Mixin;
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace Cube.Pdf.Editor
@@ -47,12 +46,15 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="text">Function to get text.</param>
         /// <param name="name">Name of icons.</param>
+        /// <param name="getText">Function to get text.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement(Getter<string> text, [CallerMemberName] string name = null) :
-            this(text, text, name) { }
+        public RibbonElement(string name,
+            Getter<string> getText,
+            IDispatcher dispatcher
+        ) : this(name, getText, getText, dispatcher) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -63,13 +65,17 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="text">Function to get text.</param>
-        /// <param name="tooltip">Function to get tooltip.</param>
         /// <param name="name">Name of icons.</param>
+        /// <param name="getText">Function to get text.</param>
+        /// <param name="getTooltip">Function to get tooltip.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement(Getter<string> text, Getter<string> tooltip,
-            [CallerMemberName] string name = null) : this(text, tooltip, null, name) { }
+        public RibbonElement(string name,
+            Getter<string> getText,
+            Getter<string> getTooltip,
+            IDispatcher dispatcher
+        ) : this(name, getText, getTooltip, null, dispatcher) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -80,19 +86,23 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="text">Function to get text.</param>
-        /// <param name="tooltip">Function to get tooltip.</param>
-        /// <param name="enabled">Function to get value.</param>
         /// <param name="name">Name of icons.</param>
+        /// <param name="getText">Function to get text.</param>
+        /// <param name="getTooltip">Function to get tooltip.</param>
+        /// <param name="getEnabled">Function to get enabled value.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement(Getter<string> text, Getter<string> tooltip,
-            Getter<bool> enabled, [CallerMemberName] string name = null) : base(text)
+        public RibbonElement(string name,
+            Getter<string> getText,
+            Getter<string> getTooltip,
+            Getter<bool> getEnabled,
+            IDispatcher dispatcher
+        ) : base(getText, dispatcher)
         {
             Name = name;
-            _getTooltip = tooltip;
-            _getEnabled = enabled;
-            _locale     = Locale.Subscribe(z => RaisePropertyChanged(nameof(Tooltip)));
+            _getTooltip = getTooltip;
+            _getEnabled = getEnabled;
         }
 
         #endregion
@@ -197,11 +207,22 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                _canExecute?.Dispose();
-                _locale.Dispose();
-            }
+            if (disposing) _canExecute?.Dispose();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// React
+        ///
+        /// <summary>
+        /// Occurs when any states are changed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void React()
+        {
+            base.React();
+            Refresh(nameof(Tooltip));
         }
 
         /* ----------------------------------------------------------------- */
@@ -241,9 +262,9 @@ namespace Cube.Pdf.Editor
         {
             void action(object s, EventArgs e)
             {
-                RaisePropertyChanged(nameof(Enabled));
-                RaisePropertyChanged(nameof(SmallIcon));
-                RaisePropertyChanged(nameof(LargeIcon));
+                Refresh(nameof(Enabled));
+                Refresh(nameof(SmallIcon));
+                Refresh(nameof(LargeIcon));
             };
 
             src.CanExecuteChanged -= action;
@@ -257,7 +278,6 @@ namespace Cube.Pdf.Editor
         #region Fields
         private readonly Getter<string> _getTooltip;
         private readonly Getter<bool> _getEnabled;
-        private readonly IDisposable _locale;
         private IDisposable _canExecute;
         #endregion
     }

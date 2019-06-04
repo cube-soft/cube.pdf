@@ -120,7 +120,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MouseOpenBehavior : FileDropBehavior<Window> { }
+    public class MouseOpenBehavior : FileDropToCommand<Window> { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -131,7 +131,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertPositionBehavior : CheckedBehavior<int> { }
+    public class InsertPositionBehavior : CheckedToCommand<int> { }
 
     #endregion
 }

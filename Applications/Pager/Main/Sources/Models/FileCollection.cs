@@ -17,8 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Log;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Logging;
+using Cube.Mixin.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

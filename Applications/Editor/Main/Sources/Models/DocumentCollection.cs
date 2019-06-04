@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
+using Cube.Mixin.String;
 using Cube.Pdf.Pdfium;
 using System.Collections.Concurrent;
 
@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentCollection(IQuery<string> password, IO io)
+        public DocumentCollection(IQuery<string, string> password, IO io)
         {
             IO     = io;
             _query = password;
@@ -137,7 +137,7 @@ namespace Cube.Pdf.Editor
 
         #region Fields
         private readonly ConcurrentDictionary<string, DocumentReader> _core = new ConcurrentDictionary<string, DocumentReader>();
-        private readonly IQuery<string> _query;
+        private readonly IQuery<string, string> _query;
         #endregion
     }
 }

@@ -30,7 +30,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public class Page : ObservableProperty
+    public class Page : SerializableBase
     {
         #region Constructors
 

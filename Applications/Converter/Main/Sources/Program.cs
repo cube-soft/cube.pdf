@@ -48,24 +48,27 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args)
+        static void Main(string[] raw)
         {
             try
             {
                 Logger.Configure();
                 Logger.ObserveTaskException();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
-                Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
+                Logger.Info(LogType, $"Ghostscript {Ghostscript.Converter.Revision}");
+                Logger.Info(LogType, $"[ {string.Join(" ", raw)} ]");
 
+                ApplicationSettings.Configure();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var src      = new ArgumentCollection(args, '/', true);
-                var settings = CreateSettings(src);
+                var args = new ArgumentCollection(raw, Argument.Windows, true);
+                var settings = CreateSettings(args, Assembly.GetExecutingAssembly());
                 settings.Load();
-                settings.Set(src);
+                settings.Normalize();
+                settings.Set(args);
 
-                if (settings.Value.SkipUi) Invoke(settings);
+                if (args.Options.ContainsKey("SkipUI")) Execute(settings);
                 else Show(settings);
             }
             catch (Exception err) { Logger.Error(LogType, err); }
@@ -85,10 +88,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static SettingsFolder CreateSettings(ArgumentCollection src) =>
+        private static SettingsFolder CreateSettings(ArgumentCollection src, Assembly asm) =>
             src.Options.TryGetValue("Settings", out var subkey) ?
-            new SettingsFolder(Format.Registry, subkey, new IO()) :
-            new SettingsFolder();
+            new SettingsFolder(asm, Format.Registry, subkey, new IO()) :
+            new SettingsFolder(asm);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,30 +104,23 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private static void Show(SettingsFolder settings)
         {
-            var view = new MainForm();
-            using (var vm = new MainViewModel(settings))
-            {
-                view.Bind(vm);
-                Application.Run(view);
-            }
+            var view = new MainWindow();
+            view.Bind(new MainViewModel(settings));
+            Application.Run(view);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Execute
         ///
         /// <summary>
-        /// Invokes the conversion directly.
+        /// Executes the conversion directly.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Invoke(SettingsFolder settings)
+        private static void Execute(SettingsFolder settings)
         {
-            using (var src = new MainFacade(settings))
-            {
-                src.UpdateExtension();
-                src.Convert();
-            }
+            using (var src = new Facade(settings)) src.Invoke();
         }
 
         #endregion

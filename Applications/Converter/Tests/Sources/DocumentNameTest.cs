@@ -60,7 +60,7 @@ namespace Cube.Pdf.Converter.Tests
         [TestCase("http://www.example.com/index.html", ExpectedResult = "index.html")]
         [TestCase("",                                  ExpectedResult = "Default")]
         [TestCase(null,                                ExpectedResult = "Default")]
-        public string Name(string src) => new DocumentName(src, "Default", new IO()).Name;
+        public string Name(string src) => new DocumentName(src, "Default", new IO()).Value;
 
         #endregion
     }

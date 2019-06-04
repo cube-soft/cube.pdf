@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Conversions;
+using Cube.Mixin.ByteFormat;
 using System.Drawing;
 using System.Windows.Forms;
 

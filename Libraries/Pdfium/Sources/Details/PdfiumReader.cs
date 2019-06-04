@@ -16,7 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -142,23 +142,23 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="query">Password query.</param>
+        /// <param name="qv">Password string or query.</param>
         /// <param name="fullaccess">Requires full access.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /// <returns>PdfiumReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfiumReader Create(string src, IQuery<string> query, bool fullaccess, IO io)
+        public static PdfiumReader Create(string src,
+            QueryMessage<IQuery<string, string>, string> qv, bool fullaccess, IO io)
         {
             var dest = new PdfiumReader(src, io);
-            var pass = (query as QueryValue<string>)?.Value ?? string.Empty;
 
             while (true)
             {
                 try
                 {
-                    dest.Load(pass);
+                    dest.Load(qv.Value);
                     var denied = fullaccess && dest.File is PdfFile pf && !pf.FullAccess;
                     if (denied) throw new LoadException(LoadStatus.PasswordError);
                     return dest;
@@ -166,9 +166,8 @@ namespace Cube.Pdf.Pdfium
                 catch (LoadException err)
                 {
                     if (err.Status != LoadStatus.PasswordError) throw;
-                    if (query is QueryValue<string>) throw new EncryptionException(err.Message, err);
-                    var args = query.RequestPassword(src);
-                    if (!args.Cancel) pass = args.Result;
+                    var args = qv.Query.RequestPassword(src);
+                    if (!args.Cancel) qv.Value = args.Value;
                     else throw new OperationCanceledException();
                 }
             }

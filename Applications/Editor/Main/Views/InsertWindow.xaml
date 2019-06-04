@@ -51,7 +51,7 @@
     *********************************************************************** -->
     <i:Interaction.Behaviors>
         <xb:DialogBehavior />
-        <xb:OpenFileDialogBehavior />
+        <xb:OpenFileBehavior />
         <xb:CloseBehavior />
         <my:MouseOpenBehavior Command="{Binding DragAdd}" />
     </i:Interaction.Behaviors>

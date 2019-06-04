@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
@@ -31,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class History : ObservableProperty
+    public class History : ObservableBase
     {
         #region Constructors
 
@@ -44,10 +43,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public History()
-        {
-            Context = SynchronizationContext.Current;
-        }
+        public History(IDispatcher dispatcher) : base(dispatcher) { }
 
         #endregion
 
@@ -145,6 +141,23 @@ namespace Cube.Pdf.Editor
             _forward.Push(item);
         });
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
+
         #endregion
 
         #region Implementations
@@ -161,8 +174,8 @@ namespace Cube.Pdf.Editor
         public void Invoke(Action action)
         {
             action();
-            RaisePropertyChanged(nameof(Undoable));
-            RaisePropertyChanged(nameof(Redoable));
+            Refresh(nameof(Undoable));
+            Refresh(nameof(Redoable));
         }
 
         #endregion

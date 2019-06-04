@@ -145,7 +145,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnReceived(EnumerableEventArgs<string> e)
+        protected override void OnReceived(CollectionEventArgs<string> e)
         {
             base.OnReceived(e);
             OnOpen(ValueEventArgs.Create(e.Value.ToArray()));

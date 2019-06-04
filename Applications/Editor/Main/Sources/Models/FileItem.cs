@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileItem : ObservableProperty, IListItem, IDisposable
+    public class FileItem : ObservableBase, IListItem
     {
         #region Constructors
 
@@ -52,7 +52,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public FileItem(string src, Selection<FileItem> selection, IO io)
         {
-            _dispose   = new OnceAction<bool>(Dispose);
             _selection = selection;
 
             var info = io.Get(src);
@@ -60,7 +59,7 @@ namespace Cube.Pdf.Editor
             FullName      = info.FullName;
             Length        = info.Length;
             LastWriteTime = info.LastWriteTime;
-            Icon          = info.IconImage(IconSize.Small);
+            Icon          = info.GetIconImage(IconSize.Small);
         }
 
         #endregion
@@ -148,32 +147,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ~FileItem
-        ///
-        /// <summary>
-        /// Finalizes the FileItem.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~FileItem() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the FileItem.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Dispose
         ///
         /// <summary>
@@ -187,7 +160,7 @@ namespace Cube.Pdf.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
@@ -199,7 +172,6 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private readonly OnceAction<bool> _dispose;
         private Selection<FileItem> _selection;
         private bool _selected = false;
         #endregion

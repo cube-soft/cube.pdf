@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
+using Cube.Mixin.String;
 using System.Text;
 
 namespace Cube.Pdf.Ghostscript
@@ -235,7 +235,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         protected Argument(string description) :
-            this(default(char), string.Empty, description, false) { }
+            this(default, string.Empty, description, false) { }
 
         #endregion
 

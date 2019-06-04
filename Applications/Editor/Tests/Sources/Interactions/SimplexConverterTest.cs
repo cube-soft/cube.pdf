@@ -17,8 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.FileSystem.TestService;
-using Cube.Generics;
+using Cube.Mixin.String;
+using Cube.Tests;
 using Cube.Xui.Converters;
 using NUnit.Framework;
 using System;
@@ -106,7 +106,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         [TestCase("",           ExpectedResult = false)]
         public bool IconConverter(string src) => Convert<ImageSource>(
             new IconConverter(),
-            src.HasValue() ? IO.Get(GetExamplesWith(src)) : null
+            src.HasValue() ? IO.Get(GetSource(src)) : null
         ) != null;
 
         #endregion
@@ -335,7 +335,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         /* ----------------------------------------------------------------- */
         [Test]
         public void HasValueToVisibility() => Assert.That(
-            Convert<Visibility>(new HasValueToVisibility(), GetExamplesWith("Sample.pdf")),
+            Convert<Visibility>(new HasValueToVisibility(), GetSource("Sample.pdf")),
             Is.EqualTo(Visibility.Visible)
         );
 
@@ -354,7 +354,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         /* ----------------------------------------------------------------- */
         [Test]
         public void HasValueToVisibilityInverse() => Assert.That(
-            Convert<Visibility>(new HasValueToVisibilityInverse(), GetExamplesWith("Sample.pdf")),
+            Convert<Visibility>(new HasValueToVisibilityInverse(), GetSource("Sample.pdf")),
             Is.EqualTo(Visibility.Collapsed)
         );
 
@@ -383,7 +383,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         [OneTimeSetUp]
         public void Setup()
         {
-            var dummy = new SettingsFolder(Assembly.GetExecutingAssembly(), IO);
+            new SettingsFolder(Assembly.GetExecutingAssembly(), IO);
         }
 
         /* ----------------------------------------------------------------- */

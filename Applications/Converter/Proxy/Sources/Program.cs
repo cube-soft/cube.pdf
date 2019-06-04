@@ -84,7 +84,7 @@ namespace Cube.Pdf.Converter.Proxy
         /* ----------------------------------------------------------------- */
         static System.Diagnostics.Process StartAs(string[] args)
         {
-            var src = new ArgumentCollection(args, '/');
+            var src = new ArgumentCollection(args, Argument.Windows, true);
             if (!src.Options.TryGetValue("Exec", out var exec)) throw new ArgumentException("Exec");
 
             try

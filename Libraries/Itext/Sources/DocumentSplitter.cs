@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.FileSystem.Mixin;
+using Cube.Mixin.IO;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
@@ -177,7 +177,7 @@ namespace Cube.Pdf.Itext
         private string Unique(string dir, File src, int pagenum)
         {
             var digit = string.Format("D{0}", Math.Max(src.Count.ToString("D").Length, 2));
-            var name  = string.Format("{0}-{1}", src.NameWithoutExtension, pagenum.ToString(digit));
+            var name  = string.Format("{0}-{1}", src.BaseName, pagenum.ToString(digit));
             var dest  = IO.Combine(dir, $"{name}.pdf");
 
             return IO.GetUniqueName(dest);

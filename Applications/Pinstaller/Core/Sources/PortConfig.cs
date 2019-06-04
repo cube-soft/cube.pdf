@@ -29,7 +29,7 @@ namespace Cube.Pdf.Pinstaller
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class PortConfig : ObservableProperty
+    public class PortConfig : SerializableBase
     {
         #region Constructors
 

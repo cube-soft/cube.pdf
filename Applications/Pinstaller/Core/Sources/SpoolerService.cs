@@ -15,8 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Environment;
+using Cube.Mixin.Logging;
 using Cube.Pdf.Pinstaller.Debug;
 using System;
 using System.Collections.Generic;

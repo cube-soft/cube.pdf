@@ -31,7 +31,7 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     [Serializable]
     [DataContract]
-    public class Metadata : ObservableProperty
+    public class Metadata : SerializableBase
     {
         #region Constructors
 

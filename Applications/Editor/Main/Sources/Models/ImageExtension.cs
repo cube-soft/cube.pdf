@@ -17,9 +17,13 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
+using Cube.FileSystem;
+using Cube.Images.Icons;
+using Cube.Mixin.Drawing;
 using Cube.Pdf.Itext;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Editor
 {
@@ -39,25 +43,11 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Within
+        /// NewItem
         ///
         /// <summary>
-        /// Gets the collection that each item is in [0, n).
-        /// </summary>
-        ///
-        /// <param name="src">Source collection.</param>
-        /// <param name="n">Maximum value.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static IEnumerable<int> Within(this IEnumerable<int> src, int n) =>
-            src.Where(i => i >= 0 && i < n);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateEntry
-        ///
-        /// <summary>
-        /// Creats a new ImageEntry object.
+        /// Creats a new instance of the ImageItem class with the specified
+        /// arguments.
         /// </summary>
         ///
         /// <param name="src">Source collection.</param>
@@ -67,7 +57,7 @@ namespace Cube.Pdf.Editor
         /// <returns>ImageItem object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageItem CreateEntry(this ImageCollection src, int index, Page item) =>
+        public static ImageItem NewItem(this ImageCollection src, int index, Page item) =>
             new ImageItem(src.Convert, src.Selection, src.Preferences)
         {
             Index     = index,
@@ -271,6 +261,27 @@ namespace Cube.Pdf.Editor
                 () => src.Move(cvt,    -delta)
             );
         }
+
+        #endregion
+
+        #region Icon
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IconImage
+        ///
+        /// <summary>
+        /// Creates a icon from the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">File information.</param>
+        /// <param name="size">Icon size.</param>
+        ///
+        /// <returns>Bitmap of the requested icon.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static BitmapImage GetIconImage(this Information src, IconSize size) =>
+            src.GetIcon(size)?.ToBitmap().ToBitmapImage(true);
 
         #endregion
 

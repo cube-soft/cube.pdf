@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Generics;
+using Cube.Mixin.Generics;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
@@ -41,7 +41,7 @@ namespace Cube.Pdf.Itext
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DocumentWriterBase : IDocumentWriter
+    public abstract class DocumentWriterBase : DisposableBase, IDocumentWriter
     {
         #region Constructors
 
@@ -57,11 +57,7 @@ namespace Cube.Pdf.Itext
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected DocumentWriterBase(IO io)
-        {
-            _dispose = new OnceAction<bool>(Dispose);
-            IO = io;
-        }
+        protected DocumentWriterBase(IO io) { IO = io; }
 
         #endregion
 
@@ -150,56 +146,6 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Methods
-
-        #region IDisposable
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~DocumentWriterBase
-        ///
-        /// <summary>
-        /// Finalizes the DocumentWriterBase.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~DocumentWriterBase() { _dispose.Invoke(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the DocumentWriterBase.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the DocumentWriterBase
-        /// and optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing) Release();
-        }
-
-        #endregion
 
         #region IDocumentWriter
 
@@ -408,6 +354,26 @@ namespace Cube.Pdf.Itext
             src.File is PdfFile   pdf ? GetRawReader(pdf) :
             src.File is ImageFile img ? GetRawReader(img) : null;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) Release();
+        }
+
         #endregion
 
         #region Implementations
@@ -460,7 +426,6 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Fields
-        private readonly OnceAction<bool> _dispose;
         private readonly List<Page> _pages = new List<Page>();
         private readonly List<Attachment> _attachments = new List<Attachment>();
         private readonly List<IDisposable> _resources = new List<IDisposable>();

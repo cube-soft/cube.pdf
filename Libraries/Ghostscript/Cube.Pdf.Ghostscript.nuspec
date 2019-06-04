@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>2.15.0</version>
+        <version>2.16.0</version>
         <id>Cube.Pdf.Ghostscript</id>
         <title>Cube.Pdf.Ghostscript</title>
         <authors>clown,cube-soft</authors>
@@ -14,7 +14,7 @@
         <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
-            <dependency id="Cube.Pdf" version="2.15.0" />
+            <dependency id="Cube.Pdf" version="2.16.0" />
         </dependencies>
     </metadata>
     <files>

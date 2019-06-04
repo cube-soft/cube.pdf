@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections.Mixin;
 using Cube.FileSystem;
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -198,7 +198,7 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WorkDirectory
+        /// Temp
         ///
         /// <summary>
         /// Gets or sets the path of the working directory.
@@ -210,7 +210,7 @@ namespace Cube.Pdf.Ghostscript
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public string WorkDirectory { get; set; } = string.Empty;
+        public string Temp { get; set; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -292,15 +292,15 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> sources, string dest) =>
             Invoke(() => GsApi.Invoke(Create()
-                .Concat(new[] { new Argument('s', "OutputFile", dest) })
+                .Concat(new Argument('s', "OutputFile", dest))
                 .Concat(OnCreateArguments())
                 .Concat(CreateCodes())
-                .Concat(new[] { new Argument('f') })
+                .Concat(new Argument('f'))
                 .Select(e => e.ToString())
                 .Concat(sources)
                 .Where(e => { this.LogDebug(e); return true; }) // for debug
                 .ToArray()
-            ), dest);
+            , Temp, IO), dest);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -363,7 +363,7 @@ namespace Cube.Pdf.Ghostscript
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<Argument> Create() => new[] { Argument.Dummy };
+        private IEnumerable<Argument> Create() { yield return Argument.Dummy; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -462,39 +462,10 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action, string dest)
         {
-            var name = "TEMP";
-            var prev = Environment.GetEnvironmentVariable(name);
-
-            try
-            {
-                var info = IO.Get(dest);
-                if (!IO.Exists(info.DirectoryName)) IO.CreateDirectory(info.DirectoryName);
-
-                if (WorkDirectory.HasValue())
-                {
-                    if (!IO.Exists(WorkDirectory)) IO.CreateDirectory(WorkDirectory);
-                    SetVariable(name, WorkDirectory);
-                }
-                action();
-            }
-            finally { SetVariable(name, prev); }
+            var info = IO.Get(dest);
+            if (!IO.Exists(info.DirectoryName)) IO.CreateDirectory(info.DirectoryName);
+            action();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetVariable
-        ///
-        /// <summary>
-        /// Sets the environment variable with the specified key and value.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 設定された環境変数は実行プロセス中でのみ有効です。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetVariable(string key, string value) =>
-            Environment.SetEnvironmentVariable(key, value, EnvironmentVariableTarget.Process);
 
         #endregion
     }

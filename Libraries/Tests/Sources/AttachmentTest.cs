@@ -15,7 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
+using Cube.Tests;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Tests
@@ -48,7 +48,7 @@ namespace Cube.Pdf.Tests
         public void Create()
         {
             var name = "SampleImage02.png";
-            var src  = GetExamplesWith(name);
+            var src  = GetSource(name);
             var dest = new Attachment(src);
 
             Assert.That(dest.Name,            Is.EqualTo(name));
@@ -72,7 +72,7 @@ namespace Cube.Pdf.Tests
         public void Create_NotFound()
         {
             var name = "NotFound.txt";
-            var src = GetExamplesWith(name);
+            var src = GetSource(name);
             var dest = new Attachment(src);
 
             Assert.That(dest.Name,     Is.EqualTo(name));

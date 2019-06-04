@@ -48,10 +48,9 @@ namespace Cube.Pdf.Tests
         [TestCaseSource(nameof(TestCases))]
         public void Get(string klass, string filename, Metadata cmp)
         {
-            using (var r = Create(klass, GetExamplesWith(filename), ""))
+            using (var src = Create(klass, GetSource(filename), ""))
             {
-                var dest = r.Metadata;
-
+                var dest = src.Metadata;
                 Assert.That(dest.Title,         Is.EqualTo(cmp.Title),    nameof(dest.Title));
                 Assert.That(dest.Author,        Is.EqualTo(cmp.Author),   nameof(dest.Author));
                 Assert.That(dest.Subject,       Is.EqualTo(cmp.Subject),  nameof(dest.Subject));

@@ -100,11 +100,12 @@
     *********************************************************************** -->
     <i:Interaction.Behaviors>
         <xb:DialogBehavior />
-        <xb:OpenFileDialogBehavior />
-        <xb:SaveFileDialogBehavior />
+        <xb:OpenFileBehavior />
+        <xb:SaveFileBehavior />
         <xb:UriBehavior />
         <xb:CloseBehavior />
-        <xb:ClosingBehavior Command="{Binding Ribbon.Close.Command}" />
+        <xb:DisposeBehavior />
+        <xb:ClosingToCommand Command="{Binding Ribbon.Close.Command}" />
         <my:PasswordWindowBehavior />
         <my:PreviewWindowBehavior />
         <my:InsertWindowBehavior />
@@ -115,12 +116,6 @@
         <my:MouseOpenBehavior Command="{Binding Open}" />
         <my:Hack35Behavior />
     </i:Interaction.Behaviors>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closed">
-            <xb:DisposeAction />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
     <!-- **********************************************************************
       Main

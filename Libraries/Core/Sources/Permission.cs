@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Net35;
-using Cube.Pdf.Mixin;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -33,7 +32,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public class Permission : ObservableProperty
+    public class Permission : SerializableBase
     {
         #region Constructors
 
@@ -254,7 +253,7 @@ namespace Cube.Pdf
         private bool Set(ref PermissionFlags src, PermissionFlags value, string name)
         {
             var dest = SetProperty(ref src, value, name);
-            if (dest) RaisePropertyChanged(nameof(Value));
+            if (dest) Refresh(nameof(Value));
             return dest;
         }
 

@@ -15,8 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Generics;
-using Cube.Log;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 using Cube.Pdf.Pinstaller.Debug;
 using NUnit.Framework;
 using System;
@@ -72,7 +72,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         public void CreateForce()
         {
             var name = "Dummy Driver";
-            var src  = new PrinterDriver(name, new PrinterDriver[0]);
+            var src  = new PrinterDriver(name, Enumerable.Empty<PrinterDriver>());
             Assert.That(src.Name,                       Is.EqualTo(name));
             Assert.That(src.Exists,                     Is.False, nameof(src.Exists));
             Assert.That(src.CanInstall(),               Is.False, nameof(src.CanInstall));
@@ -209,7 +209,7 @@ namespace Cube.Pdf.Pinstaller.Tests
         [TestCase("",        ExpectedResult = false)]
         public bool GetRepository(string src)
         {
-            var driver = new PrinterDriver("Dummy", new PrinterDriver[0]) { Repository = src };
+            var driver = new PrinterDriver("Dummy", Enumerable.Empty<PrinterDriver>()) { Repository = src };
             var dest   = driver.GetRepository(IO);
             this.LogDebug($"[{nameof(GetRepository)}] {src} -> {dest.Quote()}");
             return dest.HasValue() && IO.Exists(dest);

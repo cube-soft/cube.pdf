@@ -17,7 +17,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.DataContract;
-using Cube.Generics;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.Environment;
+using Cube.Mixin.String;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -234,7 +236,7 @@ namespace Cube.Pdf.Pinstaller
         #endregion
 
         #region Fields
-        private static readonly string _current = new AssemblyReader(Assembly.GetExecutingAssembly()).DirectoryName;
+        private static readonly string _current = Assembly.GetExecutingAssembly().GetDirectoryName();
         #endregion
     }
 }

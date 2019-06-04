@@ -15,8 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem.TestService;
-using Cube.Log;
+using Cube.Tests;
+using Cube.Mixin.Logging;
 using NUnit.Framework;
 using System;
 using System.ServiceProcess;

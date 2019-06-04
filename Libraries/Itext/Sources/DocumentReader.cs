@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Pdf.Mixin;
+using Cube.Mixin.Pdf;
 using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Itext
         /// <param name="query">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query) :
+        public DocumentReader(string src, IQuery<string, string> query) :
             this(src, query, false, true, new IO()) { }
 
         /* ----------------------------------------------------------------- */
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Itext
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query, IO io) :
+        public DocumentReader(string src, IQuery<string, string> query, IO io) :
             this(src, query, false, true, io) { }
 
         /* ----------------------------------------------------------------- */
@@ -135,7 +135,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password, bool partial, IO io) :
-            this(src, new QueryValue<string>(password), false, partial, io) { }
+            this(src, MakeQuery(null, password), false, partial, io) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -147,18 +147,45 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password query.</param>
+        /// <param name="query">Password query.</param>
         /// <param name="fullaccess">Requires full access.</param>
         /// <param name="partial">Partial reading mode.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> password,
-            bool fullaccess, bool partial, IO io) : base(io)
-        {
-            _core = ReaderFactory.Create(src, password, fullaccess, partial, out var result);
+        public DocumentReader(string src,
+            IQuery<string, string> query,
+            bool fullaccess,
+            bool partial,
+            IO io
+        ) : this(src, MakeQuery(query, string.Empty), fullaccess, partial, io) { }
 
-            var f = io.GetPdfFile(src, result);
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentReader
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="qv">Password query or string.</param>
+        /// <param name="fullaccess">Requires full access.</param>
+        /// <param name="partial">Partial reading mode.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private DocumentReader(string src,
+            QueryMessage<IQuery<string, string>, string> qv,
+            bool fullaccess,
+            bool partial,
+            IO io
+        ) : base(io)
+        {
+            _core = ReaderFactory.Create(src, qv, fullaccess, partial);
+
+            var f = io.GetPdfFile(src, qv.Value);
             f.Count      = _core.NumberOfPages;
             f.FullAccess = _core.IsOpenedWithFullPermissions;
 
@@ -207,6 +234,23 @@ namespace Cube.Pdf.Itext
         {
             if (disposing) _core?.Dispose();
         }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// QueryMessage
+        ///
+        /// <summary>
+        /// Creates a password query and string.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static QueryMessage<IQuery<string, string>, string> MakeQuery(
+            IQuery<string, string> query, string password) =>
+            Query.NewMessage(query, password);
 
         #endregion
 

@@ -189,33 +189,6 @@ steps:
     replaceExistingArchive: true
   displayName: 'Copy CubePinstaller modules'
 
-- task: ArchiveFiles@2
-  inputs:
-    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Clip.zip'
-    rootFolderOrFile: 'Applications\Clip\Main\$(PROJECT_BIN)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    replaceExistingArchive: true
-  displayName: 'Copy CubePDF Clip modules'
-
-- task: ArchiveFiles@2
-  inputs:
-    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Page.zip'
-    rootFolderOrFile: 'Applications\Pager\Main\$(PROJECT_BIN)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    replaceExistingArchive: true
-  displayName: 'Copy CubePDF Page modules'
-
-- task: ArchiveFiles@2
-  inputs:
-    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Picker.zip'
-    rootFolderOrFile: 'Applications\Picker\Main\$(PROJECT_BIN)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    replaceExistingArchive: true
-  displayName: 'Copy CubePDF ImagePicker modules'
-
 - task: CopyFiles@2
   inputs:
     contents: '**\*.log'
