@@ -96,12 +96,12 @@
     *********************************************************************** -->
     <i:Interaction.Behaviors>
         <xb:DialogBehavior />
-        <xb:OpenFileDialogBehavior />
-        <xb:SaveFileDialogBehavior />
+        <xb:OpenFileBehavior />
+        <xb:SaveFileBehavior />
         <xb:UriBehavior />
         <xb:CloseBehavior />
-        <xb:ClosingBehavior Command="{Binding Ribbon.Close.Command}" />
         <xb:DisposeBehavior />
+        <xb:ClosingToCommand Command="{Binding Ribbon.Close.Command}" />
         <my:PasswordWindowBehavior />
         <my:PreviewWindowBehavior />
         <my:InsertWindowBehavior />

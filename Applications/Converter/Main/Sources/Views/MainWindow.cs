@@ -137,8 +137,8 @@ namespace Cube.Pdf.Converter
 
             Behaviors.Add(new CloseBehavior(src, this));
             Behaviors.Add(new DialogBehavior(src));
-            Behaviors.Add(new OpenFileDialogBehavior(src));
-            Behaviors.Add(new SaveFileDialogBehavior(src));
+            Behaviors.Add(new OpenFileBehavior(src));
+            Behaviors.Add(new SaveFileBehavior(src));
 
             UpdateString(vm.General.Language);
         }

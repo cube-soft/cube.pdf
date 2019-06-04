@@ -18,9 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Images;
-using Cube.Mixin.String;
+using Cube.Mixin.Drawing;
 using Cube.Mixin.Pdf;
-using Cube.Xui.Converters;
+using Cube.Mixin.String;
 using System;
 using System.Drawing;
 using System.Windows.Media;
