@@ -24,7 +24,7 @@ require 'rake/clean'
 PROJECT     = 'Cube.Pdf'
 LIB         = '../packages'
 NATIVE      = '../resources/native'
-BRANCHES    = ['stable', 'net35']
+BRANCHES    = ['master', 'net35']
 FRAMEWORKS  = ['net45', 'net35']
 CONFIGS     = ['Release', 'Debug']
 PLATFORMS   = ['Any CPU', 'x86', 'x64']
@@ -78,7 +78,7 @@ end
 # --------------------------------------------------------------------------- #
 desc "Clean objects and build the solution in pre-defined branches and platforms."
 task :clean_build => [:clean] do
-    BRANCHES.product(['Any CPU']) { |e|
+    BRANCHES.product(PLATFORMS) { |e|
         sh("git checkout #{e[0]}")
         RakeFileUtils::rm_rf(FileList.new("#{LIB}/cube.*"))
         Rake::Task[:build].reenable
