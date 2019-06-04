@@ -21,27 +21,28 @@ require 'rake/clean'
 # --------------------------------------------------------------------------- #
 # configuration
 # --------------------------------------------------------------------------- #
-PROJECT     = 'Cube.Pdf'
-LIB         = '../packages'
-NATIVE      = '../resources/native'
-BRANCHES    = ['master', 'net35']
-FRAMEWORKS  = ['net45', 'net35']
-CONFIGS     = ['Release', 'Debug']
-PLATFORMS   = ['Any CPU', 'x86', 'x64']
-GS_NAME     = 'gsdll32.dll'
-GS_DEST     = ['Libraries/Tests', 'Applications/Converter/Tests', 'Applications/Converter/Main']
-PDFIUM_NAME = 'pdfiumviewer.native'
-PDFIUM_KIND = 'no_v8-no_xfa'
-PDFIUM_VER  = '2018.4.8.256'
-PDFIUM_DEST = ['Libraries/Tests', 'Applications/Editor/Tests', 'Applications/Editor/Main']
-PACKAGES    = ['Libraries/Core/Cube.Pdf.Core.nuspec',
-               'Libraries/Ghostscript/Cube.Pdf.Ghostscript.nuspec',
-               'Libraries/Itext/Cube.Pdf.Itext.nuspec',
-               'Libraries/Pdfium/Cube.Pdf.Pdfium.nuspec']
-TESTCASES   = {'Cube.Pdf.Tests'            => 'Libraries/Tests',
-               'Cube.Pdf.Converter.Tests'  => 'Applications/Converter/Tests',
-               'Cube.Pdf.Editor.Tests'     => 'Applications/Editor/Tests',
-               'Cube.Pdf.Pinstaller.Tests' => 'Applications/Pinstaller/Tests'}
+PROJECT     = "Cube.Pdf"
+MAIN        = "#{PROJECT}.Apps"
+LIB         = "../packages"
+NATIVE      = "../resources/native"
+BRANCHES    = ["master", "net35"]
+FRAMEWORKS  = ["net45", "net35"]
+CONFIGS     = ["Release", "Debug"]
+PLATFORMS   = ["Any CPU", "x86", "x64"]
+GS_NAME     = "gsdll32.dll"
+GS_DEST     = ["Libraries/Tests", "Applications/Converter/Tests", "Applications/Converter/Main"]
+PDFIUM_NAME = "pdfiumviewer.native"
+PDFIUM_KIND = "no_v8-no_xfa"
+PDFIUM_VER  = "2018.4.8.256"
+PDFIUM_DEST = ["Libraries/Tests", "Applications/Editor/Tests", "Applications/Editor/Main"]
+PACKAGES    = ["Libraries/Core/#{PROJECT}.Core.nuspec",
+               "Libraries/Ghostscript/#{PROJECT}.Ghostscript.nuspec",
+               "Libraries/Itext/#{PROJECT}.Itext.nuspec",
+               "Libraries/Pdfium#{PROJECT}.Pdfium.nuspec"]
+TESTCASES   = {"#{PROJECT}.Tests"            => "Libraries/Tests",
+               "#{PROJECT}.Converter.Tests"  => "Applications/Converter/Tests",
+               "#{PROJECT}.Editor.Tests"     => "Applications/Editor/Tests",
+               "#{PROJECT}.Pinstaller.Tests" => "Applications/Pinstaller/Tests"}
 
 # --------------------------------------------------------------------------- #
 # commands
@@ -55,59 +56,68 @@ TEST  = "../packages/NUnit.ConsoleRunner/3.10.0/tools/nunit3-console.exe"
 # --------------------------------------------------------------------------- #
 CLEAN.include("#{PROJECT}.*.nupkg")
 CLEAN.include("#{LIB}/cube.*")
-CLEAN.include(['bin', 'obj'].map{ |e| "**/#{e}" })
+CLEAN.include(["bin", "obj"].map{ |e| "**/#{e}" })
 
 # --------------------------------------------------------------------------- #
 # default
 # --------------------------------------------------------------------------- #
-desc "Build the solution and create NuGet packages."
-task :default => [:clean_build, :pack]
+desc "Clean, build, and create NuGet packages."
+task :default => [:clean, :build_all, :pack]
 
 # --------------------------------------------------------------------------- #
 # pack
 # --------------------------------------------------------------------------- #
 desc "Create NuGet packages in the net35 branch."
 task :pack do
-    sh("git checkout net35")
-    PACKAGES.each { |e| sh("#{PACK} #{e}") }
-    sh("git checkout master")
-end
-
-# --------------------------------------------------------------------------- #
-# clean_build
-# --------------------------------------------------------------------------- #
-desc "Clean objects and build the solution in pre-defined branches and platforms."
-task :clean_build => [:clean] do
-    BRANCHES.product(PLATFORMS) { |e|
-        sh("git checkout #{e[0]}")
-        RakeFileUtils::rm_rf(FileList.new("#{LIB}/cube.*"))
-        Rake::Task[:build].reenable
-        Rake::Task[:build].invoke(e[1])
-    }
+    checkout("net35") { PACKAGES.each { |e| sh("#{PACK} #{e}") }}
 end
 
 # --------------------------------------------------------------------------- #
 # build
 # --------------------------------------------------------------------------- #
-desc "Build the solution in the current branch."
+desc "Build projects in the current branch."
 task :build, [:platform] do |_, e|
     e.with_defaults(:platform => PLATFORMS[0])
-    sh("nuget restore #{PROJECT}.Apps.sln")
-    sh(%(#{BUILD} -p:Platform="#{e.platform}" #{PROJECT}.Apps.sln))
+    sh("nuget restore #{MAIN}.sln")
+    sh(%(#{BUILD} -p:Platform="#{e.platform}" #{MAIN}.sln))
 end
+
+# --------------------------------------------------------------------------- #
+# clean_build
+# --------------------------------------------------------------------------- #
+desc "Build projects in pre-defined branches and platforms."
+task :build_all do
+    BRANCHES.product(PLATFORMS) { |set|
+        checkout(set[0]) do
+            Rake::Task[:build].reenable
+            Rake::Task[:build].invoke(set[1])
+        end
+    }
+end
+
+# --------------------------------------------------------------------------- #
+# build_test
+# --------------------------------------------------------------------------- #
+desc "Build and test projects in the current branch."
+task :build_test => [:build, :test]
 
 # --------------------------------------------------------------------------- #
 # test
 # --------------------------------------------------------------------------- #
 desc "Build and test projects in the current branch."
-task :test => [:build] do
-    pf  = PLATFORMS[0]
+task :test do
     fw  = %x(git symbolic-ref --short HEAD).chomp
     fw  = 'net45' if (fw != 'net35')
-    bin = ['bin', pf, CONFIGS[0], fw].join('/')
-    Rake::Task[:copy].reenable
-    Rake::Task[:copy].invoke(pf, fw)
+    bin = ['bin', PLATFORMS[0], CONFIGS[0], fw].join('/')
     TESTCASES.each { |p, d| sh(%(#{TEST} "#{d}/#{bin}/#{p}.dll" --work="#{d}/#{bin}")) }
+end
+
+# --------------------------------------------------------------------------- #
+# test_all
+# --------------------------------------------------------------------------- #
+desc "Test projects in pre-defined branches."
+task :test_all do
+    BRANCHES.each { |e| checkout(e) { Rake::Task[:test].execute }}
 end
 
 # --------------------------------------------------------------------------- #
@@ -137,4 +147,14 @@ task :copy, [:platform, :framework] do |_, e|
             RakeFileUtils::cp_r(src, dest)
         }
     }
+end
+
+# --------------------------------------------------------------------------- #
+# checkout
+# --------------------------------------------------------------------------- #
+def checkout(branch, &callback)
+    sh("git checkout #{branch}")
+    callback.call()
+ensure
+    sh("git checkout master")
 end
