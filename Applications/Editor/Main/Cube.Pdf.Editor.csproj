@@ -9,9 +9,10 @@
         <AssemblyName>CubePdfUtility</AssemblyName>
         <AssemblyTitle>CubePDF Utility</AssemblyTitle>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net35</TargetFramework>
         <LangVersion>latest</LangVersion>
+        <TargetFramework>net35</TargetFramework>
         <Platforms>AnyCPU;x86;x64</Platforms>
+        <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
         <IsPackable>false</IsPackable>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
