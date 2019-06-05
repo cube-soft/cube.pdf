@@ -38,7 +38,7 @@ PDFIUM_DEST = ["Libraries/Tests", "Applications/Editor/Tests", "Applications/Edi
 PACKAGES    = ["Libraries/Core/#{PROJECT}.Core.nuspec",
                "Libraries/Ghostscript/#{PROJECT}.Ghostscript.nuspec",
                "Libraries/Itext/#{PROJECT}.Itext.nuspec",
-               "Libraries/Pdfium#{PROJECT}.Pdfium.nuspec"]
+               "Libraries/Pdfium/#{PROJECT}.Pdfium.nuspec"]
 TESTCASES   = {"#{PROJECT}.Tests"            => "Libraries/Tests",
                "#{PROJECT}.Converter.Tests"  => "Applications/Converter/Tests",
                "#{PROJECT}.Editor.Tests"     => "Applications/Editor/Tests",
