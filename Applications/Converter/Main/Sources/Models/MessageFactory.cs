@@ -30,7 +30,7 @@ namespace Cube.Pdf.Converter
     /// MessageFactory
     ///
     /// <summary>
-    /// Provides functionality to create messsage objects.
+    /// Provides functionality to create message objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -135,7 +135,7 @@ namespace Cube.Pdf.Converter
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForSource(this SettingsFolder src)
+        public static OpenFileMessage CreateForSource(this SettingFolder src)
         {
             var io   = src.IO;
             var path = src.Value.Source;
@@ -166,7 +166,7 @@ namespace Cube.Pdf.Converter
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage CreateForDestination(this SettingsFolder src)
+        public static SaveFileMessage CreateForDestination(this SettingFolder src)
         {
             var io   = src.IO;
             var path = src.Value.Destination;
@@ -197,7 +197,7 @@ namespace Cube.Pdf.Converter
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForUserProgram(this SettingsFolder src)
+        public static OpenFileMessage CreateForUserProgram(this SettingFolder src)
         {
             var io   = src.IO;
             var path = src.Value.UserProgram;

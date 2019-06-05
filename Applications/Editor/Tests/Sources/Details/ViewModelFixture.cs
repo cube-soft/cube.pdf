@@ -184,7 +184,7 @@ namespace Cube.Pdf.Editor.Tests
         /* ----------------------------------------------------------------- */
         private MainViewModel CreateMainViewModel()
         {
-            var src = new SettingsFolder(
+            var src = new SettingFolder(
                 Assembly.GetExecutingAssembly(),
                 DataContract.Format.Registry,
                 @"CubeSoft\Cube.Pdf.Editor.Tests",

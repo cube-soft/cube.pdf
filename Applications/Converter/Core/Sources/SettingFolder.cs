@@ -28,29 +28,29 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsFolder
+    /// SettingFolder
     ///
     /// <summary>
     /// Represents the application and/or user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsFolder : SettingsFolder<SettingsValue>
+    public class SettingFolder : SettingFolder<SettingValue>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsFolder
+        /// SettingFolder
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingsFolder class.
+        /// Initializes a new instance of the SettingFolder class.
         /// </summary>
         ///
         /// <param name="assembly">Assembly object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly) : this(
+        public SettingFolder(Assembly assembly) : this(
             assembly,
             DataContract.Format.Registry,
             @"CubeSoft\CubePDF\v2"
@@ -58,10 +58,10 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsFolder
+        /// SettingFolder
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingsFolder class with the
+        /// Initializes a new instance of the SettingFolder class with the
         /// specified arguments.
         /// </summary>
         ///
@@ -70,15 +70,15 @@ namespace Cube.Pdf.Converter
         /// <param name="path">Path to save settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly, DataContract.Format format, string path) :
+        public SettingFolder(Assembly assembly, DataContract.Format format, string path) :
             this(assembly, format, path, new IO()) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsFolder
+        /// SettingFolder
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingsFolder class with the
+        /// Initializes a new instance of the SettingFolder class with the
         /// specified arguments.
         /// </summary>
         ///
@@ -88,7 +88,7 @@ namespace Cube.Pdf.Converter
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly, DataContract.Format format, string path, IO io) :
+        public SettingFolder(Assembly assembly, DataContract.Format format, string path, IO io) :
             base(assembly, format, path, io)
         {
             AutoSave       = false;

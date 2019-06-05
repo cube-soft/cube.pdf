@@ -16,43 +16,30 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using NUnit.Framework;
-using System.Reflection;
+using System.Windows;
 
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// GlobalSetup
+    /// SettingWindow
     ///
     /// <summary>
-    /// NUnit で最初に実行する処理を記述するテストです。
+    /// Represents the code behind of the SettingWindow.xaml
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [SetUpFixture]
-    public class GlobalSetup
+    public partial class SettingWindow : Window
     {
-        #region Methods
-
         /* ----------------------------------------------------------------- */
         ///
-        /// OneTimeSetup
+        /// SettingWindow
         ///
         /// <summary>
-        /// 一度だけ実行される初期化処理です。
+        /// Initializes a new instance of the SettingWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            Logger.Configure();
-            Logger.ObserveTaskException();
-            Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
-            ApplicationSetting.Configure();
-        }
-
-        #endregion
+        public SettingWindow() { InitializeComponent(); }
     }
 }

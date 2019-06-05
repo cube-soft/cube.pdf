@@ -92,7 +92,7 @@ namespace Cube.Pdf.Editor
             Arguments = e.Args ?? Enumerable.Empty<string>();
             this.LogInfo($"Arguments:{Arguments.Join(" ")}");
 
-            ApplicationSettings.Configure();
+            ApplicationSetting.Configure();
             base.OnStartup(e);
         }
 

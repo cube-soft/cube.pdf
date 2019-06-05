@@ -97,15 +97,15 @@ namespace Cube.Pdf.Editor
 
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsWindowBehavior
+    /// SettingWindowBehavior
     ///
     /// <summary>
-    /// Represents the behavior to show a SettingsWindow dialog.
+    /// Represents the behavior to show a SettingWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsWindowBehavior :
-        ShowDialogBehavior<SettingsWindow, SettingsViewModel> { }
+    public class SettingWindowBehavior :
+        ShowDialogBehavior<SettingWindow, SettingViewModel> { }
 
     #endregion
 

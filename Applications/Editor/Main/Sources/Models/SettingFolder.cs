@@ -28,23 +28,23 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsFolder
+    /// SettingFolder
     ///
     /// <summary>
     /// Represents the application and/or user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingsFolder : SettingsFolder<SettingsValue>
+    public class SettingFolder : SettingFolder<SettingValue>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsFolder
+        /// SettingFolder
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingsFolder with the
+        /// Initializes a new instance of the SettingFolder with the
         /// specified parameters.
         /// </summary>
         ///
@@ -52,15 +52,15 @@ namespace Cube.Pdf.Editor
         /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly, IO io) :
+        public SettingFolder(Assembly assembly, IO io) :
             this(assembly, Cube.DataContract.Format.Registry, @"CubeSoft\CubePDF Utility2", io) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsFolder
+        /// SettingFolder
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingsFolder with the
+        /// Initializes a new instance of the SettingFolder with the
         /// specified parameters.
         /// </summary>
         ///
@@ -70,7 +70,7 @@ namespace Cube.Pdf.Editor
         /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
+        public SettingFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
             base(assembly, format, location, io)
         {
             Title          = Assembly.GetTitle();
@@ -123,7 +123,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnLoaded(ValueChangedEventArgs<SettingsValue> e)
+        protected override void OnLoaded(ValueChangedEventArgs<SettingValue> e)
         {
             try { Locale.Set(e.NewValue.Language); }
             finally { base.OnLoaded(e); }

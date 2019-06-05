@@ -57,7 +57,7 @@ namespace Cube.Pdf.Converter
         /// <returns>Ghostscript.Converter object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Ghostscript.Converter Create(SettingsFolder src)
+        public static Ghostscript.Converter Create(SettingFolder src)
         {
             var asm  = Assembly.GetExecutingAssembly();
             var dir  = src.IO.Get(asm.Location).DirectoryName;
@@ -80,7 +80,7 @@ namespace Cube.Pdf.Converter
         /// LogDebug
         ///
         /// <summary>
-        /// Outputs log ot the Ghostscript API.
+        /// Outputs log of the Ghostscript API.
         /// </summary>
         ///
         /// <param name="src">Ghostscript converter object.</param>
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static DocumentConverter CreateDocumentConverter(SettingsFolder src)
+        private static DocumentConverter CreateDocumentConverter(SettingFolder src)
         {
             var dest = PdfConverter.SupportedFormats.Contains(src.Value.Format) ?
                        CreatePdfConverter(src) :
@@ -136,7 +136,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static PdfConverter CreatePdfConverter(SettingsFolder src) =>
+        private static PdfConverter CreatePdfConverter(SettingFolder src) =>
             new PdfConverter(src.IO)
             {
                 Version     = src.Value.Metadata.Version,
@@ -153,7 +153,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Ghostscript.Converter CreateImageConverter(SettingsFolder src)
+        private static Ghostscript.Converter CreateImageConverter(SettingFolder src)
         {
             var key = KeyValuePair.Create(src.Value.Format, src.Value.Grayscale);
             Debug.Assert(FormatMap.ContainsKey(key));

@@ -27,7 +27,7 @@ namespace Cube.Pdf.Converter
     /// MetadataViewModel
     ///
     /// <summary>
-    /// Represents the viewmodel for the metadata tab in the main window.
+    /// Represents the ViewModel for the metadata tab in the main window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

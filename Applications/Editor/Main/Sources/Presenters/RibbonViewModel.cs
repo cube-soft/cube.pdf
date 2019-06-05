@@ -546,15 +546,15 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// Setting
         ///
         /// <summary>
-        /// Gets a menu to show a settings dialog.
+        /// Gets a menu to show a setting dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Settings => Get(() => new RibbonElement(
-            nameof(Settings),
+        public RibbonElement Setting => Get(() => new RibbonElement(
+            nameof(Setting),
             () => Properties.Resources.MenuSettings,
             GetDispatcher(false)
         ));
@@ -572,8 +572,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> FrameOnly => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuFrameOnly,
-            () => _model.Settings.FrameOnly,
-            e  => _model.Settings.FrameOnly = e,
+            () => _model.Setting.FrameOnly,
+            e  => _model.Setting.FrameOnly = e,
             GetDispatcher(false)
         ));
 

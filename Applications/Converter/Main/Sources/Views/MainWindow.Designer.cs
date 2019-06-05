@@ -228,7 +228,7 @@
             //
             // SettingsBindingSource
             //
-            this.SettingsBindingSource.DataSource = typeof(Cube.Pdf.Converter.SettingsViewModel);
+            this.SettingsBindingSource.DataSource = typeof(Cube.Pdf.Converter.SettingViewModel);
             //
             // PostProcessComboBox
             //

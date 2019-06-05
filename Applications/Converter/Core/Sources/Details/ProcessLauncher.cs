@@ -49,9 +49,9 @@ namespace Cube.Pdf.Converter
         /// <param name="src">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ProcessLauncher(SettingsFolder src)
+        public ProcessLauncher(SettingFolder src)
         {
-            Settings  = src;
+            Setting   = src;
             _handlers = new Dictionary<PostProcess, Action<IEnumerable<string>>>
             {
                 { PostProcess.Open,          Open           },
@@ -66,14 +66,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// Setting
         ///
         /// <summary>
         /// Gets the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
+        public SettingFolder Setting { get; }
 
         #endregion
 
@@ -92,7 +92,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Invoke(IEnumerable<string> src)
         {
-            if (_handlers.TryGetValue(Settings.Value.PostProcess, out var dest)) dest(src);
+            if (_handlers.TryGetValue(Setting.Value.PostProcess, out var dest)) dest(src);
         }
 
         #endregion
@@ -121,7 +121,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void OpenDirectory(IEnumerable<string> src) => Start(Create(
             "explorer.exe",
-            Settings.IO.Get(src.First()).DirectoryName.Quote()
+            Setting.IO.Get(src.First()).DirectoryName.Quote()
         ));
 
         /* ----------------------------------------------------------------- */
@@ -135,8 +135,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void RunUserProgram(IEnumerable<string> src)
         {
-            if (!Settings.Value.UserProgram.HasValue()) return;
-            Start(Create(Settings.Value.UserProgram, src.First().Quote()));
+            if (!Setting.Value.UserProgram.HasValue()) return;
+            Start(Create(Setting.Value.UserProgram, src.First().Quote()));
         }
 
         /* ----------------------------------------------------------------- */

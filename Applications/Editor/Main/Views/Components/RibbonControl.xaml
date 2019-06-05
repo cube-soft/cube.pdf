@@ -310,14 +310,14 @@
 
             <r:RibbonGroup>
                 <!-- **********************************************************
-                  Settings
+                  Setting
                 *********************************************************** -->
                 <r:RibbonButton
-                    Label="{Binding Ribbon.Settings.Text}"
-                    SmallImageSource="{Binding Ribbon.Settings.SmallIcon}"
-                    LargeImageSource="{Binding Ribbon.Settings.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Settings.Enabled}"
-                    Command="{Binding Ribbon.Settings.Command}" />
+                    Label="{Binding Ribbon.Setting.Text}"
+                    SmallImageSource="{Binding Ribbon.Setting.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Setting.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Setting.Enabled}"
+                    Command="{Binding Ribbon.Setting.Command}" />
             </r:RibbonGroup>
         </r:RibbonTab>
 
@@ -348,12 +348,12 @@
                     Command="{Binding Ribbon.SaveAs.Command}" />
 
                 <!-- **********************************************************
-                  Settings (ApplicationMenu)
+                  Setting (ApplicationMenu)
                 *********************************************************** -->
                 <r:RibbonApplicationMenuItem
-                    Header="{Binding Ribbon.Settings.Tooltip}"
-                    ImageSource="{Binding Ribbon.Settings.LargeIcon}"
-                    Command="{Binding Ribbon.Settings.Command}" />
+                    Header="{Binding Ribbon.Setting.Tooltip}"
+                    ImageSource="{Binding Ribbon.Setting.LargeIcon}"
+                    Command="{Binding Ribbon.Setting.Command}" />
 
                 <!-- **********************************************************
                   Close (ApplicationMenu)

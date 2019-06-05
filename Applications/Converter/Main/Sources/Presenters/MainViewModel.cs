@@ -29,14 +29,8 @@ namespace Cube.Pdf.Converter
     /// MainViewModel
     ///
     /// <summary>
-    /// Settings とメイン画面を関連付ける ViewModel を表すクラスです。
+    /// SettingFolder とメイン画面を関連付ける ViewModel を表すクラスです。
     /// </summary>
-    ///
-    /// <remarks>
-    /// Convert 以外では、Messenger 経由でイベントを発生させる際に
-    /// Sync を利用していません。これらのコマンドが非同期で実行される
-    /// 可能性がある場合、Sync を利用する形に修正して下さい。
-    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     public sealed class MainViewModel : CommonViewModel
@@ -48,40 +42,40 @@ namespace Cube.Pdf.Converter
         /// MainViewModel
         ///
         /// <summary>
-        /// Intializes a new instance of the MainViewModel class with the
+        /// Initializes a new instance of the MainViewModel class with the
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
+        /// <param name="setting">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingsFolder settings) :
-            this(settings, SynchronizationContext.Current) { }
+        public MainViewModel(SettingFolder setting) :
+            this(setting, SynchronizationContext.Current) { }
 
         /* ----------------------------------------------------------------- */
         ///
         /// MainViewModel
         ///
         /// <summary>
-        /// Intializes a new instance of the MainViewModel class with the
+        /// Initializes a new instance of the MainViewModel class with the
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
+        /// <param name="setting">User settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingsFolder settings, SynchronizationContext context) :
+        public MainViewModel(SettingFolder setting, SynchronizationContext context) :
             base(new Aggregator(), context)
         {
-            Locale.Set(settings.Value.Language);
+            Locale.Set(setting.Value.Language);
 
-            General    = new SettingsViewModel(settings, Aggregator, context);
-            Metadata   = new MetadataViewModel(settings.Value.Metadata, Aggregator, context);
-            Encryption = new EncryptionViewModel(settings.Value.Encryption, Aggregator, context);
+            General    = new SettingViewModel(setting, Aggregator, context);
+            Metadata   = new MetadataViewModel(setting.Value.Metadata, Aggregator, context);
+            Encryption = new EncryptionViewModel(setting.Value.Encryption, Aggregator, context);
 
-            _model = new Facade(settings);
-            _model.Settings.PropertyChanged += Observe;
+            _model = new Facade(setting);
+            _model.Setting.PropertyChanged += Observe;
         }
 
         #endregion
@@ -98,7 +92,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsViewModel General { get; }
+        public SettingViewModel General { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -132,8 +126,8 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public string Title =>
-            _model.Settings.DocumentName.Source.HasValue() ?
-            $"{_model.Settings.DocumentName.Source} - {Product} {Version}" :
+            _model.Setting.DocumentName.Source.HasValue() ?
+            $"{_model.Setting.DocumentName.Source} - {Product} {Version}" :
             $"{Product} {Version}";
 
         /* ----------------------------------------------------------------- */
@@ -145,7 +139,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Product => _model.Settings.Assembly.GetProduct();
+        public string Product => _model.Setting.Assembly.GetProduct();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -156,7 +150,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Version => _model.Settings.Version.ToString(true);
+        public string Version => _model.Setting.Version.ToString(true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -167,7 +161,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri => ApplicationSettings.Uri;
+        public Uri Uri => ApplicationSetting.Uri;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -178,7 +172,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Busy => _model.Settings.Value.Busy;
+        public bool Busy => _model.Setting.Value.Busy;
 
         #endregion
 
@@ -209,7 +203,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Save()
         {
-            if (Metadata.ConfirmWhenSave()) _model.Settings.Save();
+            if (Metadata.ConfirmWhenSave()) _model.Setting.Save();
         }
 
         /* ----------------------------------------------------------------- */
@@ -223,7 +217,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void SelectSource() =>
-            Send(_model.Settings.CreateForSource(), e => _model.SetSource(e));
+            Send(_model.Setting.CreateForSource(), e => _model.SetSource(e));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -236,7 +230,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void SelectDestination() =>
-            Send(_model.Settings.CreateForDestination(), e => _model.SetDestination(e));
+            Send(_model.Setting.CreateForDestination(), e => _model.SetDestination(e));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -249,7 +243,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void SelectUserProgram() =>
-            Send(_model.Settings.CreateForUserProgram(), e => _model.SetUserProgram(e));
+            Send(_model.Setting.CreateForUserProgram(), e => _model.SetUserProgram(e));
 
         #endregion
 
@@ -287,7 +281,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void Observe(object s, PropertyChangedEventArgs e)
         {
-            var value = _model.Settings.Value;
+            var value = _model.Setting.Value;
 
             switch (e.PropertyName)
             {

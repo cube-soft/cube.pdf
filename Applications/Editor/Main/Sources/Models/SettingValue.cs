@@ -16,167 +16,195 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Assembly;
-using Cube.Xui;
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Threading;
+using System.Runtime.Serialization;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsViewModel
+    /// SettingValue
     ///
     /// <summary>
-    /// Represents the ViewModel for a SettingsWindow instance.
+    /// ユーザ設定を保持するためのクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class SettingsViewModel : DialogViewModel
+    [DataContract]
+    public class SettingValue : SerializableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsViewModel
+        /// SettingValue
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingsViewModel
-        /// with the specified argumetns.
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
-        /// <param name="src">User settings.</param>
-        /// <param name="context">Synchronization context.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public SettingsViewModel(SettingsFolder src, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleSettings, new Aggregator(), context)
-        {
-            _model = src;
-            OK.Command = new DelegateCommand(() =>
-            {
-                Send<UpdateSourcesMessage>();
-                Send<CloseMessage>();
-            });
-        }
+        public SettingValue() { Reset(); }
 
         #endregion
 
         #region Properties
 
+        #region DataMember
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Languages
+        /// Width
         ///
         /// <summary>
-        /// Gets the collection of supported languages.
+        /// Gets or sets the width of main window.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Language> Languages { get; } = new[]
+        [DataMember]
+        public int Width
         {
-            Cube.Language.Auto,
-            Cube.Language.English,
-            Cube.Language.Japanese,
-        };
+            get => _width;
+            set => SetProperty(ref _width, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Height
+        ///
+        /// <summary>
+        /// Gets or sets the height of main window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int Height
+        {
+            get => _height;
+            set => SetProperty(ref _height, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ItemSize
+        ///
+        /// <summary>
+        /// Gets or sets the displayed item size.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember(Name = "ViewSize")]
+        public int ItemSize
+        {
+            get => _itemSize;
+            set => SetProperty(ref _itemSize, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FrameOnly
+        ///
+        /// <summary>
+        /// Gets or sets the value indicating whether only the frame
+        /// of each item is displayed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool FrameOnly
+        {
+            get => _frameOnly;
+            set => SetProperty(ref _frameOnly, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Language
         ///
         /// <summary>
-        /// Gets the language menu.
+        /// Gets or sets the display language.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<Language> Language => Get(() => new BindableElement<Language>(
-            () => Properties.Resources.MenuLanguage,
-            () => _model.Value.Language,
-            e  => _model.Value.Language = e,
-            GetDispatcher(false)
-        ));
+        [DataMember]
+        public Language Language
+        {
+            get => _language;
+            set => SetProperty(ref _language, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Version
+        /// CheckUpdate
         ///
         /// <summary>
-        /// Gets the version menu.
+        /// Gets or sets the value indicating whether checking update.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<string> Version => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuVersion,
-            () => $"{_model.Title} {_model.Version.ToString(true)}",
-            GetDispatcher(false)
-        ));
+        [DataMember]
+        public bool CheckUpdate
+        {
+            get => _update;
+            set => SetProperty(ref _update, value);
+        }
+
+        #endregion
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Link
+        /// Uri
         ///
         /// <summary>
-        /// Gets the link menu.
+        /// Web ページの URL を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<Uri> Link => Get(() => new BindableElement<Uri>(
-            () => Assembly.GetExecutingAssembly().GetCopyright(),
-            () => _model.Value.Uri,
-            GetDispatcher(false)
-        ) { Command = new DelegateCommand(() => Post(Link.Value)) });
+        public Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdfutility/");
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Update
+        /// OnDeserializing
         ///
         /// <summary>
-        /// Gets the menu indicating whether checking software update
-        /// at launching process.
+        /// デシリアライズ直前に実行されます。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<bool> Update => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuUpdate,
-            () => _model.Value.CheckUpdate,
-            e  => _model.Value.CheckUpdate = e,
-            GetDispatcher(false)
-        ));
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext context) => Reset();
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Windows
+        /// Reset
         ///
         /// <summary>
-        /// Gets the menu of Windows version.
+        /// 値をリセットします。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement Windows => Get(() => new BindableElement(
-            () => $"{Environment.OSVersion}",
-            GetDispatcher(false)
-        ));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Framework
-        ///
-        /// <summary>
-        /// Gets the menu of .NET Framework version.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IElement Framework => Get(() => new BindableElement(
-            () => $"Microsoft .NET Framework {Environment.Version}",
-            GetDispatcher(false)
-        ));
+        private void Reset()
+        {
+            _width    = 800;
+            _height   = 600;
+            _itemSize = 250;
+            _language = Language.Auto;
+            _update   = true;
+        }
 
         #endregion
 
         #region Fields
-        private readonly SettingsFolder _model;
+        private int _width;
+        private int _height;
+        private int _itemSize;
+        private bool _frameOnly;
+        private Language _language;
+        private bool _update;
         #endregion
     }
 }
