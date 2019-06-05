@@ -28,15 +28,15 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsTest
+    /// SettingTest
     ///
     /// <summary>
-    /// Tests for the SettingsViewModel class.
+    /// Tests for the SettingViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SettingsTest : ViewModelFixture
+    class SettingTest : ViewModelFixture
     {
         #region Tests
 
@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Subscribe<SettingsViewModel>(e =>
+            var dp  = vm.Subscribe<SettingViewModel>(e =>
             {
                 Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
@@ -76,8 +76,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 cts.Cancel(); // done
             });
 
-            Assert.That(vm.Ribbon.Settings.Command.CanExecute(), Is.True);
-            Task.Run(() => vm.Ribbon.Settings.Command.Execute());
+            Assert.That(vm.Ribbon.Setting.Command.CanExecute(), Is.True);
+            Task.Run(() => vm.Ribbon.Setting.Command.Execute());
             Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Cancel)");
             dp.Dispose();
         });

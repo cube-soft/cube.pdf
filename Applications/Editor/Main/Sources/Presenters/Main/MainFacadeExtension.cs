@@ -57,7 +57,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Setup(this MainFacade src, IEnumerable<string> args)
         {
-            foreach (var ps in src.Settings.GetSplashProcesses()) ps.Kill();
+            foreach (var ps in src.Setting.GetSplashProcesses()) ps.Kill();
             var path = src.GetFirst(args);
             if (path.HasValue()) src.Open(path);
             src.Backup.Cleanup();
@@ -426,7 +426,7 @@ namespace Cube.Pdf.Editor
         {
             var items = src.Bindable.Images.Preferences.ItemSizeOptions;
             var prev  = src.Bindable.Images.Preferences.ItemSizeIndex;
-            var next  = items.LastIndexOf(x => x <= src.Settings.Value.ItemSize);
+            var next  = items.LastIndexOf(x => x <= src.Setting.Value.ItemSize);
             src.Zoom(next - prev);
         }
 

@@ -51,7 +51,7 @@ namespace Cube.Pdf.Converter.Tests
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Invoke(int id, SettingsValue src, IEnumerable<string> args, string filename, bool precopy)
+        public void Invoke(int id, SettingValue src, IEnumerable<string> args, string filename, bool precopy)
         {
             var dest = Create(Combine(args, filename));
 
@@ -138,7 +138,7 @@ namespace Cube.Pdf.Converter.Tests
                 var n = 0;
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format          = Format.Pdf,
                         Grayscale       = true,
@@ -149,7 +149,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format          = Format.Pdf,
                         Grayscale       = false,
@@ -160,7 +160,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format          = Format.Pdf,
                         Grayscale       = true,
@@ -172,7 +172,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = true,
@@ -183,7 +183,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = true,
@@ -194,7 +194,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -206,7 +206,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -218,7 +218,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -230,7 +230,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -250,7 +250,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Pdf,
                         Grayscale        = false,
@@ -286,7 +286,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Ps,
                         Grayscale        = false,
@@ -296,7 +296,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Ps,
                         Grayscale        = true,
@@ -306,7 +306,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Eps,
                         Grayscale        = false,
@@ -316,7 +316,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Eps,
                         Grayscale        = true,
@@ -326,7 +326,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Png,
                         Grayscale        = false,
@@ -336,7 +336,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Png,
                         Grayscale        = false,
@@ -346,7 +346,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Png,
                         Grayscale        = true,
@@ -356,7 +356,7 @@ namespace Cube.Pdf.Converter.Tests
                 );
 
                 yield return Create(n++,
-                    new SettingsValue
+                    new SettingValue
                     {
                         Format           = Format.Png,
                         Grayscale        = true,

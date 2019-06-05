@@ -64,15 +64,15 @@ namespace Cube.Pdf.Converter.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsViewModel
+        /// SettingViewModel
         ///
         /// <summary>
-        /// SettingsViewModel の各種プロパティを確認します。
+        /// SettingViewModel の各種プロパティを確認します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void SettingsViewModel() => Invoke(vm =>
+        public void SettingViewModel() => Invoke(vm =>
         {
             var vms = vm.General;
             Assert.That(vms.Resolution,         Is.EqualTo(600));

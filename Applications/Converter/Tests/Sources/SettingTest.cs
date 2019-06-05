@@ -30,15 +30,15 @@ namespace Cube.Pdf.Converter.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsTest
+    /// SettingTest
     ///
     /// <summary>
-    /// SettingsFolder のテスト用クラスです。
+    /// SettingFolder のテスト用クラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SettingsTest : FileFixture
+    class SettingTest : FileFixture
     {
         #region Tests
 
@@ -54,7 +54,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Create()
         {
-            var dest = new SettingsFolder(Assembly.GetExecutingAssembly());
+            var dest = new SettingFolder(Assembly.GetExecutingAssembly());
             Assert.That(dest.Format,                Is.EqualTo(Cube.DataContract.Format.Registry));
             Assert.That(dest.Location,              Is.EqualTo(@"CubeSoft\CubePDF\v2"));
             Assert.That(dest.AutoSave,              Is.False);
@@ -81,10 +81,10 @@ namespace Cube.Pdf.Converter.Tests
         {
             var temp    = IO.Combine(Environment.SpecialFolder.CommonApplicationData.GetName(), @"CubeSoft\CubePDF");
             var desktop = Environment.SpecialFolder.Desktop.GetName();
-            var src     = new SettingsFolder(
+            var src     = new SettingFolder(
                 Assembly.GetExecutingAssembly(),
                 Cube.DataContract.Format.Registry,
-                $@"CubeSoft\CubePDF\{nameof(SettingsTest)}",
+                $@"CubeSoft\CubePDF\{nameof(SettingTest)}",
                 IO
             );
 
@@ -148,7 +148,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Normalize()
         {
-            var src = new SettingsFolder(Assembly.GetExecutingAssembly());
+            var src = new SettingFolder(Assembly.GetExecutingAssembly());
             src.Normalize();
 
             var dest = src.Value;
@@ -202,7 +202,7 @@ namespace Cube.Pdf.Converter.Tests
                 @"C:\Program Files\CubePDF\cubepdf.exe",
             };
 
-            var dest = new SettingsFolder(Assembly.GetExecutingAssembly());
+            var dest = new SettingFolder(Assembly.GetExecutingAssembly());
             dest.Set(new ArgumentCollection(src, Collections.Argument.Windows, true));
 
             var path = System.IO.Path.Combine(
@@ -230,7 +230,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Set_Empty()
         {
-            var dest = new SettingsFolder(Assembly.GetExecutingAssembly());
+            var dest = new SettingFolder(Assembly.GetExecutingAssembly());
             dest.Set(new ArgumentCollection(Enumerable.Empty<string>(), Collections.Argument.Windows, true));
 
             Assert.That(dest.Digest,             Is.Null);

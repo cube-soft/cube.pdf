@@ -412,7 +412,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 cts.Cancel();
             });
 
-            vm.Data.Settings.Language = Language.English;
+            vm.Data.Setting.Language = Language.English;
             Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute(), Is.True);
             vm.Ribbon.InsertOthers.Command.Execute();
             Assert.That(Wait.For(cts.Token), "Timeout");

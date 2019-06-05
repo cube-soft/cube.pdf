@@ -16,34 +16,51 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Editor
+using System;
+
+namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ApplicationSettings
+    /// ApplicationSetting
     ///
     /// <summary>
     /// Represents the global settings of the application.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class ApplicationSettings
+    public sealed class ApplicationSetting
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ApplicationSettings
+        /// ApplicationSetting
         ///
         /// <summary>
-        /// Initializes a new instance of the ApplicationSettings class.
+        /// Initializes a new instance of the ApplicationSetting class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ApplicationSettings()
+        private ApplicationSetting()
         {
             Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo());
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uri
+        ///
+        /// <summary>
+        /// Gets the URL of the Web page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdf/");
 
         #endregion
 
@@ -63,7 +80,7 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private static readonly OnceAction _core = new OnceAction(() => new ApplicationSettings());
+        private static readonly OnceAction _core = new OnceAction(() => new ApplicationSetting());
         #endregion
     }
 }

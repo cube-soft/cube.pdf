@@ -24,33 +24,33 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsViewModel
+    /// SettingViewModel
     ///
     /// <summary>
-    /// Represents the viewmodel for the general and others tabs in
+    /// Represents the ViewModel for the general and others tabs in
     /// the main window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class SettingsViewModel : CommonViewModel
+    public sealed class SettingViewModel : CommonViewModel
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsViewModel
+        /// SettingViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingsViewModel class with
+        /// Initializes a new instance of the SettingViewModel class with
         /// the specified arguments.
         /// </summary>
         ///
         /// <param name="settings">User settings.</param>
-        /// <param name="aggregator">Event aggregator.</param>
+        /// <param name="aggregator">Message aggregator.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsViewModel(SettingsFolder settings, Aggregator aggregator,
+        public SettingViewModel(SettingFolder settings, Aggregator aggregator,
             SynchronizationContext context) : base(aggregator, context)
         {
             _io    = settings.IO;
@@ -398,7 +398,7 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Fields
-        private readonly SettingsValue _model;
+        private readonly SettingValue _model;
         private readonly IO _io;
         #endregion
     }

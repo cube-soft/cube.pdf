@@ -80,7 +80,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Refresh.Text,       Is.EqualTo("Refresh"));
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("ZoomIn"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
-            Assert.That(dest.Settings.Text,      Is.EqualTo("Settings"));
+            Assert.That(dest.Setting.Text,       Is.EqualTo("Settings"));
         }
 
         /* ----------------------------------------------------------------- */
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
-            Assert.That(dest.Settings.Tooltip,      Is.EqualTo(dest.Settings.Text));
+            Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
         }
 
         /* ----------------------------------------------------------------- */
@@ -172,7 +172,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Refresh.Text,       Is.EqualTo("更新"));
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("拡大"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
-            Assert.That(dest.Settings.Text,      Is.EqualTo("設定"));
+            Assert.That(dest.Setting.Text,       Is.EqualTo("設定"));
         }
 
          /* ----------------------------------------------------------------- */
@@ -218,7 +218,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
-            Assert.That(dest.Settings.Tooltip,      Is.EqualTo(dest.Settings.Text));
+            Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
         }
 
        /* ----------------------------------------------------------------- */
@@ -267,7 +267,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /* ----------------------------------------------------------------- */
         private RibbonViewModel Create()
         {
-            new SettingsFolder(Assembly.GetExecutingAssembly(), new IO()); // Locale.Configure
+            new SettingFolder(Assembly.GetExecutingAssembly(), new IO()); // Locale.Configure
             return new RibbonViewModel(null, new Aggregator(), new SynchronizationContext());
         }
 

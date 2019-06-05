@@ -5,6 +5,6 @@
     Renaming the file extension or editing the content of this file may
     cause the file to be unrecognizable by the program.
 -->
-<GenericObjectDataSource DisplayName="SettingsViewModel" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>Cube.Pdf.Converter.SettingsViewModel, CubePdf, Version=1.0.0.20, Culture=neutral, PublicKeyToken=null</TypeInfo>
+<GenericObjectDataSource DisplayName="SettingViewModel" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+   <TypeInfo>Cube.Pdf.Converter.SettingViewModel, CubePdf, Version=1.0.0.20, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

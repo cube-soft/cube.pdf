@@ -47,7 +47,7 @@ namespace Cube.Pdf.Converter
         /// <param name="assembly">Assembly object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Facade(Assembly assembly) : this(new SettingsFolder(assembly)) { }
+        public Facade(Assembly assembly) : this(new SettingFolder(assembly)) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -60,7 +60,7 @@ namespace Cube.Pdf.Converter
         /// <param name="settings">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Facade(SettingsFolder settings) { Settings = settings; }
+        public Facade(SettingFolder settings) { Setting = settings; }
 
         #endregion
 
@@ -68,14 +68,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// Setting
         ///
         /// <summary>
         /// Gets the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
+        public SettingFolder Setting { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -113,19 +113,19 @@ namespace Cube.Pdf.Converter
             {
                 try
                 {
-                    Settings.Value.Busy = true;
+                    Setting.Value.Busy = true;
                     var dest = new List<string>();
-                    using (var fs = new FileTransfer(Settings, GetTemp()))
+                    using (var fs = new FileTransfer(Setting, GetTemp()))
                     {
-                        Run(() => new DigestChecker(Settings).Invoke());
+                        Run(() => new DigestChecker(Setting).Invoke());
                         RunGhostscript(fs.Value);
-                        Run(() => new FileDecorator(Settings).Invoke(fs.Value));
+                        Run(() => new FileDecorator(Setting).Invoke(fs.Value));
                         Run(() => fs.Invoke(dest));
-                        Run(() => new ProcessLauncher(Settings).Invoke(dest));
+                        Run(() => new ProcessLauncher(Setting).Invoke(dest));
                     }
                     Results = dest;
                 }
-                finally { Settings.Value.Busy = false; }
+                finally { Setting.Value.Busy = false; }
             }
         }
 
@@ -157,9 +157,9 @@ namespace Cube.Pdf.Converter
         {
             lock (_lock)
             {
-                Settings.IO.TryDelete(GetTemp());
-                if (!Settings.Value.DeleteSource) return;
-                Settings.IO.TryDelete(Settings.Value.Source);
+                Setting.IO.TryDelete(GetTemp());
+                if (!Setting.Value.DeleteSource) return;
+                Setting.IO.TryDelete(Setting.Value.Source);
             }
         }
 
@@ -185,8 +185,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void RunGhostscript(string dest) => Run(() =>
         {
-            var gs = GhostscriptFactory.Create(Settings);
-            try { gs.Invoke(Settings.Value.Source, dest); }
+            var gs = GhostscriptFactory.Create(Setting);
+            try { gs.Invoke(Setting.Value.Source, dest); }
             finally { gs.LogDebug(); }
         });
 
@@ -199,7 +199,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetTemp() => Settings.IO.Combine(Settings.Value.Temp, Settings.Uid.ToString("D"));
+        private string GetTemp() => Setting.IO.Combine(Setting.Value.Temp, Setting.Uid.ToString("D"));
 
         #endregion
 

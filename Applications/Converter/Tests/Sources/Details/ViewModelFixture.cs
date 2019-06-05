@@ -103,7 +103,7 @@ namespace Cube.Pdf.Converter.Tests
         /// <returns>テストケース</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData Create(int id, SettingsValue src, IEnumerable<string> args) =>
+        protected static TestCaseData Create(int id, SettingValue src, IEnumerable<string> args) =>
             Create(id, src, args, false);
 
         /* ----------------------------------------------------------------- */
@@ -123,7 +123,7 @@ namespace Cube.Pdf.Converter.Tests
         ///
         /* ----------------------------------------------------------------- */
         protected static TestCaseData Create(int id,
-            SettingsValue src,
+            SettingValue src,
             IEnumerable<string> args,
             bool precopy
         ) => Create(id, src, args, "SampleMix.ps", precopy);
@@ -146,7 +146,7 @@ namespace Cube.Pdf.Converter.Tests
         ///
         /* ----------------------------------------------------------------- */
         protected static TestCaseData Create(int id,
-            SettingsValue src,
+            SettingValue src,
             IEnumerable<string> args,
             string filename,
             bool precopy
@@ -157,20 +157,20 @@ namespace Cube.Pdf.Converter.Tests
         /// Create
         ///
         /// <summary>
-        /// SettingsFolder オブジェクトを生成します。
+        /// SettingFolder オブジェクトを生成します。
         /// </summary>
         ///
         /// <param name="args">プログラム引数一覧</param>
         ///
-        /// <returns>SettingsFolder</returns>
+        /// <returns>SettingFolder</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected SettingsFolder Create(IEnumerable<string> args)
+        protected SettingFolder Create(IEnumerable<string> args)
         {
             var asm  = Assembly.GetExecutingAssembly();
             var fmt  = Cube.DataContract.Format.Registry;
             var path = $@"CubeSoft\CubePDF\{GetType().Name}";
-            var dest = new SettingsFolder(asm, fmt, path, IO);
+            var dest = new SettingFolder(asm, fmt, path, IO);
 
             dest.Load();
             dest.Normalize();
@@ -226,7 +226,7 @@ namespace Cube.Pdf.Converter.Tests
         /// <param name="src">設定内容</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Set(MainViewModel vm, SettingsValue src)
+        protected void Set(MainViewModel vm, SettingValue src)
         {
             Set(vm.General,   src);
             Set(vm.Metadata,   src.Metadata);
@@ -337,7 +337,7 @@ namespace Cube.Pdf.Converter.Tests
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void Set(SettingsViewModel vm, SettingsValue src)
+        private void Set(SettingViewModel vm, SettingValue src)
         {
             vm.Language          = src.Language;
             vm.Format            = src.Format;

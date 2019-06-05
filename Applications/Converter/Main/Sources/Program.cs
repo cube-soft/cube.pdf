@@ -58,18 +58,18 @@ namespace Cube.Pdf.Converter
                 Logger.Info(LogType, $"Ghostscript {Ghostscript.Converter.Revision}");
                 Logger.Info(LogType, $"[ {string.Join(" ", raw)} ]");
 
-                ApplicationSettings.Configure();
+                ApplicationSetting.Configure();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 var args = new ArgumentCollection(raw, Argument.Windows, true);
-                var settings = CreateSettings(args, Assembly.GetExecutingAssembly());
-                settings.Load();
-                settings.Normalize();
-                settings.Set(args);
+                var setting = CreateSetting(args, Assembly.GetExecutingAssembly());
+                setting.Load();
+                setting.Normalize();
+                setting.Set(args);
 
-                if (args.Options.ContainsKey("SkipUI")) Execute(settings);
-                else Show(settings);
+                if (args.Options.ContainsKey("SkipUI")) Execute(setting);
+                else Show(setting);
             }
             catch (Exception err) { Logger.Error(LogType, err); }
         }
@@ -80,18 +80,18 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateSettings
+        /// CreateSetting
         ///
         /// <summary>
-        /// Creates a new instance of the SettingsFolder class with the
+        /// Creates a new instance of the SettingFolder class with the
         /// specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static SettingsFolder CreateSettings(ArgumentCollection src, Assembly asm) =>
-            src.Options.TryGetValue("Settings", out var subkey) ?
-            new SettingsFolder(asm, Format.Registry, subkey, new IO()) :
-            new SettingsFolder(asm);
+        private static SettingFolder CreateSetting(ArgumentCollection src, Assembly asm) =>
+            src.Options.TryGetValue("Setting", out var subkey) ?
+            new SettingFolder(asm, Format.Registry, subkey, new IO()) :
+            new SettingFolder(asm);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -102,10 +102,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Show(SettingsFolder settings)
+        private static void Show(SettingFolder setting)
         {
             var view = new MainWindow();
-            view.Bind(new MainViewModel(settings));
+            view.Bind(new MainViewModel(setting));
             Application.Run(view);
         }
 
@@ -118,9 +118,9 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Execute(SettingsFolder settings)
+        private static void Execute(SettingFolder setting)
         {
-            using (var src = new Facade(settings)) src.Invoke();
+            using (var src = new Facade(setting)) src.Invoke();
         }
 
         #endregion

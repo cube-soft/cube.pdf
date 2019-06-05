@@ -59,7 +59,7 @@
         </Grid.RowDefinitions>
 
         <!-- ******************************************************************
-          Removal settings
+          Removal setting
         ******************************************************************* -->
         <Grid VerticalAlignment="Center" Margin="20,0">
             <Grid.RowDefinitions>

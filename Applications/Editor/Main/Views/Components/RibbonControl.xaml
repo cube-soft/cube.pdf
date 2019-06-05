@@ -310,14 +310,14 @@
 
             <r:RibbonGroupBox>
                 <!-- **********************************************************
-                  Settings
+                  Setting
                 *********************************************************** -->
                 <r:Button
-                    Header="{Binding Ribbon.Settings.Text}"
-                    Icon="{Binding Ribbon.Settings.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Settings.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Settings.Enabled}"
-                    Command="{Binding Ribbon.Settings.Command}" />
+                    Header="{Binding Ribbon.Setting.Text}"
+                    Icon="{Binding Ribbon.Setting.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Setting.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Setting.Enabled}"
+                    Command="{Binding Ribbon.Setting.Command}" />
             </r:RibbonGroupBox>
         </r:RibbonTabItem>
 
@@ -349,12 +349,12 @@
                 <Separator />
 
                 <!-- **********************************************************
-                  Settings (ApplicationMenu)
+                  Setting (ApplicationMenu)
                 *********************************************************** -->
                 <r:MenuItem
-                    Header="{Binding Ribbon.Settings.Tooltip}"
-                    Icon="{Binding Ribbon.Settings.LargeIcon}"
-                    Command="{Binding Ribbon.Settings.Command}" />
+                    Header="{Binding Ribbon.Setting.Tooltip}"
+                    Icon="{Binding Ribbon.Setting.LargeIcon}"
+                    Command="{Binding Ribbon.Setting.Command}" />
                 <Separator />
 
                 <!-- **********************************************************

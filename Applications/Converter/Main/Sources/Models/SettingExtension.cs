@@ -19,9 +19,9 @@
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.Environment;
+using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
-using Cube.Mixin.Pdf;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -30,14 +30,14 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsExtension
+    /// SettingExtension
     ///
     /// <summary>
-    /// Provides extended methods of the SettingsFolder class.
+    /// Provides extended methods of the SettingFolder class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class SettingsExtension
+    public static class SettingExtension
     {
         #region Methods
 
@@ -49,7 +49,7 @@ namespace Cube.Pdf.Converter
         /// Normalizes the specified settings.
         /// </summary>
         ///
-        /// <param name="src">Settings to be normalized.</param>
+        /// <param name="src">Setting to be normalized.</param>
         ///
         /// <remarks>
         /// 1.0.0RC12 より Resolution を ComboBox のインデックスに対応
@@ -58,7 +58,7 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Normalize(this SettingsFolder src)
+        public static void Normalize(this SettingFolder src)
         {
             var value = src.Value;
 
@@ -85,7 +85,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Format GetFormat(SettingsValue src) =>
+        private static Format GetFormat(SettingValue src) =>
             ViewResources.Formats.Any(e => e.Value == src.Format) ?
             src.Format :
             Format.Pdf;
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Orientation GetOrientation(SettingsValue src) =>
+        private static Orientation GetOrientation(SettingValue src) =>
             ViewResources.Orientations.Any(e => e.Value == src.Orientation) ?
             src.Orientation :
             Orientation.Auto;
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static int GetResolution(SettingsValue src) =>
+        private static int GetResolution(SettingValue src) =>
             src.Resolution >= 72 ? src.Resolution : 600;
 
         /* ----------------------------------------------------------------- */
@@ -125,7 +125,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetDestination(SettingsValue src, IO io)
+        private static string GetDestination(SettingValue src, IO io)
         {
             var desktop = Environment.SpecialFolder.Desktop.GetName();
 
@@ -147,7 +147,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetCreator(SettingsValue src) =>
+        private static string GetCreator(SettingValue src) =>
             src.Metadata.Creator.HasValue() ?
             src.Metadata.Creator :
             Assembly.GetExecutingAssembly().GetProduct();

@@ -16,30 +16,54 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Windows;
-
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsWindow
+    /// ApplicationSetting
     ///
     /// <summary>
-    /// Represents the code behind of the SettingsWindow.xaml
+    /// Represents the global settings of the application.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class SettingsWindow : Window
+    public sealed class ApplicationSetting
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsWindow
+        /// ApplicationSetting
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingsWindow class.
+        /// Initializes a new instance of the ApplicationSetting class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsWindow() { InitializeComponent(); }
+        private ApplicationSetting()
+        {
+            Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo());
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Configure
+        ///
+        /// <summary>
+        /// Configures global settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Configure() => _core.Invoke();
+
+        #endregion
+
+        #region Fields
+        private static readonly OnceAction _core = new OnceAction(() => new ApplicationSetting());
+        #endregion
     }
 }

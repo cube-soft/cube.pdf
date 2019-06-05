@@ -25,7 +25,7 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingsValue
+    /// SettingValue
     ///
     /// <summary>
     /// Represents the user settings.
@@ -33,20 +33,20 @@ namespace Cube.Pdf.Converter
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class SettingsValue : SerializableBase
+    public class SettingValue : SerializableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsValue
+        /// SettingValue
         ///
         /// <summary>
-        /// Initializes a new instance of the Settings class.
+        /// Initializes a new instance of the SettingValue class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsValue() { Reset(); }
+        public SettingValue() { Reset(); }
 
         #endregion
 

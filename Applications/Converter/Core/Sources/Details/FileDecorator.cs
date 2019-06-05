@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Pdf;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Itext;
-using Cube.Mixin.Pdf;
 using System;
 
 namespace Cube.Pdf.Converter
@@ -49,7 +49,7 @@ namespace Cube.Pdf.Converter
         /// <param name="src">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileDecorator(SettingsFolder src) { Settings = src; }
+        public FileDecorator(SettingFolder src) { Setting = src; }
 
         #endregion
 
@@ -57,14 +57,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// Setting
         ///
         /// <summary>
-        /// Gets the instance of the SettingsFolder class.
+        /// Gets the instance of the SettingFolder class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingsFolder Settings { get; }
+        public SettingFolder Setting { get; }
 
         #endregion
 
@@ -83,7 +83,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Invoke(string src)
         {
-            if (Settings.Value.Format != Format.Pdf) return;
+            if (Setting.Value.Format != Format.Pdf) return;
 
             InvokeItext(src);
             InvokeLinearization(src);
@@ -104,8 +104,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeItext(string src)
         {
-            var io    = Settings.IO;
-            var value = Settings.Value;
+            var io    = Setting.IO;
+            var value = Setting.Value;
             var tmp   = io.Combine(io.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
 
             using (var writer = new DocumentWriter(io))
@@ -133,12 +133,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeLinearization(string src)
         {
-            var io    = Settings.IO;
-            var value = Settings.Value;
+            var io    = Setting.IO;
+            var value = Setting.Value;
 
             if (!value.Linearization || value.Encryption.Enabled) return;
 
-            if (GhostscriptFactory.Create(Settings) is PdfConverter gs)
+            if (GhostscriptFactory.Create(Setting) is PdfConverter gs)
             {
                 var tmp = io.Combine(io.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
                 gs.Linearization = value.Linearization;
@@ -158,8 +158,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void Add(DocumentWriter src, string path, SaveOption so)
         {
-            var io    = Settings.IO;
-            var value = Settings.Value;
+            var io    = Setting.IO;
+            var value = Setting.Value;
 
             if (value.SaveOption != so || !io.Exists(path)) return;
 

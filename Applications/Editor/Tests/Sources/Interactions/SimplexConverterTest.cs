@@ -366,28 +366,6 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Setup
-        ///
-        /// <summary>
-        /// Invokes the setup operation at once.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Properties.Resources クラスの表示文字列を設定言語毎に
-        /// 切り替えるための処理を SettingsFolder の静的コンストラクタで
-        /// 実行しています。このコンストラクタが確実に実行されるように
-        /// Setup で SettingsFolder オブジェクトを生成します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            new SettingsFolder(Assembly.GetExecutingAssembly(), IO);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Convert
         ///
         /// <summary>

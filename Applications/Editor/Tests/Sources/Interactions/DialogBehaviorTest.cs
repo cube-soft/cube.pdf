@@ -177,19 +177,19 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsWindow
+        /// SettingWindow
         ///
         /// <summary>
         /// Executes the test for creating a new instance of the
-        /// SettingsWindowBehavior class.
+        /// SettingWindowBehavior class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void SettingsWindow() => Create(vm =>
+        public void SettingWindow() => Create(vm =>
         {
             var view = new Window { DataContext = vm };
-            var src  = new SettingsWindowBehavior();
+            var src  = new SettingWindowBehavior();
 
             Assert.DoesNotThrow(() =>
             {

@@ -56,7 +56,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel() : this (
-            new SettingsFolder(Assembly.GetExecutingAssembly(), new IO()) { AutoSave = true },
+            new SettingFolder(Assembly.GetExecutingAssembly(), new IO()) { AutoSave = true },
             SynchronizationContext.Current
         ) { }
 
@@ -70,7 +70,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingsFolder src, SynchronizationContext context) :
+        public MainViewModel(SettingFolder src, SynchronizationContext context) :
             base(new Aggregator(), context)
         {
             var recent   = Environment.SpecialFolder.Recent.GetName();
@@ -233,7 +233,7 @@ namespace Cube.Pdf.Editor
             Ribbon.Redo.Command          = IsRedo();
             Ribbon.ZoomIn.Command        = Any(() => TrackSync(() => Model.Zoom(1)));
             Ribbon.ZoomOut.Command       = Any(() => TrackSync(() => Model.Zoom(-1)));
-            Ribbon.Settings.Command      = Any(() => PostSettings());
+            Ribbon.Setting.Command       = Any(() => PostSetting());
             Ribbon.Exit.Command          = Any(() => Send<CloseMessage>());
         }
 
@@ -522,15 +522,15 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PostSettings
+        /// PostSetting
         ///
         /// <summary>
-        /// Posts the message to show a dialog of the SettingsWindow
+        /// Posts the message to show a dialog of the SettingWindow
         /// class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostSettings() => Post(new SettingsViewModel(Model.Settings, Context));
+        private void PostSetting() => Post(new SettingViewModel(Model.Setting, Context));
 
         #endregion
 
