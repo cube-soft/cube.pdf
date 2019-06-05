@@ -54,8 +54,8 @@ namespace Cube.Pdf.Editor
             Selection          = new Selection<FileItem> { Dispatcher = dispatcher };
             Count              = n;
             SelectedIndex      = i;
-            Index              = new Bindable<int>(Math.Max(i, 0), dispatcher);
-            UserSpecifiedIndex = new Bindable<int>(Math.Max(i, 0), dispatcher);
+            Index              = new BindableValue<int>(Math.Max(i, 0), dispatcher);
+            UserSpecifiedIndex = new BindableValue<int>(Math.Max(i, 0), dispatcher);
             UserSpecifiedIndex.PropertyChanged += (s, e) => Index.Value = UserSpecifiedIndex.Value;
         }
 
@@ -94,7 +94,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<int> Index { get; }
+        public BindableValue<int> Index { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -106,7 +106,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<int> UserSpecifiedIndex { get; }
+        public BindableValue<int> UserSpecifiedIndex { get; }
 
         /* ----------------------------------------------------------------- */
         ///

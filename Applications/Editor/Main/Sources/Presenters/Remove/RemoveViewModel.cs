@@ -45,7 +45,7 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the RemoveViewModel with the
-        /// specified argumetns.
+        /// specified arguments.
         /// </summary>
         ///
         /// <param name="callback">Callback method when applied.</param>
@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editor
         ) : base(() => Properties.Resources.TitleRemove, new Aggregator(), context)
         {
             _count = n;
-            Range = new Bindable<string>(string.Empty, GetDispatcher(false));
+            Range = new BindableValue<string>(string.Empty, GetDispatcher(false));
             OK.Command = new DelegateCommand(
                 () => Track(() =>
                 {
@@ -83,7 +83,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<string> Range { get; }
+        public BindableValue<string> Range { get; }
 
         /* ----------------------------------------------------------------- */
         ///
