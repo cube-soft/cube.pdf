@@ -555,7 +555,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Setting => Get(() => new RibbonElement(
             nameof(Setting),
-            () => Properties.Resources.MenuSettings,
+            () => Properties.Resources.MenuSetting,
             GetDispatcher(false)
         ));
 

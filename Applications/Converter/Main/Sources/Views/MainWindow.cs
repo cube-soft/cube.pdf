@@ -59,7 +59,7 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox));
 
             Locale.Subscribe(e => UpdateString(e));
-            SettingsPanel.ApplyButton = ApplyButton;
+            SettingPanel.ApplyButton = ApplyButton;
         }
 
         #endregion
@@ -84,7 +84,7 @@ namespace Cube.Pdf.Converter
             {
                 _busy = value;
                 ConvertButton.Enabled = !value;
-                SettingsTabControl.Enabled = !value;
+                SettingTabControl.Enabled = !value;
                 ApplyButton.Visible = !value;
                 ConvertProgressBar.Visible = value;
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
@@ -119,13 +119,13 @@ namespace Cube.Pdf.Converter
             if (!(src is MainViewModel vm)) return;
 
             MainBindingSource.DataSource       = vm;
-            SettingsBindingSource.DataSource   = vm.General;
+            SettingBindingSource.DataSource    = vm.General;
             MetadataBindingSource.DataSource   = vm.Metadata;
             EncryptionBindingSource.DataSource = vm.Encryption;
 
             // see remarks
-            SourceLabel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
-            SourcePanel.DataBindings.Add("Visible", SettingsBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
+            SourceLabel.DataBindings.Add("Visible", SettingBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
+            SourcePanel.DataBindings.Add("Visible", SettingBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
             DataBindings.Add("Text", MainBindingSource, "Title", false, DataSourceUpdateMode.Never);
             DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
 
@@ -133,7 +133,7 @@ namespace Cube.Pdf.Converter
             DestinationButton.Click += (s, e) => vm.SelectDestination();
             UserProgramButton.Click += (s, e) => vm.SelectUserProgram();
             ConvertButton.Click     += (s, e) => vm.Convert();
-            SettingsPanel.Apply     += (s, e) => vm.Save();
+            SettingPanel.Apply      += (s, e) => vm.Save();
 
             Behaviors.Add(new CloseBehavior(src, this));
             Behaviors.Add(new DialogBehavior(src));

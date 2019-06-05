@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingViewModel(SettingFolder src, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleSettings, new Aggregator(), context)
+            base(() => Properties.Resources.TitleSetting, new Aggregator(), context)
         {
             _model = src;
             OK.Command = new DelegateCommand(() =>
