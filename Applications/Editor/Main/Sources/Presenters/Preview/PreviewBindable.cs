@@ -57,11 +57,11 @@ namespace Cube.Pdf.Editor
             var ratio = size.Width / size.Height;
             var diff  = size.Width > size.Height ? magic * ratio : -(magic * ratio);
 
-            File   = new Bindable<Information>(file, dispatcher);
-            Image  = new Bindable<ImageSource>(dispatcher);
-            Width  = new Bindable<int>((int)size.Width, dispatcher);
-            Height = new Bindable<int>((int)(size.Height + diff), dispatcher);
-            Busy   = new Bindable<bool>(false, dispatcher);
+            File   = new BindableValue<Information>(file, dispatcher);
+            Image  = new BindableValue<ImageSource>(dispatcher);
+            Width  = new BindableValue<int>((int)size.Width, dispatcher);
+            Height = new BindableValue<int>((int)(size.Height + diff), dispatcher);
+            Busy   = new BindableValue<bool>(false, dispatcher);
         }
 
         #endregion
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<Information> File { get; }
+        public BindableValue<Information> File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -88,7 +88,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<ImageSource> Image { get; }
+        public BindableValue<ImageSource> Image { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<int> Width { get; }
+        public BindableValue<int> Width { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -110,7 +110,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<int> Height { get; }
+        public BindableValue<int> Height { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -121,7 +121,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> Busy { get; }
+        public BindableValue<bool> Busy { get; }
 
         #endregion
     }

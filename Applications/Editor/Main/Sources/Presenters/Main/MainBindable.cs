@@ -58,12 +58,12 @@ namespace Cube.Pdf.Editor
             Images    = images;
             Query     = query;
             History   = new History(dispatcher);
-            Source    = new Bindable<Information>(dispatcher);
-            Message   = new Bindable<string>(string.Empty, dispatcher);
-            Busy      = new Bindable<bool>(() => _busy, dispatcher);
-            Modified  = new Bindable<bool>(() => History.Undoable, dispatcher);
-            Count     = new Bindable<int>(() => Images.Count, dispatcher);
-            ItemSize  = new Bindable<int>(
+            Source    = new BindableValue<Information>(dispatcher);
+            Message   = new BindableValue<string>(string.Empty, dispatcher);
+            Busy      = new BindableValue<bool>(() => _busy, dispatcher);
+            Modified  = new BindableValue<bool>(() => History.Undoable, dispatcher);
+            Count     = new BindableValue<int>(() => Images.Count, dispatcher);
+            ItemSize  = new BindableValue<int>(
                 () => Settings.ItemSize,
                 e  => Settings.ItemSize = e,
                 dispatcher
@@ -167,7 +167,7 @@ namespace Cube.Pdf.Editor
             set => SetProperty(ref _encryption, value);
         }
 
-        #region Bindable
+        #region BindableValue
 
         /* ----------------------------------------------------------------- */
         ///
@@ -178,7 +178,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<Information> Source { get; }
+        public BindableValue<Information> Source { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -194,7 +194,7 @@ namespace Cube.Pdf.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> Busy { get; }
+        public BindableValue<bool> Busy { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -205,7 +205,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<bool> Modified { get; }
+        public BindableValue<bool> Modified { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -216,7 +216,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<int> Count { get; }
+        public BindableValue<int> Count { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -227,7 +227,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<int> ItemSize { get; }
+        public BindableValue<int> ItemSize { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -238,7 +238,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Bindable<string> Message { get; }
+        public BindableValue<string> Message { get; }
 
         #endregion
 
