@@ -55,15 +55,15 @@ namespace Cube.Pdf.Converter.Tests
             {
                 var dest = Get($"{nameof(Convert)}.pdf");
 
-                e.Setting.Value.Source = GetSource("Sample.ps");
-                e.Setting.Value.Destination = dest;
-                e.Setting.Value.PostProcess = PostProcess.None;
+                e.Settings.Value.Source = GetSource("Sample.ps");
+                e.Settings.Value.Destination = dest;
+                e.Settings.Value.PostProcess = PostProcess.None;
                 e.Invoke();
 
-                Assert.That(e.Setting.Value.Busy, Is.False);
-                Assert.That(e.Results.Count(),    Is.EqualTo(1));
-                Assert.That(e.Results.First(),    Is.EqualTo(dest));
-                Assert.That(IO.Exists(dest),      Is.True);
+                Assert.That(e.Settings.Value.Busy, Is.False);
+                Assert.That(e.Results.Count(),     Is.EqualTo(1));
+                Assert.That(e.Results.First(),     Is.EqualTo(dest));
+                Assert.That(IO.Exists(dest),       Is.True);
             }
         }
 
@@ -83,17 +83,17 @@ namespace Cube.Pdf.Converter.Tests
             {
                 var dest = Get($"{nameof(Convert)}.png");
 
-                e.Setting.Value.Source = GetSource("SampleCjk.ps");
-                e.Setting.Value.Destination = dest;
-                e.Setting.Value.PostProcess = PostProcess.None;
-                e.Setting.Value.Format      = Ghostscript.Format.Png;
-                e.Setting.Value.Resolution  = 72;
+                e.Settings.Value.Source = GetSource("SampleCjk.ps");
+                e.Settings.Value.Destination = dest;
+                e.Settings.Value.PostProcess = PostProcess.None;
+                e.Settings.Value.Format      = Ghostscript.Format.Png;
+                e.Settings.Value.Resolution  = 72;
                 e.Invoke();
 
-                Assert.That(e.Setting.Value.Busy, Is.False);
-                Assert.That(e.Results.Count(),    Is.EqualTo(5));
-                Assert.That(e.Results.First(),    Does.EndWith($"{nameof(Convert)}-01.png"));
-                Assert.That(IO.Exists(dest),      Is.False);
+                Assert.That(e.Settings.Value.Busy, Is.False);
+                Assert.That(e.Results.Count(),     Is.EqualTo(5));
+                Assert.That(e.Results.First(),     Does.EndWith($"{nameof(Convert)}-01.png"));
+                Assert.That(IO.Exists(dest),       Is.False);
             }
         }
 
@@ -117,15 +117,15 @@ namespace Cube.Pdf.Converter.Tests
 
             using (var e = new Facade(Assembly.GetExecutingAssembly()))
             {
-                e.Setting.Value.Source = GetSource("Sample.ps");
-                e.Setting.Value.Destination = dest;
-                e.Setting.Value.SaveOption  = so;
-                e.Setting.Value.PostProcess = PostProcess.None;
+                e.Settings.Value.Source = GetSource("Sample.ps");
+                e.Settings.Value.Destination = dest;
+                e.Settings.Value.SaveOption  = so;
+                e.Settings.Value.PostProcess = PostProcess.None;
                 e.Invoke();
 
-                Assert.That(e.Setting.Value.Busy, Is.False);
-                Assert.That(e.Results.Count(),    Is.EqualTo(1));
-                Assert.That(IO.Exists(dest),      Is.True);
+                Assert.That(e.Settings.Value.Busy, Is.False);
+                Assert.That(e.Results.Count(),     Is.EqualTo(1));
+                Assert.That(IO.Exists(dest),       Is.True);
             }
         }
 

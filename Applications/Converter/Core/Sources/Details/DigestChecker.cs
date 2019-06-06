@@ -48,7 +48,7 @@ namespace Cube.Pdf.Converter
         /// <param name="src">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DigestChecker(SettingFolder src) { Setting = src; }
+        public DigestChecker(SettingFolder src) { Settings = src; }
 
         #endregion
 
@@ -63,7 +63,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder Setting { get; }
+        public SettingFolder Settings { get; }
 
         #endregion
 
@@ -85,10 +85,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Invoke()
         {
-            var src = Setting.Digest;
+            var src = Settings.Digest;
             if (!src.HasValue()) return;
 
-            var cmp = Compute(Setting.Value.Source);
+            var cmp = Compute(Settings.Value.Source);
             if (!src.FuzzyEquals(cmp)) throw new CryptographicException();
         }
 
@@ -107,7 +107,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string Compute(string src)
         {
-            using (var stream = Setting.IO.OpenRead(src))
+            using (var stream = Settings.IO.OpenRead(src))
             {
                 return new SHA256CryptoServiceProvider()
                     .ComputeHash(stream)

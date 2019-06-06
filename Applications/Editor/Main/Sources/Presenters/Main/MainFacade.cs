@@ -63,9 +63,9 @@ namespace Cube.Pdf.Editor
             Backup   = new Backup(src.IO);
             Bindable = new MainBindable(images, src, query, post);
 
-            Setting = src;
-            Setting.Load();
-            Setting.PropertyChanged += (s, e) => Update(e.PropertyName);
+            Settings = src;
+            Settings.Load();
+            Settings.PropertyChanged += (s, e) => Update(e.PropertyName);
 
             var sizes = Bindable.Images.Preferences.ItemSizeOptions;
             var index = sizes.LastIndexOf(e => e <= Bindable.ItemSize.Value);
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder Setting { get; }
+        public SettingFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -177,7 +177,7 @@ namespace Cube.Pdf.Editor
         public void Save(string dest, bool reopen) => Invoke(() =>
         {
             Bindable.SetMessage(Properties.Resources.MessageSaving, dest);
-            this.Save(Setting.IO.Get(dest), () => _core.Clear());
+            this.Save(Settings.IO.Get(dest), () => _core.Clear());
             if (reopen) this.Restruct(_core.GetOrAdd(dest, Bindable.Encryption.OwnerPassword));
         }, "");
 
@@ -240,7 +240,7 @@ namespace Cube.Pdf.Editor
                     Bindable.SetMessage(Properties.Resources.MessageLoading, e);
                     if (!this.IsInsertable(e)) return new Page[0];
                     else if (e.IsPdf()) return _core.GetOrAdd(e).Pages;
-                    else return Setting.IO.GetImagePages(e);
+                    else return Settings.IO.GetImagePages(e);
                 })
             ), "");
 
@@ -448,7 +448,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Update(string name)
         {
-            var src = Setting.Value;
+            var src = Settings.Value;
             var dic = new Dictionary<string, Action>
             {
                 { nameof(src.ItemSize),  () => this.Zoom() },

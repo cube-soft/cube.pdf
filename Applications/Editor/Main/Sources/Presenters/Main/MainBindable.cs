@@ -46,26 +46,26 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="images">Image collection.</param>
-        /// <param name="setting">User settings.</param>
+        /// <param name="settings">User settings.</param>
         /// <param name="query">Password query.</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable(ImageCollection images, SettingFolder setting,
+        public MainBindable(ImageCollection images, SettingFolder settings,
             IQuery<string> query, IDispatcher dispatcher)
         {
-            _setting = setting;
-            Images   = images;
-            Query    = query;
-            History  = new History(dispatcher);
-            Source   = new BindableValue<Information>(dispatcher);
-            Message  = new BindableValue<string>(string.Empty, dispatcher);
-            Busy     = new BindableValue<bool>(() => _busy, dispatcher);
-            Modified = new BindableValue<bool>(() => History.Undoable, dispatcher);
-            Count    = new BindableValue<int>(() => Images.Count, dispatcher);
-            ItemSize = new BindableValue<int>(
-                () => Setting.ItemSize,
-                e  => Setting.ItemSize = e,
+            _settings = settings;
+            Images    = images;
+            Query     = query;
+            History   = new History(dispatcher);
+            Source    = new BindableValue<Information>(dispatcher);
+            Message   = new BindableValue<string>(string.Empty, dispatcher);
+            Busy      = new BindableValue<bool>(() => _busy, dispatcher);
+            Modified  = new BindableValue<bool>(() => History.Undoable, dispatcher);
+            Count     = new BindableValue<int>(() => Images.Count, dispatcher);
+            ItemSize  = new BindableValue<int>(
+                () => Settings.ItemSize,
+                e  => Settings.ItemSize = e,
                 dispatcher
             );
         }
@@ -94,7 +94,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingValue Setting => _setting.Value;
+        public SettingValue Settings => _settings.Value;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -105,7 +105,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IO IO => _setting.IO;
+        public IO IO => _settings.IO;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -403,7 +403,7 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private readonly SettingFolder _setting;
+        private readonly SettingFolder _settings;
         private Metadata _metadata;
         private Encryption _encryption;
         private bool _busy = false;

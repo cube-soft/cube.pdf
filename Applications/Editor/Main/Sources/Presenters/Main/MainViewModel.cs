@@ -530,7 +530,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostSetting() => Post(new SettingViewModel(Model.Setting, Context));
+        private void PostSetting() => Post(new SettingViewModel(Model.Settings, Context));
 
         #endregion
 

@@ -60,7 +60,7 @@ namespace Cube.Pdf.Converter
         /// <param name="settings">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Facade(SettingFolder settings) { Setting = settings; }
+        public Facade(SettingFolder settings) { Settings = settings; }
 
         #endregion
 
@@ -68,27 +68,26 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Setting
+        /// Settings
         ///
         /// <summary>
         /// Gets the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder Setting { get; }
+        public SettingFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Results
         ///
         /// <summary>
-        /// Gets the collectioin of created files.
+        /// Gets the collection of created files.
         /// </summary>
         ///
         /// <remarks>
-        /// 変換形式に PNG などを指定した場合、複数のファイルを生成する関係で
-        /// 保存パスとして指定したものとは異なる名前のファイルが生成される事が
-        /// あります。
+        /// Results may be different from Settings.Value.Destination
+        /// when PNG format is specified, etc.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -113,19 +112,19 @@ namespace Cube.Pdf.Converter
             {
                 try
                 {
-                    Setting.Value.Busy = true;
+                    Settings.Value.Busy = true;
                     var dest = new List<string>();
-                    using (var fs = new FileTransfer(Setting, GetTemp()))
+                    using (var fs = new FileTransfer(Settings, GetTemp()))
                     {
-                        Run(() => new DigestChecker(Setting).Invoke());
+                        Run(() => new DigestChecker(Settings).Invoke());
                         RunGhostscript(fs.Value);
-                        Run(() => new FileDecorator(Setting).Invoke(fs.Value));
+                        Run(() => new FileDecorator(Settings).Invoke(fs.Value));
                         Run(() => fs.Invoke(dest));
-                        Run(() => new ProcessLauncher(Setting).Invoke(dest));
+                        Run(() => new ProcessLauncher(Settings).Invoke(dest));
                     }
                     Results = dest;
                 }
-                finally { Setting.Value.Busy = false; }
+                finally { Settings.Value.Busy = false; }
             }
         }
 
@@ -147,19 +146,14 @@ namespace Cube.Pdf.Converter
         /// false to release only unmanaged resources.
         /// </param>
         ///
-        /// <remarks>
-        /// 別スレッドで変換処理中の場合、一時ファイルの削除に失敗する可能性が
-        /// あるので Invoke と Dispose との間で排他制御を挿入しています。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
             lock (_lock)
             {
-                Setting.IO.TryDelete(GetTemp());
-                if (!Setting.Value.DeleteSource) return;
-                Setting.IO.TryDelete(Setting.Value.Source);
+                Settings.IO.TryDelete(GetTemp());
+                if (!Settings.Value.DeleteSource) return;
+                Settings.IO.TryDelete(Settings.Value.Source);
             }
         }
 
@@ -185,8 +179,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void RunGhostscript(string dest) => Run(() =>
         {
-            var gs = GhostscriptFactory.Create(Setting);
-            try { gs.Invoke(Setting.Value.Source, dest); }
+            var gs = GhostscriptFactory.Create(Settings);
+            try { gs.Invoke(Settings.Value.Source, dest); }
             finally { gs.LogDebug(); }
         });
 
@@ -199,7 +193,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetTemp() => Setting.IO.Combine(Setting.Value.Temp, Setting.Uid.ToString("D"));
+        private string GetTemp() => Settings.IO.Combine(Settings.Value.Temp, Settings.Uid.ToString("D"));
 
         #endregion
 
