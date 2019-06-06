@@ -102,10 +102,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Show(SettingFolder setting)
+        private static void Show(SettingFolder settings)
         {
             var view = new MainWindow();
-            view.Bind(new MainViewModel(setting));
+            view.Bind(new MainViewModel(settings));
             Application.Run(view);
         }
 
@@ -118,9 +118,9 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Execute(SettingFolder setting)
+        private static void Execute(SettingFolder settings)
         {
-            using (var src = new Facade(setting)) src.Invoke();
+            using (var src = new Facade(settings)) src.Invoke();
         }
 
         #endregion

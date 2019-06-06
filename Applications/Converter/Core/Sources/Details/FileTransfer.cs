@@ -54,10 +54,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public FileTransfer(SettingFolder src, string temp)
         {
-            Setting = src;
-            Temp    = GetTempDirectory(temp);
-            Target  = Setting.IO.Get(src.Value.Destination);
-            Value   = Setting.IO.Combine(Temp, GetName());
+            Settings = src;
+            Temp     = GetTempDirectory(temp);
+            Target   = Settings.IO.Get(src.Value.Destination);
+            Value    = Settings.IO.Combine(Temp, GetName());
         }
 
         #endregion
@@ -66,14 +66,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Setting
+        /// Settings
         ///
         /// <summary>
         /// Gets the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder Setting { get; }
+        public SettingFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -123,7 +123,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool AutoRename => Setting.Value.SaveOption == SaveOption.Rename;
+        public bool AutoRename => Settings.Value.SaveOption == SaveOption.Rename;
 
         #endregion
 
@@ -140,7 +140,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Invoke(IList<string> dest)
         {
-            var io  = Setting.IO;
+            var io  = Settings.IO;
             var src = io.GetFiles(Temp);
 
             for (var i = 0; i < src.Length; ++i)
@@ -172,7 +172,7 @@ namespace Cube.Pdf.Converter
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) => Setting.IO.TryDelete(Temp);
+        protected override void Dispose(bool disposing) => Settings.IO.TryDelete(Temp);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -185,8 +185,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetTempDirectory(string src) =>
             Enumerable.Range(1, int.MaxValue)
-                      .Select(e => Setting.IO.Combine(src, e.ToString()))
-                      .First(e => !Setting.IO.Get(e).Exists);
+                      .Select(e => Settings.IO.Combine(src, e.ToString()))
+                      .First(e => !Settings.IO.Get(e).Exists);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -198,7 +198,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         private string GetName() =>
-            DocumentConverter.SupportedFormats.Contains(Setting.Value.Format) ?
+            DocumentConverter.SupportedFormats.Contains(Settings.Value.Format) ?
             $"tmp{Target.Extension}" :
             $"tmp-%08d{Target.Extension}";
 
@@ -213,7 +213,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetDestination(int index, int count)
         {
-            var io   = Setting.IO;
+            var io   = Settings.IO;
             var dest = GetDestinationCore(index, count);
             return (AutoRename && io.Exists(dest)) ? io.GetUniqueName(dest) : dest;
         }
@@ -236,7 +236,7 @@ namespace Cube.Pdf.Converter
             var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
             var dest  = string.Format("{0}-{1}{2}", name, index.ToString(digit), ext);
 
-            return Setting.IO.Combine(Target.DirectoryName, dest);
+            return Settings.IO.Combine(Target.DirectoryName, dest);
         }
 
         #endregion

@@ -65,11 +65,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static void ChangeExtension(this Facade src)
         {
-            var io   = src.Setting.IO;
-            var prev = io.Get(src.Setting.Value.Destination);
-            var ext  = src.Setting.Value.Format.GetExtension();
+            var io   = src.Settings.IO;
+            var prev = io.Get(src.Settings.Value.Destination);
+            var ext  = src.Settings.Value.Format.GetExtension();
             if (prev.Extension.FuzzyEquals(ext)) return;
-            src.Setting.Value.Destination = io.Combine(prev.DirectoryName, $"{prev.BaseName}{ext}");
+            src.Settings.Value.Destination = io.Combine(prev.DirectoryName, $"{prev.BaseName}{ext}");
         }
 
         /* ----------------------------------------------------------------- */
@@ -86,7 +86,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static void SetSource(this Facade src, OpenFileMessage e)
         {
-            if (!e.Cancel) src.Setting.Value.Source = e.Value.First();
+            if (!e.Cancel) src.Settings.Value.Source = e.Value.First();
         }
 
         /* ----------------------------------------------------------------- */
@@ -109,8 +109,8 @@ namespace Cube.Pdf.Converter
             Debug.Assert(e.FilterIndex > 0);
             Debug.Assert(e.FilterIndex <= ViewResources.Formats.Count);
 
-            src.Setting.Value.Destination = e.Value;
-            src.Setting.Value.Format = ViewResources.Formats[e.FilterIndex - 1].Value;
+            src.Settings.Value.Destination = e.Value;
+            src.Settings.Value.Format = ViewResources.Formats[e.FilterIndex - 1].Value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -127,7 +127,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static void SetUserProgram(this Facade src, OpenFileMessage e)
         {
-            if (!e.Cancel) src.Setting.Value.UserProgram = e.Value.First();
+            if (!e.Cancel) src.Settings.Value.UserProgram = e.Value.First();
         }
 
         #endregion

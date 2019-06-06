@@ -29,8 +29,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 
-    Height="{Binding Data.Setting.Height, Mode=TwoWay}"
-    Width="{Binding Data.Setting.Width, Mode=TwoWay}"
+    Height="{Binding Data.Settings.Height, Mode=TwoWay}"
+    Width="{Binding Data.Settings.Width, Mode=TwoWay}"
     FontFamily="Meiryo UI"
     AllowDrop="True"
     Cursor="{Binding Data.Busy.Value, Converter={my:BooleanToCursor}}">

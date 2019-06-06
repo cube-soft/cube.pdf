@@ -169,7 +169,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /// <remarks>
-        /// Key は (Format, Grayscale) のペアになります。
+        /// Key is a (Format, Grayscale) pair.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
