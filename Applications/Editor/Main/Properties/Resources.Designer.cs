@@ -727,11 +727,11 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
-        ///   Settings に類似しているローカライズされた文字列を検索します。
+        ///   Setting に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuSettings {
+        internal static string MenuSetting {
             get {
-                return ResourceManager.GetString("MenuSettings", resourceCulture);
+                return ResourceManager.GetString("MenuSetting", resourceCulture);
             }
         }
 
@@ -1071,9 +1071,9 @@ namespace Cube.Pdf.Editor.Properties {
         /// <summary>
         ///   CubePDF Utility settings に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TitleSettings {
+        internal static string TitleSetting {
             get {
-                return ResourceManager.GetString("TitleSettings", resourceCulture);
+                return ResourceManager.GetString("TitleSetting", resourceCulture);
             }
         }
 

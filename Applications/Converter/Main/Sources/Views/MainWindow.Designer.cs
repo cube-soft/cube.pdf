@@ -31,12 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.SettingsPanel = new Cube.Forms.SettingsControl();
-            this.SettingsTabControl = new System.Windows.Forms.TabControl();
+            this.SettingPanel = new Cube.Forms.SettingControl();
+            this.SettingTabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ResolutionControl = new System.Windows.Forms.NumericUpDown();
-            this.SettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.SettingBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.PostProcessComboBox = new System.Windows.Forms.ComboBox();
             this.UserProgramPanel = new System.Windows.Forms.TableLayoutPanel();
             this.UserProgramButton = new System.Windows.Forms.Button();
@@ -121,12 +121,12 @@
             this.PathToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.RootPanel.SuspendLayout();
-            this.SettingsPanel.SuspendLayout();
-            this.SettingsTabControl.SuspendLayout();
+            this.SettingPanel.SuspendLayout();
+            this.SettingTabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingBindingSource)).BeginInit();
             this.UserProgramPanel.SuspendLayout();
             this.OrientationPanel.SuspendLayout();
             this.SourcePanel.SuspendLayout();
@@ -153,27 +153,27 @@
             // RootPanel
             //
             resources.ApplyResources(this.RootPanel, "RootPanel");
-            this.RootPanel.Controls.Add(this.SettingsPanel, 0, 1);
+            this.RootPanel.Controls.Add(this.SettingPanel, 0, 1);
             this.RootPanel.Controls.Add(this.FooterPanel, 0, 2);
             this.RootPanel.Controls.Add(this.HeaderPictureBox, 0, 0);
             this.RootPanel.Name = "RootPanel";
             //
-            // SettingsPanel
+            // SettingPanel
             //
-            this.SettingsPanel.Controls.Add(this.SettingsTabControl);
-            resources.ApplyResources(this.SettingsPanel, "SettingsPanel");
-            this.SettingsPanel.Name = "SettingsPanel";
+            this.SettingPanel.Controls.Add(this.SettingTabControl);
+            resources.ApplyResources(this.SettingPanel, "SettingPanel");
+            this.SettingPanel.Name = "SettingPanel";
             //
-            // SettingsTabControl
+            // SettingTabControl
             //
-            this.SettingsTabControl.Controls.Add(this.GeneralTabPage);
-            this.SettingsTabControl.Controls.Add(this.DocumentPage);
-            this.SettingsTabControl.Controls.Add(this.EncryptionTabPage);
-            this.SettingsTabControl.Controls.Add(this.OthersTabPage);
-            resources.ApplyResources(this.SettingsTabControl, "SettingsTabControl");
-            this.SettingsTabControl.Name = "SettingsTabControl";
-            this.SettingsTabControl.SelectedIndex = 0;
-            this.SettingsTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.SettingTabControl.Controls.Add(this.GeneralTabPage);
+            this.SettingTabControl.Controls.Add(this.DocumentPage);
+            this.SettingTabControl.Controls.Add(this.EncryptionTabPage);
+            this.SettingTabControl.Controls.Add(this.OthersTabPage);
+            resources.ApplyResources(this.SettingTabControl, "SettingTabControl");
+            this.SettingTabControl.Name = "SettingTabControl";
+            this.SettingTabControl.SelectedIndex = 0;
+            this.SettingTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             //
             // GeneralTabPage
             //
@@ -202,7 +202,7 @@
             //
             // ResolutionControl
             //
-            this.ResolutionControl.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.SettingsBindingSource, "Resolution", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.ResolutionControl.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.SettingBindingSource, "Resolution", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.ResolutionControl, "ResolutionControl");
             this.ResolutionControl.Increment = new decimal(new int[] {
             50,
@@ -226,13 +226,13 @@
             0,
             0});
             //
-            // SettingsBindingSource
+            // SettingBindingSource
             //
-            this.SettingsBindingSource.DataSource = typeof(Cube.Pdf.Converter.SettingViewModel);
+            this.SettingBindingSource.DataSource = typeof(Cube.Pdf.Converter.SettingViewModel);
             //
             // PostProcessComboBox
             //
-            this.PostProcessComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "PostProcess", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.PostProcessComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingBindingSource, "PostProcess", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.PostProcessComboBox, "PostProcessComboBox");
             this.PostProcessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PostProcessComboBox.FormattingEnabled = true;
@@ -243,7 +243,7 @@
             resources.ApplyResources(this.UserProgramPanel, "UserProgramPanel");
             this.UserProgramPanel.Controls.Add(this.UserProgramButton, 0, 0);
             this.UserProgramPanel.Controls.Add(this.UserProgramTextBox, 0, 0);
-            this.UserProgramPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "EnableUserProgram", true, System.Windows.Forms.DataSourceUpdateMode.Never));
+            this.UserProgramPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingBindingSource, "EnableUserProgram", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.UserProgramPanel.Name = "UserProgramPanel";
             //
             // UserProgramButton
@@ -254,7 +254,7 @@
             //
             // UserProgramTextBox
             //
-            this.UserProgramTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingsBindingSource, "UserProgram", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.UserProgramTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingBindingSource, "UserProgram", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.UserProgramTextBox, "UserProgramTextBox");
             this.UserProgramTextBox.Name = "UserProgramTextBox";
             //
@@ -269,7 +269,7 @@
             // PortraitRadioButton
             //
             resources.ApplyResources(this.PortraitRadioButton, "PortraitRadioButton");
-            this.PortraitRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "IsPortrait", true));
+            this.PortraitRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "IsPortrait", true));
             this.PortraitRadioButton.Name = "PortraitRadioButton";
             this.PortraitRadioButton.TabStop = true;
             this.PortraitRadioButton.UseVisualStyleBackColor = true;
@@ -277,7 +277,7 @@
             // LandscapeRadioButton
             //
             resources.ApplyResources(this.LandscapeRadioButton, "LandscapeRadioButton");
-            this.LandscapeRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "IsLandscape", true));
+            this.LandscapeRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "IsLandscape", true));
             this.LandscapeRadioButton.Name = "LandscapeRadioButton";
             this.LandscapeRadioButton.TabStop = true;
             this.LandscapeRadioButton.UseVisualStyleBackColor = true;
@@ -285,7 +285,7 @@
             // AutoRadioButton
             //
             resources.ApplyResources(this.AutoRadioButton, "AutoRadioButton");
-            this.AutoRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "IsAutoOrientation", true));
+            this.AutoRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "IsAutoOrientation", true));
             this.AutoRadioButton.Name = "AutoRadioButton";
             this.AutoRadioButton.TabStop = true;
             this.AutoRadioButton.UseVisualStyleBackColor = true;
@@ -300,7 +300,7 @@
             resources.ApplyResources(this.SourcePanel, "SourcePanel");
             this.SourcePanel.Controls.Add(this.SourceButton, 0, 0);
             this.SourcePanel.Controls.Add(this.SourceTextBox, 0, 0);
-            this.SourcePanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "SourceEditable", true, System.Windows.Forms.DataSourceUpdateMode.Never));
+            this.SourcePanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingBindingSource, "SourceEditable", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.SourcePanel.Name = "SourcePanel";
             //
             // SourceButton
@@ -311,7 +311,7 @@
             //
             // SourceTextBox
             //
-            this.SourceTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingsBindingSource, "Source", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.SourceTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingBindingSource, "Source", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.SourceTextBox, "SourceTextBox");
             this.SourceTextBox.Name = "SourceTextBox";
             //
@@ -350,7 +350,7 @@
             //
             // SaveOptionComboBox
             //
-            this.SaveOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "SaveOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.SaveOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingBindingSource, "SaveOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.SaveOptionComboBox, "SaveOptionComboBox");
             this.SaveOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SaveOptionComboBox.FormattingEnabled = true;
@@ -364,7 +364,7 @@
             //
             // DestinationTextBox
             //
-            this.DestinationTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingsBindingSource, "Destination", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.DestinationTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingBindingSource, "Destination", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.DestinationTextBox, "DestinationTextBox");
             this.DestinationTextBox.Name = "DestinationTextBox";
             //
@@ -378,7 +378,7 @@
             // PdfVersionComboBox
             //
             this.PdfVersionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "Version", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.PdfVersionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingsBindingSource, "IsPdf", true, System.Windows.Forms.DataSourceUpdateMode.Never));
+            this.PdfVersionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingBindingSource, "IsPdf", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             resources.ApplyResources(this.PdfVersionComboBox, "PdfVersionComboBox");
             this.PdfVersionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PdfVersionComboBox.FormattingEnabled = true;
@@ -386,7 +386,7 @@
             //
             // FormatComboBox
             //
-            this.FormatComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "Format", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.FormatComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingBindingSource, "Format", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.FormatComboBox, "FormatComboBox");
             this.FormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FormatComboBox.FormattingEnabled = true;
@@ -680,7 +680,7 @@
             // GrayscaleCheckBox
             //
             resources.ApplyResources(this.GrayscaleCheckBox, "GrayscaleCheckBox");
-            this.GrayscaleCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "Grayscale", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.GrayscaleCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "Grayscale", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
             this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
             //
@@ -692,27 +692,27 @@
             // ImageFilterCheckBox
             //
             resources.ApplyResources(this.ImageFilterCheckBox, "ImageFilterCheckBox");
-            this.ImageFilterCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "ImageFilter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.ImageFilterCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "ImageFilter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.ImageFilterCheckBox.Name = "ImageFilterCheckBox";
             this.ImageFilterCheckBox.UseVisualStyleBackColor = true;
             //
             // LinearizationCheckBox
             //
             resources.ApplyResources(this.LinearizationCheckBox, "LinearizationCheckBox");
-            this.LinearizationCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "Linearization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.LinearizationCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "Linearization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.LinearizationCheckBox.Name = "LinearizationCheckBox";
             this.LinearizationCheckBox.UseVisualStyleBackColor = true;
             //
             // UpdateCheckBox
             //
             resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
-            this.UpdateCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingsBindingSource, "CheckUpdate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.UpdateCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "CheckUpdate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.UpdateCheckBox.Name = "UpdateCheckBox";
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
             //
             // LanguageComboBox
             //
-            this.LanguageComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingsBindingSource, "Language", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.LanguageComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingBindingSource, "Language", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.LanguageComboBox, "LanguageComboBox");
             this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LanguageComboBox.FormattingEnabled = true;
@@ -819,13 +819,13 @@
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.RootPanel.ResumeLayout(false);
-            this.SettingsPanel.ResumeLayout(false);
-            this.SettingsTabControl.ResumeLayout(false);
+            this.SettingPanel.ResumeLayout(false);
+            this.SettingTabControl.ResumeLayout(false);
             this.GeneralTabPage.ResumeLayout(false);
             this.GeneralPanel.ResumeLayout(false);
             this.GeneralPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SettingBindingSource)).EndInit();
             this.UserProgramPanel.ResumeLayout(false);
             this.UserProgramPanel.PerformLayout();
             this.OrientationPanel.ResumeLayout(false);
@@ -867,7 +867,7 @@
         private System.Windows.Forms.TableLayoutPanel RootPanel;
         private System.Windows.Forms.PictureBox HeaderPictureBox;
         private System.Windows.Forms.TableLayoutPanel FooterPanel;
-        private System.Windows.Forms.TabControl SettingsTabControl;
+        private System.Windows.Forms.TabControl SettingTabControl;
         private System.Windows.Forms.TabPage GeneralTabPage;
         private System.Windows.Forms.TabPage DocumentPage;
         private System.Windows.Forms.TabPage EncryptionTabPage;
@@ -946,9 +946,9 @@
         private System.Windows.Forms.ProgressBar ConvertProgressBar;
         private System.Windows.Forms.Button ApplyButton;
         private Cube.Forms.VersionControl VersionPanel;
-        private Cube.Forms.SettingsControl SettingsPanel;
+        private Cube.Forms.SettingControl SettingPanel;
         private System.Windows.Forms.BindingSource MainBindingSource;
-        private System.Windows.Forms.BindingSource SettingsBindingSource;
+        private System.Windows.Forms.BindingSource SettingBindingSource;
         private System.Windows.Forms.BindingSource MetadataBindingSource;
         private System.Windows.Forms.BindingSource EncryptionBindingSource;
         private System.Windows.Forms.Label LanguageLabel;

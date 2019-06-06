@@ -339,7 +339,7 @@
   <data name="MenuSelectFlip" xml:space="preserve">
     <value>選択の切り替え</value>
   </data>
-  <data name="MenuSettings" xml:space="preserve">
+  <data name="MenuSetting" xml:space="preserve">
     <value>設定</value>
   </data>
   <data name="MenuSharePassword" xml:space="preserve">
@@ -450,7 +450,7 @@
   <data name="TitleSaveAs" xml:space="preserve">
     <value>名前を付けて保存</value>
   </data>
-  <data name="TitleSettings" xml:space="preserve">
+  <data name="TitleSetting" xml:space="preserve">
     <value>CubePDF Utility 設定</value>
   </data>
   <data name="TooltipExtract" xml:space="preserve">

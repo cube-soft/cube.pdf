@@ -127,7 +127,7 @@
   <data name="GeneralPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <metadata name="SettingsBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="SettingBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>191, 17</value>
   </metadata>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -988,7 +988,7 @@
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;GeneralTabPage.Parent" xml:space="preserve">
-    <value>SettingsTabControl</value>
+    <value>SettingTabControl</value>
   </data>
   <data name="&gt;&gt;GeneralTabPage.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1432,7 +1432,7 @@
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;DocumentPage.Parent" xml:space="preserve">
-    <value>SettingsTabControl</value>
+    <value>SettingTabControl</value>
   </data>
   <data name="&gt;&gt;DocumentPage.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -2170,7 +2170,7 @@
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;EncryptionTabPage.Parent" xml:space="preserve">
-    <value>SettingsTabControl</value>
+    <value>SettingTabControl</value>
   </data>
   <data name="&gt;&gt;EncryptionTabPage.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -2527,69 +2527,69 @@
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OthersTabPage.Parent" xml:space="preserve">
-    <value>SettingsTabControl</value>
+    <value>SettingTabControl</value>
   </data>
   <data name="&gt;&gt;OthersTabPage.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="SettingsTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="SettingTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="SettingsTabControl.ItemSize" type="System.Drawing.Size, System.Drawing">
+  <data name="SettingTabControl.ItemSize" type="System.Drawing.Size, System.Drawing">
     <value>100, 20</value>
   </data>
-  <data name="SettingsTabControl.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SettingTabControl.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
-  <data name="SettingsTabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="SettingTabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
-  <data name="SettingsTabControl.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SettingTabControl.Size" type="System.Drawing.Size, System.Drawing">
     <value>460, 350</value>
   </data>
-  <data name="SettingsTabControl.TabIndex" type="System.Int32, mscorlib">
+  <data name="SettingTabControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;SettingsTabControl.Name" xml:space="preserve">
-    <value>SettingsTabControl</value>
+  <data name="&gt;&gt;SettingTabControl.Name" xml:space="preserve">
+    <value>SettingTabControl</value>
   </data>
-  <data name="&gt;&gt;SettingsTabControl.Type" xml:space="preserve">
+  <data name="&gt;&gt;SettingTabControl.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;SettingsTabControl.Parent" xml:space="preserve">
-    <value>SettingsPanel</value>
+  <data name="&gt;&gt;SettingTabControl.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
   </data>
-  <data name="&gt;&gt;SettingsTabControl.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SettingTabControl.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="SettingsPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="SettingsPanel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SettingPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 59</value>
   </data>
-  <data name="SettingsPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="SettingPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>9, 9, 9, 3</value>
   </data>
-  <data name="SettingsPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="SettingPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="SettingsPanel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>466, 356</value>
   </data>
-  <data name="SettingsPanel.TabIndex" type="System.Int32, mscorlib">
+  <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;SettingsPanel.Name" xml:space="preserve">
-    <value>SettingsPanel</value>
+  <data name="&gt;&gt;SettingPanel.Name" xml:space="preserve">
+    <value>SettingPanel</value>
   </data>
-  <data name="&gt;&gt;SettingsPanel.Type" xml:space="preserve">
-    <value>Cube.Forms.SettingsControl, Cube.Forms, Version=1.16.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+  <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
+    <value>Cube.Forms.SettingControl, Cube.Forms, Version=1.16.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
-  <data name="&gt;&gt;SettingsPanel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
     <value>RootPanel</value>
   </data>
-  <data name="&gt;&gt;SettingsPanel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SettingPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="FooterPanel.ColumnCount" type="System.Int32, mscorlib">
@@ -3311,10 +3311,10 @@
   <data name="$this.Text" xml:space="preserve">
     <value>CubePDF</value>
   </data>
-  <data name="&gt;&gt;SettingsBindingSource.Name" xml:space="preserve">
-    <value>SettingsBindingSource</value>
+  <data name="&gt;&gt;SettingBindingSource.Name" xml:space="preserve">
+    <value>SettingBindingSource</value>
   </data>
-  <data name="&gt;&gt;SettingsBindingSource.Type" xml:space="preserve">
+  <data name="&gt;&gt;SettingBindingSource.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MetadataBindingSource.Name" xml:space="preserve">
