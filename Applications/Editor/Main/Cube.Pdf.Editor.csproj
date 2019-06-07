@@ -46,6 +46,8 @@
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
         <Resource Include="Assets\**\*" />
+        <Resource Include="App.ico" />
         <None Include="App.config" />
+        <None Include="App.manifest" />
     </ItemGroup>
 </Project>
