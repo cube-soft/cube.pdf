@@ -24,34 +24,34 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainForm
+    /// MainWindow
     ///
     /// <summary>
     /// Represents the splash window of the CubePDF Utility.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainForm : Form
+    public partial class MainWindow : Form
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainForm
+        /// MainWindow
         ///
         /// <summary>
-        /// Initializes a new instance of the MainForm class.
+        /// Initializes a new instance of the MainWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainForm()
+        public MainWindow()
         {
             InitializeComponent();
 
             var count = 0;
 
             VersionLabel.Text = GetVersion();
-            RefreshTimer.Tick += (_, __) =>
+            RefreshTimer.Tick += (s, e) =>
             {
                 if (count++ >= 60) Close();
                 else MessageLabel.Text += ".";

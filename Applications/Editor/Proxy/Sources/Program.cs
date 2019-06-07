@@ -61,7 +61,7 @@ namespace Cube.Pdf.Editor
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var view = new MainForm();
+                var view = new MainWindow();
                 view.Shown += (s, e) =>
                 {
                     try { Start(args); }

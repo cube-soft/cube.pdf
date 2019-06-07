@@ -1,6 +1,6 @@
 ﻿namespace Cube.Pdf.Editor
 {
-    partial class MainForm
+    partial class MainWindow
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.MessageLabel = new System.Windows.Forms.Label();
