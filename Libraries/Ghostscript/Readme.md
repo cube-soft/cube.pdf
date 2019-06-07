@@ -31,6 +31,7 @@ Instead of using the Converter class directly, you can use some inherited classe
 For example, the following code converts to the PDF format.
 
 ```cs
+// using Cube.Pdf;
 // using Cube.Pdf.Ghostscript;
 var converter = new PdfConverter
 {
@@ -40,7 +41,7 @@ var converter = new PdfConverter
     Resolution   = 600,
     Compression  = Encoding.Jpeg,
     Downsampling = Downsampling.None,
-    Version      = new Version(1, 7),
+    Version      = new PdfVersion(1, 7),
 };
 converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```

@@ -68,6 +68,7 @@ When you convert from PostScript to any other formats, you can use the Cube.Pdf.
 The following code converts to the PDF file.
 
 ```cs
+// using Cube.Pdf;
 // using Cube.Pdf.Ghostscript;
 var converter = new PdfConverter
 {
@@ -77,7 +78,7 @@ var converter = new PdfConverter
     Resolution   = 600,
     Compression  = Encoding.Jpeg,
     Downsampling = Downsampling.None,
-    Version      = new Version(1, 7),
+    Version      = new PdfVersion(1, 7),
 };
 converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
@@ -88,7 +89,7 @@ See the [Readme](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Gho
 
 ### CubePDF
 
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Overview.png?raw=true)
+![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Overview.png?raw=true)
 
 [CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application uses Ghostscript and iTextSharp.
 
@@ -97,7 +98,7 @@ Source codes of the CubePDF are in the [Applications/Converter](https://github.c
 
 ### CubePDF Utility
 
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Overview.png?raw=true)
+![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Overview.png?raw=true)
 
 [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application uses PDFium and iTextSharp.
 
