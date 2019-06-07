@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.Pager
+﻿namespace Cube.Pdf.Pages
 {
     partial class PasswordForm
     {
@@ -95,7 +95,7 @@
             //
             // ImagePictureBox
             //
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Pager.Properties.Resources.HeaderImage;
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Pages.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.ImagePictureBox.Location = new System.Drawing.Point(265, 0);
@@ -108,7 +108,7 @@
             //
             this.TitleButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TitleButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.TitleButton.Image = global::Cube.Pdf.Pager.Properties.Resources.HeaderTitle;
+            this.TitleButton.Image = global::Cube.Pdf.Pages.Properties.Resources.HeaderTitle;
             this.TitleButton.Location = new System.Drawing.Point(0, 0);
             this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
             this.TitleButton.Name = "TitleButton";

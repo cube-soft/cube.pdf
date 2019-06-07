@@ -1,4 +1,4 @@
-﻿namespace Cube.Pdf.Pager
+﻿namespace Cube.Pdf.Pages
 {
     partial class MainForm
     {
@@ -47,7 +47,7 @@
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.TitleButton = new System.Windows.Forms.PictureBox();
-            this.FileListView = new Cube.Pdf.Pager.FileGridView();
+            this.FileListView = new Cube.Pdf.Pages.FileGridView();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ExitButtonPanel.SuspendLayout();
@@ -286,7 +286,7 @@
             //
             // ImagePictureBox
             //
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Pager.Properties.Resources.HeaderImage;
+            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Pages.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.ImagePictureBox.Location = new System.Drawing.Point(418, 0);
@@ -299,7 +299,7 @@
             //
             this.TitleButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TitleButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.TitleButton.Image = global::Cube.Pdf.Pager.Properties.Resources.HeaderTitle;
+            this.TitleButton.Image = global::Cube.Pdf.Pages.Properties.Resources.HeaderTitle;
             this.TitleButton.Location = new System.Drawing.Point(0, 0);
             this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
             this.TitleButton.Name = "TitleButton";

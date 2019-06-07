@@ -143,7 +143,7 @@ Projects are respectively licensed as follows:
 | [CubePDF](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter)          | GNU AGPLv3 |
 | [CubePDF Utility](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor)     | GNU AGPLv3 |
 | [CubePDF Clip](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Clip)          | GNU AGPLv3 |
-| [CubePDF Page](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Pager)         | GNU AGPLv3 |
+| [CubePDF Page](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Pages)         | GNU AGPLv3 |
 | [CubePDF ImagePicker](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Picker) | GNU AGPLv3 |
 
 Note that trade names, trademarks, service marks, or logo images distributed in CubeSoft applications are not allowed to reuse or modify all or parts of them.

@@ -25,7 +25,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.Pager
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///

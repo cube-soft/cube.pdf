@@ -36,5 +36,7 @@
         <EmbeddedResource Update="Sources\Views\*Form.resx" DependentUpon="%(Filename).cs" />
         <None Include="Assets\**\*" />
         <None Include="App.config" />
+        <None Include="App.ico" />
+        <None Include="App.manifest" />
     </ItemGroup>
 </Project>

@@ -16,43 +16,35 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Images.Icons;
-using Cube.Mixin.Logging;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
+using System.Reflection;
 
-namespace Cube.Pdf.Pager
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IconCollection
+    /// Settings
     ///
     /// <summary>
-    /// ListView に表示するアイコンを管理するクラスです。
+    /// 各種設定を保持するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class IconCollection
+    public class Settings : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IconCollection
+        /// SettingsValue
         ///
         /// <summary>
         /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IconCollection()
+        public Settings()
         {
-            ImageList = new ImageList();
-            ImageList.ImageSize = new Size(16, 16);
-            ImageList.ColorDepth = ColorDepth.Depth32Bit;
-            ImageList.Images.Add(DefaultIcon());
+            Assembly = Assembly.GetExecutingAssembly();
         }
 
         #endregion
@@ -61,14 +53,29 @@ namespace Cube.Pdf.Pager
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ImageList
+        /// Assembly
         ///
         /// <summary>
-        /// ListView 用の ImageList を取得します。
+        /// アセンブリ情報を取得します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageList ImageList { get; }
+        public Assembly Assembly { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowOperation
+        ///
+        /// <summary>
+        /// ユーザからの操作を受け付けるかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AllowOperation
+        {
+            get { return _allowOperation; }
+            set { SetProperty(ref _allowOperation, value); }
+        }
 
         #endregion
 
@@ -76,54 +83,25 @@ namespace Cube.Pdf.Pager
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Register
+        /// Dispose
         ///
         /// <summary>
-        /// 新しい項目のアイコンを登録します。
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
         /// </summary>
         ///
-        /* ----------------------------------------------------------------- */
-        public int Register(File file)
-        {
-            var icon = file.GetIcon(IconSize.Small);
-            if (icon == null) return 0;
-
-            var extension = file.Extension.ToLower();
-            if (_map.ContainsKey(extension)) return _map[extension];
-
-            var index = ImageList.Images.Count;
-            ImageList.Images.Add(icon);
-            _map.Add(extension, index);
-            return index;
-        }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DefaultIcon
-        ///
-        /// <summary>
-        /// 既定のアイコンを取得します。
-        /// </summary>
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        private Icon DefaultIcon()
-        {
-            try { return IconFactory.Create(StockIcons.DocumentNotAssociated, IconSize.Small); }
-            catch (Exception err)
-            {
-                this.LogError(err);
-                return Properties.Resources.NotAssociated;
-            }
-        }
-
+        protected override void Dispose(bool disposing) { }
+        
         #endregion
 
         #region Fields
-        private readonly Dictionary<string, int> _map = new Dictionary<string, int>();
+        private bool _allowOperation = true;
         #endregion
     }
 }
