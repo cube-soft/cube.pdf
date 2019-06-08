@@ -7,7 +7,7 @@
         <Description>CLI application to install virtual printers.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <AssemblyName>CubeVpc</AssemblyName>
-        <AssemblyTitle>Cube Virtual Printer Console</AssemblyTitle>
+        <AssemblyTitle>Cube VirtualPrinter Console</AssemblyTitle>
         <RootNamespace>Cube.Pdf.Pinstaller</RootNamespace>
         <OutputType>WinExe</OutputType>
         <LangVersion>latest</LangVersion>
