@@ -1,4 +1,4 @@
-CubePinstaller
+Cube VirtualPrinter Console
 ====
 
 Copyright © 2010 CubeSoft, Inc.  
@@ -7,25 +7,25 @@ https://www.cube-soft.jp/
 
 ## はじめに
 
-CubePinstaller は、プリンタのインストールおよびアンインストールを実行するための
-コマンドライン型アプリケーションです。CubePinstaller を使用するには、
-.NET Framework 3.5 以降がインストールされている必要があります。
-.NET Framework は、以下の URL からダウンロードして下さい。
+Cube VirtualPrinter Console (CubeVPC) は、仮想プリンタのインストール
+およびアンインストールを実行するためのコマンドライン型アプリケーションです。
+CubeVPC を使用するには、.NET Framework 3.5 以降がインストールされている
+必要があります。.NET Framework は、以下の URL からダウンロードして下さい。
 
 * Download .NET Framework  
   https://dotnet.microsoft.com/download/dotnet-framework
 
-CubePinstaller は、**C:\ProgramData\CubeSoft\CubePDF\Log** フォルダに実行ログを
+CubeVPC は、**C:\ProgramData\CubeSoft\CubePDF\Log** フォルダに実行ログを
 出力しています。問題が発生した時は、これらのログを添付して support@cube-soft.jp
 までご連絡お願いします。
 
 ## 使用方法
 
 ```
-CubePinstaller.exe JSON /Command COMMAND [OPTIONS] 
+CubeVpc.exe JSON -Command COMMAND [OPTIONS]
 ```
 
-CubePinstaller の必須パラメータは **JSON** および **COMMAND** の 2 種類です。
+CubeVPC の必須パラメータは **JSON** および **COMMAND** の 2 種類です。
 **JSON** には、インストールまたはアンインストールするプリンタ構成を記載した
 JSON 形式のファイルへのパスを記載します。
 **COMMAND** には、下記の 3 種類の中から一つを指定します。
@@ -41,41 +41,41 @@ JSON 形式のファイルへのパスを記載します。
 
 **OPTIONS** に指定可能なオプションは下記の通りです。
 
-* **/Resource DIRECTORY**  
-  JSON ファイルに記載される、インストールに必要な各種ファイルが存在する
+* **-Resource DIRECTORY**  
+  JSON ファイルに記載されている、インストールに必要な各種ファイルが存在する
   ディレクトリへのパスを指定します。
-* **/Relative**  
-  コマンドライン上で指定されたパスを CubePinstaller.exe が存在する
+* **-Relative**  
+  コマンドライン上で指定されたパスを CubeVpc.exe が存在する
   ディレクトリからの相対パスとして認識します。
-* **/Force**  
+* **-Force**  
   JSON ファイルに記載されたプリンタドライバやポートモニタに依存する全ての要素を
   強制的にアンインストールします。このオプションを指定しない場合、対象となる
   プリンタドライバ等が他のプリンタに使用されているなどの理由で、アンインストールに
   失敗する事があります。
-* **/Retry COUNT**  
+* **-Retry COUNT**  
   プリンタ等のインストールまたはアンインストールに失敗した時に再試行する回数を
   指定します。
-* **/Timeout SECOND**  
+* **-Timeout SECOND**  
   プリンタ等のインストールまたはアンインストール実行時のタイムアウト時間の初期値を
   秒単位で指定します。実際のタイムアウト時間は、実行に失敗する度に等倍されます。
-  例えば 30 を指定した場合、実際のタイムアウト時間は 30 秒、60 秒、90 秒、...と
+  例えば 30 を指定した場合、実際のタイムアウト時間は 30 秒、60 秒、90 秒、... と
   増加していきます。
 
-CubePinstaller の実行コマンド例は下記の通りです。
+CubeVPC の実行コマンド例は下記の通りです。
 
 ```
-CubePinstaller.exe CubePrinter.json
-    /Command Reinstall
-    /Force
-    /Relative
-    /Resource Printers
-    /Retry 6
-    /Timeout 30
+CubeVPC.exe CubePrinter.json
+    -Command Reinstall
+    -Force
+    -Relative
+    -Resource Printers
+    -Retry 6
+    -Timeout 30
 ```
 
 ## JSON 仕様
 
-CubePinstaller に指定する構成用 JSON ファイルの仕様は下記の通りです。
+CubeVPC に指定する構成用 JSON ファイルの仕様は下記の通りです。
 
 ```
 {
@@ -94,39 +94,44 @@ CubePinstaller に指定する構成用 JSON ファイルの仕様は下記の�
 ### PortMonitors
 
 **PortMonitors** には、インストールまたはアンインストールするポートモニタを
-指定します。指定可能な項目は、**Name**, **FileName**, **Config** の 3 種類で
-いずれも string です。
+指定します。指定項目は下記の通りです。
 
-**Name** はインストールまたはアンインストールするポートモニタの名前で必須項目です。
-**FileName** および **Config** はインストールに必要なモジュール名を表します。
-これらの項目はアンインストール時には省略する事ができます。
-また、指定されたモジュールは **/Resource** オプションで指定されたディレクトリに
-存在するものとします。
+* **Name** (string)  
+  インストールまたはアンインストールするポートモニタの名前を指定します。
+* **FileName** (string)  
+  モジュール名を指定します。
+* **Config** (string)  
+  UI モジュール名を指定します。
+
+尚、**FileName** および **Config** で指定されたモジュールは **-Resource**
+オプションで指定されたディレクトリに存在するものとします。
 
 ### Ports
 
 **Ports** には、インストールまたはアンインストールするポートを指定します。
-指定可能な項目は下記の通りです。
+指定項目は下記の通りです。
 
 * **Name** (string)  
-  インストールまたはアンインストールするポートの名前を表します。
+  インストールまたはアンインストールするポートの名前を指定します。
 * **MonitorName** (string)  
-  ポートが利用するポートモニタの名前を表します。
+  ポートが利用するポートモニタの名前を指定します。
   ここで指定されるポートモニタは、既にインストールされているか、または、
   同じ構成ファイルに記述されている必要があります。
 * **Application** (string)  
-  ポートが実行するアプリケーションのパスを表します。
+  ポートが実行するアプリケーションのパスを指定します。
 * **Arguments** (string)  
-  ポートがアプリケーションを実行する際に指定する引数を表します。
+  ポートがアプリケーションを実行する際に指定する引数を指定します。
+  実際にポートがアプリケーションを実行する際には、ここで指定されたもの以外の
+  引数が含まれる事があります。
 * **Temp** (string)  
-  一時ファイル等を保存するディレクトリのパスを表します。
+  一時ファイル等を保存するディレクトリのパスを指定します。
   ログイン中のユーザおよび SYSTEM アカウントが書き込み可能なディレクトリを
   指定して下さい。
 * **WaitForExit** (bool)  
   アプリケーションが終了するまで、次の印刷ジョブの処理を待機するかどうかを
-  表します。false の場合、複数のプロセスが同時に実行される可能性があります。
+  指定します。false の場合、複数のプロセスが同時に実行される可能性があります。
 * **RunAsUser** (bool)  
-  アプリケーションをログオン中のユーザで実行するかどうかを表します。
+  アプリケーションをログオン中のユーザで実行するかどうかを指定します。
   false の場合、SYSTEM アカウントで実行されます。尚、**Proxy** の項目が省略
   されている場合、この項目に関わらず SYSTEM アカウントで実行されます。
 * **Proxy** (string)  
@@ -137,45 +142,57 @@ CubePinstaller に指定する構成用 JSON ファイルの仕様は下記の�
 ### PrinterDrivers
 
 **PrinterDrivers** には、インストールまたはアンインストールするプリンタドライバを
-指定します。指定可能な項目は、**Name**, **MonitorName**, **FileName**, **Config**,
-**Data**, **Help**, **Dependencies**, **Repository** の 8 種類で、
-**Dependencies** は string の配列、それ以外は string です。
+指定します。指定項目は下記の通りです。
 
-**Name** はインストールまたはアンインストールするプリンタドライバの名前、
-**MonitorName** はプリンタドライバが利用するポートモニタの名前を表し、
-いずれも必須項目です。また、**MonitorName** で指定されるポートモニタは、
-既にインストールされているか、または、同じ構成ファイルに記述されている必要が
-あります。
-
-**Repository** は、各種モジュールを DriverStore ディレクトリから検索する際に
-使用します。例えば、64bit 環境において ntprint を指定した場合、
-DriverStore/FileRepository/ntprint.ing_amd64_xxxxxxxxxxxxxxx/amd64
-からの取得を試みます。
-
-**FileName**, **Config**, **Data**, **Help**, **Dependencies** はインストールに
-必要なモジュール名を表します。これらの項目はアンインストール時には省略する事が
-できます。また、指定されたモジュールは **/Resource** オプションで指定された
-ディレクトリ、または DriverStore ディレクトリ下に存在するものとします。
-
-尚、**Data** で指定するファイルには PCFileName と言う項目が存在します。
-この項目と実際のファイル名が異なる場合、プリンタドライバのインストールに失敗する
-現象が確認されています。
+* **Name** (string)  
+  インストールまたはアンインストールするプリンタドライバの名前を指定します。
+* **MonitorName** (string)  
+  プリンタドライバが利用するポートモニタの名前を指定します。
+  ここで指定されるポートモニタは、既にインストールされているか、または、同じ構成
+  ファイルに記述されている必要があります。
+* **Data** (string)  
+  PostScript Printer Driver (PPD) ファイルを指定します。指定された PPD ファイルは
+  **-Resource** オプションで指定されたディレクトリに存在するものとします。
+  尚、PPD ファイルには PCFileName と言う項目が存在します。
+  この項目と実際のファイル名が異なる場合、プリンタドライバのインストールに失敗する
+  現象が確認されています。
+* **FileName** (string)  
+  モジュール名を指定します（例: pscript5.dll）。
+* **Config** (string)  
+  UI モジュール名を指定します（例: psui5.dll）。
+* **Help** (string)  
+  ヘルプ用ファイル名を指定します（例: pscript.hlp）。
+* **Dependencies** (string 配列)  
+  その他の依存ファイルを配列形式で指定します。
+* **Repository** (string)  
+  **FileName**, **Config**, **Help**, **Dependencies** で指定された各種モジュールを
+  DriverStore ディレクトリから検索する際に使用します。例えば、64bit 環境において
+  ntprint を指定した場合、  
+  DriverStore/FileRepository/ntprint.ing_amd64_xxxxxxxxxxxxxxx/amd64  
+  からの取得を試みます。尚、DriverStore ディレクトリに各種モジュールが存在しなかった
+  場合、**-Resource** オプションで指定されたディレクトリを検索します。
 
 ### Printers
 
 **Printers** には、インストールまたはアンインストールするプリンタを指定します。
-指定可能な項目は、**Name**, **ShareName**, **DriverName**, **PortName** の
-4 種類でいずれも string です。また、これらの項目はいずれも必須項目です。
+指定可能な項目は、指定項目は下記の通りです。
 
-**Name** は、インストールまたはアンインストールするプリンタ名、**ShareName** は
-このプリンタを LAN 等のネットワーク上で共有する時の名前を表します。
-**DriverName** および **PortName** は、プリンタが利用するプリンタドライバおよび
-ポートの名前を表します。これらは、既にインストールされているか、または、同じ構成
-ファイルに記述されている必要があります。
+* **Name** (string)  
+  インストールまたはアンインストールするプリンタ名を指定します。
+* **ShareName** (string)  
+  プリンタを LAN 等のネットワーク上で共有する時の名前を指定します。
+* **DriverName** (string)  
+  プリンタが利用するプリンタドライバ名を指定します。
+  指定されたプリンタドライバは既にインストールされているか、または、同じ構成
+  ファイルに記述されている必要があります。
+* **PortName** (string)  
+  プリンタが利用するポート名を指定します。
+  指定されたポートは既にインストールされているか、または、同じ構成ファイルに記述
+  されている必要があります。
 
 ### Examples
 
-CubePinstaller に指定する JSON ファイルの構成例は下記の通りです。
+CubeVPC に指定する JSON ファイルの構成例は下記の通りです。
 
 ```
 {
