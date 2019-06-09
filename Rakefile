@@ -41,8 +41,7 @@ PACKAGES    = ["Libraries/Core/#{PROJECT}.Core.nuspec",
                "Libraries/Pdfium/#{PROJECT}.Pdfium.nuspec"]
 TESTCASES   = {"#{PROJECT}.Tests"            => "Libraries/Tests",
                "#{PROJECT}.Converter.Tests"  => "Applications/Converter/Tests",
-               "#{PROJECT}.Editor.Tests"     => "Applications/Editor/Tests",
-               "#{PROJECT}.Pinstaller.Tests" => "Applications/Pinstaller/Tests"}
+               "#{PROJECT}.Editor.Tests"     => "Applications/Editor/Tests"}
 
 # --------------------------------------------------------------------------- #
 # commands
