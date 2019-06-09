@@ -16,104 +16,92 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading;
-using System.Windows.Forms;
 
-namespace Cube.Pdf.Editor
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
+    /// Settings
     ///
     /// <summary>
-    /// Represents the main program of the CubePDF Utility.
+    /// 各種設定を保持するクラスです。
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    public class Settings : ObservableBase
     {
-        #region Methods
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// SettingsValue
         ///
         /// <summary>
-        /// Executes the main program.
+        /// オブジェクトを初期化します。
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args)
+        public Settings()
         {
-            var mutex = new Mutex(true, "CubePdfUtilitySplash", out var created);
-            if (!created) return;
-
-            try
-            {
-                if (IsSkip()) { Start(args); return; }
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-
-                var view = new MainWindow();
-                view.Shown += (s, e) =>
-                {
-                    try { Start(args); }
-                    catch (Exception err) { view.Error(err); }
-                };
-
-                Application.Run(view);
-            }
-            catch (Exception err) { Trace.WriteLine(err.ToString()); }
-            finally { mutex.ReleaseMutex(); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Start
-        ///
-        /// <summary>
-        /// Starts the main process.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        static void Start(string[] args)
-        {
-            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Process.Start(new ProcessStartInfo
-            {
-                FileName  = Path.Combine(dir, $"{Target}.exe"),
-                Arguments = string.Join(" ", args.Select(s => $"\"{s}\"").ToArray()),
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsSkip
-        ///
-        /// <summary>
-        /// Gets a value indicating whether to skip displaying the splash
-        /// window.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        static bool IsSkip()
-        {
-            var p = Process.GetProcessesByName(Target);
-            var n = p?.Length ?? 0;
-            return n > 0;
+            Assembly = Assembly.GetExecutingAssembly();
         }
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Assembly
+        ///
+        /// <summary>
+        /// アセンブリ情報を取得します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Assembly Assembly { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AllowOperation
+        ///
+        /// <summary>
+        /// ユーザからの操作を受け付けるかどうかを示す値を取得または設定します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AllowOperation
+        {
+            get { return _allowOperation; }
+            set { SetProperty(ref _allowOperation, value); }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
+        
+        #endregion
+
         #region Fields
-        private static readonly string Target = "CubePdfUtility";
+        private bool _allowOperation = true;
         #endregion
     }
 }

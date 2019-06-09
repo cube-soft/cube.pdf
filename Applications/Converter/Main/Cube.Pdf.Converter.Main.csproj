@@ -4,7 +4,7 @@
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF</Product>
-        <Description>GUI application to Convert to PDF or other formats.</Description>
+        <Description>GUI application to convert to PDF or other formats.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <AssemblyName>CubePdf</AssemblyName>
         <AssemblyTitle>CubePDF</AssemblyTitle>
@@ -40,5 +40,7 @@
         <None Include="Properties\DataSources\*" />
         <None Include="Assets\**\*" />
         <None Include="App.config" />
+        <None Include="App.ico" />
+        <None Include="App.manifest" />
     </ItemGroup>
 </Project>

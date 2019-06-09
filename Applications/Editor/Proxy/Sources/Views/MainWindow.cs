@@ -17,103 +17,113 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
+    /// MainWindow
     ///
     /// <summary>
-    /// Represents the main program of the CubePDF Utility.
+    /// Represents the splash window of the CubePDF Utility.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    public partial class MainWindow : Form
     {
-        #region Methods
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// MainWindow
         ///
         /// <summary>
-        /// Executes the main program.
+        /// Initializes a new instance of the MainWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args)
+        public MainWindow()
         {
-            var mutex = new Mutex(true, "CubePdfUtilitySplash", out var created);
-            if (!created) return;
+            InitializeComponent();
 
-            try
+            var count = 0;
+
+            VersionLabel.Text = GetVersion();
+            RefreshTimer.Tick += (s, e) =>
             {
-                if (IsSkip()) { Start(args); return; }
+                if (count++ >= 60) Close();
+                else MessageLabel.Text += ".";
+            };
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-
-                var view = new MainWindow();
-                view.Shown += (s, e) =>
-                {
-                    try { Start(args); }
-                    catch (Exception err) { view.Error(err); }
-                };
-
-                Application.Run(view);
-            }
-            catch (Exception err) { Trace.WriteLine(err.ToString()); }
-            finally { mutex.ReleaseMutex(); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Start
-        ///
-        /// <summary>
-        /// Starts the main process.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        static void Start(string[] args)
-        {
-            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Process.Start(new ProcessStartInfo
-            {
-                FileName  = Path.Combine(dir, $"{Target}.exe"),
-                Arguments = string.Join(" ", args.Select(s => $"\"{s}\"").ToArray()),
-            });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsSkip
-        ///
-        /// <summary>
-        /// Gets a value indicating whether to skip displaying the splash
-        /// window.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        static bool IsSkip()
-        {
-            var p = Process.GetProcessesByName(Target);
-            var n = p?.Length ?? 0;
-            return n > 0;
+            RefreshTimer.Start();
         }
 
         #endregion
 
-        #region Fields
-        private static readonly string Target = "CubePdfUtility";
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateParams
+        ///
+        /// <summary>
+        /// Gets the value of initialzing information.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cp = base.CreateParams;
+                cp.ClassStyle |= 0x00020000;
+                return cp;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Error
+        ///
+        /// <summary>
+        /// Shows the error message and close the window.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Error(Exception src)
+        {
+            MessageBox.Show($"{src.Message} ({src.GetType().Name})",
+                "CubePDF Utility", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Close();
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetVersion
+        ///
+        /// <summary>
+        /// Get the version string.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetVersion()
+        {
+            var app  = Assembly.GetExecutingAssembly().GetName().Version;
+            var fw   = Environment.Version;
+            var arch = (IntPtr.Size == 4) ? "x86" : "x64";
+            return $"Version {app} ({arch}) Microsoft {fw}";
+        }
+
         #endregion
     }
 }
