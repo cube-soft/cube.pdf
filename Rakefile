@@ -92,9 +92,10 @@ end
 # build
 # --------------------------------------------------------------------------- #
 desc "Build projects in the current branch."
-task :build, [:platform] => :restore do |_, e|
+task :build, [:platform] do |_, e|
     e.with_defaults(:platform => PLATFORMS[0])
-    sh(%(#{BUILD} -p:Platform="#{e.platform}" #{MAIN}.sln))
+    Rake::Task[:restore].execute
+sh(%(#{BUILD} -p:Platform="#{e.platform}" #{MAIN}.sln))
 end
 
 # --------------------------------------------------------------------------- #
