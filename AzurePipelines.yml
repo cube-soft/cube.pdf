@@ -8,7 +8,6 @@ variables:
     PROJECT_CONFIG: 'Release'
     PROJECT_BIN:    'bin\$(PROJECT_ARCH)\$(PROJECT_CONFIG)\net45'
     PROJECT_LIB:    '..\packages'
-    PROJECT_NATIVE: '..\resources\native'
     TEST_TOOL:      '$(PROJECT_LIB)\OpenCover\4.7.922\tools\OpenCover.Console.exe'
     TEST_CORETOOL:  '$(PROJECT_LIB)\NUnit.ConsoleRunner\3.10.0\tools\nunit3-console.exe'
     TEST_FILTERS:   '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.App -[*]*Window -[*]*Control'
@@ -33,43 +32,41 @@ steps:
     configuration: '$(PROJECT_CONFIG)'
   displayName: 'Build solution'
 
-- task: PythonScript@0
-  inputs:
-    scriptSource: 'inline'
-    script: from urllib.request import urlretrieve; urlretrieve('https://www.cube-soft.jp/archive/gs-x64.7z', 'gs-x64.7z')
-  displayName: 'Download Ghostscript archives'
-
-- task: ExtractFiles@1
-  inputs:
-    archiveFilePatterns: 'gs-x64.7z'
-    destinationFolder: 'Libraries\Tests\$(PROJECT_BIN)'
-    cleanDestinationFolder: false
-  displayName: 'Extract Ghostscript archives'
-
-- task: ExtractFiles@1
-  inputs:
-    archiveFilePatterns: 'gs-x64.7z'
-    destinationFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
-    cleanDestinationFolder: false
-  displayName: 'Extract Ghostscript archives'
-
 - task: CopyFiles@2
   inputs:
-    contents: '**\*.dll'
-    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\pdfiumviewer.native.x86_64.no_v8-no_xfa'
+    contents: '**\win-x64\native\*.dll'
+    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Ghostscript'
     targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
     flattenFolders: true
     overWrite: true
-  displayName: 'Copy PDFium modules'
+  displayName: 'Copy Ghostscript files to the library test directory.'
 
 - task: CopyFiles@2
   inputs:
-    contents: '**\*.dll'
-    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\pdfiumviewer.native.x86_64.no_v8-no_xfa'
+    contents: '**\win-x64\native\*.dll'
+    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Ghostscript'
+    targetFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
+    flattenFolders: true
+    overWrite: true
+  displayName: 'Copy Ghostscript files to the CubePDF test directory.'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**\win-x64\native\*.dll'
+    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Pdfium.Lite'
+    targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
+    flattenFolders: true
+    overWrite: true
+  displayName: 'Copy PDFium files to the library test directory.'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**\win-x64\native\*.dll'
+    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Pdfium.Lite'
     targetFolder: 'Applications\Editor\Tests\$(PROJECT_BIN)'
     flattenFolders: true
     overWrite: true
-  displayName: 'Copy PDFium modules'
+  displayName: 'Copy PDFium files to the CubePDF Utility test directory.'
 
 - script: >
     "$(TEST_TOOL)"
@@ -126,7 +123,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: 'Libraries\*\$(PROJECT_NAME).csproj'
+    packagesToPack: 'Libraries\*\$(PROJECT_NAME)*.csproj'
     configuration: '$(PROJECT_CONFIG)'
   displayName: 'Create NuGet packages'
 
@@ -137,7 +134,7 @@ steps:
     includeRootFolder: false
     archiveType: 'zip'
     replaceExistingArchive: true
-  displayName: 'Copy CubePDF modules'
+  displayName: 'Pack CubePDF files'
 
 - task: ArchiveFiles@2
   inputs:
@@ -146,7 +143,7 @@ steps:
     includeRootFolder: false
     archiveType: 'zip'
     replaceExistingArchive: true
-  displayName: 'Copy CubeProxy modules'
+  displayName: 'Pack CubeProxy files'
 
 - task: ArchiveFiles@2
   inputs:
@@ -155,7 +152,7 @@ steps:
     includeRootFolder: false
     archiveType: 'zip'
     replaceExistingArchive: true
-  displayName: 'Copy CubePDF Utility modules'
+  displayName: 'Pack CubePDF Utility files'
 
 - task: ArchiveFiles@2
   inputs:
@@ -164,7 +161,7 @@ steps:
     includeRootFolder: false
     archiveType: 'zip'
     replaceExistingArchive: true
-  displayName: 'Copy CubePDF Utility Splash modules'
+  displayName: 'Pack CubePDF Utility Splash files'
 
 - task: CopyFiles@2
   inputs:
