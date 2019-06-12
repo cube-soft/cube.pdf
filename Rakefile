@@ -24,17 +24,10 @@ require 'rake/clean'
 PROJECT     = "Cube.Pdf"
 MAIN        = "#{PROJECT}.Apps"
 LIB         = "../packages"
-NATIVE      = "../resources/native"
 BRANCHES    = ["master", "net35"]
 FRAMEWORKS  = ["net45", "net35"]
 CONFIGS     = ["Release", "Debug"]
 PLATFORMS   = ["Any CPU", "x86", "x64"]
-GS_NAME     = "gsdll32.dll"
-GS_DEST     = ["Libraries/Tests", "Applications/Converter/Tests", "Applications/Converter/Main"]
-PDFIUM_NAME = "pdfiumviewer.native"
-PDFIUM_KIND = "no_v8-no_xfa"
-PDFIUM_VER  = "2018.4.8.256"
-PDFIUM_DEST = ["Libraries/Tests", "Applications/Editor/Tests", "Applications/Editor/Main"]
 PACKAGES    = ["Libraries/Core/#{PROJECT}.Core.nuspec",
                "Libraries/Ghostscript/#{PROJECT}.Ghostscript.nuspec",
                "Libraries/Itext/#{PROJECT}.Itext.nuspec",
@@ -42,6 +35,22 @@ PACKAGES    = ["Libraries/Core/#{PROJECT}.Core.nuspec",
 TESTCASES   = {"#{PROJECT}.Tests"            => "Libraries/Tests",
                "#{PROJECT}.Converter.Tests"  => "Applications/Converter/Tests",
                "#{PROJECT}.Editor.Tests"     => "Applications/Editor/Tests"}
+
+# --------------------------------------------------------------------------- #
+# unmanaged libraries
+# --------------------------------------------------------------------------- #
+COPIES = {
+    "Cube.Native.Ghostscript/9.27.0" => [
+        "Libraries/Tests",
+        "Applications/Converter/Tests",
+        "Applications/Converter/Main"
+    ],
+    "Cube.Native.Pdfium.Lite/1.0.3770" => [
+        "Libraries/Tests",
+        "Applications/Editor/Tests",
+        "Applications/Editor/Main"
+    ]
+}
 
 # --------------------------------------------------------------------------- #
 # commands
@@ -72,12 +81,19 @@ task :pack do
 end
 
 # --------------------------------------------------------------------------- #
+# restore
+# --------------------------------------------------------------------------- #
+desc "Resote NuGet packages in the current branch."
+task :restore do
+    sh("nuget restore #{MAIN}.sln")
+end
+
+# --------------------------------------------------------------------------- #
 # build
 # --------------------------------------------------------------------------- #
 desc "Build projects in the current branch."
-task :build, [:platform] do |_, e|
+task :build, [:platform] => :restore do |_, e|
     e.with_defaults(:platform => PLATFORMS[0])
-    sh("nuget restore #{MAIN}.sln")
     sh(%(#{BUILD} -p:Platform="#{e.platform}" #{MAIN}.sln))
 end
 
@@ -122,28 +138,20 @@ end
 # --------------------------------------------------------------------------- #
 # Copy
 # --------------------------------------------------------------------------- #
-desc "Copy resources to the bin directories."
-task :copy, [:platform, :framework] do |_, e|
+desc "Copy umnamaged packages the bin directories."
+task :copy, [:platform, :framework] => :restore do |_, e|
     v0 = (e.platform  != nil) ? [e.platform ] : PLATFORMS
     v1 = (e.framework != nil) ? [e.framework] : FRAMEWORKS
 
     v0.product(CONFIGS, v1) { |set|
-        pf  = (set[0] == 'Any CPU') ? 'x64' : set[0]
-        bin = ['bin', set[0], set[1], set[2]].join('/')
-
-        GS_DEST.each { |root|
-            src  = "#{NATIVE}/#{pf}/gs/#{GS_NAME}"
-            dest = "#{root}/#{bin}"
-            RakeFileUtils::mkdir_p(dest)
-            RakeFileUtils::cp_r(src, dest)
-        }
-
-        PDFIUM_DEST.each { |root|
-            name = [PDFIUM_NAME, (pf == 'x64') ? 'x86_64' : 'x86', PDFIUM_KIND].join('.')
-            src  = [LIB, name, PDFIUM_VER, 'Build', pf, 'pdfium.dll'].join('/')
-            dest = "#{root}/#{bin}"
-            RakeFileUtils::mkdir_p(dest)
-            RakeFileUtils::cp_r(src, dest)
+        pf = (set[0] == 'Any CPU') ? 'x64' : set[0]
+        COPIES.each { |key, value|
+            src = FileList.new("#{LIB}/#{key}/runtimes/win-#{pf}/native/*.dll")
+            value.each { |root|
+                dest = "#{root}/bin/#{set[0]}/#{set[1]}/#{set[2]}"
+                RakeFileUtils::mkdir_p(dest)
+                RakeFileUtils::cp_r(src, dest)
+            }
         }
     }
 end

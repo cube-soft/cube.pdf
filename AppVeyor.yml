@@ -6,7 +6,6 @@ environment:
     PROJECT_NAME:   'Cube.Pdf'
     PROJECT_BIN:    'bin\%PLATFORM%\%CONFIGURATION%\net45'
     PROJECT_LIB:    '..\packages'
-    PROJECT_NATIVE: '..\resources\native'
     TEST_TOOL:      '$(PROJECT_LIB)\OpenCover\4.7.922\tools\OpenCover.Console.exe'
     TEST_CORETOOL:  'nunit3-console.exe'
     TEST_FILTERS:   '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.App -[*]*Window -[*]*Control'
@@ -29,10 +28,6 @@ build:
     publish_nuget: true
     verbosity: minimal
 after_build:
-    - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x86.7z
-    - ps: Start-FileDownload https://www.cube-soft.jp/archive/gs-x64.7z
-    - 7z x -o"%PROJECT_NATIVE%\x86\gs" gs-x86.7z
-    - 7z x -o"%PROJECT_NATIVE%\x64\gs" gs-x64.7z
     - rake copy
 test_script:
     - >
