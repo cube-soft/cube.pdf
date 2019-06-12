@@ -34,7 +34,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: '**\*.dll'
+    contents: '**\win-x64\native\*.dll'
     sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Ghostscript'
     targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
     flattenFolders: true
@@ -43,16 +43,16 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: '**\*.dll'
+    contents: '**\win-x64\native\*.dll'
     sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Ghostscript'
-    targetFolder: 'Applications\Editor\Tests\$(PROJECT_BIN)'
+    targetFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
     flattenFolders: true
     overWrite: true
   displayName: 'Copy Ghostscript files to the CubePDF test directory.'
 
 - task: CopyFiles@2
   inputs:
-    contents: '**\*.dll'
+    contents: '**\win-x64\native\*.dll'
     sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Pdfium.Lite'
     targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
     flattenFolders: true
@@ -61,7 +61,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    contents: '**\*.dll'
+    contents: '**\win-x64\native\*.dll'
     sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Pdfium.Lite'
     targetFolder: 'Applications\Editor\Tests\$(PROJECT_BIN)'
     flattenFolders: true
@@ -123,7 +123,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: 'pack'
-    packagesToPack: '**\$(PROJECT_NAME)*.csproj'
+    packagesToPack: 'Libraries\*\$(PROJECT_NAME)*.csproj'
     configuration: '$(PROJECT_CONFIG)'
   displayName: 'Create NuGet packages'
 
