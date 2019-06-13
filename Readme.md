@@ -2,9 +2,12 @@ Cube.Pdf
 ====
 
 [![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.svg?label=core)](https://www.nuget.org/packages/Cube.Pdf/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Ghostscript.svg?label=gs)](https://www.nuget.org/packages/Cube.Pdf.Ghostscript/)
+[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Ghostscript.svg?label=ghostscript)](https://www.nuget.org/packages/Cube.Pdf.Ghostscript/)
 [![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Itext.svg?label=itext)](https://www.nuget.org/packages/Cube.Pdf.Itext/)
 [![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Pdfium.svg?label=pdfium)](https://www.nuget.org/packages/Cube.Pdf.Pdfium/)  
+[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Ghostscript.svg?label=ghostscript.native)](https://www.nuget.org/packages/Cube.Native.Ghostscript)
+[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Pdfium.svg?label=pdfium.native)](https://www.nuget.org/packages/Cube.Native.Pdfium)
+[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Pdfium.Lite.svg?label=pdfium.lite.native)](https://www.nuget.org/packages/Cube.Native.Pdfium.Lite)  
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
 [![Azure Pipelines](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_apis/build/status/cube-soft.Cube.Pdf?branchName=master)](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_build)
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
