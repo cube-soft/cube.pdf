@@ -45,9 +45,17 @@ Dependencies of the CubePDF are as follows.
     - MIT License
     - http://alphafs.alphaleonis.com/
     - https://www.nuget.org/packages/AlphaFS/
+* AsyncBridge (.NET Framework 3.5 only)
+    - MIT license
+    - https://omermor.github.io/AsyncBridge/
+    - https://www.nuget.org/packages/AsyncBridge/
 
 ## History
 
+* 2019/06/21 version 1.0.0
+    - Update Ghostscript 9.27
+    - Improve operations related to the Ghostscript error number -100.
+    - Fix errors when no printers are registered.
 * 2019/03/14 version 1.0.0RC19
     - Fix to install and uninstall the CubePDF printer.
 * 2019/02/15 version 1.0.0RC18

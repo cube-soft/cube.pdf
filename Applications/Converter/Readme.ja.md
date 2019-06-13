@@ -49,9 +49,17 @@ CubePDF は、以下のライブラリを利用しています。
     - MIT License
     - http://alphafs.alphaleonis.com/
     - https://www.nuget.org/packages/AlphaFS/
+* AsyncBridge (.NET Framework 3.5 のみ)
+    - MIT license
+    - https://omermor.github.io/AsyncBridge/
+    - https://www.nuget.org/packages/AsyncBridge/
 
 ## バージョン履歴
 
+* 2019/06/21 version 1.0.0
+    - Ghostscript 9.27 のバージョンアップに対応
+    - Ghostscript エラー (-100) を改善
+    - 登録されているプリンタ数がゼロの時に発生する不都合を修正
 * 2019/03/14 version 1.0.0RC19
     - CubePDF プリンタのインストール処理を改善
 * 2019/02/15 version 1.0.0RC18
