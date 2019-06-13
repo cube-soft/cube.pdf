@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+    <metadata>
+        <version>1.0.0.20</version>
+        <id>Cube.Pdf.Converter</id>
+        <title>Cube.Pdf.Converter</title>
+        <authors>clown,cube-soft</authors>
+        <owners>clown,cube-soft</owners>
+        <description>Core module of the CubePDF application.</description>
+        <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
+        <tags>Cube PDF</tags>
+        <license type="expression">AGPL-3.0-or-later</license>
+        <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
+        <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <dependencies>
+            <dependency id="Cube.Pdf.Ghostscript" version="2.16.0" />
+            <dependency id="Cube.Pdf.Itext" version="2.16.0" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Any CPU\Release\net45\Cube.Pdf.Converter.*" target="lib\net45" />
+        <file src="bin\Any CPU\Release\net35\Cube.Pdf.Converter.*" target="lib\net35" />
+    </files>
+</package>
