@@ -55,7 +55,7 @@ namespace Cube.Pdf.Converter
                 Logger.Configure();
                 Logger.ObserveTaskException();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
-                Logger.Info(LogType, $"Ghostscript {Ghostscript.Converter.Revision}");
+                Logger.Info(LogType, $"Ghostscript {GetGsVersion()}");
                 Logger.Info(LogType, $"[ {string.Join(" ", raw)} ]");
 
                 ApplicationSetting.Configure();
@@ -77,21 +77,6 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateSetting
-        ///
-        /// <summary>
-        /// Creates a new instance of the SettingFolder class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static SettingFolder CreateSetting(ArgumentCollection src, Assembly asm) =>
-            src.Options.TryGetValue("Setting", out var subkey) ?
-            new SettingFolder(asm, Format.Registry, subkey, new IO()) :
-            new SettingFolder(asm);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -121,6 +106,37 @@ namespace Cube.Pdf.Converter
         private static void Execute(SettingFolder settings)
         {
             using (var src = new Facade(settings)) src.Invoke();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateSetting
+        ///
+        /// <summary>
+        /// Creates a new instance of the SettingFolder class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static SettingFolder CreateSetting(ArgumentCollection src, Assembly asm) =>
+            src.Options.TryGetValue("Setting", out var subkey) ?
+            new SettingFolder(asm, Format.Registry, subkey, new IO()) :
+            new SettingFolder(asm);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetGsVersion
+        ///
+        /// <summary>
+        /// Gets a version number of the Ghostscript.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static int GetGsVersion()
+        {
+            try { return Ghostscript.Converter.Revision; }
+            catch (Exception err) { Logger.Warn(LogType, err); }
+            return -1;
         }
 
         #endregion

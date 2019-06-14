@@ -39,7 +39,7 @@ namespace Cube.Pdf.Ghostscript
         /// GetRevision
         ///
         /// <summary>
-        /// Gets information of the currently loadded Ghostscript library.
+        /// Gets information of the currently loaded Ghostscript library.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
