@@ -40,7 +40,7 @@ TESTCASES   = {"#{PROJECT}.Tests"            => "Libraries/Tests",
 # unmanaged libraries
 # --------------------------------------------------------------------------- #
 COPIES = {
-    "Cube.Native.Ghostscript/9.27.0" => [
+    "Cube.Native.Ghostscript/9.27.1" => [
         "Libraries/Tests",
         "Applications/Converter/Tests",
         "Applications/Converter/Main"

@@ -16,11 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections;
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
-using Cube.Mixin.Pdf;
 using Cube.Tests;
 using NUnit.Framework;
 using System;
@@ -176,7 +174,7 @@ namespace Cube.Pdf.Converter.Tests
             dest.Normalize();
             dest.Value.Destination = Results;
             dest.Value.Temp = Get("Temp");
-            dest.Set(new ArgumentCollection(args, Collections.Argument.Windows, true));
+            dest.Set(args);
 
             return dest;
         }

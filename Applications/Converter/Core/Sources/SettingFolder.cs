@@ -22,6 +22,7 @@ using Cube.Mixin.Assembly;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Cube.Pdf.Converter
@@ -137,6 +138,20 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// Sets values based on the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="args">Program arguments.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Set(IEnumerable<string> args) =>
+            Set(new ArgumentCollection(args, Collections.Argument.Windows, true));
 
         /* ----------------------------------------------------------------- */
         ///
