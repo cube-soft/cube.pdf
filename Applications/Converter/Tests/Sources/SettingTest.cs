@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.Environment;
 using Cube.Pdf.Ghostscript;
@@ -203,7 +202,7 @@ namespace Cube.Pdf.Converter.Tests
             };
 
             var dest = new SettingFolder(Assembly.GetExecutingAssembly());
-            dest.Set(new ArgumentCollection(src, Collections.Argument.Windows, true));
+            dest.Set(src);
 
             var path = System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -231,7 +230,7 @@ namespace Cube.Pdf.Converter.Tests
         public void Set_Empty()
         {
             var dest = new SettingFolder(Assembly.GetExecutingAssembly());
-            dest.Set(new ArgumentCollection(Enumerable.Empty<string>(), Collections.Argument.Windows, true));
+            dest.Set(Enumerable.Empty<string>());
 
             Assert.That(dest.Digest,             Is.Null);
             Assert.That(dest.DocumentName.Value, Is.EqualTo("Cube.Pdf.Converter.Tests"));
