@@ -22,19 +22,20 @@ require 'rake/clean'
 # configuration
 # --------------------------------------------------------------------------- #
 PROJECT     = "Cube.Pdf"
-MAIN        = "#{PROJECT}.Apps"
+MAIN        = "Cube.Pdf.Apps"
 LIB         = "../packages"
 BRANCHES    = ["master", "net35"]
 FRAMEWORKS  = ["net45", "net35"]
 CONFIGS     = ["Release", "Debug"]
 PLATFORMS   = ["Any CPU", "x86", "x64"]
-PACKAGES    = ["Libraries/Core/#{PROJECT}.Core.nuspec",
-               "Libraries/Ghostscript/#{PROJECT}.Ghostscript.nuspec",
-               "Libraries/Itext/#{PROJECT}.Itext.nuspec",
-               "Libraries/Pdfium/#{PROJECT}.Pdfium.nuspec"]
-TESTCASES   = {"#{PROJECT}.Tests"            => "Libraries/Tests",
-               "#{PROJECT}.Converter.Tests"  => "Applications/Converter/Tests",
-               "#{PROJECT}.Editor.Tests"     => "Applications/Editor/Tests"}
+PACKAGES    = ["Libraries/Core/Cube.Pdf.Core.nuspec",
+               "Libraries/Ghostscript/Cube.Pdf.Ghostscript.nuspec",
+               "Libraries/Itext/Cube.Pdf.Itext.nuspec",
+               "Libraries/Pdfium/Cube.Pdf.Pdfium.nuspec",
+               "Applications/Converter/Core/Cube.Pdf.Converter.nuspec"]
+TESTCASES   = {"Cube.Pdf.Tests"            => "Libraries/Tests",
+               "Cube.Pdf.Converter.Tests"  => "Applications/Converter/Tests",
+               "Cube.Pdf.Editor.Tests"     => "Applications/Editor/Tests"}
 
 # --------------------------------------------------------------------------- #
 # unmanaged libraries
