@@ -76,8 +76,8 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public static Argument GetArgument(this ColorMode src)
         {
-            var result = GetColorModeMap().TryGetValue(src, out var value);
-            Debug.Assert(result);
+            var status = Map.TryGetValue(src, out var value);
+            Debug.Assert(status);
             return new Argument("ColorConversionStrategy", value);
         }
 
@@ -87,28 +87,22 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetColorModeMap
+        /// Map
         ///
         /// <summary>
         /// Gets the collection of the color mode and related information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static IDictionary<ColorMode, string> GetColorModeMap() => _map ?? (
-            _map = new Dictionary<ColorMode, string>
-            {
-                { ColorMode.Rgb,               "RGB"                       },
-                { ColorMode.Cmyk,              "CMYK"                      },
-                { ColorMode.Grayscale,         "Gray"                      },
-                { ColorMode.SameAsSource,      "LeaveColorUnchanged"       },
-                { ColorMode.DeviceIndependent, "UseDeviceIndependentColor" },
-            }
-        );
+        private static Dictionary<ColorMode, string> Map { get; } = new Dictionary<ColorMode, string>
+        {
+            { ColorMode.Rgb,               "RGB"                       },
+            { ColorMode.Cmyk,              "CMYK"                      },
+            { ColorMode.Grayscale,         "Gray"                      },
+            { ColorMode.SameAsSource,      "LeaveColorUnchanged"       },
+            { ColorMode.DeviceIndependent, "UseDeviceIndependentColor" },
+        };
 
-        #endregion
-
-        #region Fields
-        private static IDictionary<ColorMode, string> _map;
         #endregion
     }
 }

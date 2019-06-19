@@ -277,9 +277,11 @@ namespace Cube.Pdf.Converter.Tests
             Message = string.Empty;
 
             var closed = false;
-            vm.Subscribe<CloseMessage>(e => closed = true);
-            vm.Convert();
-            return Wait.For(() => closed, TimeSpan.FromSeconds(10));
+            using (vm.Subscribe<CloseMessage>(e => closed = true))
+            {
+                vm.Convert();
+                return Wait.For(() => closed, TimeSpan.FromSeconds(10));
+            }
         }
 
         /* ----------------------------------------------------------------- */

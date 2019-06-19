@@ -52,7 +52,7 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public static void FPDF_InitLibrary() =>
-            Invoke(() => NativeMethods.FPDF_InitLibrary());
+            Invoke(NativeMethods.FPDF_InitLibrary);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,7 +64,7 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public static void FPDF_DestroyLibrary() =>
-            Invoke(() => NativeMethods.FPDF_DestroyLibrary());
+            Invoke(NativeMethods.FPDF_DestroyLibrary);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,7 +76,7 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public static uint FPDF_GetLastError() =>
-            Invoke(() => NativeMethods.FPDF_GetLastError());
+            Invoke(NativeMethods.FPDF_GetLastError);
 
         #endregion
 

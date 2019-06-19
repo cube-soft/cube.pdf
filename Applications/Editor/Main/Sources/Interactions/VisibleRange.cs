@@ -81,7 +81,7 @@ namespace Cube.Pdf.Editor
         public int Unit
         {
             get => _unit;
-            set => Set(ref _unit, value, () => Update());
+            set => Set(ref _unit, value, Update);
         }
 
         #endregion

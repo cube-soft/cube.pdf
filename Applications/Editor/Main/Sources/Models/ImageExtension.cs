@@ -20,6 +20,7 @@ using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Images.Icons;
 using Cube.Mixin.Drawing;
+using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace Cube.Pdf.Editor
         /// NewItem
         ///
         /// <summary>
-        /// Creats a new instance of the ImageItem class with the specified
+        /// Creates a new instance of the ImageItem class with the specified
         /// arguments.
         /// </summary>
         ///
@@ -207,7 +208,7 @@ namespace Cube.Pdf.Editor
             var items = GetPair(src, indices.OrderBy(i => i));
             return HistoryItem.CreateInvoke(
                 () => src.Remove(indices),
-                () => { foreach (var kv in items) src.Insert(kv.Key, new[] { kv.Value }); }
+                () => items.Each(e => src.Insert(e.Key, new[] { e.Value }))
             );
         }
 
@@ -241,7 +242,7 @@ namespace Cube.Pdf.Editor
         /// Move
         ///
         /// <summary>
-        /// Moves the selected images at the specfied distance.
+        /// Moves the selected images at the specified distance.
         /// </summary>
         ///
         /// <param name="src">Source collection.</param>

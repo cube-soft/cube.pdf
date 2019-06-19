@@ -57,8 +57,8 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new PathBehavior(UserProgramTextBox, PathToolTip));
             Behaviors.Add(new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
             Behaviors.Add(new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox));
+            Behaviors.Add(Locale.Subscribe(e => UpdateString(e)));
 
-            Locale.Subscribe(e => UpdateString(e));
             SettingPanel.ApplyButton = ApplyButton;
         }
 
@@ -113,9 +113,8 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public override void Bind(IPresentable src)
+        protected override void OnBind(IPresentable src)
         {
-            base.Bind(src);
             if (!(src is MainViewModel vm)) return;
 
             MainBindingSource.DataSource       = vm;
@@ -124,10 +123,10 @@ namespace Cube.Pdf.Converter
             EncryptionBindingSource.DataSource = vm.Encryption;
 
             // see remarks
-            SourceLabel.DataBindings.Add("Visible", SettingBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
-            SourcePanel.DataBindings.Add("Visible", SettingBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
-            DataBindings.Add("Text", MainBindingSource, "Title", false, DataSourceUpdateMode.Never);
-            DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
+            _ = SourceLabel.DataBindings.Add("Visible", SettingBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
+            _ = SourcePanel.DataBindings.Add("Visible", SettingBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
+            _ = DataBindings.Add("Text", MainBindingSource, "Title", false, DataSourceUpdateMode.Never);
+            _ = DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
 
             SourceButton.Click      += (s, e) => vm.SelectSource();
             DestinationButton.Click += (s, e) => vm.SelectDestination();

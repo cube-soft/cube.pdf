@@ -135,8 +135,8 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         internal static Argument GetArgument(this Format src)
         {
-            var result = GetFormatMap().TryGetValue(src, out var value);
-            Debug.Assert(result);
+            var status = Map.TryGetValue(src, out var value);
+            Debug.Assert(status);
             return new Argument('s', "DEVICE", value.Device);
         }
 
@@ -155,8 +155,8 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         public static string GetExtension(this Format src)
         {
-            var result = GetFormatMap().TryGetValue(src, out var value);
-            Debug.Assert(result);
+            var status = Map.TryGetValue(src, out var value);
+            Debug.Assert(status);
             return value.Extension;
         }
 
@@ -166,52 +166,50 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetFormatMap
+        /// Map
         ///
         /// <summary>
         /// Gets the collection of formats and related information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static IDictionary<Format, FormatInfo> GetFormatMap() => _map ?? (
-            _map = new Dictionary<Format, FormatInfo>
-            {
-                { Format.Text,               new FormatInfo("txtwrite",  ".txt")  },
-                { Format.Ps,                 new FormatInfo("ps2write",  ".ps")   },
-                { Format.Eps,                new FormatInfo("eps2write", ".eps")  },
-                { Format.Pdf,                new FormatInfo("pdfwrite",  ".pdf")  },
-                { Format.Psd,                new FormatInfo("psdrgb",    ".psd")  },
-                { Format.PsdRgb,             new FormatInfo("psdrgb",    ".psd")  },
-                { Format.PsdCmyk,            new FormatInfo("psdcmyk",   ".psd")  },
-                { Format.PsdCmykog,          new FormatInfo("psdcmykog", ".psd")  },
-                { Format.Jpeg,               new FormatInfo("jpeg",      ".jpg")  },
-                { Format.Jpeg24bppRgb,       new FormatInfo("jpeg",      ".jpg")  },
-                { Format.Jpeg32bppCmyk,      new FormatInfo("jpegcmyk",  ".jpg")  },
-                { Format.Jpeg8bppGrayscale,  new FormatInfo("jpeggray",  ".jpg")  },
-                { Format.Png,                new FormatInfo("png16m",    ".png")  },
-                { Format.Png24bppRgb,        new FormatInfo("png16m",    ".png")  },
-                { Format.Png32bppArgb,       new FormatInfo("pngalpha",  ".png")  },
-                { Format.Png4bppIndexed,     new FormatInfo("png16",     ".png")  },
-                { Format.Png8bppIndexed,     new FormatInfo("png256",    ".png")  },
-                { Format.Png8bppGrayscale,   new FormatInfo("pnggray",   ".png")  },
-                { Format.Png1bppMonochrome,  new FormatInfo("pngmonod",  ".png")  },
-                { Format.Bmp,                new FormatInfo("bmp16m",    ".bmp")  },
-                { Format.Bmp24bppRgb,        new FormatInfo("bmp16m",    ".bmp")  },
-                { Format.Bmp32bppArgb,       new FormatInfo("bmp32b",    ".bmp")  },
-                { Format.Bmp4bppIndexed,     new FormatInfo("bmp16",     ".bmp")  },
-                { Format.Bmp8bppIndexed,     new FormatInfo("bmp256",    ".bmp")  },
-                { Format.Bmp8bppGrayscale,   new FormatInfo("bmpgray",   ".bmp")  },
-                { Format.Bmp1bppMonochrome,  new FormatInfo("bmpmono",   ".bmp")  },
-                { Format.Tiff,               new FormatInfo("tiff24nc",  ".tiff") },
-                { Format.Tiff12bppRgb,       new FormatInfo("tiff12nc",  ".tiff") },
-                { Format.Tiff24bppRgb,       new FormatInfo("tiff24nc",  ".tiff") },
-                { Format.Tiff48bppRgb,       new FormatInfo("tiff48nc",  ".tiff") },
-                { Format.Tiff32bppCmyk,      new FormatInfo("tiff32nc",  ".tiff") },
-                { Format.Tiff64bppCmyk,      new FormatInfo("tiff64nc",  ".tiff") },
-                { Format.Tiff8bppGrayscale,  new FormatInfo("tiffgray",  ".tiff") },
-                { Format.Tiff1bppMonochrome, new FormatInfo("tifflzw",   ".tiff") },
-            }
-        );
+        private static Dictionary<Format, FormatInfo> Map { get; } = new Dictionary<Format, FormatInfo>
+        {
+            { Format.Text,               new FormatInfo("txtwrite",  ".txt")  },
+            { Format.Ps,                 new FormatInfo("ps2write",  ".ps")   },
+            { Format.Eps,                new FormatInfo("eps2write", ".eps")  },
+            { Format.Pdf,                new FormatInfo("pdfwrite",  ".pdf")  },
+            { Format.Psd,                new FormatInfo("psdrgb",    ".psd")  },
+            { Format.PsdRgb,             new FormatInfo("psdrgb",    ".psd")  },
+            { Format.PsdCmyk,            new FormatInfo("psdcmyk",   ".psd")  },
+            { Format.PsdCmykog,          new FormatInfo("psdcmykog", ".psd")  },
+            { Format.Jpeg,               new FormatInfo("jpeg",      ".jpg")  },
+            { Format.Jpeg24bppRgb,       new FormatInfo("jpeg",      ".jpg")  },
+            { Format.Jpeg32bppCmyk,      new FormatInfo("jpegcmyk",  ".jpg")  },
+            { Format.Jpeg8bppGrayscale,  new FormatInfo("jpeggray",  ".jpg")  },
+            { Format.Png,                new FormatInfo("png16m",    ".png")  },
+            { Format.Png24bppRgb,        new FormatInfo("png16m",    ".png")  },
+            { Format.Png32bppArgb,       new FormatInfo("pngalpha",  ".png")  },
+            { Format.Png4bppIndexed,     new FormatInfo("png16",     ".png")  },
+            { Format.Png8bppIndexed,     new FormatInfo("png256",    ".png")  },
+            { Format.Png8bppGrayscale,   new FormatInfo("pnggray",   ".png")  },
+            { Format.Png1bppMonochrome,  new FormatInfo("pngmonod",  ".png")  },
+            { Format.Bmp,                new FormatInfo("bmp16m",    ".bmp")  },
+            { Format.Bmp24bppRgb,        new FormatInfo("bmp16m",    ".bmp")  },
+            { Format.Bmp32bppArgb,       new FormatInfo("bmp32b",    ".bmp")  },
+            { Format.Bmp4bppIndexed,     new FormatInfo("bmp16",     ".bmp")  },
+            { Format.Bmp8bppIndexed,     new FormatInfo("bmp256",    ".bmp")  },
+            { Format.Bmp8bppGrayscale,   new FormatInfo("bmpgray",   ".bmp")  },
+            { Format.Bmp1bppMonochrome,  new FormatInfo("bmpmono",   ".bmp")  },
+            { Format.Tiff,               new FormatInfo("tiff24nc",  ".tiff") },
+            { Format.Tiff12bppRgb,       new FormatInfo("tiff12nc",  ".tiff") },
+            { Format.Tiff24bppRgb,       new FormatInfo("tiff24nc",  ".tiff") },
+            { Format.Tiff48bppRgb,       new FormatInfo("tiff48nc",  ".tiff") },
+            { Format.Tiff32bppCmyk,      new FormatInfo("tiff32nc",  ".tiff") },
+            { Format.Tiff64bppCmyk,      new FormatInfo("tiff64nc",  ".tiff") },
+            { Format.Tiff8bppGrayscale,  new FormatInfo("tiffgray",  ".tiff") },
+            { Format.Tiff1bppMonochrome, new FormatInfo("tifflzw",   ".tiff") },
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -234,10 +232,6 @@ namespace Cube.Pdf.Ghostscript
             public string Extension { get; }
         }
 
-        #endregion
-
-        #region Fields
-        private static IDictionary<Format, FormatInfo> _map;
         #endregion
     }
 }
