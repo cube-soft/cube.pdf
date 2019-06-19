@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.String;
-using Cube.Mixin.Pdf;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -29,11 +28,11 @@ namespace Cube.Pdf.Converter
     /// EncryptionViewModel
     ///
     /// <summary>
-    /// Represents the viewmodel for the security tab in the main window.
+    /// Represents the ViewModel for the security tab in the main window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class EncryptionViewModel : CommonViewModel
+    public sealed class EncryptionViewModel : ViewModelBase
     {
         #region Constructors
 
@@ -195,8 +194,8 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /// <remarks>
-        /// 閲覧用パスワードと管理用パスワードを共用する場合、許可設定を
-        /// 変更する事はできません。
+        /// If the user password is shared with the owner password,
+        /// the permission settings are not permitted.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -288,8 +287,8 @@ namespace Cube.Pdf.Converter
 
             var owner = OwnerPassword.FuzzyEquals(OwnerConfirm);
             var user = !OpenWithPassword ||
-                         UseOwnerPassword ||
-                         UserPassword.FuzzyEquals(UserConfirm);
+                        UseOwnerPassword ||
+                        UserPassword.FuzzyEquals(UserConfirm);
             if (owner && user) return true;
 
             Send(MessageFactory.CreateError(Properties.Resources.MessagePassword));

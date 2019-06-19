@@ -31,7 +31,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MetadataViewModel : CommonViewModel
+    public sealed class MetadataViewModel : ViewModelBase
     {
         #region Constructors
 

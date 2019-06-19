@@ -28,7 +28,7 @@ namespace Cube.Pdf.Itext
     /// ImageExtension
     ///
     /// <summary>
-    /// Provices extended methods of the image classes.
+    /// Provides extended methods of the image classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -53,7 +53,7 @@ namespace Cube.Pdf.Itext
         {
             var scale  = PdfFile.Point / image.HorizontalResolution;
             var format = image.GetImageFormat();
-            if (!GetSupportFormats().Contains(format)) format = ImageFormat.Png;
+            if (!SupportFormats.Contains(format)) format = ImageFormat.Png;
 
             var dest = iTextSharp.text.Image.GetInstance(image, format);
             dest.SetAbsolutePosition(0, 0);
@@ -68,28 +68,22 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetSupportFormats
+        /// SupportFormats
         ///
         /// <summary>
         /// Gets the collection of supported image formats.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static HashSet<ImageFormat> GetSupportFormats() => _supports ?? (
-            _supports = new HashSet<ImageFormat>
-            {
-                ImageFormat.Bmp,
-                ImageFormat.Gif,
-                ImageFormat.Jpeg,
-                ImageFormat.Png,
-                ImageFormat.Tiff,
-            }
-        );
+        private static HashSet<ImageFormat> SupportFormats { get; } = new HashSet<ImageFormat>
+        {
+            ImageFormat.Bmp,
+            ImageFormat.Gif,
+            ImageFormat.Jpeg,
+            ImageFormat.Png,
+            ImageFormat.Tiff,
+        };
 
-        #endregion
-
-        #region Fields
-        private static HashSet<ImageFormat> _supports;
         #endregion
     }
 }

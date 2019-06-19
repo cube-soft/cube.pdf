@@ -141,7 +141,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
-        
+
         #endregion
     }
 

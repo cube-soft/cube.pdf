@@ -82,7 +82,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         public static Argument GetArgument(this Encoding src, string name) =>
-            GetEncodingMap().TryGetValue(src, out var value) ?
+            Map.TryGetValue(src, out var value) ?
             new Argument(name, value) :
             null;
 
@@ -92,28 +92,23 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetEncodingMap
+        /// Map
         ///
         /// <summary>
         /// Gets the collection of Encoding values and related information.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static IDictionary<Encoding, string> GetEncodingMap() => _map ?? (
-            _map = new Dictionary<Encoding, string>
-            {
-                { Encoding.Flate,  "FlateEncode"    },
-                { Encoding.Jpeg,   "DCTEncode"      },
-                { Encoding.Fax,    "CCITTFaxEncode" },
-                { Encoding.Lzw,    "LZWEncode"      },
-                { Encoding.Base85, "ASCII85Encode"  },
-            }
-        );
+        private static Dictionary<Encoding, string> Map { get; } = new Dictionary<Encoding, string>
+        {
+            { Encoding.Flate,  "FlateEncode"    },
+            { Encoding.Jpeg,   "DCTEncode"      },
+            { Encoding.Fax,    "CCITTFaxEncode" },
+            { Encoding.Lzw,    "LZWEncode"      },
+            { Encoding.Base85, "ASCII85Encode"  },
+        };
 
         #endregion
 
-        #region Fields
-        private static IDictionary<Encoding, string> _map;
-        #endregion
     }
 }

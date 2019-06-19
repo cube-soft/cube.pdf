@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Assembly;
 using Cube.Mixin.String;
+using Cube.Mixin.Syntax;
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -29,11 +30,11 @@ namespace Cube.Pdf.Converter
     /// MainViewModel
     ///
     /// <summary>
-    /// SettingFolder とメイン画面を関連付ける ViewModel を表すクラスです。
+    /// Represents the ViewModel for the MainWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : CommonViewModel
+    public sealed class MainViewModel : ViewModelBase
     {
         #region Constructors
 
@@ -189,7 +190,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            if (Encryption.Confirm() && General.Confirm()) TrackClose(() => _model.InvokeEx());
+            var ok = Encryption.Confirm() && General.Confirm();
+            if (ok) _ = TrackClose(() => _model.InvokeEx());
         }
 
         /* ----------------------------------------------------------------- */
@@ -201,10 +203,8 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save()
-        {
-            if (Metadata.ConfirmWhenSave()) _model.Settings.Save();
-        }
+        public void Save() =>
+            Metadata.ConfirmWhenSave().Then(() => _model.Settings.Save());
 
         /* ----------------------------------------------------------------- */
         ///

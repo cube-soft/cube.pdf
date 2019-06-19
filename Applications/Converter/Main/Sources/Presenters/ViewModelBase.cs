@@ -25,14 +25,14 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// CommonViewModel
+    /// ViewModelBase
     ///
     /// <summary>
     /// Represents the base class of ViewModel classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class CommonViewModel : PresentableBase
+    public abstract class ViewModelBase : PresentableBase
     {
         #region Constructors
 
@@ -49,7 +49,7 @@ namespace Cube.Pdf.Converter
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected CommonViewModel(Aggregator aggregator, SynchronizationContext context) :
+        protected ViewModelBase(Aggregator aggregator, SynchronizationContext context) :
             base(aggregator, context) { }
 
         #endregion
@@ -68,7 +68,7 @@ namespace Cube.Pdf.Converter
         protected void Send<T>(T message, Action<T> next)
         {
             Send(message);
-            Track(() => next(message), MessageFactory.Create, true);
+            _ = Track(() => next(message), MessageFactory.Create, true);
         }
 
         /* ----------------------------------------------------------------- */
