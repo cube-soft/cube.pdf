@@ -19,6 +19,8 @@
 using Cube.FileSystem;
 using Cube.Mixin.Logging;
 using Cube.Mixin.Pdf;
+using Cube.Mixin.Syntax;
+using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,11 +33,11 @@ namespace Cube.Pdf.Pages
     /// FileCollection
     ///
     /// <summary>
-    /// ファイル一覧を管理するクラスです。
+    /// Represents the collection of PDF or image files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileCollection : ObservableCollection<File>
+    public sealed class FileCollection : ObservableCollection<File>
     {
         #region Properties
 
@@ -44,7 +46,7 @@ namespace Cube.Pdf.Pages
         /// IO
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します。
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -55,26 +57,11 @@ namespace Cube.Pdf.Pages
         /// Metadata
         ///
         /// <summary>
-        /// PDF のメタ情報を取得します。
+        /// Gets the PDF metadata.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public Metadata Metadata { get; } = new Metadata();
-
-        #endregion
-
-        #region Events
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PasswordRequired
-        ///
-        /// <summary>
-        /// パスワードが要求された時に発生するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public event EventHandler<QueryEventArgs<string>> PasswordRequired;
 
         #endregion
 
@@ -85,15 +72,17 @@ namespace Cube.Pdf.Pages
         /// Add
         ///
         /// <summary>
-        /// 指定されたファイルを追加します。
+        /// Adds the specified PDF or image file.
         /// </summary>
         ///
+        /// <param name="src">PDF or image file.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Add(string path)
+        public void Add(string src)
         {
-            var ext = IO.Get(path).Extension.ToLower();
-            if (ext == ".pdf") AddDocument(path);
-            else lock (_lock) Add(IO.GetImageFile(path));
+            var ext = IO.Get(src).Extension.ToLower();
+            if (ext == ".pdf") AddDocument(src);
+            else lock (_lock) Add(IO.GetImageFile(src));
         }
 
         /* --------------------------------------------------------------------- */
@@ -101,28 +90,27 @@ namespace Cube.Pdf.Pages
         /// Add
         ///
         /// <summary>
-        /// ファイルを追加します。
+        /// Adds the specified PDF or image files.
         /// </summary>
         ///
-        /// <remarks>
-        /// 追加不可能なファイルに関しては読み飛ばします。
-        /// </remarks>
+        /// <param name="src">Collection of PDF or image files.</param>
+        /// <param name="limit">
+        /// Upper limit of recursively adding files of directories.
+        /// </param>
+        ///
+        /// <remarks>Ignores unsupported files.</remarks>
         ///
         /* --------------------------------------------------------------------- */
-        public void Add(string[] files, int hierarchy)
+        public void Add(IEnumerable<string> src, int limit)
         {
-            foreach (var path in files)
+            foreach (var path in src)
             {
                 if (Contains(path)) continue;
-
-                var info = IO.Get(path);
-
-                if (info.IsDirectory)
+                if (IO.Get(path).IsDirectory)
                 {
-                    if (hierarchy <= 0) continue;
-                    Add(IO.GetFiles(path), hierarchy - 1);
+                    if (limit > 0) Add(IO.GetFiles(path), limit - 1);
                 }
-                else if (info.Exists)
+                else
                 {
                     try { Add(path); }
                     catch (Exception err) { this.LogWarn($"Ignore:{path} ({err.Message})"); }
@@ -135,47 +123,49 @@ namespace Cube.Pdf.Pages
         /// Contains
         ///
         /// <summary>
-        /// 指定されたパスを表す項目が既に存在しているかどうか判別します。
+        /// Determines whether the specified PDF or image file has already
+        /// been added.
         /// </summary>
         ///
+        /// <param name="src">PDF or image file.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public bool Contains(string path)
-        {
-            return Items.Any(f => f.FullName == path);
-        }
+        public bool Contains(string src) => Items.Any(f => f.FullName == src);
 
         /* ----------------------------------------------------------------- */
         ///
         /// Move
         ///
         /// <summary>
-        /// 項目を移動します。
+        /// Moves the specified items by the specified offset.
         /// </summary>
         ///
+        /// <param name="indices">Indices of files.</param>
+        /// <param name="offset">Offset to move.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Move(IList<int> indices, int offset)
-        {
-            if (offset == 0) return;
-            MoveItems(offset < 0 ? indices : indices.Reverse(), offset);
-        }
+        public void Move(IList<int> indices, int offset) =>
+            (offset != 0).Then(() => MoveItems(offset < 0 ? indices : indices.Reverse(), offset));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Merge
         ///
         /// <summary>
-        /// ファイルを結合します。
+        /// Merges the provided files and save to the specified path.
         /// </summary>
         ///
+        /// <param name="dest">Path to save.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Merge(string path)
+        public void Merge(string dest)
         {
-            var dir = IO.Get(path).DirectoryName;
+            var dir = IO.Get(dest).DirectoryName;
             var tmp = IO.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
             {
-                var writer = new Cube.Pdf.Itext.DocumentWriter();
+                var writer = new DocumentWriter();
                 foreach (var file in Items)
                 {
                     if (file is PdfFile) AddDocument(file as PdfFile, writer);
@@ -183,9 +173,9 @@ namespace Cube.Pdf.Pages
                 }
                 writer.Set(Metadata);
                 writer.Save(tmp);
-                IO.Move(tmp, path, true);
+                IO.Move(tmp, dest, true);
             }
-            finally { IO.TryDelete(tmp); }
+            finally { _ = IO.TryDelete(tmp); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -193,65 +183,46 @@ namespace Cube.Pdf.Pages
         /// Split
         ///
         /// <summary>
-        /// ファイルを分割します。
+        /// Splits the provided files and save to the specified directory.
         /// </summary>
+        ///
+        /// <param name="directory">Directory to save.</param>
+        /// <param name="results">Operation results.</param>
         ///
         /* ----------------------------------------------------------------- */
         public void Split(string directory, IList<string> results)
         {
-            var writer = new Cube.Pdf.Itext.DocumentSplitter();
-            foreach (var item in Items)
+            using (var writer = new DocumentSplitter())
             {
-                if (item is PdfFile) AddDocument(item as PdfFile, writer);
-                else AddImage(item as ImageFile, writer);
+                foreach (var item in Items)
+                {
+                    if (item is PdfFile) AddDocument(item as PdfFile, writer);
+                    else AddImage(item as ImageFile, writer);
+                }
+                writer.Set(Metadata);
+                writer.Save(directory);
+
+                foreach (var result in writer.Results) results.Add(result);
             }
-            writer.Set(Metadata);
-            writer.Save(directory);
-
-            foreach (var result in writer.Results) results.Add(result);
         }
 
         #endregion
 
-        #region Virtual methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnPasswordRequired
-        ///
-        /// <summary>
-        /// パスワードが要求された時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /// <remarks>
-        /// イベントハンドラが設定されていない場合は、無限ループを防ぐ
-        /// ために操作をキャンセルします。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnPasswordRequired(QueryEventArgs<string> e)
-        {
-            if (PasswordRequired != null) PasswordRequired(this, e);
-            else e.Cancel = true;
-        }
-
-        #endregion
-
-        #region Other private methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
         /// AddDocument
         ///
         /// <summary>
-        /// PDF ファイルを追加します。
+        /// Adds the specified PDF file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private void AddDocument(string path)
         {
-            var query = new Query<string>(e => OnPasswordRequired(e));
-            using (var reader = new Cube.Pdf.Itext.DocumentReader(path, query, true, true, IO))
+            var query = new Query<string>(e => throw new NotSupportedException());
+            using (var reader = new DocumentReader(path, query, true, true, IO))
             {
                 lock (_lock) Add(reader.File);
             }
@@ -262,14 +233,14 @@ namespace Cube.Pdf.Pages
         /// AddDocument
         ///
         /// <summary>
-        /// PDF ファイルを追加します。
+        /// Adds the specified PDF file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private void AddDocument(PdfFile src, IDocumentWriter dest)
         {
             var query = new Query<string>(e => e.Cancel = true);
-            using (var reader = new Cube.Pdf.Itext.DocumentReader(src.FullName, query, true, true, IO))
+            using (var reader = new DocumentReader(src.FullName, query, true, true, IO))
             {
                 dest.Add(reader.Pages);
             }
@@ -280,7 +251,7 @@ namespace Cube.Pdf.Pages
         /// AddImage
         ///
         /// <summary>
-        /// 画像ファイルを追加します。
+        /// Adds the specified image file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -295,7 +266,7 @@ namespace Cube.Pdf.Pages
         /// MoveItems
         ///
         /// <summary>
-        /// 項目を移動します。
+        /// Moves the specified items by the specified offset.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

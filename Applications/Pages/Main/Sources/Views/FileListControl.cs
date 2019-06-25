@@ -23,14 +23,14 @@ namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileGridView
+    /// FileListControl
     ///
     /// <summary>
-    /// 結合対象となる PDF または画像ファイル一覧を表示するクラスです。
+    /// Represents the collection view of PDF or image files to be combined.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileGridView : DataGridView
+    public class FileListControl : DataGridView
     {
         #region Implementations
 
@@ -39,7 +39,7 @@ namespace Cube.Pdf.Pages
         /// OnCreateControl
         ///
         /// <summary>
-        /// コントロール生成時に実行されます。
+        /// Occurs when creating the control.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Pages
         /// InitializeColumns
         ///
         /// <summary>
-        /// カラムを初期化します。
+        /// Initializes the layout of columns.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -79,20 +79,11 @@ namespace Cube.Pdf.Pages
         {
             Columns.Clear();
 
-            Columns.Add(new DataGridViewImageColumn
-            {
-                Name             = "Icon",
-                DataPropertyName = "Icon",
-                HeaderText       = Properties.Resources.ColumnIcon,
-                FillWeight       = 1.0f,
-                SortMode         = DataGridViewColumnSortMode.NotSortable,
-            });
-
-            Columns.Add(CreateColumn("Name",  Properties.Resources.ColumnName,   5.0f));
-            Columns.Add(CreateColumn("Type",  Properties.Resources.ColumnType,   2.4f));
-            Columns.Add(CreateColumn("Pages", Properties.Resources.ColumnPages,  2.0f));
-            Columns.Add(CreateColumn("Date",  Properties.Resources.ColumnDate,   3.0f));
-            Columns.Add(CreateColumn("Size",  Properties.Resources.ColumnLength, 2.4f));
+            _ = Columns.Add(CreateColumn("Name",  Properties.Resources.ColumnName,   5.0f));
+            _ = Columns.Add(CreateColumn("Type",  Properties.Resources.ColumnType,   2.4f));
+            _ = Columns.Add(CreateColumn("Pages", Properties.Resources.ColumnPages,  2.0f));
+            _ = Columns.Add(CreateColumn("Date",  Properties.Resources.ColumnDate,   3.0f));
+            _ = Columns.Add(CreateColumn("Size",  Properties.Resources.ColumnLength, 2.4f));
         }
 
         /* ----------------------------------------------------------------- */
@@ -100,19 +91,19 @@ namespace Cube.Pdf.Pages
         /// CreateColumn
         ///
         /// <summary>
-        /// 新しいカラムを生成します。
+        /// Creates a new instance of the DataGridViewColumn with the
+        /// specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DataGridViewColumn CreateColumn(string name, string text, float weight) =>
-            new DataGridViewColumn
-            {
-                Name             = name,
-                DataPropertyName = name,
-                HeaderText       = text,
-                FillWeight       = weight,
-                SortMode         = DataGridViewColumnSortMode.NotSortable,
-            };
+        private DataGridViewColumn CreateColumn(string name, string text, float weight) => new DataGridViewColumn
+        {
+            Name             = name,
+            DataPropertyName = name,
+            HeaderText       = text,
+            FillWeight       = weight,
+            SortMode         = DataGridViewColumnSortMode.NotSortable,
+        };
 
         #endregion
     }

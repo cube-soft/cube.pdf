@@ -16,95 +16,83 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using IoEx = System.IO;
+using Cube.Forms;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DropPresenter
+    /// PreviewWindow
     ///
     /// <summary>
-    /// DropForm とモデルを関連付けるクラスです。
+    /// Represents the window to preview the provided image.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DropPresenter : Cube.Forms.PresenterBase<DropForm, object>
+    public partial class PreviewWindow : WindowBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DropPresenter
+        /// PreviewForm
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the PreviewWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DropPresenter(DropForm view)
-            : base(view, null)
+        public PreviewWindow()
         {
-            View.Open += View_Open;
+            InitializeComponent();
+            PictureBox.Click += (s, e) => Close();
         }
 
         #endregion
 
-        #region Event handlers
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open_Handle
+        /// OnClientSizeChanged
         ///
         /// <summary>
-        /// ファイルを開くイベントが発生した時に実行されるハンドラです。
+        /// Occurs when the ClientSizeChanged event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void View_Open(object sender, ValueEventArgs<string[]> e)
+        protected override void OnClientSizeChanged(EventArgs e)
         {
-            if (e.Value == null) return;
-            foreach (var path in e.Value) OpenProgress(path);
+            base.OnClientSizeChanged(e);
+            ResizeImage();
         }
 
-        #endregion
-
-        #region Others
-
         /* ----------------------------------------------------------------- */
         ///
-        /// OpenProgress
+        /// ResizeImage
         ///
         /// <summary>
-        /// ProgressForm を表示します。
+        /// Resize the provided image.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void OpenProgress(string path) => Sync(() =>
+        private void ResizeImage()
         {
-            var ext = IoEx.Path.GetExtension(path).ToLowerInvariant();
-            if (!ContainsExtension(ext) || !IoEx.File.Exists(path)) return;
+            var width  = LayoutPanel.ClientSize.Width;
+            var height = (PictureBox.Image != null) ?
+                         (int)(LayoutPanel.ClientSize.Width * (PictureBox.Image.Height / (double)PictureBox.Image.Width)) :
+                         LayoutPanel.ClientSize.Height;
 
-            var view = new ProgressForm();
-            new ProgressPresenter(
-                view,
-                new ImageCollection(path),
-                new Aggregator()
-            );
-            view.Show();
-        });
+            var x = 0;
+            var y = Math.Max(ClientSize.Height - height, 0) / 2;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// PDF ファイルを開いて解析するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool ContainsExtension(string ext)
-            => SyncWait(() => View.AllowExtensions.Contains(ext));
+            PictureBox.Location = new Point(x, y);
+            PictureBox.Width    = width;
+            PictureBox.Height   = height;
+        }
 
         #endregion
     }

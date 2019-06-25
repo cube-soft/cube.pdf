@@ -16,111 +16,103 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Windows.Forms;
+
 namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Aggregator
+    /// ImageListMenuControl
     ///
     /// <summary>
-    /// CubePDF ImagePicker で発生するイベントを集約するクラスです。
+    /// Represents the context menu to be displayed on the image list.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Aggregator : IAggregator
+    public class ImageListMenuControl : ContextMenuStrip
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageListMenuControl
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ImageListMenuControl class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageListMenuControl()
+        {
+            PreviewMenu   = new ToolStripMenuItem(Properties.Resources.MenuPreviewImage);
+            SelectAllMenu = new ToolStripMenuItem(Properties.Resources.MenuSelectAll);
+            SaveMenu      = new ToolStripMenuItem(Properties.Resources.MenuSave);
+            RemoveMenu    = new ToolStripMenuItem(Properties.Resources.MenuRemove);
+
+            PreviewMenu.ShortcutKeys   = Keys.Control | Keys.R;
+            SelectAllMenu.ShortcutKeys = Keys.Control | Keys.A;
+            SaveMenu.ShortcutKeys      = Keys.Control | Keys.S;
+            RemoveMenu.ShortcutKeys    = Keys.Control | Keys.D;
+
+            Items.AddRange(new ToolStripItem[]
+            {
+                PreviewMenu,
+                new ToolStripSeparator(),
+                SaveMenu,
+                RemoveMenu,
+                new ToolStripSeparator(),
+                SelectAllMenu,
+            });
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// PreviewMenu
+        ///
+        /// <summary>
+        /// Gets the preview menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ToolStripMenuItem PreviewMenu { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectAll
+        ///
+        /// <summary>
+        /// Gets the menu to select all items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ToolStripMenuItem SelectAllMenu { get; }
+
         /* ----------------------------------------------------------------- */
         ///
         /// Save
         ///
         /// <summary>
-        /// 画像を保存するイベントです。
+        /// Gets the save menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent<int[]> Save { get; } = new RelayEvent<int[]>();
+        public ToolStripMenuItem SaveMenu { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SaveComplete
+        /// RemoveMenu
         ///
         /// <summary>
-        /// 画像の保存が完了した事を表すイベントです。
+        /// Gets the remove menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RelayEvent SaveComplete { get; } = new RelayEvent();
+        public ToolStripMenuItem RemoveMenu { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Preview
-        ///
-        /// <summary>
-        /// プレビュー画面を表示するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Preview { get; } = new RelayEvent();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PreviewImage
-        ///
-        /// <summary>
-        /// 画像のプレビューを表示するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent PreviewImage { get; } = new RelayEvent();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Remove
-        ///
-        /// <summary>
-        /// 画像を一覧から削除するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Remove { get; } = new RelayEvent();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Version
-        ///
-        /// <summary>
-        /// バージョン情報を表示するイベントです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RelayEvent Version { get; } = new RelayEvent();
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// AggregatorExtension
-    ///
-    /// <summary>
-    /// Aggregator の拡張用クラスです。
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static class AggregatorExtension
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEvents
-        ///
-        /// <summary>
-        /// Aggregator で定義されているイベント群にアクセス可能な
-        /// オブジェクトを取得します。
-        /// </summary>
-        ///
-        /// <param name="src">イベント集約オブジェクト</param>
-        ///
-        /// <returns>Aggregator オブジェクト</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Aggregator GetEvents(this IAggregator src) => src as Aggregator;
+        #endregion
     }
 }

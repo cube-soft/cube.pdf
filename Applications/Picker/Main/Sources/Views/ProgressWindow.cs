@@ -16,50 +16,39 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
-using System;
-using System.Reflection;
-using System.Windows.Forms;
+using Cube.Forms;
 
-namespace Cube.Pdf.Pages
+namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
+    /// ProgressWindow
     ///
     /// <summary>
-    /// Represents the main program.
+    /// Represents the window to display the progress.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    public partial class ProgressWindow : WindowBase
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// ProgressWindow
         ///
         /// <summary>
-        /// Executes the main program of the application.
+        /// Initializes a new instance of the ProgressWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args)
+        public ProgressWindow()
         {
-            try
-            {
-                Logger.Configure();
-                Logger.ObserveTaskException();
-                Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
-                Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");
+            InitializeComponent();
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-
-                var view = new MainWindow();
-                Application.Run(view);
-            }
-            catch (Exception err) { Logger.Error(typeof(Program), err); }
+            ExitButton.Click += (s, e) => Close();
         }
+
+        #endregion
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Cube.Pdf.Picker
 {
-    partial class ThumbnailForm
+    partial class ImageListWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThumbnailForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageListWindow));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ImageListView = new System.Windows.Forms.ListView();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();

@@ -1,6 +1,6 @@
 ﻿namespace Cube.Pdf.Picker
 {
-    partial class DropForm
+    partial class MainWindow
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DropForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.DropPanel = new Cube.Forms.Panel();
             this.ExitButton = new Cube.Forms.Button();
             this.DropPanel.SuspendLayout();

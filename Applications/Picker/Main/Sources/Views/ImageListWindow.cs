@@ -16,50 +16,45 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
-using System;
-using System.Reflection;
+using Cube.Forms;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.Pages
+namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
+    /// ImageListWindow
     ///
     /// <summary>
-    /// Represents the main program.
+    /// Represents the window to display the image list.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    public partial class ImageListWindow : WindowBase
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// ImageListWindow
         ///
         /// <summary>
-        /// Executes the main program of the application.
+        /// Initializes a new instance of the ImageListWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args)
+        public ImageListWindow()
         {
-            try
+            InitializeComponent();
+
+            new ToolTip
             {
-                Logger.Configure();
-                Logger.ObserveTaskException();
-                Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
-                Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-
-                var view = new MainWindow();
-                Application.Run(view);
-            }
-            catch (Exception err) { Logger.Error(typeof(Program), err); }
+                InitialDelay = 200,
+                AutoPopDelay = 5000,
+                ReshowDelay  = 1000,
+            }.SetToolTip(TitleButton, Properties.Resources.About);
         }
+
+        #endregion
     }
 }

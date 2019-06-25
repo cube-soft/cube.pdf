@@ -16,59 +16,54 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+using Cube.FileSystem;
+using Cube.Mixin.Syntax;
+using Cube.Pdf.Itext;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Forms;
 
-namespace Cube.Pdf.Picker
+namespace Cube.Pdf.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DropForm
+    /// MainFacade
     ///
     /// <summary>
-    /// メイン画面を表示するクラスです。
+    /// Represents the facade model for the MainViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class DropForm : Cube.Forms.BorderlessForm
+    public sealed class MainFacade : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DropForm
+        /// MainFacade
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the MainFacade class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DropForm()
-        {
-            InitializeComponent();
-            InitializeEvents();
-            InitializePresenters();
-
-            AllowExtensions.Add(".pdf");
-            //Caption = DropPanel;
-        }
+        public MainFacade() : this(new IO()) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DropForm
+        /// MainFacade
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the MainFacade class with the
+        /// specified arguments.
         /// </summary>
         ///
+        /// <param name="io">I/O handler.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public DropForm(string[] src)
-            : this()
+        public MainFacade(IO io)
         {
-            OnOpen(ValueEventArgs.Create(src));
+            IO = io;
         }
 
         #endregion
@@ -77,216 +72,217 @@ namespace Cube.Pdf.Picker
 
         /* ----------------------------------------------------------------- */
         ///
-        /// AllowExtensions
+        /// Source
         ///
         /// <summary>
-        /// ドラッグ&amp;ドロップを受け付けるファイルの拡張子一覧を取得します。
+        /// Gets the PDF to attach files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IList<string> AllowExtensions { get; } = new List<string>();
+        public IDocumentReader Source
+        {
+            get => _source;
+            set => SetProperty(ref _source, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clips
+        ///
+        /// <summary>
+        /// Gets the collection of attachments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ObservableCollection<ClipItem> Clips { get; } =
+            new ObservableCollection<ClipItem>();
 
         #endregion
 
-        #region Events
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
         /// Open
         ///
         /// <summary>
-        /// ファイルを開くときに発生するイベントです。
+        /// Opens the specified PDF file.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Open(string src)
+        {
+            Close();
+            Source = new DocumentReader(src, "", true, IO);
+            Reset();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// Resets to the state when the provided PDF was loaded.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public event EventHandler<ValueEventArgs<string[]>> Open;
+        public void Reset()
+        {
+            Clips.Clear();
+            var msg = Properties.Resources.StatusEmbedded;
+            foreach (var item in Source.Attachments)
+            {
+                Clips.Add(new ClipItem(item) { Status = msg });
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// Overwrites the provided PDF file with the current condition.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Save()
+        {
+            var dest  = Source.File.FullName;
+            var tmp   = System.IO.Path.GetTempFileName();
+            var items = Clips.Select(e => e.RawObject).Where(e => IO.Exists(e.Source));
+
+            using (var writer = new Cube.Pdf.Itext.DocumentWriter())
+            {
+                writer.UseSmartCopy = true;
+                writer.Set(Source.Metadata);
+                writer.Set(Source.Encryption);
+                writer.Add(Source.Pages);
+                writer.Add(items);
+
+                _ = IO.TryDelete(tmp);
+                writer.Save(tmp);
+            }
+
+            Close();
+            IO.Copy(tmp, dest, true);
+            _ = IO.TryDelete(tmp);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        ///
+        /// <summary>
+        /// Attaches the specified files.
+        /// </summary>
+        ///
+        /// <param name="files">Files to be attached.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Attach(IEnumerable<string> files) => files.Each(f => Attach(f));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        ///
+        /// <summary>
+        /// Attaches the specified file.
+        /// </summary>
+        ///
+        /// <param name="file">File to be attached.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Attach(string file)
+        {
+            if (Clips.Any(e => e.RawObject.Source == file)) return;
+            Clips.Insert(0, new ClipItem(new Attachment(file, IO))
+            {
+                Status = Properties.Resources.StatusNew
+            });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Detach
+        ///
+        /// <summary>
+        /// Remove the specified files from the provided PDF.
+        /// </summary>
+        ///
+        /// <param name="indices">Indices of files to be removed.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Detach(IEnumerable<int> indices) =>
+            indices.OrderByDescending(x => x).Each(i => Detach(i));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Detach
+        ///
+        /// <summary>
+        /// Remove the specified file from the provided PDF.
+        /// </summary>
+        ///
+        /// <param name="index">Index of file to be removed.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Detach(int index) =>
+            (index >= 0 && index < Clips.Count).Then(() => Clips.RemoveAt(index));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) => Close();
 
         #endregion
 
-        #region Virtual methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnOpen
+        /// Close
         ///
         /// <summary>
-        /// Open イベントを発生させます。
+        /// Closes the provided PDF.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnOpen(ValueEventArgs<string[]> e)
-            => Open?.Invoke(this, e);
-
-        #endregion
-
-        #region Override methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnLoad
-        ///
-        /// <summary>
-        /// フォームが表示される直前に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnLoad(EventArgs e)
+        private void Close()
         {
-            base.OnLoad(e);
-            InitializeLayout();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnReceived
-        ///
-        /// <summary>
-        /// 他プロセスからデータ受信時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnReceived(CollectionEventArgs<string> e)
-        {
-            base.OnReceived(e);
-            OnOpen(ValueEventArgs.Create(e.Value.ToArray()));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnNcHitTest
-        ///
-        /// <summary>
-        /// ヒットテスト時に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnNcHitTest(QueryEventArgs<Point, Cube.Forms.Position> e)
-        {
-            base.OnNcHitTest(e);
-            if (e.Result == Cube.Forms.Position.Caption) ShowCloseButton();
-            else HideCloseButton();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDragEnter
-        ///
-        /// <summary>
-        /// ファイルがドラッグされた時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnDragEnter(DragEventArgs e)
-        {
-            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ?
-                       DragDropEffects.Copy :
-                       DragDropEffects.None;
-            base.OnDragEnter(e);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDragDrop
-        ///
-        /// <summary>
-        /// ファイルがドロップされた時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnDragDrop(DragEventArgs e)
-        {
-            base.OnDragDrop(e);
-            var files = e.Data.GetData(DataFormats.FileDrop, false) as string[];
-            OnOpen(ValueEventArgs.Create(files));
-        }
-
-        #endregion
-
-        #region Initialize methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeLayout
-        ///
-        /// <summary>
-        /// メイン画面のレイアウトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeLayout()
-        {
-            Width  = DropPanel.BackgroundImage.Width;
-            Height = DropPanel.BackgroundImage.Height;
-
-            StartPosition = FormStartPosition.Manual;
-            var area = Screen.GetWorkingArea(this);
-            var x = area.Width - Width - 10;
-            var y = 10;
-            Location = new Point(x, y);
-
-            var cx = Width - ExitButton.Width - 1;
-            var cy = 1;
-            ExitButton.Location = new Point(cx, cy);
-            ExitButton.Image = null;
-            ExitButton.Cursor = Cursors.Hand;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeEvents
-        ///
-        /// <summary>
-        /// 各種イベントを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeEvents()
-        {
-            ExitButton.Click      += (s, e) => Close();
-            ExitButton.MouseEnter += (s, e) => ShowCloseButton();
-            ExitButton.MouseLeave += (s, e) => HideCloseButton();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializePresenters
-        ///
-        /// <summary>
-        /// 各種 Presenter を初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializePresenters()
-        {
-            new DropPresenter(this);
+            Clips.Clear();
+            Source.Dispose();
+            Source = null;
         }
 
         #endregion
 
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ShowCloseButton
-        ///
-        /// <summary>
-        /// 閉じるボタンを表示します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void ShowCloseButton() => ExitButton.Image = Properties.Resources.CloseButton;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// HideCloseButton
-        ///
-        /// <summary>
-        /// 閉じるボタンを非表示にします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void HideCloseButton() => ExitButton.Image = null;
-
+        #region Fields
+        private IDocumentReader _source = null;
         #endregion
     }
 }

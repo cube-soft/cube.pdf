@@ -16,93 +16,93 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.ComponentModel;
+using System;
+using System.Windows.Forms;
 
 namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MenuPresenter
+    /// PasswordWindow
     ///
     /// <summary>
-    /// MainForm とモデルを対応付けるためのクラスです。
+    /// Represents the window to input password.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MenuPresenter
-        : Cube.Forms.PresenterBase<MainForm, Settings>
+    public partial class PasswordWindow : Cube.Forms.WindowBase
     {
         #region Constructors
 
         /* --------------------------------------------------------------------- */
         ///
-        /// MenuPresenter
+        /// PasswordWindow
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the PasswordWindow class.
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public MenuPresenter(MainForm view, Settings model, IAggregator events)
-            : base(view, model, events)
+        public PasswordWindow()
         {
-            Aggregator.GetEvents()?.Refresh.Subscribe(Refresh_Handle);
-            Aggregator.GetEvents()?.Version.Subscribe(Version_Handle);
-            Model.PropertyChanged += Settings_PropertyChanged;
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        #region Aggregator
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Refresh_Handle
-        ///
-        /// <summary>
-        /// 再描画イベント発生時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void Refresh_Handle()
-            => Sync(() => View.Refresh());
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Version_Handle
-        ///
-        /// <summary>
-        /// バージョン情報の表示イベント発生時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void Version_Handle()
-            => Sync(() => Views.CreateVersionView(Model.Assembly));
-
-        #endregion
-
-        #region Settings
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Settings_PropertyChanged
-        ///
-        /// <summary>
-        /// Settings の内容が変化した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(Model.AllowOperation))
+            InitializeComponent();
+            ShowPasswordCheckBox.CheckedChanged += (s, e) =>
             {
-                Sync(() => View.AllowOperation = Model.AllowOperation);
-            }
+                var check = ShowPasswordCheckBox.Checked;
+                PasswordTextBox.UseSystemPasswordChar = !check;
+            };
         }
 
         #endregion
+
+        #region Implementations
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// OnLoad
+        ///
+        /// <summary>
+        /// Occurs when the Loaded event is fired.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        protected override void OnLoad(EventArgs e)
+        {
+            try
+            {
+                var v0 = Math.Max(PasswordTextBox.Height - PasswordKeyLabel.Height, 0) / 2;
+                var l0 = PasswordKeyLabel.Margin.Left;
+                var t0 = PasswordTextBox.Margin.Top + v0;
+                var r0 = PasswordKeyLabel.Margin.Right;
+                var b0 = PasswordKeyLabel.Margin.Bottom;
+
+                var v1 = ShowPasswordCheckBox.Width + PasswordTextBox.Margin.Right;
+                var l1 = ShowPasswordCheckBox.Margin.Left;
+                var t1 = ShowPasswordCheckBox.Margin.Top;
+                var r1 = PasswordTextBox.Width - v1;
+                var b1 = ShowPasswordCheckBox.Margin.Bottom;
+
+                PasswordKeyLabel.Margin     = new Padding(l0, t0, r0, b0);
+                ShowPasswordCheckBox.Margin = new Padding(l1, t1, r1, b1);
+            }
+            finally { base.OnLoad(e); }
+        }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// OnShown
+        ///
+        /// <summary>
+        /// Occurs when the Shown event is fired.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            ActiveControl = PasswordTextBox;
+            _ = PasswordTextBox.Focus();
+        }
 
         #endregion
     }

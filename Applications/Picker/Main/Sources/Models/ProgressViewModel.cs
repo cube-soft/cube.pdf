@@ -16,63 +16,55 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
+using System.Threading;
 
-namespace Cube.Pdf.Clip
+namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IClipView
+    /// ProgressViewModel
     ///
     /// <summary>
-    /// 添付画面を表すインターフェースです。
+    /// Represents the ViewModel for the ProgressWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IClipView : Cube.Forms.IForm
+    public class ProgressViewModel : PresentableBase
     {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsBusy
-        ///
-        /// <summary>
-        /// 処理中かどうかを示す値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        bool IsBusy { get; set; }
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Source
+        /// ProgressViewModel
         ///
         /// <summary>
-        /// PDF ファイルのパスを取得または設定します。
+        /// Initializes a new instance of the ProgressViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        string Source { get; set; }
+        public ProgressViewModel() : base(new Aggregator(), SynchronizationContext.Current) { }
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DataSource
+        /// Dispose
         ///
         /// <summary>
-        /// View に関連付けられるデータを取得または設定します。
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
         /// </summary>
         ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
         /* ----------------------------------------------------------------- */
-        object DataSource { get; set; }
+        protected override void Dispose(bool disposing) { }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SelectedIndices
-        ///
-        /// <summary>
-        /// 選択されているインデックスの一覧を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerable<int> SelectedIndices { get; }
+        #endregion
     }
 }

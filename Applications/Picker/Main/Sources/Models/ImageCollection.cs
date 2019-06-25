@@ -34,7 +34,8 @@ namespace Cube.Pdf.Picker
     /// ImageCollection
     ///
     /// <summary>
-    /// PDF ファイルから抽出したイメージを管理するクラスです。
+    /// Represents the collection of images that are extracted from the
+    /// PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -47,27 +48,14 @@ namespace Cube.Pdf.Picker
         /// ImageCollection
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ImageCollection class with
+        /// the specified path.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public ImageCollection(string path)
         {
             Path = path;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~ImageCollection
-        ///
-        /// <summary>
-        /// オブジェクトを解放します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~ImageCollection()
-        {
-            Dispose(false);
         }
 
         #endregion
@@ -79,7 +67,7 @@ namespace Cube.Pdf.Picker
         /// IO
         ///
         /// <summary>
-        /// I/O オブジェクトを取得します
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -90,7 +78,7 @@ namespace Cube.Pdf.Picker
         /// Path
         ///
         /// <summary>
-        /// 画像を抽出するファイルを取得します。
+        /// Gets the path of the PDF file to extract images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -105,11 +93,11 @@ namespace Cube.Pdf.Picker
         /// ExtractAsync
         ///
         /// <summary>
-        /// 抽出処理を非同期で実行します。
+        /// Extracts images as an asynchronous method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public async Task ExtractAsync(IProgress<ProgressEventArgs<string>> progress)
+        public async Task ExtractAsync(IProgress<ProgressMessage<string>> progress)
         {
             try
             {
@@ -126,7 +114,7 @@ namespace Cube.Pdf.Picker
         /// Cancel
         ///
         /// <summary>
-        /// 非同期で実行中の処理をキャンセルします。
+        /// Invokes the cancellation of the current operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -137,7 +125,7 @@ namespace Cube.Pdf.Picker
         /// Save
         ///
         /// <summary>
-        /// 全てのイメージを保存します。
+        /// Saves all of extracted images to the specified directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -155,7 +143,7 @@ namespace Cube.Pdf.Picker
         /// Save
         ///
         /// <summary>
-        /// 選択したイメージを保存します。
+        /// Saves the selected images to the specified directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -171,15 +159,14 @@ namespace Cube.Pdf.Picker
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Restore
+        /// Reset
         ///
         /// <summary>
-        /// Images に対して行った処理を破棄し、RunAsync 完了直後の状態に
-        /// 復元します。
+        /// Resets to the state when the provided PDF was loaded.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Restore()
+        public void Reset()
         {
             lock (_lock)
             {
@@ -189,12 +176,25 @@ namespace Cube.Pdf.Picker
             }
         }
 
+        #region IDisposable
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ~ImageCollection
+        ///
+        /// <summary>
+        /// Finalizes the object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        ~ImageCollection() { Dispose(false); }
+
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
         ///
         /// <summary>
-        /// オブジェクトを解放します。
+        /// Releases the resources.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -204,17 +204,19 @@ namespace Cube.Pdf.Picker
             GC.SuppressFinalize(this);
         }
 
-        #endregion
-
-        #region Virtual methods
-
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
         ///
         /// <summary>
-        /// オブジェクトを解放します。
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
         /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
         protected virtual void Dispose(bool disposing)
@@ -236,40 +238,20 @@ namespace Cube.Pdf.Picker
 
         #endregion
 
-        #region Event handlers
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenPasswordRequired
-        ///
-        /// <summary>
-        /// パスワードの要求が発生した時に実行されるハンドラです。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenPasswordRequired(QueryEventArgs<string> e)
-        {
-            e.Cancel = true;
-            throw new ArgumentException(string.Format(
-                Properties.Resources.MessagePassword,
-                IO.Get(e.Query).Name
-            ));
-        }
-
         #endregion
 
-        #region Extract methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
         /// Extract
         ///
         /// <summary>
-        /// PDF ファイルからイメージを抽出します。
+        /// Extracts images from the specified PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Extract(IProgress<ProgressEventArgs<string>> progress)
+        private void Extract(IProgress<ProgressMessage<string>> progress)
         {
             try
             {
@@ -303,13 +285,13 @@ namespace Cube.Pdf.Picker
         /// ExtractImages
         ///
         /// <summary>
-        /// PDF ファイルからイメージを抽出します。
+        /// Extracts images from the specified PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private KeyValuePair<int, int> ExtractImages(IProgress<ProgressEventArgs<string>> progress)
+        private KeyValuePair<int, int> ExtractImages(IProgress<ProgressMessage<string>> progress)
         {
-            var query = new Query<string>(e => WhenPasswordRequired(e));
+            var query = new Query<string>(e => throw new NotSupportedException());
             using (var reader = new DocumentReader(Path, query, true, true, IO))
             {
                 ExtractImages(reader, progress);
@@ -322,11 +304,11 @@ namespace Cube.Pdf.Picker
         /// ExtractImages
         ///
         /// <summary>
-        /// PDF ファイルからイメージを抽出します。
+        /// Extracts images from the specified PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ExtractImages(DocumentReader src, IProgress<ProgressEventArgs<string>> progress)
+        private void ExtractImages(DocumentReader src, IProgress<ProgressMessage<string>> progress)
         {
             var count = src.Pages.Count();
             var name = IO.Get(Path).BaseName;
@@ -356,16 +338,12 @@ namespace Cube.Pdf.Picker
             }
         }
 
-        #endregion
-
-        #region Others
-
         /* ----------------------------------------------------------------- */
         ///
         /// Save
         ///
         /// <summary>
-        /// イメージを保存します。
+        /// Save the specified image to the specified directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -380,7 +358,7 @@ namespace Cube.Pdf.Picker
         /// Unique
         ///
         /// <summary>
-        /// 一意のパス名を取得します。
+        /// Gets the unique name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -404,12 +382,17 @@ namespace Cube.Pdf.Picker
         /// Create
         ///
         /// <summary>
-        /// ProgressEventArgs オブジェクトを生成します。
+        /// Creates a new instance of the ProgressMessage(string) class
+        /// with the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ProgressEventArgs<string> Create(int percentage, string message)
-            => new ProgressEventArgs<string>(percentage, message);
+        private ProgressMessage<string> Create(int percentage, string message) =>
+            new ProgressMessage<string>
+            {
+                Ratio = percentage,
+                Value = message
+            };
 
         #endregion
 

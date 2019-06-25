@@ -16,63 +16,54 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Reflection;
-using System.Windows.Forms;
-using IoEx = System.IO;
+using System.Threading;
 
-namespace Cube.Pdf.Picker
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Dialogs
+    /// MainViewModel
     ///
     /// <summary>
-    /// 各種ダイアログの生成を行うためのクラスです。
+    /// Represents the ViewModel for the MainWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class Dialogs
+    public sealed class MainViewModel : PresentableBase
     {
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Save
-        ///
-        /// <summary>
-        /// 保存するフォルダを選択するためのダイアログを生成します。
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        public static FolderBrowserDialog Save(string path)
-        {
-            var dest = new FolderBrowserDialog();
-            dest.Description = Properties.Resources.SaveFolder;
-            dest.SelectedPath = IoEx.Path.GetDirectoryName(path);
-            return dest;
-        }
-
-        #region MessageBox
+        #region Constructors
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Version
+        /// MainViewModel
         ///
         /// <summary>
-        /// バージョン情報を表示します。
+        /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public static void Version(Assembly assembly)
-        {
-            var sv = new SoftwareVersion(assembly) { Digit = 3 };
-            using (var dialog = new Cube.Forms.VersionForm
-            {
-                Version = sv.ToString(true),
-                Image = Properties.Resources.Logo,
-                Description = string.Empty,
-                Height = 280,
-                StartPosition = FormStartPosition.CenterParent,
-            }) dialog.ShowDialog();
-        }
+        public MainViewModel() : base(new Aggregator(), SynchronizationContext.Current) { }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
 
         #endregion
     }

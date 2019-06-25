@@ -1,6 +1,6 @@
 ﻿namespace Cube.Pdf.Pages
 {
-    partial class PasswordForm
+    partial class PasswordWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PasswordForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PasswordWindow));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.PasswordLabel = new System.Windows.Forms.Label();
             this.HeaderPanel = new System.Windows.Forms.Panel();

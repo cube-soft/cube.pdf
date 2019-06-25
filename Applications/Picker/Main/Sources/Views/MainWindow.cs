@@ -16,85 +16,79 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Clip
+using Cube.Forms;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ClipItem
+    /// MainWindow
     ///
     /// <summary>
-    /// Represents an attached item to a PDF.
+    /// Represents the main window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ClipItem
+    public partial class MainWindow : BorderlessWindow
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ClipItem
+        /// MainWindow
         ///
         /// <summary>
-        /// Initializes a new instance of the ClipItem class with the
-        /// specified object.
+        /// Initializes a new instance of the MainWindow class.
         /// </summary>
         ///
-        /// <param name="raw">Raw attachment data.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public ClipItem(Attachment raw)
+        public MainWindow()
         {
-            RawObject = raw;
+            InitializeComponent();
+
+            ExitButton.Click += (s, e) => Close();
+            ExitButton.MouseEnter += (s, e) => ExitButton.Image = Properties.Resources.CloseButton;
+            ExitButton.MouseLeave += (s, e) => ExitButton.Image = null;
+
+            MouseEnter += (s, e) => ExitButton.Image = Properties.Resources.CloseButton;
+            MouseLeave += (s, e) => ExitButton.Image = null;
         }
 
         #endregion
 
-        #region Properties
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Name
+        /// OnLoad
         ///
         /// <summary>
-        /// Gets the name of the attachment.
+        /// Occurs when the Load event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Name => RawObject.Name;
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Length
-        ///
-        /// <summary>
-        /// Gets the file size of the attachment.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public long Length => RawObject.Length;
+            Width  = DropPanel.BackgroundImage.Width;
+            Height = DropPanel.BackgroundImage.Height;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Status
-        ///
-        /// <summary>
-        /// Gets a value that represents the current condition.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Status { get; set; }
+            StartPosition = FormStartPosition.Manual;
+            var area = Screen.GetWorkingArea(this);
+            var x = area.Width - Width - 10;
+            var y = 10;
+            Location = new Point(x, y);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RawObject
-        ///
-        /// <summary>
-        /// Gets the raw object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Attachment RawObject { get; }
+            var cx = Width - ExitButton.Width - 1;
+            var cy = 1;
+            ExitButton.Location = new Point(cx, cy);
+            ExitButton.Image = null;
+            ExitButton.Cursor = Cursors.Hand;
+        }
 
         #endregion
     }

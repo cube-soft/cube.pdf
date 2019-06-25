@@ -16,45 +16,40 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Images.Icons;
-using Cube.Mixin.Logging;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
+using System.Threading;
 
-namespace Cube.Pdf.Pages
+namespace Cube.Pdf.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IconCollection
+    /// MainViewModel
     ///
     /// <summary>
-    /// Represents the collection of icons.
+    /// Represents the ViewModel for the MainWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class IconCollection
+    public class MainViewModel : PresentableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IconCollection
+        /// MainViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the IconCollection class.
+        /// Initializes a new instance of the MainViewModel class with
+        /// the specified arguments.
         /// </summary>
         ///
+        /// <param name="args">Program arguments.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public IconCollection()
+        public MainViewModel(IEnumerable<string> args) :
+            base(new Aggregator(), SynchronizationContext.Current)
         {
-            ImageList = new ImageList
-            {
-                ImageSize  = new Size(16, 16),
-                ColorDepth = ColorDepth.Depth32Bit,
-            };
-            ImageList.Images.Add(GetDefaultIcon());
+            Model = new MainFacade();
         }
 
         #endregion
@@ -63,14 +58,14 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ImageList
+        /// Model
         ///
         /// <summary>
-        /// Gets the ImageList object.
+        /// Gets the model object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageList ImageList { get; }
+        private MainFacade Model { get; }
 
         #endregion
 
@@ -78,54 +73,24 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Add
+        /// Dispose
         ///
         /// <summary>
-        /// Add a new icon that is associated with the specified file.
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
         /// </summary>
         ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
         /* ----------------------------------------------------------------- */
-        public int Add(File file)
+        protected override void Dispose(bool disposing)
         {
-            var icon = file.GetIcon(IconSize.Small);
-            if (icon == null) return 0;
-
-            var extension = file.Extension.ToLower();
-            if (_map.ContainsKey(extension)) return _map[extension];
-
-            var index = ImageList.Images.Count;
-            ImageList.Images.Add(icon);
-            _map.Add(extension, index);
-            return index;
+            if (disposing) Model.Dispose();
         }
 
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetDefaultIcon
-        ///
-        /// <summary>
-        /// Gets the default icon.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Icon GetDefaultIcon()
-        {
-            try { return IconFactory.Create(StockIcons.DocumentNotAssociated, IconSize.Small); }
-            catch (Exception err)
-            {
-                this.LogError(err);
-                return Properties.Resources.NotAssociated;
-            }
-        }
-
-        #endregion
-
-        #region Fields
-        private readonly Dictionary<string, int> _map = new Dictionary<string, int>();
         #endregion
     }
 }

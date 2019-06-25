@@ -1,6 +1,6 @@
 ﻿namespace Cube.Pdf.Picker
 {
-    partial class ProgressForm
+    partial class ProgressWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgressForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgressWindow));
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
             this.ExitButton = new Cube.Forms.Button();
             this.SaveButton = new Cube.Forms.Button();
@@ -159,13 +159,14 @@
         }
 
         #endregion
+
         private System.Windows.Forms.ProgressBar ProgressBar;
-        private Cube.Forms.Button ExitButton;
-        private Cube.Forms.Button SaveButton;
-        private Cube.Forms.Button PreviewButton;
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox ImagePictureBox;
         private System.Windows.Forms.PictureBox LogoPictureBox;
         private System.Windows.Forms.Label MessageLabel;
+        private Cube.Forms.Button ExitButton;
+        private Cube.Forms.Button SaveButton;
+        private Cube.Forms.Button PreviewButton;
     }
 }

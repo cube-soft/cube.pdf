@@ -16,50 +16,46 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
-using System;
-using System.Reflection;
 using System.Windows.Forms;
 
-namespace Cube.Pdf.Pages
+namespace Cube.Pdf.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
+    /// MainForm
     ///
     /// <summary>
-    /// Represents the main program.
+    /// Represents the main window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    public partial class MainWindow : Cube.Forms.Window
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// MainForm
         ///
         /// <summary>
-        /// Executes the main program of the application.
+        /// Initializes a new instance of the MainWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args)
+        public MainWindow()
         {
-            try
+            InitializeComponent();
+
+            var tips = new ToolTip
             {
-                Logger.Configure();
-                Logger.ObserveTaskException();
-                Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
-                Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-
-                var view = new MainWindow();
-                Application.Run(view);
-            }
-            catch (Exception err) { Logger.Error(typeof(Program), err); }
+                InitialDelay = 200,
+                AutoPopDelay = 5000,
+                ReshowDelay  = 1000
+            };
+            tips.SetToolTip(VersionButton, Properties.Resources.VersionTitle);
+            tips.SetToolTip(OpenButton,    Properties.Resources.SourceTitle);
         }
+
+        #endregion
     }
 }

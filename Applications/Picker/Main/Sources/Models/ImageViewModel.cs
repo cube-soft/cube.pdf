@@ -16,66 +16,33 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Reflection;
+using System.Threading;
 
-namespace Cube.Pdf.Pages
+namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Settings
+    /// ImageViewModel
     ///
     /// <summary>
-    /// 各種設定を保持するクラスです。
+    /// Represents the ViewModel for the ThumbnailWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Settings : ObservableBase
+    public class ImageViewModel : PresentableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingsValue
+        /// ThumbnailViewModel
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ProgressViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Settings()
-        {
-            Assembly = Assembly.GetExecutingAssembly();
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Assembly
-        ///
-        /// <summary>
-        /// アセンブリ情報を取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Assembly Assembly { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AllowOperation
-        ///
-        /// <summary>
-        /// ユーザからの操作を受け付けるかどうかを示す値を取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool AllowOperation
-        {
-            get { return _allowOperation; }
-            set { SetProperty(ref _allowOperation, value); }
-        }
+        public ImageViewModel() : base(new Aggregator(), SynchronizationContext.Current) { }
 
         #endregion
 
@@ -97,11 +64,7 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
-        
-        #endregion
 
-        #region Fields
-        private bool _allowOperation = true;
         #endregion
     }
 }

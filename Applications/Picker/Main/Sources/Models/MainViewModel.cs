@@ -16,50 +16,55 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
-using System;
-using System.Reflection;
-using System.Windows.Forms;
+using System.Threading;
 
-namespace Cube.Pdf.Pages
+namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
+    /// MainViewModel
     ///
     /// <summary>
-    /// Represents the main program.
+    /// Represents the ViewModel for the MainWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    public class MainViewModel : PresentableBase
     {
+        #region Constructors
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// MainViewModel
         ///
         /// <summary>
-        /// Executes the main program of the application.
+        /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args)
-        {
-            try
-            {
-                Logger.Configure();
-                Logger.ObserveTaskException();
-                Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
-                Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");
+        public MainViewModel() : base(new Aggregator(), SynchronizationContext.Current) { }
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
+        #endregion
 
-                var view = new MainWindow();
-                Application.Run(view);
-            }
-            catch (Exception err) { Logger.Error(typeof(Program), err); }
-        }
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
+
+        #endregion
     }
 }

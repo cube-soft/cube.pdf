@@ -1,6 +1,6 @@
 ﻿namespace Cube.Pdf.Clip
 {
-    partial class MainForm
+    partial class MainWindow
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ExitButton = new Cube.Forms.Button();
@@ -42,7 +42,7 @@
             this.AttachButton = new Cube.Forms.Button();
             this.DetachButton = new Cube.Forms.Button();
             this.ResetButton = new Cube.Forms.Button();
-            this.MyClipDataView = new Cube.Pdf.Clip.ClipControl();
+            this.MyClipDataView = new Cube.Pdf.Clip.ClipListControl();
             this.VersionButton = new System.Windows.Forms.PictureBox();
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
@@ -273,17 +273,17 @@
             this.VersionButton.TabIndex = 8;
             this.VersionButton.TabStop = false;
             //
-            // MainForm
+            // MainWindow
             //
             this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(584, 281);
+            this.ClientSize = new System.Drawing.Size(684, 311);
             this.Controls.Add(this.LayoutPanel);
             this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(510, 280);
-            this.Name = "MainForm";
+            this.Name = "MainWindow";
             this.Text = "CubePDF Clip";
             this.LayoutPanel.ResumeLayout(false);
             this.FooterPanel.ResumeLayout(false);
@@ -301,19 +301,19 @@
 
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.TableLayoutPanel SourcePanel;
+        private System.Windows.Forms.TableLayoutPanel ClipPanel;
+        private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
+        private System.Windows.Forms.FlowLayoutPanel FooterPanel;
         private System.Windows.Forms.Label SourceLabel;
         private System.Windows.Forms.TextBox SourceTextBox;
-        private System.Windows.Forms.TableLayoutPanel ClipPanel;
-        private ClipControl MyClipDataView;
-        private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
-        private Forms.Button AttachButton;
-        private Forms.Button DetachButton;
-        private Forms.Button ResetButton;
-        private System.Windows.Forms.FlowLayoutPanel FooterPanel;
-        private Forms.Button ExitButton;
-        private Forms.Button SaveButton;
-        private Forms.Button OpenButton;
         private System.Windows.Forms.PictureBox VersionButton;
+        private Cube.Forms.Button AttachButton;
+        private Cube.Forms.Button DetachButton;
+        private Cube.Forms.Button ResetButton;
+        private Cube.Forms.Button ExitButton;
+        private Cube.Forms.Button SaveButton;
+        private Cube.Forms.Button OpenButton;
+        private ClipListControl MyClipDataView;
     }
 }
 
