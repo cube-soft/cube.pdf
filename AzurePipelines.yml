@@ -16,6 +16,7 @@ variables:
     TEST_LOG:       '$(Build.ArtifactStagingDirectory)\TestResults'
 
 steps:
+
 - task: NuGetToolInstaller@0
   inputs:
     versionSpec: '>= 4.9'

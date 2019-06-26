@@ -102,6 +102,8 @@ test_script:
       -output:"%TEST_COVERAGE%"
       -filter:"%TEST_FILTERS%"
 after_test:
+    - pip install codecov
+    - codecov -f "%TEST_COVERAGE%"
     - xcopy /q /Y /I "Applications\Converter\Proxy\%PROJECT_BIN%" CubePdf
     - xcopy /q /Y /I "Applications\Converter\Main\%PROJECT_BIN%" CubePdf
     - xcopy /q /Y /I "Applications\Editor\Proxy\%PROJECT_BIN%" CubePdf.Utility
