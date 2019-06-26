@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Mixin.Logging;
 using Cube.Mixin.Pdf;
 using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
@@ -37,8 +36,29 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainFacade : ObservableCollection<File>
+    public sealed class MainFacade : ObservableBase
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MainFacade
+        ///
+        /// <summary>
+        /// Initializes a new instance of the MainFacade class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainFacade(IO io)
+        {
+            IO = io;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -50,7 +70,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IO IO { get; } = new IO();
+        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,40 +102,7 @@ namespace Cube.Pdf.Pages
         {
             var ext = IO.Get(src).Extension.ToLower();
             if (ext == ".pdf") AddDocument(src);
-            else lock (_lock) Add(IO.GetImageFile(src));
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds the specified PDF or image files.
-        /// </summary>
-        ///
-        /// <param name="src">Collection of PDF or image files.</param>
-        /// <param name="limit">
-        /// Upper limit of recursively adding files of directories.
-        /// </param>
-        ///
-        /// <remarks>Ignores unsupported files.</remarks>
-        ///
-        /* --------------------------------------------------------------------- */
-        public void Add(IEnumerable<string> src, int limit)
-        {
-            foreach (var path in src)
-            {
-                if (Contains(path)) continue;
-                if (IO.Get(path).IsDirectory)
-                {
-                    if (limit > 0) Add(IO.GetFiles(path), limit - 1);
-                }
-                else
-                {
-                    try { Add(path); }
-                    catch (Exception err) { this.LogWarn($"Ignore:{path} ({err.Message})"); }
-                }
-            }
+            else lock (_lock) _core.Add(IO.GetImageFile(src));
         }
 
         /* ----------------------------------------------------------------- */
@@ -130,7 +117,7 @@ namespace Cube.Pdf.Pages
         /// <param name="src">PDF or image file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Contains(string src) => Items.Any(f => f.FullName == src);
+        public bool Contains(string src) => _core.Any(f => f.FullName == src);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -166,7 +153,7 @@ namespace Cube.Pdf.Pages
             try
             {
                 var writer = new DocumentWriter();
-                foreach (var file in Items)
+                foreach (var file in _core)
                 {
                     if (file is PdfFile) AddDocument(file as PdfFile, writer);
                     else AddImage(file as ImageFile, writer);
@@ -194,7 +181,7 @@ namespace Cube.Pdf.Pages
         {
             using (var writer = new DocumentSplitter())
             {
-                foreach (var item in Items)
+                foreach (var item in _core)
                 {
                     if (item is PdfFile) AddDocument(item as PdfFile, writer);
                     else AddImage(item as ImageFile, writer);
@@ -205,6 +192,23 @@ namespace Cube.Pdf.Pages
                 foreach (var result in writer.Results) results.Add(result);
             }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
 
         #endregion
 
@@ -224,7 +228,7 @@ namespace Cube.Pdf.Pages
             var query = new Query<string>(e => throw new NotSupportedException());
             using (var reader = new DocumentReader(path, query, true, true, IO))
             {
-                lock (_lock) Add(reader.File);
+                lock (_lock) _core.Add(reader.File);
             }
         }
 
@@ -274,13 +278,13 @@ namespace Cube.Pdf.Pages
         {
             lock (_lock)
             {
-                var inserted = offset < 0 ? -1 : Count;
+                var inserted = offset < 0 ? -1 : _core.Count;
                 foreach (var index in indices)
                 {
                     var newindex = offset < 0 ?
                         Math.Max(index + offset, inserted + 1) :
                         Math.Min(index + offset, inserted - 1);
-                    Move(index, newindex);
+                    _core.Move(index, newindex);
                     inserted = newindex;
                 }
             }
@@ -290,6 +294,7 @@ namespace Cube.Pdf.Pages
 
         #region Fields
         private readonly object _lock = new object();
+        private readonly ObservableCollection<File> _core = new ObservableCollection<File>();
         #endregion
     }
 }

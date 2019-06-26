@@ -16,39 +16,73 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Tests;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Cube.Pdf.Pages.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainFacadeTest
+    /// MergeTest
     ///
     /// <summary>
-    /// Tests the MainFacade class.
+    /// Tests the Merge method of the MainFacade class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class MainFacadeTest
+    class MergeTest : FileFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Merge
         ///
         /// <summary>
-        /// Tests the constructor.
+        /// Tests the Merge method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [Test]
-        public void Create()
+        [TestCaseSource(nameof(TestCases))]
+        public void Merge(int id, string f0, string f1)
         {
-            var src = new MainFacade();
-            Assert.That(src.IO,       Is.Not.Null);
-            Assert.That(src.Metadata, Is.Not.Null);
+            var dest = Get($"{nameof(Merge)}-{id}.pdf");
+            using (var src = new MainFacade(IO))
+            {
+                src.Add(GetSource(f0));
+                src.Add(GetSource(f1));
+                src.Move(new[] { 0 }, 1); // swap
+                src.Merge(dest);
+
+                Assert.That(src.Contains(GetSource(f0)), Is.True);
+                Assert.That(src.Contains(GetSource(f1)), Is.True);
+                Assert.That(IO.Exists(dest));
+            }
+        }
+
+        #endregion
+
+        #region TestCases
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TestCases
+        ///
+        /// <summary>
+        /// Gets the test cases.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<TestCaseData> TestCases
+        {
+            get
+            {
+                var n = 0;
+                yield return new TestCaseData(n++, "Sample.pdf", "SampleRotation.pdf");
+                yield return new TestCaseData(n++, "Sample.pdf", "Sample.jpg");
+            }
         }
 
         #endregion
