@@ -19,7 +19,7 @@ steps:
 - task: NuGetToolInstaller@0
   inputs:
     versionSpec: '>= 4.9'
-  displayName: 'Use NuGet 4.9 or later'
+  displayName: 'NuGet 4.9 or later'
 
 - script: |
     nuget restore "$(PROJECT_NAME).Apps.sln"
@@ -39,16 +39,7 @@ steps:
     targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
     flattenFolders: true
     overWrite: true
-  displayName: 'Copy Ghostscript files to the library test directory.'
-
-- task: CopyFiles@2
-  inputs:
-    contents: '**\win-x64\native\*.dll'
-    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Ghostscript'
-    targetFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
-    flattenFolders: true
-    overWrite: true
-  displayName: 'Copy Ghostscript files to the CubePDF test directory.'
+  displayName: 'Copy Ghostscript to Libraries'
 
 - task: CopyFiles@2
   inputs:
@@ -57,7 +48,16 @@ steps:
     targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
     flattenFolders: true
     overWrite: true
-  displayName: 'Copy PDFium files to the library test directory.'
+  displayName: 'Copy PDFium to Libraries'
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**\win-x64\native\*.dll'
+    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Ghostscript'
+    targetFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
+    flattenFolders: true
+    overWrite: true
+  displayName: 'Copy Ghostscript to CubePDF'
 
 - task: CopyFiles@2
   inputs:
@@ -66,7 +66,7 @@ steps:
     targetFolder: 'Applications\Editor\Tests\$(PROJECT_BIN)'
     flattenFolders: true
     overWrite: true
-  displayName: 'Copy PDFium files to the CubePDF Utility test directory.'
+  displayName: 'Copy PDFium to CubePDF Utility'
 
 - script: >
     "$(TEST_TOOL)"
@@ -79,7 +79,7 @@ steps:
     -hideskipped:All
     -output:"$(TEST_COVERAGE)"
     -filter:"$(TEST_FILTERS)"
-  displayName: 'Run tests for libraries via OpenCover and NUnit'
+  displayName: 'Test Libraries'
 
 - script: >
     "$(TEST_TOOL)"
@@ -93,7 +93,7 @@ steps:
     -mergeoutput
     -output:"$(TEST_COVERAGE)"
     -filter:"$(TEST_FILTERS)"
-  displayName: 'Run tests for CubePDF via OpenCover and NUnit'
+  displayName: 'Test CubePDF'
 
 - script: >
     "$(TEST_TOOL)"
@@ -107,12 +107,54 @@ steps:
     -mergeoutput
     -output:"$(TEST_COVERAGE)"
     -filter:"$(TEST_FILTERS)"
-  displayName: 'Run tests for CubePDF Utility via OpenCover and NUnit'
+  displayName: 'Test CubePDF Utility'
+
+- script: >
+    "$(TEST_TOOL)"
+    -log:Error
+    -register:user
+    -target:"$(TEST_CORETOOL)"
+    -targetargs:"$(PROJECT_NAME).Pages.Tests.dll"
+    -targetdir:"Applications\Pages\Tests\$(PROJECT_BIN)"
+    -returntargetcode
+    -hideskipped:All
+    -mergeoutput
+    -output:"$(TEST_COVERAGE)"
+    -filter:"$(TEST_FILTERS)"
+  displayName: 'Test CubePDF Page'
+
+- script: >
+    "$(TEST_TOOL)"
+    -log:Error
+    -register:user
+    -target:"$(TEST_CORETOOL)"
+    -targetargs:"$(PROJECT_NAME).Clip.Tests.dll"
+    -targetdir:"Applications\Clip\Tests\$(PROJECT_BIN)"
+    -returntargetcode
+    -hideskipped:All
+    -mergeoutput
+    -output:"$(TEST_COVERAGE)"
+    -filter:"$(TEST_FILTERS)"
+  displayName: 'Test CubePDF Clip'
+
+- script: >
+    "$(TEST_TOOL)"
+    -log:Error
+    -register:user
+    -target:"$(TEST_CORETOOL)"
+    -targetargs:"$(PROJECT_NAME).Picker.Tests.dll"
+    -targetdir:"Applications\Picker\Tests\$(PROJECT_BIN)"
+    -returntargetcode
+    -hideskipped:All
+    -mergeoutput
+    -output:"$(TEST_COVERAGE)"
+    -filter:"$(TEST_FILTERS)"
+  displayName: 'Test CubePDF ImagePicker'
 
 - script: |
     pip install codecov
     codecov -f "$(TEST_COVERAGE)" -t $(CODECOV_TOKEN)
-  displayName: 'Send coverage results to Codecov'
+  displayName: 'Send to Codecov'
 
 - task: PublishTestResults@2
   inputs:
@@ -134,7 +176,7 @@ steps:
     includeRootFolder: false
     archiveType: 'zip'
     replaceExistingArchive: true
-  displayName: 'Pack CubePDF files'
+  displayName: 'Pack CubePDF'
 
 - task: ArchiveFiles@2
   inputs:
@@ -143,7 +185,7 @@ steps:
     includeRootFolder: false
     archiveType: 'zip'
     replaceExistingArchive: true
-  displayName: 'Pack CubeProxy files'
+  displayName: 'Pack CubeProxy'
 
 - task: ArchiveFiles@2
   inputs:
@@ -152,7 +194,7 @@ steps:
     includeRootFolder: false
     archiveType: 'zip'
     replaceExistingArchive: true
-  displayName: 'Pack CubePDF Utility files'
+  displayName: 'Pack CubePDF Utility'
 
 - task: ArchiveFiles@2
   inputs:
@@ -161,7 +203,7 @@ steps:
     includeRootFolder: false
     archiveType: 'zip'
     replaceExistingArchive: true
-  displayName: 'Pack CubePDF Utility Splash files'
+  displayName: 'Pack CubePDF Utility Splash'
 
 - task: CopyFiles@2
   inputs:

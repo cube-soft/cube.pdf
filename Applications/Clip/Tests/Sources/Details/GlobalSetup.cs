@@ -19,7 +19,7 @@
 using NUnit.Framework;
 using System.Reflection;
 
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Clip.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -50,7 +50,6 @@ namespace Cube.Pdf.Converter.Tests
             Logger.Configure();
             Logger.ObserveTaskException();
             Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
-            ApplicationSetting.Configure();
         }
 
         #endregion

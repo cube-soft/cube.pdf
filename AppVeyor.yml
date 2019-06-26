@@ -65,6 +65,42 @@ test_script:
       -mergeoutput
       -output:"%TEST_COVERAGE%"
       -filter:"%TEST_FILTERS%"
+    - >
+      "%TEST_TOOL%"
+      -log:Error
+      -register:user
+      -target:"%TEST_CORETOOL%"
+      -targetargs:"%PROJECT_NAME%.Pages.Tests.dll"
+      -targetdir:"Applications\Pages\Tests\%PROJECT_BIN%"
+      -returntargetcode
+      -hideskipped:All
+      -mergeoutput
+      -output:"%TEST_COVERAGE%"
+      -filter:"%TEST_FILTERS%"
+    - >
+      "%TEST_TOOL%"
+      -log:Error
+      -register:user
+      -target:"%TEST_CORETOOL%"
+      -targetargs:"%PROJECT_NAME%.Clip.Tests.dll"
+      -targetdir:"Applications\Clip\Tests\%PROJECT_BIN%"
+      -returntargetcode
+      -hideskipped:All
+      -mergeoutput
+      -output:"%TEST_COVERAGE%"
+      -filter:"%TEST_FILTERS%"
+    - >
+      "%TEST_TOOL%"
+      -log:Error
+      -register:user
+      -target:"%TEST_CORETOOL%"
+      -targetargs:"%PROJECT_NAME%.Picker.Tests.dll"
+      -targetdir:"Applications\Picker\Tests\%PROJECT_BIN%"
+      -returntargetcode
+      -hideskipped:All
+      -mergeoutput
+      -output:"%TEST_COVERAGE%"
+      -filter:"%TEST_FILTERS%"
 after_test:
     - xcopy /q /Y /I "Applications\Converter\Proxy\%PROJECT_BIN%" CubePdf
     - xcopy /q /Y /I "Applications\Converter\Main\%PROJECT_BIN%" CubePdf
@@ -73,6 +109,9 @@ after_test:
     - xcopy /q /Y /I "Libraries\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "Applications\Converter\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "Applications\Editor\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
+    - xcopy /q /Y /I "Applications\Pages\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
+    - xcopy /q /Y /I "Applications\Clip\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
+    - xcopy /q /Y /I "Applications\Picker\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "%TEST_COVERAGE%" "%TEST_LOG%\"
 artifacts:
     - path: 'CubePdf'
