@@ -18,10 +18,10 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.FileSystem;
+using Cube.Mixin.Iteration;
 using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -39,7 +39,7 @@ namespace Cube.Pdf.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCollection : ObservableCollection<Image>, IDisposable
+    public class ImageCollection : EnumerableBase<Image>
     {
         #region Constructors
 
@@ -52,15 +52,30 @@ namespace Cube.Pdf.Picker
         /// the specified path.
         /// </summary>
         ///
+        /// <param name="src">Path to extract images.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public ImageCollection(string path)
+        public ImageCollection(string src, IO io)
         {
-            Path = path;
+            Source = src;
+            IO     = io;
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Source
+        ///
+        /// <summary>
+        /// Gets the path of the PDF file to extract images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Source { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -71,18 +86,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IO IO { get; } = new IO();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Path
-        ///
-        /// <summary>
-        /// Gets the path of the PDF file to extract images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Path { get; }
+        public IO IO { get; }
 
         #endregion
 
@@ -101,12 +105,12 @@ namespace Cube.Pdf.Picker
         {
             try
             {
-                using (_source = new CancellationTokenSource())
+                using (_cts = new CancellationTokenSource())
                 {
                     await Task.Run(() => Extract(progress)).ConfigureAwait(false);
                 }
             }
-            finally { _source = null; }
+            finally { _cts = null; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -118,7 +122,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Cancel() => _source?.Cancel();
+        public void Cancel() => _cts?.Cancel();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -129,14 +133,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save(string directory)
-        {
-            var basename = IO.Get(Path).BaseName;
-            for (var index = 0; index < Items.Count; ++index)
-            {
-                Save(Items[index], directory, basename, index);
-            }
-        }
+        public void Save(string directory) => Save(directory, _core.Count.Make(i => i));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -149,60 +146,25 @@ namespace Cube.Pdf.Picker
         /* ----------------------------------------------------------------- */
         public void Save(string directory, IEnumerable<int> indices)
         {
-            var basename = IO.Get(Path).BaseName;
+            IO.CreateDirectory(directory);
+            var basename = IO.Get(Source).BaseName;
             foreach (var index in indices)
             {
-                if (index < 0 || index >= Items.Count) continue;
-                Save(Items[index], directory, basename, index);
+                if (index < 0 || index >= _core.Count) continue;
+                Save(_core[index], directory, basename, index);
             }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Reset
+        /// GetEnumerator
         ///
         /// <summary>
-        /// Resets to the state when the provided PDF was loaded.
+        /// Gets the enumerator of the collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Reset()
-        {
-            lock (_lock)
-            {
-                if (Items.Count == _allImages.Count) return;
-                Items.Clear();
-                foreach (var image in _allImages) Items.Add(image);
-            }
-        }
-
-        #region IDisposable
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ~ImageCollection
-        ///
-        /// <summary>
-        /// Finalizes the object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        ~ImageCollection() { Dispose(false); }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the resources.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        public override IEnumerator<Image> GetEnumerator() => _core.GetEnumerator();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -219,24 +181,18 @@ namespace Cube.Pdf.Picker
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             lock (_lock)
             {
-                if (_disposed) return;
-                _disposed = true;
-
                 if (disposing)
                 {
                     Cancel();
-                    Items.Clear();
-                    foreach (var image in _allImages) image.Dispose();
-                    _allImages.Clear();
+                    foreach (var image in _core) image.Dispose();
+                    _core.Clear();
                 }
             }
         }
-
-        #endregion
 
         #endregion
 
@@ -255,7 +211,7 @@ namespace Cube.Pdf.Picker
         {
             try
             {
-                var name = IO.Get(Path).BaseName;
+                var name = IO.Get(Source).BaseName;
                 progress.Report(Create(
                     -1,
                     string.Format(Properties.Resources.MessageBegin, name)
@@ -292,10 +248,10 @@ namespace Cube.Pdf.Picker
         private KeyValuePair<int, int> ExtractImages(IProgress<ProgressMessage<string>> progress)
         {
             var query = new Query<string>(e => throw new NotSupportedException());
-            using (var reader = new DocumentReader(Path, query, true, true, IO))
+            using (var reader = new DocumentReader(Source, query, true, true, IO))
             {
                 ExtractImages(reader, progress);
-                return KeyValuePair.Create(reader.Pages.Count(), Items.Count);
+                return KeyValuePair.Create(reader.Pages.Count(), _core.Count);
             }
         }
 
@@ -311,11 +267,11 @@ namespace Cube.Pdf.Picker
         private void ExtractImages(DocumentReader src, IProgress<ProgressMessage<string>> progress)
         {
             var count = src.Pages.Count();
-            var name = IO.Get(Path).BaseName;
+            var name = IO.Get(Source).BaseName;
 
             for (var i = 0; i < count; ++i)
             {
-                _source.Token.ThrowIfCancellationRequested();
+                _cts.Token.ThrowIfCancellationRequested();
 
                 var pagenum = i + 1;
                 progress.Report(Create(
@@ -324,15 +280,14 @@ namespace Cube.Pdf.Picker
                 ));
 
                 var images = src.GetEmbeddedImages(pagenum);
-                _source.Token.ThrowIfCancellationRequested();
+                _cts.Token.ThrowIfCancellationRequested();
 
                 lock (_lock)
                 {
                     foreach (var image in images)
                     {
-                        _source.Token.ThrowIfCancellationRequested();
-                        _allImages.Add(image);
-                        Items.Add(image);
+                        _cts.Token.ThrowIfCancellationRequested();
+                        _core.Add(image);
                     }
                 }
             }
@@ -364,7 +319,7 @@ namespace Cube.Pdf.Picker
         /* ----------------------------------------------------------------- */
         private string Unique(string directory, string basename, int index)
         {
-            var digit = string.Format("D{0}", Items.Count.ToString("D").Length);
+            var digit = string.Format("D{0}", _core.Count.ToString("D").Length);
             for (var i = 1; i < 1000; ++i)
             {
                 var filename = (i == 1) ?
@@ -398,9 +353,8 @@ namespace Cube.Pdf.Picker
 
         #region Fields
         private readonly object _lock = new object();
-        private bool _disposed = false;
-        private CancellationTokenSource _source;
-        private readonly IList<Image> _allImages = new List<Image>();
+        private readonly IList<Image> _core = new List<Image>();
+        private CancellationTokenSource _cts;
         #endregion
     }
 }

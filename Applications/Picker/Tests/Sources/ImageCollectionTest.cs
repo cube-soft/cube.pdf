@@ -18,6 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Tests;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace Cube.Pdf.Picker.Tests
 {
@@ -31,24 +33,53 @@ namespace Cube.Pdf.Picker.Tests
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    public class MainFacadeTest : FileFixture
+    public class ImageCollectionTest : FileFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Extract
         ///
         /// <summary>
         /// Tests the constructor.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf", ExpectedResult = 0)]
-        public int Create(string filename)
+        [TestCaseSource(nameof(TestCases))]
+        public int Extract(int id, string filename)
         {
-            var src = new ImageCollection(GetSource(filename));
-            return src.Count;
+            var dest = Get($"{nameof(Extract)}-{id}");
+            using (var src = new ImageCollection(GetSource(filename), IO))
+            {
+                src.ExtractAsync(new Progress<ProgressMessage<string>>()).Wait();
+                src.Save(dest);
+            }
+            return IO.GetFiles(dest).Length;
+        }
+
+        #endregion
+
+        #region TestCases
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TestCases
+        ///
+        /// <summary>
+        /// Gets the test cases.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<TestCaseData> TestCases
+        {
+            get
+            {
+                var n = 0;
+                yield return new TestCaseData(n++, "Sample.pdf").Returns(2);
+                yield return new TestCaseData(n++, "SampleAlpha.pdf").Returns(2);
+                yield return new TestCaseData(n++, "SampleEmpty.pdf").Returns(0);
+            }
         }
 
         #endregion
