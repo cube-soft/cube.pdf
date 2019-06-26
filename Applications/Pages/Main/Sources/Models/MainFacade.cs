@@ -30,14 +30,14 @@ namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileCollection
+    /// MainFacade
     ///
     /// <summary>
     /// Represents the collection of PDF or image files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class FileCollection : ObservableCollection<File>
+    public sealed class MainFacade : ObservableCollection<File>
     {
         #region Properties
 
