@@ -16,7 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Tests;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Cube.Pdf.Clip.Tests
 {
@@ -30,25 +32,80 @@ namespace Cube.Pdf.Clip.Tests
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class MainFacadeTest
+    class MainFacadeTest : FileFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Attach
         ///
         /// <summary>
-        /// Tests the constructor.
+        /// Tests the Attach and related methods.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCaseSource(nameof(TestCases))]
+        public void Attach(int id, string filename, string clip)
+        {
+            var dest = Get($"{nameof(Attach)}-{id}.pdf");
+            IO.Copy(GetSource(filename), dest);
+
+            using (var facade = new MainFacade(IO))
+            {
+                facade.Source = dest;
+                facade.Attach(GetSource(clip));
+                facade.Save();
+            }
+
+            Assert.That(IO.Exists(dest), Is.True);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Detach
+        ///
+        /// <summary>
+        /// Tests the Detach and related methods.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create()
+        public void Detach()
         {
-            var src = new MainFacade();
-            Assert.That(src.IO,          Is.Not.Null);
-            Assert.That(src.Clips.Count, Is.EqualTo(0));
+            var dest = Get($"{nameof(Detach)}.pdf");
+            IO.Copy(GetSource("SampleAttachmentCjk.pdf"), dest);
+
+            using (var facade = new MainFacade(IO))
+            {
+                facade.Source = dest;
+                facade.Detach(0);
+                facade.Save();
+            }
+
+            Assert.That(IO.Exists(dest), Is.True);
+        }
+
+        #endregion
+
+        #region TestCases
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TestCases
+        ///
+        /// <summary>
+        /// Gets the test cases.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<TestCaseData> TestCases
+        {
+            get
+            {
+                var n = 0;
+                yield return new TestCaseData(n++, "Sample.pdf", "Sample.jpg");
+            }
         }
 
         #endregion

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -30,7 +31,7 @@ namespace Cube.Pdf.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainViewModel : PresentableBase
+    public sealed class MainViewModel : PresentableBase
     {
         #region Constructors
 
@@ -49,7 +50,7 @@ namespace Cube.Pdf.Clip
         public MainViewModel(IEnumerable<string> args) :
             base(new Aggregator(), SynchronizationContext.Current)
         {
-            Model = new MainFacade();
+            Facade = new MainFacade(new IO());
         }
 
         #endregion
@@ -58,14 +59,14 @@ namespace Cube.Pdf.Clip
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Model
+        /// Facade
         ///
         /// <summary>
-        /// Gets the model object.
+        /// Gets the facade of models.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private MainFacade Model { get; }
+        private MainFacade Facade { get; }
 
         #endregion
 
@@ -88,7 +89,7 @@ namespace Cube.Pdf.Clip
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (disposing) Model.Dispose();
+            if (disposing) Facade.Dispose();
         }
 
         #endregion
