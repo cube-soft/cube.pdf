@@ -151,11 +151,6 @@ steps:
     -filter:"$(TEST_FILTERS)"
   displayName: 'Test CubePDF ImagePicker'
 
-- script: |
-    pip install codecov
-    codecov -f "$(TEST_COVERAGE)" -t $(CODECOV_TOKEN)
-  displayName: 'Send to Codecov'
-
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'NUnit'
