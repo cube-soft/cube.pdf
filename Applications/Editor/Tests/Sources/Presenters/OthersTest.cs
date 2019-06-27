@@ -29,7 +29,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// OthersTest
     ///
     /// <summary>
-    /// Uncategoriezed tests of the MainViewModel class.
+    /// Uncategorized tests of the MainViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -62,7 +62,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// Close
         ///
         /// <summary>
-        /// Executes the test for closing the PDF document.
+        /// Tests the Close command.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -83,7 +83,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             }
 
             vm.Test(vm.Ribbon.Close);
-            Assert.That(vm.Data.IsOpen(), Is.False);
         });
 
         /* ----------------------------------------------------------------- */
