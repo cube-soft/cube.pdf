@@ -366,6 +366,13 @@ namespace Cube.Pdf.Converter.Tests
                     "SampleCjk.ps",
                     false
                 );
+
+                yield return Create(n++,
+                    new SettingValue(),
+                    GetArgs("PDF 再変換テスト"),
+                    "SamplePdf.ps",
+                    false
+                );
             }
         }
 

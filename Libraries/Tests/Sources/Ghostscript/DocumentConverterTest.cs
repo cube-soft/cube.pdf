@@ -365,6 +365,21 @@ namespace Cube.Pdf.Tests.Ghostscript
                     Downsampling = Downsampling.Bicubic,
                     Resolution   = 150,
                 }, "Sample600dpi.ps", "Flate_Bicubic_600_150");
+
+                /* --------------------------------------------------------- */
+                // Others
+                /* --------------------------------------------------------- */
+                yield return TestCase(n++, new PdfConverter
+                {
+                    Compression = Encoding.Flate,
+                    Resolution  = 600,
+                }, "SamplePdf.ps", "PdfToPsToPdf");
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    Compression = Encoding.Flate,
+                    Resolution  = 600,
+                }, "Sample.pdf", "PdfToPdf");
             }
         }
 
