@@ -51,6 +51,31 @@ CubePDF Utility で編集可能なものは以下の通りです。
     - フォームへの入力を許可する
     - 注釈の追加・編集操作を許可する
 
+## ショートカットキー
+
+CubePDF Utility で利用可能なショートカットキーは以下の通りです。
+
+* Ctrl + O ... PDF ファイルを開く
+* Ctrl + S ... 上書き保存
+* Ctrl + Shit + S ... 名前を付けて保存
+* Ctrl + W ... PDF ファイルを閉じる
+* Ctrl + Q ... アプリケーションを終了
+* Insert ... 選択位置に PDF, PNG, JPEG, BMP ファイルを挿入
+* Delete or Backspace ... 選択ページを削除
+* Ctrl + E ... 選択ページを抽出
+* Ctrl + B ... 選択ページを 1 ページ分前に移動
+* Ctrl + F ... 選択ページを 1 ページ分後ろに移動
+* Ctrl + L ... 選択ページを左 90 度回転
+* Ctrl + R ... 選択ページを右 90 度回転
+* Ctrl + I ... 文書プロパティ編集画面を表示
+* Ctrl + K ... セキュリティ編集画面を表示
+* Ctrl + A ... 全て選択
+* Ctrl + D ... 選択を解除
+* Ctrl + Z ... 元に戻す
+* Ctrl + Y ... やり直し
+* Ctrl + + ... サムネイル画像サイズを拡大
+* Ctrl + - ... サムネイル画像サイズを縮小
+
 ## 問題が発生した場合
 
 CubePDF Utility は、以下のフォルダに実行ログを出力しています。  
@@ -76,16 +101,12 @@ CubePDF Utility は、以下のライブラリを利用しています。
 * PDFium
     - 3-clause BSD License
     - https://pdfium.googlesource.com/pdfium/
-    - https://www.nuget.org/packages/PdfiumViewer.Native.x86.no_v8-no_xfa/
-    - https://www.nuget.org/packages/PdfiumViewer.Native.x86_64.no_v8-no_xfa/
+    - https://www.nuget.org/packages/Cube.Native.Pdfium/
+    - https://www.nuget.org/packages/Cube.Native.Pdfium.Lite/
 * log4net
     - Apache License, Version 2.0
     - http://logging.apache.org/log4net/
     - https://www.nuget.org/packages/log4net/
-* MVVM Light Toolkit
-    - MIT License
-    - http://www.galasoft.ch/mvvm
-    - https://www.nuget.org/packages/MvvmLight/
 * AsyncBridge (.NET Framework 3.5 のみ)
     - MIT License
     - http://omermor.github.io/AsyncBridge/

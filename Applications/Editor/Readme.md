@@ -40,16 +40,12 @@ Dependencies of the CubePDF Utility are as follows.
 * PDFium
     - 3-clause BSD License
     - https://pdfium.googlesource.com/pdfium/
-    - https://www.nuget.org/packages/PdfiumViewer.Native.x86.no_v8-no_xfa/
-    - https://www.nuget.org/packages/PdfiumViewer.Native.x86_64.no_v8-no_xfa/
+    - https://www.nuget.org/packages/Cube.Native.Pdfium/
+    - https://www.nuget.org/packages/Cube.Native.Pdfium.Lite/
 * log4net
     - Apache License, Version 2.0
     - http://logging.apache.org/log4net/
     - https://www.nuget.org/packages/log4net/
-* MVVM Light Toolkit
-    - MIT License
-    - http://www.galasoft.ch/mvvm
-    - https://www.nuget.org/packages/MvvmLight/
 * AsyncBridge (.NET Framework 3.5)
     - MIT License
     - http://omermor.github.io/AsyncBridge/
