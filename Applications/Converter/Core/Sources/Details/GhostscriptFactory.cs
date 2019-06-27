@@ -119,7 +119,7 @@ namespace Cube.Pdf.Converter
                        CreatePdfConverter(src) :
                        new DocumentConverter(src.Value.Format, src.IO);
 
-            dest.ColorMode    = src.Value.Grayscale ? ColorMode.Grayscale : ColorMode.Rgb;
+            dest.ColorMode    = src.Value.Grayscale ? ColorMode.Grayscale : ColorMode.SameAsSource;
             dest.Downsampling = src.Value.Downsampling;
             dest.EmbedFonts   = src.Value.EmbedFonts;
 
