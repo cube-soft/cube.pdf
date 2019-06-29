@@ -19,45 +19,48 @@
 using Cube.Tests;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading;
 
-namespace Cube.Pdf.Pages.Tests
+namespace Cube.Pdf.Pages.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SplitTest
+    /// MergeTest
     ///
     /// <summary>
-    /// Tests the Split method of the MainFacade class.
+    /// Tests the Merge method of the MainViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SplitTest : FileFixture
+    class MergeTest : FileFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Split
+        /// Merge
         ///
         /// <summary>
-        /// Tests the Split method.
+        /// Tests the Merge method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public int Split(int id, string filename)
+        public void Merge(int id, string f0, string f1)
         {
-            var files = new List<string>();
-            var dest  = Get($"{nameof(Split)}-{id}");
-
-            using (var src = new MainFacade(IO))
+            var dest = Get($"{nameof(Merge)}-{id}.pdf");
+            using (var vm = new MainViewModel(new SynchronizationContext()))
             {
-                src.Add(GetSource(filename));
-                src.Split(dest, files);
-                Assert.That(src.Contains(GetSource(filename)), Is.True);
+                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource(f0), GetSource(f1) });
+                _ = vm.Subscribe<SaveFileMessage>(e => e.Value = dest);
+
+                vm.Add();
+                Assert.That(Wait.For(() => !vm.Busy), "Timeout (Add)");
+                vm.Merge();
+                Assert.That(Wait.For(() => !vm.Busy), "Timeout (Merge)");
             }
-            return files.Count;
+            Assert.That(IO.Exists(dest));
         }
 
         #endregion
@@ -78,8 +81,8 @@ namespace Cube.Pdf.Pages.Tests
             get
             {
                 var n = 0;
-                yield return new TestCaseData(n++, "SampleRotation.pdf").Returns(9);
-                yield return new TestCaseData(n++, "Sample.jpg").Returns(1);
+                yield return new TestCaseData(n++, "Sample.pdf", "SampleRotation.pdf");
+                yield return new TestCaseData(n++, "Sample.pdf", "Sample.jpg");
             }
         }
 

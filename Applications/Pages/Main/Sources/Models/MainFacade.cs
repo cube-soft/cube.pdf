@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 
 namespace Cube.Pdf.Pages
 {
@@ -49,11 +50,13 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /// <param name="io">I/O handler.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(IO io)
+        public MainFacade(IO io, SynchronizationContext context)
         {
-            IO = io;
+            IO         = io;
+            Dispatcher = new Dispatcher(context, true);
         }
 
         #endregion
@@ -150,7 +153,7 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IList<int> indices, int offset) => Invoke(() =>
+        public void Move(IEnumerable<int> indices, int offset) => Invoke(() =>
         {
             if (offset == 0) return;
             var src = offset < 0 ? indices : indices.Reverse();

@@ -18,73 +18,65 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Tests;
 using NUnit.Framework;
-using System.Collections.Generic;
+using System.Threading;
 
-namespace Cube.Pdf.Pages.Tests
+namespace Cube.Pdf.Pages.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MergeTest
+    /// OthersTest
     ///
     /// <summary>
-    /// Tests the Merge method of the MainFacade class.
+    /// Tests methods of the MainViewModel class except for the Merge and
+    /// Split.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class MergeTest : FileFixture
+    class OthersTest : FileFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Merge
+        /// Create_ArgumentNullException
         ///
         /// <summary>
-        /// Tests the Merge method.
+        /// Tests the constructor with an invalid context.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCaseSource(nameof(TestCases))]
-        public void Merge(int id, string f0, string f1)
+        [TestCase( 1)]
+        [TestCase(-1)]
+        public void Move(int offset)
         {
-            var dest = Get($"{nameof(Merge)}-{id}.pdf");
-            using (var src = new MainFacade(IO))
+            using (var vm = new MainViewModel(new SynchronizationContext()))
             {
-                src.Add(GetSource(f0));
-                src.Add(GetSource(f1));
-                src.Move(new[] { 0 },  1);
-                src.Move(new[] { 1 }, -1);
-                src.Move(new[] { 0 }, -1);
-                src.Merge(dest);
+                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleRotation.pdf") });
 
-                Assert.That(src.Contains(GetSource(f0)), Is.True);
-                Assert.That(src.Contains(GetSource(f1)), Is.True);
-                Assert.That(IO.Exists(dest));
+                vm.Add();
+                Assert.That(Wait.For(() => !vm.Busy), "Timeout (Add)");
+                vm.Move(new[] { 0, 1 }, offset);
+                Assert.That(Wait.For(() => !vm.Busy), "Timeout (Move)");
             }
         }
 
-        #endregion
-
-        #region TestCases
-
         /* ----------------------------------------------------------------- */
         ///
-        /// TestCases
+        /// Create_ArgumentNullException
         ///
         /// <summary>
-        /// Gets the test cases.
+        /// Tests the constructor with an invalid context.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        [Test]
+        public void Create_ArgumentNullException()
         {
-            get
-            {
-                var n = 0;
-                yield return new TestCaseData(n++, "Sample.pdf", "SampleRotation.pdf");
-                yield return new TestCaseData(n++, "Sample.pdf", "Sample.jpg");
-            }
+            Assert.That(
+                () => { using (new MainViewModel()) { } },
+                Throws.ArgumentNullException
+            );
         }
 
         #endregion

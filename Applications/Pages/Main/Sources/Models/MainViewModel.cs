@@ -46,11 +46,42 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public MainViewModel() : base(
-            new MainFacade(new IO()),
+        public MainViewModel() : this(SynchronizationContext.Current) { }
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// MainViewModel
+        ///
+        /// <summary>
+        /// Initializes a new instance of the MainViewModel class with the
+        /// specified context.
+        /// </summary>
+        ///
+        /// <param name="context">Synchronization context.</param>
+        ///
+        /* --------------------------------------------------------------------- */
+        public MainViewModel(SynchronizationContext context) : base(
+            new MainFacade(new IO(), context),
             new Aggregator(),
-            SynchronizationContext.Current
-        ) { }
+            context
+        ) {
+            Facade.PropertyChanged += (s, e) => OnPropertyChanged(e);
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Busy
+        ///
+        /// <summary>
+        /// Gets a value indicating whether the class is busy.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Busy => Facade.Busy;
 
         #endregion
 
@@ -88,6 +119,20 @@ namespace Cube.Pdf.Pages
         ///
         /* --------------------------------------------------------------------- */
         public void Split() => Send(MessageFactory.CreateForSplit(), e => Facade.Split(e, new List<string>())).Forget();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// Moves the specified items by the specified offset.
+        /// </summary>
+        ///
+        /// <param name="indices">Indices of files.</param>
+        /// <param name="offset">Offset to move.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Move(IEnumerable<int> indices, int offset) => Track(() => Facade.Move(indices, offset)).Forget();
 
         #endregion
     }
