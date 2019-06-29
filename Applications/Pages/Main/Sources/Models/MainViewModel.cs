@@ -16,6 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
+using Cube.Mixin.Syntax;
+using Cube.Mixin.Tasks;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Cube.Pdf.Pages
@@ -29,7 +33,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : PresentableBase
+    public sealed class MainViewModel : ViewModelBase<MainFacade>
     {
         #region Constructors
 
@@ -42,28 +46,48 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public MainViewModel() : base(new Aggregator(), SynchronizationContext.Current) { }
+        public MainViewModel() : base(
+            new MainFacade(new IO()),
+            new Aggregator(),
+            SynchronizationContext.Current
+        ) { }
 
         #endregion
 
         #region Methods
 
-        /* ----------------------------------------------------------------- */
+        /* --------------------------------------------------------------------- */
         ///
-        /// Dispose
+        /// Add
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
+        /// Invokes the Add command.
         /// </summary>
         ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
+        /* --------------------------------------------------------------------- */
+        public void Add() => Send(MessageFactory.CreateForAdd(), e => e.Each(f => Facade.Add(f))).Forget();
+
+        /* --------------------------------------------------------------------- */
         ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
+        /// Merge
+        ///
+        /// <summary>
+        /// Invokes the Merge command.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Merge() => Send(MessageFactory.CreateForMerge(), e => Facade.Merge(e)).Forget();
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Split
+        ///
+        /// <summary>
+        /// Invokes the Split command.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Split() => Send(MessageFactory.CreateForSplit(), e => Facade.Split(e, new List<string>())).Forget();
 
         #endregion
     }

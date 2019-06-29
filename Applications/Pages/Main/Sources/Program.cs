@@ -57,6 +57,7 @@ namespace Cube.Pdf.Pages
                 Application.SetCompatibleTextRenderingDefault(false);
 
                 var view = new MainWindow();
+                view.Bind(new MainViewModel());
                 Application.Run(view);
             }
             catch (Exception err) { Logger.Error(typeof(Program), err); }

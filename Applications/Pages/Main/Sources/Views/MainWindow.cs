@@ -16,6 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Forms;
+using Cube.Forms.Behaviors;
+using System;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.Pages
@@ -29,7 +32,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainWindow : Cube.Forms.Window
+    public partial class MainWindow : Window
     {
         #region Constructors
 
@@ -45,14 +48,61 @@ namespace Cube.Pdf.Pages
         public MainWindow()
         {
             InitializeComponent();
+            Behaviors.Add(SetupForAbout());
+        }
 
-            var tips = new ToolTip
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnBind
+        ///
+        /// <summary>
+        /// Initializes for the About page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnBind(IPresentable src)
+        {
+            base.OnBind(src);
+            if (!(src is MainViewModel vm)) return;
+
+            FileButton.Click  += (s, e) => vm.Add();
+            MergeButton.Click += (s, e) => vm.Merge();
+            SplitButton.Click += (s, e) => vm.Split();
+
+            Behaviors.Add(new CloseBehavior(src, this));
+            Behaviors.Add(new DialogBehavior(src));
+            Behaviors.Add(new OpenFileBehavior(src));
+            Behaviors.Add(new OpenDirectoryBehavior(src));
+            Behaviors.Add(new SaveFileBehavior(src));
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetupForAbout
+        ///
+        /// <summary>
+        /// Initializes for the About page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IDisposable SetupForAbout()
+        {
+            var dest = new ToolTip
             {
                 InitialDelay = 200,
                 AutoPopDelay = 5000,
-                ReshowDelay = 1000
+                ReshowDelay  = 1000
             };
-            tips.SetToolTip(TitleButton, Properties.Resources.About);
+            dest.SetToolTip(TitleButton, Properties.Resources.MessageAbout);
+            return dest;
         }
 
         #endregion
