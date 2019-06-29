@@ -53,7 +53,9 @@ namespace Cube.Pdf.Pages.Tests
             {
                 src.Add(GetSource(f0));
                 src.Add(GetSource(f1));
-                src.Move(new[] { 0 }, 1); // swap
+                src.Move(new[] { 0 },  1);
+                src.Move(new[] { 1 }, -1);
+                src.Move(new[] { 0 }, -1);
                 src.Merge(dest);
 
                 Assert.That(src.Contains(GetSource(f0)), Is.True);

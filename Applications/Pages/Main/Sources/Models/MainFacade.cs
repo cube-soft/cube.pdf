@@ -63,6 +63,22 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Gets the PDF metadata.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata Metadata { get; } = new Metadata
+        {
+            Version  = new PdfVersion(1, 7),
+            Creator  = "CubePDF Page",
+            Producer = "CubePDF Page",
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// IO
         ///
         /// <summary>
@@ -71,17 +87,6 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public IO IO { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Metadata
-        ///
-        /// <summary>
-        /// Gets the PDF metadata.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; } = new Metadata();
 
         #endregion
 
@@ -102,7 +107,7 @@ namespace Cube.Pdf.Pages
         {
             var ext = IO.Get(src).Extension.ToLower();
             if (ext == ".pdf") AddDocument(src);
-            else lock (_lock) _core.Add(IO.GetImageFile(src));
+            else lock (_lock) _inner.Add(IO.GetImageFile(src));
         }
 
         /* ----------------------------------------------------------------- */
@@ -117,7 +122,7 @@ namespace Cube.Pdf.Pages
         /// <param name="src">PDF or image file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Contains(string src) => _core.Any(f => f.FullName == src);
+        public bool Contains(string src) => _inner.Any(f => f.FullName == src);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -153,7 +158,7 @@ namespace Cube.Pdf.Pages
             try
             {
                 var writer = new DocumentWriter();
-                foreach (var file in _core)
+                foreach (var file in _inner)
                 {
                     if (file is PdfFile) AddDocument(file as PdfFile, writer);
                     else AddImage(file as ImageFile, writer);
@@ -181,7 +186,7 @@ namespace Cube.Pdf.Pages
         {
             using (var writer = new DocumentSplitter())
             {
-                foreach (var item in _core)
+                foreach (var item in _inner)
                 {
                     if (item is PdfFile) AddDocument(item as PdfFile, writer);
                     else AddImage(item as ImageFile, writer);
@@ -228,7 +233,7 @@ namespace Cube.Pdf.Pages
             var query = new Query<string>(e => throw new NotSupportedException());
             using (var reader = new DocumentReader(path, query, true, true, IO))
             {
-                lock (_lock) _core.Add(reader.File);
+                lock (_lock) _inner.Add(reader.File);
             }
         }
 
@@ -278,13 +283,13 @@ namespace Cube.Pdf.Pages
         {
             lock (_lock)
             {
-                var inserted = offset < 0 ? -1 : _core.Count;
+                var inserted = offset < 0 ? -1 : _inner.Count;
                 foreach (var index in indices)
                 {
                     var newindex = offset < 0 ?
                         Math.Max(index + offset, inserted + 1) :
                         Math.Min(index + offset, inserted - 1);
-                    _core.Move(index, newindex);
+                    if (index != newindex) _inner.Move(index, newindex);
                     inserted = newindex;
                 }
             }
@@ -294,7 +299,7 @@ namespace Cube.Pdf.Pages
 
         #region Fields
         private readonly object _lock = new object();
-        private readonly ObservableCollection<File> _core = new ObservableCollection<File>();
+        private readonly ObservableCollection<File> _inner = new ObservableCollection<File>();
         #endregion
     }
 }
