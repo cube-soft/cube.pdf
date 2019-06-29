@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.Pdf;
-using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
@@ -88,6 +87,21 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public IO IO { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Busy
+        ///
+        /// <summary>
+        /// Gets a value indicating whether the class is busy.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Busy
+        {
+            get => _busy;
+            private set => SetProperty(ref _busy, value);
+        }
+
         #endregion
 
         #region Methods
@@ -103,12 +117,12 @@ namespace Cube.Pdf.Pages
         /// <param name="src">PDF or image file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(string src)
+        public void Add(string src) => Invoke(() =>
         {
             var ext = IO.Get(src).Extension.ToLower();
             if (ext == ".pdf") AddDocument(src);
-            else lock (_lock) _inner.Add(IO.GetImageFile(src));
-        }
+            else _inner.Add(IO.GetImageFile(src));
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -136,8 +150,12 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IList<int> indices, int offset) =>
-            (offset != 0).Then(() => MoveItems(offset < 0 ? indices : indices.Reverse(), offset));
+        public void Move(IList<int> indices, int offset) => Invoke(() =>
+        {
+            if (offset == 0) return;
+            var src = offset < 0 ? indices : indices.Reverse();
+            MoveItems(src, offset);
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -150,7 +168,7 @@ namespace Cube.Pdf.Pages
         /// <param name="dest">Path to save.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Merge(string dest)
+        public void Merge(string dest) => Invoke(() =>
         {
             var dir = IO.Get(dest).DirectoryName;
             var tmp = IO.Combine(dir, Guid.NewGuid().ToString("N"));
@@ -168,7 +186,7 @@ namespace Cube.Pdf.Pages
                 IO.Move(tmp, dest, true);
             }
             finally { _ = IO.TryDelete(tmp); }
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -182,7 +200,7 @@ namespace Cube.Pdf.Pages
         /// <param name="results">Operation results.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Split(string directory, IList<string> results)
+        public void Split(string directory, IList<string> results) => Invoke(() =>
         {
             using (var writer = new DocumentSplitter())
             {
@@ -196,7 +214,7 @@ namespace Cube.Pdf.Pages
 
                 foreach (var result in writer.Results) results.Add(result);
             }
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -231,10 +249,7 @@ namespace Cube.Pdf.Pages
         private void AddDocument(string path)
         {
             var query = new Query<string>(e => throw new NotSupportedException());
-            using (var reader = new DocumentReader(path, query, true, true, IO))
-            {
-                lock (_lock) _inner.Add(reader.File);
-            }
+            using (var e = new DocumentReader(path, query, true, true, IO)) _inner.Add(e.File);
         }
 
         /* ----------------------------------------------------------------- */
@@ -249,10 +264,7 @@ namespace Cube.Pdf.Pages
         private void AddDocument(PdfFile src, IDocumentWriter dest)
         {
             var query = new Query<string>(e => e.Cancel = true);
-            using (var reader = new DocumentReader(src.FullName, query, true, true, IO))
-            {
-                dest.Add(reader.Pages);
-            }
+            using (var e = new DocumentReader(src.FullName, query, true, true, IO)) dest.Add(e.Pages);
         }
 
         /* ----------------------------------------------------------------- */
@@ -281,17 +293,36 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void MoveItems(IEnumerable<int> indices, int offset)
         {
+            var inserted = offset < 0 ? -1 : _inner.Count;
+            foreach (var index in indices)
+            {
+                var newindex = offset < 0 ?
+                    Math.Max(index + offset, inserted + 1) :
+                    Math.Min(index + offset, inserted - 1);
+                if (index != newindex) _inner.Move(index, newindex);
+                inserted = newindex;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Action action)
+        {
             lock (_lock)
             {
-                var inserted = offset < 0 ? -1 : _inner.Count;
-                foreach (var index in indices)
+                try
                 {
-                    var newindex = offset < 0 ?
-                        Math.Max(index + offset, inserted + 1) :
-                        Math.Min(index + offset, inserted - 1);
-                    if (index != newindex) _inner.Move(index, newindex);
-                    inserted = newindex;
+                    Busy = true;
+                    action();
                 }
+                finally { Busy = false; }
             }
         }
 
@@ -300,6 +331,7 @@ namespace Cube.Pdf.Pages
         #region Fields
         private readonly object _lock = new object();
         private readonly ObservableCollection<File> _inner = new ObservableCollection<File>();
+        private bool _busy = false;
         #endregion
     }
 }
