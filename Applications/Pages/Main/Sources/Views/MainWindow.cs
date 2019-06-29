@@ -49,6 +49,7 @@ namespace Cube.Pdf.Pages
         {
             InitializeComponent();
             Behaviors.Add(SetupForAbout());
+            ExitButton.Click += (s, e) => Close();
         }
 
         #endregion
@@ -69,6 +70,8 @@ namespace Cube.Pdf.Pages
             base.OnBind(src);
             if (!(src is MainViewModel vm)) return;
 
+            FileListView.DataSource = vm.Files;
+
             FileButton.Click  += (s, e) => vm.Add();
             MergeButton.Click += (s, e) => vm.Merge();
             SplitButton.Click += (s, e) => vm.Split();
@@ -78,6 +81,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new OpenFileBehavior(src));
             Behaviors.Add(new OpenDirectoryBehavior(src));
             Behaviors.Add(new SaveFileBehavior(src));
+            Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Files.ResetBindings(false)));
         }
 
         #endregion

@@ -22,6 +22,7 @@ using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 
@@ -36,7 +37,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainFacade : ObservableBase
+    public sealed class MainFacade : ObservableBase, INotifyCollectionChanged
     {
         #region Constructors
 
@@ -56,12 +57,25 @@ namespace Cube.Pdf.Pages
         public MainFacade(IO io, SynchronizationContext context)
         {
             IO         = io;
-            Dispatcher = new Dispatcher(context, true);
+            Dispatcher = new Dispatcher(context, false);
+
+            _inner.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Files
+        ///
+        /// <summary>
+        /// Gets the collection of target files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<File> Files => _inner;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -104,6 +118,22 @@ namespace Cube.Pdf.Pages
             get => _busy;
             private set => SetProperty(ref _busy, value);
         }
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CollectionChanged
+        ///
+        /// <summary>
+        /// Occurs when an item is added, removed, changed, moved, or the
+        /// entire list is refreshed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         #endregion
 

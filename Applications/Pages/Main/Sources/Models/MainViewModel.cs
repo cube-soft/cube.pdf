@@ -21,6 +21,7 @@ using Cube.Mixin.Syntax;
 using Cube.Mixin.Tasks;
 using System.Collections.Generic;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Cube.Pdf.Pages
 {
@@ -65,12 +66,26 @@ namespace Cube.Pdf.Pages
             new Aggregator(),
             context
         ) {
-            Facade.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Files = new BindingSource { DataSource = Facade.Files };
+
+            Facade.CollectionChanged += (s, e) => Send<CollectionMessage>();
+            Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Files
+        ///
+        /// <summary>
+        /// Gets the collection of target files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindingSource Files { get; }
 
         /* ----------------------------------------------------------------- */
         ///

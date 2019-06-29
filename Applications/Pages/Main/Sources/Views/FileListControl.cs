@@ -79,11 +79,11 @@ namespace Cube.Pdf.Pages
         {
             Columns.Clear();
 
-            _ = Columns.Add(CreateColumn("Name",  Properties.Resources.ColumnName,   5.0f));
-            _ = Columns.Add(CreateColumn("Type",  Properties.Resources.ColumnType,   2.4f));
-            _ = Columns.Add(CreateColumn("Pages", Properties.Resources.ColumnPages,  2.0f));
-            _ = Columns.Add(CreateColumn("Date",  Properties.Resources.ColumnDate,   3.0f));
-            _ = Columns.Add(CreateColumn("Size",  Properties.Resources.ColumnLength, 2.4f));
+            _ = Columns.Add(CreateColumn("Name",          Properties.Resources.ColumnName,   5.0f));
+            //_ = Columns.Add(CreateColumn("Type",          Properties.Resources.ColumnType, 2.4f));
+            _ = Columns.Add(CreateColumn("Count",         Properties.Resources.ColumnPages,  2.0f));
+            _ = Columns.Add(CreateColumn("LastWriteTime", Properties.Resources.ColumnDate,   3.0f));
+            _ = Columns.Add(CreateColumn("Length",        Properties.Resources.ColumnLength, 2.4f));
         }
 
         /* ----------------------------------------------------------------- */
@@ -103,6 +103,7 @@ namespace Cube.Pdf.Pages
             HeaderText       = text,
             FillWeight       = weight,
             SortMode         = DataGridViewColumnSortMode.NotSortable,
+            CellTemplate     = new DataGridViewTextBoxCell(),
         };
 
         #endregion
