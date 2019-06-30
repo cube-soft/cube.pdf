@@ -55,10 +55,8 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 _ = vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource(filename) });
                 _ = vm.Subscribe<OpenDirectoryMessage>(e => e.Value = dest);
 
-                vm.Add();
-                Assert.That(Wait.For(() => !vm.Busy), "Timeout (Add)");
-                vm.Split();
-                Assert.That(Wait.For(() => !vm.Busy), "Timeout (Split)");
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                Assert.That(vm.Test(vm.Split), nameof(vm.Split));
             }
             return IO.GetFiles(dest).Length;
         }

@@ -17,64 +17,53 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Tests;
-using NUnit.Framework;
+using System;
 using System.Threading;
 
-namespace Cube.Pdf.Pages.Tests.Presenters
+namespace Cube.Pdf.Pages.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// OthersTest
+    /// ViewModelExtension
     ///
     /// <summary>
-    /// Tests methods of the MainViewModel class except for the Merge and
-    /// Split.
+    /// Provides extended methods of the MainViewModel class for testing.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class OthersTest : FileFixture
+    static class ViewModelExtension
     {
-        #region Tests
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create_ArgumentNullException
+        /// Test
         ///
         /// <summary>
-        /// Tests the constructor with an invalid context.
+        /// Tests the specified action.
         /// </summary>
         ///
+        /// <param name="vm">MainViewModel instance.</param>
+        /// <param name="action">Target action.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        [TestCase( 1)]
-        [TestCase(-1)]
-        public void Move(int offset)
+        public static bool Test(this MainViewModel vm, Action action)
         {
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            var cs = new CancellationTokenSource();
+            void observe(object s, EventArgs e)
             {
-                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleRotation.pdf") });
-
-                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
-                Assert.That(vm.Test(() => vm.Move(new[] { 0, 1 }, offset)), nameof(vm.Move));
+                if (vm.Busy) return;
+                vm.PropertyChanged -= observe;
+                cs.Cancel();
             }
-        }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create_ArgumentNullException
-        ///
-        /// <summary>
-        /// Tests the constructor with an invalid context.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Create_ArgumentNullException()
-        {
-            Assert.That(
-                () => { using (new MainViewModel()) { } },
-                Throws.ArgumentNullException
-            );
+            vm.PropertyChanged += observe;
+            try
+            {
+                action();
+                return Wait.For(cs.Token);
+            }
+            finally { vm.PropertyChanged -= observe; }
         }
 
         #endregion

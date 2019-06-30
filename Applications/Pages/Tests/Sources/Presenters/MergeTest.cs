@@ -55,10 +55,8 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 _ = vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource(f0), GetSource(f1) });
                 _ = vm.Subscribe<SaveFileMessage>(e => e.Value = dest);
 
-                vm.Add();
-                Assert.That(Wait.For(() => !vm.Busy), "Timeout (Add)");
-                vm.Merge();
-                Assert.That(Wait.For(() => !vm.Busy), "Timeout (Merge)");
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                Assert.That(vm.Test(vm.Merge), nameof(vm.Merge));
             }
             Assert.That(IO.Exists(dest));
         }
