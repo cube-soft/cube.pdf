@@ -54,6 +54,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             {
                 _ = vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleRotation.pdf") });
 
+                Assert.That(vm.Files, Is.Not.Null);
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.Test(() => vm.Move(new[] { 0, 1 }, offset)), nameof(vm.Move));
             }
@@ -61,7 +62,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create_ArgumentNullException
+        /// Create_Throws
         ///
         /// <summary>
         /// Tests the constructor with an invalid context.
@@ -69,12 +70,9 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create_ArgumentNullException()
+        public void Create_Throws()
         {
-            Assert.That(
-                () => { using (new MainViewModel()) { } },
-                Throws.ArgumentNullException
-            );
+            Assert.That(() => { using (new MainViewModel()) { } }, Throws.ArgumentNullException);
         }
 
         #endregion
