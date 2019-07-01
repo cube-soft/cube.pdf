@@ -198,11 +198,9 @@ namespace Cube.Pdf.Pages
 
             try
             {
-                using (var writer = Make<DocumentWriter>())
-                {
-                    writer.Save(tmp);
-                    IO.Move(tmp, dest, true);
-                }
+                using (var writer = Make<DocumentWriter>()) writer.Save(tmp);
+                IO.Move(tmp, dest, true);
+                Clear();
             }
             finally { _ = IO.TryDelete(tmp); }
         });
@@ -224,8 +222,9 @@ namespace Cube.Pdf.Pages
             using (var writer = Make<DocumentSplitter>())
             {
                 writer.Save(directory);
-                foreach (var result in writer.Results) results.Add(result);
+                foreach (var f in writer.Results) results.Add(f);
             }
+            Clear();
         });
 
         /* ----------------------------------------------------------------- */

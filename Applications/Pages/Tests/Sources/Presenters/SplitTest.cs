@@ -19,6 +19,7 @@
 using Cube.Tests;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Pages.Tests.Presenters
@@ -57,6 +58,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
 
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.Test(vm.Split), nameof(vm.Split));
+                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
             }
             return IO.GetFiles(dest).Length;
         }

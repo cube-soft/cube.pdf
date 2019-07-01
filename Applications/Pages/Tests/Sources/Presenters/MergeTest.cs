@@ -58,6 +58,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
 
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.Test(vm.Merge), nameof(vm.Merge));
+                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
             }
             Assert.That(IO.Exists(dest));
         }
