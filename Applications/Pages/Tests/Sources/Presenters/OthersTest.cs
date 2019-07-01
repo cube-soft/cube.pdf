@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Tests;
 using NUnit.Framework;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Pages.Tests.Presenters
@@ -39,10 +40,10 @@ namespace Cube.Pdf.Pages.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create_ArgumentNullException
+        /// Move
         ///
         /// <summary>
-        /// Tests the constructor with an invalid context.
+        /// Tests the Move method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -57,6 +58,33 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 Assert.That(vm.Files, Is.Not.Null);
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.Test(() => vm.Move(new[] { 0, 1 }, offset)), nameof(vm.Move));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        ///
+        /// <summary>
+        /// Tests the Clear method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Clear()
+        {
+            var files = new[] { "Sample.pdf", "SampleRotation.pdf" };
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            {
+                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f)));
+
+                Assert.That(vm.Files, Is.Not.Null);
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                Assert.That(vm.GetFiles().Count(), Is.EqualTo(2));
+                Assert.That(vm.Test(vm.Clear), nameof(vm.Clear));
+                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
+                Assert.That(vm.Test(vm.Clear), nameof(vm.Clear));
+                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
             }
         }
 

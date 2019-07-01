@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Tests;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Cube.Pdf.Pages.Tests
@@ -65,6 +66,21 @@ namespace Cube.Pdf.Pages.Tests
             }
             finally { vm.PropertyChanged -= observe; }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetFiles
+        ///
+        /// <summary>
+        /// Gets the collection of added files.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel instance.</param>
+        ///
+        /// <returns>Collection of added files.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<File> GetFiles(this MainViewModel vm) => (IEnumerable<File>)vm.Files.DataSource;
 
         #endregion
     }

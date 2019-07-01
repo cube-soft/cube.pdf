@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Mixin.Syntax;
 using Cube.Mixin.Tasks;
 using System.Collections.Generic;
 using System.Threading;
@@ -104,17 +103,6 @@ namespace Cube.Pdf.Pages
 
         /* --------------------------------------------------------------------- */
         ///
-        /// Add
-        ///
-        /// <summary>
-        /// Invokes the Add command.
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        public void Add() => Send(MessageFactory.CreateForAdd(), e => e.Each(f => Facade.Add(f))).Forget();
-
-        /* --------------------------------------------------------------------- */
-        ///
         /// Merge
         ///
         /// <summary>
@@ -134,6 +122,28 @@ namespace Cube.Pdf.Pages
         ///
         /* --------------------------------------------------------------------- */
         public void Split() => Send(MessageFactory.CreateForSplit(), e => Facade.Split(e, new List<string>())).Forget();
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Add
+        ///
+        /// <summary>
+        /// Invokes the Add command.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Add() => Send(MessageFactory.CreateForAdd(), e => Facade.Add(e)).Forget();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        ///
+        /// <summary>
+        /// Clears the added files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Clear() => Track(Facade.Clear);
 
         /* ----------------------------------------------------------------- */
         ///

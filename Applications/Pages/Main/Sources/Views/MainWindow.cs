@@ -72,9 +72,10 @@ namespace Cube.Pdf.Pages
 
             FileListView.DataSource = vm.Files;
 
-            FileButton.Click  += (s, e) => vm.Add();
             MergeButton.Click += (s, e) => vm.Merge();
             SplitButton.Click += (s, e) => vm.Split();
+            FileButton.Click  += (s, e) => vm.Add();
+            ClearButton.Click += (s, e) => vm.Clear();
 
             Behaviors.Add(new CloseBehavior(src, this));
             Behaviors.Add(new DialogBehavior(src));

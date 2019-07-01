@@ -150,27 +150,16 @@ namespace Cube.Pdf.Pages
         /// <param name="src">PDF or image file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(string src) => Invoke(() =>
+        public void Add(IEnumerable<string> src) => Invoke(() =>
         {
-            if (Contains(src)) return;
-            var ext = IO.Get(src).Extension.ToLower();
-            if (ext == ".pdf") AddDocument(src);
-            else _inner.Add(IO.GetImageFile(src));
+            foreach (var f in src)
+            {
+                if (_inner.Any(e => e.FullName == f)) continue;
+                var ext = IO.Get(f).Extension.ToLower();
+                if (ext == ".pdf") AddDocument(f);
+                else _inner.Add(IO.GetImageFile(f));
+            }
         });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Contains
-        ///
-        /// <summary>
-        /// Determines whether the specified PDF or image file has already
-        /// been added.
-        /// </summary>
-        ///
-        /// <param name="src">PDF or image file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool Contains(string src) => _inner.Any(f => f.FullName == src);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -238,6 +227,17 @@ namespace Cube.Pdf.Pages
                 foreach (var result in writer.Results) results.Add(result);
             }
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        ///
+        /// <summary>
+        /// Clears the added files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Clear() => Invoke(() => _inner.Clear());
 
         /* ----------------------------------------------------------------- */
         ///
