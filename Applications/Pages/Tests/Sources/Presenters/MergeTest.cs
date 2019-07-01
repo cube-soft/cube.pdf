@@ -19,6 +19,7 @@
 using Cube.Tests;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Pages.Tests.Presenters
@@ -47,12 +48,12 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Merge(int id, string f0, string f1)
+        public void Merge(int id, IEnumerable<string> files)
         {
             var dest = Get($"{nameof(Merge)}-{id}.pdf");
             using (var vm = new MainViewModel(new SynchronizationContext()))
             {
-                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource(f0), GetSource(f1) });
+                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f)));
                 _ = vm.Subscribe<SaveFileMessage>(e => e.Value = dest);
 
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
@@ -79,8 +80,9 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             get
             {
                 var n = 0;
-                yield return new TestCaseData(n++, "Sample.pdf", "SampleRotation.pdf");
-                yield return new TestCaseData(n++, "Sample.pdf", "Sample.jpg");
+                yield return new TestCaseData(n++, new[] { "Sample.pdf", "SampleRotation.pdf" });
+                yield return new TestCaseData(n++, new[] { "Sample.pdf", "Sample.jpg" });
+                yield return new TestCaseData(n++, new[] { "Sample.pdf", "Sample.pdf", "Sample.pdf" });
             }
         }
 

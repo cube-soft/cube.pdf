@@ -152,6 +152,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Add(string src) => Invoke(() =>
         {
+            if (Contains(src)) return;
             var ext = IO.Get(src).Extension.ToLower();
             if (ext == ".pdf") AddDocument(src);
             else _inner.Add(IO.GetImageFile(src));
@@ -208,15 +209,11 @@ namespace Cube.Pdf.Pages
 
             try
             {
-                var writer = new DocumentWriter();
-                foreach (var file in _inner)
+                using (var writer = Make<DocumentWriter>())
                 {
-                    if (file is PdfFile) AddDocument(file as PdfFile, writer);
-                    else AddImage(file as ImageFile, writer);
+                    writer.Save(tmp);
+                    IO.Move(tmp, dest, true);
                 }
-                writer.Set(Metadata);
-                writer.Save(tmp);
-                IO.Move(tmp, dest, true);
             }
             finally { _ = IO.TryDelete(tmp); }
         });
@@ -235,16 +232,9 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Split(string directory, IList<string> results) => Invoke(() =>
         {
-            using (var writer = new DocumentSplitter())
+            using (var writer = Make<DocumentSplitter>())
             {
-                foreach (var item in _inner)
-                {
-                    if (item is PdfFile) AddDocument(item as PdfFile, writer);
-                    else AddImage(item as ImageFile, writer);
-                }
-                writer.Set(Metadata);
                 writer.Save(directory);
-
                 foreach (var result in writer.Results) results.Add(result);
             }
         });
@@ -269,6 +259,27 @@ namespace Cube.Pdf.Pages
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Make
+        ///
+        /// <summary>
+        /// Makes the specified writer with the provided settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private T Make<T>() where T : IDocumentWriter, new()
+        {
+            var dest = new T();
+            foreach (var file in _inner)
+            {
+                if (file is PdfFile) AddDocument(file as PdfFile, dest);
+                else AddImage(file as ImageFile, dest);
+            }
+            dest.Set(Metadata);
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
