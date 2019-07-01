@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -90,10 +91,8 @@ namespace Cube.Pdf.Pages
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing) Facade?.Dispose();
-        }
+        protected override void Dispose(bool disposing) =>
+            disposing.Then(() => Facade?.Dispose());
 
         /* ----------------------------------------------------------------- */
         ///

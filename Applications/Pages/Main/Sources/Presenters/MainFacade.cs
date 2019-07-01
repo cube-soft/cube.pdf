@@ -55,11 +55,9 @@ namespace Cube.Pdf.Pages
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(IO io, SynchronizationContext context)
+        public MainFacade(IO io, SynchronizationContext context) : base(new Dispatcher(context, false))
         {
-            IO         = io;
-            Dispatcher = new Dispatcher(context, false);
-
+            IO = io;
             _inner.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
 
