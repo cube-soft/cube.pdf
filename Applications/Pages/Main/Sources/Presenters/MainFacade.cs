@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.Pdf;
+using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
@@ -141,47 +142,6 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds the specified PDF or image file.
-        /// </summary>
-        ///
-        /// <param name="src">PDF or image file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Add(IEnumerable<string> src) => Invoke(() =>
-        {
-            foreach (var f in src)
-            {
-                if (_inner.Any(e => e.FullName == f)) continue;
-                var ext = IO.Get(f).Extension.ToLower();
-                if (ext == ".pdf") AddDocument(f);
-                else _inner.Add(IO.GetImageFile(f));
-            }
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Move
-        ///
-        /// <summary>
-        /// Moves the specified items by the specified offset.
-        /// </summary>
-        ///
-        /// <param name="indices">Indices of files.</param>
-        /// <param name="offset">Offset to move.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Move(IEnumerable<int> indices, int offset) => Invoke(() =>
-        {
-            if (offset == 0) return;
-            var src = offset < 0 ? indices : indices.Reverse();
-            MoveItems(src, offset);
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Merge
         ///
         /// <summary>
@@ -226,6 +186,63 @@ namespace Cube.Pdf.Pages
             }
             Clear();
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        ///
+        /// <summary>
+        /// Adds the specified PDF or image file.
+        /// </summary>
+        ///
+        /// <param name="src">PDF or image file.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Add(IEnumerable<string> src) => Invoke(() =>
+        {
+            foreach (var f in src)
+            {
+                if (_inner.Any(e => e.FullName == f)) continue;
+                var ext = IO.Get(f).Extension.ToLower();
+                if (ext == ".pdf") AddDocument(f);
+                else _inner.Add(IO.GetImageFile(f));
+            }
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// Moves the specified items by the specified offset.
+        /// </summary>
+        ///
+        /// <param name="indices">Indices of files.</param>
+        /// <param name="offset">Offset to move.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Move(IEnumerable<int> indices, int offset) => Invoke(() =>
+        {
+            if (offset == 0) return;
+            var src = offset < 0 ? indices : indices.Reverse();
+            MoveItems(src, offset);
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Removes the specified indices.
+        /// </summary>
+        ///
+        /// <param name="indices">
+        /// Collection of indices to be removed.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove(IEnumerable<int> indices) => Invoke(() =>
+            indices.OrderByDescending(e => e).Each(i => _inner.RemoveAt(i)));
 
         /* ----------------------------------------------------------------- */
         ///

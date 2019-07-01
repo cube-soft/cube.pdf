@@ -136,6 +136,21 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Removes the specified indices.
+        /// </summary>
+        ///
+        /// <param name="indices">
+        /// Collection of indices to be removed.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Remove(IEnumerable<int> indices) => Track(() => Facade.Remove(indices));
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Clear
         ///
         /// <summary>

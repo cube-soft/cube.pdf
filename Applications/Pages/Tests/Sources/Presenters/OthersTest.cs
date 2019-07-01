@@ -63,6 +63,32 @@ namespace Cube.Pdf.Pages.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Remove
+        ///
+        /// <summary>
+        /// Tests the Remove method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Remove()
+        {
+            var files = new[] { "Sample.pdf", "SampleRotation.pdf", "Sample.jpg" };
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            {
+                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f)));
+
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                Assert.That(vm.GetFiles().Count(), Is.EqualTo(3));
+                Assert.That(vm.Test(() => vm.Remove(new[] { 0, 2 })), nameof(vm.Remove));
+                Assert.That(vm.GetFiles().Count(), Is.EqualTo(1));
+                Assert.That(vm.Test(() => vm.Remove(Enumerable.Empty<int>())), nameof(vm.Remove));
+                Assert.That(vm.GetFiles().Count(), Is.EqualTo(1));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Clear
         ///
         /// <summary>
@@ -78,7 +104,6 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             {
                 _ = vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f)));
 
-                Assert.That(vm.Files, Is.Not.Null);
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(2));
                 Assert.That(vm.Test(vm.Clear), nameof(vm.Clear));

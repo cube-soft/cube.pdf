@@ -19,6 +19,9 @@
 using Cube.Forms;
 using Cube.Forms.Behaviors;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.Pages
@@ -54,6 +57,27 @@ namespace Cube.Pdf.Pages
 
         #endregion
 
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectedIndices
+        ///
+        /// <summary>
+        /// Gets the collection of selected indices.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IEnumerable<int> SelectedIndices => FileListView
+            .SelectedRows
+            .Cast<DataGridViewRow>()
+            .Select(e => e.Index)
+            .ToArray();
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -72,10 +96,13 @@ namespace Cube.Pdf.Pages
 
             FileListView.DataSource = vm.Files;
 
-            MergeButton.Click += (s, e) => vm.Merge();
-            SplitButton.Click += (s, e) => vm.Split();
-            FileButton.Click  += (s, e) => vm.Add();
-            ClearButton.Click += (s, e) => vm.Clear();
+            MergeButton.Click  += (s, e) => vm.Merge();
+            SplitButton.Click  += (s, e) => vm.Split();
+            FileButton.Click   += (s, e) => vm.Add();
+            UpButton.Click     += (s, e) => vm.Move(SelectedIndices, -1);
+            DownButton.Click   += (s, e) => vm.Move(SelectedIndices, 1);
+            RemoveButton.Click += (s, e) => vm.Remove(SelectedIndices);
+            ClearButton.Click  += (s, e) => vm.Clear();
 
             Behaviors.Add(new CloseBehavior(src, this));
             Behaviors.Add(new DialogBehavior(src));
