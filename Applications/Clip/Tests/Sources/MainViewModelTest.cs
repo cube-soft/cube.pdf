@@ -19,20 +19,22 @@
 using Cube.Tests;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace Cube.Pdf.Clip.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainFacadeTest
+    /// MainViewModelTest
     ///
     /// <summary>
-    /// Tests the MainFacade class.
+    /// Tests the MainViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class MainFacadeTest : FileFixture
+    class MainViewModelTest : FileFixture
     {
         #region Tests
 
@@ -46,16 +48,19 @@ namespace Cube.Pdf.Clip.Tests
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Attach(int id, string filename, string clip)
+        public void Attach(int id, string filename, IEnumerable<string> clips)
         {
             var dest = Get($"{nameof(Attach)}-{id}.pdf");
             IO.Copy(GetSource(filename), dest);
 
-            using (var facade = new MainFacade(IO))
+            using (var vm = new MainViewModel(new SynchronizationContext()))
             {
-                facade.Source = dest;
-                facade.Attach(GetSource(clip));
-                facade.Save();
+                _ = vm.Subscribe<OpenSourceMessage>(e => e.Value = new[] { dest });
+                _ = vm.Subscribe<AttachFileMessage>(e => e.Value = clips.Select(f => GetSource(f)));
+
+                Assert.That(vm.Test(vm.Open), nameof(vm.Open));
+                Assert.That(vm.Test(vm.Attach), nameof(vm.Attach));
+                Assert.That(vm.Test(vm.Save), nameof(vm.Save));
             }
 
             Assert.That(IO.Exists(dest), Is.True);
@@ -76,11 +81,13 @@ namespace Cube.Pdf.Clip.Tests
             var dest = Get($"{nameof(Detach)}.pdf");
             IO.Copy(GetSource("SampleAttachmentCjk.pdf"), dest);
 
-            using (var facade = new MainFacade(IO))
+            using (var vm = new MainViewModel(new SynchronizationContext()))
             {
-                facade.Source = dest;
-                facade.Detach(0);
-                facade.Save();
+                _ = vm.Subscribe<OpenSourceMessage>(e => e.Value = new[] { dest });
+
+                Assert.That(vm.Test(vm.Open), nameof(vm.Open));
+                Assert.That(vm.Test(() => vm.Detach(new[] { 0 })));
+                Assert.That(vm.Test(vm.Save), nameof(vm.Save));
             }
 
             Assert.That(IO.Exists(dest), Is.True);
@@ -104,7 +111,7 @@ namespace Cube.Pdf.Clip.Tests
             get
             {
                 var n = 0;
-                yield return new TestCaseData(n++, "Sample.pdf", "Sample.jpg");
+                yield return new TestCaseData(n++, "Sample.pdf", new[] { "Sample.jpg" });
             }
         }
 

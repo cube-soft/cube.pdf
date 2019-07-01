@@ -16,44 +16,54 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Windows.Forms;
+using Cube.Tests;
+using System;
+using System.Threading;
 
-namespace Cube.Pdf.Clip
+namespace Cube.Pdf.Clip.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainForm
+    /// ViewModelExtension
     ///
     /// <summary>
-    /// Represents the main window.
+    /// Provides extended methods of the MainViewModel class for testing.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainWindow : Cube.Forms.Window
+    static class ViewModelExtension
     {
-        #region Constructors
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainForm
+        /// Test
         ///
         /// <summary>
-        /// Initializes a new instance of the MainWindow class.
+        /// Tests the specified action.
         /// </summary>
         ///
+        /// <param name="vm">MainViewModel instance.</param>
+        /// <param name="action">Target action.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public MainWindow()
+        public static bool Test(this MainViewModel vm, Action action)
         {
-            InitializeComponent();
-
-            var tips = new ToolTip
+            var cs = new CancellationTokenSource();
+            void observe(object s, EventArgs e)
             {
-                InitialDelay = 200,
-                AutoPopDelay = 5000,
-                ReshowDelay  = 1000
-            };
-            tips.SetToolTip(VersionButton, Properties.Resources.TitleAbout);
-            tips.SetToolTip(OpenButton,    Properties.Resources.TitleOpen);
+                if (vm.Busy) return;
+                vm.PropertyChanged -= observe;
+                cs.Cancel();
+            }
+
+            vm.PropertyChanged += observe;
+            try
+            {
+                action();
+                return Wait.For(cs.Token);
+            }
+            finally { vm.PropertyChanged -= observe; }
         }
 
         #endregion

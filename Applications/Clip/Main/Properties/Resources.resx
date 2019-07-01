@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AttachFilter" xml:space="preserve">
-    <value>すべてのファイル (*.*)|*.*</value>
-  </data>
-  <data name="AttachTitle" xml:space="preserve">
-    <value>添付するファイルを選択して下さい</value>
-  </data>
   <data name="ColumnLength" xml:space="preserve">
     <value>サイズ</value>
   </data>
@@ -131,6 +125,12 @@
   </data>
   <data name="ColumnStatus" xml:space="preserve">
     <value>添付状況</value>
+  </data>
+  <data name="FilterAll" xml:space="preserve">
+    <value>すべてのファイル</value>
+  </data>
+  <data name="FilterPdf" xml:space="preserve">
+    <value>PDF ファイル</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="HeaderImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -148,20 +148,20 @@
   <data name="MessageSuccess" xml:space="preserve">
     <value>ファイルの添付が完了しました。</value>
   </data>
-  <data name="SourceFilter" xml:space="preserve">
-    <value>PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.*</value>
-  </data>
-  <data name="SourceTitle" xml:space="preserve">
-    <value>添付対象となる PDF ファイルを選択して下さい</value>
-  </data>
   <data name="StatusEmbedded" xml:space="preserve">
     <value>添付済</value>
   </data>
   <data name="StatusNew" xml:space="preserve">
     <value>新規</value>
   </data>
-  <data name="VersionTitle" xml:space="preserve">
+  <data name="TitleAbout" xml:space="preserve">
     <value>CubePDF Clip について</value>
+  </data>
+  <data name="TitleAttach" xml:space="preserve">
+    <value>添付するファイルを選択して下さい</value>
+  </data>
+  <data name="TitleOpen" xml:space="preserve">
+    <value>添付対象となる PDF ファイルを選択して下さい</value>
   </data>
   <data name="VersionWeb" xml:space="preserve">
     <value>https://www.cube-soft.jp/</value>

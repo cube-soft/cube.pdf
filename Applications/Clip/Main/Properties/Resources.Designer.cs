@@ -61,24 +61,6 @@ namespace Cube.Pdf.Clip.Properties {
         }
         
         /// <summary>
-        ///   すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string AttachFilter {
-            get {
-                return ResourceManager.GetString("AttachFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   添付するファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string AttachTitle {
-            get {
-                return ResourceManager.GetString("AttachTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   サイズ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ColumnLength {
@@ -102,6 +84,24 @@ namespace Cube.Pdf.Clip.Properties {
         internal static string ColumnStatus {
             get {
                 return ResourceManager.GetString("ColumnStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   すべてのファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterAll {
+            get {
+                return ResourceManager.GetString("FilterAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PDF ファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterPdf {
+            get {
+                return ResourceManager.GetString("FilterPdf", resourceCulture);
             }
         }
         
@@ -153,24 +153,6 @@ namespace Cube.Pdf.Clip.Properties {
         }
         
         /// <summary>
-        ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SourceFilter {
-            get {
-                return ResourceManager.GetString("SourceFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   添付対象となる PDF ファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SourceTitle {
-            get {
-                return ResourceManager.GetString("SourceTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   添付済 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string StatusEmbedded {
@@ -191,9 +173,27 @@ namespace Cube.Pdf.Clip.Properties {
         /// <summary>
         ///   CubePDF Clip について に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string VersionTitle {
+        internal static string TitleAbout {
             get {
-                return ResourceManager.GetString("VersionTitle", resourceCulture);
+                return ResourceManager.GetString("TitleAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   添付するファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleAttach {
+            get {
+                return ResourceManager.GetString("TitleAttach", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   添付対象となる PDF ファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleOpen {
+            get {
+                return ResourceManager.GetString("TitleOpen", resourceCulture);
             }
         }
         

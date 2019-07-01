@@ -20,8 +20,12 @@ using Cube.FileSystem;
 using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Threading;
 
 namespace Cube.Pdf.Clip
 {
@@ -34,7 +38,7 @@ namespace Cube.Pdf.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainFacade : ObservableBase
+    public sealed class MainFacade : ObservableBase, INotifyCollectionChanged
     {
         #region Constructors
 
@@ -48,11 +52,13 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /// <param name="io">I/O handler.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(IO io)
+        public MainFacade(IO io, SynchronizationContext context) : base(new Dispatcher(context, false))
         {
             IO = io;
+            _clips.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
 
         #endregion
@@ -68,11 +74,18 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Source
-        {
-            get => _source?.File.FullName;
-            set => Open(value);
-        }
+        public string Source => _source?.File.FullName;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clips
+        ///
+        /// <summary>
+        /// Gets the collection of attached files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<ClipItem> Clips => _clips;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -85,28 +98,62 @@ namespace Cube.Pdf.Clip
         /* ----------------------------------------------------------------- */
         public IO IO { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Busy
+        ///
+        /// <summary>
+        /// Gets a value indicating whether the class is busy.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Busy
+        {
+            get => _busy;
+            private set => SetProperty(ref _busy, value);
+        }
+
+        #endregion
+
+        #region Events
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CollectionChanged
+        ///
+        /// <summary>
+        /// Occurs when an item is added, removed, changed, moved, or the
+        /// entire list is refreshed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
         #endregion
 
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Reset
+        /// Open
         ///
         /// <summary>
-        /// Resets to the state when the provided PDF was loaded.
+        /// Opens the specified PDF file.
         /// </summary>
         ///
+        /// <param name="src">Path of the PDF file.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Reset()
+        public void Open(string src) => Invoke(() =>
         {
-            _clips.Clear();
-            if (_source == null) return;
-            foreach (var item in _source.Attachments)
+            if (_source != null)
             {
-                _clips.Add(new ClipItem(item) { Status = Properties.Resources.StatusEmbedded });
+                if (_source.File.FullName.FuzzyEquals(src)) return;
+                else Close();
             }
-        }
+            _source = new DocumentReader(src, "", true, IO);
+            Reset();
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -117,7 +164,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save()
+        public void Save() => Invoke(() =>
         {
             var dest  = _source.File.FullName;
             var tmp   = System.IO.Path.GetTempFileName();
@@ -138,41 +185,46 @@ namespace Cube.Pdf.Clip
             Close();
             IO.Copy(tmp, dest, true);
             _ = IO.TryDelete(tmp);
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Attach
         ///
         /// <summary>
-        /// Attaches the specified file.
+        /// Attaches the specified files.
         /// </summary>
         ///
-        /// <param name="file">File to be attached.</param>
+        /// <param name="src">Files to be attached.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach(string file)
+        public void Attach(IEnumerable<string> src) => Invoke(() =>
         {
-            if (_clips.Any(e => e.RawObject.Source == file)) return;
-            _clips.Insert(0, new ClipItem(new Attachment(file, IO))
+            foreach (var f in src)
             {
-                Status = Properties.Resources.StatusNew
-            });
-        }
+                if (_clips.Any(e => e.RawObject.Source == f)) continue;
+                _clips.Insert(0, new ClipItem(new Attachment(f, IO))
+                {
+                    Status = Properties.Resources.StatusNew
+                });
+            }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Detach
         ///
         /// <summary>
-        /// Remove the specified file from the provided PDF.
+        /// Remove the specified files from the provided PDF.
         /// </summary>
         ///
-        /// <param name="index">Index of file to be removed.</param>
+        /// <param name="indices">
+        /// Collection of files to be removed.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Detach(int index) =>
-            (index >= 0 && index < _clips.Count).Then(() => _clips.RemoveAt(index));
+        public void Detach(IEnumerable<int> indices) => Invoke(() =>
+            indices.OrderByDescending(e => e).Each(i => _clips.RemoveAt(i)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -197,24 +249,21 @@ namespace Cube.Pdf.Clip
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// Reset
         ///
         /// <summary>
-        /// Opens the specified PDF file.
+        /// Resets to the state when the provided PDF was loaded.
         /// </summary>
         ///
-        /// <param name="src">Path of the PDF file.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        private void Open(string src)
+        private void Reset()
         {
-            if (_source != null)
+            _clips.Clear();
+            if (_source == null) return;
+            foreach (var item in _source.Attachments)
             {
-                if (_source.File.FullName.FuzzyEquals(src)) return;
-                else Close();
+                _clips.Add(new ClipItem(item) { Status = Properties.Resources.StatusEmbedded });
             }
-            _source = new DocumentReader(src, "", true, IO);
-            Reset();
         }
 
         /* ----------------------------------------------------------------- */
@@ -233,11 +282,35 @@ namespace Cube.Pdf.Clip
             _source = null;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Invoke(Action action)
+        {
+            lock (_lock)
+            {
+                try
+                {
+                    Busy = true;
+                    action();
+                }
+                finally { Busy = false; }
+            }
+        }
+
         #endregion
 
         #region Fields
+        private readonly object _lock = new object();
         private readonly ObservableCollection<ClipItem> _clips = new ObservableCollection<ClipItem>();
         private IDocumentReader _source = null;
+        private bool _busy = false;
         #endregion
     }
 }

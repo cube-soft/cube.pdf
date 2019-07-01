@@ -16,46 +16,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Windows.Forms;
-
 namespace Cube.Pdf.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainForm
+    /// OpenSourceMessage
     ///
     /// <summary>
-    /// Represents the main window.
+    /// Represents the message to select a PDF file.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainWindow : Cube.Forms.Window
-    {
-        #region Constructors
+    public class OpenSourceMessage : OpenFileMessage { }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MainForm
-        ///
-        /// <summary>
-        /// Initializes a new instance of the MainWindow class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            var tips = new ToolTip
-            {
-                InitialDelay = 200,
-                AutoPopDelay = 5000,
-                ReshowDelay  = 1000
-            };
-            tips.SetToolTip(VersionButton, Properties.Resources.TitleAbout);
-            tips.SetToolTip(OpenButton,    Properties.Resources.TitleOpen);
-        }
-
-        #endregion
-    }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// AttachFileMessage
+    ///
+    /// <summary>
+    /// Represents the message to select files to attach.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class AttachFileMessage : OpenFileMessage { }
 }

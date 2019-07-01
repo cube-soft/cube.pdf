@@ -17,7 +17,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Clip
@@ -31,7 +33,7 @@ namespace Cube.Pdf.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : PresentableBase
+    public sealed class MainViewModel : ViewModelBase<MainFacade>
     {
         #region Constructors
 
@@ -44,13 +46,15 @@ namespace Cube.Pdf.Clip
         /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="args">Program arguments.</param>
+        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(IEnumerable<string> args) :
-            base(new Aggregator(), SynchronizationContext.Current)
+        public MainViewModel(SynchronizationContext context) : base(
+            new MainFacade(new IO(), context),
+            new Aggregator(),
+            context)
         {
-            Facade = new MainFacade(new IO());
+            Facade.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
@@ -59,14 +63,14 @@ namespace Cube.Pdf.Clip
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Facade
+        /// Busy
         ///
         /// <summary>
-        /// Gets the facade of models.
+        /// Gets a value indicating whether the class is busy.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private MainFacade Facade { get; }
+        public bool Busy => Facade.Busy;
 
         #endregion
 
@@ -74,23 +78,47 @@ namespace Cube.Pdf.Clip
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Dispose
+        /// Open
         ///
         /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
+        /// Opens a PDF file.
         /// </summary>
         ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
+        /* ----------------------------------------------------------------- */
+        public void Open() => Send(MessageFactory.CreateForOpen(), e => Facade.Open(e.First())).Forget();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attach
+        ///
+        /// <summary>
+        /// Attaches files.
+        /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing) Facade.Dispose();
-        }
+        public void Attach() => Send(MessageFactory.CreateForAttach(), e => Facade.Attach(e)).Forget();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Detach
+        ///
+        /// <summary>
+        /// Detaches the selected files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Detach(IEnumerable<int> indices) => Track(() => Facade.Detach(indices));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// Overwrites the provided PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Save() => Track(() => Facade.Save());
 
         #endregion
     }
