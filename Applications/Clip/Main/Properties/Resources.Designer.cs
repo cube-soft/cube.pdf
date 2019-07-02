@@ -10,8 +10,8 @@
 
 namespace Cube.Pdf.Clip.Properties {
     using System;
-
-
+    
+    
     /// <summary>
     ///   ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
     /// </summary>
@@ -19,19 +19,19 @@ namespace Cube.Pdf.Clip.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
+        
         /// <summary>
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
@@ -45,9 +45,9 @@ namespace Cube.Pdf.Clip.Properties {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
-        ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
+        ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -59,34 +59,7 @@ namespace Cube.Pdf.Clip.Properties {
                 resourceCulture = value;
             }
         }
-
-        /// <summary>
-        ///   すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string AttachFilter {
-            get {
-                return ResourceManager.GetString("AttachFilter", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   添付するファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string AttachTitle {
-            get {
-                return ResourceManager.GetString("AttachTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   添付状況 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ColumnCondition {
-            get {
-                return ResourceManager.GetString("ColumnCondition", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   サイズ に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -95,7 +68,7 @@ namespace Cube.Pdf.Clip.Properties {
                 return ResourceManager.GetString("ColumnLength", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   ファイル名 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -104,25 +77,34 @@ namespace Cube.Pdf.Clip.Properties {
                 return ResourceManager.GetString("ColumnName", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   添付済 に類似しているローカライズされた文字列を検索します。
+        ///   添付状況 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ConditionEmbedded {
+        internal static string ColumnStatus {
             get {
-                return ResourceManager.GetString("ConditionEmbedded", resourceCulture);
+                return ResourceManager.GetString("ColumnStatus", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   新規 に類似しているローカライズされた文字列を検索します。
+        ///   すべてのファイル に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ConditionNew {
+        internal static string FilterAll {
             get {
-                return ResourceManager.GetString("ConditionNew", resourceCulture);
+                return ResourceManager.GetString("FilterAll", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   PDF ファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterPdf {
+            get {
+                return ResourceManager.GetString("FilterPdf", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -132,7 +114,7 @@ namespace Cube.Pdf.Clip.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -142,7 +124,7 @@ namespace Cube.Pdf.Clip.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   パスワードで保護された PDF ファイルの編集には未対応です。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -151,7 +133,7 @@ namespace Cube.Pdf.Clip.Properties {
                 return ResourceManager.GetString("MessageEncryption", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   {0} は他のプロセスによって開かれているため、操作を完了できません。ファイルを閉じてから再試行してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -160,7 +142,7 @@ namespace Cube.Pdf.Clip.Properties {
                 return ResourceManager.GetString("MessageLock", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   ファイルの添付が完了しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -169,36 +151,54 @@ namespace Cube.Pdf.Clip.Properties {
                 return ResourceManager.GetString("MessageSuccess", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        ///   添付済 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SourceFilter {
+        internal static string StatusEmbedded {
             get {
-                return ResourceManager.GetString("SourceFilter", resourceCulture);
+                return ResourceManager.GetString("StatusEmbedded", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   添付対象となる PDF ファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
+        ///   新規 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SourceTitle {
+        internal static string StatusNew {
             get {
-                return ResourceManager.GetString("SourceTitle", resourceCulture);
+                return ResourceManager.GetString("StatusNew", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   CubePDF Clip について に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string VersionTitle {
+        internal static string TitleAbout {
             get {
-                return ResourceManager.GetString("VersionTitle", resourceCulture);
+                return ResourceManager.GetString("TitleAbout", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   http://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
+        ///   添付するファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleAttach {
+            get {
+                return ResourceManager.GetString("TitleAttach", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   添付対象となる PDF ファイルを選択して下さい に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleOpen {
+            get {
+                return ResourceManager.GetString("TitleOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   https://www.cube-soft.jp/ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string VersionWeb {
             get {

@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.0.1</Version>
+        <Version>2.1.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
-        <Product>CubePdfPage</Product>
+        <Product>CubePDF Page</Product>
         <Description>GUI application for merging or splitting PDF files.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <AssemblyName>CubePdfPage</AssemblyName>
@@ -32,9 +32,9 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
-        <Compile Update="Sources\Views\*Form.cs" SubType="Form" />
+        <Compile Update="Sources\Views\*Window.cs" SubType="Form" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
-        <EmbeddedResource Update="Sources\Views\*Form.resx" DependentUpon="%(Filename).cs" />
+        <EmbeddedResource Update="Sources\Views\*Window.resx" DependentUpon="%(Filename).cs" />
         <None Include="Assets\**\*" />
         <None Include="App.config" />
         <None Include="App.ico" />

@@ -17,6 +17,9 @@ Cube.Pdf.Ghostscript.Converter is the base class of other converter classes and 
 Basic interfaces of converters are as follows:
 
 ```cs
+// using System.Collections.Generics;
+// using Cube.Pdf.Ghostscript;
+
 public class Converter
 {
     public Converter(Format format);
@@ -36,6 +39,7 @@ For example, the following code converts to the PDF format.
 ```cs
 // using Cube.Pdf;
 // using Cube.Pdf.Ghostscript;
+
 var converter = new PdfConverter
 {
     Paper        = Paper.Auto,
@@ -60,6 +64,8 @@ The library provides the following variations. All available formats and other o
 When you need to add some options manually, you create a new instance of the [Argument](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Ghostscript/Sources/Argument.cs) class and add it to the Options property. Constructors of the Argument class are as follows:
 
 ```cs
+// using Cube.Pdf.Ghostscript;
+
 public class Argument
 {
     public Argument(string name, string value);
@@ -80,7 +86,7 @@ public class Argument
 * [Cube.Core](https://github.com/cube-soft/Cube.Core)
 * [Cube.FileSystem](https://github.com/cube-soft/Cube.FileSystem)
 * [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf)
-* [Ghostscript](https://www.ghostscript.com/)
+* [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) is an unofficial package.
 
 ## Contributing
 

@@ -10,8 +10,8 @@
 
 namespace Cube.Pdf.Pages.Properties {
     using System;
-
-
+    
+    
     /// <summary>
     ///   ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
     /// </summary>
@@ -19,19 +19,19 @@ namespace Cube.Pdf.Pages.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
+        
         /// <summary>
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
@@ -45,9 +45,9 @@ namespace Cube.Pdf.Pages.Properties {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
-        ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
+        ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -59,16 +59,7 @@ namespace Cube.Pdf.Pages.Properties {
                 resourceCulture = value;
             }
         }
-
-        /// <summary>
-        ///   CubePDF Page について (H) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string About {
-            get {
-                return ResourceManager.GetString("About", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   更新日時 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -77,16 +68,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("ColumnDate", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ColumnIcon {
-            get {
-                return ResourceManager.GetString("ColumnIcon", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   サイズ に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -95,7 +77,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("ColumnLength", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   ファイル名 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -104,7 +86,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("ColumnName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   ページ数 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -113,7 +95,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("ColumnPages", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   種類 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -122,7 +104,34 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("ColumnType", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   すべてのファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterAll {
+            get {
+                return ResourceManager.GetString("FilterAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   PDF ファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterPdf {
+            get {
+                return ResourceManager.GetString("FilterPdf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   追加可能なファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FilterSupported {
+            get {
+                return ResourceManager.GetString("FilterSupported", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -132,7 +141,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -142,7 +151,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -152,7 +161,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   下へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -161,7 +170,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("MenuDown", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   プレビュー に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -170,7 +179,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("MenuPreview", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   ファイルリストから削除 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -179,7 +188,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("MenuRemove", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   上へ に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -188,26 +197,45 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("MenuUp", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   CubePDF Page について に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageAbout {
+            get {
+                return ResourceManager.GetString("MessageAbout", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   {0} 個のファイルを結合しました。
         ///結合されたファイルをファイルリストに登録しますか？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MergeSuccess {
+        internal static string MessageMerge {
             get {
-                return ResourceManager.GetString("MergeSuccess", resourceCulture);
+                return ResourceManager.GetString("MessageMerge", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   結合したファイルの保存 に類似しているローカライズされた文字列を検索します。
+        ///   {0} はパスワードで保護されています。編集するためには管理用パスワードを入力して下さい。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MergeTitle {
+        internal static string MessagePassword {
             get {
-                return ResourceManager.GetString("MergeTitle", resourceCulture);
+                return ResourceManager.GetString("MessagePassword", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   {0} 個のファイルを分割しました。
+        ///分割されたすべてのファイルをファイルリストに登録しますか？ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageSplit {
+            get {
+                return ResourceManager.GetString("MessageSplit", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
@@ -217,62 +245,16 @@ namespace Cube.Pdf.Pages.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
-
-        /// <summary>
-        ///   追加可能なファイル (*.pdf, *.bmp, *.gif, *.jpg, *.png, *.tiff)|*.pdf;*.PDF;*.bmp;*.BMP;*.dib;*.DIB;*.gif;*.GIF;*.jpg;*.JPG;*.jpeg;*.JPEG;*.jpe;*.JPE;*.png;*.PNG;*.tiff;*.TIFF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string OpenFileFilter {
-            get {
-                return ResourceManager.GetString("OpenFileFilter", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   ファイルを追加 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string OpenFileTitle {
+        internal static string TitleAdd {
             get {
-                return ResourceManager.GetString("OpenFileTitle", resourceCulture);
+                return ResourceManager.GetString("TitleAdd", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   {0} はパスワードで保護されています。編集するためにはオーナーパスワードを入力して下さい。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string PasswordRequired {
-            get {
-                return ResourceManager.GetString("PasswordRequired", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   PDF ファイル (*.pdf)|*.pdf;*.PDF|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SaveFileFilter {
-            get {
-                return ResourceManager.GetString("SaveFileFilter", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   分割したファイルを保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SplitDescription {
-            get {
-                return ResourceManager.GetString("SplitDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   {0} 個のファイルを分割しました。
-        ///分割されたすべてのファイルをファイルリストに登録しますか？ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SplitSuccess {
-            get {
-                return ResourceManager.GetString("SplitSuccess", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   処理を実行中です... - {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -281,22 +263,22 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("TitleBusy", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   CubePDF Page に類似しているローカライズされた文字列を検索します。
+        ///   結合したファイルの保存 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TitleCommon {
+        internal static string TitleMerge {
             get {
-                return ResourceManager.GetString("TitleCommon", resourceCulture);
+                return ResourceManager.GetString("TitleMerge", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   CubePDF Page エラー に類似しているローカライズされた文字列を検索します。
+        ///   分割したファイルを保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TitleError {
+        internal static string TitleSplit {
             get {
-                return ResourceManager.GetString("TitleError", resourceCulture);
+                return ResourceManager.GetString("TitleSplit", resourceCulture);
             }
         }
     }

@@ -23,7 +23,7 @@ namespace Cube.Pdf.Clip
     /// ClipItem
     ///
     /// <summary>
-    /// 添付ファイルの情報を保持するためのクラスです。
+    /// Represents an attached item to a PDF.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -36,8 +36,11 @@ namespace Cube.Pdf.Clip
         /// ClipItem
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the ClipItem class with the
+        /// specified object.
         /// </summary>
+        ///
+        /// <param name="raw">Raw attachment data.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ClipItem(Attachment raw)
@@ -54,7 +57,7 @@ namespace Cube.Pdf.Clip
         /// Name
         ///
         /// <summary>
-        /// 添付ファイルの名前を取得します。
+        /// Gets the name of the attachment.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -65,7 +68,7 @@ namespace Cube.Pdf.Clip
         /// Length
         ///
         /// <summary>
-        /// 添付ファイルのサイズを取得します。
+        /// Gets the file size of the attachment.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -73,22 +76,21 @@ namespace Cube.Pdf.Clip
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Condition
+        /// Status
         ///
         /// <summary>
-        /// 添付状況を表す文字列を取得または設定します。
+        /// Gets a value that represents the current condition.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Condition { get; set; }
+        public string Status { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RawObject
         ///
         /// <summary>
-        /// ClipItem クラスが参照している Attachment オブジェクトを
-        /// 取得します。
+        /// Gets the raw object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

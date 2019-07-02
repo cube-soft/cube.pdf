@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.0.1</Version>
+        <Version>1.1.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePdfImagePicker</Product>
@@ -32,10 +32,12 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
-        <Compile Update="Sources\Views\*Form.cs" SubType="Form" />
+        <Compile Update="Sources\Views\*Window.cs" SubType="Form" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
-        <EmbeddedResource Update="Sources\Views\*Form.resx" DependentUpon="%(Filename).cs" />
+        <EmbeddedResource Update="Sources\Views\*Window.resx" DependentUpon="%(Filename).cs" />
         <None Include="Assets\**\*" />
         <None Include="App.config" />
+        <None Include="App.ico" />
+        <None Include="App.manifest" />
     </ItemGroup>
 </Project>

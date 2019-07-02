@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Collections;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -27,7 +28,7 @@ namespace Cube.Pdf.Clip
     /// Program
     ///
     /// <summary>
-    /// メインプログラムを表すクラスです。
+    /// Represents the main program.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,27 +39,28 @@ namespace Cube.Pdf.Clip
         /// Main
         ///
         /// <summary>
-        /// アプリケーションのメイン エントリ ポイントです。
+        /// Executes the main program of the application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
         static void Main(string[] args)
         {
-            var type = typeof(Program);
-
             try
             {
                 Logger.Configure();
-                Logger.Info(type, Assembly.GetExecutingAssembly());
+                Logger.ObserveTaskException();
+                Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
+                Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
-                var view = Views.CreateMainView(args);
-                using (new ClipPresenter(view)) Application.Run(view);
+                var view = new MainWindow();
+                view.Bind(new MainViewModel());
+                Application.Run(view);
             }
-            catch (Exception err) { Logger.Error(type, err); }
+            catch (Exception err) { Logger.Error(typeof(Program), err); }
         }
     }
 }

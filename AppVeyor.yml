@@ -4,6 +4,7 @@ platform: Any CPU
 configuration: Release
 environment:
     PROJECT_NAME:   'Cube.Pdf'
+    PROJECT_MAIN:   'Cube.Pdf.Apps'
     PROJECT_BIN:    'bin\%PLATFORM%\%CONFIGURATION%\net45'
     PROJECT_LIB:    '..\packages'
     TEST_TOOL:      '$(PROJECT_LIB)\OpenCover\4.7.922\tools\OpenCover.Console.exe'
@@ -21,9 +22,9 @@ nuget:
     disable_publish_on_pr: true
 clone_folder: 'C:\Cube\%PROJECT_NAME%'
 before_build:
-    - nuget restore "%PROJECT_NAME%.Apps.sln"
+    - nuget restore "%PROJECT_MAIN%.sln"
 build:
-    project: '%PROJECT_NAME%.Apps.sln'
+    project: '%PROJECT_MAIN%.sln'
     parallel: true
     publish_nuget: true
     verbosity: minimal
@@ -46,6 +47,18 @@ test_script:
       -log:Error
       -register:user
       -target:"%TEST_CORETOOL%"
+      -targetargs:"%PROJECT_NAME%.Editor.Tests.dll"
+      -targetdir:"Applications\Editor\Tests\%PROJECT_BIN%"
+      -returntargetcode
+      -hideskipped:All
+      -mergeoutput
+      -output:"%TEST_COVERAGE%"
+      -filter:"%TEST_FILTERS%"
+    - >
+      "%TEST_TOOL%"
+      -log:Error
+      -register:user
+      -target:"%TEST_CORETOOL%"
       -targetargs:"%PROJECT_NAME%.Converter.Tests.dll"
       -targetdir:"Applications\Converter\Tests\%PROJECT_BIN%"
       -returntargetcode
@@ -58,14 +71,40 @@ test_script:
       -log:Error
       -register:user
       -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Editor.Tests.dll"
-      -targetdir:"Applications\Editor\Tests\%PROJECT_BIN%"
+      -targetargs:"%PROJECT_NAME%.Pages.Tests.dll"
+      -targetdir:"Applications\Pages\Tests\%PROJECT_BIN%"
+      -returntargetcode
+      -hideskipped:All
+      -mergeoutput
+      -output:"%TEST_COVERAGE%"
+      -filter:"%TEST_FILTERS%"
+    - >
+      "%TEST_TOOL%"
+      -log:Error
+      -register:user
+      -target:"%TEST_CORETOOL%"
+      -targetargs:"%PROJECT_NAME%.Clip.Tests.dll"
+      -targetdir:"Applications\Clip\Tests\%PROJECT_BIN%"
+      -returntargetcode
+      -hideskipped:All
+      -mergeoutput
+      -output:"%TEST_COVERAGE%"
+      -filter:"%TEST_FILTERS%"
+    - >
+      "%TEST_TOOL%"
+      -log:Error
+      -register:user
+      -target:"%TEST_CORETOOL%"
+      -targetargs:"%PROJECT_NAME%.Picker.Tests.dll"
+      -targetdir:"Applications\Picker\Tests\%PROJECT_BIN%"
       -returntargetcode
       -hideskipped:All
       -mergeoutput
       -output:"%TEST_COVERAGE%"
       -filter:"%TEST_FILTERS%"
 after_test:
+    - pip install codecov
+    - codecov -f "%TEST_COVERAGE%"
     - xcopy /q /Y /I "Applications\Converter\Proxy\%PROJECT_BIN%" CubePdf
     - xcopy /q /Y /I "Applications\Converter\Main\%PROJECT_BIN%" CubePdf
     - xcopy /q /Y /I "Applications\Editor\Proxy\%PROJECT_BIN%" CubePdf.Utility
@@ -73,6 +112,9 @@ after_test:
     - xcopy /q /Y /I "Libraries\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "Applications\Converter\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "Applications\Editor\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
+    - xcopy /q /Y /I "Applications\Pages\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
+    - xcopy /q /Y /I "Applications\Clip\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
+    - xcopy /q /Y /I "Applications\Picker\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
     - xcopy /q /Y /I "%TEST_COVERAGE%" "%TEST_LOG%\"
 artifacts:
     - path: 'CubePdf'

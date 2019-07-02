@@ -25,11 +25,11 @@ namespace Cube.Pdf.Pages
     /// FileMenuControl
     ///
     /// <summary>
-    /// ファイルリスト上で表示されるコンテキストメニューを表すクラスです。
+    /// Represents the context menu to be displayed on the file list.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileMenuControl : ContextMenuStrip
+    public sealed class FileMenuControl : ContextMenuStrip
     {
         #region Constructors
 
@@ -38,7 +38,7 @@ namespace Cube.Pdf.Pages
         /// FileMenuControl
         ///
         /// <summary>
-        /// オブジェクトを初期化します。
+        /// Initializes a new instance of the FileMenuControl class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -49,119 +49,11 @@ namespace Cube.Pdf.Pages
             DownMenu    = new ToolStripMenuItem(Properties.Resources.MenuDown);
             RemoveMenu  = new ToolStripMenuItem(Properties.Resources.MenuRemove);
 
-            InitializeShortcutKeys();
-            InitializeEvents();
-            InitializeMenu();
-        }
+            PreviewMenu.ShortcutKeys = Keys.Control | Keys.R;
+            UpMenu.ShortcutKeys      = Keys.Control | Keys.Up;
+            DownMenu.ShortcutKeys    = Keys.Control | Keys.Down;
+            RemoveMenu.ShortcutKeys  = Keys.Control | Keys.D;
 
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Aggregator
-        ///
-        /// <summary>
-        /// イベントを集約するオブジェクトを取得または設定します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IAggregator Aggregator { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PreviewMenu
-        ///
-        /// <summary>
-        /// プレビューメニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ToolStripItem PreviewMenu { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UpMenu
-        ///
-        /// <summary>
-        /// 上へメニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ToolStripItem UpMenu { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DownMenu
-        ///
-        /// <summary>
-        /// 下へメニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ToolStripItem DownMenu { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RemoveMenu
-        ///
-        /// <summary>
-        /// 削除メニューを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ToolStripItem RemoveMenu { get; }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeShortcutKeys
-        ///
-        /// <summary>
-        /// ショートカットキーを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeShortcutKeys()
-        {
-            Menu(PreviewMenu).ShortcutKeys = Keys.Control | Keys.R;
-            Menu(UpMenu).ShortcutKeys      = Keys.Control | Keys.Up;
-            Menu(DownMenu).ShortcutKeys    = Keys.Control | Keys.Down;
-            Menu(RemoveMenu).ShortcutKeys  = Keys.Control | Keys.D;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeEvents
-        ///
-        /// <summary>
-        /// 各種イベントを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeEvents()
-        {
-            PreviewMenu.Click += (s, e) => Aggregator.GetEvents()?.Preview.Publish();
-            UpMenu.Click      += (s, e) => Aggregator.GetEvents()?.Move.Publish(-1);
-            DownMenu.Click    += (s, e) => Aggregator.GetEvents()?.Move.Publish(1);
-            RemoveMenu.Click  += (s, e) => Aggregator.GetEvents()?.Remove.Publish();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeMenu
-        ///
-        /// <summary>
-        /// メニューを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeMenu()
-        {
             Items.AddRange(new ToolStripItem[]
             {
                 PreviewMenu,
@@ -173,17 +65,53 @@ namespace Cube.Pdf.Pages
             });
         }
 
+        #endregion
+
+        #region Properties
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Menu
+        /// PreviewMenu
         ///
         /// <summary>
-        /// ToolStripMenuItem にキャストします。
+        /// Gets the preview menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ToolStripMenuItem Menu(ToolStripItem src)
-            => src as ToolStripMenuItem;
+        public ToolStripMenuItem PreviewMenu { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UpMenu
+        ///
+        /// <summary>
+        /// Gets the up menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ToolStripMenuItem UpMenu { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DownMenu
+        ///
+        /// <summary>
+        /// Gets the down menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ToolStripMenuItem DownMenu { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RemoveMenu
+        ///
+        /// <summary>
+        /// Gets the remove menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ToolStripMenuItem RemoveMenu { get; }
 
         #endregion
     }

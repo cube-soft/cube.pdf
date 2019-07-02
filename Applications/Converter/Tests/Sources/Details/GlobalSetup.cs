@@ -26,7 +26,7 @@ namespace Cube.Pdf.Converter.Tests
     /// GlobalSetup
     ///
     /// <summary>
-    /// NUnit で最初に実行する処理を記述するテストです。
+    /// Represents the global setup operations.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,7 +40,7 @@ namespace Cube.Pdf.Converter.Tests
         /// OneTimeSetup
         ///
         /// <summary>
-        /// 一度だけ実行される初期化処理です。
+        /// Invokes the setup method only once.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

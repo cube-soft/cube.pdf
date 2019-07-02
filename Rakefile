@@ -35,7 +35,10 @@ PACKAGES    = ["Libraries/Core/Cube.Pdf.Core.nuspec",
                "Applications/Converter/Core/Cube.Pdf.Converter.nuspec"]
 TESTCASES   = {"Cube.Pdf.Tests"            => "Libraries/Tests",
                "Cube.Pdf.Converter.Tests"  => "Applications/Converter/Tests",
-               "Cube.Pdf.Editor.Tests"     => "Applications/Editor/Tests"}
+               "Cube.Pdf.Editor.Tests"     => "Applications/Editor/Tests",
+               "Cube.Pdf.Pages.Tests"      => "Applications/Pages/Tests",
+               "Cube.Pdf.Clip.Tests"       => "Applications/Clip/Tests",
+               "Cube.Pdf.Picker.Tests"     => "Applications/Picker/Tests"}
 
 # --------------------------------------------------------------------------- #
 # unmanaged libraries

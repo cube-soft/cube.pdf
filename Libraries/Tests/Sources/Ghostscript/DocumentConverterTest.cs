@@ -132,8 +132,8 @@ namespace Cube.Pdf.Tests.Ghostscript
                 /* --------------------------------------------------------- */
                 // Format
                 /* --------------------------------------------------------- */
-                yield return TestCase(n++, new DocumentConverter(Format.Ps  ), "Sample.ps", Format.Ps);
-                yield return TestCase(n++, new DocumentConverter(Format.Eps ), "Sample.ps", Format.Eps);
+                yield return TestCase(n++, new DocumentConverter(Format.Ps ), "Sample.ps", Format.Ps);
+                yield return TestCase(n++, new DocumentConverter(Format.Eps), "Sample.ps", Format.Eps);
 
                 /* --------------------------------------------------------- */
                 // Version
@@ -152,33 +152,32 @@ namespace Cube.Pdf.Tests.Ghostscript
                 }, "Sample.ps", "Linearization");
 
                 /* --------------------------------------------------------- */
-                //
-                // EmbedFonts
-                //
-                // TODO: EmbedFonts が false の場合、変換後の PDF ファイル
-                // に文字化けが発生します。回避方法を要調査。
-                //
+                // Orientation
                 /* --------------------------------------------------------- */
                 yield return TestCase(n++, new PdfConverter
                 {
-                    EmbedFonts = true,
-                }, "Sample.ps", "EmbedFonts_True_1");
+                    Orientation = Orientation.Auto,
+                }, "SampleMix.ps", Orientation.Auto);
 
                 yield return TestCase(n++, new PdfConverter
                 {
-                    EmbedFonts  = true,
                     Orientation = Orientation.Portrait,
-                }, "Sample.ps", "EmbedFonts_True_2");
+                }, "SampleMix.ps", Orientation.Portrait);
 
                 yield return TestCase(n++, new PdfConverter
                 {
-                    EmbedFonts = false,
-                }, "Sample.ps", "EmbedFonts_False");
+                    Orientation = Orientation.UpsideDown,
+                }, "SampleMix.ps", Orientation.UpsideDown);
 
                 yield return TestCase(n++, new PdfConverter
                 {
-                    EmbedFonts = false,
-                }, "SampleCjk.ps", "EmbedFonts_False_Cjk");
+                    Orientation = Orientation.Landscape,
+                }, "SampleMix.ps", Orientation.Landscape);
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    Orientation = Orientation.Seascape,
+                }, "SampleMix.ps", Orientation.Seascape);
 
                 /* --------------------------------------------------------- */
                 // ColorMode
@@ -186,20 +185,52 @@ namespace Cube.Pdf.Tests.Ghostscript
                 yield return TestCase(n++, new PdfConverter
                 {
                     ColorMode   = ColorMode.Rgb,
-                    Orientation = Orientation.Portrait,
                 }, "SampleMix.ps", ColorMode.Rgb);
 
                 yield return TestCase(n++, new PdfConverter
                 {
+                    ColorMode = ColorMode.Rgb,
+                }, "SamplePdf.ps", "ColorMode_Rgb_RePdf");
+
+                yield return TestCase(n++, new PdfConverter
+                {
                     ColorMode   = ColorMode.Cmyk,
-                    Orientation = Orientation.Portrait,
                 }, "SampleMix.ps", ColorMode.Cmyk);
 
                 yield return TestCase(n++, new PdfConverter
                 {
+                    ColorMode = ColorMode.Cmyk,
+                }, "SamplePdf.ps", "ColorMode_Cmyk_RePdf");
+
+                yield return TestCase(n++, new PdfConverter
+                {
                     ColorMode   = ColorMode.Grayscale,
-                    Orientation = Orientation.Portrait,
                 }, "SampleMix.ps", ColorMode.Grayscale);
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    ColorMode = ColorMode.Grayscale,
+                }, "SamplePdf.ps", "ColorMode_Grayscale_RePdf");
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    ColorMode   = ColorMode.SameAsSource,
+                }, "SampleMix.ps", ColorMode.SameAsSource);
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    ColorMode = ColorMode.SameAsSource,
+                }, "SamplePdf.ps", "ColorMode_SameAsSource_RePdf");
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    ColorMode = ColorMode.DeviceIndependent,
+                }, "SampleMix.ps", ColorMode.DeviceIndependent);
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    ColorMode = ColorMode.DeviceIndependent,
+                }, "SamplePdf.ps", "ColorMode_DeviceIndependent_RePdf");
 
                 /* --------------------------------------------------------- */
                 // Compression
@@ -229,7 +260,7 @@ namespace Cube.Pdf.Tests.Ghostscript
                 }, "SampleMix.ps", Encoding.Lzw);
 
                 /* --------------------------------------------------------- */
-                // Downsampling
+                // Down-sampling
                 /* --------------------------------------------------------- */
                 yield return TestCase(n++, new PdfConverter
                 {
@@ -252,7 +283,7 @@ namespace Cube.Pdf.Tests.Ghostscript
                 }, "SampleMix.ps", Downsampling.Subsample);
 
                 /* --------------------------------------------------------- */
-                // Mixed
+                // Compression and down-sampling
                 /* --------------------------------------------------------- */
                 yield return TestCase(n++, new PdfConverter
                 {
@@ -365,6 +396,34 @@ namespace Cube.Pdf.Tests.Ghostscript
                     Downsampling = Downsampling.Bicubic,
                     Resolution   = 150,
                 }, "Sample600dpi.ps", "Flate_Bicubic_600_150");
+
+                /* --------------------------------------------------------- */
+                //
+                // EmbedFonts
+                //
+                // TODO: Fix the text garbling when setting EmbedFonts to
+                // false.
+                //
+                /* --------------------------------------------------------- */
+                yield return TestCase(n++, new PdfConverter
+                {
+                    EmbedFonts = true,
+                }, "Sample.ps", "EmbedFonts_True");
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    EmbedFonts  = true,
+                }, "SampleCjk.ps", "EmbedFonts_True_Cjk");
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    EmbedFonts = false,
+                }, "Sample.ps", "EmbedFonts_False");
+
+                yield return TestCase(n++, new PdfConverter
+                {
+                    EmbedFonts = false,
+                }, "SampleCjk.ps", "EmbedFonts_False_Cjk");
             }
         }
 
