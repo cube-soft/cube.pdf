@@ -32,6 +32,7 @@
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -46,15 +47,17 @@
             this.AttachButton = new Cube.Forms.Button();
             this.DetachButton = new Cube.Forms.Button();
             this.ResetButton = new Cube.Forms.Button();
-            this.VersionButton = new System.Windows.Forms.PictureBox();
             this.ClipListView = new Cube.Pdf.Clip.ClipListControl();
+            this.VersionButton = new System.Windows.Forms.PictureBox();
+            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.SourcePanel.SuspendLayout();
             this.ClipPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VersionButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipListView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VersionButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).BeginInit();
             this.SuspendLayout();
             //
             // LayoutPanel
@@ -149,6 +152,7 @@
             // SourceTextBox
             //
             this.SourceTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.SourceTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MainBindingSource, "Source", true));
             this.SourceTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SourceTextBox.Location = new System.Drawing.Point(86, 6);
             this.SourceTextBox.Margin = new System.Windows.Forms.Padding(6);
@@ -243,19 +247,6 @@
             this.ResetButton.Text = "リセット (&R)";
             this.ResetButton.UseVisualStyleBackColor = false;
             //
-            // VersionButton
-            //
-            this.VersionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.VersionButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.VersionButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VersionButton.Image = global::Cube.Pdf.Clip.Properties.Resources.HeaderImage;
-            this.VersionButton.Location = new System.Drawing.Point(0, 0);
-            this.VersionButton.Margin = new System.Windows.Forms.Padding(0);
-            this.VersionButton.Name = "VersionButton";
-            this.VersionButton.Size = new System.Drawing.Size(684, 35);
-            this.VersionButton.TabIndex = 8;
-            this.VersionButton.TabStop = false;
-            //
             // ClipListView
             //
             this.ClipListView.AllowUserToAddRows = false;
@@ -278,6 +269,23 @@
             this.ClipListView.Size = new System.Drawing.Size(560, 181);
             this.ClipListView.TabIndex = 4;
             //
+            // VersionButton
+            //
+            this.VersionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.VersionButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.VersionButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VersionButton.Image = global::Cube.Pdf.Clip.Properties.Resources.HeaderImage;
+            this.VersionButton.Location = new System.Drawing.Point(0, 0);
+            this.VersionButton.Margin = new System.Windows.Forms.Padding(0);
+            this.VersionButton.Name = "VersionButton";
+            this.VersionButton.Size = new System.Drawing.Size(684, 35);
+            this.VersionButton.TabIndex = 8;
+            this.VersionButton.TabStop = false;
+            //
+            // MainBindingSource
+            //
+            this.MainBindingSource.DataSource = typeof(Cube.Pdf.Clip.MainViewModel);
+            //
             // MainWindow
             //
             this.AllowDrop = true;
@@ -296,8 +304,9 @@
             this.SourcePanel.PerformLayout();
             this.ClipPanel.ResumeLayout(false);
             this.ToolsPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.VersionButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipListView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VersionButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -319,6 +328,7 @@
         private Cube.Forms.Button SaveButton;
         private Cube.Forms.Button OpenButton;
         private ClipListControl ClipListView;
+        private System.Windows.Forms.BindingSource MainBindingSource;
     }
 }
 

@@ -53,8 +53,11 @@ namespace Cube.Pdf.Clip.Tests
             var dest = Get($"{nameof(Attach)}-{id}.pdf");
             IO.Copy(GetSource(filename), dest);
 
+            var f0 = new[] { dest };
+            var f1 = clips.Select(f => GetSource(f));
+
             using (var vm = new MainViewModel(new SynchronizationContext()))
-            using (vm.Subscribe<OpenFileMessage>(e => e.Value = e.Multiselect ? clips.Select(f => GetSource(f)) : new[] { dest }))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = e.Multiselect ? f1 : f0))
             {
                 Assert.That(vm.Test(vm.Open), nameof(vm.Open));
                 Assert.That(vm.Test(vm.Attach), nameof(vm.Attach));
@@ -76,7 +79,7 @@ namespace Cube.Pdf.Clip.Tests
         [Test]
         public void Detach()
         {
-            var dest = Get($"{nameof(Detach)}.pdf");
+            var dest = Get($"{nameof(Reset)}.pdf");
             IO.Copy(GetSource("SampleAttachmentCjk.pdf"), dest);
 
             using (var vm = new MainViewModel(new SynchronizationContext()))
@@ -90,6 +93,41 @@ namespace Cube.Pdf.Clip.Tests
             }
 
             Assert.That(IO.Exists(dest), Is.True);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// Tests the Reset and related methods.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Reset()
+        {
+            var dest = Get($"{nameof(Detach)}.pdf");
+            IO.Copy(GetSource("SampleAttachmentCjk.pdf"), dest);
+
+            var f0 = new[] { dest };
+            var f1 = new[] { GetSource("Sample.jpg") };
+
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = e.Multiselect ? f1 : f0))
+            {
+                Assert.That(vm.Test(vm.Open), nameof(vm.Open));
+                Assert.That(vm.GetClips().Count(), Is.EqualTo(3));
+
+                Assert.That(vm.Test(() => vm.Detach(new[] { 0, 2 })));
+                Assert.That(vm.GetClips().Count(), Is.EqualTo(1));
+
+                Assert.That(vm.Test(vm.Attach), nameof(vm.Attach));
+                Assert.That(vm.GetClips().Count(), Is.EqualTo(2));
+
+                Assert.That(vm.Test(vm.Reset), nameof(vm.Reset));
+                Assert.That(vm.GetClips().Count(), Is.EqualTo(3));
+            }
         }
 
         /* ----------------------------------------------------------------- */

@@ -51,6 +51,7 @@ namespace Cube.Pdf.Clip
         {
             InitializeComponent();
             Behaviors.Add(CreateTooltip());
+            ExitButton.Click += (s, e) => Close();
         }
 
         #endregion
@@ -92,12 +93,14 @@ namespace Cube.Pdf.Clip
             base.OnBind(src);
             if (!(src is MainViewModel vm)) return;
 
+            MainBindingSource.DataSource = vm;
             ClipListView.DataSource = vm.Clips;
 
             OpenButton.Click   += (s, e) => vm.Open();
             AttachButton.Click += (s, e) => vm.Attach();
             DetachButton.Click += (s, e) => vm.Detach(SelectedIndices);
             SaveButton.Click   += (s, e) => vm.Save();
+            ResetButton.Click  += (s, e) => vm.Reset();
 
             Behaviors.Add(new CloseBehavior(src, this));
             Behaviors.Add(new DialogBehavior(src));

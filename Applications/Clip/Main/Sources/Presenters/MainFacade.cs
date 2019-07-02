@@ -157,6 +157,25 @@ namespace Cube.Pdf.Clip
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Reset
+        ///
+        /// <summary>
+        /// Resets to the state when the provided PDF was loaded.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Reset() => Invoke(() =>
+        {
+            _clips.Clear();
+            if (_source == null) return;
+            foreach (var item in _source.Attachments)
+            {
+                _clips.Add(new ClipItem(item) { Status = Properties.Resources.StatusEmbedded });
+            }
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Save
         ///
         /// <summary>
@@ -246,25 +265,6 @@ namespace Cube.Pdf.Clip
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        ///
-        /// <summary>
-        /// Resets to the state when the provided PDF was loaded.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Reset()
-        {
-            _clips.Clear();
-            if (_source == null) return;
-            foreach (var item in _source.Attachments)
-            {
-                _clips.Add(new ClipItem(item) { Status = Properties.Resources.StatusEmbedded });
-            }
-        }
 
         /* ----------------------------------------------------------------- */
         ///

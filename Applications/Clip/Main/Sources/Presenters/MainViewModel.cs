@@ -155,7 +155,18 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Track(() => Facade.Save());
+        public void Save() => Track(Facade.Save);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reset
+        ///
+        /// <summary>
+        /// Resets to the state when the provided PDF was loaded.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Reset() => Track(Facade.Reset);
 
         #endregion
     }
