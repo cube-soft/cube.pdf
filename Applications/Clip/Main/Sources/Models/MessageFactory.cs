@@ -41,10 +41,10 @@ namespace Cube.Pdf.Clip
         /// Creates a message to show an OpenFileDialog dialog.
         /// </summary>
         ///
-        /// <returns>OpenPdfMessage object.</returns>
+        /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenSourceMessage CreateForOpen() => new OpenSourceMessage
+        public static OpenFileMessage CreateForOpen() => new OpenFileMessage
         {
             Title           = Properties.Resources.TitleOpen,
             CheckPathExists = true,
@@ -64,10 +64,10 @@ namespace Cube.Pdf.Clip
         /// Creates a message to show an OpenFileDialog dialog.
         /// </summary>
         ///
-        /// <returns>AttachFileMessage object.</returns>
+        /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static AttachFileMessage CreateForAttach() => new AttachFileMessage
+        public static OpenFileMessage CreateForAttach() => new OpenFileMessage
         {
             Title           = Properties.Resources.TitleAttach,
             CheckPathExists = true,

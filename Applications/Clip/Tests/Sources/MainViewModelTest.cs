@@ -54,10 +54,8 @@ namespace Cube.Pdf.Clip.Tests
             IO.Copy(GetSource(filename), dest);
 
             using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = e.Multiselect ? clips.Select(f => GetSource(f)) : new[] { dest }))
             {
-                _ = vm.Subscribe<OpenSourceMessage>(e => e.Value = new[] { dest });
-                _ = vm.Subscribe<AttachFileMessage>(e => e.Value = clips.Select(f => GetSource(f)));
-
                 Assert.That(vm.Test(vm.Open), nameof(vm.Open));
                 Assert.That(vm.Test(vm.Attach), nameof(vm.Attach));
                 Assert.That(vm.Test(vm.Save), nameof(vm.Save));
@@ -82,9 +80,8 @@ namespace Cube.Pdf.Clip.Tests
             IO.Copy(GetSource("SampleAttachmentCjk.pdf"), dest);
 
             using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { dest }))
             {
-                _ = vm.Subscribe<OpenSourceMessage>(e => e.Value = new[] { dest });
-
                 Assert.That(vm.Test(vm.Open), nameof(vm.Open));
                 Assert.That(vm.Test(() => vm.Detach(new[] { 0 })));
                 Assert.That(vm.Test(vm.Save), nameof(vm.Save));

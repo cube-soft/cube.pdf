@@ -109,7 +109,7 @@ namespace Cube.Pdf.Clip
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected async Task Send<T>(T message, Action<IEnumerable<string>> next) where T : OpenFileMessage
+        protected async Task Send(OpenFileMessage message, Action<IEnumerable<string>> next)
         {
             Send(message);
             if (message.Cancel) return;
