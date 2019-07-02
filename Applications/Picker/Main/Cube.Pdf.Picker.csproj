@@ -36,10 +36,7 @@
         <EmbeddedResource Update="Sources\Views\*Window.resx" DependentUpon="%(Filename).cs" />
         <None Include="Assets\**\*" />
         <None Include="App.config" />
-    </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Update="Sources\Views\ImageListWindow.resx">
-        <DependentUpon>ImageListWindow.cs</DependentUpon>
-      </EmbeddedResource>
+        <None Include="App.ico" />
+        <None Include="App.manifest" />
     </ItemGroup>
 </Project>
