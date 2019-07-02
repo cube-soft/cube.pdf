@@ -21,6 +21,7 @@ using Cube.Mixin.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Cube.Pdf.Clip
 {
@@ -42,6 +43,17 @@ namespace Cube.Pdf.Clip
         /// MainViewModel
         ///
         /// <summary>
+        /// Initializes a new instance of the MainViewModel class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MainViewModel() : this(SynchronizationContext.Current) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MainViewModel
+        ///
+        /// <summary>
         /// Initializes a new instance of the MainViewModel class with
         /// the specified arguments.
         /// </summary>
@@ -54,12 +66,37 @@ namespace Cube.Pdf.Clip
             new Aggregator(),
             context)
         {
-            Facade.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Clips = new BindingSource { DataSource = Facade.Clips };
+
+            Facade.CollectionChanged += (s, e) => Send<CollectionMessage>();
+            Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Source
+        ///
+        /// <summary>
+        /// Gets the path of the source file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Source => Facade.Source;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clips
+        ///
+        /// <summary>
+        /// Gets the collection of attached files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public BindingSource Clips { get; }
 
         /* ----------------------------------------------------------------- */
         ///

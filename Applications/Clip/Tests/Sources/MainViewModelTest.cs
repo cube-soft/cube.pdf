@@ -83,11 +83,28 @@ namespace Cube.Pdf.Clip.Tests
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { dest }))
             {
                 Assert.That(vm.Test(vm.Open), nameof(vm.Open));
+                Assert.That(vm.GetClips().Count(), Is.EqualTo(3));
                 Assert.That(vm.Test(() => vm.Detach(new[] { 0 })));
+                Assert.That(vm.GetClips().Count(), Is.EqualTo(2));
                 Assert.That(vm.Test(vm.Save), nameof(vm.Save));
             }
 
             Assert.That(IO.Exists(dest), Is.True);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create_Throws
+        ///
+        /// <summary>
+        /// Tests the constructor with an invalid context.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Create_Throws()
+        {
+            Assert.That(() => { using (new MainViewModel()) { } }, Throws.ArgumentNullException);
         }
 
         #endregion

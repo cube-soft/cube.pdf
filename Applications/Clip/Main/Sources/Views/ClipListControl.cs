@@ -127,6 +127,7 @@ namespace Cube.Pdf.Clip
                 HeaderText       = text,
                 FillWeight       = weight,
                 SortMode         = DataGridViewColumnSortMode.NotSortable,
+                CellTemplate     = new DataGridViewTextBoxCell(),
             };
 
             dest.DefaultCellStyle.Alignment =

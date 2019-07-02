@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Tests;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Cube.Pdf.Clip.Tests
@@ -65,6 +66,21 @@ namespace Cube.Pdf.Clip.Tests
             }
             finally { vm.PropertyChanged -= observe; }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetClips
+        ///
+        /// <summary>
+        /// Gets the collection of attached files.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel instance.</param>
+        ///
+        /// <returns>Collection of attached files.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<ClipItem> GetClips(this MainViewModel vm) => (IEnumerable<ClipItem>)vm.Clips.DataSource;
 
         #endregion
     }
