@@ -100,6 +100,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         [Test]
+        [Ignore("COMException in .NET Framework 3.5")]
         public void Invoke_Cjk_Failed()
         {
             Assert.That(() =>
