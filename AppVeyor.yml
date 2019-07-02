@@ -4,6 +4,7 @@ platform: Any CPU
 configuration: Release
 environment:
     PROJECT_NAME:   'Cube.Pdf'
+    PROJECT_MAIN:   'Cube.Pdf.Apps'
     PROJECT_BIN:    'bin\%PLATFORM%\%CONFIGURATION%\net45'
     PROJECT_LIB:    '..\packages'
     TEST_TOOL:      '$(PROJECT_LIB)\OpenCover\4.7.922\tools\OpenCover.Console.exe'
@@ -21,9 +22,9 @@ nuget:
     disable_publish_on_pr: true
 clone_folder: 'C:\Cube\%PROJECT_NAME%'
 before_build:
-    - nuget restore "%PROJECT_NAME%.Apps.sln"
+    - nuget restore "%PROJECT_MAIN%.sln"
 build:
-    project: '%PROJECT_NAME%.Apps.sln'
+    project: '%PROJECT_MAIN%.sln'
     parallel: true
     publish_nuget: true
     verbosity: minimal
@@ -46,8 +47,8 @@ test_script:
       -log:Error
       -register:user
       -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Converter.Tests.dll"
-      -targetdir:"Applications\Converter\Tests\%PROJECT_BIN%"
+      -targetargs:"%PROJECT_NAME%.Editor.Tests.dll"
+      -targetdir:"Applications\Editor\Tests\%PROJECT_BIN%"
       -returntargetcode
       -hideskipped:All
       -mergeoutput
@@ -58,8 +59,8 @@ test_script:
       -log:Error
       -register:user
       -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Editor.Tests.dll"
-      -targetdir:"Applications\Editor\Tests\%PROJECT_BIN%"
+      -targetargs:"%PROJECT_NAME%.Converter.Tests.dll"
+      -targetdir:"Applications\Converter\Tests\%PROJECT_BIN%"
       -returntargetcode
       -hideskipped:All
       -mergeoutput

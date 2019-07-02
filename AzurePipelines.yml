@@ -4,6 +4,7 @@ pool:
     vmImage: 'Windows-2019'
 variables:
     PROJECT_NAME:   'Cube.Pdf'
+    PROJECT_MAIN:   'Cube.Pdf.Apps'
     PROJECT_ARCH:   'Any CPU'
     PROJECT_CONFIG: 'Release'
     PROJECT_BIN:    'bin\$(PROJECT_ARCH)\$(PROJECT_CONFIG)\net45'
@@ -14,216 +15,199 @@ variables:
     TEST_RESULT:    'TestResult.xml'
     TEST_COVERAGE:  'CoverResults.xml'
     TEST_LOG:       '$(Build.ArtifactStagingDirectory)\TestResults'
-
 steps:
+    - task: NuGetToolInstaller@0
+      inputs:
+        versionSpec: '>= 4.9'
+      displayName: 'Use NuGet'
 
-- task: NuGetToolInstaller@0
-  inputs:
-    versionSpec: '>= 4.9'
-  displayName: 'NuGet 4.9 or later'
+    - script: |
+        nuget restore "$(PROJECT_MAIN).sln"
+      displayName: 'Restore NuGet packages'
 
-- script: |
-    nuget restore "$(PROJECT_NAME).Apps.sln"
-  displayName: 'Restore NuGet packages'
+    - task: VSBuild@1
+      inputs:
+        solution: '$(PROJECT_MAIN).sln'
+        platform: '$(PROJECT_ARCH)'
+        configuration: '$(PROJECT_CONFIG)'
+      displayName: 'Build solution'
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(PROJECT_NAME).Apps.sln'
-    platform: '$(PROJECT_ARCH)'
-    configuration: '$(PROJECT_CONFIG)'
-  displayName: 'Build solution'
+    - task: CopyFiles@2
+      inputs:
+        contents: '**\win-x64\native\*.dll'
+        sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)'
+        targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
+        flattenFolders: true
+        overWrite: true
+      displayName: 'Copy to Libraries'
 
-- task: CopyFiles@2
-  inputs:
-    contents: '**\win-x64\native\*.dll'
-    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Ghostscript'
-    targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
-    flattenFolders: true
-    overWrite: true
-  displayName: 'Copy Ghostscript to Libraries'
+    - task: CopyFiles@2
+      inputs:
+        contents: '**\win-x64\native\*.dll'
+        sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)'
+        targetFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
+        flattenFolders: true
+        overWrite: true
+      displayName: 'Copy to CubePDF'
 
-- task: CopyFiles@2
-  inputs:
-    contents: '**\win-x64\native\*.dll'
-    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Pdfium.Lite'
-    targetFolder: 'Libraries\Tests\$(PROJECT_BIN)'
-    flattenFolders: true
-    overWrite: true
-  displayName: 'Copy PDFium to Libraries'
+    - task: CopyFiles@2
+      inputs:
+        contents: '**\win-x64\native\*.dll'
+        sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)'
+        targetFolder: 'Applications\Editor\Tests\$(PROJECT_BIN)'
+        flattenFolders: true
+        overWrite: true
+      displayName: 'Copy to CubePDF Utility'
 
-- task: CopyFiles@2
-  inputs:
-    contents: '**\win-x64\native\*.dll'
-    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Ghostscript'
-    targetFolder: 'Applications\Converter\Tests\$(PROJECT_BIN)'
-    flattenFolders: true
-    overWrite: true
-  displayName: 'Copy Ghostscript to CubePDF'
+    - script: >
+        "$(TEST_TOOL)"
+        -log:Error
+        -register:user
+        -target:"$(TEST_CORETOOL)"
+        -targetargs:"$(PROJECT_NAME).Tests.dll"
+        -targetdir:"Libraries\Tests\$(PROJECT_BIN)"
+        -returntargetcode
+        -hideskipped:All
+        -output:"$(TEST_COVERAGE)"
+        -filter:"$(TEST_FILTERS)"
+      displayName: 'Test Libraries'
 
-- task: CopyFiles@2
-  inputs:
-    contents: '**\win-x64\native\*.dll'
-    sourceFolder: '$(Build.SourcesDirectory)\$(PROJECT_LIB)\Cube.Native.Pdfium.Lite'
-    targetFolder: 'Applications\Editor\Tests\$(PROJECT_BIN)'
-    flattenFolders: true
-    overWrite: true
-  displayName: 'Copy PDFium to CubePDF Utility'
+    - script: >
+        "$(TEST_TOOL)"
+        -log:Error
+        -register:user
+        -target:"$(TEST_CORETOOL)"
+        -targetargs:"$(PROJECT_NAME).Editor.Tests.dll"
+        -targetdir:"Applications\Editor\Tests\$(PROJECT_BIN)"
+        -returntargetcode
+        -hideskipped:All
+        -mergeoutput
+        -output:"$(TEST_COVERAGE)"
+        -filter:"$(TEST_FILTERS)"
+      displayName: 'Test CubePDF Utility'
 
-- script: >
-    "$(TEST_TOOL)"
-    -log:Error
-    -register:user
-    -target:"$(TEST_CORETOOL)"
-    -targetargs:"$(PROJECT_NAME).Tests.dll"
-    -targetdir:"Libraries\Tests\$(PROJECT_BIN)"
-    -returntargetcode
-    -hideskipped:All
-    -output:"$(TEST_COVERAGE)"
-    -filter:"$(TEST_FILTERS)"
-  displayName: 'Test Libraries'
+    - script: >
+        "$(TEST_TOOL)"
+        -log:Error
+        -register:user
+        -target:"$(TEST_CORETOOL)"
+        -targetargs:"$(PROJECT_NAME).Converter.Tests.dll"
+        -targetdir:"Applications\Converter\Tests\$(PROJECT_BIN)"
+        -returntargetcode
+        -hideskipped:All
+        -mergeoutput
+        -output:"$(TEST_COVERAGE)"
+        -filter:"$(TEST_FILTERS)"
+      displayName: 'Test CubePDF'
 
-- script: >
-    "$(TEST_TOOL)"
-    -log:Error
-    -register:user
-    -target:"$(TEST_CORETOOL)"
-    -targetargs:"$(PROJECT_NAME).Converter.Tests.dll"
-    -targetdir:"Applications\Converter\Tests\$(PROJECT_BIN)"
-    -returntargetcode
-    -hideskipped:All
-    -mergeoutput
-    -output:"$(TEST_COVERAGE)"
-    -filter:"$(TEST_FILTERS)"
-  displayName: 'Test CubePDF'
+    - script: >
+        "$(TEST_TOOL)"
+        -log:Error
+        -register:user
+        -target:"$(TEST_CORETOOL)"
+        -targetargs:"$(PROJECT_NAME).Pages.Tests.dll"
+        -targetdir:"Applications\Pages\Tests\$(PROJECT_BIN)"
+        -returntargetcode
+        -hideskipped:All
+        -mergeoutput
+        -output:"$(TEST_COVERAGE)"
+        -filter:"$(TEST_FILTERS)"
+      displayName: 'Test CubePDF Page'
 
-- script: >
-    "$(TEST_TOOL)"
-    -log:Error
-    -register:user
-    -target:"$(TEST_CORETOOL)"
-    -targetargs:"$(PROJECT_NAME).Editor.Tests.dll"
-    -targetdir:"Applications\Editor\Tests\$(PROJECT_BIN)"
-    -returntargetcode
-    -hideskipped:All
-    -mergeoutput
-    -output:"$(TEST_COVERAGE)"
-    -filter:"$(TEST_FILTERS)"
-  displayName: 'Test CubePDF Utility'
+    - script: >
+        "$(TEST_TOOL)"
+        -log:Error
+        -register:user
+        -target:"$(TEST_CORETOOL)"
+        -targetargs:"$(PROJECT_NAME).Clip.Tests.dll"
+        -targetdir:"Applications\Clip\Tests\$(PROJECT_BIN)"
+        -returntargetcode
+        -hideskipped:All
+        -mergeoutput
+        -output:"$(TEST_COVERAGE)"
+        -filter:"$(TEST_FILTERS)"
+      displayName: 'Test CubePDF Clip'
 
-- script: >
-    "$(TEST_TOOL)"
-    -log:Error
-    -register:user
-    -target:"$(TEST_CORETOOL)"
-    -targetargs:"$(PROJECT_NAME).Pages.Tests.dll"
-    -targetdir:"Applications\Pages\Tests\$(PROJECT_BIN)"
-    -returntargetcode
-    -hideskipped:All
-    -mergeoutput
-    -output:"$(TEST_COVERAGE)"
-    -filter:"$(TEST_FILTERS)"
-  displayName: 'Test CubePDF Page'
+    - script: >
+        "$(TEST_TOOL)"
+        -log:Error
+        -register:user
+        -target:"$(TEST_CORETOOL)"
+        -targetargs:"$(PROJECT_NAME).Picker.Tests.dll"
+        -targetdir:"Applications\Picker\Tests\$(PROJECT_BIN)"
+        -returntargetcode
+        -hideskipped:All
+        -mergeoutput
+        -output:"$(TEST_COVERAGE)"
+        -filter:"$(TEST_FILTERS)"
+      displayName: 'Test CubePDF ImagePicker'
 
-- script: >
-    "$(TEST_TOOL)"
-    -log:Error
-    -register:user
-    -target:"$(TEST_CORETOOL)"
-    -targetargs:"$(PROJECT_NAME).Clip.Tests.dll"
-    -targetdir:"Applications\Clip\Tests\$(PROJECT_BIN)"
-    -returntargetcode
-    -hideskipped:All
-    -mergeoutput
-    -output:"$(TEST_COVERAGE)"
-    -filter:"$(TEST_FILTERS)"
-  displayName: 'Test CubePDF Clip'
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'Libraries\*\$(PROJECT_NAME)*.csproj'
+        configuration: '$(PROJECT_CONFIG)'
+      displayName: 'Pack NuGet packages'
 
-- script: >
-    "$(TEST_TOOL)"
-    -log:Error
-    -register:user
-    -target:"$(TEST_CORETOOL)"
-    -targetargs:"$(PROJECT_NAME).Picker.Tests.dll"
-    -targetdir:"Applications\Picker\Tests\$(PROJECT_BIN)"
-    -returntargetcode
-    -hideskipped:All
-    -mergeoutput
-    -output:"$(TEST_COVERAGE)"
-    -filter:"$(TEST_FILTERS)"
-  displayName: 'Test CubePDF ImagePicker'
+    - task: ArchiveFiles@2
+      inputs:
+        archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.zip'
+        rootFolderOrFile: 'Applications\Converter\Main\$(PROJECT_BIN)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        replaceExistingArchive: true
+      displayName: 'Pack CubePDF'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'NUnit'
-    testResultsFiles: '**\$(TEST_RESULT)'
-  displayName: 'Publish test results'
+    - task: ArchiveFiles@2
+      inputs:
+        archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Proxy.zip'
+        rootFolderOrFile: 'Applications\Converter\Proxy\$(PROJECT_BIN)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        replaceExistingArchive: true
+      displayName: 'Pack CubeProxy'
 
-- task: NuGetCommand@2
-  inputs:
-    command: 'pack'
-    packagesToPack: 'Libraries\*\$(PROJECT_NAME)*.csproj'
-    configuration: '$(PROJECT_CONFIG)'
-  displayName: 'Create NuGet packages'
+    - task: ArchiveFiles@2
+      inputs:
+        archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Utility.zip'
+        rootFolderOrFile: 'Applications\Editor\Main\$(PROJECT_BIN)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        replaceExistingArchive: true
+      displayName: 'Pack CubePDF Utility'
 
-- task: ArchiveFiles@2
-  inputs:
-    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.zip'
-    rootFolderOrFile: 'Applications\Converter\Main\$(PROJECT_BIN)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    replaceExistingArchive: true
-  displayName: 'Pack CubePDF'
+    - task: ArchiveFiles@2
+      inputs:
+        archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Utility.Proxy.zip'
+        rootFolderOrFile: 'Applications\Editor\Proxy\$(PROJECT_BIN)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        replaceExistingArchive: true
+      displayName: 'Pack CubePDF Utility Splash'
 
-- task: ArchiveFiles@2
-  inputs:
-    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Proxy.zip'
-    rootFolderOrFile: 'Applications\Converter\Proxy\$(PROJECT_BIN)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    replaceExistingArchive: true
-  displayName: 'Pack CubeProxy'
+    - task: CopyFiles@2
+      inputs:
+        contents: '**\*.log'
+        targetFolder: '$(TEST_LOG)'
+        overWrite: true
+        flattenFolders: true
+      displayName: 'Copy test results'
 
-- task: ArchiveFiles@2
-  inputs:
-    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Utility.zip'
-    rootFolderOrFile: 'Applications\Editor\Main\$(PROJECT_BIN)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    replaceExistingArchive: true
-  displayName: 'Pack CubePDF Utility'
+    - task: CopyFiles@2
+      inputs:
+        contents: '$(TEST_COVERAGE)'
+        targetFolder: '$(TEST_LOG)'
+        overWrite: true
+      displayName: 'Copy converage results'
 
-- task: ArchiveFiles@2
-  inputs:
-    archiveFile: '$(Build.ArtifactStagingDirectory)/CubePdf.Utility.Proxy.zip'
-    rootFolderOrFile: 'Applications\Editor\Proxy\$(PROJECT_BIN)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    replaceExistingArchive: true
-  displayName: 'Pack CubePDF Utility Splash'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'NUnit'
+        testResultsFiles: '**\$(TEST_RESULT)'
+      displayName: 'Publish test results'
 
-- task: CopyFiles@2
-  inputs:
-    contents: '**\*.log'
-    targetFolder: '$(TEST_LOG)'
-    overWrite: true
-  displayName: 'Copy log files'
-
-- task: CopyFiles@2
-  inputs:
-    contents: '**\$(TEST_RESULT)'
-    targetFolder: '$(TEST_LOG)'
-    overWrite: true
-  displayName: 'Copy test results'
-
-- task: CopyFiles@2
-  inputs:
-    contents: '$(TEST_COVERAGE)'
-    targetFolder: '$(TEST_LOG)'
-    overWrite: true
-  displayName: 'Copy coverage results'
-
-- task: PublishPipelineArtifact@0
-  inputs:
-    artifactName: '$(PROJECT_NAME)'
-    targetPath: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Publish pipline artifacts'
+    - task: PublishPipelineArtifact@0
+      inputs:
+        artifactName: '$(PROJECT_NAME)'
+        targetPath: '$(Build.ArtifactStagingDirectory)'
+      displayName: 'Publish pipline artifacts'
