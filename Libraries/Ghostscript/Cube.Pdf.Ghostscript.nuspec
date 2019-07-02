@@ -6,7 +6,7 @@
         <title>Cube.Pdf.Ghostscript</title>
         <authors>clown,cube-soft</authors>
         <owners>clown,cube-soft</owners>
-        <description>Wrapper library of the Ghostscript, which is available for .NET Framework 3.5, 4.5 or more.</description>
+        <description>Library to use the Ghostscript in the .NET Framework 3.5, 4.5, or later.</description>
         <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
         <tags>Cube PDF Ghostscript</tags>
         <license type="expression">AGPL-3.0-or-later</license>
@@ -15,6 +15,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <dependency id="Cube.Pdf" version="2.16.0" />
+            <dependency id="Cube.Native.Ghostscript" version="9.27.1" />
         </dependencies>
     </metadata>
     <files>
