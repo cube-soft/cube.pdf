@@ -59,7 +59,9 @@ namespace Cube.Pdf.Clip.Tests
             using (var vm = new MainViewModel(new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = e.Multiselect ? f1 : f0))
             {
+                Assert.That(vm.Source, Is.Null);
                 Assert.That(vm.Test(vm.Open), nameof(vm.Open));
+                Assert.That(vm.Source, Is.EqualTo(dest));
                 Assert.That(vm.Test(vm.Attach), nameof(vm.Attach));
                 Assert.That(vm.Test(vm.Save), nameof(vm.Save));
             }

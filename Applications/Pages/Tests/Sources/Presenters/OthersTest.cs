@@ -52,9 +52,8 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         public void Move(int offset)
         {
             using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleRotation.pdf") }))
             {
-                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleRotation.pdf") });
-
                 Assert.That(vm.Files, Is.Not.Null);
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.Test(() => vm.Move(new[] { 0, 1 }, offset)), nameof(vm.Move));
@@ -75,9 +74,8 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         {
             var files = new[] { "Sample.pdf", "SampleRotation.pdf", "Sample.jpg" };
             using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             {
-                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f)));
-
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(3));
                 Assert.That(vm.Test(() => vm.Remove(new[] { 0, 2 })), nameof(vm.Remove));
@@ -101,9 +99,8 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         {
             var files = new[] { "Sample.pdf", "SampleRotation.pdf" };
             using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             {
-                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f)));
-
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(2));
                 Assert.That(vm.Test(vm.Clear), nameof(vm.Clear));

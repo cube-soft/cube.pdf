@@ -51,15 +51,16 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         public void Merge(int id, IEnumerable<string> files)
         {
             var dest = Get($"{nameof(Merge)}-{id}.pdf");
-            using (var vm = new MainViewModel(new SynchronizationContext()))
-            {
-                _ = vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f)));
-                _ = vm.Subscribe<SaveFileMessage>(e => e.Value = dest);
 
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
+            using (vm.Subscribe<SaveFileMessage>(e => e.Value = dest))
+            {
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.Test(vm.Merge), nameof(vm.Merge));
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
             }
+
             Assert.That(IO.Exists(dest));
         }
 

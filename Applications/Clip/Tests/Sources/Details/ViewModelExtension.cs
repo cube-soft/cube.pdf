@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Tests;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -50,6 +51,7 @@ namespace Cube.Pdf.Clip.Tests
         /* ----------------------------------------------------------------- */
         public static bool Test(this MainViewModel vm, Action action)
         {
+            Assert.That(vm.Busy, Is.False, nameof(Test));
             var cs = new CancellationTokenSource();
             void observe(object s, EventArgs e)
             {
