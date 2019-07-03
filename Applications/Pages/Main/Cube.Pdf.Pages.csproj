@@ -12,6 +12,7 @@
         <TargetFramework>net45</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Platforms>AnyCPU;x86;x64</Platforms>
+        <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
         <IsPackable>false</IsPackable>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
