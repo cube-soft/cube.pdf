@@ -53,6 +53,7 @@ Note that if you specify an IDocumentReader object to the Add method of an IDocu
 
 ```cs
 // using Cube.Pdf.Itext;
+
 using (var writer = new DocumentWriter())
 {
     var src0 = new DocumentReader("first.pdf", "password");
@@ -74,6 +75,7 @@ The following code converts to the PDF file.
 ```cs
 // using Cube.Pdf;
 // using Cube.Pdf.Ghostscript;
+
 var converter = new PdfConverter
 {
     Paper        = Paper.Auto,
@@ -121,11 +123,11 @@ Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Li
 ## Contributing
 
 1. Fork [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/fork) repository.
-2. Create a feature branch from the master or stable branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer some pre-released NuGet packages. Try the [rake clean](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) command when build errors occur.
+2. Create a feature branch from the master or stable branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clean](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
 3. Commit your changes.
 4. Rebase your local changes against the master or stable branch.
 5. Run test suite with the [NUnit](http://nunit.org/) console or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
-6. Create new Pull Request.
+6. Create a new Pull Request.
 
 ## License
  
