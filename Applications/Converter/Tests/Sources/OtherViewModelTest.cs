@@ -281,16 +281,13 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Validate_OwnerPassword() => Invoke(vm =>
         {
-            vm.General.Language        = Language.English;
+            vm.General.Language         = Language.English;
             vm.Encryption.Enabled       = true;
             vm.Encryption.OwnerPassword = nameof(Validate_OwnerPassword);
 
-            Assert.That(WaitMessage(vm), Is.True, "Timeout");
-            Assert.That(Message, Is.Not.Null.And.Not.Empty);
-
+            Assert.That(TestError(vm), Is.True, "Timeout (Empty)");
             vm.Encryption.OwnerConfirm = "Dummy";
-            Assert.That(WaitMessage(vm), Is.True, "Timeout");
-            Assert.That(Message, Is.Not.Null.And.Not.Empty);
+            Assert.That(TestError(vm), Is.True, "Timeout (NotMatch)");
         });
 
         /* ----------------------------------------------------------------- */
@@ -305,19 +302,16 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Validate_UserPassword() => Invoke(vm =>
         {
-            vm.General.Language           = Language.English;
+            vm.General.Language            = Language.English;
             vm.Encryption.Enabled          = true;
             vm.Encryption.OwnerPassword    = nameof(Validate_OwnerPassword);
             vm.Encryption.OwnerConfirm     = nameof(Validate_OwnerPassword);
             vm.Encryption.OpenWithPassword = true;
             vm.Encryption.UserPassword     = nameof(Validate_UserPassword);
 
-            Assert.That(WaitMessage(vm), Is.True, "Timeout");
-            Assert.That(Message, Is.Not.Null.And.Not.Empty);
-
+            Assert.That(TestError(vm), Is.True, "Timeout (Empty)");
             vm.Encryption.UserConfirm = "Dummy";
-            Assert.That(WaitMessage(vm), Is.True, "Timeout");
-            Assert.That(Message, Is.Not.Null.And.Not.Empty);
+            Assert.That(TestError(vm), Is.True, "Timeout (NotMatch)");
         });
 
         #endregion

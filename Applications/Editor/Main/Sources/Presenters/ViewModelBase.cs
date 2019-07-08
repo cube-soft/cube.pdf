@@ -89,10 +89,14 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (!disposing) return;
-            foreach (var obj in _elements.Values.OfType<IDisposable>()) obj.Dispose();
-            _elements.Clear();
-            _commands.Clear();
+            try
+            {
+                if (!disposing) return;
+                foreach (var obj in _elements.Values.OfType<IDisposable>()) obj.Dispose();
+                _elements.Clear();
+                _commands.Clear();
+            }
+            finally { base.Dispose(disposing); }
         }
 
         #region Get

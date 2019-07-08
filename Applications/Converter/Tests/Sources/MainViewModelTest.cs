@@ -73,7 +73,7 @@ namespace Cube.Pdf.Converter.Tests
                 if (precopy) IO.Copy(GetSource("Sample.pdf"), vms.Destination);
 
                 vm.Subscribe<DialogMessage>(SetMessage);
-                Assert.That(WaitConv(vm), Is.True, $"Timeout (No.{id})");
+                Assert.That(Test(vm), Is.True, $"Timeout (No.{id})");
             }
 
             Assert.That(IO.Exists(dest.Value.Source),      Is.False, dest.Value.Source);
@@ -97,17 +97,13 @@ namespace Cube.Pdf.Converter.Tests
             var dest = Create(Combine(args, "Sample.ps"));
 
             using (var vm = new MainViewModel(dest))
+            using (vm.Subscribe<DialogMessage>(SetMessage))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { exec }))
             {
-                vm.Subscribe<DialogMessage>(SetMessage);
-                vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { exec });
                 vm.General.PostProcess = PostProcess.Others;
-
-                Assert.That(vm.General.UserProgram, Is.EqualTo(exec));
                 Assert.That(vm.Busy, Is.False);
-                Assert.That(WaitMessage(vm), Is.True, "Timeout (error)");
+                Assert.That(TestError(vm), Is.True, "Timeout");
             }
-
-            Assert.Pass(Message);
         }
 
         #endregion

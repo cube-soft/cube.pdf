@@ -261,10 +261,10 @@ namespace Cube.Pdf.Converter.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Wait
+        /// Test
         ///
         /// <summary>
-        /// Waits for converting the document.
+        /// Invokes the Convert method.
         /// </summary>
         ///
         /// <param name="vm">ViewModel</param>
@@ -272,7 +272,7 @@ namespace Cube.Pdf.Converter.Tests
         /// <returns>true for success.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected bool WaitConv(MainViewModel vm)
+        protected bool Test(MainViewModel vm)
         {
             Message = string.Empty;
 
@@ -286,18 +286,21 @@ namespace Cube.Pdf.Converter.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WaitMessage
+        /// TestError
         ///
         /// <summary>
-        /// Waits for receiving a message.
+        /// Invokes the Convert method and waits for receiving a message.
         /// </summary>
         ///
-        /// <param name="vm">ViewModel</param>
+        /// <param name="vm">ViewModel object.</param>
         ///
-        /// <returns>true for receiving a message.</returns>
+        /// <returns>
+        /// true for receiving a message, which means that an error or
+        /// warning has occurred.
+        /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected bool WaitMessage(MainViewModel vm)
+        protected bool TestError(MainViewModel vm)
         {
             Message = string.Empty;
             vm.Convert();
