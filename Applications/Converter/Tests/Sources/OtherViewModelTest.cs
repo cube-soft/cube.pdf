@@ -16,7 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
+using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -48,18 +50,16 @@ namespace Cube.Pdf.Converter.Tests
         /// MainViewModel
         ///
         /// <summary>
-        /// MainViewModel の各種プロパティを確認します。
+        /// Confirms the properties of the MainViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
         public void MainViewModel() => Invoke(vm =>
         {
-            Assert.That(vm.Title,   Does.StartWith(nameof(MainViewModel)));
-            Assert.That(vm.Title,   Does.Contain(vm.Product));
-            Assert.That(vm.Title,   Does.Contain(vm.Version));
-            Assert.That(vm.Version, Does.StartWith("1.0.0"));
-            Assert.That(vm.Uri,     Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdf/")));
+            Assert.That(vm.Title, Does.StartWith(nameof(MainViewModel)));
+            Assert.That(vm.Title, Does.Contain("CubePDF 1.0.0"));
+            Assert.That(vm.Uri,   Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdf/")));
         });
 
         /* ----------------------------------------------------------------- */
@@ -67,7 +67,7 @@ namespace Cube.Pdf.Converter.Tests
         /// SettingViewModel
         ///
         /// <summary>
-        /// SettingViewModel の各種プロパティを確認します。
+        /// Confirms the properties of the SettingViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -186,9 +186,9 @@ namespace Cube.Pdf.Converter.Tests
         {
             var done = $"{nameof(BrowseSource)}_Done.pdf";
 
-            vm.Subscribe<OpenFileMessage>(e =>
+            _ = vm.Subscribe<OpenFileMessage>(e =>
             {
-                Assert.That(e.Title,            Is.EqualTo("入力ファイルを選択"));
+                Assert.That(e.Text,             Is.EqualTo("入力ファイルを選択"));
                 Assert.That(e.InitialDirectory, Is.Empty);
                 Assert.That(e.Value.Count(),    Is.EqualTo(1));
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
@@ -201,7 +201,7 @@ namespace Cube.Pdf.Converter.Tests
 
             vm.General.Language = Language.Japanese;
             vm.SelectSource();
-            Assert.That(vm.General.Source, Is.EqualTo(done));
+            Assert.That(Wait.For(() => vm.General.Source.FuzzyEquals(done)), "Timeout");
         });
 
         /* ----------------------------------------------------------------- */
@@ -218,9 +218,9 @@ namespace Cube.Pdf.Converter.Tests
         {
             var done = $"{nameof(BrowseDestination)}_Done.pdf";
 
-            vm.Subscribe<SaveFileMessage>(e =>
+            _ = vm.Subscribe<SaveFileMessage>(e =>
             {
-                Assert.That(e.Title,            Is.EqualTo("名前を付けて保存"));
+                Assert.That(e.Text,             Is.EqualTo("名前を付けて保存"));
                 Assert.That(e.InitialDirectory, Is.Empty);
                 Assert.That(e.Value,            Is.EqualTo(nameof(BrowseDestination)));
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
@@ -234,7 +234,7 @@ namespace Cube.Pdf.Converter.Tests
 
             vm.General.Language = Language.Japanese;
             vm.SelectDestination();
-            Assert.That(vm.General.Destination, Is.EqualTo(done));
+            Assert.That(Wait.For(() => vm.General.Destination.FuzzyEquals(done)), "Timeout");
         });
 
         /* ----------------------------------------------------------------- */
@@ -251,9 +251,9 @@ namespace Cube.Pdf.Converter.Tests
         {
             var done = $"{nameof(BrowseUserProgram)}_Done.pdf";
 
-            vm.Subscribe<OpenFileMessage>(e =>
+            _ = vm.Subscribe<OpenFileMessage>(e =>
             {
-                Assert.That(e.Title,            Is.EqualTo("変換完了時に実行するプログラムを選択"));
+                Assert.That(e.Text,             Is.EqualTo("変換完了時に実行するプログラムを選択"));
                 Assert.That(e.InitialDirectory, Is.Empty);
                 Assert.That(e.Value.Count(),    Is.EqualTo(0));
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
@@ -266,7 +266,7 @@ namespace Cube.Pdf.Converter.Tests
 
             vm.General.Language = Language.Japanese;
             vm.SelectUserProgram();
-            Assert.That(vm.General.UserProgram, Is.EqualTo(done));
+            Assert.That(Wait.For(() => vm.General.UserProgram.FuzzyEquals(done)), "Timeout");
         });
 
         /* ----------------------------------------------------------------- */
@@ -340,8 +340,8 @@ namespace Cube.Pdf.Converter.Tests
 
             using (Locale.Subscribe(SetUiCulture))
             using (var vm = new MainViewModel(dest, new SynchronizationContext()))
+            using (vm.Subscribe<DialogMessage>(SetMessage))
             {
-                vm.Subscribe<DialogMessage>(SetMessage);
                 action(vm);
             }
         }

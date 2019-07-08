@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RecentViewModel : ViewModelBase
+    public class RecentViewModel : ViewModelBase<DirectoryMonitor>
     {
         #region Constructors
 
@@ -43,7 +43,7 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the RecentViewModel with the
-        /// specified argumetns.
+        /// specified arguments.
         /// </summary>
         ///
         /// <param name="items">Recently used PDF files.</param>
@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor
         public RecentViewModel(DirectoryMonitor items,
             Aggregator Aggregator,
             SynchronizationContext context
-        ) : base(Aggregator, context) { Items = items; }
+        ) : base(items, Aggregator, context) { }
 
         #endregion
 
@@ -69,7 +69,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DirectoryMonitor Items { get; }
+        public DirectoryMonitor Items => Facade;
 
         /* ----------------------------------------------------------------- */
         ///

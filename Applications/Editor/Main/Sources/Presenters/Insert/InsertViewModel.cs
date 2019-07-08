@@ -35,7 +35,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class InsertViewModel : DialogViewModel
+    public sealed class InsertViewModel : DialogViewModel<InsertFacade>
     {
         #region Constructors
 
@@ -45,7 +45,7 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the InsertViewModel with the
-        /// specified argumetns.
+        /// specified arguments.
         /// </summary>
         ///
         /// <param name="callback">Callback function.</param>
@@ -56,13 +56,17 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public InsertViewModel(Action<int, IEnumerable<FileItem>> callback,
-            int i, int n, IO io, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleInsert, new Aggregator(), context)
-        {
-            _model = new InsertFacade(i, n, io, GetDispatcher(false));
-
+            int i,
+            int n,
+            IO io,
+            SynchronizationContext context
+        ) : base(() => Properties.Resources.TitleInsert,
+            new InsertFacade(i, n, io, new Dispatcher(context, false)),
+            new Aggregator(),
+            context
+        ) {
             Position   = new InsertPosViewModel(Data, Aggregator, context);
-            DragMove   = new InsertDropTarget((f, t) => _model.Move(f, t));
+            DragMove   = new InsertDropTarget((f, t) => Facade.Move(f, t));
             OK.Command = new DelegateCommand(
                 () =>
                 {
@@ -79,6 +83,17 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Data
+        ///
+        /// <summary>
+        /// Gets data object associated with the ViewModel.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public InsertBindable Data => Facade.Bindable;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Position
         ///
         /// <summary>
@@ -90,17 +105,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
-        ///
-        /// <summary>
-        /// Gets data object associated with the ViewModel.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public InsertBindable Data => _model.Bindable;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// DragMove
         ///
         /// <summary>
@@ -109,28 +113,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public InsertDropTarget DragMove { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DragAdd
-        ///
-        /// <summary>
-        /// Gets the command when files are Drag&amp;Drop.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICommand DragAdd => Get(() => new DelegateCommand<string[]>(e => _model.Add(e)));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SelectClear
-        ///
-        /// <summary>
-        /// Gets the SelectClear command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ICommand SelectClear => Get(() => Any(() => TrackSync(() => _model.SelectClear())));
 
         #region Elements
 
@@ -146,7 +128,7 @@ namespace Cube.Pdf.Editor
         public IElement Preview => Get(() => new BindableElement(
             () => Properties.Resources.MenuPreview,
             GetDispatcher(false)
-        ) { Command = IsItem(() => Track(() => _model.Preview())) });
+        ) { Command = IsItem(() => Track(() => Facade.Preview())) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -160,7 +142,7 @@ namespace Cube.Pdf.Editor
         public IElement Add => Get(() => new BindableElement(
             () => Properties.Resources.MenuAdd,
             GetDispatcher(false)
-        ) { Command = Any(() => SendOpen()) });
+        ) { Command = new DelegateCommand(() => SendOpen()) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -174,7 +156,7 @@ namespace Cube.Pdf.Editor
         public IElement Remove => Get(() => new BindableElement(
             () => Properties.Resources.MenuRemove,
             GetDispatcher(false)
-        ) { Command = IsItem(() => TrackSync(() => _model.Remove())) });
+        ) { Command = IsItem(() => Sync(() => Facade.Remove())) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -188,7 +170,7 @@ namespace Cube.Pdf.Editor
         public IElement Clear => Get(() => new BindableElement(
             () => Properties.Resources.MenuClear,
             GetDispatcher(false)
-        ) { Command = Any(() => TrackSync(() => _model.Clear())) });
+        ) { Command = new DelegateCommand(() => Sync(() => Facade.Clear())) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -202,7 +184,7 @@ namespace Cube.Pdf.Editor
         public IElement Up => Get(() => new BindableElement(
             () => Properties.Resources.MenuUp,
             GetDispatcher(false)
-        ) { Command = IsItem(() => TrackSync(() => _model.Move(-1))) });
+        ) { Command = IsItem(() => Sync(() => Facade.Move(-1))) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -216,7 +198,7 @@ namespace Cube.Pdf.Editor
         public IElement Down => Get(() => new BindableElement(
             () => Properties.Resources.MenuDown,
             GetDispatcher(false)
-        ) { Command = IsItem(() => TrackSync(() => _model.Move(1))) });
+        ) { Command = IsItem(() => Sync(() => Facade.Move(1))) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -276,6 +258,36 @@ namespace Cube.Pdf.Editor
 
         #endregion
 
+        #region Commands
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DragAdd
+        ///
+        /// <summary>
+        /// Gets the command when files are Drag&amp;Drop.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand DragAdd => Get(() =>
+            new DelegateCommand<string[]>(e => Facade.Add(e))
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SelectClear
+        ///
+        /// <summary>
+        /// Gets the SelectClear command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand SelectClear => Get(() =>
+            new DelegateCommand(() => Sync(() => Facade.SelectClear()))
+        );
+
+        #endregion
+
         #endregion
 
         #region Implementations
@@ -301,48 +313,6 @@ namespace Cube.Pdf.Editor
             finally { base.Dispose(disposing); }
         }
 
-        #region Factory
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Any
-        ///
-        /// <summary>
-        /// Creates a command that can execute at any time.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand Any(Action action) => new DelegateCommand(action);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsItem
-        ///
-        /// <summary>
-        /// Creates a command that can execute when any items are
-        /// selected.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand IsItem(Action action) => new DelegateCommand(action,
-            () => Data.Selection.Count > 0
-        ).Associate(Data.Selection);
-
-        #endregion
-
-        #region Send or Post
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TrackSync
-        ///
-        /// <summary>
-        /// Executes the Track method as a synchronous manner.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void TrackSync(Action action) => Track(action, DialogMessage.Create, true);
-
         /* ----------------------------------------------------------------- */
         ///
         /// SendOpen
@@ -363,15 +333,23 @@ namespace Cube.Pdf.Editor
         {
             var msg = MessageFactory.CreateForInsert();
             Send(msg);
-            if (!msg.Cancel) _model.Add(msg.Value);
+            if (!msg.Cancel) Facade.Add(msg.Value);
         }
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsItem
+        ///
+        /// <summary>
+        /// Creates a command that can execute when any items are
+        /// selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand IsItem(Action action) => new DelegateCommand(action,
+            () => Data.Selection.Count > 0
+        ).Associate(Data.Selection);
 
-        #endregion
-
-        #region Fields
-        private readonly InsertFacade _model;
         #endregion
     }
 }

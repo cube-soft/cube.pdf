@@ -23,14 +23,14 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DialogViewModel
+    /// DialogViewModel(TModel)
     ///
     /// <summary>
     /// Represents the ViewModel for a dialog window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DialogViewModel : ViewModelBase
+    public abstract class DialogViewModel<TModel> : ViewModelBase<TModel>
     {
         #region Constructors
 
@@ -40,18 +40,20 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the DialogViewModel with the
-        /// specified argumetns.
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="getTitle">Title for the dialog.</param>
-        /// <param name="aggregator">Messenger object.</param>
+        /// <param name="getTitle">Function to get title.</param>
+        /// <param name="model">Model object.</param>
+        /// <param name="aggregator">Message aggregator.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         protected DialogViewModel(Getter<string> getTitle,
+            TModel model,
             Aggregator aggregator,
             SynchronizationContext context
-        ) : base(aggregator, context)
+        ) : base(model, aggregator, context)
         {
             Title = Get(() => new BindableElement(getTitle, GetDispatcher(false)), nameof(Title));
         }

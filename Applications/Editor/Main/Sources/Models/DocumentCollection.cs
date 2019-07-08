@@ -19,6 +19,7 @@
 using Cube.FileSystem;
 using Cube.Mixin.String;
 using Cube.Pdf.Pdfium;
+using System;
 using System.Collections.Concurrent;
 
 namespace Cube.Pdf.Editor
@@ -28,7 +29,7 @@ namespace Cube.Pdf.Editor
     /// DocumentCollection
     ///
     /// <summary>
-    /// Represents a colletion of PDF documents.
+    /// Represents a collection of PDF documents.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -45,14 +46,14 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="password">Password query.</param>
         /// <param name="io">I/O handler.</param>
+        /// <param name="query">Function to get the password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentCollection(IQuery<string, string> password, IO io)
+        public DocumentCollection(IO io, Func<IQuery<string>> query)
         {
-            IO     = io;
-            _query = password;
+            IO = io;
+            _query = query;
         }
 
         #endregion
@@ -108,12 +109,12 @@ namespace Cube.Pdf.Editor
         public DocumentReader GetOrAdd(string src, string password)
         {
             if (!src.IsPdf()) return null;
-            if (_core.TryGetValue(src, out var value)) return value;
+            if (_inner.TryGetValue(src, out var value)) return value;
 
-            var dest = _core.GetOrAdd(src, e =>
+            var dest = _inner.GetOrAdd(src, e =>
                 password.HasValue() ?
                 new DocumentReader(e, password, IO) :
-                new DocumentReader(e, _query, true, IO)
+                new DocumentReader(e, _query(), true, IO)
             );
             return dest;
         }
@@ -129,15 +130,16 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Clear()
         {
-            foreach (var kv in _core) kv.Value.Dispose();
-            _core.Clear();
+            foreach (var kv in _inner) kv.Value.Dispose();
+            _inner.Clear();
         }
 
         #endregion
 
         #region Fields
-        private readonly ConcurrentDictionary<string, DocumentReader> _core = new ConcurrentDictionary<string, DocumentReader>();
-        private readonly IQuery<string, string> _query;
+        private readonly Func<IQuery<string>> _query;
+        private readonly ConcurrentDictionary<string, DocumentReader> _inner =
+            new ConcurrentDictionary<string, DocumentReader>();
         #endregion
     }
 }

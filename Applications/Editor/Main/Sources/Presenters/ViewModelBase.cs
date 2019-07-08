@@ -29,14 +29,14 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewModelBase
+    /// ViewModelBase(TModel)
     ///
     /// <summary>
     /// Represents the base class of ViewModels.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class ViewModelBase : PresentableBase
+    public abstract class ViewModelBase<TModel> : Presentable<TModel>
     {
         #region Constructors
 
@@ -46,19 +46,31 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the ViewModelBase class with
-        /// the specified argumetns.
+        /// the specified arguments.
         /// </summary>
         ///
+        /// <param name="model">Model object.</param>
         /// <param name="aggregator">Messenger object.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected ViewModelBase(Aggregator aggregator, SynchronizationContext context) :
-            base(aggregator, context) { }
+        protected ViewModelBase(TModel model, Aggregator aggregator, SynchronizationContext context) :
+            base(model, aggregator, context) { }
 
         #endregion
 
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Sync
+        ///
+        /// <summary>
+        /// Executes the specified action as a synchronous method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Sync(Action action) => Track(action, DialogMessage.Create, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -80,7 +92,7 @@ namespace Cube.Pdf.Editor
             if (!disposing) return;
             foreach (var obj in _elements.Values.OfType<IDisposable>()) obj.Dispose();
             _elements.Clear();
-            // TODO: _commands の開放処理
+            _commands.Clear();
         }
 
         #region Get

@@ -35,7 +35,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RemoveViewModel : DialogViewModel
+    public class RemoveViewModel : DialogViewModel<int>
     {
         #region Constructors
 
@@ -56,14 +56,13 @@ namespace Cube.Pdf.Editor
         public RemoveViewModel(Action<IEnumerable<int>> callback,
             int n,
             SynchronizationContext context
-        ) : base(() => Properties.Resources.TitleRemove, new Aggregator(), context)
+        ) : base(() => Properties.Resources.TitleRemove, n, new Aggregator(), context)
         {
-            _count = n;
             Range = new BindableValue<string>(string.Empty, GetDispatcher(false));
             OK.Command = new DelegateCommand(
                 () => Track(() =>
                 {
-                    callback(new Range(Range.Value, _count).Select(i => i - 1));
+                    callback(new Range(Range.Value, Facade).Select(i => i - 1));
                     Send<CloseMessage>();
                 }),
                 () => Range.Value.HasValue()
@@ -111,14 +110,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> PageCaption => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuPageCount,
-            () => string.Format(Properties.Resources.MessagePage, _count),
+            () => string.Format(Properties.Resources.MessagePage, Facade),
             GetDispatcher(false)
         ));
 
-        #endregion
-
-        #region Fields
-        private readonly int _count;
         #endregion
     }
 }

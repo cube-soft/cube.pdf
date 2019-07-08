@@ -101,7 +101,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public async Task ExtractAsync(IProgress<ProgressMessage<string>> progress)
+        public async Task ExtractAsync(IProgress<Message<int>> progress)
         {
             try
             {
@@ -207,7 +207,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Extract(IProgress<ProgressMessage<string>> progress)
+        private void Extract(IProgress<Message<int>> progress)
         {
             try
             {
@@ -245,7 +245,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private KeyValuePair<int, int> ExtractImages(IProgress<ProgressMessage<string>> progress)
+        private KeyValuePair<int, int> ExtractImages(IProgress<Message<int>> progress)
         {
             var query = new Query<string>(e => throw new NotSupportedException());
             using (var reader = new DocumentReader(Source, query, true, true, IO))
@@ -264,7 +264,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ExtractImages(DocumentReader src, IProgress<ProgressMessage<string>> progress)
+        private void ExtractImages(DocumentReader src, IProgress<Message<int>> progress)
         {
             var count = src.Pages.Count();
             var name = IO.Get(Source).BaseName;
@@ -342,12 +342,11 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ProgressMessage<string> Create(int percentage, string message) =>
-            new ProgressMessage<string>
-            {
-                Ratio = percentage,
-                Value = message
-            };
+        private Message<int> Create(int percentage, string message) => new Message<int>
+        {
+            Value = percentage,
+            Text  = message,
+        };
 
         #endregion
 

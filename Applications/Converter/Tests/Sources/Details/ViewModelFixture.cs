@@ -165,7 +165,7 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         protected SettingFolder Create(IEnumerable<string> args)
         {
-            var asm  = Assembly.GetExecutingAssembly();
+            var asm  = typeof(MainWindow).Assembly;
             var fmt  = Cube.DataContract.Format.Registry;
             var path = $@"CubeSoft\CubePDF\{GetType().Name}";
             var dest = new SettingFolder(asm, fmt, path, IO);
@@ -236,15 +236,15 @@ namespace Cube.Pdf.Converter.Tests
         /// SetMessage
         ///
         /// <summary>
-        /// メッセージボックス表示時に実行されるハンドラです。
+        /// Occurs when the message box is displayed.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         protected void SetMessage(DialogMessage e)
         {
             Assert.That(e.Icon, Is.EqualTo(DialogIcon.Error).Or.EqualTo(DialogIcon.Warning));
-            Message  = e.Value;
-            e.Status = DialogStatus.Ok;
+            Message = e.Text;
+            e.Value = DialogStatus.Yes;
         }
 
         /* ----------------------------------------------------------------- */
@@ -252,7 +252,7 @@ namespace Cube.Pdf.Converter.Tests
         /// SetUiCulture
         ///
         /// <summary>
-        /// SetCulture イベント発生時に実行されるハンドラです。
+        /// Occurs when the SetCulture event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

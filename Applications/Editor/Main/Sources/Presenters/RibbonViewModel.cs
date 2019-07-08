@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class RibbonViewModel : ViewModelBase
+    public sealed class RibbonViewModel : ViewModelBase<MainBindable>
     {
         #region Constructors
 
@@ -52,15 +52,13 @@ namespace Cube.Pdf.Editor
         public RibbonViewModel(MainBindable src,
             Aggregator aggregator,
             SynchronizationContext context
-        ) : base(aggregator, context)
+        ) : base(src, aggregator, context)
         {
             if (src != null)
             {
                 src.Source.PropertyChanged += WhenPropertyChanged;
                 src.Busy.PropertyChanged   += WhenPropertyChanged;
             }
-
-            _model = src;
         }
 
         #endregion
@@ -311,7 +309,7 @@ namespace Cube.Pdf.Editor
             nameof(Insert),
             () => Properties.Resources.MenuInsert,
             () => Properties.Resources.TooltipInsert,
-            () => !_model.Busy.Value && _model.IsOpen(),
+            () => !Facade.Busy.Value && Facade.IsOpen(),
             GetDispatcher(false)
         ));
 
@@ -389,7 +387,7 @@ namespace Cube.Pdf.Editor
             nameof(Remove),
             () => Properties.Resources.MenuRemove,
             () => Properties.Resources.TooltipRemove,
-            () => !_model.Busy.Value && _model.IsOpen(),
+            () => !Facade.Busy.Value && Facade.IsOpen(),
             GetDispatcher(false)
         ));
 
@@ -572,8 +570,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> FrameOnly => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuFrameOnly,
-            () => _model.Settings.FrameOnly,
-            e  => _model.Settings.FrameOnly = e,
+            () => Facade.Settings.FrameOnly,
+            e  => Facade.Settings.FrameOnly = e,
             GetDispatcher(false)
         ));
 
@@ -596,10 +594,6 @@ namespace Cube.Pdf.Editor
             foreach (var re in src) re.Refresh(nameof(RibbonElement.Enabled));
         }
 
-        #endregion
-
-        #region Fields
-        private readonly MainBindable _model;
         #endregion
     }
 }

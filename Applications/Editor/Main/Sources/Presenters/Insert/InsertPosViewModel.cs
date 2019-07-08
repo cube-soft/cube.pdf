@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class InsertPosViewModel : ViewModelBase
+    public sealed class InsertPosViewModel : ViewModelBase<InsertBindable>
     {
         #region Constructors
 
@@ -51,7 +51,7 @@ namespace Cube.Pdf.Editor
         public InsertPosViewModel(InsertBindable src,
             Aggregator aggregator,
             SynchronizationContext context
-        ) : base(aggregator, context) { _model = src; }
+        ) : base(src, aggregator, context) { }
 
         #endregion
 
@@ -69,7 +69,7 @@ namespace Cube.Pdf.Editor
         public IElement Main => Get(() => new BindableElement(
             () => Properties.Resources.MenuInsertPosition,
             GetDispatcher(false)
-        ) { Command = new DelegateCommand<int>(e => _model.Index.Value = e) });
+        ) { Command = new DelegateCommand<int>(e => Facade.Index.Value = e) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -111,7 +111,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> Selected => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuPositionSelected,
-            () => _model.SelectedIndex >= 0,
+            () => Facade.SelectedIndex >= 0,
             GetDispatcher(false)
         ));
 
@@ -127,8 +127,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<int> UserSpecified => Get(() => new BindableElement<int>(
             () => Properties.Resources.MenuPositionSpecified,
-            () => _model.UserSpecifiedIndex.Value + 1,
-            e  => _model.UserSpecifiedIndex.Value = e - 1,
+            () => Facade.UserSpecifiedIndex.Value + 1,
+            e  => Facade.UserSpecifiedIndex.Value = e - 1,
             GetDispatcher(false)
         ));
 
@@ -143,14 +143,10 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement UserSpecifiedSuffix => Get(() => new BindableElement(
-            () => string.Format($"/ {Properties.Resources.MessagePage}", _model.Count),
+            () => string.Format($"/ {Properties.Resources.MessagePage}", Facade.Count),
             GetDispatcher(false)
         ));
 
-        #endregion
-
-        #region Fields
-        private readonly InsertBindable _model;
         #endregion
     }
 }

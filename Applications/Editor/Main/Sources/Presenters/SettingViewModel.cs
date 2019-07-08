@@ -34,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class SettingViewModel : DialogViewModel
+    public sealed class SettingViewModel : DialogViewModel<SettingFolder>
     {
         #region Constructors
 
@@ -52,12 +52,11 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingViewModel(SettingFolder src, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleSetting, new Aggregator(), context)
+            base(() => Properties.Resources.TitleSetting, src, new Aggregator(), context)
         {
-            _model = src;
             OK.Command = new DelegateCommand(() =>
             {
-                Send<UpdateSourcesMessage>();
+                Send<ApplyMessage>();
                 Send<CloseMessage>();
             });
         }
@@ -93,8 +92,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<Language> Language => Get(() => new BindableElement<Language>(
             () => Properties.Resources.MenuLanguage,
-            () => _model.Value.Language,
-            e  => _model.Value.Language = e,
+            () => Facade.Value.Language,
+            e  => Facade.Value.Language = e,
             GetDispatcher(false)
         ));
 
@@ -109,7 +108,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Version => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuVersion,
-            () => $"{_model.Title} {_model.Version.ToString(true)}",
+            () => $"{Facade.Title} {Facade.Version.ToString(true)}",
             GetDispatcher(false)
         ));
 
@@ -124,7 +123,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<Uri> Link => Get(() => new BindableElement<Uri>(
             () => Assembly.GetExecutingAssembly().GetCopyright(),
-            () => _model.Value.Uri,
+            () => Facade.Value.Uri,
             GetDispatcher(false)
         ) { Command = new DelegateCommand(() => Post(Link.Value)) });
 
@@ -140,8 +139,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> Update => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuUpdate,
-            () => _model.Value.CheckUpdate,
-            e  => _model.Value.CheckUpdate = e,
+            () => Facade.Value.CheckUpdate,
+            e  => Facade.Value.CheckUpdate = e,
             GetDispatcher(false)
         ));
 
@@ -173,10 +172,6 @@ namespace Cube.Pdf.Editor
             GetDispatcher(false)
         ));
 
-        #endregion
-
-        #region Fields
-        private readonly SettingFolder _model;
         #endregion
     }
 }

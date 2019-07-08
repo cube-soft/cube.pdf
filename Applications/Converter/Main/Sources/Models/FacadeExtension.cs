@@ -19,7 +19,6 @@
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Cube.Pdf.Converter
 {
@@ -74,23 +73,6 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetSource
-        ///
-        /// <summary>
-        /// Sets the message result to the Source property.
-        /// </summary>
-        ///
-        /// <param name="src">Source facade.</param>
-        /// <param name="e">Result message.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void SetSource(this Facade src, OpenFileMessage e)
-        {
-            if (!e.Cancel) src.Settings.Value.Source = e.Value.First();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// SetDestination
         ///
         /// <summary>
@@ -104,30 +86,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static void SetDestination(this Facade src, SaveFileMessage e)
         {
-            if (e.Cancel) return;
-
             Debug.Assert(e.FilterIndex > 0);
             Debug.Assert(e.FilterIndex <= ViewResources.Formats.Count);
 
             src.Settings.Value.Destination = e.Value;
             src.Settings.Value.Format = ViewResources.Formats[e.FilterIndex - 1].Value;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetUserProgram
-        ///
-        /// <summary>
-        /// Sets the message result to the UserProgram property.
-        /// </summary>
-        ///
-        /// <param name="src">Source facade.</param>
-        /// <param name="e">Result message.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void SetUserProgram(this Facade src, OpenFileMessage e)
-        {
-            if (!e.Cancel) src.Settings.Value.UserProgram = e.Value.First();
         }
 
         #endregion

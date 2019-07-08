@@ -50,25 +50,24 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="src">User settings.</param>
-        /// <param name="query">Password query.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingFolder src, IQuery<string> query, SynchronizationContext context)
+        public MainFacade(SettingFolder src, SynchronizationContext context)
         {
             var images = new ImageCollection(e => _core?.GetOrAdd(e), new Dispatcher(context, true));
             var post   = new Dispatcher(context, false);
 
-            _core    = new DocumentCollection(query, src.IO);
+            _core    = new DocumentCollection(src.IO, () => Query);
             Backup   = new Backup(src.IO);
-            Bindable = new MainBindable(images, src, query, post);
+            Bindable = new MainBindable(images, src, post);
 
             Settings = src;
             Settings.Load();
             Settings.PropertyChanged += (s, e) => Update(e.PropertyName);
 
             var sizes = Bindable.Images.Preferences.ItemSizeOptions;
-            var index = sizes.LastIndexOf(e => e <= Bindable.ItemSize.Value);
+            var index = sizes.LastIndex(e => e <= Bindable.ItemSize.Value);
 
             Bindable.Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
             Bindable.Images.Preferences.FrameOnly     = src.Value.FrameOnly;
@@ -84,7 +83,7 @@ namespace Cube.Pdf.Editor
         /// Bindable
         ///
         /// <summary>
-        /// Gets bindable data related with PDF docuemnts.
+        /// Gets bindable data related with PDF documents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -111,6 +110,21 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Backup Backup { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Backup
+        ///
+        /// <summary>
+        /// Gets or sets the password query.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IQuery<string> Query
+        {
+            get => Bindable.Query;
+            set => Bindable.Query = value;
+        }
 
         #endregion
 

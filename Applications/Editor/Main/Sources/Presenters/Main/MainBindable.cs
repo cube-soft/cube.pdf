@@ -47,16 +47,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="images">Image collection.</param>
         /// <param name="settings">User settings.</param>
-        /// <param name="query">Password query.</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable(ImageCollection images, SettingFolder settings,
-            IQuery<string> query, IDispatcher dispatcher)
+        public MainBindable(ImageCollection images, SettingFolder settings, IDispatcher dispatcher)
         {
             _settings = settings;
             Images    = images;
-            Query     = query;
             History   = new History(dispatcher);
             Source    = new BindableValue<Information>(dispatcher);
             Message   = new BindableValue<string>(string.Empty, dispatcher);
@@ -127,7 +124,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IQuery<string> Query { get; }
+        public IQuery<string> Query
+        {
+            get => _query;
+            set => SetProperty(ref _query, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -251,7 +252,7 @@ namespace Cube.Pdf.Editor
         /// IsOpen
         ///
         /// <summary>
-        /// Gets the value indicatint whether a PDF document is open.
+        /// Gets the value indicating whether a PDF document is open.
         /// </summary>
         ///
         /// <returns>true for open.</returns>
@@ -404,6 +405,7 @@ namespace Cube.Pdf.Editor
 
         #region Fields
         private readonly SettingFolder _settings;
+        private IQuery<string> _query;
         private Metadata _metadata;
         private Encryption _encryption;
         private bool _busy = false;

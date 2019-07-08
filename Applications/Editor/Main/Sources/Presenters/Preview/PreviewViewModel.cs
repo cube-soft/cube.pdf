@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PreviewViewModel : DialogViewModel
+    public sealed class PreviewViewModel : DialogViewModel<PreviewFacade>
     {
         #region Constructors
 
@@ -40,7 +40,7 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the PreviewViewModel
-        /// with the specified argumetns.
+        /// with the specified arguments.
         /// </summary>
         ///
         /// <param name="src">Image collection.</param>
@@ -51,10 +51,11 @@ namespace Cube.Pdf.Editor
         public PreviewViewModel(ImageCollection src,
             Information file,
             SynchronizationContext context
-        ) : base(() => GetTitle(src, file), new Aggregator(), context)
-        {
-            _model = new PreviewFacade(src, file, GetDispatcher(false));
-        }
+        ) : base(() => GetTitle(src, file),
+            new PreviewFacade(src, file, new Dispatcher(context, false)),
+            new Aggregator(),
+            context
+        ) { }
 
         #endregion
 
@@ -69,7 +70,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable Data => _model.Bindable;
+        public PreviewBindable Data => Facade.Bindable;
 
         #endregion
 
@@ -92,10 +93,6 @@ namespace Cube.Pdf.Editor
                 src.Count
             );
 
-        #endregion
-
-        #region Fields
-        private readonly PreviewFacade _model;
         #endregion
     }
 }

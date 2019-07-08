@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MetadataViewModel : DialogViewModel
+    public class MetadataViewModel : DialogViewModel<MetadataFacade>
     {
         #region Constructors
 
@@ -43,7 +43,7 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the MetadataViewModel
-        /// with the specified argumetns.
+        /// with the specified arguments.
         /// </summary>
         ///
         /// <param name="callback">Callback method when applied.</param>
@@ -56,8 +56,11 @@ namespace Cube.Pdf.Editor
             Metadata src,
             Information file,
             SynchronizationContext context
-        ) : base(() => Properties.Resources.TitleMetadata, new Aggregator(), context)
-        {
+        ) : base(() => Properties.Resources.TitleMetadata,
+            new MetadataFacade(src, file),
+            new Aggregator(),
+            context
+        ) {
             _model = new MetadataFacade(src, file);
             OK.Command = new DelegateCommand(() => { Send<CloseMessage>(); callback(src); });
         }

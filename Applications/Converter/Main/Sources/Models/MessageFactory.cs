@@ -21,6 +21,7 @@ using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography;
 
 namespace Cube.Pdf.Converter
@@ -89,7 +90,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static DialogMessage CreateError(string src) => new DialogMessage
         {
-            Value   = src,
+            Text    = src,
             Title   = Properties.Resources.TitleError,
             Icon    = DialogIcon.Error,
             Buttons = DialogButtons.Ok,
@@ -111,10 +112,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static DialogMessage CreateWarn(string src) => new DialogMessage
         {
-            Value   = src,
+            Text    = src,
             Title   = Properties.Resources.TitleWarning,
             Icon    = DialogIcon.Warning,
-            Buttons = DialogButtons.OkCancel,
+            Buttons = DialogButtons.YesNo,
         };
 
         #endregion
@@ -137,18 +138,17 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static OpenFileMessage CreateForSource(this SettingFolder src)
         {
-            var io   = src.IO;
             var path = src.Value.Source;
             var dest = new OpenFileMessage
             {
-                Title       = Properties.Resources.TitleSelectSource,
-                Value       = GetFileNames(path, io),
+                Text        = Properties.Resources.TitleSelectSource,
+                Value       = GetFileNames(path, src.IO),
                 Multiselect = false,
                 Filter      = ViewResources.SourceFilters.GetFilter(),
-                FilterIndex = ViewResources.SourceFilters.GetFilterIndex(path, io),
+                FilterIndex = ViewResources.SourceFilters.GetFilterIndex(path, src.IO),
             };
 
-            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
+            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, src.IO);
             return dest;
         }
 
@@ -168,18 +168,17 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static SaveFileMessage CreateForDestination(this SettingFolder src)
         {
-            var io   = src.IO;
             var path = src.Value.Destination;
             var dest = new SaveFileMessage
             {
-                Title           = Properties.Resources.TitleSelectDestination,
-                Value           = GetFileName(path, io),
+                Text            = Properties.Resources.TitleSelectDestination,
+                Value           = GetFileName(path, src.IO),
                 OverwritePrompt = false,
                 Filter          = ViewResources.DestinationFilters.GetFilter(),
-                FilterIndex     = ViewResources.DestinationFilters.GetFilterIndex(path, io),
+                FilterIndex     = ViewResources.DestinationFilters.GetFilterIndex(path, src.IO),
             };
 
-            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
+            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, src.IO);
             return dest;
         }
 
@@ -199,17 +198,16 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static OpenFileMessage CreateForUserProgram(this SettingFolder src)
         {
-            var io   = src.IO;
             var path = src.Value.UserProgram;
             var dest = new OpenFileMessage
             {
-                Title       = Properties.Resources.TitleSelectUserProgram,
-                Value       = GetFileNames(path, io),
+                Text        = Properties.Resources.TitleSelectUserProgram,
+                Value       = GetFileNames(path, src.IO),
                 Multiselect = false,
                 Filter      = ViewResources.UserProgramFilters.GetFilter(),
             };
 
-            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, io);
+            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path, src.IO);
             return dest;
         }
 
@@ -247,12 +245,14 @@ namespace Cube.Pdf.Converter
         private static string GetWarnMessage(string src, SaveOption option)
         {
             var s0 = string.Format(Properties.Resources.MessageExists, src);
-            new Dictionary<SaveOption, string>
+            var ok = new Dictionary<SaveOption, string>
             {
                 { SaveOption.Overwrite, Properties.Resources.MessageOverwrite },
                 { SaveOption.MergeHead, Properties.Resources.MessageMergeHead },
                 { SaveOption.MergeTail, Properties.Resources.MessageMergeTail },
             }.TryGetValue(option, out var s1);
+
+            Debug.Assert(ok);
             return $"{s0} {s1}";
         }
 

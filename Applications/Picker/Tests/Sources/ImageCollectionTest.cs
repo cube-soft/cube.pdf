@@ -52,7 +52,7 @@ namespace Cube.Pdf.Picker.Tests
             var dest = Get($"{nameof(Extract)}-{id}");
             using (var src = new ImageCollection(GetSource(filename), IO))
             {
-                src.ExtractAsync(new Progress<ProgressMessage<string>>()).Wait();
+                src.ExtractAsync(new Progress<Message<int>>()).Wait();
                 src.Save(dest);
             }
             return IO.GetFiles(dest).Length;

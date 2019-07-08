@@ -34,7 +34,7 @@ namespace Cube.Pdf.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : ViewModelBase<MainFacade>
+    public sealed class MainViewModel : Presentable<MainFacade>
     {
         #region Constructors
 

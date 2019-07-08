@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using Cube.Mixin.Observing;
 using Cube.Mixin.String;
 using Cube.Xui;
@@ -34,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PasswordViewModel : DialogViewModel
+    public sealed class PasswordViewModel : DialogViewModel<QueryMessage<string, string>>
     {
         #region Constructors
 
@@ -47,30 +46,17 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="src">Query for password.</param>
-        /// <param name="io">I/O handler</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PasswordViewModel(QueryMessage<string, string> src,
-            IO io,
-            SynchronizationContext context
-        ) : base(() => Properties.Resources.TitlePassword, new Aggregator(), context)
+        public PasswordViewModel(QueryMessage<string, string> src, SynchronizationContext context) :
+            base(() => Properties.Resources.TitlePassword, src, new Aggregator(), context)
         {
-            var fi = io.Get(src.Query);
-
-            Password = Get(() => new BindableElement<string>(
-                () => string.Format(Properties.Resources.MessagePassword, fi.Name),
-                () => src.Value,
-                e  => src.Value = e,
-                GetDispatcher(false)
-            ), nameof(Password));
-
+            Facade.Cancel = true;
             OK.Command = new DelegateCommand(
                 () => { src.Cancel = false; Send<CloseMessage>(); },
                 () => Password.Value.HasValue()
             ).Associate(Password);
-
-            src.Cancel = true;
         }
 
         #endregion
@@ -86,7 +72,31 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<string> Password { get; }
+        public IElement<string> Password => Get(() => new BindableElement<string>(
+            () => string.Format(Properties.Resources.MessagePassword, GetFileName(Facade.Query)),
+            () => Facade.Value,
+            e  => Facade.Value = e,
+            GetDispatcher(false)
+        ));
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetFileName
+        ///
+        /// <summary>
+        /// Gets the filename of the specified path.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetFileName(string src)
+        {
+            var index = src.LastIndexOfAny(new[] { '/', '\\' });
+            return index >= 0 && index + 1 < src.Length ? src.Substring(index) : src;
+        }
 
         #endregion
     }

@@ -17,6 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.String;
+using Cube.Mixin.Tasks;
+using System;
 using System.Linq;
 using System.Threading;
 
@@ -31,7 +33,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MetadataViewModel : ViewModelBase
+    public sealed class MetadataViewModel : Presentable<Metadata>
     {
         #region Constructors
 
@@ -50,10 +52,9 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public MetadataViewModel(Metadata model, Aggregator aggregator,
-            SynchronizationContext context) : base(aggregator, context)
+            SynchronizationContext context) : base(model, aggregator, context)
         {
-            _model = model;
-            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Facade.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
@@ -71,8 +72,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Title
         {
-            get => _model.Title;
-            set => _model.Title = value;
+            get => Facade.Title;
+            set => Facade.Title = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -86,8 +87,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Author
         {
-            get => _model.Author;
-            set => _model.Author = value;
+            get => Facade.Author;
+            set => Facade.Author = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -101,8 +102,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Subject
         {
-            get => _model.Subject;
-            set => _model.Subject = value;
+            get => Facade.Subject;
+            set => Facade.Subject = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -116,8 +117,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Keywords
         {
-            get => _model.Keywords;
-            set => _model.Keywords = value;
+            get => Facade.Keywords;
+            set => Facade.Keywords = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -131,8 +132,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Creator
         {
-            get => _model.Creator;
-            set => _model.Creator = value;
+            get => Facade.Creator;
+            set => Facade.Creator = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -146,8 +147,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public int Version
         {
-            get => _model.Version.Minor;
-            set => _model.Version = new PdfVersion(1, value);
+            get => Facade.Version.Minor;
+            set => Facade.Version = new PdfVersion(1, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -161,8 +162,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public ViewerOptions Options
         {
-            get => _model.Options;
-            set => _model.Options = value;
+            get => Facade.Options;
+            set => Facade.Options = value;
         }
 
         #endregion
@@ -171,24 +172,25 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ConfirmWhenSave
+        /// Save
         ///
         /// <summary>
-        /// Confirms if the current settings are acceptable.
+        /// Saves the current settings. When some fields have value,
+        /// confirms if the current settings are acceptable.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool ConfirmWhenSave()
+        public void Save(Action callback)
         {
             var src = new[] { Title, Author, Subject, Keywords };
-            if (src.All(e => !e.HasValue())) return true;
-            else return Confirm(MessageFactory.CreateWarn(Properties.Resources.MessageSave));
+            if (src.All(e => !e.HasValue())) callback();
+            else Send(
+                MessageFactory.CreateWarn(Properties.Resources.MessageSave),
+                e => callback(),
+                e => e.Any(DialogStatus.Yes)
+            ).Forget();
         }
 
-        #endregion
-
-        #region Fields
-        private readonly Metadata _model;
         #endregion
     }
 }

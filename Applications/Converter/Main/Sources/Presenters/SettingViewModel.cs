@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using System.Threading;
 
@@ -32,7 +31,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class SettingViewModel : ViewModelBase
+    public sealed class SettingViewModel : Presentable<SettingFolder>
     {
         #region Constructors
 
@@ -51,11 +50,9 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public SettingViewModel(SettingFolder settings, Aggregator aggregator,
-            SynchronizationContext context) : base(aggregator, context)
+            SynchronizationContext context) : base(settings, aggregator, context)
         {
-            _io    = settings.IO;
-            _model = settings.Value;
-            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Facade.Value.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
@@ -73,10 +70,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Format Format
         {
-            get => _model.Format;
+            get => Facade.Value.Format;
             set
             {
-                _model.Format = value;
+                Facade.Value.Format = value;
                 RaisePropertyChanged(nameof(IsPdf));
             }
         }
@@ -92,8 +89,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public SaveOption SaveOption
         {
-            get => _model.SaveOption;
-            set => _model.SaveOption = value;
+            get => Facade.Value.SaveOption;
+            set => Facade.Value.SaveOption = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -107,10 +104,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public PostProcess PostProcess
         {
-            get => _model.PostProcess;
+            get => Facade.Value.PostProcess;
             set
             {
-                _model.PostProcess = value;
+                Facade.Value.PostProcess = value;
                 RaisePropertyChanged(nameof(EnableUserProgram));
             }
         }
@@ -126,8 +123,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Source
         {
-            get => _model.Source;
-            set => _model.Source = value;
+            get => Facade.Value.Source;
+            set => Facade.Value.Source = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -141,8 +138,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Destination
         {
-            get => _model.Destination;
-            set => _model.Destination = value;
+            get => Facade.Value.Destination;
+            set => Facade.Value.Destination = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -156,8 +153,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string UserProgram
         {
-            get => _model.UserProgram;
-            set => _model.UserProgram = value;
+            get => Facade.Value.UserProgram;
+            set => Facade.Value.UserProgram = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -171,8 +168,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public int Resolution
         {
-            get => _model.Resolution;
-            set => _model.Resolution = value;
+            get => Facade.Value.Resolution;
+            set => Facade.Value.Resolution = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -187,12 +184,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool IsAutoOrientation
         {
-            get => _model.Orientation == Orientation.Auto;
+            get => Facade.Value.Orientation == Orientation.Auto;
             set
             {
                 if (value)
                 {
-                    _model.Orientation = Orientation.Auto;
+                    Facade.Value.Orientation = Orientation.Auto;
                     RaisePropertyChanged(nameof(IsAutoOrientation));
                 }
             }
@@ -210,12 +207,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool IsPortrait
         {
-            get => _model.Orientation == Orientation.Portrait;
+            get => Facade.Value.Orientation == Orientation.Portrait;
             set
             {
                 if (value)
                 {
-                    _model.Orientation = Orientation.Portrait;
+                    Facade.Value.Orientation = Orientation.Portrait;
                     RaisePropertyChanged(nameof(IsPortrait));
                 }
             }
@@ -233,12 +230,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool IsLandscape
         {
-            get => _model.Orientation == Orientation.Landscape;
+            get => Facade.Value.Orientation == Orientation.Landscape;
             set
             {
                 if (value)
                 {
-                    _model.Orientation = Orientation.Landscape;
+                    Facade.Value.Orientation = Orientation.Landscape;
                     RaisePropertyChanged(nameof(IsLandscape));
                 }
             }
@@ -256,8 +253,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Grayscale
         {
-            get => _model.Grayscale;
-            set => _model.Grayscale = value;
+            get => Facade.Value.Grayscale;
+            set => Facade.Value.Grayscale = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -272,8 +269,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool ImageFilter
         {
-            get => _model.ImageFilter;
-            set => _model.ImageFilter = value;
+            get => Facade.Value.ImageFilter;
+            set => Facade.Value.ImageFilter = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -288,8 +285,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Linearization
         {
-            get => _model.Linearization;
-            set => _model.Linearization = value;
+            get => Facade.Value.Linearization;
+            set => Facade.Value.Linearization = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -304,8 +301,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool CheckUpdate
         {
-            get => _model.CheckUpdate;
-            set => _model.CheckUpdate = value;
+            get => Facade.Value.CheckUpdate;
+            set => Facade.Value.CheckUpdate = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -319,8 +316,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Language Language
         {
-            get => _model.Language;
-            set => _model.Language = value;
+            get => Facade.Value.Language;
+            set => Facade.Value.Language = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -333,7 +330,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool SourceVisible => _model.SourceVisible;
+        public bool SourceVisible => Facade.Value.SourceVisible;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -344,13 +341,8 @@ namespace Cube.Pdf.Converter
         /// the source file is editable.
         /// </summary>
         ///
-        /// <remarks>
-        /// 現在は、プログラム引数で /DeleteOnClose オプションとともに
-        /// 入力ファイルが指定された場合、変更不可能としています。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public bool SourceEditable => !_model.DeleteSource;
+        public bool SourceEditable => !Facade.Value.DeleteSource;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -391,15 +383,15 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Confirm()
         {
-            if (!_io.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
-            else return Confirm(MessageFactory.Create(Destination, SaveOption));
+            if (!Facade.IO.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
+            else
+            {
+                var src = MessageFactory.Create(Destination, SaveOption);
+                Send(src);
+                return src.Value == DialogStatus.Yes;
+            }
         }
 
-        #endregion
-
-        #region Fields
-        private readonly SettingValue _model;
-        private readonly IO _io;
         #endregion
     }
 }

@@ -426,7 +426,7 @@ namespace Cube.Pdf.Editor
         {
             var items = src.Bindable.Images.Preferences.ItemSizeOptions;
             var prev  = src.Bindable.Images.Preferences.ItemSizeIndex;
-            var next  = items.LastIndexOf(x => x <= src.Settings.Value.ItemSize);
+            var next  = items.LastIndex(x => x <= src.Settings.Value.ItemSize);
             src.Zoom(next - prev);
         }
 

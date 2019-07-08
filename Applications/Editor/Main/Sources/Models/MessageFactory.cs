@@ -19,7 +19,6 @@
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
 using System;
-using System.Reflection;
 
 namespace Cube.Pdf.Editor
 {
@@ -67,8 +66,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static DialogMessage CreateOverwriteWarn() => new DialogMessage
         {
-            Value   = Properties.Resources.MessageOverwrite,
-            Title   = Assembly.GetExecutingAssembly().GetTitle(),
+            Text    = Properties.Resources.MessageOverwrite,
+            Title   = typeof(App).Assembly.GetTitle(),
             Buttons = DialogButtons.YesNoCancel,
             Icon    = DialogIcon.Warning,
         };
@@ -89,8 +88,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static DialogMessage CreateError(string src) => new DialogMessage
         {
-            Value   = src,
-            Title   = Assembly.GetExecutingAssembly().GetTitle(),
+            Text    = src,
+            Title   = typeof(App).Assembly.GetTitle(),
             Icon    = DialogIcon.Error,
             Buttons = DialogButtons.Ok,
         };
@@ -112,7 +111,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static OpenFileMessage CreateForOpen() => new OpenFileMessage
         {
-            Title           = Properties.Resources.TitleOpen,
+            Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = false,
             Filter          = new []
@@ -135,7 +134,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static OpenFileMessage CreateForInsert() => new OpenFileMessage
         {
-            Title           = Properties.Resources.TitleOpen,
+            Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = true,
             Filter          = new []
@@ -158,7 +157,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static SaveFileMessage CreateForSave() => new SaveFileMessage
         {
-            Title           = Properties.Resources.TitleSaveAs,
+            Text            = Properties.Resources.TitleSaveAs,
             OverwritePrompt = true,
             CheckPathExists = false,
             Filter          = new[]

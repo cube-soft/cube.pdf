@@ -53,7 +53,7 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
-* 2019/04/15 version 0.5.3β
+* 2019/04/15 version 0.5.4β
     - Fix errors when showing icons that are associated with PDF files.
     - Fix a problem when selecting with Ctrl-click.
 * 2018/12/10 version 0.5.2β

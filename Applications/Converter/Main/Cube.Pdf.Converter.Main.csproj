@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.0.0.21</Version>
+        <Version>1.0.0.22</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF</Product>
@@ -28,7 +28,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Converter.csproj" />
-        <PackageReference Include="Cube.Forms" Version="1.16.0" />
+        <PackageReference Include="Cube.Forms" Version="1.17.0" />
         <Reference Include="System.Windows.Forms" />
     </ItemGroup>
     <ItemGroup>

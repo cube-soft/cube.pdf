@@ -33,7 +33,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : ViewModelBase<MainFacade>
+    public sealed class MainViewModel : Presentable<MainFacade>
     {
         #region Constructors
 
