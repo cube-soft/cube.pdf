@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+
 namespace Cube.Pdf.Pdfium
 {
     /* --------------------------------------------------------------------- */
@@ -26,7 +27,7 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal abstract class PdfiumLibrary
+    internal abstract class PdfiumLibrary : DisposableBase
     {
         #region Constructors
 

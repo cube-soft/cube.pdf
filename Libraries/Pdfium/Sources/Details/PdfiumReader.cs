@@ -32,7 +32,7 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class PdfiumReader : PdfiumLibrary, IDisposable
+    internal sealed class PdfiumReader : PdfiumLibrary
     {
         #region Constructors
 
@@ -186,7 +186,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public void Invoke(Action<IntPtr> action)
         {
-            if (_disposed) throw new ObjectDisposedException(GetType().Name);
+            if (Disposed) throw new ObjectDisposedException(GetType().Name);
             lock (_lock) action(_core);
         }
 
@@ -205,25 +205,8 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public T Invoke<T>(Func<IntPtr, T> func)
         {
-            if (_disposed) throw new ObjectDisposedException(GetType().Name);
+            if (Disposed) throw new ObjectDisposedException(GetType().Name);
             lock (_lock) return func(_core);
-        }
-
-        #region IDisposable
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the PdfiumReader.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /* ----------------------------------------------------------------- */
@@ -241,11 +224,8 @@ namespace Cube.Pdf.Pdfium
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        private void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
-            if (_disposed) return;
-            _disposed = true;
-
             lock (_lock)
             {
                 if (_core != IntPtr.Zero)
@@ -257,8 +237,6 @@ namespace Cube.Pdf.Pdfium
 
             if (disposing) _stream?.Dispose();
         }
-
-        #endregion
 
         #endregion
 
@@ -356,7 +334,6 @@ namespace Cube.Pdf.Pdfium
         private readonly System.IO.Stream _stream;
         private readonly ReadDelegate _delegate;
         private IntPtr _core;
-        private bool _disposed;
         #endregion
     }
 }
