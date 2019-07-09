@@ -56,9 +56,9 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public static Encryption Create(PdfiumReader core, string password)
         {
-            var method     = core.Invoke(e => PdfiumApi.FPDF_GetSecurityHandlerRevision(e));
-            var permission = (uint)core.Invoke(e => PdfiumApi.FPDF_GetDocPermissions(e));
-            var restrict   = permission != 0xfffffffc;
+            var method   = core.Invoke(NativeMethods.FPDF_GetSecurityHandlerRevision);
+            var value    = (uint)core.Invoke(NativeMethods.FPDF_GetDocPermissions);
+            var restrict = value != 0xfffffffc && value != 0xffffffff;
 
             return method == -1 ?
                    new Encryption() :
@@ -69,7 +69,7 @@ namespace Cube.Pdf.Pdfium
                        OpenWithPassword = restrict,
                        UserPassword     = restrict ? password : string.Empty,
                        Method           = CreateMethod(method),
-                       Permission       = new Permission(permission),
+                       Permission       = new Permission(value),
                    };
         }
 

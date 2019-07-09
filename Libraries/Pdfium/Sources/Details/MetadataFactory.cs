@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -49,7 +50,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public static Metadata Create(PdfiumReader core) => new Metadata
         {
-            Version  = GetVersion(core),
+            Version  = core.Invoke(GetVersion),
             Title    = GetText(core, nameof(Metadata.Title)),
             Author   = GetText(core, nameof(Metadata.Author)),
             Subject  = GetText(core, nameof(Metadata.Subject)),
@@ -74,11 +75,11 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private static string GetText(PdfiumReader core, string name)
         {
-            var size = core.Invoke(e => PdfiumApi.FPDF_GetMetaText(e, name, null, 0));
+            var size = core.Invoke(e => NativeMethods.FPDF_GetMetaText(e, name, null, 0));
             if (size <= 2) return string.Empty;
 
             var buffer = new byte[size];
-            core.Invoke(e => PdfiumApi.FPDF_GetMetaText(e, name, buffer, size));
+            core.Invoke(e => NativeMethods.FPDF_GetMetaText(e, name, buffer, size));
             return Encoding.Unicode.GetString(buffer, 0, (int)(size - 2));
         }
 
@@ -91,11 +92,10 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static PdfVersion GetVersion(PdfiumReader core) => core.Invoke(
-            e => PdfiumApi.FPDF_GetFileVersion(e, out var version) ?
-            new PdfVersion(version / 10, version % 10) :
-            new PdfVersion(1, 7)
-        );
+        private static PdfVersion GetVersion(IntPtr core) =>
+            NativeMethods.FPDF_GetFileVersion(core, out var dest) ?
+            new PdfVersion(dest / 10, dest % 10) :
+            new PdfVersion(1, 7);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,9 +108,8 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private static ViewerOptions GetPageMode(PdfiumReader core)
         {
-            var m = core.Invoke(e => PdfiumApi.FPDFDoc_GetPageMode(e));
-            return new Dictionary<int, ViewerOptions>
-            {
+            var m = core.Invoke(NativeMethods.FPDFDoc_GetPageMode);
+            return new Dictionary<int, ViewerOptions> {
                 { 1, ViewerOptions.Outline         },
                 { 2, ViewerOptions.Thumbnail       },
                 { 3, ViewerOptions.FullScreen      },

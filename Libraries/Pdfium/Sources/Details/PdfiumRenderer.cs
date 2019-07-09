@@ -90,8 +90,7 @@ namespace Cube.Pdf.Pdfium
         {
             if (core == IntPtr.Zero) return null;
 
-            var n = 5;
-            var hp = PdfiumApi.FPDF_LoadPage(core, page.Number - 1, n);
+            var hp = NativeMethods.FPDF_LoadPage(core, page.Number - 1);
             if (hp == IntPtr.Zero) throw new LoadException(LoadStatus.PageError);
 
             try
@@ -103,14 +102,14 @@ namespace Cube.Pdf.Pdfium
 
                 using (var gs = Graphics.FromImage(dest)) gs.Clear(Color.White);
                 var bits = dest.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, dest.PixelFormat);
-                var hbm  = PdfiumApi.FPDFBitmap_CreateEx(width, height, bpp, bits.Scan0, width * bpp);
-                PdfiumApi.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, 0, flags, n);
-                PdfiumApi.FPDFBitmap_Destroy(hbm);
+                var hbm  = NativeMethods.FPDFBitmap_CreateEx(width, height, bpp, bits.Scan0, width * bpp);
+                NativeMethods.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, 0, flags);
+                NativeMethods.FPDFBitmap_Destroy(hbm);
                 dest.UnlockBits(bits);
 
                 return dest;
             }
-            finally { PdfiumApi.FPDF_ClosePage(hp); }
+            finally { NativeMethods.FPDF_ClosePage(hp); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -127,14 +126,13 @@ namespace Cube.Pdf.Pdfium
         {
             if (core == IntPtr.Zero) return;
 
-            var n = 5;
-            var hp = PdfiumApi.FPDF_LoadPage(core, page.Number - 1, n);
+            var hp = NativeMethods.FPDF_LoadPage(core, page.Number - 1);
             if (hp == IntPtr.Zero) throw new LoadException(LoadStatus.PageError);
             var hdc = dest.GetHdc();
 
             try
             {
-                PdfiumApi.FPDF_RenderPage(
+                NativeMethods.FPDF_RenderPage(
                     hdc,
                     hp,
                     (int)point.X,
@@ -142,14 +140,13 @@ namespace Cube.Pdf.Pdfium
                     (int)size.Width,
                     (int)size.Height,
                     GetRotation(page.Delta),
-                    flags,
-                    n
+                    flags
                 );
             }
             finally
             {
                 dest.ReleaseHdc(hdc);
-                PdfiumApi.FPDF_ClosePage(hp);
+                NativeMethods.FPDF_ClosePage(hp);
             }
         }
 

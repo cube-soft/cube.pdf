@@ -178,36 +178,28 @@ namespace Cube.Pdf.Pdfium
         /// Invoke
         ///
         /// <summary>
-        /// Invokes the specified action.
+        /// Invokes the specified action with the global lock.
         /// </summary>
         ///
-        /// <param name="action">Action object.</param>
+        /// <param name="action">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Invoke(Action<IntPtr> action)
-        {
-            if (Disposed) throw new ObjectDisposedException(GetType().Name);
-            lock (_lock) action(_core);
-        }
+        public void Invoke(Action<IntPtr> action) => Invoke(() => action(_core));
 
         /* ----------------------------------------------------------------- */
         ///
         /// Invoke
         ///
         /// <summary>
-        /// Invokes the specified function.
+        /// Invokes the specified function with the global lock.
         /// </summary>
         ///
-        /// <param name="func">Function object.</param>
+        /// <param name="func">User function.</param>
         ///
-        /// <returns>Return value for the specified object.</returns>
+        /// <returns>Returned value of the specified function.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public T Invoke<T>(Func<IntPtr, T> func)
-        {
-            if (Disposed) throw new ObjectDisposedException(GetType().Name);
-            lock (_lock) return func(_core);
-        }
+        public T Invoke<T>(Func<IntPtr, T> func) => Invoke(() => func(_core));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -224,19 +216,15 @@ namespace Cube.Pdf.Pdfium
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing) => Lock(() =>
         {
-            lock (_lock)
+            if (_core != IntPtr.Zero)
             {
-                if (_core != IntPtr.Zero)
-                {
-                    PdfiumApi.FPDF_CloseDocument(_core);
-                    _core = IntPtr.Zero;
-                }
+                NativeMethods.FPDF_CloseDocument(_core);
+                _core = IntPtr.Zero;
             }
-
             if (disposing) _stream?.Dispose();
-        }
+        });
 
         #endregion
 
@@ -255,7 +243,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private void Load(string password)
         {
-            var core = PdfiumApi.FPDF_LoadCustomDocument(
+            var core = Invoke(() => NativeMethods.FPDF_LoadCustomDocument(
                 new FileAccess
                 {
                     Length    = (uint)_stream.Length,
@@ -263,7 +251,7 @@ namespace Cube.Pdf.Pdfium
                     Parameter = IntPtr.Zero,
                 },
                 password
-            );
+            ));
 
             if (core == IntPtr.Zero) throw GetLastError();
 
@@ -286,7 +274,7 @@ namespace Cube.Pdf.Pdfium
         private PdfFile Create(string password, bool fullaccess)
         {
             var dest = IO.GetPdfFile(Source, password);
-            dest.Count      = Invoke(e => PdfiumApi.FPDF_GetPageCount(e));
+            dest.Count      = Invoke(NativeMethods.FPDF_GetPageCount);
             dest.FullAccess = fullaccess;
             return dest;
         }
@@ -330,7 +318,6 @@ namespace Cube.Pdf.Pdfium
         #endregion
 
         #region Fields
-        private readonly object _lock = new object();
         private readonly System.IO.Stream _stream;
         private readonly ReadDelegate _delegate;
         private IntPtr _core;
