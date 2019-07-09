@@ -345,6 +345,51 @@ namespace Cube.Pdf.Pdfium
             int rotate, int flags, int retry) =>
             Invoke(() => NativeMethods.FPDF_RenderPage(dc, page, start_x, start_y, size_x, size_y, rotate, flags), retry);
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_RenderPageBitmap
+        ///
+        /// <summary>
+        /// Render contents of a page to a device independent bitmap.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void FPDF_RenderPageBitmap(IntPtr bitmap, IntPtr page,
+            int start_x, int start_y, int size_x, int size_y,
+            int rotate, int flags, int retry) =>
+            Invoke(() => NativeMethods.FPDF_RenderPageBitmap(bitmap, page, start_x, start_y, size_x, size_y, rotate, flags), retry);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDFBitmap_CreateEx
+        ///
+        /// <summary>
+        /// Create a device independent bitmap.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IntPtr FPDFBitmap_CreateEx(int width, int height,
+            int format, IntPtr first, int stride) =>
+            Invoke(() => NativeMethods.FPDFBitmap_CreateEx(width, height, format, first, stride));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDFBitmap_Destroy
+        ///
+        /// <summary>
+        /// Destroy a bitmap and release all related buffers.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void FPDFBitmap_Destroy(IntPtr bitmap) =>
+            Invoke(() => NativeMethods.FPDFBitmap_Destroy(bitmap));
+
         #endregion
 
         #endregion
@@ -381,7 +426,7 @@ namespace Cube.Pdf.Pdfium
         {
             for (var i = 0; i < retry; ++i)
             {
-                try { lock (_lock) action(); }
+                try { lock (_lock) { action(); return; } }
                 catch (Exception err) { LogWait(err, name, i, retry); }
             }
         }

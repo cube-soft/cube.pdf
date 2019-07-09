@@ -203,16 +203,7 @@ namespace Cube.Pdf.Pdfium
         /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public Image Render(Page page, SizeF size)
-        {
-            var dest = new Bitmap((int)size.Width, (int)size.Height);
-            using (var gs = Graphics.FromImage(dest))
-            {
-                gs.Clear(Color.White);
-                Render(gs, page, new PointF(0, 0), size);
-            }
-            return dest;
-        }
+        public Image Render(Page page, SizeF size) => _core.Render(page, size, 0);
 
         /* ----------------------------------------------------------------- */
         ///

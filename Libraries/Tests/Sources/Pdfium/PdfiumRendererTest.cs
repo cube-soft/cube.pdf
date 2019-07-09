@@ -18,6 +18,8 @@
 using Cube.Mixin.Pdf;
 using Cube.Pdf.Pdfium;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace Cube.Pdf.Tests.Pdfium
@@ -38,34 +40,72 @@ namespace Cube.Pdf.Tests.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Render
+        /// RenderImage
         ///
         /// <summary>
         /// Executes the test to render the specified page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("SampleRotation.pdf", 1, 0.5, 297, 421)]
-        [TestCase("SampleRotation.pdf", 2, 0.5, 421, 297)]
-        [TestCase("SampleRotation.pdf", 3, 0.5, 297, 421)]
-        [TestCase("SampleRotation.pdf", 4, 0.5, 421, 297)]
-        public void Render(string filename, int pagenum, double ratio, int width, int height)
+        [TestCaseSource(nameof(TestCases))]
+        public void Render(int id, string filename, int pagenum, int width, int height)
         {
-            var src  = GetSource(filename);
-            var dest = Get($"{IO.Get(src).BaseName}-{pagenum}.png");
-
-            using (var reader = new DocumentReader(GetSource(filename)))
+            using (var src = new DocumentReader(GetSource(filename)))
+            using (var bmp = src.Render(src.GetPage(pagenum)))
             {
-                var page = reader.GetPage(pagenum);
-                using (var image = reader.Render(page, ratio))
-                {
-                    Assert.That(image.Width,  Is.EqualTo(width));
-                    Assert.That(image.Height, Is.EqualTo(height));
-                    image.Save(dest, ImageFormat.Png);
-                }
+                Assert.That(bmp.Width,  Is.EqualTo(width));
+                Assert.That(bmp.Height, Is.EqualTo(height));
+                bmp.Save(Get($"{nameof(Render)}-{id:D3}.png"), ImageFormat.Png);
             }
+        }
 
-            Assert.That(IO.Exists(dest), Is.True);
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Render_Graphics
+        ///
+        /// <summary>
+        /// Executes the test to render the specified page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCaseSource(nameof(TestCases))]
+        public void Render_Graphics(int id, string filename, int pagenum, int width, int height)
+        {
+            using (var src = new DocumentReader(GetSource(filename)))
+            using (var bmp = new Bitmap(width, height))
+            using (var gs  = Graphics.FromImage(bmp))
+            {
+                src.Render(gs, src.GetPage(pagenum));
+                bmp.Save(Get($"{nameof(Render_Graphics)}-{id:D3}.png"), ImageFormat.Png);
+            }
+        }
+
+        #endregion
+
+        #region TestCases
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TestCases
+        ///
+        /// <summary>
+        /// Gets the test cases.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<TestCaseData> TestCases
+        {
+            get
+            {
+                var n = 0;
+                yield return new TestCaseData(n++, "SampleRotation.pdf",   1, 595, 842);
+                yield return new TestCaseData(n++, "SampleRotation.pdf",   2, 842, 595);
+                yield return new TestCaseData(n++, "SampleRotation.pdf",   3, 595, 842);
+                yield return new TestCaseData(n++, "SampleRotation.pdf",   4, 842, 595);
+                yield return new TestCaseData(n++, "SampleImage.pdf",      1, 595, 842);
+                yield return new TestCaseData(n++, "SampleAlpha.pdf",      1, 595, 841);
+                yield return new TestCaseData(n++, "SampleAnnotation.pdf", 1, 595, 842);
+            }
         }
 
         #endregion

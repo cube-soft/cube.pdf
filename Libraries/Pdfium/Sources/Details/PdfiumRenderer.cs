@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Cube.Pdf.Pdfium
 {
@@ -53,9 +54,64 @@ namespace Cube.Pdf.Pdfium
             PointF point, SizeF size, int flags) =>
             src.Invoke(e => Render(e, dest, page, point, size, flags));
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Render
+        ///
+        /// <summary>
+        /// Executes the rendering with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">PDFium object.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="size">Drawing size.</param>
+        /// <param name="flags">Drawing flags.</param>
+        ///
+        /// <returns>Image to be rendered.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Image Render(this PdfiumReader src, Page page, SizeF size, int flags) =>
+            src.Invoke(e => Render(e, page, size, flags));
+
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Render
+        ///
+        /// <summary>
+        /// Executes the rendering with the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static Image Render(IntPtr core, Page page, SizeF size, int flags)
+        {
+            if (core == IntPtr.Zero) return null;
+
+            var n = 5;
+            var hp = PdfiumApi.FPDF_LoadPage(core, page.Number - 1, n);
+            if (hp == IntPtr.Zero) throw new LoadException(LoadStatus.PageError);
+
+            try
+            {
+                var bpp    = 4;
+                var width  = (int)size.Width;
+                var height = (int)size.Height;
+                var dest   = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+                using (var gs = Graphics.FromImage(dest)) gs.Clear(Color.White);
+                var bits = dest.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, dest.PixelFormat);
+                var hbm  = PdfiumApi.FPDFBitmap_CreateEx(width, height, bpp, bits.Scan0, width * bpp);
+                PdfiumApi.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, 0, flags, n);
+                PdfiumApi.FPDFBitmap_Destroy(hbm);
+                dest.UnlockBits(bits);
+
+                return dest;
+            }
+            finally { PdfiumApi.FPDF_ClosePage(hp); }
+        }
 
         /* ----------------------------------------------------------------- */
         ///

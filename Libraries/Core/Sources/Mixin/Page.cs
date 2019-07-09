@@ -211,7 +211,6 @@ namespace Cube.Mixin.Pdf
             var cos    = Math.Abs(Math.Cos(angle.Radian));
             var width  = src.Size.Width * cos + src.Size.Height * sin;
             var height = src.Size.Width * sin + src.Size.Height * cos;
-
             return new SizeF((float)(width * scale), (float)(height * scale));
         }
 
