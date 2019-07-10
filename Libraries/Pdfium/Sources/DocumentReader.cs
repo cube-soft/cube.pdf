@@ -15,8 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Cube.Pdf.Pdfium
@@ -30,7 +29,7 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentReader : DocumentReaderBase, IDocumentRenderer
+    public class DocumentReader : DisposableBase, IDocumentReader, IDocumentRenderer
     {
         #region Constructors
 
@@ -62,7 +61,7 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password) :
-            this(src, password, new IO()) { }
+            this(src, password, new OpenOption()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,8 +76,8 @@ namespace Cube.Pdf.Pdfium
         /// <param name="query">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string, string> query) :
-            this(src, query, new IO()) { }
+        public DocumentReader(string src, IQuery<string> query) :
+            this(src, query, new OpenOption()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -91,28 +90,28 @@ namespace Cube.Pdf.Pdfium
         ///
         /// <param name="src">Path of the PDF file.</param>
         /// <param name="password">Password string.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="options">Other options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, string password, IO io) :
-            this(src, MakeQuery(null, password), false, io) { }
+        public DocumentReader(string src, string password, OpenOption options) :
+            this(src, MakeQuery(null, password), options) { }
 
         /* ----------------------------------------------------------------- */
         ///
         /// DocumentReader
         ///
         /// <summary>
-        /// Initializes a new instance of the DocumentReader class with
-        /// the specified arguments.
+        /// Initializes a new instance of the DocumentReader class
+        /// with the specified arguments.
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
         /// <param name="query">Password query.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="options">Other options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string, string> query, IO io) :
-            this(src, query, false, io) { }
+        public DocumentReader(string src, IQuery<string> query, OpenOption options) :
+            this(src, MakeQuery(query, string.Empty), options) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -124,48 +123,77 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="query">Password query.</param>
-        /// <param name="fullaccess">Requires full access.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentReader(string src,
-            IQuery<string, string> query,
-            bool fullaccess,
-            IO io
-        ) : this(src, MakeQuery(query, string.Empty), fullaccess, io) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentReader
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentReader class with
-        /// the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="qv">Password query or string.</param>
-        /// <param name="fullaccess">Requires full access.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="query">Password query or string.</param>
+        /// <param name="options">Other options.</param>
         ///
         /* ----------------------------------------------------------------- */
         private DocumentReader(string src,
-            QueryMessage<IQuery<string, string>, string> qv,
-            bool fullaccess,
-            IO io
-        ) : base(io)
-        {
-            Debug.Assert(io != null);
-            _core = PdfiumReader.Create(src, qv, fullaccess, io);
-            Debug.Assert(_core != null);
+            QueryMessage<IQuery<string>, string> query,
+            OpenOption options
+        ) { _core = PdfiumReader.Create(src, query, options); }
 
-            File        = _core.File;
-            Pages       = _core.Pages;
-            Metadata    = _core.Metadata;
-            Encryption  = _core.Encryption;
-            Attachments = null; // not implemented
-        }
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// File
+        ///
+        /// <summary>
+        /// Gets information of the provided PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public File File => _core.File;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Gets the PDF metadata.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata Metadata => _core.Metadata;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// Gets the encryption information of the PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encryption Encryption => _core.Encryption;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Pages
+        ///
+        /// <summary>
+        /// Gets the page collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Page> Pages => _core.Pages;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments
+        ///
+        /// <summary>
+        /// Gets the attachment collection.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Currently not supported.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Attachment> Attachments { get; } = new Attachment[0];
 
         #endregion
 
@@ -235,8 +263,8 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static QueryMessage<IQuery<string, string>, string> MakeQuery(
-            IQuery<string, string> query, string password) =>
+        private static QueryMessage<IQuery<string>, string> MakeQuery(
+            IQuery<string> query, string password) =>
             Query.NewMessage(query, password);
 
         #endregion

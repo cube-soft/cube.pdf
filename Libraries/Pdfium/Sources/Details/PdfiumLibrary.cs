@@ -78,7 +78,7 @@ namespace Cube.Pdf.Pdfium
         public void Invoke(Action action)
         {
             if (Disposed) throw new ObjectDisposedException(GetType().Name);
-            lock (_core) action();
+            Lock(action);
         }
 
         /* ----------------------------------------------------------------- */

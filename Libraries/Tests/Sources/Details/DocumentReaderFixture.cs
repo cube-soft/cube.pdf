@@ -73,8 +73,8 @@ namespace Cube.Pdf.Tests
                 {
                     nameof(Pdf.Pdfium), (s, q, io) =>
                         q is string ?
-                        new Pdf.Pdfium.DocumentReader(s, q as string, io) :
-                        new Pdf.Pdfium.DocumentReader(s, q as IQuery<string, string>, io)
+                        new Pdf.Pdfium.DocumentReader(s, q as string) :
+                        new Pdf.Pdfium.DocumentReader(s, q as IQuery<string>)
                 },
             };
 

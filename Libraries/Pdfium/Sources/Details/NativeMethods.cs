@@ -28,12 +28,6 @@ namespace Cube.Pdf.Pdfium
     /// Represents APIs of the PDFium library.
     /// </summary>
     ///
-    /// <remarks>
-    /// このクラスのメソッドを直接実行しないで下さい。また、新しいメソッドを
-    /// 定義した場合、同名のメソッドを PdfiumApi にも定義し、PdfiumApi 経由で
-    /// 実行するようにして下さい。
-    /// </remarks>
-    ///
     /* --------------------------------------------------------------------- */
     internal class NativeMethods
     {

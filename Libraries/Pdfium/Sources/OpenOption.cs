@@ -15,25 +15,43 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Runtime.InteropServices;
+using Cube.FileSystem;
 
 namespace Cube.Pdf.Pdfium
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileAccess
+    /// OpenOption
     ///
     /// <summary>
-    /// Represents the data structure for PDFium to access files.
+    /// Represents the options to open a PDF file with the DocumentReader
+    /// class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [StructLayout(LayoutKind.Sequential)]
-    internal class FileAccess
+    public class OpenOption
     {
-        public uint Length;
-        public IntPtr GetBlock;
-        public IntPtr Parameter;
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets or sets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; set; } = new IO();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FullAccess
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to open with fully
+        /// accessible.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool FullAccess { get; set; } = false;
     }
 }

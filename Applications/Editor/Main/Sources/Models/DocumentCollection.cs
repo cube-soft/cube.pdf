@@ -113,8 +113,8 @@ namespace Cube.Pdf.Editor
 
             var dest = _inner.GetOrAdd(src, e =>
                 password.HasValue() ?
-                new DocumentReader(e, password, IO) :
-                new DocumentReader(e, _query(), true, IO)
+                new DocumentReader(e, password, new OpenOption { IO = IO }) :
+                new DocumentReader(e, _query(), new OpenOption { IO = IO, FullAccess = true })
             );
             return dest;
         }

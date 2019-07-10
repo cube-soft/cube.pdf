@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Mixin.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -38,6 +37,48 @@ namespace Cube.Pdf.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new instance of the PdfiumReader class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="password">Password string or query.</param>
+        /// <param name="options">Other options.</param>
+        ///
+        /// <returns>PdfiumReader object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PdfiumReader Create(string src,
+            QueryMessage<IQuery<string>, string> password,
+            OpenOption options
+        )
+        {
+            var dest = new PdfiumReader(src, options.IO);
+
+            while (true)
+            {
+                try
+                {
+                    dest.Load(password.Value);
+                    var denied = options.FullAccess && dest.File is PdfFile f && !f.FullAccess;
+                    if (denied) throw new LoadException(LoadStatus.PasswordError);
+                    return dest;
+                }
+                catch (LoadException err)
+                {
+                    if (err.Status != LoadStatus.PasswordError) throw;
+                    var msg = password.Query.Request(src);
+                    if (!msg.Cancel) password.Value = msg.Value;
+                    else throw new OperationCanceledException("Password");
+                }
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// PdfiumReader
         ///
         /// <summary>
@@ -54,8 +95,8 @@ namespace Cube.Pdf.Pdfium
             Source = src;
             IO     = io;
 
-            _stream   = IO.OpenRead(src);
-            _delegate = new ReadDelegate(Read);
+            _stream  = IO.OpenRead(src);
+            _handler = new GetBlockHandler(Read);
         }
 
         #endregion
@@ -134,47 +175,6 @@ namespace Cube.Pdf.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new instance of the PdfiumReader class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="qv">Password string or query.</param>
-        /// <param name="fullaccess">Requires full access.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /// <returns>PdfiumReader object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static PdfiumReader Create(string src,
-            QueryMessage<IQuery<string, string>, string> qv, bool fullaccess, IO io)
-        {
-            var dest = new PdfiumReader(src, io);
-
-            while (true)
-            {
-                try
-                {
-                    dest.Load(qv.Value);
-                    var denied = fullaccess && dest.File is PdfFile pf && !pf.FullAccess;
-                    if (denied) throw new LoadException(LoadStatus.PasswordError);
-                    return dest;
-                }
-                catch (LoadException err)
-                {
-                    if (err.Status != LoadStatus.PasswordError) throw;
-                    var args = qv.Query.RequestPassword(src);
-                    if (!args.Cancel) qv.Value = args.Value;
-                    else throw new OperationCanceledException();
-                }
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Invoke
         ///
         /// <summary>
@@ -243,40 +243,22 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private void Load(string password)
         {
-            var core = Invoke(() => NativeMethods.FPDF_LoadCustomDocument(
+            _core = Invoke(() => NativeMethods.FPDF_LoadCustomDocument(
                 new FileAccess
                 {
                     Length    = (uint)_stream.Length,
-                    GetBlock  = Marshal.GetFunctionPointerForDelegate(_delegate),
+                    GetBlock  = Marshal.GetFunctionPointerForDelegate(_handler),
                     Parameter = IntPtr.Zero,
                 },
                 password
             ));
 
-            if (core == IntPtr.Zero) throw GetLastError();
+            if (_core == IntPtr.Zero) throw GetLastError();
 
-            _core      = core;
-            Encryption = EncryptionFactory.Create(this, password);
-            File       = Create(password, !Encryption.OpenWithPassword);
-            Pages      = new ReadOnlyPageList(this, File);
             Metadata   = MetadataFactory.Create(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a PdfFile object from the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private PdfFile Create(string password, bool fullaccess)
-        {
-            var dest = IO.GetPdfFile(Source, password);
-            dest.Count      = Invoke(NativeMethods.FPDF_GetPageCount);
-            dest.FullAccess = fullaccess;
-            return dest;
+            Encryption = EncryptionFactory.Create(this, password);
+            File       = FileFactory.Create(this, password, !Encryption.OpenWithPassword);
+            Pages      = new ReadOnlyPageList(this, File);
         }
 
         /* ----------------------------------------------------------------- */
@@ -288,38 +270,26 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private int Read(IntPtr param, uint pos, IntPtr buffer, uint size)
+        private int Read(IntPtr param, uint pos, IntPtr dest, uint size)
         {
             try
             {
-                var managed = new byte[size];
+                var bytes = new byte[size];
 
                 _stream.Position = pos;
-                if (_stream.Read(managed, 0, (int)size) != size) return 0;
+                if (_stream.Read(bytes, 0, (int)size) != size) return 0;
 
-                Marshal.Copy(managed, 0, buffer, (int)size);
+                Marshal.Copy(bytes, 0, dest, (int)size);
                 return 1;
             }
             catch { return 0; }
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ReadDelegate
-        ///
-        /// <summary>
-        /// Represents the delegate to read data from the specified stream.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate int ReadDelegate(IntPtr param, uint pos, IntPtr buffer, uint size);
-
         #endregion
 
         #region Fields
         private readonly System.IO.Stream _stream;
-        private readonly ReadDelegate _delegate;
+        private readonly GetBlockHandler _handler;
         private IntPtr _core;
         #endregion
     }

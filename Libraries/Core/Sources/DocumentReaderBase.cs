@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf
@@ -26,24 +25,13 @@ namespace Cube.Pdf
     /// DocumentReaderBase
     ///
     /// <summary>
-    /// Base class for PDF document reader classes.
+    /// Represents the basic interface to load a PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DocumentReaderBase : IDocumentReader
+    public abstract class DocumentReaderBase : DisposableBase, IDocumentReader
     {
         #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentReaderBase
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentReaderBase class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected DocumentReaderBase() : this(new IO()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -57,26 +45,11 @@ namespace Cube.Pdf
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected DocumentReaderBase(IO io)
-        {
-            _dispose = new OnceAction<bool>(Dispose);
-            IO = io;
-        }
+        protected DocumentReaderBase(IO io) { IO = io; }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -133,57 +106,17 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public IEnumerable<Attachment> Attachments { get; protected set; }
 
-        #endregion
-
-        #region Methods
-
         /* ----------------------------------------------------------------- */
         ///
-        /// ~DocumentReaderBase
+        /// IO
         ///
         /// <summary>
-        /// Finalizes the DocumentReaderBase.
+        /// Gets the I/O handler.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        ~DocumentReaderBase() { _dispose.Invoke(false); }
+        protected IO IO { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases all resources used by the DocumentReaderBase.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Dispose()
-        {
-            _dispose.Invoke(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the DocumentReaderBase
-        /// and optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected abstract void Dispose(bool disposing);
-
-        #endregion
-
-        #region Fields
-        private OnceAction<bool> _dispose;
         #endregion
     }
 }

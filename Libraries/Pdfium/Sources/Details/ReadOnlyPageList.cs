@@ -51,8 +51,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public ReadOnlyPageList(PdfiumReader core, PdfFile file)
         {
-            Debug.Assert(core != null);
-            Debug.Assert(file != null);
+            Debug.Assert(core != null && file != null);
 
             File  = file;
             _core = core;
@@ -132,9 +131,9 @@ namespace Cube.Pdf.Pdfium
         /// <param name="index">Zero for the first page.</param>
         ///
         /* ----------------------------------------------------------------- */
-        private Page GetPage(int index)
+        private Page GetPage(int index) => _core.Invoke(e =>
         {
-            var page = _core.Invoke(e => NativeMethods.FPDF_LoadPage(e, index));
+            var page = NativeMethods.FPDF_LoadPage(e, index);
             if (page == IntPtr.Zero) throw _core.GetLastError();
 
             try
@@ -150,8 +149,8 @@ namespace Cube.Pdf.Pdfium
                     new PointF(72.0f, 72.0f) // Resolution
                 );
             }
-            finally { _core.Invoke(() => NativeMethods.FPDF_ClosePage(page)); }
-        }
+            finally { NativeMethods.FPDF_ClosePage(page); }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -170,10 +169,9 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private SizeF GetPageSize(IntPtr handle, int degree)
         {
-            var w = (float)_core.Invoke(() => NativeMethods.FPDF_GetPageWidth(handle));
-            var h = (float)_core.Invoke(() => NativeMethods.FPDF_GetPageHeight(handle));
-
-            return (degree != 90 && degree != 270) ? new SizeF(w, h) : new SizeF(h, w);
+            var w = (float)NativeMethods.FPDF_GetPageWidth(handle);
+            var h = (float)NativeMethods.FPDF_GetPageHeight(handle);
+            return degree % 180 == 0 ? new SizeF(w, h) : new SizeF(h, w);
         }
 
         /* ----------------------------------------------------------------- */
@@ -187,7 +185,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         private int GetPageRotation(IntPtr handle)
         {
-            var dest = _core.Invoke(() => NativeMethods.FPDFPage_GetRotation(handle));
+            var dest = NativeMethods.FPDFPage_GetRotation(handle);
             return dest == 1 ?  90 :
                    dest == 2 ? 180 :
                    dest == 3 ? 270 : 0;
