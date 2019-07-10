@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.String;
-using Cube.Mixin.Tasks;
 using System;
 using System.Linq;
 using System.Threading;
@@ -188,7 +187,7 @@ namespace Cube.Pdf.Converter
                 MessageFactory.CreateWarn(Properties.Resources.MessageSave),
                 e => callback(),
                 e => e.Any(DialogStatus.Yes)
-            ).Forget();
+            );
         }
 
         #endregion

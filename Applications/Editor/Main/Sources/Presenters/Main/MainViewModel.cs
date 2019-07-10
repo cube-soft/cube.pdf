@@ -22,7 +22,6 @@ using Cube.Mixin.Generics;
 using Cube.Mixin.Observing;
 using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
-using Cube.Mixin.Tasks;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;
@@ -84,7 +83,7 @@ namespace Cube.Pdf.Editor
             Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
 
             SetCommands();
-            Track(() => Facade.Setup(App.Arguments)).Forget();
+            Track(() => Facade.Setup(App.Arguments));
         }
 
         #endregion
@@ -410,7 +409,7 @@ namespace Cube.Pdf.Editor
 
             void close() => Facade.Close(m == DialogStatus.Yes);
             if (src != null) Sync(close);
-            else Track(close).Forget();
+            else Track(close);
         }
 
         /* ----------------------------------------------------------------- */

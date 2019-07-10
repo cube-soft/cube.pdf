@@ -218,7 +218,7 @@ namespace Cube.Pdf.Converter
         public void SelectDestination()
         {
             var src = Facade.Settings.CreateForDestination();
-            Send(src, e => Facade.SetDestination(src)).Forget();
+            Send(src, e => Facade.SetDestination(src));
         }
 
         /* ----------------------------------------------------------------- */
