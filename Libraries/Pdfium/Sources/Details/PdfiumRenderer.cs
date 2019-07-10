@@ -103,7 +103,7 @@ namespace Cube.Pdf.Pdfium
                 using (var gs = Graphics.FromImage(dest)) gs.Clear(Color.White);
                 var bits = dest.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, dest.PixelFormat);
                 var hbm  = NativeMethods.FPDFBitmap_CreateEx(width, height, bpp, bits.Scan0, width * bpp);
-                NativeMethods.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, 0, flags);
+                NativeMethods.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, GetRotation(page.Delta), flags);
                 NativeMethods.FPDFBitmap_Destroy(hbm);
                 dest.UnlockBits(bits);
 
