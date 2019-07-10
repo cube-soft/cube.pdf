@@ -21,6 +21,7 @@ using Cube.Mixin.String;
 using Cube.Pdf.Pdfium;
 using System;
 using System.Collections.Concurrent;
+using System.Drawing;
 
 namespace Cube.Pdf.Editor
 {
@@ -110,13 +111,7 @@ namespace Cube.Pdf.Editor
         {
             if (!src.IsPdf()) return null;
             if (_inner.TryGetValue(src, out var value)) return value;
-
-            var dest = _inner.GetOrAdd(src, e =>
-                password.HasValue() ?
-                new DocumentReader(e, password, new OpenOption { IO = IO }) :
-                new DocumentReader(e, _query(), new OpenOption { IO = IO, FullAccess = true })
-            );
-            return dest;
+            return _inner.GetOrAdd(src, e => Create(e, password));
         }
 
         /* ----------------------------------------------------------------- */
@@ -132,6 +127,31 @@ namespace Cube.Pdf.Editor
         {
             foreach (var kv in _inner) kv.Value.Dispose();
             _inner.Clear();
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new instance of the DocumentReader class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private DocumentReader Create(string src, string password)
+        {
+            var opt  = new OpenOption { IO = IO, FullAccess = true };
+            var dest = password.HasValue() ?
+                       new DocumentReader(src, password, opt) :
+                       new DocumentReader(src, _query(), opt);
+
+            dest.RenderOption.Background = Color.White;
+            return dest;
         }
 
         #endregion

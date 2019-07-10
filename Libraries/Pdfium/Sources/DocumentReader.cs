@@ -195,6 +195,17 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public IEnumerable<Attachment> Attachments { get; } = new Attachment[0];
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RenderOption
+        ///
+        /// <summary>
+        /// Gets or sets the rendering options.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RenderOption RenderOption { get; set; } = new RenderOption();
+
         #endregion
 
         #region Methods
@@ -215,7 +226,7 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public void Render(Graphics dest, Page page, PointF point, SizeF size) =>
-            _core.Render(dest, page, point, size, 0);
+            _core.Render(dest, page, point, size, RenderOption);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -231,7 +242,7 @@ namespace Cube.Pdf.Pdfium
         /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public Image Render(Page page, SizeF size) => _core.Render(page, size, 0);
+        public Image Render(Page page, SizeF size) => _core.Render(page, size, RenderOption);
 
         /* ----------------------------------------------------------------- */
         ///
