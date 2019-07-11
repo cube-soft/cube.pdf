@@ -56,24 +56,12 @@ namespace Cube.Pdf.Pdfium
             OpenOption options
         ) {
             var dest = new PdfiumReader(src, options.IO);
-
-            while (true)
+            try
             {
-                try
-                {
-                    dest.Load(password.Value);
-                    var denied = options.FullAccess && dest.File is PdfFile f && !f.FullAccess;
-                    if (denied) throw new PdfiumException(PdfiumStatus.PasswordError);
-                    return dest;
-                }
-                catch (PdfiumException err)
-                {
-                    if (err.Status != PdfiumStatus.PasswordError) throw;
-                    var msg = password.Query.Request(src);
-                    if (!msg.Cancel) password.Value = msg.Value;
-                    else throw new OperationCanceledException("Password");
-                }
+                Load(src, dest, password, options);
+                return dest;
             }
+            catch { dest.Dispose(); throw; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -228,6 +216,39 @@ namespace Cube.Pdf.Pdfium
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Load
+        ///
+        /// <summary>
+        /// Loads the PDF document with the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static void Load(string src,
+            PdfiumReader dest,
+            QueryMessage<IQuery<string>, string> password,
+            OpenOption options
+        ) {
+            while (true)
+            {
+                try
+                {
+                    dest.Load(password.Value);
+                    var denied = options.FullAccess && dest.File is PdfFile f && !f.FullAccess;
+                    if (denied) throw new PdfiumException(PdfiumStatus.PasswordError);
+                    else return;
+                }
+                catch (PdfiumException err)
+                {
+                    if (err.Status != PdfiumStatus.PasswordError) throw;
+                    var msg = password.Query.Request(src);
+                    if (!msg.Cancel) password.Value = msg.Value;
+                    else throw new OperationCanceledException("Password");
+                }
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
