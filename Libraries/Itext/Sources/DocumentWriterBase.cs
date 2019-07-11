@@ -319,7 +319,7 @@ namespace Cube.Pdf.Itext
             if (src is DocumentReader itext)
             {
                 var k = itext.File.FullName;
-                var v = itext.RawObject.TryCast<PdfReader>();
+                var v = itext.Core.TryCast<PdfReader>();
 
                 if (v != null && !_hints.ContainsKey(k)) _hints.Add(k, v);
             }
@@ -395,7 +395,7 @@ namespace Cube.Pdf.Itext
             var reader = new DocumentReader(key, file.Password, false, IO);
             _resources.Add(reader);
 
-            var dest = reader.RawObject.TryCast<PdfReader>();
+            var dest = reader.Core.TryCast<PdfReader>();
             Debug.Assert(dest != null);
             _hints.Add(key, dest);
 

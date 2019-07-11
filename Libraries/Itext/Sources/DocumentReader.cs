@@ -19,6 +19,7 @@
 using Cube.FileSystem;
 using Cube.Mixin.Pdf;
 using iTextSharp.text.pdf;
+using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
 {
@@ -35,7 +36,7 @@ namespace Cube.Pdf.Itext
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentReader : DocumentReaderBase
+    public class DocumentReader : DisposableBase, IDocumentReader
     {
         #region Constructors
 
@@ -181,19 +182,19 @@ namespace Cube.Pdf.Itext
             bool fullaccess,
             bool partial,
             IO io
-        ) : base(io)
-        {
-            _core = ReaderFactory.Create(src, password, fullaccess, partial);
+        ) {
+            IO   = io;
+            Core = ReaderFactory.Create(src, password, fullaccess, partial);
 
             var f = io.GetPdfFile(src, password.Value);
-            f.Count      = _core.NumberOfPages;
-            f.FullAccess = _core.IsOpenedWithFullPermissions;
+            f.Count      = Core.NumberOfPages;
+            f.FullAccess = Core.IsOpenedWithFullPermissions;
 
             File        = f;
-            Metadata    = _core.GetMetadata();
-            Encryption  = _core.GetEncryption(f);
-            Pages       = new ReadOnlyPageList(_core, f);
-            Attachments = new AttachmentCollection(_core, f, IO);
+            Metadata    = Core.GetMetadata();
+            Encryption  = Core.GetEncryption(f);
+            Pages       = new ReadOnlyPageList(Core, f);
+            Attachments = new AttachmentCollection(Core, f, IO);
         }
 
         #endregion
@@ -202,14 +203,80 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RawObject
+        /// File
         ///
         /// <summary>
-        /// Gets the raw object.
+        /// Gets the information of the target file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public object RawObject => _core;
+        public File File { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Gets the PDF metadata.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata Metadata { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// Gets the encryption information of the PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encryption Encryption { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Pages
+        ///
+        /// <summary>
+        /// Gets the page collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Page> Pages { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments
+        ///
+        /// <summary>
+        /// Gets the attachment collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Attachment> Attachments { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected IO IO { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Core
+        ///
+        /// <summary>
+        /// Gets the core object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal PdfReader Core { get; }
 
         #endregion
 
@@ -232,7 +299,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (disposing) _core?.Dispose();
+            if (disposing) Core?.Dispose();
         }
 
         #endregion
@@ -252,10 +319,6 @@ namespace Cube.Pdf.Itext
             IQuery<string> query, string password) =>
             Query.NewMessage(query, password);
 
-        #endregion
-
-        #region Fields
-        private readonly PdfReader _core;
         #endregion
     }
 }

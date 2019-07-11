@@ -52,7 +52,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static IEnumerable<Image> GetEmbeddedImages(this DocumentReader src, int pagenum)
         {
-            var core = src.RawObject as PdfReader;
+            var core = src.Core as PdfReader;
             Debug.Assert(core != null);
             var dest = new EmbeddedImageCollection();
             core.GetContentParser().ProcessContent(pagenum, dest);
