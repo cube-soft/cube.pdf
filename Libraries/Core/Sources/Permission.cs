@@ -44,7 +44,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Permission() : this((long)PermissionFlag.All) { }
+        public Permission() : this((long)PermissionFlags.All) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -60,9 +60,9 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public Permission(long src)
         {
-            var tmp  = src & (long)PermissionFlag.All;
-            var dest = tmp | (long)PermissionFlag.Reserved;
-            _flags = (PermissionFlag)dest;
+            var tmp  = src & (long)PermissionFlags.All;
+            var dest = tmp | (long)PermissionFlags.Reserved;
+            _flags = (PermissionFlags)dest;
         }
 
         #endregion
@@ -117,8 +117,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionValue CopyContents
         {
-            get => Get(PermissionFlag.CopyOrExtractContents);
-            set => Set(PermissionFlag.CopyOrExtractContents, value);
+            get => Get(PermissionFlags.CopyOrExtractContents);
+            set => Set(PermissionFlags.CopyOrExtractContents, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -134,8 +134,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionValue Accessibility
         {
-            get => Get(PermissionFlag.ExtractContentsForAccessibility);
-            set => Set(PermissionFlag.ExtractContentsForAccessibility, value);
+            get => Get(PermissionFlags.ExtractContentsForAccessibility);
+            set => Set(PermissionFlags.ExtractContentsForAccessibility, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -150,8 +150,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionValue ModifyAnnotations
         {
-            get => Get(PermissionFlag.ModifyAnnotations);
-            set => Set(PermissionFlag.ModifyAnnotations, value);
+            get => Get(PermissionFlags.ModifyAnnotations);
+            set => Set(PermissionFlags.ModifyAnnotations, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -166,8 +166,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionValue InputForm
         {
-            get => Get(PermissionFlag.InputForm);
-            set => Set(PermissionFlag.InputForm, value);
+            get => Get(PermissionFlags.InputForm);
+            set => Set(PermissionFlags.InputForm, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -195,7 +195,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PermissionValue Get(PermissionFlag src) =>
+        private PermissionValue Get(PermissionFlags src) =>
             _flags.HasFlag(src) ? PermissionValue.Allow : PermissionValue.Deny;
 
         /* ----------------------------------------------------------------- */
@@ -207,7 +207,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PermissionValue Get(PermissionFlag primary, PermissionFlag secondary) =>
+        private PermissionValue Get(PermissionFlags primary, PermissionFlags secondary) =>
             _flags.HasFlag(primary)   ? PermissionValue.Allow    :
             _flags.HasFlag(secondary) ? PermissionValue.Restrict : PermissionValue.Deny;
 
@@ -221,7 +221,7 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         private PermissionValue GetPrintPermission() =>
-            Get(PermissionFlag.PrintHighQuality, PermissionFlag.Print);
+            Get(PermissionFlags.PrintHighQuality, PermissionFlags.Print);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -233,7 +233,7 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         private PermissionValue GetModifyContentsPermission() =>
-            Get(PermissionFlag.ModifyContents, PermissionFlag.Assemble);
+            Get(PermissionFlags.ModifyContents, PermissionFlags.Assemble);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -249,7 +249,7 @@ namespace Cube.Pdf
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private bool Set(ref PermissionFlag src, PermissionFlag value, string name)
+        private bool Set(ref PermissionFlags src, PermissionFlags value, string name)
         {
             var dest = SetProperty(ref src, value, name);
             if (dest) Refresh(nameof(Value));
@@ -265,7 +265,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private bool Set(PermissionFlag src, PermissionValue value, [CallerMemberName] string name = null)
+        private bool Set(PermissionFlags src, PermissionValue value, [CallerMemberName] string name = null)
         {
             var dest = value.IsAllowed() ? (_flags | src) : (_flags & ~src);
             return Set(ref _flags, dest, name);
@@ -282,9 +282,9 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         private bool SetPrintPermission(PermissionValue value)
         {
-            var both = PermissionFlag.Print | PermissionFlag.PrintHighQuality;
+            var both = PermissionFlags.Print | PermissionFlags.PrintHighQuality;
             var dest = value.IsAllowed() ? (_flags | both) : (_flags & ~both);
-            if (value == PermissionValue.Restrict) dest |= PermissionFlag.Print;
+            if (value == PermissionValue.Restrict) dest |= PermissionFlags.Print;
             return Set(ref _flags, dest, nameof(Print));
         }
 
@@ -299,16 +299,16 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         private bool SetModifyContentsPermission(PermissionValue value)
         {
-            var both = PermissionFlag.ModifyContents | PermissionFlag.Assemble;
+            var both = PermissionFlags.ModifyContents | PermissionFlags.Assemble;
             var dest = value.IsAllowed() ? (_flags | both) : (_flags & ~both);
-            if (value == PermissionValue.Restrict) dest |= PermissionFlag.Assemble;
+            if (value == PermissionValue.Restrict) dest |= PermissionFlags.Assemble;
             return Set(ref _flags, dest, nameof(ModifyContents));
         }
 
         #endregion
 
         #region Fields
-        private PermissionFlag _flags;
+        private PermissionFlags _flags;
         #endregion
     }
 }

@@ -42,69 +42,22 @@ namespace Cube.Pdf.Pdfium
         /// Executes the rendering with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDFium object.</param>
-        /// <param name="dest">Graphics to be rendered.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="point">Starting point.</param>
-        /// <param name="size">Rendering size.</param>
-        /// <param name="options">Rendering options.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public static void Render(this PdfiumReader src,
-            Graphics dest,
-            Page page,
-            PointF point,
-            SizeF size,
-            RenderOption options
-        ) => src.Invoke(e => Render(e, dest, page, point, size, options));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Executes the rendering with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">PDFium object.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="size">Rendering size.</param>
-        /// <param name="options">Rendering options.</param>
-        ///
-        /// <returns>Image to be rendered.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Image Render(this PdfiumReader src,
-            Page page,
-            SizeF size,
-            RenderOption options
-        ) => src.Invoke(e => Render(e, page, size, options));
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Executes the rendering with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static Image Render(IntPtr core, Page page, SizeF size,
+        public static Image Render(IntPtr core, Page page, SizeF size,
             RenderOption options) => Load(core, page.Number, hp =>
         {
             var bpp    = 4;
             var width  = (int)size.Width;
             var height = (int)size.Height;
+            var degree = GetRotation(page.Delta);
+            var flags  = options.GetFlags();
             var dest   = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 
             using (var gs = Graphics.FromImage(dest)) Draw(gs, options.Background);
             var obj = dest.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, dest.PixelFormat);
             var hbm = NativeMethods.FPDFBitmap_CreateEx(width, height, bpp, obj.Scan0, width * bpp);
-            NativeMethods.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, GetRotation(page.Delta), 0);
+
+            NativeMethods.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, degree, flags);
             NativeMethods.FPDFBitmap_Destroy(hbm);
             dest.UnlockBits(obj);
 
@@ -120,25 +73,28 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Render(IntPtr core, Graphics dest,
+        public static void Render(IntPtr core, Graphics dest,
             Page page, PointF point, SizeF size,
             RenderOption options) => Load(core, page.Number, hp =>
         {
-            var hdc = dest.GetHdc();
+            var x      = (int)point.X;
+            var y      = (int)point.Y;
+            var width  = (int)size.Width;
+            var height = (int)size.Height;
+            var degree = GetRotation(page.Delta);
+            var flags  = options.GetFlags();
+            var hdc    = dest.GetHdc();
+
             Draw(dest, options.Background);
-            NativeMethods.FPDF_RenderPage(
-                hdc,
-                hp,
-                (int)point.X,
-                (int)point.Y,
-                (int)size.Width,
-                (int)size.Height,
-                GetRotation(page.Delta),
-                0
-            );
+            NativeMethods.FPDF_RenderPage(hdc, hp, x, y, width, height, degree, flags);
             dest.ReleaseHdc(hdc);
+
             return true;
         });
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///

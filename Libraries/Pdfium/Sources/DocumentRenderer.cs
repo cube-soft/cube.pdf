@@ -145,7 +145,7 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public void Render(Graphics dest, Page page, PointF point, SizeF size) =>
-            Core.Render(dest, page, point, size, RenderOption);
+            Core.Invoke(e => PdfiumRenderer.Render(e, dest, page, point, size, RenderOption));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -161,7 +161,8 @@ namespace Cube.Pdf.Pdfium
         /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public Image Render(Page page, SizeF size) => Core.Render(page, size, RenderOption);
+        public Image Render(Page page, SizeF size) =>
+            Core.Invoke(e => PdfiumRenderer.Render(e, page, size, RenderOption));
 
         #endregion
     }

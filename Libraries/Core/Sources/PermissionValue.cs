@@ -93,7 +93,7 @@ namespace Cube.Pdf
 
     /* --------------------------------------------------------------------- */
     ///
-    /// PermissionFlag
+    /// PermissionFlags
     ///
     /// <summary>
     /// Specifies the permission flags for operations.
@@ -101,7 +101,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Flags]
-    internal enum PermissionFlag : uint
+    internal enum PermissionFlags : uint
     {
         /// <summary>All operations are allowed.</summary>
         All = 0xfffffffc,

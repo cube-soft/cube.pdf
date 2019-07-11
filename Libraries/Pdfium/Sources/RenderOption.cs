@@ -41,5 +41,49 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public Color Background { get; set; } = Color.Transparent;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Background
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to render annotations.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Annotation { get; set; } = false;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AntiAlias
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to enable anti-aliasing.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AntiAlias { get; set; } = true;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Grayscale
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to render in grayscale.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Grayscale { get; set; } = false;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Print
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to render for printing.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Print { get; set; } = false;
     }
 }
