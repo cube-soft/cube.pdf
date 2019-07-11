@@ -50,7 +50,7 @@ namespace Cube.Pdf.Tests.Pdfium
         [TestCaseSource(nameof(TestCases))]
         public void Render(int id, string filename, int pagenum, int width, int height)
         {
-            using (var src = new DocumentReader(GetSource(filename)))
+            using (var src = new DocumentRenderer(GetSource(filename)))
             using (var bmp = src.Render(src.GetPage(pagenum)))
             {
                 Assert.That(bmp.Width,  Is.EqualTo(width));
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Tests.Pdfium
         [TestCaseSource(nameof(TestCases))]
         public void Render_Graphics(int id, string filename, int pagenum, int width, int height)
         {
-            using (var src = new DocumentReader(GetSource(filename)))
+            using (var src = new DocumentRenderer(GetSource(filename)))
             using (var bmp = new Bitmap(width, height))
             using (var gs  = Graphics.FromImage(bmp))
             {

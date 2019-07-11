@@ -90,7 +90,7 @@ namespace Cube.Pdf.Editor
         /// <returns>DocumentReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader GetOrAdd(string src) => GetOrAdd(src, string.Empty);
+        public DocumentRenderer GetOrAdd(string src) => GetOrAdd(src, string.Empty);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -107,7 +107,7 @@ namespace Cube.Pdf.Editor
         /// <returns>DocumentReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader GetOrAdd(string src, string password)
+        public DocumentRenderer GetOrAdd(string src, string password)
         {
             if (!src.IsPdf()) return null;
             if (_inner.TryGetValue(src, out var value)) return value;
@@ -143,12 +143,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DocumentReader Create(string src, string password)
+        private DocumentRenderer Create(string src, string password)
         {
             var opt  = new OpenOption { IO = IO, FullAccess = true };
             var dest = password.HasValue() ?
-                       new DocumentReader(src, password, opt) :
-                       new DocumentReader(src, _query(), opt);
+                       new DocumentRenderer(src, password, opt) :
+                       new DocumentRenderer(src, _query(), opt);
 
             dest.RenderOption.Background = Color.White;
             return dest;
@@ -158,8 +158,8 @@ namespace Cube.Pdf.Editor
 
         #region Fields
         private readonly Func<IQuery<string>> _query;
-        private readonly ConcurrentDictionary<string, DocumentReader> _inner =
-            new ConcurrentDictionary<string, DocumentReader>();
+        private readonly ConcurrentDictionary<string, DocumentRenderer> _inner =
+            new ConcurrentDictionary<string, DocumentRenderer>();
         #endregion
     }
 }

@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Cube.Pdf.Pdfium
 {
@@ -29,7 +28,7 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentReader : DisposableBase, IDocumentReader, IDocumentRenderer
+    public class DocumentReader : DisposableBase, IDocumentReader
     {
         #region Constructors
 
@@ -73,11 +72,12 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="query">Password query.</param>
+        /// <param name="password">Password string.</param>
+        /// <param name="options">Other options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query) :
-            this(src, query, new OpenOption()) { }
+        public DocumentReader(string src, string password, OpenOption options) :
+            this(src, MakeQuery(null, password), options) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,12 +89,11 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password string.</param>
-        /// <param name="options">Other options.</param>
+        /// <param name="query">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, string password, OpenOption options) :
-            this(src, MakeQuery(null, password), options) { }
+        public DocumentReader(string src, IQuery<string> query) :
+            this(src, query, new OpenOption()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -130,7 +129,7 @@ namespace Cube.Pdf.Pdfium
         private DocumentReader(string src,
             QueryMessage<IQuery<string>, string> query,
             OpenOption options
-        ) { _core = PdfiumReader.Create(src, query, options); }
+        ) { Core = PdfiumReader.Create(src, query, options); }
 
         #endregion
 
@@ -145,7 +144,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public File File => _core.File;
+        public File File => Core.File;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -156,7 +155,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Metadata Metadata => _core.Metadata;
+        public Metadata Metadata => Core.Metadata;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -167,7 +166,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Encryption Encryption => _core.Encryption;
+        public Encryption Encryption => Core.Encryption;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -178,7 +177,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page> Pages => _core.Pages;
+        public IEnumerable<Page> Pages => Core.Pages;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -197,52 +196,18 @@ namespace Cube.Pdf.Pdfium
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RenderOption
+        /// Core
         ///
         /// <summary>
-        /// Gets or sets the rendering options.
+        /// Gets the core object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RenderOption RenderOption { get; set; } = new RenderOption();
+        internal PdfiumReader Core { get; }
 
         #endregion
 
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Render the Page content to the Graphics object with the
-        /// specified parameters
-        /// </summary>
-        ///
-        /// <param name="dest">Graphics object.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="point">Start point to render.</param>
-        /// <param name="size">Rendering size.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Render(Graphics dest, Page page, PointF point, SizeF size) =>
-            _core.Render(dest, page, point, size, RenderOption);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Get an Image object in which the Page content is rendered.
-        /// </summary>
-        ///
-        /// <param name="page">Page object.</param>
-        /// <param name="size">Rendering size.</param>
-        ///
-        /// <returns>Image object</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Image Render(Page page, SizeF size) => _core.Render(page, size, RenderOption);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -259,7 +224,7 @@ namespace Cube.Pdf.Pdfium
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) => _core?.Dispose();
+        protected override void Dispose(bool disposing) => Core?.Dispose();
 
         #endregion
 
@@ -278,10 +243,6 @@ namespace Cube.Pdf.Pdfium
             IQuery<string> query, string password) =>
             Query.NewMessage(query, password);
 
-        #endregion
-
-        #region Fields
-        private readonly PdfiumReader _core;
         #endregion
     }
 }
