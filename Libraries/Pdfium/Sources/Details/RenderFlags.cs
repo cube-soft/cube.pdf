@@ -19,8 +19,6 @@ using System;
 
 namespace Cube.Pdf.Pdfium
 {
-    #region RenderFlags
-
     /* --------------------------------------------------------------------- */
     ///
     /// RenderFlags
@@ -64,41 +62,4 @@ namespace Cube.Pdf.Pdfium
         /// <summary>Set to disable anti-aliasing on paths.</summary>
         NoSmoothPath = 0x4000
     }
-
-    #endregion
-
-    #region RenderFlagsExtension
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// RenderFlagsExtension
-    ///
-    /// <summary>
-    /// Specifies the flags for rendering.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    internal static class RenderFlagsExtension
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetFlags
-        ///
-        /// <summary>
-        /// Gets the flags from the specified option.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static int GetFlags(this RenderOption src)
-        {
-            var dest = RenderFlags.Empty;
-            if (src.Annotation) dest |= RenderFlags.Annotation;
-            if (src.Grayscale)  dest |= RenderFlags.Grayscale;
-            if (src.Print)      dest |= RenderFlags.Printng;
-            if (!src.AntiAlias) dest |= RenderFlags.NoSmoothText | RenderFlags.NoSmoothImage | RenderFlags.NoSmoothPath;
-            return (int)dest;
-        }
-    }
-
-    #endregion
 }

@@ -46,20 +46,19 @@ namespace Cube.Pdf.Pdfium
         public static Image Render(IntPtr core, Page page, SizeF size,
             RenderOption options) => Load(core, page.Number, hp =>
         {
-            var bpp    = 4;
             var width  = (int)size.Width;
             var height = (int)size.Height;
             var degree = GetRotation(page.Delta);
             var flags  = options.GetFlags();
-            var dest   = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 
-            using (var gs = Graphics.FromImage(dest)) Draw(gs, options.Background);
-            var obj = dest.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, dest.PixelFormat);
-            var hbm = NativeMethods.FPDFBitmap_CreateEx(width, height, bpp, obj.Scan0, width * bpp);
+            var bpp  = 4;
+            var dest = options.GetBitmap(width, height);
+            var data = dest.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, dest.PixelFormat);
+            var hbm  = NativeMethods.FPDFBitmap_CreateEx(width, height, bpp, data.Scan0, width * bpp);
 
             NativeMethods.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, degree, flags);
             NativeMethods.FPDFBitmap_Destroy(hbm);
-            dest.UnlockBits(obj);
+            dest.UnlockBits(data);
 
             return dest;
         });
@@ -77,15 +76,16 @@ namespace Cube.Pdf.Pdfium
             Page page, PointF point, SizeF size,
             RenderOption options) => Load(core, page.Number, hp =>
         {
+            options.DrawBackground(e => dest.Clear(e));
+
             var x      = (int)point.X;
             var y      = (int)point.Y;
             var width  = (int)size.Width;
             var height = (int)size.Height;
             var degree = GetRotation(page.Delta);
             var flags  = options.GetFlags();
-            var hdc    = dest.GetHdc();
 
-            Draw(dest, options.Background);
+            var hdc = dest.GetHdc();
             NativeMethods.FPDF_RenderPage(hdc, hp, x, y, width, height, degree, flags);
             dest.ReleaseHdc(hdc);
 
@@ -109,24 +109,10 @@ namespace Cube.Pdf.Pdfium
         {
             if (core == IntPtr.Zero) return default;
             var hp = NativeMethods.FPDF_LoadPage(core, pagenum - 1);
-            if (hp == IntPtr.Zero) throw new LoadException(LoadStatus.PageError);
+            if (hp == IntPtr.Zero) throw new PdfiumException(PdfiumStatus.PageError);
 
             try { return func(hp); }
             finally { NativeMethods.FPDF_ClosePage(hp); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Draw
-        ///
-        /// <summary>
-        /// Draws with the specified color.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Draw(Graphics src, Color color)
-        {
-            if (color != Color.Transparent) src.Clear(color);
         }
 
         /* ----------------------------------------------------------------- */

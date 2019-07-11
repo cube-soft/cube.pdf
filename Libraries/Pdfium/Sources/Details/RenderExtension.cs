@@ -16,96 +16,74 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Cube.Pdf.Pdfium
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// LoadException
+    /// RenderExtension
     ///
     /// <summary>
-    /// Represents the exception through the PDFium API.
+    /// Provides extended methods of the RenderOption class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class LoadException : Exception
+    internal static class RenderExtension
     {
-        #region Constructors
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// LoadException
+        /// GetFlags
         ///
         /// <summary>
-        /// Initializes a new instance of the LoadException class with the
-        /// specified status.
+        /// Gets the flags from the specified option.
         /// </summary>
         ///
-        /// <param name="status">Status code.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public LoadException(uint status) : this((LoadStatus)status) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LoadException
-        ///
-        /// <summary>
-        /// Initializes a new instance of the LoadException class with the
-        /// specified status.
-        /// </summary>
-        ///
-        /// <param name="status">Status code.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public LoadException(LoadStatus status)
+        public static int GetFlags(this RenderOption src)
         {
-            Status = status;
+            var dest = RenderFlags.Empty;
+            if (src.Annotation) dest |= RenderFlags.Annotation;
+            if (src.Grayscale) dest |= RenderFlags.Grayscale;
+            if (src.Print) dest |= RenderFlags.Printng;
+            if (!src.AntiAlias) dest |= RenderFlags.NoSmoothText | RenderFlags.NoSmoothImage | RenderFlags.NoSmoothPath;
+            return (int)dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetBitmap
+        ///
+        /// <summary>
+        /// Creates a new instance of the Bitmap class with the specified
+        /// arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Bitmap GetBitmap(this RenderOption src, int width, int height)
+        {
+            var dest = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            src.DrawBackground(e => { using (var gs = Graphics.FromImage(dest)) gs.Clear(e); });
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DrawBackground
+        ///
+        /// <summary>
+        /// Draws the background.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void DrawBackground(this RenderOption src, Action<Color> action)
+        {
+            if (src.Background != Color.Transparent) action(src.Background);
         }
 
         #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Status
-        ///
-        /// <summary>
-        /// Gets the status code.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public LoadStatus Status { get; }
-
-        #endregion
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// LoadStatus
-    ///
-    /// <summary>
-    /// Specifies the status code of PDFium API.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public enum LoadStatus
-    {
-        /// <summary>No error, success.</summary>
-        Success,
-        /// <summary>Unknown error.</summary>
-        Unknown,
-        /// <summary>File not found or could not be opened.</summary>
-        NotFound,
-        /// <summary>File not in PDF format or corrupted.</summary>
-        FormatError,
-        /// <summary>Password required or incorrect password.</summary>
-        PasswordError,
-        /// <summary>Unsupported security scheme.</summary>
-        UnsupportedEncryption,
-        /// <summary>Page not found or content error.</summary>
-        PageError,
     }
 }

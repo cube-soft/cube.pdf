@@ -122,14 +122,14 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="query">Password query or string.</param>
+        /// <param name="password">Password query or string.</param>
         /// <param name="options">Other options.</param>
         ///
         /* ----------------------------------------------------------------- */
         private DocumentReader(string src,
-            QueryMessage<IQuery<string>, string> query,
+            QueryMessage<IQuery<string>, string> password,
             OpenOption options
-        ) { Core = PdfiumReader.Create(src, query, options); }
+        ) { Core = PdfiumReader.Create(src, password, options); }
 
         #endregion
 

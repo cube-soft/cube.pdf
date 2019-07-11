@@ -50,7 +50,7 @@ namespace Cube.Pdf.Pdfium
         /// <returns>PdfFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfFile Create(this PdfiumReader core, string password, bool fullaccess)
+        public static PdfFile Create(PdfiumReader core, string password, bool fullaccess)
         {
             var dest = core.IO.GetPdfFile(core.Source, password);
             dest.Count = core.Invoke(NativeMethods.FPDF_GetPageCount);

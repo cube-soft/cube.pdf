@@ -58,10 +58,10 @@ namespace Cube.Pdf.Pdfium
         /// <returns>LoadException object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public LoadException GetLastError()
+        public PdfiumException GetLastError()
         {
             var src = Invoke(NativeMethods.FPDF_GetLastError);
-            return new LoadException(src);
+            return new PdfiumException(src);
         }
 
         /* ----------------------------------------------------------------- */

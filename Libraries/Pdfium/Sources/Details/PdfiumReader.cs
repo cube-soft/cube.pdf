@@ -54,8 +54,7 @@ namespace Cube.Pdf.Pdfium
         public static PdfiumReader Create(string src,
             QueryMessage<IQuery<string>, string> password,
             OpenOption options
-        )
-        {
+        ) {
             var dest = new PdfiumReader(src, options.IO);
 
             while (true)
@@ -64,12 +63,12 @@ namespace Cube.Pdf.Pdfium
                 {
                     dest.Load(password.Value);
                     var denied = options.FullAccess && dest.File is PdfFile f && !f.FullAccess;
-                    if (denied) throw new LoadException(LoadStatus.PasswordError);
+                    if (denied) throw new PdfiumException(PdfiumStatus.PasswordError);
                     return dest;
                 }
-                catch (LoadException err)
+                catch (PdfiumException err)
                 {
-                    if (err.Status != LoadStatus.PasswordError) throw;
+                    if (err.Status != PdfiumStatus.PasswordError) throw;
                     var msg = password.Query.Request(src);
                     if (!msg.Cancel) password.Value = msg.Value;
                     else throw new OperationCanceledException("Password");
@@ -258,7 +257,7 @@ namespace Cube.Pdf.Pdfium
             Metadata   = MetadataFactory.Create(this);
             Encryption = EncryptionFactory.Create(this, password);
             File       = FileFactory.Create(this, password, !Encryption.OpenWithPassword);
-            Pages      = new ReadOnlyPageList(this, File);
+            Pages      = new PageCollection(this, File);
         }
 
         /* ----------------------------------------------------------------- */

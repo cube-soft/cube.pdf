@@ -29,10 +29,8 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class NativeMethods
+    internal static class NativeMethods
     {
-        #region Methods
-
         #region Common
 
         /* ----------------------------------------------------------------- */
@@ -379,8 +377,6 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
         public static extern void FPDFBitmap_Destroy(IntPtr bitmap);
-
-        #endregion
 
         #endregion
 
