@@ -204,13 +204,13 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(ViewerOptions.SinglePage,     Language.English,  ExpectedResult = "Single page")]
-        [TestCase(ViewerOptions.OneColumn,      Language.Japanese, ExpectedResult = "連続ページ")]
-        [TestCase(ViewerOptions.TwoPageLeft,    Language.English,  ExpectedResult = "Two page (left)")]
-        [TestCase(ViewerOptions.TwoPageRight,   Language.Japanese, ExpectedResult = "見開きページ (右綴じ)")]
-        [TestCase(ViewerOptions.TwoColumnLeft,  Language.English,  ExpectedResult = "Two column (left)")]
-        [TestCase(ViewerOptions.TwoColumnRight, Language.Japanese, ExpectedResult = "連続見開きページ (右綴じ)")]
-        public string ViewerOptionsConverter(ViewerOptions src, Language lang) =>
+        [TestCase(ViewerOption.SinglePage,     Language.English,  ExpectedResult = "Single page")]
+        [TestCase(ViewerOption.OneColumn,      Language.Japanese, ExpectedResult = "連続ページ")]
+        [TestCase(ViewerOption.TwoPageLeft,    Language.English,  ExpectedResult = "Two page (left)")]
+        [TestCase(ViewerOption.TwoPageRight,   Language.Japanese, ExpectedResult = "見開きページ (右綴じ)")]
+        [TestCase(ViewerOption.TwoColumnLeft,  Language.English,  ExpectedResult = "Two column (left)")]
+        [TestCase(ViewerOption.TwoColumnRight, Language.Japanese, ExpectedResult = "連続見開きページ (右綴じ)")]
+        public string ViewerOptionsConverter(ViewerOption src, Language lang) =>
             Convert<string>(new ViewerOptionsConverter(), src, lang);
 
         #endregion

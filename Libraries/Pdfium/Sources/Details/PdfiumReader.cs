@@ -258,8 +258,6 @@ namespace Cube.Pdf.Pdfium
         /// Loads the PDF document.
         /// </summary>
         ///
-        /// <param name="password">Password.</param>
-        ///
         /* ----------------------------------------------------------------- */
         private void Load(string password)
         {

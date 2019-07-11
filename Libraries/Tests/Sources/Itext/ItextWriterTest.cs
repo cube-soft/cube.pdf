@@ -251,7 +251,7 @@ namespace Cube.Pdf.Tests.Itext
                 Creator  = value,
                 Producer = value,
                 Version  = new PdfVersion(1, 5),
-                Options  = ViewerOptions.TwoColumnLeft,
+                Options  = ViewerOption.TwoColumnLeft,
             };
 
             using (var w = new DocumentWriter(IO))

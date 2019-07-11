@@ -266,13 +266,13 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ViewerOptionsConverter() : base(e =>
         {
-            var src = e.TryCast<ViewerOptions>();
-            if (src.HasFlag(ViewerOptions.SinglePage))     return Properties.Resources.MenuViewSinglePage;
-            if (src.HasFlag(ViewerOptions.OneColumn))      return Properties.Resources.MenuViewOneColumn;
-            if (src.HasFlag(ViewerOptions.TwoPageLeft))    return Properties.Resources.MenuViewTwoPageLeft;
-            if (src.HasFlag(ViewerOptions.TwoPageRight))   return Properties.Resources.MenuViewTwoPageRight;
-            if (src.HasFlag(ViewerOptions.TwoColumnLeft))  return Properties.Resources.MenuViewTwoColumnLeft;
-            if (src.HasFlag(ViewerOptions.TwoColumnRight)) return Properties.Resources.MenuViewTwoColumnRight;
+            var src = e.TryCast<ViewerOption>();
+            if (src.HasFlag(ViewerOption.SinglePage))     return Properties.Resources.MenuViewSinglePage;
+            if (src.HasFlag(ViewerOption.OneColumn))      return Properties.Resources.MenuViewOneColumn;
+            if (src.HasFlag(ViewerOption.TwoPageLeft))    return Properties.Resources.MenuViewTwoPageLeft;
+            if (src.HasFlag(ViewerOption.TwoPageRight))   return Properties.Resources.MenuViewTwoPageRight;
+            if (src.HasFlag(ViewerOption.TwoColumnLeft))  return Properties.Resources.MenuViewTwoColumnLeft;
+            if (src.HasFlag(ViewerOption.TwoColumnRight)) return Properties.Resources.MenuViewTwoColumnRight;
             return "Unknown";
         }) { }
     }

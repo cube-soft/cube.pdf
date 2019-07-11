@@ -18,7 +18,6 @@
 using Cube.Pdf;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -79,10 +78,6 @@ namespace Cube.Mixin.Pdf
         /* ----------------------------------------------------------------- */
         public static IEnumerable<Page> GetImagePages(this FileSystem.IO io, string src, Image image)
         {
-            Debug.Assert(image != null);
-            Debug.Assert(image.FrameDimensionsList != null);
-            Debug.Assert(image.FrameDimensionsList.Length > 0);
-
             var dest = new List<Page>();
             var dim  = new FrameDimension(image.FrameDimensionsList[0]);
 
@@ -134,15 +129,8 @@ namespace Cube.Mixin.Pdf
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetImagePage(this FileSystem.IO io, string src, Image image, int index)
-        {
-            Debug.Assert(image != null);
-            Debug.Assert(image.FrameDimensionsList != null);
-            Debug.Assert(image.FrameDimensionsList.Length > 0);
-
-            return io.GetImagePage(src, image, index,
-                new FrameDimension(image.FrameDimensionsList[0]));
-        }
+        public static Page GetImagePage(this FileSystem.IO io, string src, Image image, int index) =>
+            io.GetImagePage(src, image, index, new FrameDimension(image.FrameDimensionsList[0]));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -155,7 +143,7 @@ namespace Cube.Mixin.Pdf
         /* ----------------------------------------------------------------- */
         private static Page GetImagePage(this FileSystem.IO io, string src, Image image, int index, FrameDimension dim)
         {
-            image.SelectActiveFrame(dim, index);
+            _ = image.SelectActiveFrame(dim, index);
 
             var x = image.HorizontalResolution;
             var y = image.VerticalResolution;
@@ -186,7 +174,7 @@ namespace Cube.Mixin.Pdf
         /// <remarks>Display size.</remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static SizeF? GetViewSize(this Page src) => src.GetViewSize(1.0);
+        public static SizeF GetViewSize(this Page src) => src.GetViewSize(1.0);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -202,10 +190,8 @@ namespace Cube.Mixin.Pdf
         /// <remarks>Display size.</remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static SizeF? GetViewSize(this Page src, double scale)
+        public static SizeF GetViewSize(this Page src, double scale)
         {
-            if (src == null) return null;
-
             var angle  = src.Rotation + src.Delta;
             var sin    = Math.Abs(Math.Sin(angle.Radian));
             var cos    = Math.Abs(Math.Cos(angle.Radian));

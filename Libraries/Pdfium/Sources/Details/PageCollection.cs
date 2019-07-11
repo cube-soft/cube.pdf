@@ -31,8 +31,13 @@ namespace Cube.Pdf.Pdfium
     /// Represents the collection of PDF pages.
     /// </summary>
     ///
+    /// <remarks>
+    /// IReadOnlyList(Page) implementations is for the GetPage extended
+    /// method.
+    /// </remarks>
+    ///
     /* --------------------------------------------------------------------- */
-    internal sealed class PageCollection : EnumerableBase<Page>
+    internal sealed class PageCollection : EnumerableBase<Page>, IReadOnlyList<Page>
     {
         #region Constructors
 
@@ -54,8 +59,45 @@ namespace Cube.Pdf.Pdfium
             Debug.Assert(core != null && file != null);
 
             _core = core;
-            _file = file;
+            File  = file;
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// File
+        ///
+        /// <summary>
+        /// Gets the file information of the PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PdfFile File { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Count
+        ///
+        /// <summary>
+        /// Gets the number of PDF pages.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Count => File.Count;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Item[int]
+        ///
+        /// <summary>
+        /// Gets the Page object corresponding to the specified index.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Page this[int index] => GetPage(index);
 
         #endregion
 
@@ -76,7 +118,7 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         public override IEnumerator<Page> GetEnumerator()
         {
-            for (var i = 0; i < _file.Count; ++i) yield return GetPage(i);
+            for (var i = 0; i < Count; ++i) yield return this[i];
         }
 
         #endregion
@@ -105,7 +147,7 @@ namespace Cube.Pdf.Pdfium
                 var size   = GetPageSize(page, degree);
 
                 return new Page(
-                    _file,                   // File
+                    File,                    // File
                     index + 1,               // Number
                     size,                    // Size
                     new Angle(degree),       // Rotation
@@ -175,7 +217,6 @@ namespace Cube.Pdf.Pdfium
 
         #region Fields
         private readonly PdfiumReader _core;
-        private readonly PdfFile _file;
         #endregion
     }
 }

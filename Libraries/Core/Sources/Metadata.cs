@@ -172,7 +172,7 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public ViewerOptions Options
+        public ViewerOption Options
         {
             get => _options;
             set => SetProperty(ref _options, value);
@@ -212,7 +212,7 @@ namespace Cube.Pdf
             _keywords = string.Empty;
             _creator  = string.Empty;
             _producer = string.Empty;
-            _options  = ViewerOptions.OneColumn;
+            _options  = ViewerOption.OneColumn;
         }
 
         #endregion
@@ -225,7 +225,7 @@ namespace Cube.Pdf
         private string _keywords;
         private string _creator;
         private string _producer;
-        private ViewerOptions _options;
+        private ViewerOption _options;
         #endregion
     }
 }

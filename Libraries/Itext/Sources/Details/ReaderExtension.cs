@@ -86,7 +86,7 @@ namespace Cube.Pdf.Itext
             Keywords = src.Info.TryGetValue("Keywords", out var s3) ? s3 : string.Empty,
             Creator  = src.Info.TryGetValue("Creator",  out var s4) ? s4 : string.Empty,
             Producer = src.Info.TryGetValue("Producer", out var s5) ? s5 : string.Empty,
-            Options  = ViewerOptionsFactory.Create(src.SimpleViewerPreferences),
+            Options  = ViewerOptionFactory.Create(src.SimpleViewerPreferences),
         };
 
         /* ----------------------------------------------------------------- */

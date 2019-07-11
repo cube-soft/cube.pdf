@@ -125,7 +125,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                     Creator  = "Test creator",
                     Producer = "Test producer",
                     Version  = new PdfVersion(1, 6),
-                    Options  = ViewerOptions.TwoColumnRight,
+                    Options  = ViewerOption.TwoColumnRight,
                 });
 
                 yield return new TestCaseData(n++, new Metadata
@@ -137,7 +137,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                     Creator  = "日本語のアプリケーション",
                     Producer = "日本語の PDF 変換",
                     Version  = new PdfVersion(1, 7),
-                    Options  = ViewerOptions.OneColumn,
+                    Options  = ViewerOption.OneColumn,
                 });
             }
         }

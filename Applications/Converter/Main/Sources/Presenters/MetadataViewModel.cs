@@ -159,7 +159,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ViewerOptions Options
+        public ViewerOption Options
         {
             get => Facade.Options;
             set => Facade.Options = value;

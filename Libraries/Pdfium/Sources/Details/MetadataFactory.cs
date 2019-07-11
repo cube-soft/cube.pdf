@@ -106,16 +106,16 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static ViewerOptions GetPageMode(IntPtr core)
+        private static ViewerOption GetPageMode(IntPtr core)
         {
             var m = NativeMethods.FPDFDoc_GetPageMode(core);
-            return new Dictionary<int, ViewerOptions> {
-                { 1, ViewerOptions.Outline         },
-                { 2, ViewerOptions.Thumbnail       },
-                { 3, ViewerOptions.FullScreen      },
-                { 4, ViewerOptions.OptionalContent },
-                { 5, ViewerOptions.Attachment      },
-            }.TryGetValue(m, out var dest) ? dest : ViewerOptions.None;
+            return new Dictionary<int, ViewerOption> {
+                { 1, ViewerOption.Outline         },
+                { 2, ViewerOption.Thumbnail       },
+                { 3, ViewerOption.FullScreen      },
+                { 4, ViewerOption.OptionalContent },
+                { 5, ViewerOption.Attachment      },
+            }.TryGetValue(m, out var dest) ? dest : ViewerOption.None;
         }
 
         #endregion

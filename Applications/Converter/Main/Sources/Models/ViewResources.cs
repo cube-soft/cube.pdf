@@ -106,14 +106,14 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, ViewerOptions>> ViewerOptions => new []
+        public static IList<KeyValuePair<string, ViewerOption>> ViewerOptions => new []
         {
-            Make(Properties.Resources.MenuSinglePage,     Pdf.ViewerOptions.SinglePage),
-            Make(Properties.Resources.MenuOneColumn,      Pdf.ViewerOptions.OneColumn),
-            Make(Properties.Resources.MenuTwoPageLeft,    Pdf.ViewerOptions.TwoPageLeft),
-            Make(Properties.Resources.MenuTwoPageRight,   Pdf.ViewerOptions.TwoPageRight),
-            Make(Properties.Resources.MenuTwoColumnLeft,  Pdf.ViewerOptions.TwoColumnLeft),
-            Make(Properties.Resources.MenuTwoColumnRight, Pdf.ViewerOptions.TwoColumnRight),
+            Make(Properties.Resources.MenuSinglePage,     Pdf.ViewerOption.SinglePage),
+            Make(Properties.Resources.MenuOneColumn,      Pdf.ViewerOption.OneColumn),
+            Make(Properties.Resources.MenuTwoPageLeft,    Pdf.ViewerOption.TwoPageLeft),
+            Make(Properties.Resources.MenuTwoPageRight,   Pdf.ViewerOption.TwoPageRight),
+            Make(Properties.Resources.MenuTwoColumnLeft,  Pdf.ViewerOption.TwoColumnLeft),
+            Make(Properties.Resources.MenuTwoColumnRight, Pdf.ViewerOption.TwoColumnRight),
         };
 
         /* ----------------------------------------------------------------- */

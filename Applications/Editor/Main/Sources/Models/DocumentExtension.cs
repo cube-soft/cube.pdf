@@ -89,7 +89,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static ImageSource Create(this IDocumentRenderer src, Page page, double ratio) =>
-            src.Create(page, page.GetViewSize(ratio).Value);
+            src.Create(page, page.GetViewSize(ratio));
 
         /* ----------------------------------------------------------------- */
         ///

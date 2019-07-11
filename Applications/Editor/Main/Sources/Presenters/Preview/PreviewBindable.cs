@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public PreviewBindable(Information file, Page page, IDispatcher dispatcher)
         {
-            var size  = page.GetViewSize().Value;
+            var size  = page.GetViewSize();
             var magic = 14.0; // Scrollbar width
             var ratio = size.Width / size.Height;
             var diff  = size.Width > size.Height ? magic * ratio : -(magic * ratio);

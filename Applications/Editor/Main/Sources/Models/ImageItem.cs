@@ -267,7 +267,7 @@ namespace Cube.Pdf.Editor
             var h_magic = 22; // how to calc?
             var v_magic = 12;
 
-            var src   = RawObject.GetViewSize().Value;
+            var src   = RawObject.GetViewSize();
             var size  = _preferences.ItemSize;
 
             var h = (size - h_magic) / src.Width;

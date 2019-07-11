@@ -47,8 +47,8 @@ namespace Cube.Pdf.Pdfium
         {
             var dest = RenderFlags.Empty;
             if (src.Annotation) dest |= RenderFlags.Annotation;
-            if (src.Grayscale) dest |= RenderFlags.Grayscale;
-            if (src.Print) dest |= RenderFlags.Printng;
+            if (src.Grayscale)  dest |= RenderFlags.Grayscale;
+            if (src.Print)      dest |= RenderFlags.Printng;
             if (!src.AntiAlias) dest |= RenderFlags.NoSmoothText | RenderFlags.NoSmoothImage | RenderFlags.NoSmoothPath;
             return (int)dest;
         }
