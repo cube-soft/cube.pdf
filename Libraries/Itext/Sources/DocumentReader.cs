@@ -82,7 +82,7 @@ namespace Cube.Pdf.Itext
         /// <param name="query">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string, string> query) :
+        public DocumentReader(string src, IQuery<string> query) :
             this(src, query, false, true, new IO()) { }
 
         /* ----------------------------------------------------------------- */
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Itext
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string, string> query, IO io) :
+        public DocumentReader(string src, IQuery<string> query, IO io) :
             this(src, query, false, true, io) { }
 
         /* ----------------------------------------------------------------- */
@@ -154,7 +154,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src,
-            IQuery<string, string> query,
+            IQuery<string> query,
             bool fullaccess,
             bool partial,
             IO io
@@ -170,22 +170,22 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="qv">Password query or string.</param>
+        /// <param name="password">Password query or string.</param>
         /// <param name="fullaccess">Requires full access.</param>
         /// <param name="partial">Partial reading mode.</param>
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
         private DocumentReader(string src,
-            QueryMessage<IQuery<string, string>, string> qv,
+            QueryMessage<IQuery<string>, string> password,
             bool fullaccess,
             bool partial,
             IO io
         ) : base(io)
         {
-            _core = ReaderFactory.Create(src, qv, fullaccess, partial);
+            _core = ReaderFactory.Create(src, password, fullaccess, partial);
 
-            var f = io.GetPdfFile(src, qv.Value);
+            var f = io.GetPdfFile(src, password.Value);
             f.Count      = _core.NumberOfPages;
             f.FullAccess = _core.IsOpenedWithFullPermissions;
 
@@ -248,8 +248,8 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static QueryMessage<IQuery<string, string>, string> MakeQuery(
-            IQuery<string, string> query, string password) =>
+        private static QueryMessage<IQuery<string>, string> MakeQuery(
+            IQuery<string> query, string password) =>
             Query.NewMessage(query, password);
 
         #endregion

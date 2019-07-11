@@ -18,11 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.String;
-using Cube.Mixin.Pdf;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
@@ -66,7 +64,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">PDF document path.</param>
-        /// <param name="qv">Password string or query.</param>
+        /// <param name="password">Password string or query.</param>
         /// <param name="fullaccess">Requires full access.</param>
         /// <param name="partial">Partial mode.</param>
         ///
@@ -74,7 +72,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public static PdfReader Create(string src,
-            QueryMessage<IQuery<string, string>, string> qv,
+            QueryMessage<IQuery<string>, string> password,
             bool fullaccess,
             bool partial
         ) {
@@ -82,7 +80,7 @@ namespace Cube.Pdf.Itext
             {
                 try
                 {
-                    var bytes  = qv.Value.HasValue() ? Encoding.UTF8.GetBytes(qv.Value) : null;
+                    var bytes  = password.Value.HasValue() ? Encoding.UTF8.GetBytes(password.Value) : null;
                     var dest   = new PdfReader(src, bytes, partial);
                     var denied = fullaccess && !dest.IsOpenedWithFullPermissions;
                     if (denied)
@@ -94,8 +92,8 @@ namespace Cube.Pdf.Itext
                 }
                 catch (BadPasswordException)
                 {
-                    var args = qv.Query.RequestPassword(src);
-                    if (!args.Cancel) qv.Value = args.Value;
+                    var args = password.Query.Request(src);
+                    if (!args.Cancel) password.Value = args.Value;
                     else throw new OperationCanceledException();
                 }
             }
@@ -122,10 +120,6 @@ namespace Cube.Pdf.Itext
             using (var ss = io.OpenRead(src))
             using (var image = Image.FromStream(ss))
             {
-                Debug.Assert(image != null);
-                Debug.Assert(image.FrameDimensionsList != null);
-                Debug.Assert(image.FrameDimensionsList.Length > 0);
-
                 var doc = new iTextSharp.text.Document();
                 var writer = PdfWriter.GetInstance(doc, ms);
                 doc.Open();
@@ -134,15 +128,15 @@ namespace Cube.Pdf.Itext
                 var dim  = new FrameDimension(guid);
                 for (var i = 0; i < image.GetFrameCount(dim); ++i)
                 {
-                    image.SelectActiveFrame(dim, i);
+                    _ = image.SelectActiveFrame(dim, i);
 
                     var scale = PdfFile.Point / image.HorizontalResolution;
                     var w = image.Width  * scale;
                     var h = image.Height * scale;
 
-                    doc.SetPageSize(new iTextSharp.text.Rectangle(w, h));
-                    doc.NewPage();
-                    doc.Add(image.GetItextImage());
+                    _ = doc.SetPageSize(new iTextSharp.text.Rectangle(w, h));
+                    _ = doc.NewPage();
+                    _ = doc.Add(image.GetItextImage());
                 }
 
                 doc.Close();
@@ -150,6 +144,36 @@ namespace Cube.Pdf.Itext
 
                 return new PdfReader(ms.ToArray());
             }
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Request
+        ///
+        /// <summary>
+        /// Requests the password of the specified PDF file.
+        /// </summary>
+        ///
+        /// <param name="query">Query object.</param>
+        /// <param name="src">Path of the PDF file.</param>
+        ///
+        /// <returns>Query result.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static QueryMessage<string, string> Request(this IQuery<string> query, string src)
+        {
+            try
+            {
+                var dest = Query.NewMessage(src);
+                query.Request(dest);
+                if (dest.Cancel || dest.Value.HasValue()) return dest;
+                throw new ArgumentException("Password is empty.");
+            }
+            catch (Exception e) { throw new EncryptionException("Input password may be incorrect.", e); }
         }
 
         #endregion

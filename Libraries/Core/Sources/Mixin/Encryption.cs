@@ -15,9 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
 using Cube.Pdf;
-using System;
 
 namespace Cube.Mixin.Pdf
 {
@@ -84,38 +82,6 @@ namespace Cube.Mixin.Pdf
         /* ----------------------------------------------------------------- */
         public static void Allow(this Encryption src) => src.Set(PermissionValue.Allow);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RequestPassword
-        ///
-        /// <summary>
-        /// Requests the password for the specified PDF file.
-        /// </summary>
-        ///
-        /// <param name="query">Query object.</param>
-        /// <param name="src">Path of the PDF file.</param>
-        ///
-        /// <returns>Query result.</returns>
-        ///
-        /// <remarks>
-        /// 問い合わせ失敗時の挙動を EncryptionException を送出する形に
-        /// 統一します。また、実行後に Result が空文字だった場合も失敗と
-        /// 見なします。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static QueryMessage<string, string> RequestPassword(this IQuery<string, string> query, string src)
-        {
-            try
-            {
-                var dest = Query.NewMessage(src);
-                query.Request(dest);
-                if (dest.Cancel || dest.Value.HasValue()) return dest;
-                else throw new ArgumentException("Password is empty.");
-            }
-            catch (Exception err) { throw Convert(err); }
-        }
-
         #endregion
 
         #region Implementations
@@ -138,19 +104,6 @@ namespace Cube.Mixin.Pdf
             src.Permission.ModifyContents    = value;
             src.Permission.Print             = value;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Convert
-        ///
-        /// <summary>
-        /// Creates a new instance of the EncryptionException class from
-        /// the specified exception object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static EncryptionException Convert(Exception src) =>
-            new EncryptionException("Input password may be incorrect.", src);
 
         #endregion
     }
