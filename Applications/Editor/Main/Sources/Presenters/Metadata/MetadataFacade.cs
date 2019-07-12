@@ -48,7 +48,7 @@ namespace Cube.Pdf.Editor
         /// <param name="file">File information.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataFacade(Metadata src, Information file)
+        public MetadataFacade(Metadata src, Entity file)
         {
             src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
                           Versions.First();
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Information File { get; }
+        public Entity File { get; }
 
         /* ----------------------------------------------------------------- */
         ///

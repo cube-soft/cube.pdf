@@ -61,7 +61,7 @@ namespace Cube.Pdf.Editor
             if (values.Length < 2) return app;
 
             var m = values[1].TryCast<bool>() ? "*" : "";
-            return values[0] is Information fi ? $"{fi.Name}{m} - {app}" : app;
+            return values[0] is Entity fi ? $"{fi.Name}{m} - {app}" : app;
         }
 
         /* ----------------------------------------------------------------- */
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IconConverter() : base(e => (e as Information)?.GetIconImage(IconSize.Small)) { }
+        public IconConverter() : base(e => (e as Entity)?.GetIconImage(IconSize.Small)) { }
     }
 
     #endregion

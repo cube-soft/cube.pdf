@@ -55,7 +55,7 @@ namespace Cube.Pdf.Editor
             _settings = settings;
             Images    = images;
             History   = new History(dispatcher);
-            Source    = new BindableValue<Information>(dispatcher);
+            Source    = new BindableValue<Entity>(dispatcher);
             Message   = new BindableValue<string>(string.Empty, dispatcher);
             Busy      = new BindableValue<bool>(() => _busy, dispatcher);
             Modified  = new BindableValue<bool>(() => History.Undoable, dispatcher);
@@ -179,7 +179,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<Information> Source { get; }
+        public BindableValue<Entity> Source { get; }
 
         /* ----------------------------------------------------------------- */
         ///

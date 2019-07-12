@@ -108,7 +108,7 @@ namespace Cube.Pdf.Editor
         /// <param name="src">Source file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Invoke(Information src)
+        public void Invoke(Entity src)
         {
             if (!src.Exists) return;
 

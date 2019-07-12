@@ -50,9 +50,9 @@ namespace Cube.Mixin.Pdf
         /// <returns>Page object.</returns>
         ///
         /// <remarks>
-        /// IDocumentReader.Pages が IList(Page) または IReadOnlyList(Page)
-        /// を実装している場合は O(1) で Page オブジェクトを取得します。
-        /// それ以外の場合は O(n) の時間を要します。
+        /// If IDocumentReader.Pages implements IList(Page) or
+        /// IReadOnlyList(Page), get page object in O(1) time; otherwise
+        /// it takes O(n) time to get.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

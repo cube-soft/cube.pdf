@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public PreviewViewModel(ImageCollection src,
-            Information file,
+            Entity file,
             SynchronizationContext context
         ) : base(() => GetTitle(src, file),
             new PreviewFacade(src, file, new Dispatcher(context, false)),
@@ -85,7 +85,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetTitle(ImageCollection src, Information file) =>
+        private static string GetTitle(ImageCollection src, Entity file) =>
             string.Format(
                 Properties.Resources.TitlePreview,
                 file.Name,

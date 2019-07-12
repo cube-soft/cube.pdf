@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewFacade(ImageCollection src, Information file, IDispatcher dispatcher)
+        public PreviewFacade(ImageCollection src, Entity file, IDispatcher dispatcher)
         {
             var index = src.Selection.First;
 

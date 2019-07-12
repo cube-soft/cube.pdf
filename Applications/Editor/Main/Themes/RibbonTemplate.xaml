@@ -233,7 +233,7 @@
     <!-- **********************************************************************
       RibbonRecentItem
     *********************************************************************** -->
-    <DataTemplate x:Key="RibbonRecentItemTemplate" DataType="{x:Type fs:Information}">
+    <DataTemplate x:Key="RibbonRecentItemTemplate" DataType="{x:Type fs:Entity}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="16" />

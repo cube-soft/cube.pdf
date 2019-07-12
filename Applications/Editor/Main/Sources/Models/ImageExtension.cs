@@ -281,7 +281,7 @@ namespace Cube.Pdf.Editor
         /// <returns>Bitmap of the requested icon.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static BitmapImage GetIconImage(this Information src, IconSize size) =>
+        public static BitmapImage GetIconImage(this Entity src, IconSize size) =>
             src.GetIcon(size)?.ToBitmap().ToBitmapImage(true);
 
         #endregion

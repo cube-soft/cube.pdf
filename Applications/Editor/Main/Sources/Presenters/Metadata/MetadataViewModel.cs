@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public MetadataViewModel(Action<Metadata> callback,
             Metadata src,
-            Information file,
+            Entity file,
             SynchronizationContext context
         ) : base(() => Properties.Resources.TitleMetadata,
             new MetadataFacade(src, file),

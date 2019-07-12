@@ -33,7 +33,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public abstract class File : Information
+    public abstract class File : Entity
     {
         #region Constructors
 

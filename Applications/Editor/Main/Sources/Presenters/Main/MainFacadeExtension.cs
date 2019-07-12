@@ -93,7 +93,7 @@ namespace Cube.Pdf.Editor
         /// <param name="link">Information for the link.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void OpenLink(this MainFacade src, Information link)
+        public static void OpenLink(this MainFacade src, Entity link)
         {
             try { src.Open(Shortcut.Resolve(link?.FullName)?.Target); }
             catch (Exception err)
@@ -186,7 +186,7 @@ namespace Cube.Pdf.Editor
         /// <param name="close">Close action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Save(this MainFacade src, Information dest, Action close)
+        public static void Save(this MainFacade src, Entity dest, Action close)
         {
             var data = src.Bindable;
             var tmp  = data.IO.Combine(dest.DirectoryName, Guid.NewGuid().ToString("D"));

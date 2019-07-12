@@ -342,8 +342,8 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsLink() => new DelegateCommand<object>(
-            e => Track(() => Facade.OpenLink(e as Information)),
-            e => !Data.Busy.Value && e is Information
+            e => Track(() => Facade.OpenLink(e as Entity)),
+            e => !Data.Busy.Value && e is Entity
         ).Associate(Data.Busy);
 
         #endregion

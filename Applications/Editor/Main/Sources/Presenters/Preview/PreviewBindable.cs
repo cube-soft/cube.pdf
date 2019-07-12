@@ -50,14 +50,14 @@ namespace Cube.Pdf.Editor
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable(Information file, Page page, IDispatcher dispatcher)
+        public PreviewBindable(Entity file, Page page, IDispatcher dispatcher)
         {
             var size  = page.GetViewSize();
             var magic = 14.0; // Scrollbar width
             var ratio = size.Width / size.Height;
             var diff  = size.Width > size.Height ? magic * ratio : -(magic * ratio);
 
-            File   = new BindableValue<Information>(file, dispatcher);
+            File   = new BindableValue<Entity>(file, dispatcher);
             Image  = new BindableValue<ImageSource>(dispatcher);
             Width  = new BindableValue<int>((int)size.Width, dispatcher);
             Height = new BindableValue<int>((int)(size.Height + diff), dispatcher);
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<Information> File { get; }
+        public BindableValue<Entity> File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
