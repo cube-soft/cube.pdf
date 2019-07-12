@@ -42,58 +42,52 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// FromPdf
         ///
         /// <summary>
         /// Creates a new instance of the PdfReader class.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
+        /// <param name="src">Path of the PDF file.</param>
         ///
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader Create(string src) => new PdfReader(src);
+        public static PdfReader FromPdf(string src) => new PdfReader(src);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// FromPdf
         ///
         /// <summary>
         /// Creates a new instance of the PdfReader class.
         /// </summary>
         ///
-        /// <param name="src">PDF document path.</param>
+        /// <param name="src">Path of the PDF file.</param>
         /// <param name="password">Password string or query.</param>
-        /// <param name="fullaccess">Requires full access.</param>
-        /// <param name="partial">Partial mode.</param>
+        /// <param name="options">Open options.</param>
         ///
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader Create(string src,
+        public static PdfReader FromPdf(string src,
             QueryMessage<IQuery<string>, string> password,
-            bool fullaccess,
-            bool partial
+            OpenOption options
         ) {
             while (true)
             {
                 try
                 {
-                    var bytes  = password.Value.HasValue() ? Encoding.UTF8.GetBytes(password.Value) : null;
-                    var dest   = new PdfReader(src, bytes, partial);
-                    var denied = fullaccess && !dest.IsOpenedWithFullPermissions;
-                    if (denied)
-                    {
-                        dest.Dispose();
-                        throw new BadPasswordException("Requires full access");
-                    }
-                    else return dest;
+                    var bytes = password.Value.HasValue() ? Encoding.UTF8.GetBytes(password.Value) : null;
+                    var dest  = new PdfReader(src, bytes, options.ReduceMemory);
+                    if (dest.IsOpenedWithFullPermissions || !options.FullAccess) return dest;
+                    dest.Dispose();
+                    throw new BadPasswordException("FullAccess");
                 }
                 catch (BadPasswordException)
                 {
-                    var args = password.Query.Request(src);
-                    if (!args.Cancel) password.Value = args.Value;
+                    var msg = password.Query.Request(src);
+                    if (!msg.Cancel) password.Value = msg.Value;
                     else throw new OperationCanceledException();
                 }
             }
@@ -101,7 +95,7 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateFromImage
+        /// FromImage
         ///
         /// <summary>
         /// Creates a new instance of the PdfReader class from the
@@ -114,7 +108,7 @@ namespace Cube.Pdf.Itext
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader CreateFromImage(string src, IO io)
+        public static PdfReader FromImage(string src, IO io)
         {
             using (var ms = new System.IO.MemoryStream())
             using (var ss = io.OpenRead(src))

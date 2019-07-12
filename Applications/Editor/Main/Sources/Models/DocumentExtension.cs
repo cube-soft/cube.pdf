@@ -126,10 +126,17 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static Itext.DocumentReader GetItexReader(this Entity src, IQuery<string> query, IO io)
         {
-            var pass = (src as PdfFile)?.Password;
+            var pass    = (src as PdfFile)?.Password;
+            var options = new Itext.OpenOption
+            {
+                IO           = io,
+                FullAccess   = !pass.HasValue(),
+                ReduceMemory = false,
+            };
+
             return pass.HasValue() ?
-                   new Itext.DocumentReader(src.FullName, pass, false, io) :
-                   new Itext.DocumentReader(src.FullName, query, true, false, io);
+                   new Itext.DocumentReader(src.FullName, pass,  options) :
+                   new Itext.DocumentReader(src.FullName, query, options);
         }
 
         #endregion

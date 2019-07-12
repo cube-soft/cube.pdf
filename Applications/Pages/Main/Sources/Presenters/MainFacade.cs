@@ -306,8 +306,9 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void AddDocument(string path)
         {
-            var query = new Query<string>(e => throw new NotSupportedException());
-            using (var e = new DocumentReader(path, query, true, true, IO)) _inner.Add(e.File);
+            var query   = new Query<string>(e => throw new NotSupportedException());
+            var options = new OpenOption { IO = IO, FullAccess = true };
+            using (var e = new DocumentReader(path, query, options)) _inner.Add(e.File);
         }
 
         /* ----------------------------------------------------------------- */
@@ -321,8 +322,9 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void AddDocument(PdfFile src, IDocumentWriter dest)
         {
-            var query = new Query<string>(e => e.Cancel = true);
-            using (var e = new DocumentReader(src.FullName, query, true, true, IO)) dest.Add(e.Pages);
+            var query   = new Query<string>(e => e.Cancel = true);
+            var options = new OpenOption { IO = IO, FullAccess = true };
+            using (var e = new DocumentReader(src.FullName, query, options)) dest.Add(e.Pages);
         }
 
         /* ----------------------------------------------------------------- */

@@ -247,8 +247,9 @@ namespace Cube.Pdf.Picker
         /* ----------------------------------------------------------------- */
         private KeyValuePair<int, int> ExtractImages(IProgress<Message<int>> progress)
         {
-            var query = new Query<string>(e => throw new NotSupportedException());
-            using (var reader = new DocumentReader(Source, query, true, true, IO))
+            var query   = new Query<string>(e => throw new NotSupportedException());
+            var options = new OpenOption { IO = IO, FullAccess = true };
+            using (var reader = new DocumentReader(Source, query, options))
             {
                 ExtractImages(reader, progress);
                 return KeyValuePair.Create(reader.Pages.Count(), _core.Count);

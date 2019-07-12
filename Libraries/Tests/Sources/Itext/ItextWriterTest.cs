@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using Cube.Pdf.Itext;
-using Cube.Mixin.Pdf;
 using Cube.Tests;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -62,7 +62,7 @@ namespace Cube.Pdf.Tests.Itext
             var dest = Path(Args(filename));
 
             using (var w = new DocumentWriter(IO))
-            using (var r = new DocumentReader(src, password, true, IO))
+            using (var r = new DocumentReader(src, password))
             {
                 w.UseSmartCopy = true;
                 w.Set(r.Metadata);
@@ -89,7 +89,8 @@ namespace Cube.Pdf.Tests.Itext
             var dest = Path(Args(filename));
             IO.Copy(GetSource(filename), dest, true);
 
-            var r = new DocumentReader(dest, password, false, IO);
+            var op = new OpenOption { ReduceMemory = false };
+            var r  = new DocumentReader(dest, password, op);
             using (var w = new DocumentWriter(IO))
             {
                 w.UseSmartCopy = false;
@@ -114,8 +115,9 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("Sample.pdf", "Sample.pdf",          0, ExpectedResult =  4)]
         public int Merge(string f0, string f1, int degree)
         {
-            var r0   = new DocumentReader(GetSource(f0), "", false, IO);
-            var r1   = new DocumentReader(GetSource(f1), "", false, IO);
+            var op   = new OpenOption { ReduceMemory = false };
+            var r0   = new DocumentReader(GetSource(f0), "", op);
+            var r1   = new DocumentReader(GetSource(f1), "", op);
             var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
 
             using (var w = new DocumentWriter(IO))
@@ -139,11 +141,12 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleBookmark.pdf", "SampleImage01.png", 90, ExpectedResult = 10)]
         public int Merge_Image(string doc, string image, int degree)
         {
-            var r0   = new DocumentReader(GetSource(doc), "", false, IO);
+            var op   = new OpenOption { ReduceMemory = false };
+            var r0   = new DocumentReader(GetSource(doc), "", op);
             var dest = Path(Args(r0.File.BaseName, IO.Get(image).BaseName));
 
             using (var w = new DocumentWriter(IO))
-            using (var r = new DocumentReader(GetSource(doc), "", false, IO))
+            using (var r = new DocumentReader(GetSource(doc), "", op))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
                 w.Add(Rotate(IO.GetImagePages(GetSource(image)), degree));
@@ -157,7 +160,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Split
         ///
         /// <summary>
-        /// Executes the test for spliting a PDF document in page by page.
+        /// Executes the test for splitting a PDF document in page by page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -175,7 +178,8 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var w = new DocumentSplitter(IO))
             {
-                w.Add(new DocumentReader(src, password, false, IO));
+                var op = new OpenOption { ReduceMemory = false };
+                w.Add(new DocumentReader(src, password, op));
                 w.Save(dest);
 
                 var n   = w.Results.Count;
@@ -204,8 +208,9 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleAttachment.pdf", "日本語のサンプル.md", ExpectedResult = 3)]
         public int Attach(string doc, string file)
         {
+            var op   = new OpenOption { ReduceMemory = false };
             var src  = GetSource(doc);
-            var r0   = new DocumentReader(src, "", false, IO);
+            var r0   = new DocumentReader(src, "", op);
             var r1   = IO.Get(GetSource(file));
             var dest = Path(Args(r0.File.BaseName, r1.BaseName));
 
@@ -218,7 +223,7 @@ namespace Cube.Pdf.Tests.Itext
                 w.Save(dest);
             }
 
-            using (var r = new DocumentReader(dest, "", false, IO))
+            using (var r = new DocumentReader(dest, "", op))
             {
                 var items = r.Attachments;
                 Assert.That(items.Any(x => x.Name.FuzzyEquals(file)), Is.True);
@@ -242,6 +247,7 @@ namespace Cube.Pdf.Tests.Itext
         {
             var src  = GetSource("Sample.pdf");
             var dest = Path(Args(value));
+            var op   = new OpenOption { ReduceMemory = false };
             var cmp  = new Metadata
             {
                 Title    = value,
@@ -257,11 +263,11 @@ namespace Cube.Pdf.Tests.Itext
             using (var w = new DocumentWriter(IO))
             {
                 w.Set(cmp);
-                w.Add(new DocumentReader(src, "", false, IO));
+                w.Add(new DocumentReader(src, "", op));
                 w.Save(dest);
             }
 
-            using (var r = new DocumentReader(dest, "", false, IO))
+            using (var r = new DocumentReader(dest, "", op))
             {
                 var m = r.Metadata;
                 Assert.That(m.Title,         Is.EqualTo(cmp.Title), nameof(m.Title));
@@ -290,6 +296,7 @@ namespace Cube.Pdf.Tests.Itext
         {
             var src  = GetSource("Sample.pdf");
             var dest = Path(Args(method, permission));
+            var op   = new OpenOption { ReduceMemory = false };
             var cmp  = new Encryption
             {
                 OwnerPassword    = "owner",
@@ -303,7 +310,7 @@ namespace Cube.Pdf.Tests.Itext
             using (var w = new DocumentWriter(IO))
             {
                 w.Set(cmp);
-                w.Add(new DocumentReader(src, "", false, IO));
+                w.Add(new DocumentReader(src, "", op));
                 w.Save(dest);
             }
 
@@ -343,11 +350,12 @@ namespace Cube.Pdf.Tests.Itext
         {
             var src    = GetSource("Sample.pdf");
             var dest   = Path(Args("Sample"));
+            var op     = new OpenOption { ReduceMemory = false };
             var degree = 90;
 
             using (var w = new DocumentWriter(IO))
             {
-                var r = new DocumentReader(src, "", true, IO);
+                var r = new DocumentReader(src, "", op);
 
                 w.UseSmartCopy = true;
                 w.Set(r.Metadata);
@@ -431,7 +439,7 @@ namespace Cube.Pdf.Tests.Itext
         /* ----------------------------------------------------------------- */
         private int Count(string src, string password, int degree)
         {
-            using (var reader = new DocumentReader(src, password, true, IO))
+            using (var reader = new DocumentReader(src, password))
             {
                 Assert.That(reader.File.Count, Is.EqualTo(reader.Pages.Count()));
                 Assert.That(

@@ -151,7 +151,9 @@ namespace Cube.Pdf.Clip
                 if (_source.File.FullName.FuzzyEquals(src)) return;
                 else Close();
             }
-            _source = new DocumentReader(src, "", true, IO);
+
+            var options = new OpenOption { IO = IO, ReduceMemory = true };
+            _source = new DocumentReader(src, "", options);
             Reset();
         });
 

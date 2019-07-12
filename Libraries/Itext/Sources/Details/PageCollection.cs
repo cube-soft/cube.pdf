@@ -24,23 +24,28 @@ namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ReadOnlyPageList
+    /// PageCollection
     ///
     /// <summary>
     /// Represents a read only collection of PDF pages.
     /// </summary>
     ///
+    /// <remarks>
+    /// IReadOnlyList(Page) implementations is for the GetPage extended
+    /// method.
+    /// </remarks>
+    ///
     /* --------------------------------------------------------------------- */
-    internal class ReadOnlyPageList : EnumerableBase<Page>, IReadOnlyList<Page>
+    internal class PageCollection : EnumerableBase<Page>, IReadOnlyList<Page>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReadOnlyPageList
+        /// PageCollection
         ///
         /// <summary>
-        /// Initializes a new instance of the ReadOnlyPageList class with
+        /// Initializes a new instance of the PageCollection class with
         /// the specified arguments.
         /// </summary>
         ///
@@ -48,7 +53,7 @@ namespace Cube.Pdf.Itext
         /// <param name="file">PDF file information.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ReadOnlyPageList(PdfReader core, PdfFile file)
+        public PageCollection(PdfReader core, PdfFile file)
         {
             File  = file;
             _core = core;

@@ -144,7 +144,7 @@ namespace Cube.Pdf.Tests.Itext
         ///
         /* ----------------------------------------------------------------- */
         private DocumentReader Create(string filename, string password) =>
-            new DocumentReader(GetSource(filename), password, true, IO);
+            new DocumentReader(GetSource(filename), password);
 
         #endregion
     }

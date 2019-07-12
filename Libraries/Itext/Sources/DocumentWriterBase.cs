@@ -21,7 +21,6 @@ using Cube.Mixin.Generics;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Cube.Pdf.Itext
 {
@@ -30,8 +29,8 @@ namespace Cube.Pdf.Itext
     /// DocumentWriterBase
     ///
     /// <summary>
-    /// Provides an implementation of the "IDocumentWriter" interface by
-    /// using the iTextSharp library.
+    /// Provides an implementation of the IDocumentWriter interface by
+    /// using the iTextSharp.
     /// </summary>
     ///
     /// <remarks>
@@ -387,19 +386,17 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfReader GetRawReader(PdfFile file)
+        private PdfReader GetRawReader(PdfFile src)
         {
-            var key = file.FullName;
+            var key = src.FullName;
             if (_hints.TryGetValue(key, out var hit)) return hit;
 
-            var reader = new DocumentReader(key, file.Password, false, IO);
+            var options = new OpenOption { IO = IO, ReduceMemory = false };
+            var reader  = new DocumentReader(key, src.Password, options);
             _resources.Add(reader);
+            _hints.Add(key, reader.Core);
 
-            var dest = reader.Core.TryCast<PdfReader>();
-            Debug.Assert(dest != null);
-            _hints.Add(key, dest);
-
-            return dest;
+            return reader.Core;
         }
 
         /* ----------------------------------------------------------------- */
@@ -411,12 +408,12 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfReader GetRawReader(ImageFile file)
+        private PdfReader GetRawReader(ImageFile src)
         {
-            var key = file.FullName;
+            var key = src.FullName;
             if (_hints.TryGetValue(key, out var hit)) return hit;
 
-            var dest = ReaderFactory.CreateFromImage(key, IO);
+            var dest = ReaderFactory.FromImage(key, IO);
             _resources.Add(dest);
             _hints.Add(key, dest);
 
