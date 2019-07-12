@@ -170,6 +170,9 @@ namespace Cube.Pdf.Editor
             {
                 _core.Clear();
                 Bindable.Close();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
             }, "");
         }
 

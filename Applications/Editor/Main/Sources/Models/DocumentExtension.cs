@@ -108,7 +108,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static ImageSource Create(this IDocumentRenderer src, Page page, SizeF size) =>
-            page.File is ImageFile f ? Create(f, size) : src?.Render(page, size).ToBitmapImage();
+            page.File is ImageFile f ? Create(f, size) : src?.Render(page, size).ToBitmapImage(true);
 
         /* ----------------------------------------------------------------- */
         ///

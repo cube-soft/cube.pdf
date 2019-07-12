@@ -219,7 +219,7 @@ namespace Cube.Pdf.Editor
         {
             foreach (var item in indices.Within(Count).Select(i => _inner[i]))
             {
-                _cache.Remove(item);
+                _ = _cache.Remove(item);
                 item.Rotate(degree);
             }
         });
@@ -229,7 +229,7 @@ namespace Cube.Pdf.Editor
         /// Move
         ///
         /// <summary>
-        /// Moves the specified items at the specfied distance.
+        /// Moves the specified items at the specified distance.
         /// </summary>
         ///
         /// <param name="indices">Target items.</param>
@@ -272,8 +272,8 @@ namespace Cube.Pdf.Editor
             var src = indices.Within(Count).OrderByDescending().ToList();
             foreach (var item in src.Select(i => _inner[i]))
             {
-                _cache.Remove(item);
-                _inner.Remove(item);
+                _ = _cache.Remove(item);
+                _ = _inner.Remove(item);
                 item.Dispose();
             }
             return KeyValuePair.Create(src.LastOrDefault(), Count);
@@ -420,7 +420,7 @@ namespace Cube.Pdf.Editor
                 for (var i = min; i < max; ++i)
                 {
                     if (Disposed || cts.Token.IsCancellationRequested) return;
-                    _cache.GetOrCreate(_inner[i]);
+                    _ = _cache.GetOrCreate(_inner[i]);
                 }
             }).Forget();
         }
