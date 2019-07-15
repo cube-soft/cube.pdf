@@ -26,87 +26,80 @@ namespace Cube.Pdf.Editor
 
     /* --------------------------------------------------------------------- */
     ///
-    /// PasswordWindowBehavior
+    /// ShowPasswordWindow
     ///
     /// <summary>
     /// Represents the behavior to show a PasswordWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PasswordWindowBehavior :
-        ShowDialogBehavior<PasswordWindow, PasswordViewModel> { }
+    public class ShowPasswordWindow : ShowBehavior<PasswordWindow, PasswordViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// PreviewWindowBehavior
+    /// ShowPreviewWindow
     ///
     /// <summary>
     /// Represents the behavior to show a PreviewWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PreviewWindowBehavior :
-        ShowDialogBehavior<PreviewWindow, PreviewViewModel> { }
+    public class ShowPreviewWindow : ShowBehavior<PreviewWindow, PreviewViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// InsertWindowBehavior
+    /// ShowInsertWindow
     ///
     /// <summary>
     /// Represents the behavior to show a InsertWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertWindowBehavior :
-        ShowDialogBehavior<InsertWindow, InsertViewModel> { }
+    public class ShowInsertWindow : ShowBehavior<InsertWindow, InsertViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// RemoveWindowBehavior
+    /// ShowRemoveWindow
     ///
     /// <summary>
     /// Represents the behavior to show a RemoveWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RemoveWindowBehavior :
-        ShowDialogBehavior<RemoveWindow, RemoveViewModel> { }
+    public class ShowRemoveWindow : ShowBehavior<RemoveWindow, RemoveViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// MetadataWindowBehavior
+    /// ShowMetadataWindow
     ///
     /// <summary>
     /// Represents the behavior to show a MetadataWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MetadataWindowBehavior :
-        ShowDialogBehavior<MetadataWindow, MetadataViewModel> { }
+    public class ShowMetadataWindow : ShowBehavior<MetadataWindow, MetadataViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// EncryptionWindowBehavior
+    /// ShowEncryptionWindow
     ///
     /// <summary>
     /// Represents the behavior to show a EncryptionWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EncryptionWindowBehavior :
-        ShowDialogBehavior<EncryptionWindow, EncryptionViewModel> { }
+    public class ShowEncryptionWindow : ShowBehavior<EncryptionWindow, EncryptionViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingWindowBehavior
+    /// ShowSettingWindow
     ///
     /// <summary>
     /// Represents the behavior to show a SettingWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingWindowBehavior :
-        ShowDialogBehavior<SettingWindow, SettingViewModel> { }
+    public class ShowSettingWindow : ShowBehavior<SettingWindow, SettingViewModel> { }
 
     #endregion
 

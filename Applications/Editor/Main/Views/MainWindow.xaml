@@ -101,15 +101,15 @@
         <xb:UriBehavior />
         <xb:CloseBehavior />
         <xb:DisposeBehavior />
-        <xb:ClosingToCommand Command="{Binding Ribbon.Close.Command}" />
-        <my:PasswordWindowBehavior />
-        <my:PreviewWindowBehavior />
-        <my:InsertWindowBehavior />
-        <my:RemoveWindowBehavior />
-        <my:MetadataWindowBehavior />
-        <my:EncryptionWindowBehavior />
-        <my:SettingWindowBehavior />
-        <my:MouseOpenBehavior Command="{Binding Open}" />
+        <xb:ClosingToCommand     Command="{Binding Ribbon.Close.Command}" />
+        <my:MouseOpenBehavior    Command="{Binding Open}" />
+        <my:ShowPasswordWindow   Modal="True" />
+        <my:ShowPreviewWindow    Modal="True" />
+        <my:ShowInsertWindow     Modal="True" />
+        <my:ShowRemoveWindow     Modal="True" />
+        <my:ShowMetadataWindow   Modal="True" />
+        <my:ShowEncryptionWindow Modal="True" />
+        <my:ShowSettingWindow    Modal="True" />
     </i:Interaction.Behaviors>
 
     <!-- **********************************************************************

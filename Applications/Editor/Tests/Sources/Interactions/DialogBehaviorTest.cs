@@ -51,7 +51,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         public void PasswordWindow() => Create(vm =>
         {
             var view = new Window { DataContext = vm };
-            var src  = new PasswordWindowBehavior();
+            var src  = new ShowPasswordWindow();
 
             Assert.DoesNotThrow(() =>
             {
@@ -74,7 +74,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         public void PreviewWindow() => Create(vm =>
         {
             var view = new Window { DataContext = vm };
-            var src  = new PreviewWindowBehavior();
+            var src  = new ShowPreviewWindow();
 
             Assert.DoesNotThrow(() =>
             {
@@ -97,7 +97,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         public void InsertWindow() => Create(vm =>
         {
             var view = new Window { DataContext = vm };
-            var src  = new InsertWindowBehavior();
+            var src  = new ShowInsertWindow();
 
             Assert.DoesNotThrow(() =>
             {
@@ -120,7 +120,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         public void RemoveWindow() => Create(vm =>
         {
             var view = new Window { DataContext = vm };
-            var src  = new RemoveWindowBehavior();
+            var src  = new ShowRemoveWindow();
 
             Assert.DoesNotThrow(() =>
             {
@@ -143,7 +143,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         public void MetadataWindow() => Create(vm =>
         {
             var view = new Window { DataContext = vm };
-            var src  = new MetadataWindowBehavior();
+            var src  = new ShowMetadataWindow();
 
             Assert.DoesNotThrow(() =>
             {
@@ -166,7 +166,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         public void EncryptionWindow() => Create(vm =>
         {
             var view = new Window { DataContext = vm };
-            var src  = new EncryptionWindowBehavior();
+            var src  = new ShowEncryptionWindow();
 
             Assert.DoesNotThrow(() =>
             {
@@ -189,7 +189,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         public void SettingWindow() => Create(vm =>
         {
             var view = new Window { DataContext = vm };
-            var src  = new SettingWindowBehavior();
+            var src  = new ShowSettingWindow();
 
             Assert.DoesNotThrow(() =>
             {
