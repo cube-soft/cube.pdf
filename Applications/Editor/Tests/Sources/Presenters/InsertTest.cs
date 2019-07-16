@@ -159,43 +159,49 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Ivm_Properties() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
         {
-            Assert.That(ivm.Value,               Is.Not.Null);
-            Assert.That(ivm.Value.Count,         Is.EqualTo(9));
-            Assert.That(ivm.Value.SelectedIndex, Is.EqualTo(-1));
+            Assert.That(ivm.Value,                Is.Not.Null);
+            Assert.That(ivm.Value.Count,          Is.EqualTo(9));
+            Assert.That(ivm.Value.SelectedIndex,  Is.EqualTo(-1));
 
-            Assert.That(ivm.Title.Text,         Is.EqualTo("Insertion details"));
-            Assert.That(ivm.Add.Text,           Is.EqualTo("Add ..."));
-            Assert.That(ivm.Preview.Text,       Is.EqualTo("Preview"));
-            Assert.That(ivm.Up.Text,            Is.EqualTo("Up"));
-            Assert.That(ivm.Down.Text,          Is.EqualTo("Down"));
-            Assert.That(ivm.Remove.Text,        Is.EqualTo("Remove"));
-            Assert.That(ivm.Clear.Text,         Is.EqualTo("Clear"));
-            Assert.That(ivm.OK.Text,            Is.EqualTo("OK"));
-            Assert.That(ivm.OK.Command,         Is.Not.Null);
-            Assert.That(ivm.Cancel.Text,        Is.EqualTo("Cancel"));
-            Assert.That(ivm.Cancel.Command,     Is.Not.Null);
-            Assert.That(ivm.DragAdd,            Is.Not.Null);
-            Assert.That(ivm.DragMove,           Is.Not.Null);
+            Assert.That(ivm.Title.Text,           Is.EqualTo("Insertion details"));
+            Assert.That(ivm.Add.Text,             Is.EqualTo("Add ..."));
+            Assert.That(ivm.Preview.Text,         Is.EqualTo("Preview"));
+            Assert.That(ivm.Up.Text,              Is.EqualTo("Up"));
+            Assert.That(ivm.Down.Text,            Is.EqualTo("Down"));
+            Assert.That(ivm.Remove.Text,          Is.EqualTo("Remove"));
+            Assert.That(ivm.Clear.Text,           Is.EqualTo("Clear"));
+            Assert.That(ivm.OK.Text,              Is.EqualTo("OK"));
+            Assert.That(ivm.OK.Command,           Is.Not.Null);
+            Assert.That(ivm.Cancel.Text,          Is.EqualTo("Cancel"));
+            Assert.That(ivm.Cancel.Command,       Is.Not.Null);
+            Assert.That(ivm.DragAdd,              Is.Not.Null);
+            Assert.That(ivm.DragMove,             Is.Not.Null);
 
-            var src = ivm.Value.Files[0];
-            Assert.That(ivm.Value.Files.Count,  Is.EqualTo(4));
-            Assert.That(src.Name,               Is.EqualTo("Sample.pdf"));
-            Assert.That(src.FullName,           Does.EndWith("Sample.pdf"));
-            Assert.That(src.Length,             Is.AtLeast(60000));
-            Assert.That(src.LastWriteTime,      Is.Not.EqualTo(DateTime.MinValue));
-            Assert.That(src.Icon,               Is.Not.Null);
-            Assert.That(src.IsSelected,         Is.False);
+            var file = ivm.Value.Files[0];
+            Assert.That(ivm.Value.Files.Count,    Is.EqualTo(4));
+            Assert.That(file.Name,                Is.EqualTo("Sample.pdf"));
+            Assert.That(file.FullName,            Does.EndWith("Sample.pdf"));
+            Assert.That(file.Length,              Is.AtLeast(60000));
+            Assert.That(file.LastWriteTime,       Is.Not.EqualTo(DateTime.MinValue));
+            Assert.That(file.Icon,                Is.Not.Null);
+            Assert.That(file.IsSelected,          Is.False);
 
-            var pos = ivm.Position;
-            Assert.That(pos.Select.Text,         Is.EqualTo("Insert position"));
-            Assert.That(pos.Select.Command,      Is.Not.Null);
-            Assert.That(pos.First.Text,          Is.EqualTo("Beginning"));
-            Assert.That(pos.Last.Text,           Is.EqualTo("End"));
-            Assert.That(pos.SelectedIndex.Text,  Is.EqualTo("Selected position"));
-            Assert.That(pos.SelectedIndex.Value, Is.False);
-            Assert.That(pos.UserIndex.Text,      Is.EqualTo("Behind the number of"));
-            Assert.That(pos.UserIndex.Value,     Is.EqualTo(1));
-            Assert.That(pos.Count.Text,          Is.EqualTo("/ 9 pages"));
+            var it = ivm.Position;
+            Assert.That(it.Select.Text,           Is.EqualTo("Insert position"));
+            Assert.That(it.Select.Command,        Is.Not.Null);
+            Assert.That(it.First.Text,            Is.EqualTo("Beginning"));
+            Assert.That(it.First.Command,         Is.Null);
+            Assert.That(it.Last.Text,             Is.EqualTo("End"));
+            Assert.That(it.Last.Command,          Is.Null);
+            Assert.That(it.SelectedIndex.Text,    Is.EqualTo("Selected position"));
+            Assert.That(it.SelectedIndex.Value,   Is.EqualTo(-1));
+            Assert.That(it.SelectedIndex.Command, Is.Null);
+            Assert.That(it.UserIndex.Text,        Is.EqualTo("Behind the number of"));
+            Assert.That(it.UserIndex.Value,       Is.EqualTo(1));
+            Assert.That(it.UserIndex.Command,     Is.Null);
+            Assert.That(it.Count.Text,            Is.EqualTo("/ 9 pages"));
+            Assert.That(it.Count.Value,           Is.EqualTo(9));
+            Assert.That(it.Count.Command,         Is.Null);
 
             Assert.That(ivm.Cancel.Command.CanExecute(), Is.True);
             ivm.Cancel.Command.Execute();

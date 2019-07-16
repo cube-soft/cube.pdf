@@ -18,31 +18,30 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.Pdf;
-using Cube.Xui;
 using System.Windows.Media;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PreviewBindable
+    /// PreviewBindableValue
     ///
     /// <summary>
     /// Provides values for binding to the PreviewWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PreviewBindable
+    public class PreviewBindableValue : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PreviewBindable
+        /// PreviewBindableValue
         ///
         /// <summary>
-        /// Initializes a new instance of the PreviewBindable
-        /// class with the specified arguments.
+        /// Initializes a new instance of the PreviewBindableValue class
+        /// with the specified arguments.
         /// </summary>
         ///
         /// <param name="file">Information of the PDF file.</param>
@@ -50,18 +49,17 @@ namespace Cube.Pdf.Editor
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable(Entity file, Page page, IDispatcher dispatcher)
+        public PreviewBindableValue(Entity file, Page page, IDispatcher dispatcher) : base(dispatcher)
         {
             var size  = page.GetViewSize();
             var magic = 14.0; // Scrollbar width
             var ratio = size.Width / size.Height;
             var diff  = size.Width > size.Height ? magic * ratio : -(magic * ratio);
 
-            File   = new BindableValue<Entity>(file, dispatcher);
-            Image  = new BindableValue<ImageSource>(dispatcher);
-            Width  = new BindableValue<int>((int)size.Width, dispatcher);
-            Height = new BindableValue<int>((int)(size.Height + diff), dispatcher);
-            Busy   = new BindableValue<bool>(false, dispatcher);
+            File   = file;
+            Width  = (int)size.Width;
+            Height = (int)(size.Height + diff);
+            Busy   = false;
         }
 
         #endregion
@@ -77,7 +75,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<Entity> File { get; }
+        public Entity File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -88,7 +86,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<ImageSource> Image { get; }
+        public ImageSource Image
+        {
+            get => _image;
+            set => SetProperty(ref _image, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,7 +101,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<int> Width { get; }
+        public int Width
+        {
+            get => _width;
+            set => SetProperty(ref _width, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -110,7 +116,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<int> Height { get; }
+        public int Height
+        {
+            get => _height;
+            set => SetProperty(ref _height, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -121,8 +131,40 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<bool> Busy { get; }
+        public bool Busy
+        {
+            get => _busy;
+            set => SetProperty(ref _busy, value);
+        }
 
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
+
+        #endregion
+
+        #region Fields
+        private ImageSource _image;
+        private int _width;
+        private int _height;
+        private bool _busy;
         #endregion
     }
 }

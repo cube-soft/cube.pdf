@@ -21,7 +21,6 @@ using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
@@ -55,13 +54,12 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             var cts = new CancellationTokenSource();
             var dp  = vm.Subscribe<PreviewViewModel>(e =>
             {
-                Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Data.File.Value,   Is.Not.Null);
-                Assert.That(e.Data.Width.Value,  Is.GreaterThan(0));
-                Assert.That(e.Data.Height.Value, Is.GreaterThan(0));
-
-                Assert.That(Wait.For(() => !e.Data.Busy.Value), "Timeout (PreviewImage)");
-                Assert.That(e.Data.Image.Value,  Is.Not.Null);
+                Assert.That(e.Title.Text,   Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Value.File,   Is.Not.Null);
+                Assert.That(e.Value.Width,  Is.GreaterThan(0));
+                Assert.That(e.Value.Height, Is.GreaterThan(0));
+                Assert.That(Wait.For(() => e.Value.Image != null), "Timeout (PreviewImage)");
+                Assert.That(e.Value.Busy,  Is.False);
 
                 e.Cancel.Command.Execute();
                 cts.Cancel(); // done
@@ -69,7 +67,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             vm.Test(vm.Ribbon.Select);
             Assert.That(vm.Ribbon.Preview.Command.CanExecute(), Is.True);
-            Task.Run(() => vm.Ribbon.Preview.Command.Execute());
+            vm.Ribbon.Preview.Command.Execute();
             Assert.That(Wait.For(cts.Token), "Timeout (Preview)");
             dp.Dispose();
         });

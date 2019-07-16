@@ -47,7 +47,7 @@ namespace Cube.Pdf.Editor
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindableValue(int i, int n, IDispatcher dispatcher)
+        public InsertBindableValue(int i, int n, IDispatcher dispatcher) : base(dispatcher)
         {
             Files         = new BindableCollection<FileItem>(dispatcher);
             Selection     = new Selection<FileItem> { Dispatcher = dispatcher };

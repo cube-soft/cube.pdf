@@ -51,7 +51,7 @@ namespace Cube.Pdf.Editor
         public PreviewViewModel(ImageCollection src,
             Entity file,
             SynchronizationContext context
-        ) : base(() => GetTitle(src, file),
+        ) : base(() => string.Format(Properties.Resources.TitlePreview, file.Name, src.Selection.First + 1, src.Count),
             new PreviewFacade(src, file, new Dispatcher(context, false)),
             new Aggregator(),
             context
@@ -63,35 +63,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
+        /// Value
         ///
         /// <summary>
-        /// Gets the bindable data.
+        /// Gets the bindable value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable Data => Facade.Bindable;
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetTitle
-        ///
-        /// <summary>
-        /// Gets the title of the preview window.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static string GetTitle(ImageCollection src, Entity file) =>
-            string.Format(
-                Properties.Resources.TitlePreview,
-                file.Name,
-                src.Selection.First + 1,
-                src.Count
-            );
+        public PreviewBindableValue Value => Facade.Value;
 
         #endregion
     }
