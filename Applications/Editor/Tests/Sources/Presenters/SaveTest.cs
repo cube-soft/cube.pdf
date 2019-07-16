@@ -17,8 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Mixin.Commands;
-using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 
@@ -47,21 +45,17 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf",         "",         2)]
-        [TestCase("SampleAes128.pdf",   "password", 2)]
-        [TestCase("SampleRc40.pdf",     "password", 2)]
-        [TestCase("SampleRc40Open.pdf", "password", 2)]
-        public void SaveAs(string filename, string password, int n) =>
-            Open(filename, password, vm =>
+        [TestCase("Sample.pdf",         ""        )]
+        [TestCase("SampleAes128.pdf",   "password")]
+        [TestCase("SampleRc40.pdf",     "password")]
+        [TestCase("SampleRc40Open.pdf", "password")]
+        public void SaveAs(string filename, string password) => Open(filename, password, vm =>
         {
-            var fi = IO.Get(Source);
-            Destination = Get(MakeArgs(fi.BaseName));
+            Destination = Get(MakeArgs(IO.Get(Source).BaseName));
             Password    = string.Empty;
-            Assert.That(IO.Exists(Destination), Is.False);
 
-            var src = vm.Value.Source;
-            vm.Ribbon.SaveAs.Command.Execute();
-            Assert.That(Wait.For(() => src.FullName == Destination), "Timeout (Save)");
+            Assert.That(IO.Exists(Destination), Is.False);
+            vm.Test(vm.Ribbon.SaveAs);
             Assert.That(IO.Exists(Destination), Is.True);
         });
 
@@ -74,22 +68,17 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf", "", 2)]
-        public void Overwrite(string filename, string password, int n) => Create(vm =>
+        [TestCase("Sample.pdf", "")]
+        public void Overwrite(string filename, string password) => Create(vm =>
         {
-            var fi = IO.Get(GetSource(filename));
-            Source   = Get(MakeArgs(fi.BaseName));
+            Source   = Get(MakeArgs(IO.Get(GetSource(filename)).BaseName));
             Password = password;
-            IO.Copy(fi.FullName, Source, true);
-            vm.Ribbon.Open.Command.Execute();
-            Assert.That(Wait.For(() => vm.Value.Count == n), "Timeout (Open)");
 
+            IO.Copy(GetSource(filename), Source, true);
+            vm.Test(vm.Ribbon.Open);
             vm.Value.Images.First().IsSelected = true;
-            vm.Ribbon.RotateLeft.Command.Execute();
-            Assert.That(Wait.For(() => vm.Value.Modified), "Timeout (Rotate)");
-
-            vm.Ribbon.Save.Command.Execute();
-            Assert.That(Wait.For(() => !vm.Value.Modified), "Timeout (Save)");
+            vm.Test(vm.Ribbon.RotateLeft);
+            vm.Test(vm.Ribbon.Save);
         });
 
         #endregion
