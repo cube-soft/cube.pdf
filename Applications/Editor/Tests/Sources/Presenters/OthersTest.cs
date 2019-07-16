@@ -50,7 +50,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Properties() => Create(vm =>
         {
-            var pf = vm.Data.Images.Preferences;
+            var pf = vm.Value.Images.Preferences;
             Assert.That(vm.Recent.Items,  Is.Not.Null);
             Assert.That(pf.ItemSize,      Is.EqualTo(250));
             Assert.That(pf.ItemSizeIndex, Is.EqualTo(3));
@@ -74,7 +74,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Source = Get(MakeArgs(fi.BaseName, modify));
             IO.Copy(fi.FullName, Source, true);
             vm.Test(vm.Ribbon.Open);
-            Assert.That(vm.Data.Count.Value, Is.EqualTo(n));
+            Assert.That(vm.Value.Count, Is.EqualTo(n));
 
             if (modify)
             {
@@ -102,7 +102,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(IO.Exists(Destination), Is.False);
 
             Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.False);
-            vm.Data.Images.First().IsSelected = true;
+            vm.Value.Images.First().IsSelected = true;
             Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
 
             vm.Test(vm.Ribbon.Extract);
@@ -121,9 +121,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Rotate() => Open("Sample.pdf", "", vm =>
         {
-            var images = vm.Data.Images.ToList();
+            var images = vm.Value.Images.ToList();
             var dest   = images[0];
-            var dummy  = vm.Data.Images.Preferences.Dummy;
+            var dummy  = vm.Value.Images.Preferences.Dummy;
             Assert.That(Wait.For(() => dest.Image != dummy), "Timeout");
 
             Assert.That(vm.Ribbon.RotateLeft.Command.CanExecute(),  Is.False);
@@ -162,21 +162,21 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             vm.Test(vm.Ribbon.Select);
             vm.Test(vm.Ribbon.Remove);
 
-            Assert.That(vm.Data.Images.Count, Is.EqualTo(0));
-            Assert.That(vm.Data.History.Undoable, Is.True);
-            Assert.That(vm.Data.History.Redoable, Is.False);
+            Assert.That(vm.Value.Images.Count, Is.EqualTo(0));
+            Assert.That(vm.Value.History.Undoable, Is.True);
+            Assert.That(vm.Value.History.Redoable, Is.False);
 
             vm.Test(vm.Ribbon.Undo);
 
-            Assert.That(vm.Data.Images.Count, Is.EqualTo(9));
-            Assert.That(vm.Data.History.Undoable, Is.False);
-            Assert.That(vm.Data.History.Redoable, Is.True);
+            Assert.That(vm.Value.Images.Count, Is.EqualTo(9));
+            Assert.That(vm.Value.History.Undoable, Is.False);
+            Assert.That(vm.Value.History.Redoable, Is.True);
 
             vm.Test(vm.Ribbon.Redo);
 
-            Assert.That(vm.Data.Images.Count, Is.EqualTo(0));
-            Assert.That(vm.Data.History.Undoable, Is.True);
-            Assert.That(vm.Data.History.Redoable, Is.False);
+            Assert.That(vm.Value.Images.Count, Is.EqualTo(0));
+            Assert.That(vm.Value.History.Undoable, Is.True);
+            Assert.That(vm.Value.History.Redoable, Is.False);
         });
 
         #endregion

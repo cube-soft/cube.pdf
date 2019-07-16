@@ -194,9 +194,9 @@ namespace Cube.Pdf.Editor.Tests
             var dest  = new MainViewModel(src, new SynchronizationContext());
             var dummy = new BitmapImage(new Uri(GetSource("Loading.png")));
 
-            dest.Data.Images.Preferences.Dummy = dummy;
-            dest.Data.Images.Preferences.VisibleFirst = 0;
-            dest.Data.Images.Preferences.VisibleLast = 10;
+            dest.Value.Images.Preferences.Dummy = dummy;
+            dest.Value.Images.Preferences.VisibleFirst = 0;
+            dest.Value.Images.Preferences.VisibleLast = 10;
 
             return dest;
         }

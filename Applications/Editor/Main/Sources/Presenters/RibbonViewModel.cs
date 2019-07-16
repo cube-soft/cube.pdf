@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
-using System;
+using System.ComponentModel;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -54,11 +54,7 @@ namespace Cube.Pdf.Editor
             SynchronizationContext context
         ) : base(src, aggregator, context)
         {
-            if (src != null)
-            {
-                src.Source.PropertyChanged += WhenPropertyChanged;
-                src.Busy.PropertyChanged   += WhenPropertyChanged;
-            }
+            if (src != null) src.PropertyChanged += WhenPropertyChanged;
         }
 
         #endregion
@@ -309,7 +305,7 @@ namespace Cube.Pdf.Editor
             nameof(Insert),
             () => Properties.Resources.MenuInsert,
             () => Properties.Resources.TooltipInsert,
-            () => !Facade.Busy.Value && Facade.IsOpen(),
+            () => !Facade.Busy && Facade != null,
             GetDispatcher(false)
         ));
 
@@ -387,7 +383,7 @@ namespace Cube.Pdf.Editor
             nameof(Remove),
             () => Properties.Resources.MenuRemove,
             () => Properties.Resources.TooltipRemove,
-            () => !Facade.Busy.Value && Facade.IsOpen(),
+            () => !Facade.Busy && Facade != null,
             GetDispatcher(false)
         ));
 
@@ -588,8 +584,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenPropertyChanged(object s, EventArgs e)
+        private void WhenPropertyChanged(object s, PropertyChangedEventArgs e)
         {
+            var name = e.PropertyName;
+            if (name != nameof(Facade.Busy) && name != nameof(Facade.Source)) return;
             var src = new[] { Insert, Extract, Remove };
             foreach (var re in src) re.Refresh(nameof(RibbonElement.Enabled));
         }

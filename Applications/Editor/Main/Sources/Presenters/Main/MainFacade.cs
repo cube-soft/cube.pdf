@@ -60,18 +60,18 @@ namespace Cube.Pdf.Editor
 
             _core    = new DocumentCollection(src.IO, () => Query);
             Backup   = new Backup(src.IO);
-            Bindable = new MainBindable(images, src, post);
+            Value = new MainBindable(images, src, post);
 
             Settings = src;
             Settings.Load();
             Settings.PropertyChanged += (s, e) => Update(e.PropertyName);
 
-            var sizes = Bindable.Images.Preferences.ItemSizeOptions;
-            var index = sizes.LastIndex(e => e <= Bindable.ItemSize.Value);
+            var sizes = Value.Images.Preferences.ItemSizeOptions;
+            var index = sizes.LastIndex(e => e <= Value.ItemSize);
 
-            Bindable.Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
-            Bindable.Images.Preferences.FrameOnly     = src.Value.FrameOnly;
-            Bindable.Images.Preferences.TextHeight    = 25;
+            Value.Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
+            Value.Images.Preferences.FrameOnly     = src.Value.FrameOnly;
+            Value.Images.Preferences.TextHeight    = 25;
         }
 
         #endregion
@@ -80,14 +80,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Bindable
+        /// Value
         ///
         /// <summary>
-        /// Gets bindable data related with PDF documents.
+        /// Gets bindable value related with PDF documents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable Bindable { get; }
+        public MainBindable Value { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -122,8 +122,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IQuery<string> Query
         {
-            get => Bindable.Query;
-            set => Bindable.Query = value;
+            get => Value.Query;
+            set => Value.Query = value;
         }
 
         #endregion
@@ -144,11 +144,11 @@ namespace Cube.Pdf.Editor
         public void Open(string src)
         {
             if (!src.HasValue()) return;
-            if (Bindable.IsOpen()) this.StartProcess(src.Quote());
+            if (this.IsOpen()) this.StartProcess(src.Quote());
             else Invoke(() =>
             {
-                Bindable.SetMessage(Properties.Resources.MessageLoading, src);
-                Bindable.Open(_core.GetOrAdd(src));
+                Value.Set(Properties.Resources.MessageLoading, src);
+                this.Open(_core.GetOrAdd(src));
             }, "");
         }
 
@@ -165,11 +165,11 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Close(bool save)
         {
-            if (save) Save(Bindable.Source.Value.FullName, false);
+            if (save) Save(Value.Source.FullName, false);
             Invoke(() =>
             {
                 _core.Clear();
-                Bindable.Close();
+                this.Close();
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
                 GC.Collect();
@@ -193,9 +193,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Save(string dest, bool reopen) => Invoke(() =>
         {
-            Bindable.SetMessage(Properties.Resources.MessageSaving, dest);
+            Value.Set(Properties.Resources.MessageSaving, dest);
             this.Save(Settings.IO.Get(dest), () => _core.Clear());
-            if (reopen) this.Restruct(_core.GetOrAdd(dest, Bindable.Encryption.OwnerPassword));
+            if (reopen) this.Restruct(_core.GetOrAdd(dest, Value.Encryption.OwnerPassword));
         }, "");
 
         /* ----------------------------------------------------------------- */
@@ -209,7 +209,7 @@ namespace Cube.Pdf.Editor
         /// <param name="dest">Save path.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Extract(string dest) => Invoke(() => Bindable.Images.Extract(dest),
+        public void Extract(string dest) => Invoke(() => Value.Images.Extract(dest),
             Properties.Resources.MessageSaved, dest);
 
         /* ----------------------------------------------------------------- */
@@ -224,7 +224,7 @@ namespace Cube.Pdf.Editor
         /// <param name="selected">true for selected.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Select(bool selected) => Invoke(() => Bindable.Images.Select(selected), "");
+        public void Select(bool selected) => Invoke(() => Value.Images.Select(selected), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -235,7 +235,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Flip() => Invoke(() => Bindable.Images.Flip(), "");
+        public void Flip() => Invoke(() => Value.Images.Flip(), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -250,11 +250,11 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Insert(int index, IEnumerable<string> src) => Invoke(() =>
-            Bindable.Images.InsertAt(
-                Math.Min(Math.Max(index, 0), Bindable.Images.Count),
+            Value.Images.InsertAt(
+                Math.Min(Math.Max(index, 0), Value.Images.Count),
                 src.SelectMany(e =>
                 {
-                    Bindable.SetMessage(Properties.Resources.MessageLoading, e);
+                    Value.Set(Properties.Resources.MessageLoading, e);
                     if (!this.IsInsertable(e)) return new Page[0];
                     else if (e.IsPdf()) return _core.GetOrAdd(e).Pages;
                     else return Settings.IO.GetImagePages(e);
@@ -274,7 +274,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Insert(int index, IEnumerable<Page> src) =>
-            Invoke(() => Bindable.Images.InsertAt(index, src), "");
+            Invoke(() => Value.Images.InsertAt(index, src), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -285,7 +285,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove() => Invoke(() => Bindable.Images.Remove(), "");
+        public void Remove() => Invoke(() => Value.Images.Remove(), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -296,7 +296,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => Invoke(() => Bindable.Images.RemoveAt(indices), "");
+        public void Remove(IEnumerable<int> indices) => Invoke(() => Value.Images.RemoveAt(indices), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -307,7 +307,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(int delta) => Invoke(() => Bindable.Images.Move(delta), "");
+        public void Move(int delta) => Invoke(() => Value.Images.Move(delta), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -320,7 +320,7 @@ namespace Cube.Pdf.Editor
         /// <param name="degree">Angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Rotate(int degree) => Invoke(() => Bindable.Images.Rotate(degree), "");
+        public void Rotate(int degree) => Invoke(() => Value.Images.Rotate(degree), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -357,7 +357,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Undo() => Invoke(() => Bindable.History.Undo(), "");
+        public void Undo() => Invoke(() => Value.History.Undo(), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -368,7 +368,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Redo() => Invoke(() => Bindable.History.Redo(), "");
+        public void Redo() => Invoke(() => Value.History.Redo(), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -385,8 +385,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Zoom(int offset) => Invoke(() =>
         {
-            Bindable.Images.Zoom(offset);
-            Bindable.ItemSize.Value = Bindable.Images.Preferences.ItemSize;
+            Value.Images.Zoom(offset);
+            Value.ItemSize = Value.Images.Preferences.ItemSize;
         }, "");
 
         /* ----------------------------------------------------------------- */
@@ -398,7 +398,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Refresh() => Invoke(() => Bindable.Images.Refresh(), "");
+        public void Refresh() => Invoke(() => Value.Images.Refresh(), "");
 
         #endregion
 
@@ -422,8 +422,8 @@ namespace Cube.Pdf.Editor
         protected override void Dispose(bool disposing)
         {
             Interlocked.Exchange(ref _core, null)?.Clear();
-            Bindable.Close();
-            if (disposing) Bindable.Images.Dispose();
+            this.Close();
+            if (disposing) Value.Images.Dispose();
         }
 
         /* ----------------------------------------------------------------- */
@@ -431,12 +431,12 @@ namespace Cube.Pdf.Editor
         /// Invoke
         ///
         /// <summary>
-        /// Invokes the user action and registers the hisotry item.
+        /// Invokes the user action and registers the history item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private void Invoke(Func<HistoryItem> func, string format, params object[] args) =>
-            Invoke(() => Bindable.History.Register(func()), format, args);
+            Invoke(() => Value.History.Register(func()), format, args);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -447,11 +447,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Invoke(Action action, string format, params object[] args) => Bindable.Invoke(() =>
+        private void Invoke(Action action, string format, params object[] args) => Value.Invoke(() =>
         {
             if (_core == null) return;
             action();
-            Bindable.SetMessage(format, args);
+            Value.Set(format, args);
         });
 
         /* ----------------------------------------------------------------- */
@@ -469,7 +469,7 @@ namespace Cube.Pdf.Editor
             var dic = new Dictionary<string, Action>
             {
                 { nameof(src.ItemSize),  () => this.Zoom() },
-                { nameof(src.FrameOnly), () => Bindable.Images.Preferences.FrameOnly = src.FrameOnly },
+                { nameof(src.FrameOnly), () => Value.Images.Preferences.FrameOnly = src.FrameOnly },
             };
 
             if (dic.TryGetValue(name, out var action)) action();

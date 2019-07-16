@@ -51,13 +51,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void MoveNext() => Open("SampleRotation.pdf", "", vm =>
         {
-            var src = vm.Data.Images.ToList();
+            var src = vm.Value.Images.ToList();
             src[1].IsSelected = true;
             src[3].IsSelected = true;
             src[8].IsSelected = true;
             Assert.That(Invoke(vm, () => vm.Ribbon.MoveNext.Command.Execute()), "Invoke");
 
-            var dest = vm.Data.Images.ToList();
+            var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
             Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
             Assert.That(dest[1].RawObject.Number, Is.EqualTo(3));
@@ -83,13 +83,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void MovePrevious() => Open("SampleRotation.pdf", "", vm =>
         {
-            var src = vm.Data.Images.ToList();
+            var src = vm.Value.Images.ToList();
             src[0].IsSelected = true;
             src[3].IsSelected = true;
             src[6].IsSelected = true;
             Assert.That(Invoke(vm, () => vm.Ribbon.MovePrevious.Command.Execute()), "Invoke");
 
-            var dest = vm.Data.Images.ToList();
+            var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
             Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
             Assert.That(dest[1].RawObject.Number, Is.EqualTo(2));
@@ -115,14 +115,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void MoveNext_DragDrop() => Open("SampleRotation.pdf", "", vm =>
         {
-            var src = vm.Data.Images.ToList();
+            var src = vm.Value.Images.ToList();
             var obj = new DragDropObject(1) { DropIndex = 4 };
             src[1].IsSelected = true;
             src[3].IsSelected = true;
             src[6].IsSelected = true;
             Assert.That(Invoke(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
 
-            var dest = vm.Data.Images.ToList();
+            var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
             Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
             Assert.That(dest[1].RawObject.Number, Is.EqualTo(3));
@@ -149,14 +149,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void MovePrevious_DragDrop() => Open("SampleRotation.pdf", "", vm =>
         {
-            var src = vm.Data.Images.ToList();
+            var src = vm.Value.Images.ToList();
             var obj = new DragDropObject(6) { DropIndex = 3 };
             src[1].IsSelected = true;
             src[3].IsSelected = true;
             src[6].IsSelected = true;
             Assert.That(Invoke(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
 
-            var dest = vm.Data.Images.ToList();
+            var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
             Assert.That(dest[0].RawObject.Number, Is.EqualTo(2));
             Assert.That(dest[1].RawObject.Number, Is.EqualTo(4));
@@ -187,7 +187,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         private bool Invoke(MainViewModel vm, Action action)
         {
             var cts = new CancellationTokenSource();
-            vm.Data.Modified.PropertyChanged += (s, e) => cts.Cancel();
+            vm.Value.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(vm.Value.Modified)) cts.Cancel(); };
             action();
             return Wait.For(cts.Token);
         }

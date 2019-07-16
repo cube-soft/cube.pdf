@@ -65,6 +65,46 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// IsOpen
+        ///
+        /// <summary>
+        /// Gets the value indicating whether a PDF document is open.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        ///
+        /// <returns>true for open.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static bool IsOpen(this MainFacade src) => src.Value.Source != null;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// Sets properties of the specified IDocumentReader.
+        /// </summary>
+        ///
+        /// <param name="src">Facade object.</param>
+        /// <param name="doc">Document information.</param>
+        ///
+        /// <remarks>
+        /// PDFium は Metadata や Encryption の情報取得が不完全なため、
+        /// これらの情報は、必要になったタイミングで iTextSharp を用いて
+        /// 取得します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Open(this MainFacade src, IDocumentReader doc)
+        {
+            src.Value.Source = doc.File;
+            if (!doc.Encryption.Enabled) src.Value.Encryption = doc.Encryption;
+            src.Value.Images.Add(doc.Pages);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Open
         ///
         /// <summary>
@@ -100,7 +140,7 @@ namespace Cube.Pdf.Editor
             {
                 var cancel = err is OperationCanceledException ||
                              err is TwiceException;
-                if (!cancel) src.Bindable.IO.TryDelete(link?.FullName);
+                if (!cancel) src.Value.IO.TryDelete(link?.FullName);
                 throw;
             }
         }
@@ -141,6 +181,29 @@ namespace Cube.Pdf.Editor
 
         #endregion
 
+        #region Close
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Close
+        ///
+        /// <summary>
+        /// Clears properties of the current PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Close(this MainFacade src)
+        {
+            src.Value.Source     = null;
+            src.Value.Metadata   = null;
+            src.Value.Encryption = null;
+
+            src.Value.History.Clear();
+            src.Value.Images.Clear();
+        }
+
+        #endregion
+
         #region Save
 
         /* ----------------------------------------------------------------- */
@@ -156,7 +219,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Overwrite(this MainFacade src)
         {
-            if (src.Bindable.History.Undoable) src.Save(src.Bindable.Source.Value.FullName);
+            if (src.Value.History.Undoable) src.Save(src.Value.Source.FullName);
         }
 
         /* ----------------------------------------------------------------- */
@@ -188,12 +251,12 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Save(this MainFacade src, Entity dest, Action close)
         {
-            var data = src.Bindable;
+            var data = src.Value;
             var tmp  = data.IO.Combine(dest.DirectoryName, Guid.NewGuid().ToString("D"));
 
             try
             {
-                var reader = data.Source.Value.GetItexReader(data.Query, data.IO);
+                var reader = data.Source.GetItexReader(data.Query, data.IO);
                 data.Set(reader.Metadata, reader.Encryption);
 
                 using (var writer = new DocumentWriter())
@@ -227,9 +290,9 @@ namespace Cube.Pdf.Editor
         public static void Restruct(this MainFacade src, IDocumentReader doc)
         {
             var items = doc.Pages.Select((v, i) => new { Value = v, Index = i });
-            foreach (var e in items) src.Bindable.Images[e.Index].RawObject = e.Value;
-            src.Bindable.Source.Value = doc.File;
-            src.Bindable.History.Clear();
+            foreach (var e in items) src.Value.Images[e.Index].RawObject = e.Value;
+            src.Value.Source = doc.File;
+            src.Value.History.Clear();
         }
 
         #endregion
@@ -256,7 +319,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static bool IsInsertable(this MainFacade src, string path)
         {
-            var ext = src.Bindable.IO.Get(path).Extension.ToLowerInvariant();
+            var ext = src.Value.IO.Get(path).Extension.ToLowerInvariant();
             var cmp = new List<string> { ".pdf", ".png", ".jpg", ".jpeg", ".bmp" };
             return cmp.Contains(ext);
         }
@@ -274,14 +337,14 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static void Insert(this MainFacade src, IEnumerable<string> files) =>
-            src.Insert(src.Bindable.Images.Selection.Last + 1, files);
+            src.Insert(src.Value.Images.Selection.Last + 1, files);
 
         /* ----------------------------------------------------------------- */
         ///
         /// InsertOrMove
         ///
         /// <summary>
-        /// Inserts or moves the specified pages accoding to the specified
+        /// Inserts or moves the specified pages according to the specified
         /// condition.
         /// </summary>
         ///
@@ -293,7 +356,7 @@ namespace Cube.Pdf.Editor
         {
             if (!obj.IsCurrentProcess)
             {
-                var index = Math.Min(obj.DropIndex + 1, src.Bindable.Count.Value);
+                var index = Math.Min(obj.DropIndex + 1, src.Value.Count);
                 src.Insert(index, obj.Pages);
             }
             else if (obj.DragIndex < obj.DropIndex) src.MoveNext(obj);
@@ -305,7 +368,7 @@ namespace Cube.Pdf.Editor
         /// MovePrevious
         ///
         /// <summary>
-        /// Moves selected items accoding to the specified condition.
+        /// Moves selected items according to the specified condition.
         /// </summary>
         ///
         /// <param name="src">Facade object.</param>
@@ -315,7 +378,7 @@ namespace Cube.Pdf.Editor
         private static void MovePrevious(this MainFacade src, DragDropObject obj)
         {
             var delta = obj.DropIndex - obj.DragIndex;
-            var n     = src.Bindable.Images.Selection.Indices
+            var n     = src.Value.Images.Selection.Indices
                            .Where(i => i < obj.DragIndex && i >= obj.DropIndex).Count();
             src.Move(delta + n);
         }
@@ -325,7 +388,7 @@ namespace Cube.Pdf.Editor
         /// MoveNext
         ///
         /// <summary>
-        /// Moves selected items accoding to the specified condition.
+        /// Moves selected items according to the specified condition.
         /// </summary>
         ///
         /// <param name="src">Facade object.</param>
@@ -335,7 +398,7 @@ namespace Cube.Pdf.Editor
         private static void MoveNext(this MainFacade src, DragDropObject obj)
         {
             var delta = obj.DropIndex - obj.DragIndex;
-            var n     = src.Bindable.Images.Selection.Indices
+            var n     = src.Value.Images.Selection.Indices
                            .Where(i => i > obj.DragIndex && i <= obj.DropIndex).Count();
             src.Move(delta - n);
         }
@@ -362,10 +425,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static HistoryItem SetMetadata(this MainFacade src, Metadata value)
         {
-            var prev = src.Bindable.Metadata;
+            var prev = src.Value.Metadata;
             return HistoryItem.CreateInvoke(
-                () => src.Bindable.Metadata = value,
-                () => src.Bindable.Metadata = prev
+                () => src.Value.Metadata = value,
+                () => src.Value.Metadata = prev
             );
         }
 
@@ -387,10 +450,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static HistoryItem SetEncryption(this MainFacade src, Encryption value)
         {
-            var prev = src.Bindable.Encryption;
+            var prev = src.Value.Encryption;
             return HistoryItem.CreateInvoke(
-                () => src.Bindable.Encryption = value,
-                () => src.Bindable.Encryption = prev
+                () => src.Value.Encryption = value,
+                () => src.Value.Encryption = prev
             );
         }
 
@@ -409,7 +472,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static void Select(this MainFacade src) =>
-            src.Select(src.Bindable.Images.Selection.Count < src.Bindable.Images.Count);
+            src.Select(src.Value.Images.Selection.Count < src.Value.Images.Count);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -424,8 +487,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Zoom(this MainFacade src)
         {
-            var items = src.Bindable.Images.Preferences.ItemSizeOptions;
-            var prev  = src.Bindable.Images.Preferences.ItemSizeIndex;
+            var items = src.Value.Images.Preferences.ItemSizeOptions;
+            var prev  = src.Value.Images.Preferences.ItemSizeIndex;
             var next  = items.LastIndex(x => x <= src.Settings.Value.ItemSize);
             src.Zoom(next - prev);
         }

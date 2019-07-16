@@ -51,12 +51,12 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Remove() => Open("SampleRotation.pdf", "", vm =>
         {
-            var src = vm.Data.Images.ToList();
+            var src = vm.Value.Images.ToList();
             src[3].IsSelected = true;
             src[5].IsSelected = true;
             vm.Test(vm.Ribbon.Remove);
 
-            var dest = vm.Data.Images.ToList();
+            var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count, Is.EqualTo(7));
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
         });

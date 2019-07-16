@@ -58,13 +58,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("Sample.jpg",  10)]
         public void Insert(string filename, int n) => Open("SampleRotation.pdf", "", vm =>
         {
-            vm.Data.Images.Skip(2).First().IsSelected = true;
+            vm.Value.Images.Skip(2).First().IsSelected = true;
             Source = GetSource(filename);
             Assert.That(vm.Ribbon.Insert.Command.CanExecute(), Is.True);
             vm.Ribbon.Insert.Command.Execute();
-            Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Insert)");
+            Assert.That(Wait.For(() => vm.Value.Count == n), "Timeout (Insert)");
 
-            var dest = vm.Data.Images.ToList();
+            var dest = vm.Value.Images.ToList();
             Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
             Assert.That(dest[1].RawObject.Number, Is.EqualTo(2));
             Assert.That(dest[2].RawObject.Number, Is.EqualTo(3));
@@ -100,7 +100,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute(), Is.True);
             vm.Ribbon.InsertOthers.Command.Execute();
-            Assert.That(Wait.For(() => vm.Data.Count.Value == 11), "Timeout");
+            Assert.That(Wait.For(() => vm.Value.Count == 11), "Timeout");
         });
 
         /* ----------------------------------------------------------------- */
@@ -126,9 +126,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Pages     = pages,
             });
 
-            Assert.That(Wait.For(() => vm.Data.Count.Value == 11), "Timeout (Insert)");
+            Assert.That(Wait.For(() => vm.Value.Count == 11), "Timeout (Insert)");
 
-            var dest = vm.Data.Images.ToList();
+            var dest = vm.Value.Images.ToList();
 
             Assert.That(dest[ 0].RawObject.Number, Is.EqualTo(1));
             Assert.That(dest[ 1].RawObject.Number, Is.EqualTo(2));
@@ -418,7 +418,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 cts.Cancel();
             });
 
-            vm.Data.Settings.Language = Language.English;
+            vm.Value.Settings.Language = Language.English;
             Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute(), Is.True);
             vm.Ribbon.InsertOthers.Command.Execute();
             Assert.That(Wait.For(cts.Token), "Timeout");

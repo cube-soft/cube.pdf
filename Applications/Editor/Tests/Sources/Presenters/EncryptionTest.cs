@@ -54,16 +54,16 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Register(vm, cmp, false);
 
             var cts = new CancellationTokenSource();
-            vm.Data.PropertyChanged += (s, e) =>
+            vm.Value.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(vm.Data.Encryption)) cts.Cancel();
+                if (e.PropertyName == nameof(vm.Value.Encryption)) cts.Cancel();
             };
 
-            Assert.That(vm.Data.Encryption, Is.Not.Null);
+            Assert.That(vm.Value.Encryption, Is.Not.Null);
             Assert.That(vm.Ribbon.Encryption.Command.CanExecute(), Is.True);
             vm.Ribbon.Encryption.Command.Execute();
             Assert.That(Wait.For(cts.Token), $"Timeout (No.{id})");
-            AssertEncryption(vm.Data.Encryption, cmp);
+            AssertEncryption(vm.Value.Encryption, cmp);
         });
 
         /* ----------------------------------------------------------------- */
@@ -90,9 +90,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             vm.Ribbon.Encryption.Command.Execute();
 
             Assert.That(Wait.For(cts.Token), "Timeout");
-            Assert.That(vm.Data.History.Undoable, Is.False);
-            Assert.That(vm.Data.History.Redoable, Is.False);
-            Assert.That(vm.Data.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
+            Assert.That(vm.Value.History.Undoable, Is.False);
+            Assert.That(vm.Value.History.Redoable, Is.False);
+            Assert.That(vm.Value.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
         });
 
         #endregion

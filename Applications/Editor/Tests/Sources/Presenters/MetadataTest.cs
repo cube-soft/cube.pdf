@@ -54,16 +54,16 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Register(vm, cmp);
 
             var cts = new CancellationTokenSource();
-            vm.Data.PropertyChanged += (s, e) =>
+            vm.Value.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(vm.Data.Metadata)) cts.Cancel();
+                if (e.PropertyName == nameof(vm.Value.Metadata)) cts.Cancel();
             };
 
-            Assert.That(vm.Data.Metadata, Is.Not.Null);
+            Assert.That(vm.Value.Metadata, Is.Not.Null);
             Assert.That(vm.Ribbon.Metadata.Command.CanExecute(), Is.True);
             vm.Ribbon.Metadata.Command.Execute();
             Assert.That(Wait.For(cts.Token), $"Timeout (No.{id})");
-            AssertMetadata(vm.Data.Metadata, cmp);
+            AssertMetadata(vm.Value.Metadata, cmp);
         });
 
         /* ----------------------------------------------------------------- */
@@ -88,13 +88,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 e.Cancel.Command.Execute();
             });
 
-            Assert.That(vm.Data.Metadata, Is.Not.Null);
+            Assert.That(vm.Value.Metadata, Is.Not.Null);
             vm.Ribbon.Metadata.Command.Execute();
 
             Assert.That(Wait.For(cts.Token), "Timeout");
-            Assert.That(vm.Data.History.Undoable, Is.False);
-            Assert.That(vm.Data.History.Redoable, Is.False);
-            Assert.That(vm.Data.Metadata.Title, Is.Not.EqualTo("dummy"));
+            Assert.That(vm.Value.History.Undoable, Is.False);
+            Assert.That(vm.Value.History.Redoable, Is.False);
+            Assert.That(vm.Value.Metadata.Title, Is.Not.EqualTo("dummy"));
         });
 
         #endregion

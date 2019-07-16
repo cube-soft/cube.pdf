@@ -29,11 +29,11 @@
     mc:Ignorable="d"
 
     TitleBarHeight="30"
-    Height="{Binding Data.Settings.Height, Mode=TwoWay}"
-    Width="{Binding Data.Settings.Width, Mode=TwoWay}"
+    Height="{Binding Value.Settings.Height, Mode=TwoWay}"
+    Width="{Binding Value.Settings.Width, Mode=TwoWay}"
     FontFamily="Meiryo UI"
     AllowDrop="True"
-    Cursor="{Binding Data.Busy.Value, Converter={my:BooleanToCursor}}">
+    Cursor="{Binding Value.Busy, Converter={my:BooleanToCursor}}">
 
     <!-- **********************************************************************
       Resources
@@ -56,8 +56,8 @@
     *********************************************************************** -->
     <r:RibbonWindow.Title>
         <MultiBinding Converter="{my:TitleConverter}">
-            <Binding Path="Data.Source.Value" />
-            <Binding Path="Data.Modified.Value" />
+            <Binding Path="Value.Source" />
+            <Binding Path="Value.Modified" />
         </MultiBinding>
     </r:RibbonWindow.Title>
 
@@ -130,8 +130,8 @@
         ******************************************************************* -->
         <ListView
             ContextMenu="{StaticResource MainContextMenu}"
-            ItemsSource="{Binding Data.Images}"
-            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibility}}"
+            ItemsSource="{Binding Value.Images}"
+            Visibility="{Binding Value.Source, Converter={my:HasValueToVisibility}}"
             Style="{StaticResource PageCollectionStyle}"
             Grid.Row="1">
             <i:Interaction.Behaviors>
@@ -140,7 +140,7 @@
                 <my:MousePreviewBehavior Command="{Binding Ribbon.Preview.Command}" />
                 <my:MouseMoveBehavior
                     Command="{Binding InsertOrMove}"
-                    Selection="{Binding Data.Images.Selection}" />
+                    Selection="{Binding Value.Images.Selection}" />
             </i:Interaction.Behaviors>
         </ListView>
 
@@ -148,7 +148,7 @@
           Recent files (when not open)
         ******************************************************************* -->
         <my:HeroControl
-            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibilityInverse}}"
+            Visibility="{Binding Value.Source, Converter={my:HasValueToVisibilityInverse}}"
             Grid.Row="1" />
     </Grid>
 </r:RibbonWindow>

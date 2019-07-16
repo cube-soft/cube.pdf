@@ -86,15 +86,15 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             var unit    = 3; // Number of PropertyChanged events per action.
             var changed = 0;
-            var dest    = vm.Data.Images.Selection;
+            var dest    = vm.Value.Images.Selection;
             dest.PropertyChanged += (s, e) => ++changed;
 
             Assert.That(dest.Count,   Is.EqualTo(0));
             Assert.That(dest.Indices, Is.Not.Null);
             Assert.That(dest.Last,    Is.EqualTo(-1));
 
-            vm.Data.Images.First().IsSelected = true;
-            Assert.That(Wait.For(() => !vm.Data.Busy.Value));
+            vm.Value.Images.First().IsSelected = true;
+            Assert.That(Wait.For(() => !vm.Value.Busy));
             Assert.That(changed,    Is.EqualTo(1 * unit));
             Assert.That(dest.Count, Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(0), nameof(dest.Last));
@@ -126,13 +126,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Zoom() => Open("Sample.pdf", "", vm =>
         {
-            var ip = vm.Data.Images.Preferences;
+            var ip = vm.Value.Images.Preferences;
             Assert.That(ip.ItemSizeOptions.Count, Is.EqualTo(9));
             Assert.That(ip.ItemSizeIndex,         Is.EqualTo(3));
             Assert.That(ip.ItemSize,              Is.EqualTo(250));
 
-            vm.Data.ItemSize.Value = 325;
-            Wait.For(() => !vm.Data.Busy.Value);
+            vm.Value.ItemSize = 325;
+            Wait.For(() => !vm.Value.Busy);
 
             Assert.That(ip.ItemSizeIndex, Is.EqualTo(4));
             Assert.That(ip.ItemSize,      Is.EqualTo(300));
@@ -152,7 +152,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             Assert.That(vm.Ribbon.FrameOnly.Value, Is.False);
             vm.Ribbon.FrameOnly.Value = true;
-            foreach (var item in vm.Data.Images) Assert.That(item.Image, Is.Null);
+            foreach (var item in vm.Value.Images) Assert.That(item.Image, Is.Null);
         });
 
         #endregion

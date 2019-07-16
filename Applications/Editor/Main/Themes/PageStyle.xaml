@@ -78,18 +78,18 @@
             Template="{StaticResource ScrollViewerTemplate}"
             HorizontalScrollBarVisibility="Disabled">
             <WrapPanel
-                ItemWidth="{Binding Data.Images.Preferences.ItemSize}"
-                ItemHeight="{Binding Data.Images.Preferences.ItemSize}"
-                MinWidth="{Binding Data.Images.Preferences.ItemSize}"
+                ItemWidth="{Binding Value.Images.Preferences.ItemSize}"
+                ItemHeight="{Binding Value.Images.Preferences.ItemSize}"
+                MinWidth="{Binding Value.Images.Preferences.ItemSize}"
                 Width="{Binding FrameworkElement.ActualWidth,
                 RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
                 IsItemsHost="True" />
 
             <i:Interaction.Behaviors>
                 <my:VisibleRange
-                    First="{Binding Data.Images.Preferences.VisibleFirst, Mode=TwoWay}"
-                    Last="{Binding Data.Images.Preferences.VisibleLast, Mode=TwoWay}"
-                    Unit="{Binding Data.Images.Preferences.ItemSize}" />
+                    First="{Binding Value.Images.Preferences.VisibleFirst, Mode=TwoWay}"
+                    Last="{Binding Value.Images.Preferences.VisibleLast, Mode=TwoWay}"
+                    Unit="{Binding Value.Images.Preferences.ItemSize}" />
             </i:Interaction.Behaviors>
         </ScrollViewer>
     </ControlTemplate>

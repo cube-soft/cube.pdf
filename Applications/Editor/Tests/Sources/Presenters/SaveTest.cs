@@ -59,9 +59,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Password    = string.Empty;
             Assert.That(IO.Exists(Destination), Is.False);
 
-            var src = vm.Data.Source;
+            var src = vm.Value.Source;
             vm.Ribbon.SaveAs.Command.Execute();
-            Assert.That(Wait.For(() => src.Value.FullName == Destination), "Timeout (Save)");
+            Assert.That(Wait.For(() => src.FullName == Destination), "Timeout (Save)");
             Assert.That(IO.Exists(Destination), Is.True);
         });
 
@@ -82,14 +82,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Password = password;
             IO.Copy(fi.FullName, Source, true);
             vm.Ribbon.Open.Command.Execute();
-            Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Open)");
+            Assert.That(Wait.For(() => vm.Value.Count == n), "Timeout (Open)");
 
-            vm.Data.Images.First().IsSelected = true;
+            vm.Value.Images.First().IsSelected = true;
             vm.Ribbon.RotateLeft.Command.Execute();
-            Assert.That(Wait.For(() => vm.Data.Modified.Value), "Timeout (Rotate)");
+            Assert.That(Wait.For(() => vm.Value.Modified), "Timeout (Rotate)");
 
             vm.Ribbon.Save.Command.Execute();
-            Assert.That(Wait.For(() => !vm.Data.Modified.Value), "Timeout (Save)");
+            Assert.That(Wait.For(() => !vm.Value.Modified), "Timeout (Save)");
         });
 
         #endregion
