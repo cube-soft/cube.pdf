@@ -57,7 +57,7 @@ namespace Cube.Pdf.Editor
         public InsertFacade(int i, int n, IO io, IDispatcher dispatcher)
         {
             IO    = io;
-            Value = new InsertBindableValue(i, n, dispatcher);
+            Value = new InsertBindable(i, n, dispatcher);
         }
 
         #endregion
@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindableValue Value { get; }
+        public InsertBindable Value { get; }
 
         /* ----------------------------------------------------------------- */
         ///

@@ -90,7 +90,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindableValue Value => Facade.Value;
+        public InsertBindable Value => Facade.Value;
 
         /* ----------------------------------------------------------------- */
         ///

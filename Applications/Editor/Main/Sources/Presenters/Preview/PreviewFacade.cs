@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor
             var index = src.Selection.First;
 
             Images   = src;
-            Value = new PreviewBindableValue(file, src[index].RawObject, dispatcher);
+            Value = new PreviewBindable(file, src[index].RawObject, dispatcher);
 
             Task.Run(() => Setup(index)).Forget();
         }
@@ -72,7 +72,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindableValue Value { get; }
+        public PreviewBindable Value { get; }
 
         /* ----------------------------------------------------------------- */
         ///

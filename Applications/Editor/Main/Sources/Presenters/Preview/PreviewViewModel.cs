@@ -70,7 +70,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindableValue Value => Facade.Value;
+        public PreviewBindable Value => Facade.Value;
 
         #endregion
     }
