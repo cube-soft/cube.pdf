@@ -65,21 +65,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsOpen
-        ///
-        /// <summary>
-        /// Gets the value indicating whether a PDF document is open.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        ///
-        /// <returns>true for open.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static bool IsOpen(this MainFacade src) => src.Value.Source != null;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Open
         ///
         /// <summary>

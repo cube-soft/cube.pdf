@@ -152,7 +152,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ICommand InsertOrMove => Get(() => new DelegateCommand<DragDropObject>(
             e => Track(() => Facade.InsertOrMove(e)),
-            e => !Value.Busy && Facade.IsOpen() &&
+            e => !Value.Busy && Value.Source != null &&
                  (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0)
         ).Associate(Value, nameof(Value.Busy), nameof(Value.Source)));
 
@@ -261,7 +261,7 @@ namespace Cube.Pdf.Editor
                     PostClose(e, msg.Value);
                 }
             },
-            e => Facade.IsOpen() && (e != null || !Value.Busy)
+            e => Value.Source != null && (e != null || !Value.Busy)
         )
         .Associate(Value, nameof(Value.Busy), nameof(Value.Source));
 
@@ -275,7 +275,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsOpen(Action action) => new DelegateCommand(action,
-            () => !Value.Busy && Facade.IsOpen()
+            () => !Value.Busy && Value.Source != null
         )
         .Associate(Value, nameof(Value.Busy), nameof(Value.Source));
 
@@ -290,7 +290,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsItem(Action action) => new DelegateCommand(action,
-            () => !Value.Busy && Facade.IsOpen() && Value.Images.Selection.Count > 0
+            () => !Value.Busy && Value.Source != null && Value.Images.Selection.Count > 0
         )
         .Associate(Value, nameof(Value.Busy), nameof(Value.Source))
         .Associate(Value.Images.Selection);

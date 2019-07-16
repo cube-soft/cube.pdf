@@ -144,7 +144,7 @@ namespace Cube.Pdf.Editor
         public void Open(string src)
         {
             if (!src.HasValue()) return;
-            if (this.IsOpen()) this.StartProcess(src.Quote());
+            if (Value.Source != null) this.StartProcess(src.Quote());
             else Invoke(() =>
             {
                 Value.Set(Properties.Resources.MessageLoading, src);
