@@ -16,30 +16,29 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
 using System;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// InsertBindable
+    /// InsertBindableValue
     ///
     /// <summary>
     /// Provides values for binding to the InsertWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertBindable
+    public class InsertBindableValue : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InsertBindable
+        /// InsertBindableValue
         ///
         /// <summary>
-        /// Initializes a new instance of the InsertBindable class
+        /// Initializes a new instance of the InsertBindableValue class
         /// with the specified arguments.
         /// </summary>
         ///
@@ -48,15 +47,14 @@ namespace Cube.Pdf.Editor
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable(int i, int n, IDispatcher dispatcher)
+        public InsertBindableValue(int i, int n, IDispatcher dispatcher)
         {
-            Files              = new BindableCollection<FileItem>(dispatcher);
-            Selection          = new Selection<FileItem> { Dispatcher = dispatcher };
-            Count              = n;
-            SelectedIndex      = i;
-            Index              = new BindableValue<int>(Math.Max(i, 0), dispatcher);
-            UserSpecifiedIndex = new BindableValue<int>(Math.Max(i, 0), dispatcher);
-            UserSpecifiedIndex.PropertyChanged += (s, e) => Index.Value = UserSpecifiedIndex.Value;
+            Files         = new BindableCollection<FileItem>(dispatcher);
+            Selection     = new Selection<FileItem> { Dispatcher = dispatcher };
+            Count         = n;
+            SelectedIndex = i;
+            Index         = Math.Max(i, 0);
+            UserIndex     = Math.Max(i, 0);
         }
 
         #endregion
@@ -87,26 +85,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Index
+        /// Count
         ///
         /// <summary>
-        /// Gets or sets the value that represents the insertion position.
+        /// Gets the number of pages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<int> Index { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UserSpecifiedIndex
-        ///
-        /// <summary>
-        /// Gets or sets the value that represents the insertion position
-        /// specified by users.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public BindableValue<int> UserSpecifiedIndex { get; }
+        public int Count { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -121,15 +107,61 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Count
+        /// Index
         ///
         /// <summary>
-        /// Gets the number of pages.
+        /// Gets or sets the value that represents the insertion position.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count { get; }
+        public int Index
+        {
+            get => _index;
+            set => SetProperty(ref _index, value);
+        }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserIndex
+        ///
+        /// <summary>
+        /// Gets or sets the value that represents the insertion position
+        /// specified by users.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int UserIndex
+        {
+            get => _userIndex;
+            set { if (SetProperty(ref _userIndex, value)) Index = value; }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { }
+
+        #endregion
+
+        #region Fields
+        private int _index = -1;
+        private int _userIndex = -1;
         #endregion
     }
 }

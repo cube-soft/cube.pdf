@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui"
     xmlns:my="clr-namespace:Cube.Pdf.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -26,7 +27,7 @@
       Main
     *********************************************************************** -->
     <GroupBox
-        Header="{Binding Position.Main.Text}"
+        Header="{Binding Position.Select.Text}"
         Margin="{StaticResource VerticalFirst}"
         Grid.Row="0">
         <StackPanel Orientation="Horizontal">
@@ -34,12 +35,12 @@
               Selected
             *************************************************************** -->
             <RadioButton
-                Content="{Binding Position.Selected.Text}"
-                IsEnabled="{Binding Position.Selected.Value}">
+                Content="{Binding Position.SelectedIndex.Text}"
+                IsEnabled="{Binding Position.SelectedIndex.Value, Converter={xc:PositiveOrZero}}">
                 <i:Interaction.Behaviors>
                     <my:InsertPositionBehavior
-                        Command="{Binding Position.Main.Command}"
-                        CommandParameter="{Binding Data.SelectedIndex}" />
+                        Command="{Binding Position.Select.Command}"
+                        CommandParameter="{Binding Position.SelectedIndex.Value}" />
                 </i:Interaction.Behaviors>
             </RadioButton>
 
@@ -49,7 +50,7 @@
             <RadioButton Content="{Binding Position.First.Text}">
                 <i:Interaction.Behaviors>
                     <my:InsertPositionBehavior
-                        Command="{Binding Position.Main.Command}"
+                        Command="{Binding Position.Select.Command}"
                         CommandParameter="{StaticResource NegativeOne}" />
                 </i:Interaction.Behaviors>
             </RadioButton>
@@ -60,32 +61,32 @@
             <RadioButton Content="{Binding Position.Last.Text}">
                 <i:Interaction.Behaviors>
                     <my:InsertPositionBehavior
-                        Command="{Binding Position.Main.Command}"
-                        CommandParameter="{Binding Data.Count}" />
+                        Command="{Binding Position.Select.Command}"
+                        CommandParameter="{Binding Position.Count.Value}" />
                 </i:Interaction.Behaviors>
             </RadioButton>
 
             <!-- **************************************************************
-              UserSpecified
+              UserIndex
             *************************************************************** -->
             <RadioButton
-                x:Name="SpecifiedRadioButton"
-                Content="{Binding Position.UserSpecified.Text}"
+                x:Name="UserIndexRadioButton"
+                Content="{Binding Position.UserIndex.Text}"
                 IsChecked="True">
                 <i:Interaction.Behaviors>
                     <my:InsertPositionBehavior
-                        Command="{Binding Position.Main.Command}"
-                        CommandParameter="{Binding Data.UserSpecifiedIndex.Value}" />
+                        Command="{Binding Position.Select.Command}"
+                        CommandParameter="{Binding Position.UserIndex.Value}" />
                 </i:Interaction.Behaviors>
             </RadioButton>
 
             <StackPanel
                 Orientation="Horizontal"
-                IsEnabled="{Binding IsChecked, ElementName=SpecifiedRadioButton}">
+                IsEnabled="{Binding IsChecked, ElementName=UserIndexRadioButton}">
                 <TextBox
-                    Text="{Binding Position.UserSpecified.Value}"
+                    Text="{Binding Position.UserIndex.Value}"
                     Style="{StaticResource InsertPositionStyle}" />
-                <TextBlock Text="{Binding Position.UserSpecifiedSuffix.Text}" />
+                <TextBlock Text="{Binding Position.Count.Text}" />
             </StackPanel>
         </StackPanel>
     </GroupBox>

@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class InsertPosViewModel : ViewModelBase<InsertBindable>
+    public sealed class InsertPosViewModel : ViewModelBase<InsertBindableValue>
     {
         #region Constructors
 
@@ -48,7 +48,7 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertPosViewModel(InsertBindable src,
+        public InsertPosViewModel(InsertBindableValue src,
             Aggregator aggregator,
             SynchronizationContext context
         ) : base(src, aggregator, context) { }
@@ -59,17 +59,17 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
+        /// Select
         ///
         /// <summary>
-        /// Gets a menu to execute main operations.
+        /// Gets a menu to select the position.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement Main => Get(() => new BindableElement(
+        public IElement Select => Get(() => new BindableElement(
             () => Properties.Resources.MenuInsertPosition,
             GetDispatcher(false)
-        ) { Command = new DelegateCommand<int>(e => Facade.Index.Value = e) });
+        ) { Command = new DelegateCommand<int>(e => Facade.Index = e) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,7 +101,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Selected
+        /// SelectedIndex
         ///
         /// <summary>
         /// Gets the menu that represents the selected position of the
@@ -109,15 +109,15 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<bool> Selected => Get(() => new BindableElement<bool>(
+        public IElement<int> SelectedIndex => Get(() => new BindableElement<int>(
             () => Properties.Resources.MenuPositionSelected,
-            () => Facade.SelectedIndex >= 0,
+            () => Facade.SelectedIndex,
             GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UserSpecified
+        /// UserIndex
         ///
         /// <summary>
         /// Gets the menu that represents the user specified position
@@ -125,10 +125,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<int> UserSpecified => Get(() => new BindableElement<int>(
+        public IElement<int> UserIndex => Get(() => new BindableElement<int>(
             () => Properties.Resources.MenuPositionSpecified,
-            () => Facade.UserSpecifiedIndex.Value + 1,
-            e  => Facade.UserSpecifiedIndex.Value = e - 1,
+            () => Facade.UserIndex + 1,
+            e  => Facade.UserIndex = e - 1,
             GetDispatcher(false)
         ));
 
@@ -142,8 +142,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement UserSpecifiedSuffix => Get(() => new BindableElement(
+        public IElement<int> Count => Get(() => new BindableElement<int>(
             () => string.Format($"/ {Properties.Resources.MessagePage}", Facade.Count),
+            () => Facade.Count,
             GetDispatcher(false)
         ));
 

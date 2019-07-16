@@ -65,16 +65,16 @@ namespace Cube.Pdf.Editor
             new Aggregator(),
             context
         ) {
-            Position   = new InsertPosViewModel(Data, Aggregator, context);
+            Position   = new InsertPosViewModel(Value, Aggregator, context);
             DragMove   = new InsertDropTarget((f, t) => Facade.Move(f, t));
             OK.Command = new DelegateCommand(
                 () =>
                 {
                     Send<CloseMessage>();
-                    callback?.Invoke(Data.Index.Value, Data.Files);
+                    callback?.Invoke(Value.Index, Value.Files);
                 },
-                () => Data.Files.Count > 0
-            ).Associate(Data.Files);
+                () => Value.Files.Count > 0
+            ).Associate(Value.Files);
         }
 
         #endregion
@@ -83,14 +83,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
+        /// Value
         ///
         /// <summary>
         /// Gets data object associated with the ViewModel.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable Data => Facade.Bindable;
+        public InsertBindableValue Value => Facade.Value;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -347,8 +347,8 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private ICommand IsItem(Action action) => new DelegateCommand(action,
-            () => Data.Selection.Count > 0
-        ).Associate(Data.Selection);
+            () => Value.Selection.Count > 0
+        ).Associate(Value.Selection);
 
         #endregion
     }

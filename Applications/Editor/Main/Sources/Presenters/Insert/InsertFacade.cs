@@ -27,7 +27,7 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainFacade
+    /// InsertFacade
     ///
     /// <summary>
     /// Provides functionality to communicate with the InsertViewModel
@@ -45,7 +45,7 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the InsertFacade with the
-        /// specified argumetns.
+        /// specified arguments.
         /// </summary>
         ///
         /// <param name="i">Selected index.</param>
@@ -56,8 +56,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public InsertFacade(int i, int n, IO io, IDispatcher dispatcher)
         {
-            IO       = io;
-            Bindable = new InsertBindable(i, n, dispatcher);
+            IO    = io;
+            Value = new InsertBindableValue(i, n, dispatcher);
         }
 
         #endregion
@@ -66,14 +66,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Bindable
+        /// Value
         ///
         /// <summary>
-        /// Gets bindable data.
+        /// Gets the bindable value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable Bindable { get; }
+        public InsertBindableValue Value { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Preview() => Process.Start(Bindable.Selection.First().FullName);
+        public void Preview() => Process.Start(Value.Selection.First().FullName);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Editor
         {
             foreach (var item in src)
             {
-                Bindable.Files.Add(new FileItem(item, Bindable.Selection, IO));
+                Value.Files.Add(new FileItem(item, Value.Selection, IO));
             }
         }
 
@@ -131,8 +131,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Clear()
         {
-            foreach (var item in Bindable.Files) item.Dispose();
-            Bindable.Files.Clear();
+            foreach (var item in Value.Files) item.Dispose();
+            Value.Files.Clear();
         }
 
         /* ----------------------------------------------------------------- */
@@ -146,10 +146,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Remove()
         {
-            foreach (var item in Bindable.Selection.ToList())
+            foreach (var item in Value.Selection.ToList())
             {
-                Bindable.Files.Remove(item);
-                item.Dispose();
+                if (Value.Files.Remove(item)) item.Dispose();
             }
         }
 
@@ -158,7 +157,7 @@ namespace Cube.Pdf.Editor
         /// Move
         ///
         /// <summary>
-        /// Moves selected items at the specfied distance.
+        /// Moves selected items at the specified distance.
         /// </summary>
         ///
         /// <param name="delta">Moving distance.</param>
@@ -199,7 +198,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void SelectClear()
         {
-            foreach (var item in Bindable.Selection.ToList()) item.IsSelected = false;
+            foreach (var item in Value.Selection.ToList()) item.IsSelected = false;
         }
 
         #endregion
@@ -211,7 +210,7 @@ namespace Cube.Pdf.Editor
         /// Move
         ///
         /// <summary>
-        /// Moves specified items at the specfied distance.
+        /// Moves specified items at the specified distance.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -219,8 +218,8 @@ namespace Cube.Pdf.Editor
         {
             foreach (var index in src)
             {
-                var inew = Math.Min(Math.Max(index + delta, 0), Bindable.Files.Count - 1);
-                if (inew != index) Bindable.Files.Move(index, inew);
+                var inew = Math.Min(Math.Max(index + delta, 0), Value.Files.Count - 1);
+                if (inew != index) Value.Files.Move(index, inew);
             }
         }
 
@@ -271,8 +270,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private IEnumerable<int> GetSelection(int delta)
         {
-            var n    = Bindable.Files.Count;
-            var dest = Bindable.Selection.Select(e => Bindable.Files.IndexOf(e)).Within(n);
+            var n    = Value.Files.Count;
+            var dest = Value.Selection.Select(e => Value.Files.IndexOf(e)).Within(n);
             return delta > 0 ? dest.OrderByDescending() : dest.OrderBy();
         }
 

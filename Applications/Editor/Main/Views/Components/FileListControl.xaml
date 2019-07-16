@@ -48,7 +48,7 @@
     *********************************************************************** -->
     <ListView
         ContextMenu="{StaticResource InsertContextMenu}"
-        ItemsSource="{Binding Data.Files}"
+        ItemsSource="{Binding Value.Files}"
         Style="{StaticResource InsertCollectionStyle}"
         dd:DragDrop.IsDragSource="True"
         dd:DragDrop.IsDropTarget="True"
