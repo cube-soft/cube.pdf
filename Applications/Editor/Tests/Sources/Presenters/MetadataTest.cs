@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Commands;
 using Cube.Tests;
+using Cube.Xui;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCaseSource(nameof(TestCases))]
         public void Set(int id, Metadata cmp) => Open("Sample.pdf", "", vm =>
         {
-            Register(vm, cmp);
+            _ = Subscribe(vm, cmp);
 
             var cts = new CancellationTokenSource();
             vm.Value.PropertyChanged += (s, e) =>
@@ -60,10 +61,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             };
 
             Assert.That(vm.Value.Metadata, Is.Not.Null);
-            Assert.That(vm.Ribbon.Metadata.Command.CanExecute(), Is.True);
-            vm.Ribbon.Metadata.Command.Execute();
-            Assert.That(Wait.For(cts.Token), $"Timeout (No.{id})");
-            AssertMetadata(vm.Value.Metadata, cmp);
+            Assert.That(Test(vm.Ribbon.Metadata, cts), $"Timeout (No.{id})");
+            Assert.That(vm.Value.History.Undoable, Is.True);
+            Assert.That(vm.Value.History.Redoable, Is.False);
+            AssertEquals(vm.Value.Metadata, cmp);
         });
 
         /* ----------------------------------------------------------------- */
@@ -80,18 +81,16 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            vm.Subscribe<MetadataViewModel>(e =>
+            _ = vm.Subscribe<MetadataViewModel>(e =>
             {
                 e.Document.Value = "dummy";
-                e.Subscribe<CloseMessage>(z => cts.Cancel());
+                _ = e.Subscribe<CloseMessage>(z => cts.Cancel());
                 Assert.That(e.Cancel.Command.CanExecute(), Is.True);
                 e.Cancel.Command.Execute();
             });
 
             Assert.That(vm.Value.Metadata, Is.Not.Null);
-            vm.Ribbon.Metadata.Command.Execute();
-
-            Assert.That(Wait.For(cts.Token), "Timeout");
+            Assert.That(Test(vm.Ribbon.Metadata, cts), "Timeout");
             Assert.That(vm.Value.History.Undoable, Is.False);
             Assert.That(vm.Value.History.Redoable, Is.False);
             Assert.That(vm.Value.Metadata.Title, Is.Not.EqualTo("dummy"));
@@ -148,7 +147,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Register
+        /// Subscribe
         ///
         /// <summary>
         /// Sets the operation corresponding to the MetadataViewModel
@@ -156,7 +155,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IDisposable Register(MainViewModel vm, Metadata src) =>
+        private IDisposable Subscribe(MainViewModel vm, Metadata src) =>
             vm.Subscribe<MetadataViewModel>(e =>
         {
             Assert.That(e.Filename.Value,      Is.Not.Null.And.Not.Empty);
@@ -179,14 +178,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// AssertMetadata
+        /// AssertEquals
         ///
         /// <summary>
         /// Confirms that properties of the specified objects are equal.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AssertMetadata(Metadata src, Metadata cmp)
+        private void AssertEquals(Metadata src, Metadata cmp)
         {
             Assert.That(src.Title,         Is.EqualTo(cmp.Title),    nameof(src.Title));
             Assert.That(src.Author,        Is.EqualTo(cmp.Author),   nameof(src.Author));
@@ -196,6 +195,22 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(src.Options,       Is.EqualTo(cmp.Options));
             Assert.That(src.Version.Major, Is.EqualTo(cmp.Version.Major));
             Assert.That(src.Version.Minor, Is.EqualTo(cmp.Version.Minor));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Test
+        ///
+        /// <summary>
+        /// Tests the command of the specified element.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool Test(IElement src, CancellationTokenSource cts)
+        {
+            Assert.That(src.Command.CanExecute(), Is.True);
+            src.Command.Execute();
+            return Wait.For(cts.Token);
         }
 
         #endregion

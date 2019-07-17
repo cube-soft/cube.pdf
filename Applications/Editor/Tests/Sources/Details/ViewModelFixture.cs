@@ -108,15 +108,15 @@ namespace Cube.Pdf.Editor.Tests
         /// the specified action.
         /// </summary>
         ///
-        /// <param name="callback">User action.</param>
+        /// <param name="next">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Create(Action<MainViewModel> callback)
+        protected void Create(Action<MainViewModel> next)
         {
             using (var src = CreateMainViewModel())
             {
                 var behaviors = Subscribe(src);
-                callback(src);
+                next(src);
                 foreach (var e in behaviors) e.Dispose();
             }
         }
@@ -132,15 +132,15 @@ namespace Cube.Pdf.Editor.Tests
         ///
         /// <param name="filename">Filename of the source.</param>
         /// <param name="password">Password of the source.</param>
-        /// <param name="callback">User action.</param>
+        /// <param name="next">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Open(string filename, string password, Action<MainViewModel> callback) => Create(vm =>
+        protected void Open(string filename, string password, Action<MainViewModel> next) => Create(vm =>
         {
             Source   = GetSource(filename);
             Password = password;
             vm.Test(vm.Ribbon.Open);
-            callback(vm);
+            next(vm);
         });
 
         /* ----------------------------------------------------------------- */
@@ -158,14 +158,14 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MakeArgs
+        /// Args
         ///
         /// <summary>
         /// Creates a collection with the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IEnumerable<object> MakeArgs(params object[] src) => src;
+        protected IEnumerable<object> Args(params object[] src) => src;
 
         #endregion
 

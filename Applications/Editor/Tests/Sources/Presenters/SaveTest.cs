@@ -51,7 +51,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("SampleRc40Open.pdf", "password")]
         public void SaveAs(string filename, string password) => Open(filename, password, vm =>
         {
-            Destination = Get(MakeArgs(IO.Get(Source).BaseName));
+            Destination = Get(Args(IO.Get(Source).BaseName));
             Password    = string.Empty;
 
             Assert.That(IO.Exists(Destination), Is.False);
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("Sample.pdf", "")]
         public void Overwrite(string filename, string password) => Create(vm =>
         {
-            Source   = Get(MakeArgs(IO.Get(GetSource(filename)).BaseName));
+            Source   = Get(Args(IO.Get(GetSource(filename)).BaseName));
             Password = password;
 
             IO.Copy(GetSource(filename), Source, true);

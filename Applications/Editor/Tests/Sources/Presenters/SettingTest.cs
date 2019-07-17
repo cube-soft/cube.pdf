@@ -22,7 +22,6 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
@@ -54,7 +53,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Subscribe<SettingViewModel>(e =>
+            _ = vm.Subscribe<SettingViewModel>(e =>
             {
                 Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
@@ -77,9 +76,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             });
 
             Assert.That(vm.Ribbon.Setting.Command.CanExecute(), Is.True);
-            Task.Run(() => vm.Ribbon.Setting.Command.Execute());
+            vm.Ribbon.Setting.Command.Execute();
             Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Cancel)");
-            dp.Dispose();
         });
 
         #endregion

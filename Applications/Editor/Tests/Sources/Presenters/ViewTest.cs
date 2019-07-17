@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Preview() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Subscribe<PreviewViewModel>(e =>
+            _ = vm.Subscribe<PreviewViewModel>(e =>
             {
                 Assert.That(e.Title.Text,   Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Value.File,   Is.Not.Null);
@@ -69,7 +69,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(vm.Ribbon.Preview.Command.CanExecute(), Is.True);
             vm.Ribbon.Preview.Command.Execute();
             Assert.That(Wait.For(cts.Token), "Timeout (Preview)");
-            dp.Dispose();
         });
 
         /* ----------------------------------------------------------------- */
@@ -132,8 +131,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(ip.ItemSize,              Is.EqualTo(250));
 
             vm.Value.ItemSize = 325;
-            Wait.For(() => !vm.Value.Busy);
-
+            Assert.That(Wait.For(() => !vm.Value.Busy), "Timeout");
             Assert.That(ip.ItemSizeIndex, Is.EqualTo(4));
             Assert.That(ip.ItemSize,      Is.EqualTo(300));
         });

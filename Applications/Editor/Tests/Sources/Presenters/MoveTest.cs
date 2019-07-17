@@ -55,7 +55,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             src[1].IsSelected = true;
             src[3].IsSelected = true;
             src[8].IsSelected = true;
-            Assert.That(Invoke(vm, () => vm.Ribbon.MoveNext.Command.Execute()), "Invoke");
+            Assert.That(Test(vm, () => vm.Ribbon.MoveNext.Command.Execute()), "Invoke");
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
@@ -87,7 +87,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             src[0].IsSelected = true;
             src[3].IsSelected = true;
             src[6].IsSelected = true;
-            Assert.That(Invoke(vm, () => vm.Ribbon.MovePrevious.Command.Execute()), "Invoke");
+            Assert.That(Test(vm, () => vm.Ribbon.MovePrevious.Command.Execute()), "Invoke");
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
@@ -120,7 +120,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             src[1].IsSelected = true;
             src[3].IsSelected = true;
             src[6].IsSelected = true;
-            Assert.That(Invoke(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
+            Assert.That(Test(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
@@ -154,7 +154,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             src[1].IsSelected = true;
             src[3].IsSelected = true;
             src[6].IsSelected = true;
-            Assert.That(Invoke(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
+            Assert.That(Test(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
@@ -177,14 +177,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Test
         ///
         /// <summary>
         /// Invokes the specified action and wait for completion.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private bool Invoke(MainViewModel vm, Action action)
+        private bool Test(MainViewModel vm, Action action)
         {
             var cts = new CancellationTokenSource();
             vm.Value.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(vm.Value.Modified)) cts.Cancel(); };

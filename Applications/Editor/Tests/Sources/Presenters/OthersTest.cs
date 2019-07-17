@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Close(string filename, int n, bool modify) => Create(vm =>
         {
             var fi = IO.Get(GetSource(filename));
-            Source = Get(MakeArgs(fi.BaseName, modify));
+            Source = Get(Args(fi.BaseName, modify));
             IO.Copy(fi.FullName, Source, true);
             vm.Test(vm.Ribbon.Open);
             Assert.That(vm.Value.Count, Is.EqualTo(n));
@@ -98,7 +98,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Extract() => Open("Sample.pdf", "", vm =>
         {
-            Destination = Get(MakeArgs("Sample"));
+            Destination = Get(Args("Sample"));
             Assert.That(IO.Exists(Destination), Is.False);
 
             Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.False);

@@ -21,7 +21,6 @@ using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
@@ -75,7 +74,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void RemoveOthers() => Open("SampleRotation.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Subscribe<RemoveViewModel>(e =>
+            _ = vm.Subscribe<RemoveViewModel>(e =>
             {
                 Assert.That(e.Title.Text,         Is.Not.Null.And.Not.Empty);
                 Assert.That(e.PageCaption.Text,   Is.Not.Null.And.Not.Empty);
@@ -94,9 +93,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             });
 
             Assert.That(vm.Ribbon.RemoveOthers.Command.CanExecute(), Is.True);
-            Task.Run(() => vm.Ribbon.RemoveOthers.Command.Execute());
+            vm.Ribbon.RemoveOthers.Command.Execute();
             Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Remove)");
-            dp.Dispose();
         });
 
         #endregion

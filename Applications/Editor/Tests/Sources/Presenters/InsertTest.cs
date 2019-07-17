@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[3].RawObject.Number, Is.EqualTo(1)); // Insert
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
 
-            Destination = Get(MakeArgs(filename.Replace('.', '_')));
+            Destination = Get(Args(filename.Replace('.', '_')));
             vm.Ribbon.SaveAs.Command.Execute();
             Assert.That(Wait.For(() => IO.Exists(Destination)), "Timeout (Save)");
         });
