@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
 using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 
@@ -36,7 +36,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainFacade : DisposableBase
+    public sealed class MainFacade : DisposableBase
     {
         #region Constructors
 
@@ -49,29 +49,23 @@ namespace Cube.Pdf.Editor
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="src">User settings.</param>
+        /// <param name="settings">User settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingFolder src, SynchronizationContext context)
+        public MainFacade(SettingFolder settings, SynchronizationContext context)
         {
-            var images = new ImageCollection(e => _core?.GetOrAdd(e), new Dispatcher(context, true));
-            var post   = new Dispatcher(context, false);
+            settings.Load();
+            settings.PropertyChanged += WhenSettingChanged;
 
-            _core    = new DocumentCollection(src.IO, () => Query);
-            Backup   = new Backup(src.IO);
-            Value = new MainBindable(images, src, post);
-
-            Settings = src;
-            Settings.Load();
-            Settings.PropertyChanged += (s, e) => Update(e.PropertyName);
-
-            var sizes = Value.Images.Preferences.ItemSizeOptions;
-            var index = sizes.LastIndex(e => e <= Value.ItemSize);
-
-            Value.Images.Preferences.ItemSizeIndex = Math.Max(index, 0);
-            Value.Images.Preferences.FrameOnly     = src.Value.FrameOnly;
-            Value.Images.Preferences.TextHeight    = 25;
+            _docs    = new DocumentCollection(settings.IO, () => Value.Query);
+            Settings = settings;
+            Backup   = new Backup(settings.IO);
+            Value    = new MainBindable(
+                new ImageCollection(e => _docs?.GetOrAdd(e), new Dispatcher(context, true)),
+                settings,
+                new Dispatcher(context, false)
+            );
         }
 
         #endregion
@@ -111,21 +105,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Backup Backup { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Backup
-        ///
-        /// <summary>
-        /// Gets or sets the password query.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IQuery<string> Query
-        {
-            get => Value.Query;
-            set => Value.Query = value;
-        }
-
         #endregion
 
         #region Methods
@@ -144,11 +123,11 @@ namespace Cube.Pdf.Editor
         public void Open(string src)
         {
             if (!src.HasValue()) return;
-            if (Value.Source != null) this.StartProcess(src.Quote());
+            if (Value.Source != null) this.OpenProcess(src.Quote());
             else Invoke(() =>
             {
                 Value.Set(Properties.Resources.MessageLoading, src);
-                this.Open(_core.GetOrAdd(src));
+                this.Open(_docs.GetOrAdd(src));
             }, "");
         }
 
@@ -168,7 +147,7 @@ namespace Cube.Pdf.Editor
             if (save) Save(Value.Source.FullName, false);
             Invoke(() =>
             {
-                _core.Clear();
+                _docs.Clear();
                 this.Close();
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
@@ -194,8 +173,8 @@ namespace Cube.Pdf.Editor
         public void Save(string dest, bool reopen) => Invoke(() =>
         {
             Value.Set(Properties.Resources.MessageSaving, dest);
-            this.Save(Settings.IO.Get(dest), () => _core.Clear());
-            if (reopen) this.Restruct(_core.GetOrAdd(dest, Value.Encryption.OwnerPassword));
+            this.Save(Settings.IO.Get(dest), () => _docs.Clear());
+            if (reopen) this.ReOpen(_docs.GetOrAdd(dest, Value.Encryption.OwnerPassword));
         }, "");
 
         /* ----------------------------------------------------------------- */
@@ -255,8 +234,8 @@ namespace Cube.Pdf.Editor
                 src.SelectMany(e =>
                 {
                     Value.Set(Properties.Resources.MessageLoading, e);
-                    if (!this.IsInsertable(e)) return new Page[0];
-                    else if (e.IsPdf()) return _core.GetOrAdd(e).Pages;
+                    if (!this.CanInsert(e)) return new Page[0];
+                    else if (e.IsPdf()) return _docs.GetOrAdd(e).Pages;
                     else return Settings.IO.GetImagePages(e);
                 })
             ), "");
@@ -421,7 +400,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            Interlocked.Exchange(ref _core, null)?.Clear();
+            Interlocked.Exchange(ref _docs, null)?.Clear();
             this.Close();
             if (disposing) Value.Images.Dispose();
         }
@@ -449,24 +428,25 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action, string format, params object[] args) => Value.Invoke(() =>
         {
-            if (_core == null) return;
+            if (_docs == null) return;
             action();
             Value.Set(format, args);
         });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Update
+        /// WhenSettingChanged
         ///
         /// <summary>
-        /// Updates values corresponding to the specified name.
+        /// Occurs when the PropertyChanged event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Update(string name)
+        private void WhenSettingChanged(object s, PropertyChangedEventArgs e)
         {
-            var src = Settings.Value;
-            var dic = new Dictionary<string, Action>
+            var name = e.PropertyName;
+            var src  = Settings.Value;
+            var dic  = new Dictionary<string, Action>
             {
                 { nameof(src.ItemSize),  () => this.Zoom() },
                 { nameof(src.FrameOnly), () => Value.Images.Preferences.FrameOnly = src.FrameOnly },
@@ -478,7 +458,7 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private DocumentCollection _core;
+        private DocumentCollection _docs;
         #endregion
     }
 }

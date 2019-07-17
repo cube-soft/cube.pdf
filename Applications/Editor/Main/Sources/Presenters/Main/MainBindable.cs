@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Collections;
 using System;
 using System.Diagnostics;
 
@@ -52,8 +53,14 @@ namespace Cube.Pdf.Editor
         public MainBindable(ImageCollection images, SettingFolder settings, IDispatcher dispatcher) : base(dispatcher)
         {
             _settings = settings;
-            Images    = images;
-            History   = new History(dispatcher);
+
+            var index = images.Preferences.ItemSizeOptions.LastIndex(e => e <= ItemSize);
+            images.Preferences.ItemSizeIndex = Math.Max(index, 0);
+            images.Preferences.FrameOnly     = Settings.FrameOnly;
+            images.Preferences.TextHeight    = 25;
+
+            Images  = images;
+            History = new History(dispatcher);
         }
 
         #endregion

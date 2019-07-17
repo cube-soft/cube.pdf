@@ -16,11 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using Cube.Images;
 using Cube.Mixin.Drawing;
 using Cube.Mixin.Pdf;
-using Cube.Mixin.String;
 using System;
 using System.Drawing;
 using System.Windows.Media;
@@ -29,30 +27,16 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentExtension
+    /// RendererExtension
     ///
     /// <summary>
-    /// Represents the extended methods to handle the PDF document.
+    /// Represents the extended methods of the IDocumentRenderer interface.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class DocumentExtension
+    internal static class RendererExtension
     {
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsPdf
-        ///
-        /// <summary>
-        /// Gets the value indicating whether the specified file is PDF.
-        /// </summary>
-        ///
-        /// <param name="src">File path.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static bool IsPdf(this string src) =>
-            src.EndsWith(".pdf", StringComparison.InvariantCultureIgnoreCase);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -109,35 +93,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static ImageSource Create(this IDocumentRenderer src, Page page, SizeF size) =>
             page.File is ImageFile f ? Create(f, size) : src?.Render(page, size).ToBitmapImage(true);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetItextReader
-        ///
-        /// <summary>
-        /// Gets the DocumentReader of the specified file.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Partial モードは必ず無効にする必要があります。有効にした場合、
-        /// ページ回転情報が正常に適用されない可能性があります。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Itext.DocumentReader GetItexReader(this Entity src, IQuery<string> query, IO io)
-        {
-            var pass    = (src as PdfFile)?.Password;
-            var options = new Itext.OpenOption
-            {
-                IO           = io,
-                FullAccess   = !pass.HasValue(),
-                ReduceMemory = false,
-            };
-
-            return pass.HasValue() ?
-                   new Itext.DocumentReader(src.FullName, pass,  options) :
-                   new Itext.DocumentReader(src.FullName, query, options);
-        }
 
         #endregion
 

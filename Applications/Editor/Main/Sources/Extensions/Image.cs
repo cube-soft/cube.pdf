@@ -17,14 +17,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
-using Cube.FileSystem;
-using Cube.Images.Icons;
-using Cube.Mixin.Drawing;
 using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Media.Imaging;
 
 namespace Cube.Pdf.Editor
 {
@@ -262,27 +258,6 @@ namespace Cube.Pdf.Editor
                 () => src.Move(cvt,    -delta)
             );
         }
-
-        #endregion
-
-        #region Icon
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IconImage
-        ///
-        /// <summary>
-        /// Creates a icon from the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">File information.</param>
-        /// <param name="size">Icon size.</param>
-        ///
-        /// <returns>Bitmap of the requested icon.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static BitmapImage GetIconImage(this Entity src, IconSize size) =>
-            src.GetIcon(size)?.ToBitmap().ToBitmapImage(true);
 
         #endregion
 

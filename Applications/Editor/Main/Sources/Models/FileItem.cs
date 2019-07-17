@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editor
             FullName      = info.FullName;
             Length        = info.Length;
             LastWriteTime = info.LastWriteTime;
-            Icon          = info.GetIconImage(IconSize.Small);
+            Icon          = info.GetIconSource(IconSize.Small);
         }
 
         #endregion

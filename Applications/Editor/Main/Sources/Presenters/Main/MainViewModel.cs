@@ -80,7 +80,7 @@ namespace Cube.Pdf.Editor
 
             Ribbon = new RibbonViewModel(Facade.Value, Aggregator, context);
             Recent = new RecentViewModel(mon, Aggregator, context);
-            Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
+            Value.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
 
             SetCommands();
             Track(() => Facade.Setup(App.Arguments));
@@ -138,7 +138,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ICommand Open => Get(() => new DelegateCommand<string[]>(
             e => Track(() => Facade.Open(e)),
-            e => !Value.Busy && Facade.GetFirst(e).HasValue()
+            e => !Value.Busy && e.FirstPdf().HasValue()
         ).Associate(Value, nameof(Value.Busy)));
 
         /* ----------------------------------------------------------------- */
