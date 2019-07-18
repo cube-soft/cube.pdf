@@ -39,23 +39,23 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Properties
+        /// Create
         ///
         /// <summary>
-        /// Confirms default values of properties.
+        /// Tests the create, attach, and detach methods.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Properties() => Create(vm =>
+        public void Create()
         {
-            var view = new ListView { DataContext = vm };
+            var view = new ListView();
             var src  = new SelectionBehavior();
 
             src.Attach(view);
             Assert.That(src.Popup, Is.False);
             src.Detach();
-        });
+        }
 
         #endregion
     }

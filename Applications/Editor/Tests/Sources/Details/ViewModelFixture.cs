@@ -101,22 +101,22 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Make
         ///
         /// <summary>
-        /// Creates a new instance of the MainViewModel class and execute
-        /// the specified action.
+        /// Creates a new instance of the MainViewModel class, initalizes
+        /// some properties, and execute the specified action.
         /// </summary>
         ///
-        /// <param name="next">User action.</param>
+        /// <param name="callback">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Create(Action<MainViewModel> next)
+        protected void Make(Action<MainViewModel> callback)
         {
-            using (var src = CreateMainViewModel())
+            using (var src = Create())
             {
                 var behaviors = Subscribe(src);
-                next(src);
+                callback(src);
                 foreach (var e in behaviors) e.Dispose();
             }
         }
@@ -135,7 +135,7 @@ namespace Cube.Pdf.Editor.Tests
         /// <param name="next">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Open(string filename, string password, Action<MainViewModel> next) => Create(vm =>
+        protected void Open(string filename, string password, Action<MainViewModel> next) => Make(vm =>
         {
             Source   = GetSource(filename);
             Password = password;
@@ -173,7 +173,7 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateMainViewModel
+        /// Create
         ///
         /// <summary>
         /// Creates a new instance of the MainViewModel class.
@@ -182,7 +182,7 @@ namespace Cube.Pdf.Editor.Tests
         /// <returns>MainViewModel object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        private MainViewModel CreateMainViewModel()
+        private MainViewModel Create()
         {
             var src = new SettingFolder(
                 Assembly.GetExecutingAssembly(),

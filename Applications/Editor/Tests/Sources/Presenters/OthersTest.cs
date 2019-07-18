@@ -48,7 +48,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Properties() => Create(vm =>
+        public void Properties() => Make(vm =>
         {
             var pf = vm.Value.Images.Preferences;
             Assert.That(vm.Recent.Items,  Is.Not.Null);
@@ -68,7 +68,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", 2, true )]
         [TestCase("Sample.pdf", 2, false)]
-        public void Close(string filename, int n, bool modify) => Create(vm =>
+        public void Close(string filename, int n, bool modify) => Make(vm =>
         {
             var fi = IO.Get(GetSource(filename));
             Source = Get(Args(fi.BaseName, modify));

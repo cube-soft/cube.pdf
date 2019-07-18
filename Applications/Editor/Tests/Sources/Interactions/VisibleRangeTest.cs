@@ -39,7 +39,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Properties
+        /// Create
         ///
         /// <summary>
         /// Confirms default values of properties.
@@ -47,9 +47,9 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Properties() => Create(vm =>
+        public void Create()
         {
-            var view = new ScrollViewer { DataContext = vm };
+            var view = new ScrollViewer();
             var src  = new VisibleRange();
 
             src.Attach(view);
@@ -57,7 +57,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
             Assert.That(src.Last,  Is.EqualTo(0));
             Assert.That(src.Unit,  Is.EqualTo(0));
             src.Detach();
-        });
+        }
 
         #endregion
     }

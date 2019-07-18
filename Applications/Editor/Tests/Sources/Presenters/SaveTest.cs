@@ -69,7 +69,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", "")]
-        public void Overwrite(string filename, string password) => Create(vm =>
+        public void Overwrite(string filename, string password) => Make(vm =>
         {
             Source   = Get(Args(IO.Get(GetSource(filename)).BaseName));
             Password = password;
