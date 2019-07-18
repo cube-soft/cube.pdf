@@ -16,72 +16,79 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// HistoryItem
+    /// ImageSelection
     ///
     /// <summary>
-    /// Represents a pair of undo and redo actions.
+    /// Represents the selection of images.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class HistoryItem
+    public sealed class ImageSelection : Selection<ImageItem>
     {
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Undo
+        /// First
         ///
         /// <summary>
-        /// Gets the action that represents the undo command.
+        /// Gets the first index that is maximum value in the selected
+        /// images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Action Undo { get; set; }
+        public int First => RawObject.Keys.OrderBy(i => i.Index).FirstOrDefault()?.Index ?? -1;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Redo
+        /// Last
         ///
         /// <summary>
-        /// Gets the action that represents the redo command.
+        /// Gets the last index that is maximum value in the selected
+        /// images.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Action Redo { get; set; }
+        public int Last => RawObject.Keys.OrderByDescending(i => i.Index).FirstOrDefault()?.Index ?? -1;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Indices
+        ///
+        /// <summary>
+        /// Gets the indices of the selected images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<int> Indices => RawObject.Keys.Select(e => e.Index);
 
         #endregion
 
-        #region Methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateInvoke
+        /// OnPropertyChanged
         ///
         /// <summary>
-        /// Invokes the specified action and Creates a new instance of the
-        /// HistoryItem class with the specified actions.
+        /// Occurs when a property is changed.
         /// </summary>
         ///
-        /// <param name="action">Do or Redo action.</param>
-        /// <param name="undo">Undo action.</param>
-        ///
-        /// <returns>New instance of the HistoryItem class.</returns>
-        ///
         /* ----------------------------------------------------------------- */
-        public static HistoryItem CreateInvoke(Action action, Action undo)
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            action();
-            return new HistoryItem
-            {
-                Undo = undo,
-                Redo = action,
-            };
+            base.OnPropertyChanged(e);
+
+            if (e.PropertyName != nameof(Count)) return;
+            Refresh(nameof(Last), nameof(Indices));
         }
 
         #endregion

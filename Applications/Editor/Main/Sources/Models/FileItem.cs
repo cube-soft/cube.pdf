@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileItem : ObservableBase, IListItem
+    public sealed class FileItem : ObservableBase, IListItem
     {
         #region Constructors
 
@@ -54,12 +54,12 @@ namespace Cube.Pdf.Editor
         {
             _selection = selection;
 
-            var info = io.Get(src);
-            Name          = info.Name;
-            FullName      = info.FullName;
-            Length        = info.Length;
-            LastWriteTime = info.LastWriteTime;
-            Icon          = info.GetIconSource(IconSize.Small);
+            var fi = io.Get(src);
+            Name          = fi.Name;
+            FullName      = fi.FullName;
+            Length        = fi.Length;
+            LastWriteTime = fi.LastWriteTime;
+            Icon          = fi.GetIconSource(IconSize.Small);
         }
 
         #endregion
@@ -93,7 +93,7 @@ namespace Cube.Pdf.Editor
         /// Length
         ///
         /// <summary>
-        /// Gets the filesize.
+        /// Gets the file-size.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

@@ -37,7 +37,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DirectoryMonitor : ObservableBase<Entity>
+    public sealed class DirectoryMonitor : ObservableBase<Entity>
     {
         #region Constructors
 

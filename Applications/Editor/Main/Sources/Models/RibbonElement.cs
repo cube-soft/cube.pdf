@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RibbonElement : BindableElement
+    public sealed class RibbonElement : BindableElement
     {
         #region Constructors
 
@@ -173,7 +173,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected string IconName => Enabled ? Name : $"{Name}Disable";
+        private string IconName => Enabled ? Name : $"{Name}Disable";
 
         /* ----------------------------------------------------------------- */
         ///
@@ -184,7 +184,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected static string Assets { get; } = "pack://application:,,,/Assets";
+        private static string Assets { get; } = "pack://application:,,,/Assets";
 
         #endregion
 

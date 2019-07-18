@@ -25,14 +25,14 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImagePreferences
+    /// ImagePreference
     ///
     /// <summary>
-    /// 画像表示に関する情報を保持するためのクラスです。
+    /// Represents the settings to show thumbnails.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImagePreferences : ObservableBase
+    public sealed class ImagePreference : ObservableBase
     {
         #region Properties
 
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
-        
+
         /* ----------------------------------------------------------------- */
         ///
         /// GetDummyImage

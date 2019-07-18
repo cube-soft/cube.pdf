@@ -41,7 +41,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageCollection : ObservableBase<ImageItem>, IReadOnlyList<ImageItem>
+    public sealed class ImageCollection : ObservableBase<ImageItem>, IReadOnlyList<ImageItem>
     {
         #region Constructors
 
@@ -72,7 +72,7 @@ namespace Cube.Pdf.Editor
 
             Dispatcher  = dispatcher;
             Selection   = new ImageSelection   { Dispatcher = dispatcher };
-            Preferences = new ImagePreferences { Dispatcher = dispatcher };
+            Preferences = new ImagePreference { Dispatcher = dispatcher };
 
             Create = (i, r) =>
             {
@@ -134,7 +134,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImagePreferences Preferences { get; }
+        public ImagePreference Preferences { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -182,6 +182,25 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Clear
+        ///
+        /// <summary>
+        /// Clears all objects.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Clear()
+        {
+            Interlocked.Exchange(ref _task, null)?.Cancel();
+            foreach (var item in _inner) item.Dispose();
+            _inner.Clear();
+            _cache.Clear();
+        }
+
+        #region SetIndex
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Insert
         ///
         /// <summary>
@@ -201,27 +220,6 @@ namespace Cube.Pdf.Editor
                 ++pos;
             }
             return KeyValuePair.Create(pos, Count);
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotate
-        ///
-        /// <summary>
-        /// Rotates the specified images and regenerates them.
-        /// </summary>
-        ///
-        /// <param name="indices">Target items.</param>
-        /// <param name="degree">Rotation angle in degree unit.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Rotate(IEnumerable<int> indices, int degree) => Reschedule(() =>
-        {
-            foreach (var item in indices.Within(Count).Select(i => _inner[i]))
-            {
-                _ = _cache.Remove(item);
-                item.Rotate(degree);
-            }
         });
 
         /* ----------------------------------------------------------------- */
@@ -279,22 +277,29 @@ namespace Cube.Pdf.Editor
             return KeyValuePair.Create(src.LastOrDefault(), Count);
         });
 
+        #endregion
+
+        #region Reschedule
+
         /* ----------------------------------------------------------------- */
         ///
-        /// Clear
+        /// Rotate
         ///
         /// <summary>
-        /// Clears all objects.
+        /// Rotates the specified images and regenerates them.
         /// </summary>
         ///
+        /// <param name="indices">Target items.</param>
+        /// <param name="degree">Rotation angle in degree unit.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Clear()
-        {
-            Interlocked.Exchange(ref _task, null)?.Cancel();
-            foreach (var item in _inner) item.Dispose();
-            _inner.Clear();
-            _cache.Clear();
-        }
+        public void Rotate(IEnumerable<int> indices, int degree) => Reschedule(() => {
+            foreach (var item in indices.Within(Count).Select(i => _inner[i]))
+            {
+                _ = _cache.Remove(item);
+                item.Rotate(degree);
+            }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -324,6 +329,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Refresh() => Reschedule(() => _cache.Clear());
 
+        #endregion
+
         /* ----------------------------------------------------------------- */
         ///
         /// GetEnumerator
@@ -338,10 +345,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public override IEnumerator<ImageItem> GetEnumerator() => _inner.GetEnumerator();
-
-        #endregion
-
-        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -377,6 +380,10 @@ namespace Cube.Pdf.Editor
             Reschedule(null);
             base.OnCollectionChanged(e);
         }
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///

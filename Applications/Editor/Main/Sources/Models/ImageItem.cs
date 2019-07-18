@@ -46,15 +46,15 @@ namespace Cube.Pdf.Editor
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="image">Delegation to get an image.</param>
+        /// <param name="getter">Delegation to get an image.</param>
         /// <param name="selection">Shared object for selection.</param>
         /// <param name="preferences">Image preferences.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageItem(Func<ImageItem, ImageSource> image,
-            ImageSelection selection, ImagePreferences preferences)
+        public ImageItem(Func<ImageItem, ImageSource> getter,
+            ImageSelection selection, ImagePreference preferences)
         {
-            _image       = image;
+            _getter      = getter;
             _selection   = selection;
             _preferences = preferences;
             _preferences.PropertyChanged += WhenPreferencesChanged;
@@ -69,11 +69,11 @@ namespace Cube.Pdf.Editor
         /// Image
         ///
         /// <summary>
-        /// Gets the image of this entry.
+        /// Gets the image of this item.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSource Image => _image?.Invoke(this);
+        public ImageSource Image => _getter?.Invoke(this);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -248,7 +248,7 @@ namespace Cube.Pdf.Editor
 
                 _preferences.PropertyChanged -= WhenPreferencesChanged;
                 _preferences = null;
-                _image       = null;
+                _getter      = null;
                 _selection   = null;
             }
         }
@@ -301,8 +301,8 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private Func<ImageItem, ImageSource> _image;
-        private ImagePreferences _preferences;
+        private Func<ImageItem, ImageSource> _getter;
+        private ImagePreference _preferences;
         private ImageSelection _selection;
         private int _index;
         private int _width;

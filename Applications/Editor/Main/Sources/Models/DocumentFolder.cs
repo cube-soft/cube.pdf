@@ -27,14 +27,14 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentCollection
+    /// DocumentFolder
     ///
     /// <summary>
     /// Represents a collection of PDF documents.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class DocumentCollection
+    internal sealed class DocumentFolder
     {
         #region Constructors
 
@@ -51,26 +51,11 @@ namespace Cube.Pdf.Editor
         /// <param name="query">Function to get the password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentCollection(IO io, Func<IQuery<string>> query)
+        public DocumentFolder(IO io, Func<IQuery<string>> query)
         {
-            IO = io;
+            _io    = io;
             _query = query;
         }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         #endregion
 
@@ -145,7 +130,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private DocumentRenderer Create(string src, string password)
         {
-            var opt  = new OpenOption { IO = IO, FullAccess = true };
+            var opt  = new OpenOption { IO = _io, FullAccess = true };
             var dest = password.HasValue() ?
                        new DocumentRenderer(src, password, opt) :
                        new DocumentRenderer(src, _query(), opt);
@@ -157,6 +142,7 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
+        private readonly IO _io;
         private readonly Func<IQuery<string>> _query;
         private readonly ConcurrentDictionary<string, DocumentRenderer> _inner =
             new ConcurrentDictionary<string, DocumentRenderer>();

@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
-using System;
 
 namespace Cube.Pdf.Editor
 {
@@ -34,23 +33,6 @@ namespace Cube.Pdf.Editor
     internal static class MessageFactory
     {
         #region DialogMessage
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Create a message to show a DialogBox with an error icon
-        /// and OK button.
-        /// </summary>
-        ///
-        /// <param name="src">Occurred exception.</param>
-        ///
-        /// <returns>DialogMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static DialogMessage Create(Exception src) =>
-            CreateError($"{src.Message} ({src.GetType().Name})");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -70,28 +52,6 @@ namespace Cube.Pdf.Editor
             Title   = typeof(App).Assembly.GetTitle(),
             Buttons = DialogButtons.YesNoCancel,
             Icon    = DialogIcon.Warning,
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateError
-        ///
-        /// <summary>
-        /// Create a message to show a DialogBox with an error icon
-        /// and OK button.
-        /// </summary>
-        ///
-        /// <param name="src">Error message.</param>
-        ///
-        /// <returns>DialogMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static DialogMessage CreateError(string src) => new DialogMessage
-        {
-            Text    = src,
-            Title   = typeof(App).Assembly.GetTitle(),
-            Icon    = DialogIcon.Error,
-            Buttons = DialogButtons.Ok,
         };
 
         #endregion

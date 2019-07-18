@@ -254,12 +254,7 @@ namespace Cube.Pdf.Editor
         private ICommand Close() => new DelegateCommand<CancelEventArgs>(
             e => {
                 if (!Value.Modified) Sync(() => Facade.Close(false));
-                else
-                {
-                    var msg = MessageFactory.CreateOverwriteWarn();
-                    Send(msg);
-                    PostClose(e, msg.Value);
-                }
+                else PostClose(e);
             },
             e => Value.Source != null && (e != null || !Value.Busy)
         )
@@ -397,13 +392,16 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostClose(CancelEventArgs src, DialogStatus m)
+        private void PostClose(CancelEventArgs src)
         {
             var e = src ?? new CancelEventArgs();
-            e.Cancel = m == DialogStatus.Cancel;
+            var m = MessageFactory.CreateOverwriteWarn();
+
+            Send(m);
+            e.Cancel = m.Value == DialogStatus.Cancel;
             if (e.Cancel) return;
 
-            void close() => Facade.Close(m == DialogStatus.Yes);
+            void close() => Facade.Close(m.Value == DialogStatus.Yes);
             if (src != null) Sync(close);
             else Track(close);
         }
@@ -461,11 +459,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostMetadata() => Track(() =>
-        {
-            var m = Value.Metadata.Copy();
-            Post(new MetadataViewModel(e => Facade.Update(e), m, Value.Source, Context));
-        });
+        private void PostMetadata() => Post(new MetadataViewModel(
+            e => Facade.Update(e), Value.Metadata.Copy(), Value.Source, Context
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -477,11 +473,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void PostEncryption() => Track(() =>
-        {
-            var m = Value.Encryption.Copy();
-            Post(new EncryptionViewModel(e => Facade.Update(e), m, Context));
-        });
+        private void PostEncryption() => Post(new EncryptionViewModel(
+            e => Facade.Update(e), Value.Encryption.Copy(), Context
+        ));
 
         /* ----------------------------------------------------------------- */
         ///

@@ -58,7 +58,7 @@ namespace Cube.Pdf.Editor
             settings.Load();
             settings.PropertyChanged += WhenSettingChanged;
 
-            _docs    = new DocumentCollection(settings.IO, () => Value.Query);
+            _docs    = new DocumentFolder(settings.IO, () => Value.Query);
             Settings = settings;
             Backup   = new Backup(settings.IO);
             Value    = new MainBindable(
@@ -458,7 +458,7 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private DocumentCollection _docs;
+        private DocumentFolder _docs;
         #endregion
     }
 }
