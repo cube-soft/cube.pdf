@@ -65,7 +65,7 @@ namespace Cube.Pdf.Editor
             new Aggregator(),
             context
         ) {
-            Position   = new InsertPosViewModel(Value, Aggregator, context);
+            Position   = new InsertPositionViewModel(Value, Aggregator, context);
             DragMove   = new InsertDropTarget((f, t) => Facade.Move(f, t));
             OK.Command = new DelegateCommand(
                 () =>
@@ -101,7 +101,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertPosViewModel Position { get; }
+        public InsertPositionViewModel Position { get; }
 
         /* ----------------------------------------------------------------- */
         ///
