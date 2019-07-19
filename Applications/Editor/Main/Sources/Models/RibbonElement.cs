@@ -222,7 +222,7 @@ namespace Cube.Pdf.Editor
         protected override void React()
         {
             base.React();
-            Refresh(nameof(Tooltip));
+            Refresh(nameof(Tooltip), nameof(Enabled));
         }
 
         /* ----------------------------------------------------------------- */

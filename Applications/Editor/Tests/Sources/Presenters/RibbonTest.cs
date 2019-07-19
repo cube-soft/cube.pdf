@@ -16,10 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using NUnit.Framework;
-using System.Reflection;
-using System.Threading;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
@@ -33,7 +30,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class RibbonTest
+    class RibbonTest : ViewModelFixture
     {
         #region Tests
 
@@ -47,10 +44,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_English()
+        public void GetText_English() => Make(vm =>
         {
-            var dest = Create();
-            Locale.Set(Language.English);
+            vm.Value.Settings.Language = Language.English;
+            var dest = vm.Ribbon;
 
             Assert.That(dest.File.Text,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("Edit"));
@@ -81,7 +78,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("ZoomIn"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("Settings"));
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -93,10 +90,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetTooltip_English()
+        public void GetTooltip_English() => Make(vm =>
         {
-            var dest = Create();
-            Locale.Set(Language.English);
+            vm.Value.Settings.Language = Language.English;
+            var dest = vm.Ribbon;
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
@@ -127,7 +124,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -139,10 +136,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_Japanese()
+        public void GetText_Japanese() => Make(vm =>
         {
-            var dest = Create();
-            Locale.Set(Language.Japanese);
+            vm.Value.Settings.Language = Language.Japanese;
+            var dest = vm.Ribbon;
 
             Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("編集"));
@@ -173,7 +170,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("拡大"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("設定"));
-        }
+        });
 
          /* ----------------------------------------------------------------- */
         ///
@@ -185,10 +182,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetTooltip_Japanese()
+        public void GetTooltip_Japanese() => Make(vm =>
         {
-            var dest = Create();
-            Locale.Set(Language.Japanese);
+            vm.Value.Settings.Language = Language.Japanese;
+            var dest = vm.Ribbon;
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo(dest.File.Text));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
@@ -219,7 +216,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
-        }
+        });
 
        /* ----------------------------------------------------------------- */
         ///
@@ -231,45 +228,25 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_Dynamically()
+        public void GetText_Dynamically() => Make(vm =>
         {
-            var dest = Create();
-
-            Locale.Set(Language.English);
+            var dest = vm.Ribbon;
+            vm.Value.Settings.Language = Language.English;
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "en");
 
-            Locale.Set(Language.Japanese);
+            vm.Value.Settings.Language = Language.Japanese;
             Assert.That(dest.Open.Text,    Is.EqualTo("開く"), "ja");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "ja");
 
-            Locale.Set(Language.French);
+            vm.Value.Settings.Language = Language.French;
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "fr");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "fr");
 
-            Locale.Set(Language.Auto);
+            vm.Value.Settings.Language = Language.Auto;
             Assert.That(dest.Open.Text,    Is.Not.Null.And.Not.Empty, "empty");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "empty");
-        }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new instance of the RibbonViewModel class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private RibbonViewModel Create()
-        {
-            new SettingFolder(Assembly.GetExecutingAssembly(), new IO()); // Locale.Configure
-            return new RibbonViewModel(null, new Aggregator(), new SynchronizationContext());
-        }
+        });
 
         #endregion
     }

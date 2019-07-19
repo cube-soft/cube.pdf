@@ -33,13 +33,13 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RecentViewModel : ViewModelBase<DirectoryMonitor>
+    public sealed class RecentViewModel : ViewModelBase<DirectoryMonitor>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// HeroViewModel
+        /// RecentViewModel
         ///
         /// <summary>
         /// Initializes a new instance of the RecentViewModel with the
