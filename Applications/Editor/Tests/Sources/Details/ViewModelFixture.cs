@@ -198,6 +198,7 @@ namespace Cube.Pdf.Editor.Tests
             dest.Value.Images.Preferences.VisibleFirst = 0;
             dest.Value.Images.Preferences.VisibleLast = 10;
 
+            Assert.That(dest.Value.Message, Is.Empty);
             return dest;
         }
 
@@ -217,6 +218,8 @@ namespace Cube.Pdf.Editor.Tests
             src.Subscribe<SaveFileMessage  >(e => e.Value = Destination),
             src.Subscribe<PasswordViewModel>(e =>
             {
+                Assert.That(e.Password.Text,  Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Password.Value, Is.Null);
                 e.Password.Value = Password;
                 var dest = Password.HasValue() ? e.OK : e.Cancel;
                 Assert.That(dest.Command.CanExecute(), Is.True, dest.Text);

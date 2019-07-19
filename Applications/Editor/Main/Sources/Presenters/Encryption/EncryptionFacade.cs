@@ -181,8 +181,7 @@ namespace Cube.Pdf.Editor
         /// <returns>PermissionValue enum.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public PermissionValue GetPermission(bool value) =>
-            value ? PermissionValue.Allow : PermissionValue.Deny;
+        public PermissionValue GetPermission(bool value) => value ? PermissionValue.Allow : PermissionValue.Deny;
 
         #endregion
     }
