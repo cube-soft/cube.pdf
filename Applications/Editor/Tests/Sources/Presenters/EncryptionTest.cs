@@ -22,6 +22,7 @@ using Cube.Xui;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
@@ -52,19 +53,18 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCaseSource(nameof(TestCases))]
         public void Set(int id, Encryption cmp) => Open("Sample.pdf", "", vm =>
         {
-            _ = Subscribe(vm, cmp, false);
-
             var cts = new CancellationTokenSource();
             vm.Value.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(vm.Value.Encryption)) cts.Cancel();
             };
 
-            Assert.That(vm.Value.Encryption, Is.Not.Null);
-            Assert.That(Test(vm.Ribbon.Encryption, cts), $"Timeout (No.{id})");
-            Assert.That(vm.Value.History.Undoable, Is.True);
-            Assert.That(vm.Value.History.Redoable, Is.False);
-            AssertEquals(vm.Value.Encryption, cmp);
+            using (Subscribe(vm, cmp, false))
+            {
+                Assert.That(vm.Value.Encryption, Is.Not.Null);
+                Assert.That(Test(vm.Ribbon.Encryption, cts), $"Timeout (No.{id})");
+                AssertEquals(vm.Value.Encryption, cmp);
+            }
         });
 
         /* ----------------------------------------------------------------- */
@@ -81,19 +81,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            _ = vm.Subscribe<EncryptionViewModel>(e =>
-            {
+            using (vm.Subscribe<EncryptionViewModel>(e => {
                 e.OwnerPassword.Value = "dummy";
-                _ = e.Subscribe<CloseMessage>(z => cts.Cancel());
-                Assert.That(e.Cancel.Command.CanExecute(), Is.True);
-                e.Cancel.Command.Execute();
-            });
-
-            Assert.That(vm.Value.Encryption, Is.Not.Null);
-            Assert.That(Test(vm.Ribbon.Encryption, cts), "Timeout");
-            Assert.That(vm.Value.History.Undoable, Is.False);
-            Assert.That(vm.Value.History.Redoable, Is.False);
-            Assert.That(vm.Value.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
+                using (e.Subscribe<CloseMessage>(z => cts.Cancel())) e.Cancel.Command.Execute();
+            })) {
+                Assert.That(vm.Value.Encryption, Is.Not.Null);
+                Assert.That(Test(vm.Ribbon.Encryption, cts), "Timeout");
+                Assert.That(vm.Value.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
+            }
         });
 
         #endregion
@@ -162,6 +157,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             e.AllowForm.Value          = pm.InputForm.IsAllowed();
             e.AllowAccessibility.Value = pm.Accessibility.IsAllowed();
 
+            Assert.That(e.Methods.Count(), Is.EqualTo(4));
+            Assert.That(e.Operation.Value, Is.True);
             Assert.That(e.OK.Command.CanExecute(), Is.True);
             e.OK.Command.Execute();
         });
@@ -180,8 +177,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(src.Enabled,          Is.EqualTo(cmp.Enabled), nameof(src.Enabled));
             Assert.That(src.OwnerPassword,    Is.EqualTo(cmp.OwnerPassword));
             Assert.That(src.Method,           Is.EqualTo(cmp.Method));
-            //Assert.That(src.OpenWithPassword, Is.EqualTo(cmp.OpenWithPassword), nameof(src.OpenWithPassword));
-            //Assert.That(src.UserPassword,     Is.EqualTo(cmp.UserPassword));
 
             var x = src.Permission;
             var y = cmp.Permission;

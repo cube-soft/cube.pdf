@@ -54,6 +54,8 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
             src.Attach(view);
             Assert.That(src.Popup, Is.False);
+            src.Popup = true;
+            Assert.That(src.Popup, Is.True);
             src.Detach();
         }
 

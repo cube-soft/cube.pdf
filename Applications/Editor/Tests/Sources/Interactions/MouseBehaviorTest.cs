@@ -121,6 +121,8 @@ namespace Cube.Pdf.Editor.Tests.Interactions
             Assert.That(src.Drawing.BorderThickness,        Is.EqualTo(new Thickness(1)));
             Assert.That(src.Drawing.Background.Opacity,     Is.EqualTo(0.1));
             Assert.That(src.Drawing.CornerRadius,           Is.EqualTo(new CornerRadius(1)));
+            src.Selection = new ImageSelection();
+            Assert.That(src.Selection, Is.Not.Null);
             src.Detach();
         }
 

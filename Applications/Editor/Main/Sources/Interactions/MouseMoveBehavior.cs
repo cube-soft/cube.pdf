@@ -66,7 +66,7 @@ namespace Cube.Pdf.Editor
             Drawing.Drop       += WhenDrop;
 
             DrawingCanvas = new Canvas { Visibility = Visibility.Collapsed };
-            DrawingCanvas.Children.Add(Drawing);
+            _ = DrawingCanvas.Children.Add(Drawing);
         }
 
         #endregion
@@ -153,7 +153,7 @@ namespace Cube.Pdf.Editor
             AssociatedObject.Drop += WhenDrop;
 
             _attached = AssociatedObject.GetParent<Panel>();
-            _attached?.Children.Add(DrawingCanvas);
+            _ = _attached?.Children.Add(DrawingCanvas);
         }
 
         /* ----------------------------------------------------------------- */
@@ -271,7 +271,7 @@ namespace Cube.Pdf.Editor
 
             var pt = e.GetPosition(AssociatedObject);
             var unit = AssociatedObject.GetBounds();
-            Scroll(obj, pt, unit);
+            Scroll(pt, unit);
             Draw(obj, pt, unit);
         }
 
@@ -361,7 +361,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Scroll(DragDropObject src, Point pt, Rect unit)
+        private void Scroll(Point pt, Rect unit)
         {
             var sv = AssociatedObject.GetChild<ScrollViewer>();
             if (sv == null) return;

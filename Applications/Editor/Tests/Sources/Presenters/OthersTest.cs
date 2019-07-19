@@ -40,7 +40,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Properties
+        /// Create
         ///
         /// <summary>
         /// Confirms default values of properties.
@@ -48,10 +48,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Properties() => Make(vm =>
+        public void Create() => Make(vm =>
         {
+            vm.Value.Settings.Language = Language.English;
+            Assert.That(vm.Recent.Items,        Is.Not.Null);
+            Assert.That(vm.Recent.Menu.Text,    Is.EqualTo("Recent files"));
+            Assert.That(vm.Recent.Menu.Command, Is.Not.Null);
+
             var pf = vm.Value.Images.Preferences;
-            Assert.That(vm.Recent.Items,  Is.Not.Null);
             Assert.That(pf.ItemSize,      Is.EqualTo(250));
             Assert.That(pf.ItemSizeIndex, Is.EqualTo(3));
             Assert.That(pf.TextHeight,    Is.EqualTo(25));

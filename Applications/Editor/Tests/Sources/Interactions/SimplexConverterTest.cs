@@ -23,7 +23,6 @@ using Cube.Xui.Converters;
 using NUnit.Framework;
 using System;
 using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -75,6 +74,26 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
         /* ----------------------------------------------------------------- */
         ///
+        /// TitleConverter_Empty
+        ///
+        /// <summary>
+        /// Tests the TitleConverter class with the empty parameters.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void TitleConverter_Empty()
+        {
+            var src  = new TitleConverter();
+            var type = typeof(string);
+            var ci   = CultureInfo.CurrentCulture;
+            var dest = src.Convert(new object[0], type, null, ci) as string;
+
+            Assert.That(dest, Is.EqualTo("CubePDF Utility"));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// TitleConverter_Throws
         ///
         /// <summary>
@@ -83,10 +102,11 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void TitleConverter_Throws() => Assert.That(
-            () => new TitleConverter().ConvertBack(null, null, null, null),
-            Throws.TypeOf<NotSupportedException>()
-        );
+        public void TitleConverter_Throws()
+        {
+            var src = new TitleConverter();
+            Assert.That(() => src.ConvertBack(null, null, null, null), Throws.TypeOf<NotSupportedException>());
+        }
 
         #endregion
 

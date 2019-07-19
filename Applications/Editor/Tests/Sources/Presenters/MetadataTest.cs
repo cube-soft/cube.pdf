@@ -52,19 +52,18 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCaseSource(nameof(TestCases))]
         public void Set(int id, Metadata cmp) => Open("Sample.pdf", "", vm =>
         {
-            _ = Subscribe(vm, cmp);
-
             var cts = new CancellationTokenSource();
             vm.Value.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(vm.Value.Metadata)) cts.Cancel();
             };
 
-            Assert.That(vm.Value.Metadata, Is.Not.Null);
-            Assert.That(Test(vm.Ribbon.Metadata, cts), $"Timeout (No.{id})");
-            Assert.That(vm.Value.History.Undoable, Is.True);
-            Assert.That(vm.Value.History.Redoable, Is.False);
-            AssertEquals(vm.Value.Metadata, cmp);
+            using (Subscribe(vm, cmp))
+            {
+                Assert.That(vm.Value.Metadata, Is.Not.Null);
+                Assert.That(Test(vm.Ribbon.Metadata, cts), $"Timeout (No.{id})");
+                AssertEquals(vm.Value.Metadata, cmp);
+            }
         });
 
         /* ----------------------------------------------------------------- */
@@ -81,19 +80,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            _ = vm.Subscribe<MetadataViewModel>(e =>
-            {
+            using (vm.Subscribe<MetadataViewModel>(e => {
                 e.Document.Value = "dummy";
-                _ = e.Subscribe<CloseMessage>(z => cts.Cancel());
-                Assert.That(e.Cancel.Command.CanExecute(), Is.True);
-                e.Cancel.Command.Execute();
-            });
-
-            Assert.That(vm.Value.Metadata, Is.Not.Null);
-            Assert.That(Test(vm.Ribbon.Metadata, cts), "Timeout");
-            Assert.That(vm.Value.History.Undoable, Is.False);
-            Assert.That(vm.Value.History.Redoable, Is.False);
-            Assert.That(vm.Value.Metadata.Title, Is.Not.EqualTo("dummy"));
+                using (e.Subscribe<CloseMessage>(z => cts.Cancel())) e.Cancel.Command.Execute();
+            })) {
+                Assert.That(vm.Value.Metadata, Is.Not.Null);
+                Assert.That(Test(vm.Ribbon.Metadata, cts), "Timeout");
+                Assert.That(vm.Value.Metadata.Title, Is.Not.EqualTo("dummy"));
+            };
         });
 
         #endregion
@@ -158,11 +152,26 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         private IDisposable Subscribe(MainViewModel vm, Metadata src) =>
             vm.Subscribe<MetadataViewModel>(e =>
         {
+            vm.Value.Settings.Language = Language.English;
+            Assert.That(e.Document.Text,       Is.EqualTo("Title"));
+            Assert.That(e.Author.Text,         Is.EqualTo("Author"));
+            Assert.That(e.Subject.Text,        Is.EqualTo("Subject"));
+            Assert.That(e.Keywords.Text,       Is.EqualTo("Keywords"));
+            Assert.That(e.Creator.Text,        Is.EqualTo("Creator"));
+            Assert.That(e.Options.Text,        Is.EqualTo("Layout"));
+            Assert.That(e.Version.Text,        Is.EqualTo("Version"));
+            Assert.That(e.Filename.Text,       Is.EqualTo("Filename"));
             Assert.That(e.Filename.Value,      Is.Not.Null.And.Not.Empty);
+            Assert.That(e.Producer.Text,       Is.EqualTo("Producer"));
             Assert.That(e.Producer.Value,      Is.Not.Null.And.Not.Empty);
+            Assert.That(e.Length.Text,         Is.EqualTo("Filesize"));
             Assert.That(e.Length.Value,        Is.GreaterThan(0));
+            Assert.That(e.CreationTime.Text,   Is.EqualTo("Creation"));
             Assert.That(e.CreationTime.Value,  Is.GreaterThan(DateTime.MinValue));
+            Assert.That(e.LastWriteTime.Text,  Is.EqualTo("Last updated"));
             Assert.That(e.LastWriteTime.Value, Is.GreaterThan(DateTime.MinValue));
+            Assert.That(e.Summary.Text,        Is.EqualTo("Summary"));
+            Assert.That(e.Details.Text,        Is.EqualTo("Details"));
 
             e.Document.Value = src.Title;
             e.Author.Value   = src.Author;
@@ -171,7 +180,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             e.Creator.Value  = src.Creator;
             e.Options.Value  = src.Options;
             e.Version.Value  = src.Version;
-
             Assert.That(e.OK.Command.CanExecute(), Is.True);
             e.OK.Command.Execute();
         });
