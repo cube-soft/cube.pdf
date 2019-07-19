@@ -209,7 +209,7 @@ namespace Cube.Pdf.Editor
                     if (gc != null) return gc;
                 }
             }
-            return default(T);
+            return default;
         }
 
         /* ----------------------------------------------------------------- */
