@@ -60,31 +60,26 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ImageCollection(Func<string, IDocumentRenderer> getter, IDispatcher dispatcher)
         {
-            ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName).Create(e);
             void update(string s) { if (s == nameof(Preferences.VisibleLast)) Reschedule(null); };
-
-            _inner   = new ObservableCollection<ImageItem>();
-            _cache   = new CacheCollection<ImageItem, ImageSource>(create);
-
-            _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
-            _cache.Created += (s, e) => e.Key.Refresh();
-            _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
-
-            Dispatcher  = dispatcher;
-            Selection   = new ImageSelection   { Dispatcher = dispatcher };
-            Preferences = new ImagePreference { Dispatcher = dispatcher };
-
-            Create = (i, r) =>
+            ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName).Create(e);
+            ImageSource create_by_index(int i, double ratio)
             {
                 if (i < 0 || i >= Count) return null;
                 var src = _inner[i].RawObject;
-                return getter(src.File.FullName).Create(src, r);
-            };
+                return getter(src.File.FullName).Create(src, ratio);
+            }
 
-            Convert = (e) => Preferences.FrameOnly ? null :
-                             _cache.TryGetValue(e, out var dest) ? dest :
-                             Preferences.Dummy;
+            _inner = new ObservableCollection<ImageItem>();
+            _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
 
+            _cache = new CacheCollection<ImageItem, ImageSource>(create);
+            _cache.Created += (s, e) => e.Key.Refresh();
+            _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
+
+            Create      = create_by_index;
+            Dispatcher  = dispatcher;
+            Selection   = new ImageSelection { Dispatcher = dispatcher };
+            Preferences = new ImagePreference { Dispatcher = dispatcher };
             Preferences.PropertyChanged += (s, e) => update(e.PropertyName);
         }
 
@@ -147,18 +142,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Func<int, double, ImageSource> Create { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Convert
-        ///
-        /// <summary>
-        /// Gets the function to convert from an ImageItem object to the
-        /// ImageSource object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Func<ImageItem, ImageSource> Convert { get; }
 
         #endregion
 
@@ -293,7 +276,8 @@ namespace Cube.Pdf.Editor
         /// <param name="degree">Rotation angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Rotate(IEnumerable<int> indices, int degree) => Reschedule(() => {
+        public void Rotate(IEnumerable<int> indices, int degree) => Reschedule(() =>
+        {
             foreach (var item in indices.Within(Count).Select(i => _inner[i]))
             {
                 _ = _cache.Remove(item);
@@ -330,6 +314,24 @@ namespace Cube.Pdf.Editor
         public void Refresh() => Reschedule(() => _cache.Clear());
 
         #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImage
+        ///
+        /// <summary>
+        /// Gets the ImageSource object from the specified item.
+        /// </summary>
+        ///
+        /// <param name="src">Source item.</param>
+        ///
+        /// <returns>ImageSource object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageSource GetImage(ImageItem src) =>
+            Preferences.FrameOnly ? null :
+            _cache.TryGetValue(src, out var dest) ? dest :
+            Preferences.Dummy;
 
         /* ----------------------------------------------------------------- */
         ///

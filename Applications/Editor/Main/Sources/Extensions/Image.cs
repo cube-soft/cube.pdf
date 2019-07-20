@@ -55,7 +55,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static ImageItem NewItem(this ImageCollection src, int index, Page item) =>
-            new ImageItem(src.Convert, src.Selection, src.Preferences)
+            new ImageItem(src.GetImage, src.Selection, src.Preferences)
         {
             Index     = index,
             RawObject = item,
