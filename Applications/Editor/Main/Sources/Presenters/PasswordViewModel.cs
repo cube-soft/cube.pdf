@@ -50,7 +50,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public PasswordViewModel(QueryMessage<string, string> src, SynchronizationContext context) :
-            base(() => Properties.Resources.TitlePassword, src, new Aggregator(), context)
+            base(src, new Aggregator(), context)
         {
             Facade.Cancel = true;
             OK.Command = new DelegateCommand(
@@ -82,6 +82,19 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override string GetTitle() => Properties.Resources.TitlePassword;
 
         /* ----------------------------------------------------------------- */
         ///

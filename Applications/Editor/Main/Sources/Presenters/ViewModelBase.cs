@@ -133,8 +133,7 @@ namespace Cube.Pdf.Editor
         /// <returns>BindableElement or its inherited object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected T Get<T>(Func<T> creator, [CallerMemberName] string name = null)
-            where T : BindableElement
+        protected T Get<T>(Func<T> creator, [CallerMemberName] string name = null) where T : IElement
         {
             var dest = _elements.GetOrAdd(name, e => creator());
             Debug.Assert(dest is T);

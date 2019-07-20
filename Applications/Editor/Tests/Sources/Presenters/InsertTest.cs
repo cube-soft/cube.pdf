@@ -163,8 +163,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(ivm.Value.Count,           Is.EqualTo(9));
             Assert.That(ivm.Value.SelectedIndex,   Is.EqualTo(-1));
 
-            Assert.That(ivm.Title.Text,            Is.EqualTo("Insertion details"));
-            Assert.That(ivm.Title.Command,         Is.Null);
+            Assert.That(ivm.Title,                 Is.EqualTo("Insertion details"));
             Assert.That(ivm.OK.Text,               Is.EqualTo("OK"));
             Assert.That(ivm.OK.Command,            Is.Not.Null);
             Assert.That(ivm.Cancel.Text,           Is.EqualTo("Cancel"));

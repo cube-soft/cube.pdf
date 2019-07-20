@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingViewModel(SettingFolder src, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleSetting, src, new Aggregator(), context)
+            base(src, new Aggregator(), context)
         {
             OK.Command = new DelegateCommand(() =>
             {
@@ -171,6 +171,23 @@ namespace Cube.Pdf.Editor
             () => $"Microsoft .NET Framework {Environment.Version}",
             GetDispatcher(false)
         ));
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override string GetTitle() => Properties.Resources.TitleSetting;
 
         #endregion
     }

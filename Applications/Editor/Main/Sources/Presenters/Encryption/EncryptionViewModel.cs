@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor
         public EncryptionViewModel(Action<Encryption> callback,
             Encryption src,
             SynchronizationContext context
-        ) : base(() => Properties.Resources.TitleEncryption, new EncryptionFacade(src), new Aggregator(), context)
+        ) : base(new EncryptionFacade(src), new Aggregator(), context)
         {
             OK.Command = new DelegateCommand(
                 () =>
@@ -336,6 +336,23 @@ namespace Cube.Pdf.Editor
         ));
 
         #endregion
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override string GetTitle() => Properties.Resources.TitleEncryption;
 
         #endregion
     }

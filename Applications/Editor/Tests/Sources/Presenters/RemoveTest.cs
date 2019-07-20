@@ -76,7 +76,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             var cts = new CancellationTokenSource();
             _ = vm.Subscribe<RemoveViewModel>(e =>
             {
-                Assert.That(e.Title.Text,         Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Title,              Is.Not.Null.And.Not.Empty);
                 Assert.That(e.PageCaption.Text,   Is.Not.Null.And.Not.Empty);
                 Assert.That(e.PageCaption.Value,  Is.Not.Null.And.Not.Empty);
                 Assert.That(e.RangeCaption.Text,  Is.Not.Null.And.Not.Empty);

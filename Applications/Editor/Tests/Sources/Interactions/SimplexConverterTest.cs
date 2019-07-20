@@ -144,7 +144,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         /* ----------------------------------------------------------------- */
         [TestCase(Language.Auto,     Language.English,  ExpectedResult = "Auto")]
         [TestCase(Language.English,  Language.English,  ExpectedResult = "English")]
-        [TestCase(Language.Japanese, Language.Japanese, ExpectedResult = "日本語")]
+        [TestCase(Language.Japanese, Language.Japanese, ExpectedResult = "Japanese")]
         public string LanguageConverter(Language src, Language lang) =>
             Convert<string>(new LanguageConverter(), src, lang);
 

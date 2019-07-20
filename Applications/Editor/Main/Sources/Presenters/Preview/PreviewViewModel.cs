@@ -48,10 +48,7 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewViewModel(ImageCollection src,
-            Entity file,
-            SynchronizationContext context
-        ) : base(() => string.Format(Properties.Resources.TitlePreview, file.Name, src.Selection.First + 1, src.Count),
+        public PreviewViewModel(ImageCollection src, Entity file, SynchronizationContext context) : base(
             new PreviewFacade(src, file, new Dispatcher(context, false)),
             new Aggregator(),
             context
@@ -71,6 +68,28 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public PreviewBindable Value => Facade.Value;
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override string GetTitle() => string.Format(
+            Properties.Resources.TitlePreview,
+            Facade.Value.File.Name,
+            Facade.Value.Source.Selection.First + 1,
+            Facade.Value.Source.Count
+        );
 
         #endregion
     }

@@ -16,7 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Assembly;
 using Cube.Xui;
+using System;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -43,19 +45,17 @@ namespace Cube.Pdf.Editor
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="getTitle">Function to get title.</param>
         /// <param name="model">Model object.</param>
         /// <param name="aggregator">Message aggregator.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected DialogViewModel(Getter<string> getTitle,
-            TModel model,
+        protected DialogViewModel(TModel model,
             Aggregator aggregator,
             SynchronizationContext context
         ) : base(model, aggregator, context)
         {
-            Title = Get(() => new BindableElement(getTitle, GetDispatcher(false)), nameof(Title));
+            _dispose = Locale.Subscribe(e => RaisePropertyChanged(nameof(Title)));
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement Title { get; }
+        public string Title => GetTitle();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,6 +101,48 @@ namespace Cube.Pdf.Editor
             GetDispatcher(false)
         ) { Command = new DelegateCommand(() => Send<CloseMessage>()) });
 
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected virtual string GetTitle() => GetType().Assembly.GetTitle();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            try { if (disposing) _dispose.Dispose(); }
+            finally { base.Dispose(disposing); }
+        }
+
+        #endregion
+
+        #region Fields
+        private readonly IDisposable _dispose;
         #endregion
     }
 }

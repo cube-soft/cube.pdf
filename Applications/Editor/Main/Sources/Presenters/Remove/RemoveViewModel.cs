@@ -56,7 +56,7 @@ namespace Cube.Pdf.Editor
         public RemoveViewModel(Action<IEnumerable<int>> callback,
             int n,
             SynchronizationContext context
-        ) : base(() => Properties.Resources.TitleRemove, n, new Aggregator(), context)
+        ) : base(n, new Aggregator(), context)
         {
             Range = new BindableValue<string>(string.Empty, GetDispatcher(false));
             OK.Command = new DelegateCommand(
@@ -113,6 +113,23 @@ namespace Cube.Pdf.Editor
             () => string.Format(Properties.Resources.MessagePage, Facade),
             GetDispatcher(false)
         ));
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override string GetTitle() => Properties.Resources.TitleRemove;
 
         #endregion
     }

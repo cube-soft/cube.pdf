@@ -51,12 +51,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public PreviewFacade(ImageCollection src, Entity file, IDispatcher dispatcher)
         {
-            var index = src.Selection.First;
+            Images = src;
+            Value  = new PreviewBindable(src, file, dispatcher);
 
-            Images   = src;
-            Value = new PreviewBindable(file, src[index].RawObject, dispatcher);
-
-            Task.Run(() => Setup(index)).Forget();
+            Task.Run(() => Setup(src.Selection.First)).Forget();
         }
 
         #endregion

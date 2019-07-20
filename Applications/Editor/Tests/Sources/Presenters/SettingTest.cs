@@ -55,7 +55,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             var cts = new CancellationTokenSource();
             _ = vm.Subscribe<SettingViewModel>(e =>
             {
-                Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Title,             Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Editor.Tests 0.5.4β "));
                 Assert.That(e.Windows.Text,      Does.StartWith("Microsoft Windows"));

@@ -44,18 +44,19 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
+        /// <param name="src">Source images.</param>
         /// <param name="file">Information of the PDF file.</param>
-        /// <param name="page">Page object.</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable(Entity file, Page page, IDispatcher dispatcher) : base(dispatcher)
+        public PreviewBindable(ImageCollection src, Entity file, IDispatcher dispatcher) : base(dispatcher)
         {
-            var size  = page.GetViewSize();
+            var size  = src[src.Selection.First].RawObject.GetViewSize();
             var magic = 14.0; // Scrollbar width
             var ratio = size.Width / size.Height;
             var diff  = size.Width > size.Height ? magic * ratio : -(magic * ratio);
 
+            Source = src;
             File   = file;
             Width  = (int)size.Width;
             Height = (int)(size.Height + diff);
@@ -65,6 +66,17 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Source
+        ///
+        /// <summary>
+        /// Gets the collection of images.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageCollection Source { get; }
 
         /* ----------------------------------------------------------------- */
         ///

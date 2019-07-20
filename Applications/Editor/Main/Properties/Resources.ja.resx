@@ -232,13 +232,13 @@
     <value>表示言語</value>
   </data>
   <data name="MenuLanguageAuto" xml:space="preserve">
-    <value>自動</value>
+    <value>Auto</value>
   </data>
   <data name="MenuLanguageEnglish" xml:space="preserve">
-    <value>英語</value>
+    <value>English</value>
   </data>
   <data name="MenuLanguageJapanese" xml:space="preserve">
-    <value>日本語</value>
+    <value>Japanese</value>
   </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
     <value>最終更新日時</value>

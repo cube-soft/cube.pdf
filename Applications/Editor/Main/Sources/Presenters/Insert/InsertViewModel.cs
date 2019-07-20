@@ -60,8 +60,7 @@ namespace Cube.Pdf.Editor
             int n,
             IO io,
             SynchronizationContext context
-        ) : base(() => Properties.Resources.TitleInsert,
-            new InsertFacade(i, n, io, new Dispatcher(context, false)),
+        ) : base(new InsertFacade(i, n, io, new Dispatcher(context, false)),
             new Aggregator(),
             context
         ) {
@@ -128,7 +127,7 @@ namespace Cube.Pdf.Editor
         public IElement Preview => Get(() => new BindableElement(
             () => Properties.Resources.MenuPreview,
             GetDispatcher(false)
-        ) { Command = IsItem(() => Track(() => Facade.Preview())) });
+        ) { Command = IsSelected(() => Track(() => Facade.Preview())) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -156,7 +155,7 @@ namespace Cube.Pdf.Editor
         public IElement Remove => Get(() => new BindableElement(
             () => Properties.Resources.MenuRemove,
             GetDispatcher(false)
-        ) { Command = IsItem(() => Sync(() => Facade.Remove())) });
+        ) { Command = IsSelected(() => Sync(() => Facade.Remove())) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -170,7 +169,7 @@ namespace Cube.Pdf.Editor
         public IElement Clear => Get(() => new BindableElement(
             () => Properties.Resources.MenuClear,
             GetDispatcher(false)
-        ) { Command = new DelegateCommand(() => Sync(() => Facade.Clear())) });
+        ) { Command = new DelegateCommand(() => Sync(Facade.Clear)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -184,7 +183,7 @@ namespace Cube.Pdf.Editor
         public IElement Up => Get(() => new BindableElement(
             () => Properties.Resources.MenuUp,
             GetDispatcher(false)
-        ) { Command = IsItem(() => Sync(() => Facade.Move(-1))) });
+        ) { Command = IsSelected(() => Sync(() => Facade.Move(-1))) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -198,7 +197,7 @@ namespace Cube.Pdf.Editor
         public IElement Down => Get(() => new BindableElement(
             () => Properties.Resources.MenuDown,
             GetDispatcher(false)
-        ) { Command = IsItem(() => Sync(() => Facade.Move(1))) });
+        ) { Command = IsSelected(() => Sync(() => Facade.Move(1))) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -270,7 +269,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand DragAdd => Get(() =>
-            new DelegateCommand<string[]>(e => Facade.Add(e))
+            new DelegateCommand<string[]>(e => Sync(() => Facade.Add(e)))
         );
 
         /* ----------------------------------------------------------------- */
@@ -283,7 +282,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand SelectClear => Get(() =>
-            new DelegateCommand(() => Sync(() => Facade.SelectClear()))
+            new DelegateCommand(() => Sync(Facade.SelectClear))
         );
 
         #endregion
@@ -291,6 +290,19 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override string GetTitle() => Properties.Resources.TitleInsert;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -338,7 +350,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsItem
+        /// IsSelected
         ///
         /// <summary>
         /// Creates a command that can execute when any items are
@@ -346,7 +358,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ICommand IsItem(Action action) => new DelegateCommand(action,
+        private ICommand IsSelected(Action action) => new DelegateCommand(action,
             () => Value.Selection.Count > 0
         ).Associate(Value.Selection);
 
