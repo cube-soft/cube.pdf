@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public InsertBindable(int index, int count, IDispatcher dispatcher) : base(dispatcher)
         {
-            Files         = new BindableCollection<FileItem>(dispatcher);
+            Files         = new FileCollection(dispatcher);
             Selection     = new Selection<FileItem> { Dispatcher = dispatcher };
             Count         = count;
             SelectedIndex = index;
@@ -70,7 +70,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableCollection<FileItem> Files { get; }
+        public FileCollection Files { get; }
 
         /* ----------------------------------------------------------------- */
         ///

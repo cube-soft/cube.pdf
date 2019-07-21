@@ -137,7 +137,8 @@ namespace Cube.Pdf.Editor
         {
             foreach (var item in Value.Selection.ToList())
             {
-                if (Value.Files.Remove(item)) item.Dispose();
+                Value.Files.Remove(item);
+                item.Dispose();
             }
         }
 

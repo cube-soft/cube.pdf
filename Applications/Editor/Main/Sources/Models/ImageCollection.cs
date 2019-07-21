@@ -36,7 +36,7 @@ namespace Cube.Pdf.Editor
     /// ImageCollection
     ///
     /// <summary>
-    /// Provides a collection of images in which contents of Page
+    /// Represents a collection of images in which contents of Page
     /// objects are rendered.
     /// </summary>
     ///
@@ -342,7 +342,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <returns>
-        /// An IEnumerator(ImageEntry) object for this collection.
+        /// An IEnumerator(ImageItem) object for this collection.
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */

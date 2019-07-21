@@ -66,13 +66,7 @@ namespace Cube.Pdf.Editor
         ) {
             Position   = new PositionViewModel(Value, Aggregator, context);
             DragMove   = new InsertDropTarget((f, t) => Facade.Move(f, t));
-            OK.Command = new DelegateCommand(
-                () => {
-                    Send<CloseMessage>();
-                    callback?.Invoke(Value.Index, Value.Files);
-                },
-                () => Value.Files.Count > 0
-            ).Associate(Value.Files);
+            OK.Command = GetOkCommand(callback);
         }
 
         #endregion
@@ -345,6 +339,29 @@ namespace Cube.Pdf.Editor
             var msg = MessageFactory.CreateForInsert();
             Send(msg);
             if (!msg.Cancel) Facade.Add(msg.Value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetOkCommand
+        ///
+        /// <summary>
+        /// Gets the OK command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ICommand GetOkCommand(Action<int, IEnumerable<FileItem>> callback)
+        {
+            var dest = new DelegateCommand(
+                () => {
+                    Send<CloseMessage>();
+                    callback?.Invoke(Value.Index, Value.Files);
+                },
+                () => Value.Files.Count > 0
+            );
+
+            Value.Files.CollectionChanged += (s, e) => dest.Refresh();
+            return dest;
         }
 
         /* ----------------------------------------------------------------- */
