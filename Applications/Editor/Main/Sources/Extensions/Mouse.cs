@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Cube.Pdf.Editor
@@ -41,22 +40,6 @@ namespace Cube.Pdf.Editor
         /// GetBounds
         ///
         /// <summary>
-        /// Gets the bound of the first item.
-        /// </summary>
-        ///
-        /// <param name="src">UI element.</param>
-        ///
-        /// <returns>Rect object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Rect GetBounds(this ListView src) =>
-            src.Items.Count > 0 ? src.GetBounds(0) : new Rect();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetBounds
-        ///
-        /// <summary>
         /// Gets the bound of the specified index.
         /// </summary>
         ///
@@ -70,31 +53,16 @@ namespace Cube.Pdf.Editor
         {
             if (index < 0 || index >= src.Items.Count) return new Rect();
 
-            var item = src.GetItem(index);
-            if (item == null) return new Rect();
-
-            var delta = item.TransformToVisual(src).Transform(new Point());
-            var dest = VisualTreeHelper.GetDescendantBounds(item);
-            dest.Offset(delta.X, delta.Y);
-            return dest;
+            var obj = src.ItemContainerGenerator.ContainerFromIndex(index);
+            if (obj is ListViewItem item)
+            {
+                var delta = item.TransformToVisual(src).Transform(new Point());
+                var dest = VisualTreeHelper.GetDescendantBounds(item);
+                dest.Offset(delta.X, delta.Y);
+                return dest;
+            }
+            else return new Rect();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetItem
-        ///
-        /// <summary>
-        /// Gets the item from the specified index.
-        /// </summary>
-        ///
-        /// <param name="src">UI element.</param>
-        /// <param name="index">Target index.</param>
-        ///
-        /// <returns>ListViewItem object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static ListViewItem GetItem(this ListView src, int index) =>
-            src.ItemContainerGenerator.ContainerFromIndex(index) as ListViewItem;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -117,9 +85,10 @@ namespace Cube.Pdf.Editor
             // 最後の項目の右側
             if (pt.Y > unit.Bottom || (pt.X > unit.Right && pt.Y > unit.Top)) return obj.Items.Count;
 
-            var w = obj.ActualWidth;
-            var m = obj.GetItem(0)?.Margin.Right ?? 0;
-            var x = (w - pt.X < unit.Width) ? (w - unit.Width) : (pt.X - m);
+            var item = obj.ItemContainerGenerator.ContainerFromIndex(0) as ListViewItem;
+            var w    = obj.ActualWidth;
+            var m    = item?.Margin.Right ?? 0;
+            var x    = (w - pt.X < unit.Width) ? (w - unit.Width) : (pt.X - m);
             return (x != pt.X) ? obj.GetIndex(new Point(x, pt.Y)) : dest;
         }
 
@@ -181,7 +150,7 @@ namespace Cube.Pdf.Editor
             {
                 if (obj is T dest) return dest;
             }
-            return default(T);
+            return default;
         }
 
         /* ----------------------------------------------------------------- */
@@ -231,21 +200,6 @@ namespace Cube.Pdf.Editor
             var cvt = visible ? Visibility.Visible : Visibility.Collapsed;
             if (src.Visibility != cvt) src.Visibility = cvt;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsPressed
-        ///
-        /// <summary>
-        /// Gets the value indicating whether the specified mouse button
-        /// is pressed.
-        /// </summary>
-        ///
-        /// <param name="src">Mouse button.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static bool IsPressed(this MouseButtonState src) =>
-            src == MouseButtonState.Pressed;
 
         #endregion
     }

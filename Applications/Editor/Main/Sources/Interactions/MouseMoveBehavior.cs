@@ -215,7 +215,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseMove(object s, MouseEventArgs e)
         {
-            if (e.LeftButton.IsPressed() && !Keys.ModifierKeys.IsPressed()) WhenDragStart(s, e);
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                !Keys.ModifierKeys.IsPressed()
+            ) WhenDragStart(s, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -229,7 +231,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseEnter(object s, MouseEventArgs e)
         {
-            if (!e.LeftButton.IsPressed()) DrawingCanvas.SetVisible(false);
+            if (e.LeftButton != MouseButtonState.Pressed) DrawingCanvas.SetVisible(false);
         }
 
         /* ----------------------------------------------------------------- */
@@ -270,7 +272,7 @@ namespace Cube.Pdf.Editor
             if (!e.Handled) return;
 
             var pt = e.GetPosition(AssociatedObject);
-            var unit = AssociatedObject.GetBounds();
+            var unit = AssociatedObject.GetBounds(0);
             Scroll(pt, unit);
             Draw(obj, pt, unit);
         }
@@ -293,7 +295,7 @@ namespace Cube.Pdf.Editor
             if (!e.Handled) return;
 
             var pt = e.GetPosition(AssociatedObject);
-            var unit = AssociatedObject.GetBounds();
+            var unit = AssociatedObject.GetBounds(0);
             obj.DropIndex = GetTargetIndex(obj, pt, unit);
             if (Command?.CanExecute(obj) ?? false) Command.Execute(obj);
         }
