@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MetadataViewModel : DialogViewModel<MetadataFacade>
+    public sealed class MetadataViewModel : DialogViewModel<MetadataFacade>
     {
         #region Constructors
 

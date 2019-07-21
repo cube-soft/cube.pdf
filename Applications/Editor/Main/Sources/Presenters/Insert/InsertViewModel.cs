@@ -49,26 +49,25 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="callback">Callback function.</param>
-        /// <param name="i">Selected index.</param>
-        /// <param name="n">Number of pages.</param>
+        /// <param name="index">Selected index.</param>
+        /// <param name="count">Number of pages.</param>
         /// <param name="io">I/O handler.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         public InsertViewModel(Action<int, IEnumerable<FileItem>> callback,
-            int i,
-            int n,
+            int index,
+            int count,
             IO io,
             SynchronizationContext context
-        ) : base(new InsertFacade(i, n, io, new Dispatcher(context, false)),
+        ) : base(new InsertFacade(index, count, io, new Dispatcher(context, false)),
             new Aggregator(),
             context
         ) {
-            Position   = new InsertPositionViewModel(Value, Aggregator, context);
+            Position   = new PositionViewModel(Value, Aggregator, context);
             DragMove   = new InsertDropTarget((f, t) => Facade.Move(f, t));
             OK.Command = new DelegateCommand(
-                () =>
-                {
+                () => {
                     Send<CloseMessage>();
                     callback?.Invoke(Value.Index, Value.Files);
                 },
@@ -100,7 +99,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertPositionViewModel Position { get; }
+        public PositionViewModel Position { get; }
 
         /* ----------------------------------------------------------------- */
         ///

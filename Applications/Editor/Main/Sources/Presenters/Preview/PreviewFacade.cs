@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PreviewFacade
+    public sealed class PreviewFacade
     {
         #region Constructors
 
@@ -51,9 +51,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public PreviewFacade(ImageCollection src, Entity file, IDispatcher dispatcher)
         {
-            Images = src;
-            Value  = new PreviewBindable(src, file, dispatcher);
-
+            Value = new PreviewBindable(src, file, dispatcher);
             Task.Run(() => Setup(src.Selection.First)).Forget();
         }
 
@@ -71,17 +69,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public PreviewBindable Value { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Images
-        ///
-        /// <summary>
-        /// Gets the image collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected ImageCollection Images { get; }
 
         #endregion
 
@@ -101,7 +88,7 @@ namespace Cube.Pdf.Editor
             try
             {
                 Value.Busy  = true;
-                Value.Image = Images.Create(index, 2.0);
+                Value.Image = Value.Source.Create(index, 2.0);
             }
             finally { Value.Busy = false; }
         }

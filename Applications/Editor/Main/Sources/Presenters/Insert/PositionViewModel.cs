@@ -23,23 +23,23 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// InsertPositionViewModel
+    /// PositionViewModel
     ///
     /// <summary>
     /// Represents the ViewModel of the insertion position menu.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class InsertPositionViewModel : ViewModelBase<InsertBindable>
+    public sealed class PositionViewModel : GenericViewModel<InsertBindable>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InsertPositionViewModel
+        /// PositionViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the InsertPositionViewModel class
+        /// Initializes a new instance of the PositionViewModel class
         /// with the specified arguments.
         /// </summary>
         ///
@@ -48,7 +48,7 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertPositionViewModel(InsertBindable src,
+        public PositionViewModel(InsertBindable src,
             Aggregator aggregator,
             SynchronizationContext context
         ) : base(src, aggregator, context) { }

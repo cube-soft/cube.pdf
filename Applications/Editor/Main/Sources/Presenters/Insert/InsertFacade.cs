@@ -35,7 +35,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertFacade
+    public sealed class InsertFacade
     {
         #region Constructors
 
@@ -48,16 +48,16 @@ namespace Cube.Pdf.Editor
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="i">Selected index.</param>
-        /// <param name="n">Number of pages.</param>
+        /// <param name="index">Selected index.</param>
+        /// <param name="count">Number of pages.</param>
         /// <param name="io">I/O handler</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertFacade(int i, int n, IO io, IDispatcher dispatcher)
+        public InsertFacade(int index, int count, IO io, IDispatcher dispatcher)
         {
-            IO    = io;
-            Value = new InsertBindable(i, n, dispatcher);
+            _io   = io;
+            Value = new InsertBindable(index, count, dispatcher);
         }
 
         #endregion
@@ -74,17 +74,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public InsertBindable Value { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected IO IO { get; }
 
         #endregion
 
@@ -116,7 +105,7 @@ namespace Cube.Pdf.Editor
         {
             foreach (var item in src)
             {
-                Value.Files.Add(new FileItem(item, Value.Selection, IO));
+                Value.Files.Add(new FileItem(item, Value.Selection, _io));
             }
         }
 
@@ -275,6 +264,10 @@ namespace Cube.Pdf.Editor
             return delta > 0 ? dest.OrderByDescending() : dest.OrderBy();
         }
 
+        #endregion
+
+        #region Fields
+        private readonly IO _io;
         #endregion
     }
 }

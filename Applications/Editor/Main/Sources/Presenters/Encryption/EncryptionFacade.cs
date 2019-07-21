@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EncryptionFacade
+    public sealed class EncryptionFacade
     {
         #region Constructors
 
@@ -49,7 +49,6 @@ namespace Cube.Pdf.Editor
             if (src.Method == EncryptionMethod.Unknown) src.Method = EncryptionMethod.Aes256;
             SharePassword = src.OwnerPassword.HasValue() && src.OwnerPassword.FuzzyEquals(src.UserPassword);
             if (SharePassword) src.UserPassword = string.Empty;
-
             Value = src;
         }
 

@@ -29,7 +29,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertBindable : ObservableBase
+    public sealed class InsertBindable : ObservableBase
     {
         #region Constructors
 
@@ -42,19 +42,19 @@ namespace Cube.Pdf.Editor
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="i">Selected index.</param>
-        /// <param name="n">Number of pages.</param>
+        /// <param name="index">Selected index.</param>
+        /// <param name="count">Number of pages.</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable(int i, int n, IDispatcher dispatcher) : base(dispatcher)
+        public InsertBindable(int index, int count, IDispatcher dispatcher) : base(dispatcher)
         {
             Files         = new BindableCollection<FileItem>(dispatcher);
             Selection     = new Selection<FileItem> { Dispatcher = dispatcher };
-            Count         = n;
-            SelectedIndex = i;
-            Index         = Math.Max(i, 0);
-            UserIndex     = Math.Max(i, 0);
+            Count         = count;
+            SelectedIndex = index;
+            Index         = Math.Max(index, 0);
+            UserIndex     = Math.Max(index, 0);
         }
 
         #endregion

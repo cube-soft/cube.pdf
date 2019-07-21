@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PreviewBindable : ObservableBase
+    public sealed class PreviewBindable : ObservableBase
     {
         #region Constructors
 

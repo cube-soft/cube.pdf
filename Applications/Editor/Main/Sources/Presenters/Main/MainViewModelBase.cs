@@ -39,7 +39,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class MainViewModelBase : ViewModelBase<MainFacade>
+    public abstract class MainViewModelBase : GenericViewModel<MainFacade>
     {
         #region Constructors
 

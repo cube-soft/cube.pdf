@@ -32,7 +32,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainBindable : ObservableBase
+    public sealed class MainBindable : ObservableBase
     {
         #region Constructors
 

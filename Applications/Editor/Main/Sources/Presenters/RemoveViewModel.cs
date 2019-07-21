@@ -35,7 +35,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RemoveViewModel : DialogViewModel<int>
+    public sealed class RemoveViewModel : DialogViewModel<int>
     {
         #region Constructors
 
