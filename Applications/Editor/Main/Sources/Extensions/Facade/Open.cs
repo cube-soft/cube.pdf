@@ -17,9 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Mixin.String;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -62,24 +60,6 @@ namespace Cube.Pdf.Editor
             src.Value.Source = doc.File;
             if (!doc.Encryption.Enabled) src.Value.Encryption = doc.Encryption;
             src.Value.Images.Add(doc.Pages);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// Opens the first item of the specified collection.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        /// <param name="files">File collection.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Open(this MainFacade src, IEnumerable<string> files)
-        {
-            var path = files.FirstPdf();
-            if (path.HasValue()) src.Open(path);
         }
 
         /* ----------------------------------------------------------------- */

@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// SettingTest
     ///
     /// <summary>
-    /// Tests for the SettingViewModel class.
+    /// Tests the settings related classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,11 +41,32 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Create
+        ///
+        /// <summary>
+        /// Confirms the values of settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Create() => Make(vm =>
+        {
+            Assert.That(vm.Value.Settings.Width,       Is.EqualTo(800));
+            Assert.That(vm.Value.Settings.Height,      Is.EqualTo(600));
+            Assert.That(vm.Value.Settings.CheckUpdate, Is.True);
+
+            vm.Value.Settings.Width       = 1024;
+            vm.Value.Settings.Height      = 768;
+            vm.Value.Settings.CheckUpdate = false;
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test for confirming properties and invoking the
-        /// Cancel command.
+        /// Confirms properties of the SettingViewModel class and invokes
+        /// the Cancel command.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

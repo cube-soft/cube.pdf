@@ -132,7 +132,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand Open => Get(() => new DelegateCommand<string[]>(
-            e => Track(() => Facade.Open(e)),
+            e => Track(() => Facade.Open(e.FirstPdf())),
             e => !Value.Busy && e.FirstPdf().HasValue()
         ).Associate(Value, nameof(Value.Busy)));
 
