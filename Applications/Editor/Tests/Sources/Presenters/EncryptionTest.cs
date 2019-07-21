@@ -139,6 +139,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         private IDisposable Subscribe(MainViewModel vm, Encryption src, bool share) =>
             vm.Subscribe<EncryptionViewModel>(e =>
         {
+            vm.Value.Settings.Language = Language.English;
+            var pm = src.Permission;
+
             e.Enabled.Value            = src.Enabled;
             e.OwnerPassword.Value      = src.OwnerPassword;
             e.OwnerConfirm.Value       = src.OwnerPassword;
@@ -146,9 +149,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             e.OpenPassword.Value       = src.OpenWithPassword;
             e.SharePassword.Value      = share;
             e.UserPassword.Value       = src.UserPassword;
-
-            var pm = src.Permission;
-
             e.UserConfirm.Value        = src.UserPassword;
             e.AllowPrint.Value         = pm.Print.IsAllowed();
             e.AllowCopy.Value          = pm.CopyContents.IsAllowed();
@@ -157,6 +157,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             e.AllowForm.Value          = pm.InputForm.IsAllowed();
             e.AllowAccessibility.Value = pm.Accessibility.IsAllowed();
 
+            Assert.That(e.Title,           Is.EqualTo("Encryption"));
             Assert.That(e.Methods.Count(), Is.EqualTo(4));
             Assert.That(e.Operation.Value, Is.True);
             Assert.That(e.OK.Command.CanExecute(), Is.True);

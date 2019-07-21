@@ -22,6 +22,7 @@ using Cube.Xui;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
@@ -153,25 +154,28 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             vm.Subscribe<MetadataViewModel>(e =>
         {
             vm.Value.Settings.Language = Language.English;
-            Assert.That(e.Document.Text,       Is.EqualTo("Title"));
-            Assert.That(e.Author.Text,         Is.EqualTo("Author"));
-            Assert.That(e.Subject.Text,        Is.EqualTo("Subject"));
-            Assert.That(e.Keywords.Text,       Is.EqualTo("Keywords"));
-            Assert.That(e.Creator.Text,        Is.EqualTo("Creator"));
-            Assert.That(e.Options.Text,        Is.EqualTo("Layout"));
-            Assert.That(e.Version.Text,        Is.EqualTo("Version"));
-            Assert.That(e.Filename.Text,       Is.EqualTo("Filename"));
-            Assert.That(e.Filename.Value,      Is.Not.Null.And.Not.Empty);
-            Assert.That(e.Producer.Text,       Is.EqualTo("Producer"));
-            Assert.That(e.Producer.Value,      Is.Not.Null.And.Not.Empty);
-            Assert.That(e.Length.Text,         Is.EqualTo("Filesize"));
-            Assert.That(e.Length.Value,        Is.GreaterThan(0));
-            Assert.That(e.CreationTime.Text,   Is.EqualTo("Creation"));
-            Assert.That(e.CreationTime.Value,  Is.GreaterThan(DateTime.MinValue));
-            Assert.That(e.LastWriteTime.Text,  Is.EqualTo("Last updated"));
-            Assert.That(e.LastWriteTime.Value, Is.GreaterThan(DateTime.MinValue));
-            Assert.That(e.Summary.Text,        Is.EqualTo("Summary"));
-            Assert.That(e.Details.Text,        Is.EqualTo("Details"));
+            Assert.That(e.Title,                 Is.EqualTo("PDF Metadata"));
+            Assert.That(e.Versions.Count(),      Is.EqualTo(6), nameof(e.Versions));
+            Assert.That(e.ViewerOptions.Count(), Is.EqualTo(6), nameof(e.ViewerOptions));
+            Assert.That(e.Document.Text,         Is.EqualTo("Title"));
+            Assert.That(e.Author.Text,           Is.EqualTo("Author"));
+            Assert.That(e.Subject.Text,          Is.EqualTo("Subject"));
+            Assert.That(e.Keywords.Text,         Is.EqualTo("Keywords"));
+            Assert.That(e.Creator.Text,          Is.EqualTo("Creator"));
+            Assert.That(e.Options.Text,          Is.EqualTo("Layout"));
+            Assert.That(e.Version.Text,          Is.EqualTo("Version"));
+            Assert.That(e.Filename.Text,         Is.EqualTo("Filename"));
+            Assert.That(e.Filename.Value,        Is.Not.Null.And.Not.Empty);
+            Assert.That(e.Producer.Text,         Is.EqualTo("Producer"));
+            Assert.That(e.Producer.Value,        Is.Not.Null.And.Not.Empty);
+            Assert.That(e.Length.Text,           Is.EqualTo("Filesize"));
+            Assert.That(e.Length.Value,          Is.GreaterThan(0));
+            Assert.That(e.CreationTime.Text,     Is.EqualTo("Creation"));
+            Assert.That(e.CreationTime.Value,    Is.GreaterThan(DateTime.MinValue));
+            Assert.That(e.LastWriteTime.Text,    Is.EqualTo("Last updated"));
+            Assert.That(e.LastWriteTime.Value,   Is.GreaterThan(DateTime.MinValue));
+            Assert.That(e.Summary.Text,          Is.EqualTo("Summary"));
+            Assert.That(e.Details.Text,          Is.EqualTo("Details"));
 
             e.Document.Value = src.Title;
             e.Author.Value   = src.Author;

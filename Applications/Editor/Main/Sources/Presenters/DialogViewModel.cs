@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Assembly;
 using Cube.Xui;
 using System;
 using System.Threading;
@@ -116,7 +115,7 @@ namespace Cube.Pdf.Editor
         /// <returns>String value.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual string GetTitle() => GetType().Assembly.GetTitle();
+        protected abstract string GetTitle();
 
         /* ----------------------------------------------------------------- */
         ///

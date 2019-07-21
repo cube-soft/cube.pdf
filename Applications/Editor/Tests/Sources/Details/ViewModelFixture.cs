@@ -218,6 +218,7 @@ namespace Cube.Pdf.Editor.Tests
             src.Subscribe<SaveFileMessage  >(e => e.Value = Destination),
             src.Subscribe<PasswordViewModel>(e =>
             {
+                Assert.That(e.Title,          Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Password.Text,  Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Password.Value, Is.Null);
                 e.Password.Value = Password;
