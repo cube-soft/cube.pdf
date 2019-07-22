@@ -74,27 +74,27 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void RemoveOthers() => Open("SampleRotation.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            _ = vm.Subscribe<RemoveViewModel>(e =>
+            using (vm.Subscribe<RemoveViewModel>(e =>
             {
-                Assert.That(e.Title,              Is.Not.Null.And.Not.Empty);
-                Assert.That(e.PageCaption.Text,   Is.Not.Null.And.Not.Empty);
-                Assert.That(e.PageCaption.Value,  Is.Not.Null.And.Not.Empty);
-                Assert.That(e.RangeCaption.Text,  Is.Not.Null.And.Not.Empty);
-                Assert.That(e.RangeCaption.Value, Is.Not.Null.And.Not.Empty);
+                vm.Value.Settings.Language = Language.English;
 
-                Assert.That(e.Range.Value, Is.Empty);
+                Assert.That(e.Title,        Is.EqualTo("Removal details"));
+                Assert.That(e.Count.Text,   Is.EqualTo("Page count"));
+                Assert.That(e.Count.Value,  Is.AtLeast(1));
+                Assert.That(e.Range.Text,   Is.EqualTo("Removal range"));
+                Assert.That(e.Range.Value,  Is.Empty);
+                Assert.That(e.Example.Text, Is.EqualTo("e.g. 1,2,4-7,9"));
+
                 Assert.That(e.OK.Command.CanExecute(), Is.False);
-
                 e.Range.Value = "1,3,5-7,9";
                 Assert.That(e.OK.Command.CanExecute(), Is.True);
-
                 e.OK.Command.Execute();
                 cts.Cancel(); // done
-            });
-
-            Assert.That(vm.Ribbon.RemoveOthers.Command.CanExecute(), Is.True);
-            vm.Ribbon.RemoveOthers.Command.Execute();
-            Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Remove)");
+            })) {
+                Assert.That(vm.Ribbon.RemoveOthers.Command.CanExecute(), Is.True);
+                vm.Ribbon.RemoveOthers.Command.Execute();
+                Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Remove)");
+            };
         });
 
         #endregion

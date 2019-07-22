@@ -21,7 +21,6 @@ using Cube.Mixin.String;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -35,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class RemoveViewModel : DialogViewModel<int>
+    public sealed class RemoveViewModel : DialogViewModel<RemoveFacade>
     {
         #region Constructors
 
@@ -56,17 +55,17 @@ namespace Cube.Pdf.Editor
         public RemoveViewModel(Action<IEnumerable<int>> callback,
             int n,
             SynchronizationContext context
-        ) : base(n, new Aggregator(), context)
-        {
-            Range = new BindableValue<string>(string.Empty, GetDispatcher(false));
+        ) : base(new RemoveFacade(n, new Dispatcher(context, false)),
+            new Aggregator(),
+            context
+        ) {
             OK.Command = new DelegateCommand(
-                () => Track(() =>
-                {
-                    callback(new Range(Range.Value, Facade).Select(i => i - 1));
+                () => Track(() => {
+                    callback(Facade.Get());
                     Send<CloseMessage>();
                 }),
-                () => Range.Value.HasValue()
-            ).Associate(Range);
+                () => Facade.Range.HasValue()
+            ).Associate(Facade, nameof(Facade.Range));
         }
 
         #endregion
@@ -75,42 +74,46 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Range
+        /// Count
         ///
         /// <summary>
-        /// Gets the removal range.
+        /// Gets the menu of page count.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<string> Range { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RangeCaption
-        ///
-        /// <summary>
-        /// Gets a menu that represents the caption of the removal range.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IElement<string> RangeCaption => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MessageRemoveRange,
-            () => Properties.Resources.MenuRemoveRange,
+        public IElement<int> Count => Get(() => new BindableElement<int>(
+            () => Properties.Resources.MenuPageCount,
+            () => Facade.Count,
             GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCaption
+        /// Range
         ///
         /// <summary>
-        /// Gets a menu that represents the number of pages.
+        /// Gets the menu of removal range.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<string> PageCaption => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuPageCount,
-            () => string.Format(Properties.Resources.MessagePage, Facade),
+        public IElement<string> Range => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuRemoveRange,
+            () => Facade.Range,
+            e  => Facade.Range = e,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Example
+        ///
+        /// <summary>
+        /// Gets menu of range example.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement Example => Get(() => new BindableElement(
+            () => Properties.Resources.MessageRemoveRange,
             GetDispatcher(false)
         ));
 
