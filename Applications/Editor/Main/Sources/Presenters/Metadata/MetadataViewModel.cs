@@ -80,14 +80,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewerPreferences
+        /// Options
         ///
         /// <summary>
-        /// Gets the collection of viewer preferences.
+        /// Gets the collection of viewer options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<ViewerOption> ViewerOptions => MetadataFacade.ViewerOptions;
+        public IEnumerable<ViewerOption> Options => MetadataFacade.ViewerOptions;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -224,7 +224,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Options
+        /// Option
         ///
         /// <summary>
         /// Gets the menu that represents the viewer options of the
@@ -232,7 +232,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<ViewerOption> Options => Get(() => new BindableElement<ViewerOption>(
+        public IElement<ViewerOption> Option => Get(() => new BindableElement<ViewerOption>(
             () => Properties.Resources.MenuLayout,
             () => Facade.Value.Options,
             e  => Facade.Value.Options = e,

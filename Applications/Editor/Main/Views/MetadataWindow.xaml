@@ -181,12 +181,12 @@
                   ViewerOptions
                 *********************************************************** -->
                 <TextBlock
-                    Text="{Binding Viewer.Text}"
+                    Text="{Binding Option.Text}"
                     Grid.Row="1"
                     Grid.Column="0" />
                 <ComboBox
-                    ItemsSource="{Binding ViewerOptions}"
-                    SelectedValue="{Binding Options.Value, Mode=TwoWay}"
+                    ItemsSource="{Binding Options}"
+                    SelectedValue="{Binding Option.Value, Mode=TwoWay}"
                     Grid.Row="1"
                     Grid.Column="1">
                     <ComboBox.ItemTemplate>
