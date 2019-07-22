@@ -76,7 +76,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Select(this ImageCollection src, bool selected)
         {
-            foreach (var item in src) item.IsSelected = selected;
+            foreach (var item in src) item.Selected = selected;
         }
 
         /* ----------------------------------------------------------------- */
@@ -92,7 +92,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Flip(this ImageCollection src)
         {
-            foreach (var item in src) item.IsSelected = !item.IsSelected;
+            foreach (var item in src) item.Selected = !item.Selected;
         }
 
         /* ----------------------------------------------------------------- */

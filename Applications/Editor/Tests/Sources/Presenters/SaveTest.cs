@@ -76,7 +76,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             IO.Copy(GetSource(filename), Source, true);
             vm.Test(vm.Ribbon.Open);
-            vm.Value.Images.First().IsSelected = true;
+            vm.Value.Images.First().Selected = true;
             vm.Test(vm.Ribbon.RotateLeft);
             vm.Test(vm.Ribbon.Save);
         });

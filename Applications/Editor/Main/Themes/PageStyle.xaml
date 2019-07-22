@@ -66,7 +66,7 @@
     *********************************************************************** -->
     <Style x:Key="PageStyle" TargetType="{x:Type ListViewItem}">
         <Setter Property="Margin" Value="3" />
-        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWay}" />
+        <Setter Property="IsSelected" Value="{Binding Selected, Mode=OneWay}" />
     </Style>
 
     <!-- **********************************************************************

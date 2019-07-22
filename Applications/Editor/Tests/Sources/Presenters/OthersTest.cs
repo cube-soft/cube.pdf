@@ -106,7 +106,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(IO.Exists(Destination), Is.False);
 
             Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.False);
-            vm.Value.Images.First().IsSelected = true;
+            vm.Value.Images.First().Selected = true;
             Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
 
             vm.Test(vm.Ribbon.Extract);
@@ -137,7 +137,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             var width  = dest.Width;
             var height = dest.Height;
             var count  = 0;
-            dest.IsSelected = true;
+            dest.Selected = true;
             dest.PropertyChanged += (s, e) => ++count;
 
             vm.Test(vm.Ribbon.RotateLeft);

@@ -122,14 +122,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsSelected
+        /// Selected
         ///
         /// <summary>
         /// Gets a value indicating whether this entry is selected.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsSelected
+        public bool Selected
         {
             get => _selected;
             set
@@ -244,7 +244,7 @@ namespace Cube.Pdf.Editor
         {
             if (disposing)
             {
-                IsSelected = false;
+                Selected = false;
 
                 _preferences.PropertyChanged -= WhenPreferencesChanged;
                 _preferences = null;

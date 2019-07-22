@@ -52,9 +52,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void MoveNext() => Open("SampleRotation.pdf", "", vm =>
         {
             var src = vm.Value.Images.ToList();
-            src[1].IsSelected = true;
-            src[3].IsSelected = true;
-            src[8].IsSelected = true;
+            src[1].Selected = true;
+            src[3].Selected = true;
+            src[8].Selected = true;
             Assert.That(Test(vm, () => vm.Ribbon.MoveNext.Command.Execute()), "Invoke");
 
             var dest = vm.Value.Images.ToList();
@@ -84,9 +84,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void MovePrevious() => Open("SampleRotation.pdf", "", vm =>
         {
             var src = vm.Value.Images.ToList();
-            src[0].IsSelected = true;
-            src[3].IsSelected = true;
-            src[6].IsSelected = true;
+            src[0].Selected = true;
+            src[3].Selected = true;
+            src[6].Selected = true;
             Assert.That(Test(vm, () => vm.Ribbon.MovePrevious.Command.Execute()), "Invoke");
 
             var dest = vm.Value.Images.ToList();
@@ -117,9 +117,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             var src = vm.Value.Images.ToList();
             var obj = new DragDropObject(1) { DropIndex = 4 };
-            src[1].IsSelected = true;
-            src[3].IsSelected = true;
-            src[6].IsSelected = true;
+            src[1].Selected = true;
+            src[3].Selected = true;
+            src[6].Selected = true;
             Assert.That(Test(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
 
             var dest = vm.Value.Images.ToList();
@@ -151,9 +151,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             var src = vm.Value.Images.ToList();
             var obj = new DragDropObject(6) { DropIndex = 3 };
-            src[1].IsSelected = true;
-            src[3].IsSelected = true;
-            src[6].IsSelected = true;
+            src[1].Selected = true;
+            src[3].Selected = true;
+            src[6].Selected = true;
             Assert.That(Test(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
 
             var dest = vm.Value.Images.ToList();

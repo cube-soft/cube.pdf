@@ -58,7 +58,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("Sample.jpg",  10)]
         public void Insert(string filename, int n) => Open("SampleRotation.pdf", "", vm =>
         {
-            vm.Value.Images.Skip(2).First().IsSelected = true;
+            vm.Value.Images.Skip(2).First().Selected = true;
             Source = GetSource(filename);
             Assert.That(vm.Ribbon.Insert.Command.CanExecute(), Is.True);
             vm.Ribbon.Insert.Command.Execute();
@@ -199,7 +199,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(file.Length,               Is.AtLeast(60000));
             Assert.That(file.LastWriteTime,        Is.Not.EqualTo(DateTime.MinValue));
             Assert.That(file.Icon,                 Is.Not.Null);
-            Assert.That(file.IsSelected,           Is.False);
+            Assert.That(file.Selected,             Is.False);
 
             var it = ivm.Position;
             Assert.That(it.Select.Text,            Is.EqualTo("Insert position"));
@@ -235,7 +235,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void SelectClear() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
             Assert.That(ivm.Value.Selection.Count, Is.EqualTo(0));
-            ivm.Value.Files[0].IsSelected = true;
+            ivm.Value.Files[0].Selected = true;
             Assert.That(ivm.Value.Selection.Count, Is.EqualTo(1));
             ivm.SelectClear.Execute();
             Assert.That(ivm.Value.Selection.Count, Is.EqualTo(0));
@@ -272,7 +272,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Remove() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
             Assert.That(ivm.Remove.Command.CanExecute(), Is.False);
-            ivm.Value.Files[0].IsSelected = true;
+            ivm.Value.Files[0].Selected = true;
             Assert.That(ivm.Remove.Command.CanExecute(), Is.True);
             ivm.Remove.Command.Execute();
             Assert.That(ivm.Value.Files.Count, Is.EqualTo(3));
@@ -292,7 +292,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Move() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
             Assert.That(ivm.Down.Command.CanExecute(), Is.False);
-            ivm.Value.Files[0].IsSelected = true;
+            ivm.Value.Files[0].Selected = true;
             Assert.That(ivm.Down.Command.CanExecute(), Is.True);
             ivm.Down.Command.Execute();
             Assert.That(ivm.Value.Files[0].Name, Is.EqualTo("SampleAes128.pdf"));
@@ -313,8 +313,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void DragUp() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
-            ivm.Value.Files[2].IsSelected = true;
-            ivm.Value.Files[3].IsSelected = true;
+            ivm.Value.Files[2].Selected = true;
+            ivm.Value.Files[3].Selected = true;
 
             var obj = new MockDropInfo
             {
@@ -346,8 +346,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void DragDown() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
-            ivm.Value.Files[0].IsSelected = true;
-            ivm.Value.Files[2].IsSelected = true;
+            ivm.Value.Files[0].Selected = true;
+            ivm.Value.Files[2].Selected = true;
 
             var obj = new MockDropInfo
             {
@@ -374,7 +374,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void DragCancel() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
-            ivm.Value.Files[2].IsSelected = true;
+            ivm.Value.Files[2].Selected = true;
 
             var obj = new MockDropInfo
             {

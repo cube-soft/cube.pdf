@@ -188,7 +188,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void SelectClear()
         {
-            foreach (var item in Value.Selection.ToList()) item.IsSelected = false;
+            foreach (var item in Value.Selection.ToList()) item.Selected = false;
         }
 
         #endregion

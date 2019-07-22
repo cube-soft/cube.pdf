@@ -51,8 +51,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Remove() => Open("SampleRotation.pdf", "", vm =>
         {
             var src = vm.Value.Images.ToList();
-            src[3].IsSelected = true;
-            src[5].IsSelected = true;
+            src[3].Selected = true;
+            src[5].Selected = true;
             vm.Test(vm.Ribbon.Remove);
 
             var dest = vm.Value.Images.ToList();
