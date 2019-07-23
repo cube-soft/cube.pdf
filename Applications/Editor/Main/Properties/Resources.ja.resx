@@ -195,6 +195,9 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>抽出</value>
   </data>
+  <data name="MenuExtractOthers" xml:space="preserve">
+    <value>詳細を設定して抽出</value>
+  </data>
   <data name="MenuFile" xml:space="preserve">
     <value>ファイル</value>
   </data>

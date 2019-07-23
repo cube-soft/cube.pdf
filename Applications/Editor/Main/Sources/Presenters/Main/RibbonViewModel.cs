@@ -366,10 +366,26 @@ namespace Cube.Pdf.Editor
             nameof(Extract),
             () => Properties.Resources.MenuExtract,
             () => Properties.Resources.TooltipExtract,
+            () => !Facade.Value.Busy,
             GetDispatcher(false)
         ) {
             Command = IsSelected(() => SendSave(Facade.Extract))
         }.Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source)));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ExtractOthers
+        ///
+        /// <summary>
+        /// Gets a menu to show an extract dialog.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonElement ExtractOthers => Get(() => new RibbonElement(
+            nameof(ExtractOthers),
+            () => Properties.Resources.MenuExtractOthers,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///

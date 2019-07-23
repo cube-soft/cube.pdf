@@ -195,6 +195,9 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>Extract</value>
   </data>
+  <data name="MenuExtractOthers" xml:space="preserve">
+    <value>Extract details</value>
+  </data>
   <data name="MenuFile" xml:space="preserve">
     <value>File</value>
   </data>

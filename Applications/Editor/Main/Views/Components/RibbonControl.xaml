@@ -134,7 +134,7 @@
 
             <r:RibbonGroupBox>
                 <!-- **********************************************************
-                  Insesrt
+                  Insert
                 *********************************************************** -->
                 <r:SplitButton
                     Header="{Binding Ribbon.Insert.Text}"
@@ -161,12 +161,21 @@
                 <!-- **********************************************************
                   Extract
                 *********************************************************** -->
-                <r:Button
+                <r:SplitButton
                     Header="{Binding Ribbon.Extract.Text}"
                     Icon="{Binding Ribbon.Extract.SmallIcon}"
                     LargeIcon="{Binding Ribbon.Extract.LargeIcon}"
                     IsEnabled="{Binding Ribbon.Extract.Enabled}"
-                    Command="{Binding Ribbon.Extract.Command}" />
+                    Command="{Binding Ribbon.Extract.Command}">
+                    <r:MenuItem
+                        Header="{Binding Ribbon.Extract.Tooltip}"
+                        Icon="{Binding Ribbon.Extract.SmallIcon}"
+                        Command="{Binding Ribbon.Extract.Command}" />
+                    <r:MenuItem
+                        Header="{Binding Ribbon.ExtractOthers.Tooltip}"
+                        Icon="{Binding Ribbon.ExtractOthers.SmallIcon}"
+                        Command="{Binding Ribbon.ExtractOthers.Command}" />
+                </r:SplitButton>
 
                 <!-- **********************************************************
                   Remove

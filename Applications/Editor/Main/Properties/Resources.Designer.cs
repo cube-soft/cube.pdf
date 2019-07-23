@@ -19,7 +19,7 @@ namespace Cube.Pdf.Editor.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -291,6 +291,15 @@ namespace Cube.Pdf.Editor.Properties {
         internal static string MenuExtract {
             get {
                 return ResourceManager.GetString("MenuExtract", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Extract details に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuExtractOthers {
+            get {
+                return ResourceManager.GetString("MenuExtractOthers", resourceCulture);
             }
         }
 
@@ -727,7 +736,7 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
-        ///   Setting に類似しているローカライズされた文字列を検索します。
+        ///   Settings に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuSetting {
             get {
@@ -894,15 +903,6 @@ namespace Cube.Pdf.Editor.Properties {
         internal static string MessageLoading {
             get {
                 return ResourceManager.GetString("MessageLoading", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Loading metadata ... に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageLoadingMetadata {
-            get {
-                return ResourceManager.GetString("MessageLoadingMetadata", resourceCulture);
             }
         }
 
@@ -1074,15 +1074,6 @@ namespace Cube.Pdf.Editor.Properties {
         internal static string TitleSetting {
             get {
                 return ResourceManager.GetString("TitleSetting", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Add new files に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TooltipAdd {
-            get {
-                return ResourceManager.GetString("TooltipAdd", resourceCulture);
             }
         }
 
