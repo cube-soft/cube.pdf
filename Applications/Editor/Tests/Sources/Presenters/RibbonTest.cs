@@ -75,7 +75,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.RotateRight.Text,   Is.EqualTo("Right"));
             Assert.That(dest.Metadata.Text,      Is.EqualTo("Metadata"));
             Assert.That(dest.Encryption.Text,    Is.EqualTo("Security"));
-            Assert.That(dest.Refresh.Text,       Is.EqualTo("Refresh"));
+            Assert.That(dest.Redraw.Text,        Is.EqualTo("Refresh"));
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("ZoomIn"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("Settings"));
@@ -122,7 +122,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
             Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("PDF document metadata"));
             Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
-            Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
+            Assert.That(dest.Redraw.Tooltip,        Is.EqualTo(dest.Redraw.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
@@ -169,7 +169,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.RotateRight.Text,   Is.EqualTo("右90度"));
             Assert.That(dest.Metadata.Text,      Is.EqualTo("プロパティ"));
             Assert.That(dest.Encryption.Text,    Is.EqualTo("セキュリティ"));
-            Assert.That(dest.Refresh.Text,       Is.EqualTo("更新"));
+            Assert.That(dest.Redraw.Text,        Is.EqualTo("更新"));
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("拡大"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("設定"));
@@ -216,7 +216,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
             Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("PDF 文書プロパティ"));
             Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
-            Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
+            Assert.That(dest.Redraw.Tooltip,        Is.EqualTo(dest.Redraw.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));

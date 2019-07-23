@@ -143,8 +143,7 @@ namespace Cube.Pdf.Converter
             set
             {
                 Facade.OpenWithPassword = value;
-                RaisePropertyChanged(nameof(EnableUserPassword));
-                RaisePropertyChanged(nameof(EnablePermission));
+                Refresh(nameof(EnableUserPassword), nameof(EnablePermission));
             }
         }
 
@@ -160,15 +159,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool UseOwnerPassword
         {
-            get => _useOwnerPassword;
-            set
-            {
-                if (SetProperty(ref _useOwnerPassword, value))
-                {
-                    RaisePropertyChanged(nameof(EnableUserPassword));
-                    RaisePropertyChanged(nameof(EnablePermission));
-                }
-            }
+            get => GetProperty<bool>();
+            set { if (SetProperty(value)) Refresh(nameof(EnableUserPassword), nameof(EnablePermission)); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -310,7 +302,7 @@ namespace Cube.Pdf.Converter
         private void Update(Action action, [CallerMemberName] string name = null)
         {
             action();
-            RaisePropertyChanged(name);
+            Refresh(name);
         }
 
         /* ----------------------------------------------------------------- */
@@ -325,10 +317,6 @@ namespace Cube.Pdf.Converter
         private PermissionValue GetPermission(bool allow) =>
             allow ? PermissionValue.Allow : PermissionValue.Deny;
 
-        #endregion
-
-        #region Fields
-        private bool _useOwnerPassword;
         #endregion
     }
 }

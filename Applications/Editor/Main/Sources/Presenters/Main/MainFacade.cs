@@ -370,14 +370,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Refresh
+        /// Redraw
         ///
         /// <summary>
         /// Clears all of images and regenerates them.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Refresh() => Invoke(() => Value.Images.Refresh(), "");
+        public void Redraw() => Invoke(() => Value.Images.Redraw(), "");
 
         #endregion
 

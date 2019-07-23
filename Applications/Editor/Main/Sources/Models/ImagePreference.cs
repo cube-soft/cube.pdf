@@ -34,6 +34,24 @@ namespace Cube.Pdf.Editor
     /* --------------------------------------------------------------------- */
     public sealed class ImagePreference : ObservableBase
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImagePreference
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ImagePreference class with
+        /// the specified dispatcher.
+        /// </summary>
+        ///
+        /// <param name="dispatcher">Dispatcher object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImagePreference(IDispatcher dispatcher) : base(dispatcher) { }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */

@@ -303,7 +303,7 @@
   <data name="MenuRedo" xml:space="preserve">
     <value>やり直し</value>
   </data>
-  <data name="MenuRefresh" xml:space="preserve">
+  <data name="MenuRedraw" xml:space="preserve">
     <value>更新</value>
   </data>
   <data name="MenuRemove" xml:space="preserve">

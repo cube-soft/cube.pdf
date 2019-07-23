@@ -33,6 +33,24 @@ namespace Cube.Pdf.Editor
     /* --------------------------------------------------------------------- */
     public sealed class ImageSelection : Selection<ImageItem>
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageSelection
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ImageSelection class with
+        /// the specified dispatcher.
+        /// </summary>
+        ///
+        /// <param name="dispatcher">Dispatcher object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageSelection(IDispatcher dispatcher) : base(dispatcher) { }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */

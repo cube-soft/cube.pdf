@@ -33,6 +33,24 @@ namespace Cube.Pdf.Editor
     /* --------------------------------------------------------------------- */
     public class Selection<T> : ObservableBase, IEnumerable<T>
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Selection
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Selection class with the
+        /// specified dispatcher.
+        /// </summary>
+        ///
+        /// <param name="dispatcher">Dispatcher object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Selection(IDispatcher dispatcher) : base(dispatcher) { }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */

@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor
             SynchronizationContext context
         ) : base(model, aggregator, context)
         {
-            _dispose = Locale.Subscribe(e => RaisePropertyChanged(nameof(Title)));
+            _dispose = Locale.Subscribe(e => Refresh(nameof(Title)));
         }
 
         #endregion

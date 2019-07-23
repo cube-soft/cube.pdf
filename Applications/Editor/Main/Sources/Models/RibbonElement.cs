@@ -260,17 +260,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private IDisposable Register(ICommand src)
         {
-            void action(object s, EventArgs e)
-            {
-                Refresh(nameof(Enabled));
-                Refresh(nameof(SmallIcon));
-                Refresh(nameof(LargeIcon));
-            };
-
-            src.CanExecuteChanged -= action;
-            src.CanExecuteChanged += action;
-
-            return Disposable.Create(() => src.CanExecuteChanged -= action);
+            void update(object s, EventArgs e) => Refresh(nameof(Enabled), nameof(SmallIcon), nameof(LargeIcon));
+            src.CanExecuteChanged -= update;
+            src.CanExecuteChanged += update;
+            return Disposable.Create(() => src.CanExecuteChanged -= update);
         }
 
         #endregion

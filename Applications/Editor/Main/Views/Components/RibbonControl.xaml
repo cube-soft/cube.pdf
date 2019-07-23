@@ -258,14 +258,14 @@
         <r:RibbonTabItem Header="{Binding Ribbon.Others.Text}">
             <r:RibbonGroupBox>
                 <!-- **********************************************************
-                  Refresh
+                  Redraw
                 *********************************************************** -->
                 <r:Button
-                    Header="{Binding Ribbon.Refresh.Text}"
-                    Icon="{Binding Ribbon.Refresh.SmallIcon}"
-                    LargeIcon="{Binding Ribbon.Refresh.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Refresh.Enabled}"
-                    Command="{Binding Ribbon.Refresh.Command}" />
+                    Header="{Binding Ribbon.Redraw.Text}"
+                    Icon="{Binding Ribbon.Redraw.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Redraw.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Redraw.Enabled}"
+                    Command="{Binding Ribbon.Redraw.Command}" />
             </r:RibbonGroupBox>
 
             <r:RibbonGroupBox>

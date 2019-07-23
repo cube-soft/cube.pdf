@@ -18,12 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui.Behaviors;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 
 namespace Cube.Pdf.Editor
 {
-    #region ShowDialog
-
     /* --------------------------------------------------------------------- */
     ///
     /// ShowPasswordWindow
@@ -101,10 +98,6 @@ namespace Cube.Pdf.Editor
     /* --------------------------------------------------------------------- */
     public class ShowSettingWindow : ShowBehavior<SettingWindow, SettingViewModel> { }
 
-    #endregion
-
-    #region Others
-
     /* --------------------------------------------------------------------- */
     ///
     /// MouseOpenBehavior
@@ -115,63 +108,4 @@ namespace Cube.Pdf.Editor
     ///
     /* --------------------------------------------------------------------- */
     public class MouseOpenBehavior : FileDropToCommand<Window> { }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// InsertPositionBehavior
-    ///
-    /// <summary>
-    /// Represents the behavior when a RadioButton is checked.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class InsertPositionBehavior : CommandBehavior<ToggleButton, int>
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnAttached
-        ///
-        /// <summary>
-        /// Called after the action is attached to an AssociatedObject.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-            AssociatedObject.Checked += WhenChecked;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDetaching
-        ///
-        /// <summary>
-        /// Called when the action is being detached from its
-        /// AssociatedObject, but before it has actually occurred.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnDetaching()
-        {
-            AssociatedObject.Checked -= WhenChecked;
-            base.OnDetaching();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenChecked
-        ///
-        /// <summary>
-        /// Occurs when the Checked event is fired.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenChecked(object s, RoutedEventArgs e)
-        {
-            if (Command?.CanExecute(CommandParameter) ?? false) Command.Execute(CommandParameter);
-        }
-    }
-
-    #endregion
 }

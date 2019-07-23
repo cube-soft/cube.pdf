@@ -74,7 +74,7 @@ namespace Cube.Pdf.Converter
             set
             {
                 Facade.Value.Format = value;
-                RaisePropertyChanged(nameof(IsPdf));
+                Refresh(nameof(IsPdf));
             }
         }
 
@@ -108,7 +108,7 @@ namespace Cube.Pdf.Converter
             set
             {
                 Facade.Value.PostProcess = value;
-                RaisePropertyChanged(nameof(EnableUserProgram));
+                Refresh(nameof(EnableUserProgram));
             }
         }
 
@@ -190,7 +190,7 @@ namespace Cube.Pdf.Converter
                 if (value)
                 {
                     Facade.Value.Orientation = Orientation.Auto;
-                    RaisePropertyChanged(nameof(IsAutoOrientation));
+                    Refresh(nameof(IsAutoOrientation));
                 }
             }
         }
@@ -213,7 +213,7 @@ namespace Cube.Pdf.Converter
                 if (value)
                 {
                     Facade.Value.Orientation = Orientation.Portrait;
-                    RaisePropertyChanged(nameof(IsPortrait));
+                    Refresh(nameof(IsPortrait));
                 }
             }
         }
@@ -236,7 +236,7 @@ namespace Cube.Pdf.Converter
                 if (value)
                 {
                     Facade.Value.Orientation = Orientation.Landscape;
-                    RaisePropertyChanged(nameof(IsLandscape));
+                    Refresh(nameof(IsLandscape));
                 }
             }
         }

@@ -78,8 +78,8 @@ namespace Cube.Pdf.Editor
 
             Create      = create_by_index;
             Dispatcher  = dispatcher;
-            Selection   = new ImageSelection { Dispatcher = dispatcher };
-            Preferences = new ImagePreference { Dispatcher = dispatcher };
+            Selection   = new ImageSelection(dispatcher);
+            Preferences = new ImagePreference(dispatcher);
             Preferences.PropertyChanged += (s, e) => update(e.PropertyName);
         }
 
@@ -304,14 +304,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Refresh
+        /// Redraw
         ///
         /// <summary>
         /// Removes all images and regenerates them.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Refresh() => Reschedule(() => _cache.Clear());
+        public void Redraw() => Reschedule(() => _cache.Clear());
 
         #endregion
 

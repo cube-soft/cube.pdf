@@ -65,7 +65,7 @@
       KeyBindings
     *********************************************************************** -->
     <r:RibbonWindow.InputBindings>
-        <KeyBinding Gesture="F5"            Command="{Binding Ribbon.Refresh.Command}" />
+        <KeyBinding Gesture="F5"            Command="{Binding Ribbon.Redraw.Command}" />
         <KeyBinding Gesture="Insert"        Command="{Binding Ribbon.Insert.Command}" />
         <KeyBinding Gesture="Delete"        Command="{Binding Ribbon.Remove.Command}" />
         <KeyBinding Gesture="Backspace"     Command="{Binding Ribbon.Remove.Command}" />

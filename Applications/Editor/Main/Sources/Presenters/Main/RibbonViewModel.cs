@@ -498,18 +498,18 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Refresh
+        /// Redraw
         ///
         /// <summary>
-        /// Gets a Refresh menu.
+        /// Gets a Redraw menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Refresh => Get(() => new RibbonElement(
-            nameof(Refresh),
-            () => Properties.Resources.MenuRefresh,
+        public RibbonElement Redraw => Get(() => new RibbonElement(
+            nameof(Redraw),
+            () => Properties.Resources.MenuRedraw,
             GetDispatcher(false)
-        ) { Command = IsOpen(() => Sync(Facade.Refresh)) });
+        ) { Command = IsOpen(() => Sync(Facade.Redraw)) });
 
         /* ----------------------------------------------------------------- */
         ///

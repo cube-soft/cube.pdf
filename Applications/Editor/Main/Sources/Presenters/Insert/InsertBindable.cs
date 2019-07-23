@@ -50,7 +50,7 @@ namespace Cube.Pdf.Editor
         public InsertBindable(int index, int count, IDispatcher dispatcher) : base(dispatcher)
         {
             Files         = new FileCollection(dispatcher);
-            Selection     = new Selection<FileItem> { Dispatcher = dispatcher };
+            Selection     = new Selection<FileItem>(dispatcher);
             Count         = count;
             SelectedIndex = index;
             Index         = Math.Max(index, 0);

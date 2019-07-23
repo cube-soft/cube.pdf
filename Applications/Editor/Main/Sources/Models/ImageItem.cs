@@ -198,11 +198,7 @@ namespace Cube.Pdf.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public void Refresh()
-        {
-            Refresh(nameof(Stretch));
-            Refresh(nameof(Image));
-        }
+        public void Refresh() => Refresh(nameof(Stretch), nameof(Image));
 
         /* ----------------------------------------------------------------- */
         ///

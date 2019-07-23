@@ -619,11 +619,11 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
-        ///   Refresh に類似しているローカライズされた文字列を検索します。
+        ///   Redraw に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuRefresh {
+        internal static string MenuRedraw {
             get {
-                return ResourceManager.GetString("MenuRefresh", resourceCulture);
+                return ResourceManager.GetString("MenuRedraw", resourceCulture);
             }
         }
 
