@@ -101,7 +101,7 @@ namespace Cube.Pdf.Editor
         public IElement<string> Filename => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuFilename,
             () => Facade.File.Name,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -118,7 +118,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuTitle,
             () => Facade.Value.Title,
             e  => Facade.Value.Title = e,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -135,7 +135,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuAuthor,
             () => Facade.Value.Author,
             e  => Facade.Value.Author = e,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -152,7 +152,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuSubject,
             () => Facade.Value.Subject,
             e  => Facade.Value.Subject = e,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -169,7 +169,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuKeywords,
             () => Facade.Value.Keywords,
             e  => Facade.Value.Keywords = e,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -186,7 +186,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuCreator,
             () => Facade.Value.Creator,
             e  => Facade.Value.Creator = e,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -202,7 +202,7 @@ namespace Cube.Pdf.Editor
         public IElement<string> Producer => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuProducer,
             () => Facade.Value.Producer,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -219,7 +219,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuVersion,
             () => Facade.Value.Version,
             e  => Facade.Value.Version = e,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -236,7 +236,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuLayout,
             () => Facade.Value.Options,
             e  => Facade.Value.Options = e,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -251,7 +251,7 @@ namespace Cube.Pdf.Editor
         public IElement<long> Length => Get(() => new BindableElement<long>(
             () => Properties.Resources.MenuFilesize,
             () => Facade.File.Length,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -267,7 +267,7 @@ namespace Cube.Pdf.Editor
         public IElement<DateTime> CreationTime => Get(() => new BindableElement<DateTime>(
             () => Properties.Resources.MenuCreationTime,
             () => Facade.File.CreationTime,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -283,7 +283,7 @@ namespace Cube.Pdf.Editor
         public IElement<DateTime> LastWriteTime => Get(() => new BindableElement<DateTime>(
             () => Properties.Resources.MenuLastWriteTime,
             () => Facade.File.LastWriteTime,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -297,7 +297,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Summary => Get(() => new BindableElement(
             () => Properties.Resources.MenuSummary,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -311,7 +311,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Details => Get(() => new BindableElement(
             () => Properties.Resources.MenuDetails,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         #endregion

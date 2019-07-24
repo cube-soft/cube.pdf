@@ -46,10 +46,10 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="src">Source images.</param>
         /// <param name="file">Information of the PDF file.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable(ImageCollection src, Entity file, IDispatcher dispatcher) : base(dispatcher)
+        public PreviewBindable(ImageCollection src, Entity file, Invoker invoker) : base(invoker)
         {
             var size  = src[src.Selection.First].RawObject.GetViewSize();
             var magic = 14.0; // Scrollbar width

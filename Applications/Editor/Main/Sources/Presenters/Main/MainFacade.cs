@@ -62,9 +62,9 @@ namespace Cube.Pdf.Editor
             Settings = settings;
             Backup   = new Backup(settings.IO);
             Value    = new MainBindable(
-                new ImageCollection(e => _docs?.GetOrAdd(e), new Dispatcher(context, true)),
+                new ImageCollection(e => _docs?.GetOrAdd(e), new ContextInvoker(context, true)),
                 settings,
-                new Dispatcher(context, false)
+                new ContextInvoker(context, false)
             );
         }
 

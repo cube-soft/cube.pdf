@@ -49,8 +49,8 @@ namespace Cube.Pdf.Editor.Tests
         public void Undo()
         {
             var src = Create();
-            var dispatcher = new Dispatcher(new SynchronizationContext(), false);
-            var history = new History(dispatcher);
+            var invoker = new ContextInvoker(new SynchronizationContext(), false);
+            var history = new History(invoker);
 
             Assert.That(src.Count, Is.EqualTo(10));
             Assert.That(history.Undoable, Is.False);
@@ -94,8 +94,8 @@ namespace Cube.Pdf.Editor.Tests
         public void Redo()
         {
             var src = Create();
-            var dispatcher = new Dispatcher(new SynchronizationContext(), false);
-            var history = new History(dispatcher);
+            var invoker = new ContextInvoker(new SynchronizationContext(), false);
+            var history = new History(invoker);
 
             Remove(src, 0, history);
             Remove(src, 3, history);

@@ -48,13 +48,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="name">Name of icons.</param>
         /// <param name="getText">Function to get text.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public RibbonElement(string name,
             Getter<string> getText,
-            IDispatcher dispatcher
-        ) : this(name, getText, getText, dispatcher) { }
+            Invoker invoker
+        ) : this(name, getText, getText, invoker) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -68,14 +68,14 @@ namespace Cube.Pdf.Editor
         /// <param name="name">Name of icons.</param>
         /// <param name="getText">Function to get text.</param>
         /// <param name="getTooltip">Function to get tooltip.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public RibbonElement(string name,
             Getter<string> getText,
             Getter<string> getTooltip,
-            IDispatcher dispatcher
-        ) : this(name, getText, getTooltip, null, dispatcher) { }
+            Invoker invoker
+        ) : this(name, getText, getTooltip, null, invoker) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -90,15 +90,15 @@ namespace Cube.Pdf.Editor
         /// <param name="getText">Function to get text.</param>
         /// <param name="getTooltip">Function to get tooltip.</param>
         /// <param name="getEnabled">Function to get enabled value.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public RibbonElement(string name,
             Getter<string> getText,
             Getter<string> getTooltip,
             Getter<bool> getEnabled,
-            IDispatcher dispatcher
-        ) : base(getText, dispatcher)
+            Invoker invoker
+        ) : base(getText, invoker)
         {
             Name = name;
             _getTooltip = getTooltip;

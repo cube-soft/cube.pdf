@@ -68,7 +68,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Select => Get(() => new BindableElement(
             () => Properties.Resources.MenuInsertPosition,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = new DelegateCommand<int>(e => Facade.Index = e) });
 
         /* ----------------------------------------------------------------- */
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement First => Get(() => new BindableElement(
             () => Properties.Resources.MenuPositionFirst,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -96,7 +96,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Last => Get(() => new BindableElement(
             () => Properties.Resources.MenuPositionLast,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -112,7 +112,7 @@ namespace Cube.Pdf.Editor
         public IElement<int> SelectedIndex => Get(() => new BindableElement<int>(
             () => Properties.Resources.MenuPositionSelected,
             () => Facade.SelectedIndex,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -129,7 +129,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuPositionSpecified,
             () => Facade.UserIndex + 1,
             e  => Facade.UserIndex = e - 1,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -145,7 +145,7 @@ namespace Cube.Pdf.Editor
         public IElement<int> Count => Get(() => new BindableElement<int>(
             () => string.Format($"/ {Properties.Resources.MessagePage}", Facade.Count),
             () => Facade.Count,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         #endregion

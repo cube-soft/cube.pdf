@@ -51,13 +51,13 @@ namespace Cube.Pdf.Editor
         /// <param name="index">Selected index.</param>
         /// <param name="count">Number of pages.</param>
         /// <param name="io">I/O handler</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertFacade(int index, int count, IO io, IDispatcher dispatcher)
+        public InsertFacade(int index, int count, IO io, Invoker invoker)
         {
             _io   = io;
-            Value = new InsertBindable(index, count, dispatcher);
+            Value = new InsertBindable(index, count, invoker);
         }
 
         #endregion

@@ -55,7 +55,7 @@ namespace Cube.Pdf.Clip
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(IO io, SynchronizationContext context) : base(new Dispatcher(context, false))
+        public MainFacade(IO io, SynchronizationContext context) : base(new ContextInvoker(context, false))
         {
             IO = io;
             _clips.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);

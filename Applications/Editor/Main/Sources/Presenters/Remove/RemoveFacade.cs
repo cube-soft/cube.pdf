@@ -44,10 +44,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="count">Number of pages.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RemoveFacade(int count, IDispatcher dispatcher) : base(dispatcher)
+        public RemoveFacade(int count, Invoker invoker) : base(invoker)
         {
             Count = count;
         }

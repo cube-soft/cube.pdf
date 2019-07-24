@@ -47,10 +47,10 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="images">Image collection.</param>
         /// <param name="settings">User settings.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable(ImageCollection images, SettingFolder settings, IDispatcher dispatcher) : base(dispatcher)
+        public MainBindable(ImageCollection images, SettingFolder settings, Invoker invoker) : base(invoker)
         {
             _settings = settings;
 
@@ -60,7 +60,7 @@ namespace Cube.Pdf.Editor
             images.Preferences.TextHeight    = 25;
 
             Images  = images;
-            History = new History(dispatcher);
+            History = new History(invoker);
         }
 
         #endregion

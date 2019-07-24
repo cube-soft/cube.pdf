@@ -44,13 +44,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="index">Selected index.</param>
         /// <param name="count">Number of pages.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable(int index, int count, IDispatcher dispatcher) : base(dispatcher)
+        public InsertBindable(int index, int count, Invoker invoker) : base(invoker)
         {
-            Files         = new FileCollection(dispatcher);
-            Selection     = new Selection<FileItem>(dispatcher);
+            Files         = new FileCollection(invoker);
+            Selection     = new Selection<FileItem>(invoker);
             Count         = count;
             SelectedIndex = index;
             Index         = Math.Max(index, 0);

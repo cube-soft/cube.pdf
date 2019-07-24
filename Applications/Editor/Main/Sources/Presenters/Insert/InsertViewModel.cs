@@ -60,7 +60,7 @@ namespace Cube.Pdf.Editor
             int count,
             IO io,
             SynchronizationContext context
-        ) : base(new InsertFacade(index, count, io, new Dispatcher(context, false)),
+        ) : base(new InsertFacade(index, count, io, new ContextInvoker(context, false)),
             new Aggregator(),
             context
         ) {
@@ -119,7 +119,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Preview => Get(() => new BindableElement(
             () => Properties.Resources.MenuPreview,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = IsSelected(() => Track(() => Facade.Preview())) });
 
         /* ----------------------------------------------------------------- */
@@ -133,7 +133,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Add => Get(() => new BindableElement(
             () => Properties.Resources.MenuAdd,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = new DelegateCommand(() => SendOpen()) });
 
         /* ----------------------------------------------------------------- */
@@ -147,7 +147,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Remove => Get(() => new BindableElement(
             () => Properties.Resources.MenuRemove,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = IsSelected(() => Sync(() => Facade.Remove())) });
 
         /* ----------------------------------------------------------------- */
@@ -161,7 +161,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Clear => Get(() => new BindableElement(
             () => Properties.Resources.MenuClear,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = new DelegateCommand(() => Sync(Facade.Clear)) });
 
         /* ----------------------------------------------------------------- */
@@ -175,7 +175,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Up => Get(() => new BindableElement(
             () => Properties.Resources.MenuUp,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = IsSelected(() => Sync(() => Facade.Move(-1))) });
 
         /* ----------------------------------------------------------------- */
@@ -189,7 +189,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Down => Get(() => new BindableElement(
             () => Properties.Resources.MenuDown,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = IsSelected(() => Sync(() => Facade.Move(1))) });
 
         /* ----------------------------------------------------------------- */
@@ -203,7 +203,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement FileName => Get(() => new BindableElement(
             () => Properties.Resources.MenuFilename,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -217,7 +217,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement FileType => Get(() => new BindableElement(
             () => Properties.Resources.MenuFiletype,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -231,7 +231,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement FileLength => Get(() => new BindableElement(
             () => Properties.Resources.MenuFilesize,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -245,7 +245,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement LastWriteTime => Get(() => new BindableElement(
             () => Properties.Resources.MenuLastWriteTime,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         #endregion

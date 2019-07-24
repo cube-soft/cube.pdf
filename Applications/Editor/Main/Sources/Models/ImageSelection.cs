@@ -41,13 +41,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the ImageSelection class with
-        /// the specified dispatcher.
+        /// the specified invoker.
         /// </summary>
         ///
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSelection(IDispatcher dispatcher) : base(dispatcher) { }
+        public ImageSelection(Invoker invoker) : base(invoker) { }
 
         #endregion
 

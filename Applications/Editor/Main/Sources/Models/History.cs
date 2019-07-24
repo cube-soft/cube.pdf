@@ -43,7 +43,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public History(IDispatcher dispatcher) : base(dispatcher) { }
+        public History(Invoker invoker) : base(invoker) { }
 
         #endregion
 

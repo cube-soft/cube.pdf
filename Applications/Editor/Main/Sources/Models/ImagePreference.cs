@@ -42,13 +42,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the ImagePreference class with
-        /// the specified dispatcher.
+        /// the specified invoker.
         /// </summary>
         ///
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImagePreference(IDispatcher dispatcher) : base(dispatcher) { }
+        public ImagePreference(Invoker invoker) : base(invoker) { }
 
         #endregion
 

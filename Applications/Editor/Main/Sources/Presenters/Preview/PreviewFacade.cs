@@ -46,12 +46,12 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="src">Source images.</param>
         /// <param name="file">Target file information.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewFacade(ImageCollection src, Entity file, IDispatcher dispatcher)
+        public PreviewFacade(ImageCollection src, Entity file, Invoker invoker)
         {
-            Value = new PreviewBindable(src, file, dispatcher);
+            Value = new PreviewBindable(src, file, invoker);
             Task.Run(() => Setup(src.Selection.First)).Forget();
         }
 

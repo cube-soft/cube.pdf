@@ -82,7 +82,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Menu => Get(() => new BindableElement(
             () => Properties.Resources.MenuRecent,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = new DelegateCommand(() => Track(() => Process.Start(Items.Directory))) });
 
         #endregion

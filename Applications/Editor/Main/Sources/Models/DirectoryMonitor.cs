@@ -53,11 +53,11 @@ namespace Cube.Pdf.Editor
         /// <param name="directory">Target directory.</param>
         /// <param name="filter">Filter string.</param>
         /// <param name="io">I/O handler</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DirectoryMonitor(string directory, string filter, IO io, IDispatcher dispatcher) :
-            base(dispatcher)
+        public DirectoryMonitor(string directory, string filter, IO io, Invoker invoker) :
+            base(invoker)
         {
             Directory  = directory;
             Filter     = filter;

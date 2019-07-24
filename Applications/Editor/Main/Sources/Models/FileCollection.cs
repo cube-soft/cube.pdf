@@ -25,10 +25,10 @@ namespace Cube.Pdf.Editor
         /// Initializes a new instance of the FileCollection class.
         /// </summary>
         ///
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileCollection(IDispatcher dispatcher) : base(dispatcher)
+        public FileCollection(Invoker invoker) : base(invoker)
         {
             _inner = new ObservableCollection<FileItem>();
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);

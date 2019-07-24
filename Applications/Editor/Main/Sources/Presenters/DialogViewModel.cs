@@ -83,7 +83,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement OK => Get(() => new BindableElement(
             () => Properties.Resources.MenuOk,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -97,7 +97,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Cancel => Get(() => new BindableElement(
             () => Properties.Resources.MenuCancel,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = new DelegateCommand(() => Send<CloseMessage>()) });
 
         #endregion
