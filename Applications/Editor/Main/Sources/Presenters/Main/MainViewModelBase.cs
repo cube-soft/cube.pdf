@@ -317,6 +317,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected void SendExtract() => Send(new ExtractViewModel(
             e => Facade.Extract(e),
+            Facade.Value.Images.Selection,
+            Facade.Value.Count,
             Context
         ));
 

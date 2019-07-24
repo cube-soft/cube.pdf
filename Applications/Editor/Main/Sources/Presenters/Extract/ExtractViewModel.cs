@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Observing;
+using Cube.Mixin.Syntax;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;
@@ -32,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class ExtractViewModel : DialogViewModel<ExtractOption>
+    public sealed class ExtractViewModel : DialogViewModel<ExtractFacade>
     {
         #region Constructors
 
@@ -46,18 +48,22 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="callback">Callback method when applied.</param>
+        /// <param name="selection">Page selection.</param>
+        /// <param name="count">Number of pages.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ExtractViewModel(Action<ExtractOption> callback,
+            ImageSelection selection,
+            int count,
             SynchronizationContext context
-        ) : base(new ExtractOption(new ContextInvoker(context, false)),
+        ) : base(new ExtractFacade(selection, count, new ContextInvoker(context, false)),
             new Aggregator(),
             context
         ) {
             OK.Command = new DelegateCommand(
                 () => Track(() => {
-                    callback(Facade);
+                    callback(Facade.Value);
                     Send<CloseMessage>();
                 }),
                 () => true
@@ -77,11 +83,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<ExtractFormat> Formats { get; } = new[]
-        {
-            ExtractFormat.Pdf,
-            ExtractFormat.Png,
-        };
+        public IEnumerable<ExtractFormat> Formats => Facade.Formats;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -94,8 +96,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Destination => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuDestination,
-            () => Facade.Destination,
-            e  => Facade.Destination = e,
+            () => Facade.Value.Destination,
+            e  => Facade.Value.Destination = e,
             GetInvoker(false)
         ));
 
@@ -110,8 +112,27 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<ExtractFormat> Format => Get(() => new BindableElement<ExtractFormat>(
             () => Properties.Resources.MenuFormat,
-            () => Facade.Format,
-            e  => Facade.Format = e,
+            () => Facade.Value.Format,
+            e  => Facade.Value.Format = e,
+            GetInvoker(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Target
+        ///
+        /// <summary>
+        /// Gets the target menu.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Value determines whether the Selected element is enabled.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<bool> Target => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuTarget,
+            () => Facade.Selection.Count > 0,
             GetInvoker(false)
         ));
 
@@ -127,10 +148,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> Selected => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuExtractSelected,
-            () => Facade.Target == ExtractTarget.Selected,
-            e  => { if (e) Facade.Target = ExtractTarget.Selected; },
+            () => Facade.Value.Target == ExtractTarget.Selected,
+            e  => e.Then(() => Facade.Value.Target = ExtractTarget.Selected),
             GetInvoker(false)
-        ));
+        )).Associate(Facade.Value, nameof(ExtractOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -144,10 +165,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> All => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuExtractAll,
-            () => Facade.Target == ExtractTarget.All,
-            e  => { if (e) Facade.Target = ExtractTarget.All; },
+            () => Facade.Value.Target == ExtractTarget.All,
+            e  => e.Then(() => Facade.Value.Target = ExtractTarget.All),
             GetInvoker(false)
-        ));
+        )).Associate(Facade.Value, nameof(ExtractOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -161,10 +182,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> Specified => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuExtractRange,
-            () => Facade.Target == ExtractTarget.Range,
-            e  => { if (e) Facade.Target = ExtractTarget.Range; },
+            () => Facade.Value.Target == ExtractTarget.Range,
+            e  => e.Then(() => Facade.Value.Target = ExtractTarget.Range),
             GetInvoker(false)
-        ));
+        )).Associate(Facade.Value, nameof(ExtractOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -177,8 +198,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Range => Get(() => new BindableElement<string>(
             () => Properties.Resources.MessageRangeExample,
-            () => Facade.Range,
-            e  => Facade.Range = e,
+            () => Facade.Value.Range,
+            e  => Facade.Value.Range = e,
             GetInvoker(false)
         ));
 
@@ -194,33 +215,22 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> Split => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuSplit,
-            () => Facade.Split,
-            e  => Facade.Split = e,
+            () => Facade.Value.Split,
+            e  => Facade.Value.Split = e,
             GetInvoker(false)
-        ));
-
-        #region Texts
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Target
-        ///
-        /// <summary>
-        /// Gets the target menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IElement Target => Get(() => new BindableElement(
-            () => Properties.Resources.MenuTarget,
-            GetInvoker(false)
-        ));
+        ) {
+            Command = new DelegateCommand(
+                () => { },
+                () => Facade.Value.Format == ExtractFormat.Pdf
+            ).Associate(Facade.Value, nameof(ExtractOption.Format))
+        });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Option
         ///
         /// <summary>
-        /// Gets the option menu.
+        /// Gets the option menu. The property has text only.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -228,8 +238,6 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuOptions,
             GetInvoker(false)
         ));
-
-        #endregion
 
         #endregion
 

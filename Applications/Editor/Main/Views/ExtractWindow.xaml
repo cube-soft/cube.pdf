@@ -128,7 +128,8 @@
                 Grid.ColumnSpan="2">
                 <RadioButton
                     Content="{Binding Selected.Text}"
-                    IsChecked="{Binding Selected.Value}" />
+                    IsChecked="{Binding Selected.Value}"
+                    IsEnabled="{Binding Target.Value}" />
                 <RadioButton
                     Content="{Binding All.Text}"
                     IsChecked="{Binding All.Value}" />
@@ -141,6 +142,7 @@
               Range
             *************************************************************** -->
             <WrapPanel
+                IsEnabled="{Binding Specified.Value}"
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
                 Grid.Row="3"
@@ -164,6 +166,7 @@
             <CheckBox
                 Content="{Binding Split.Text}"
                 IsChecked="{Binding Split.Value}"
+                Command="{Binding Split.Command}"
                 Grid.Row="4"
                 Grid.Column="1"
                 Grid.ColumnSpan="2" />
