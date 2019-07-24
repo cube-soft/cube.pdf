@@ -385,7 +385,7 @@ namespace Cube.Pdf.Editor
             nameof(ExtractOthers),
             () => Properties.Resources.MenuExtractOthers,
             GetInvoker(false)
-        ));
+        ) { Command = IsOpen(SendExtract) });
 
         /* ----------------------------------------------------------------- */
         ///

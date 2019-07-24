@@ -107,6 +107,7 @@
         <my:ShowPreviewWindow    Modal="True" />
         <my:ShowInsertWindow     Modal="True" />
         <my:ShowRemoveWindow     Modal="True" />
+        <my:ShowExtractWindow    Modal="True" />
         <my:ShowMetadataWindow   Modal="True" />
         <my:ShowEncryptionWindow Modal="True" />
         <my:ShowSettingWindow    Modal="True" />

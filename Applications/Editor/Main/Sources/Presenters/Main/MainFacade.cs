@@ -193,6 +193,22 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Extract
+        ///
+        /// <summary>
+        /// Extract pages with the specified settings.
+        /// </summary>
+        ///
+        /// <param name="src">Extract options.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Extract(ExtractOption src) => Invoke(() =>
+        {
+            // TODO: implementations
+        }, Properties.Resources.MessageSaved, src.Destination);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Select
         ///
         /// <summary>

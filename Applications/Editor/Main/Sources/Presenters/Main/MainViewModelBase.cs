@@ -307,6 +307,21 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// SendExtract
+        ///
+        /// <summary>
+        /// Sends the message to show a dialog of the ExtractWindow
+        /// class, and executes the remove operation.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void SendExtract() => Send(new ExtractViewModel(
+            e => Facade.Extract(e),
+            Context
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SendMetadata
         ///
         /// <summary>

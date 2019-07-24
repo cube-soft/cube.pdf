@@ -28,7 +28,7 @@
     mc:Ignorable="d"
     Title="{Binding Title}"
     Height="540"
-    Width="470"
+    Width="500"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"

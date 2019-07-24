@@ -171,6 +171,9 @@
   <data name="MenuCreator" xml:space="preserve">
     <value>Creator</value>
   </data>
+  <data name="MenuDestination" xml:space="preserve">
+    <value>Save path</value>
+  </data>
   <data name="MenuDetails" xml:space="preserve">
     <value>Details</value>
   </data>
@@ -195,8 +198,17 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>Extract</value>
   </data>
+  <data name="MenuExtractAll" xml:space="preserve">
+    <value>All pages</value>
+  </data>
   <data name="MenuExtractOthers" xml:space="preserve">
-    <value>Extract details</value>
+    <value>Extract with other settings</value>
+  </data>
+  <data name="MenuExtractRange" xml:space="preserve">
+    <value>Specified range</value>
+  </data>
+  <data name="MenuExtractSelected" xml:space="preserve">
+    <value>Selected pages</value>
   </data>
   <data name="MenuFile" xml:space="preserve">
     <value>File</value>
@@ -209,6 +221,9 @@
   </data>
   <data name="MenuFiletype" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="MenuFormat" xml:space="preserve">
+    <value>Format</value>
   </data>
   <data name="MenuFrameOnly" xml:space="preserve">
     <value>Frame only</value>
@@ -223,7 +238,7 @@
     <value>Insert at the beginning</value>
   </data>
   <data name="MenuInsertOthers" xml:space="preserve">
-    <value>Insertion details</value>
+    <value>Insert at other position</value>
   </data>
   <data name="MenuInsertPosition" xml:space="preserve">
     <value>Insert position</value>
@@ -270,6 +285,9 @@
   <data name="MenuOperations" xml:space="preserve">
     <value>Operations</value>
   </data>
+  <data name="MenuOptions" xml:space="preserve">
+    <value>Options</value>
+  </data>
   <data name="MenuOthers" xml:space="preserve">
     <value>Others</value>
   </data>
@@ -313,7 +331,7 @@
     <value>Remove</value>
   </data>
   <data name="MenuRemoveOthers" xml:space="preserve">
-    <value>Removal details</value>
+    <value>Remove other pages</value>
   </data>
   <data name="MenuRemoveRange" xml:space="preserve">
     <value>Removal range</value>
@@ -348,11 +366,17 @@
   <data name="MenuSharePassword" xml:space="preserve">
     <value>Use owner password</value>
   </data>
+  <data name="MenuSplit" xml:space="preserve">
+    <value>Save as a separate file per page</value>
+  </data>
   <data name="MenuSubject" xml:space="preserve">
     <value>Subject</value>
   </data>
   <data name="MenuSummary" xml:space="preserve">
     <value>Summary</value>
+  </data>
+  <data name="MenuTarget" xml:space="preserve">
+    <value>Target</value>
   </data>
   <data name="MenuTitle" xml:space="preserve">
     <value>Title</value>
@@ -411,7 +435,7 @@
   <data name="MessageRangeError" xml:space="preserve">
     <value>Failed to parse the removal range.</value>
   </data>
-  <data name="MessageRemoveRange" xml:space="preserve">
+  <data name="MessageRangeExample" xml:space="preserve">
     <value>e.g. 1,2,4-7,9</value>
   </data>
   <data name="MessageSaved" xml:space="preserve">

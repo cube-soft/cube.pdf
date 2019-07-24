@@ -171,6 +171,9 @@
   <data name="MenuCreator" xml:space="preserve">
     <value>アプリケーション</value>
   </data>
+  <data name="MenuDestination" xml:space="preserve">
+    <value>保存先</value>
+  </data>
   <data name="MenuDetails" xml:space="preserve">
     <value>詳細情報</value>
   </data>
@@ -195,8 +198,17 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>抽出</value>
   </data>
+  <data name="MenuExtractAll" xml:space="preserve">
+    <value>全てのページ</value>
+  </data>
   <data name="MenuExtractOthers" xml:space="preserve">
     <value>詳細を設定して抽出</value>
+  </data>
+  <data name="MenuExtractRange" xml:space="preserve">
+    <value>範囲を指定</value>
+  </data>
+  <data name="MenuExtractSelected" xml:space="preserve">
+    <value>選択ページ</value>
   </data>
   <data name="MenuFile" xml:space="preserve">
     <value>ファイル</value>
@@ -209,6 +221,9 @@
   </data>
   <data name="MenuFiletype" xml:space="preserve">
     <value>種類</value>
+  </data>
+  <data name="MenuFormat" xml:space="preserve">
+    <value>保存形式</value>
   </data>
   <data name="MenuFrameOnly" xml:space="preserve">
     <value>枠線のみ</value>
@@ -269,6 +284,9 @@
   </data>
   <data name="MenuOperations" xml:space="preserve">
     <value>操作</value>
+  </data>
+  <data name="MenuOptions" xml:space="preserve">
+    <value>オプション</value>
   </data>
   <data name="MenuOthers" xml:space="preserve">
     <value>その他</value>
@@ -348,11 +366,17 @@
   <data name="MenuSharePassword" xml:space="preserve">
     <value>管理用パスワードと共用する</value>
   </data>
+  <data name="MenuSplit" xml:space="preserve">
+    <value>1 ページ毎に個別のファイルとして保存</value>
+  </data>
   <data name="MenuSubject" xml:space="preserve">
     <value>サブタイトル</value>
   </data>
   <data name="MenuSummary" xml:space="preserve">
     <value>概要</value>
+  </data>
+  <data name="MenuTarget" xml:space="preserve">
+    <value>対象ページ</value>
   </data>
   <data name="MenuTitle" xml:space="preserve">
     <value>タイトル</value>
@@ -411,7 +435,7 @@
   <data name="MessageRangeError" xml:space="preserve">
     <value>削除範囲の解析に失敗しました。不適切な文字が含まれていないか確認して下さい。</value>
   </data>
-  <data name="MessageRemoveRange" xml:space="preserve">
+  <data name="MessageRangeExample" xml:space="preserve">
     <value>例. 1,2,4-7,9</value>
   </data>
   <data name="MessageSaved" xml:space="preserve">

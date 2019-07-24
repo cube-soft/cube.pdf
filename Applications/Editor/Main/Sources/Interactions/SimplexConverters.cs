@@ -243,6 +243,10 @@ namespace Cube.Pdf.Editor
         }.TryGetValue(e.TryCast<EncryptionMethod>(), out var dest) ? dest : "Unknown") { }
     }
 
+    #endregion
+
+    #region ViewerOptionsConverter
+
     /* --------------------------------------------------------------------- */
     ///
     /// ViewerOptionsConverter
