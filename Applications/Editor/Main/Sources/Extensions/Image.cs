@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.Mixin.Syntax;
-using Cube.Pdf.Itext;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -97,25 +96,20 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Extract
+        /// GetSelectedIndices
         ///
         /// <summary>
-        /// Saves the selected PDF objects as the specified filename.
+        /// Gets the copied collection that represents the selected
+        /// indices.
         /// </summary>
         ///
         /// <param name="src">Source collection.</param>
-        /// <param name="dest">Save path.</param>
+        ///
+        /// <returns>Selected indices.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Extract(this ImageCollection src, string dest)
-        {
-            var pages = GetCopiedIndices(src).OrderBy(i => i).Select(i => src[i].RawObject);
-            using (var writer = new DocumentWriter())
-            {
-                writer.Add(pages);
-                writer.Save(dest);
-            }
-        }
+        public static IList<int> GetSelectedIndices(this ImageCollection src) =>
+            src.Selection.Indices.Where(i => i >= 0 && i < src.Count).ToList();
 
         #region Undoable
 
@@ -181,7 +175,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static HistoryItem Remove(this ImageCollection src) =>
-            src.RemoveAt(GetCopiedIndices(src));
+            src.RemoveAt(src.GetSelectedIndices());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -226,7 +220,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static HistoryItem Rotate(this ImageCollection src, int degree)
         {
-            var indices = GetCopiedIndices(src);
+            var indices = src.GetSelectedIndices();
             return HistoryItem.CreateInvoke(
                 () => src.Rotate(indices,  degree),
                 () => src.Rotate(indices, -degree)
@@ -251,7 +245,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static HistoryItem Move(this ImageCollection src, int delta)
         {
-            var indices = GetCopiedIndices(src);
+            var indices = src.GetSelectedIndices();
             var cvt     = indices.Select(i => i + delta).ToList();
             return HistoryItem.CreateInvoke(
                 () => src.Move(indices, delta),
@@ -278,19 +272,6 @@ namespace Cube.Pdf.Editor
         private static IList<KeyValuePair<int, Page>> GetPair(ImageCollection src,
             IEnumerable<int> indices) =>
             indices.Select(i => KeyValuePair.Create(i, src[i].RawObject)).ToList();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetCopiedIndices
-        ///
-        /// <summary>
-        /// Gets the copied collection that represents the selected
-        /// indices.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static IList<int> GetCopiedIndices(ImageCollection src) =>
-            src.Selection.Indices.Where(i => i >= 0 && i < src.Count).ToList();
 
         #endregion
     }

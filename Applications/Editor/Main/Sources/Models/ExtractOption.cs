@@ -43,6 +43,20 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ExtractOption(IO io) : this(io, Invoker.Vanilla) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ExtractOption
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ExtractOption class with
+        /// the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="io">I/O handler.</param>
         /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */

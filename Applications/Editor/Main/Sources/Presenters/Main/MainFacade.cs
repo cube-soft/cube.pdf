@@ -182,30 +182,16 @@ namespace Cube.Pdf.Editor
         /// Extract
         ///
         /// <summary>
-        /// Saves the selected PDF objects as the specified filename.
-        /// </summary>
-        ///
-        /// <param name="dest">Save path.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Extract(string dest) => Invoke(() => Value.Images.Extract(dest),
-            Properties.Resources.MessageSaved, dest);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Extract
-        ///
-        /// <summary>
         /// Extract pages with the specified settings.
         /// </summary>
         ///
         /// <param name="src">Extract options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Extract(ExtractOption src) => Invoke(() =>
-        {
-            // TODO: implementations
-        }, Properties.Resources.MessageSaved, src.Destination);
+        public void Extract(ExtractOption src) => Invoke(
+            () => this.ExtractAs(src),
+            Properties.Resources.MessageSaved, src.Destination
+        );
 
         /* ----------------------------------------------------------------- */
         ///
