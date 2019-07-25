@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Mixin.Observing;
 using Cube.Mixin.Syntax;
 using Cube.Xui;
@@ -50,14 +51,16 @@ namespace Cube.Pdf.Editor
         /// <param name="callback">Callback method when applied.</param>
         /// <param name="selection">Page selection.</param>
         /// <param name="count">Number of pages.</param>
+        /// <param name="io">I/O handler.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ExtractViewModel(Action<ExtractOption> callback,
             ImageSelection selection,
             int count,
+            IO io,
             SynchronizationContext context
-        ) : base(new ExtractFacade(selection, count, new ContextInvoker(context, false)),
+        ) : base(new ExtractFacade(selection, count, io, new ContextInvoker(context, false)),
             new Aggregator(),
             context
         ) {
@@ -99,7 +102,12 @@ namespace Cube.Pdf.Editor
             () => Facade.Value.Destination,
             e  => Facade.Value.Destination = e,
             GetInvoker(false)
-        ));
+        ) {
+            Command = new DelegateCommand(() => Send(
+                MessageFactory.CreateForExtract(),
+                e => Facade.Value.Destination = e
+            ))
+        }).Associate(Facade.Value, nameof(ExtractOption.Destination));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -115,7 +123,7 @@ namespace Cube.Pdf.Editor
             () => Facade.Value.Format,
             e  => Facade.Value.Format = e,
             GetInvoker(false)
-        ));
+        )).Associate(Facade.Value, nameof(ExtractOption.Format));
 
         /* ----------------------------------------------------------------- */
         ///

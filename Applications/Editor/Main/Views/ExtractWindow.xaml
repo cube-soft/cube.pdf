@@ -47,6 +47,7 @@
     <i:Interaction.Behaviors>
         <xb:CloseBehavior />
         <xb:DialogBehavior />
+        <xb:SaveFileBehavior />
     </i:Interaction.Behaviors>
 
     <!-- **********************************************************************
@@ -84,11 +85,12 @@
                 Grid.Row="0"
                 Grid.Column="0" />
             <TextBox
-                Text="{Binding Destination.Value, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Destination.Value}"
                 Grid.Row="0"
                 Grid.Column="1" />
             <Button
                 Content="..."
+                Command="{Binding Destination.Command}"
                 Grid.Row="0"
                 Grid.Column="2"
                 Margin="4,3,0,4" />

@@ -319,6 +319,7 @@ namespace Cube.Pdf.Editor
             e => Facade.Extract(e),
             Facade.Value.Images.Selection,
             Facade.Value.Count,
+            Facade.Value.IO,
             Context
         ));
 

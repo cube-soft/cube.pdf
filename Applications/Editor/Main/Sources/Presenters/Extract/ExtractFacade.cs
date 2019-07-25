@@ -16,7 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
+using Cube.Mixin.String;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.Editor
 {
@@ -45,11 +48,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="selection">Page selection.</param>
         /// <param name="count">Number of pages.</param>
+        /// <param name="io">I/O handler.</param>
         /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ExtractFacade(ImageSelection selection, int count, Invoker invoker)
+        public ExtractFacade(ImageSelection selection, int count, IO io, Invoker invoker)
         {
+            _io       = io;
             Count     = count;
             Selection = selection;
             Value     = Create(selection, invoker);
@@ -120,12 +125,77 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static ExtractOption Create(ImageSelection src, Invoker invoker) =>
-            new ExtractOption(invoker)
+        private ExtractOption Create(ImageSelection src, Invoker invoker)
         {
-            Target = src.Count > 0 ? ExtractTarget.Selected : ExtractTarget.All,
-        };
+            var dest = new ExtractOption(invoker) {
+                Target = src.Count > 0 ? ExtractTarget.Selected : ExtractTarget.All,
+            };
 
+            dest.PropertyChanged += (s, e) => {
+                switch (e.PropertyName)
+                {
+                    case nameof(ExtractOption.Format):
+                        SetDestination(Value.Format);
+                        break;
+                    case nameof(ExtractOption.Destination):
+                        SetFormat(Value.Destination);
+                        break;
+                }
+            };
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetFormat
+        ///
+        /// <summary>
+        /// Sets the Format property according to the specified value.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetFormat(string src)
+        {
+            var fi = GetEntity(src);
+            if (fi == null || !fi.Extension.HasValue()) return;
+
+            try { Value.Format = Formats.First(e => fi.Extension.FuzzyEquals($".{e}")); }
+            catch { /* Not found */ }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetDestination
+        ///
+        /// <summary>
+        /// Sets the Destination property according to the specified value.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetDestination(ExtractFormat src)
+        {
+            var fi = GetEntity(Value.Destination);
+            if (fi == null || fi.Extension.FuzzyEquals($".{src}")) return;
+
+            var name = $"{fi.BaseName}.{src.ToString().ToLowerInvariant()}";
+            Value.Destination = _io.Combine(fi.DirectoryName, name);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEntity
+        ///
+        /// <summary>
+        /// Creates a new instance of the Entity class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Entity GetEntity(string src) => src.HasValue() ? _io.Get(src) : null;
+
+        #endregion
+
+        #region Fields
+        private readonly IO _io;
         #endregion
     }
 }

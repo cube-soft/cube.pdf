@@ -106,6 +106,29 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// CreateForExtract
+        ///
+        /// <summary>
+        /// Creates a message to show a SaveFileDialog dialog.
+        /// </summary>
+        ///
+        /// <returns>SaveFileMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static SaveFileMessage CreateForExtract() => new SaveFileMessage
+        {
+            Text            = Properties.Resources.MenuSaveAs,
+            OverwritePrompt = true,
+            CheckPathExists = false,
+            Filter          = new[]
+            {
+                new ExtensionFilter(Properties.Resources.FilterExtract, true, ".pdf", ".png"),
+                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
+            }.GetFilter(),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// CreateForSave
         ///
         /// <summary>
