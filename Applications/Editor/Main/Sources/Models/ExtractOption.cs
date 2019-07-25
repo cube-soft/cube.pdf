@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
+
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
@@ -40,10 +42,11 @@ namespace Cube.Pdf.Editor
         /// the specified arguments.
         /// </summary>
         ///
+        /// <param name="io">I/O handler.</param>
         /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ExtractOption(Invoker invoker) : base(invoker) { }
+        public ExtractOption(IO io, Invoker invoker) : base(invoker) { IO = io; }
 
         #endregion
 
@@ -124,6 +127,17 @@ namespace Cube.Pdf.Editor
             get => GetProperty<bool>();
             set => SetProperty(value);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IO
+        ///
+        /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO { get; }
 
         #endregion
 

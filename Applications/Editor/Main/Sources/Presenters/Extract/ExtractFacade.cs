@@ -54,10 +54,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ExtractFacade(ImageSelection selection, int count, IO io, Invoker invoker)
         {
-            _io       = io;
             Count     = count;
             Selection = selection;
-            Value     = Create(selection, invoker);
+            Value     = Create(selection, io, invoker);
         }
 
         #endregion
@@ -125,11 +124,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ExtractOption Create(ImageSelection src, Invoker invoker)
+        private ExtractOption Create(ImageSelection src, IO io, Invoker invoker)
         {
-            var dest = new ExtractOption(invoker) {
-                Target = src.Count > 0 ? ExtractTarget.Selected : ExtractTarget.All,
-            };
+            var target = src.Count > 0 ? ExtractTarget.Selected : ExtractTarget.All;
+            var dest   = new ExtractOption(io, invoker) { Target = target };
 
             dest.PropertyChanged += (s, e) => {
                 switch (e.PropertyName)
@@ -178,7 +176,7 @@ namespace Cube.Pdf.Editor
             if (fi == null || fi.Extension.FuzzyEquals($".{src}")) return;
 
             var name = $"{fi.BaseName}.{src.ToString().ToLowerInvariant()}";
-            Value.Destination = _io.Combine(fi.DirectoryName, name);
+            Value.Destination = Value.IO.Combine(fi.DirectoryName, name);
         }
 
         /* ----------------------------------------------------------------- */
@@ -190,12 +188,8 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Entity GetEntity(string src) => src.HasValue() ? _io.Get(src) : null;
+        private Entity GetEntity(string src) => src.HasValue() ? Value.IO.Get(src) : null;
 
-        #endregion
-
-        #region Fields
-        private readonly IO _io;
         #endregion
     }
 }
