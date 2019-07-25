@@ -118,40 +118,6 @@ namespace Cube.Pdf.Editor
 
     #endregion
 
-    #region LanguageConverter
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// LanguageConverter
-    ///
-    /// <summary>
-    /// Provides functionality to convert a Language value.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class LanguageConverter : SimplexConverter
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LanguageConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the LanguageConverter
-        /// class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public LanguageConverter() : base(e => new Dictionary<Language, string>
-            {
-                { Language.Auto,     Properties.Resources.MenuLanguageAuto     },
-                { Language.English,  Properties.Resources.MenuLanguageEnglish  },
-                { Language.Japanese, Properties.Resources.MenuLanguageJapanese },
-            }.TryGetValue(e.TryCast<Language>(), out var dest) ? dest : Properties.Resources.MenuLanguageAuto
-        ) { }
-    }
-
-    #endregion
-
     #region ByteConverter
 
     /* --------------------------------------------------------------------- */

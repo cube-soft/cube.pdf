@@ -249,15 +249,6 @@
   <data name="MenuLanguage" xml:space="preserve">
     <value>表示言語</value>
   </data>
-  <data name="MenuLanguageAuto" xml:space="preserve">
-    <value>Auto</value>
-  </data>
-  <data name="MenuLanguageEnglish" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="MenuLanguageJapanese" xml:space="preserve">
-    <value>Japanese</value>
-  </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
     <value>最終更新日時</value>
   </data>

@@ -131,25 +131,6 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
         #endregion
 
-        #region LanguageConverter
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LanguageConverter
-        ///
-        /// <summary>
-        /// Executes the test of the LanguageConverter class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase(Language.Auto,     Language.English,  ExpectedResult = "Auto")]
-        [TestCase(Language.English,  Language.English,  ExpectedResult = "English")]
-        [TestCase(Language.Japanese, Language.Japanese, ExpectedResult = "Japanese")]
-        public string LanguageConverter(Language src, Language lang) =>
-            Convert<string>(new LanguageConverter(), src, lang);
-
-        #endregion
-
         #region ByteConverter
 
         /* ----------------------------------------------------------------- */

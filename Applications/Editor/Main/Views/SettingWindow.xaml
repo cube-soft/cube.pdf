@@ -124,13 +124,7 @@
                 ItemsSource="{Binding Languages}"
                 SelectedValue="{Binding Language.Value, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
                 Grid.Column="1"
-                Grid.Row="4">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={my:LanguageConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+                Grid.Row="4" />
         </Grid>
 
         <!-- ******************************************************************
