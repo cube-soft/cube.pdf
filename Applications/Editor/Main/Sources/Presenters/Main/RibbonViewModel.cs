@@ -369,7 +369,7 @@ namespace Cube.Pdf.Editor
             () => !Facade.Value.Busy,
             GetInvoker(false)
         ) {
-            Command = IsSelected(() => SendSave(Facade.ExtractAs))
+            Command = IsSelected(() => SendSave(Facade.Extract))
         }.Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source)));
 
         /* ----------------------------------------------------------------- */

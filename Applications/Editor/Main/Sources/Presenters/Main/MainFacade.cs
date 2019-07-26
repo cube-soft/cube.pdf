@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using System;
@@ -58,11 +59,11 @@ namespace Cube.Pdf.Editor
             settings.Load();
             settings.PropertyChanged += WhenSettingChanged;
 
-            _docs    = new DocumentFolder(settings.IO, () => Value.Query);
-            Settings = settings;
-            Backup   = new Backup(settings.IO);
-            Value    = new MainBindable(
-                new ImageCollection(e => _docs?.GetOrAdd(e), new ContextInvoker(context, true)),
+            Documents = new DocumentFolder(settings.IO, () => Value.Query);
+            Settings  = settings;
+            Backup    = new Backup(settings.IO);
+            Value     = new MainBindable(
+                new ImageCollection(e => Documents?.GetOrAdd(e), new ContextInvoker(context, true)),
                 settings,
                 new ContextInvoker(context, false)
             );
@@ -105,6 +106,17 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Backup Backup { get; }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Documents
+        ///
+        /// <summary>
+        /// Gets the collection of document renderer.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentFolder Documents { get; private set; }
+
         #endregion
 
         #region Methods
@@ -127,9 +139,26 @@ namespace Cube.Pdf.Editor
             else Invoke(() =>
             {
                 Value.Set(Properties.Resources.MessageLoading, src);
-                this.Open(_docs.GetOrAdd(src));
+                this.Open(Documents.GetOrAdd(src));
             }, "");
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ReOpen
+        ///
+        /// <summary>
+        /// Resets some inner fields.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ReOpen(string src) => Invoke(() => {
+            var doc = Documents.GetOrAdd(src, Value.Encryption.OwnerPassword);
+            var items = doc.Pages.Select((v, i) => new { Value = v, Index = i });
+            foreach (var e in items) Value.Images[e.Index].RawObject = e.Value;
+            Value.Source = doc.File;
+            Value.History.Clear();
+        }, "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -144,14 +173,11 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Close(bool save)
         {
-            if (save) Save(Value.Source.FullName, false);
+            if (save) this.Save(Value.Source.FullName, false);
             Invoke(() =>
             {
-                _docs.Clear();
+                Documents.Clear();
                 this.Close();
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
             }, "");
         }
 
@@ -163,35 +189,18 @@ namespace Cube.Pdf.Editor
         /// Saves the PDF document to the specified file path.
         /// </summary>
         ///
-        /// <param name="dest">File path.</param>
-        /// <param name="reopen">
-        /// Value indicating whether restructuring some inner fields
-        /// after saving.
-        /// </param>
+        /// <param name="src">Source reader.</param>
+        /// <param name="options">Save options.</param>
+        /// <param name="prev">Action to be invoked before saving.</param>
+        /// <param name="next">Action to be invoked after saving.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save(string dest, bool reopen) => Invoke(() =>
+        public void Save(IDocumentReader src, SaveOption options, Action<Entity> prev, Action<Entity> next) => Invoke(() =>
         {
-            Value.Set(Properties.Resources.MessageSaving, dest);
-            this.Save(Settings.IO.Get(dest), () => _docs.Clear());
-            if (reopen) this.ReOpen(_docs.GetOrAdd(dest, Value.Encryption.OwnerPassword));
-        }, "");
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Extract
-        ///
-        /// <summary>
-        /// Extract pages with the specified settings.
-        /// </summary>
-        ///
-        /// <param name="src">Extract options.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Extract(SaveOption src) => Invoke(
-            () => this.ExtractAs(src),
-            Properties.Resources.MessageSaved, src.Destination
-        );
+            var reader = src ?? Value.Source.GetItexReader(Value.Query, Value.IO);
+            Value.Set(src.Metadata, src.Encryption);
+            using (var dest = new DocumentWriter(reader, Value.Images, options)) dest.Save(prev, next);
+        }, Properties.Resources.MessageSaving, options.Destination);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -237,7 +246,7 @@ namespace Cube.Pdf.Editor
                 {
                     Value.Set(Properties.Resources.MessageLoading, e);
                     if (!this.CanInsert(e)) return new Page[0];
-                    else if (e.IsPdf()) return _docs.GetOrAdd(e).Pages;
+                    else if (e.IsPdf()) return Documents.GetOrAdd(e).Pages;
                     else return Settings.IO.GetImagePages(e);
                 })
             ), "");
@@ -402,7 +411,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            Interlocked.Exchange(ref _docs, null)?.Clear();
+            var docs = Documents;
+            Documents = null;
+            docs?.Clear();
             this.Close();
             if (disposing) Value.Images.Dispose();
         }
@@ -430,7 +441,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action, string format, params object[] args) => Value.Invoke(() =>
         {
-            if (_docs == null) return;
+            if (Documents == null) return;
             action();
             Value.Set(format, args);
         });
@@ -457,10 +468,6 @@ namespace Cube.Pdf.Editor
             if (dic.TryGetValue(name, out var action)) action();
         }
 
-        #endregion
-
-        #region Fields
-        private DocumentFolder _docs;
         #endregion
     }
 }

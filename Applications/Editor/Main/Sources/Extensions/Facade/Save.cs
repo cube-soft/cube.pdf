@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using System;
-using System.Linq;
 
 namespace Cube.Pdf.Editor
 {
@@ -54,39 +53,94 @@ namespace Cube.Pdf.Editor
         /// Save
         ///
         /// <summary>
+        /// Saves the PDF document to the specified file path.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="dest">Path to save.</param>
+        /// <param name="reopen">
+        /// Value indicating whether to reopen the document.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Save(this MainFacade src, string dest, bool reopen) => src.Save(
+            dest,
+            e => { src.Backup.Invoke(e); src.Documents?.Clear(); },
+            e => { if (reopen) src.ReOpen(e.FullName); }
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
         /// Save the PDF document
         /// </summary>
         ///
         /// <param name="src">Source object.</param>
         /// <param name="dest">Saving file information.</param>
-        /// <param name="callback">User action.</param>
+        /// <param name="prev">Action to be invoked before saving.</param>
+        /// <param name="next">Action to be invoked after saving.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Save(this MainFacade src, Entity dest, Action callback)
+        public static void Save(this MainFacade src, string dest, Action<Entity> prev, Action<Entity> next)
         {
-            var data = src.Value;
-            var tmp  = data.IO.Combine(dest.DirectoryName, Guid.NewGuid().ToString("D"));
+            var data   = src.Value;
+            var reader = data.Source.GetItexReader(data.Query, data.IO);
+            data.Set(reader.Metadata, reader.Encryption);
 
-            try
+            src.Save(reader, new SaveOption(data.IO)
             {
-                var reader = data.Source.GetItexReader(data.Query, data.IO);
-                data.Set(reader.Metadata, reader.Encryption);
-
-                using (var writer = new Itext.DocumentWriter())
-                {
-                    writer.Add(reader.Attachments);
-                    writer.Add(data.Images.Select(e => e.RawObject), reader);
-                    writer.Set(data.Metadata);
-                    writer.Set(data.Encryption);
-                    writer.Save(tmp);
-                }
-
-                callback();
-                src.Backup.Invoke(dest);
-                data.IO.Copy(tmp, dest.FullName, true);
-            }
-            finally { _ = data.IO.TryDelete(tmp); }
+                Target      = SaveTarget.All,
+                Split       = false,
+                Destination = dest,
+                Metadata    = data.Metadata,
+                Encryption  = data.Encryption,
+                Attachments = reader.Attachments,
+            }, prev, next);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Extract
+        ///
+        /// <summary>
+        /// Extracts PDF pages saves to a file with the specified options.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="options">Save options.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Extract(this MainFacade src, SaveOption options)
+        {
+            var data   = src.Value;
+            var reader = data.Source.GetItexReader(data.Query, data.IO);
+            data.Set(reader.Metadata, reader.Encryption);
+            src.Save(reader, options, e => { }, e => { });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Extract
+        ///
+        /// <summary>
+        /// Extracts the selected PDF pages and saves to the specified
+        /// file.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="dest">Path to save.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Extract(this MainFacade src, string dest) =>
+            src.Extract(new SaveOption(src.Value.IO)
+        {
+            Destination = dest,
+            Format      = SaveFormat.Pdf,
+            Target      = SaveTarget.Selected,
+            Split       = false,
+        });
 
         /* ----------------------------------------------------------------- */
         ///

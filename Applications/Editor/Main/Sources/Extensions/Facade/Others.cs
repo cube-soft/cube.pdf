@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Editor
@@ -74,6 +75,10 @@ namespace Cube.Pdf.Editor
 
             src.Value.History.Clear();
             src.Value.Images.Clear();
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
 
         /* ----------------------------------------------------------------- */

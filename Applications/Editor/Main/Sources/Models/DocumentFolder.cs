@@ -34,17 +34,17 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class DocumentFolder
+    public sealed class DocumentFolder
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DocumentCollection
+        /// DocumentFolder
         ///
         /// <summary>
-        /// Initializes a new instance of the DocumentCollection class
-        /// with the specified arguments.
+        /// Initializes a new instance of the DocumentFolder class with
+        /// the specified arguments.
         /// </summary>
         ///
         /// <param name="io">I/O handler.</param>

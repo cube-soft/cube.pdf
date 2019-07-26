@@ -19,6 +19,7 @@
 using Cube.FileSystem;
 using Cube.Mixin.String;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cube.Pdf.Editor
@@ -142,6 +143,52 @@ namespace Cube.Pdf.Editor
         public bool Split
         {
             get => GetProperty<bool>();
+            set => SetProperty(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Gets or sets the PDF metadata.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata Metadata
+        {
+            get => GetProperty<Metadata>();
+            set => SetProperty(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// Gets or sets the PDF encryption information.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encryption Encryption
+        {
+            get => GetProperty<Encryption>();
+            set => SetProperty(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments
+        ///
+        /// <summary>
+        /// Gets or sets the collection of objects to attach the PDF
+        /// document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Attachment> Attachments
+        {
+            get => GetProperty<IEnumerable<Attachment>>();
             set => SetProperty(value);
         }
 

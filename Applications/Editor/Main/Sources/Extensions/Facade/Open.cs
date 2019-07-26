@@ -19,7 +19,6 @@
 using Cube.FileSystem;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 
 namespace Cube.Pdf.Editor
@@ -104,26 +103,6 @@ namespace Cube.Pdf.Editor
             FileName  = Assembly.GetExecutingAssembly().Location,
             Arguments = args
         });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ReOpen
-        ///
-        /// <summary>
-        /// Resets some properties with the specified new PDF document.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        /// <param name="doc">New PDF document.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void ReOpen(this MainFacade src, IDocumentReader doc)
-        {
-            var items = doc.Pages.Select((v, i) => new { Value = v, Index = i });
-            foreach (var e in items) src.Value.Images[e.Index].RawObject = e.Value;
-            src.Value.Source = doc.File;
-            src.Value.History.Clear();
-        }
 
         #endregion
     }
