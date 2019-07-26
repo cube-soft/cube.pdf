@@ -17,9 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Mixin.String;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Cube.Pdf.Editor
 {
@@ -90,26 +87,11 @@ namespace Cube.Pdf.Editor
         /// Value
         ///
         /// <summary>
-        /// Gets the extract options.
+        /// Gets the save options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ExtractOption Value { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Formats
-        ///
-        /// <summary>
-        /// Gets the supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<ExtractFormat> Formats { get; } = new[]
-        {
-            ExtractFormat.Pdf,
-            ExtractFormat.Png,
-        };
+        public SaveOption Value { get; }
 
         #endregion
 
@@ -120,75 +102,15 @@ namespace Cube.Pdf.Editor
         /// Create
         ///
         /// <summary>
-        /// Creates a new instance of the ExtractOption class.
+        /// Creates a new instance of the SaveOption class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ExtractOption Create(ImageSelection src, IO io, Invoker invoker)
+        private SaveOption Create(ImageSelection src, IO io, Invoker invoker)
         {
-            var target = src.Count > 0 ? ExtractTarget.Selected : ExtractTarget.All;
-            var dest   = new ExtractOption(io, invoker) { Target = target };
-
-            dest.PropertyChanged += (s, e) => {
-                switch (e.PropertyName)
-                {
-                    case nameof(ExtractOption.Format):
-                        SetDestination(Value.Format);
-                        break;
-                    case nameof(ExtractOption.Destination):
-                        SetFormat(Value.Destination);
-                        break;
-                }
-            };
-            return dest;
+            var target = src.Count > 0 ? SaveTarget.Selected : SaveTarget.All;
+            return new SaveOption(io, invoker) { Target = target };
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetFormat
-        ///
-        /// <summary>
-        /// Sets the Format property according to the specified value.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetFormat(string src)
-        {
-            var fi = GetEntity(src);
-            if (fi == null || !fi.Extension.HasValue()) return;
-
-            try { Value.Format = Formats.First(e => fi.Extension.FuzzyEquals($".{e}")); }
-            catch { /* Not found */ }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetDestination
-        ///
-        /// <summary>
-        /// Sets the Destination property according to the specified value.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetDestination(ExtractFormat src)
-        {
-            var fi = GetEntity(Value.Destination);
-            if (fi == null || fi.Extension.FuzzyEquals($".{src}")) return;
-
-            var name = $"{fi.BaseName}.{src.ToString().ToLowerInvariant()}";
-            Value.Destination = Value.IO.Combine(fi.DirectoryName, name);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEntity
-        ///
-        /// <summary>
-        /// Creates a new instance of the Entity class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Entity GetEntity(string src) => src.HasValue() ? Value.IO.Get(src) : null;
 
         #endregion
     }

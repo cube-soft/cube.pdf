@@ -50,11 +50,11 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static void ExtractAs(this MainFacade src, string dest) =>
-            src.Extract(new ExtractOption(src.Value.IO)
+            src.Extract(new SaveOption(src.Value.IO)
         {
             Destination = dest,
-            Format      = ExtractFormat.Pdf,
-            Target      = ExtractTarget.Selected,
+            Format      = SaveFormat.Pdf,
+            Target      = SaveTarget.Selected,
             Split       = false,
         });
 
@@ -70,9 +70,9 @@ namespace Cube.Pdf.Editor
         /// <param name="options">Extract options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void ExtractAs(this MainFacade src, ExtractOption options)
+        public static void ExtractAs(this MainFacade src, SaveOption options)
         {
-            if (options.Format == ExtractFormat.Pdf)
+            if (options.Format == SaveFormat.Pdf)
             {
                 if (options.Split) src.SplitAsDocument(options);
                 else src.ExtractAsDocument(options);
@@ -93,7 +93,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void ExtractAsDocument(this MainFacade src, ExtractOption option)
+        private static void ExtractAsDocument(this MainFacade src, SaveOption option)
         {
             using (var writer = new DocumentWriter())
             {
@@ -114,7 +114,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void SplitAsDocument(this MainFacade src, ExtractOption option)
+        private static void SplitAsDocument(this MainFacade src, SaveOption option)
         {
             throw new System.NotImplementedException();
         }
@@ -129,7 +129,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void SplitAsImage(this MainFacade src, ExtractOption option)
+        private static void SplitAsImage(this MainFacade src, SaveOption option)
         {
             throw new System.NotImplementedException();
         }
@@ -143,9 +143,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static IEnumerable<int> GetTarget(this MainFacade src, ExtractOption e) =>
-            e.Target == ExtractTarget.All      ? src.Value.Count.Make(i => i) :
-            e.Target == ExtractTarget.Selected ? src.Value.Images.GetSelectedIndices() :
+        private static IEnumerable<int> GetTarget(this MainFacade src, SaveOption e) =>
+            e.Target == SaveTarget.All      ? src.Value.Count.Make(i => i) :
+            e.Target == SaveTarget.Selected ? src.Value.Images.GetSelectedIndices() :
             new Range(e.Range, src.Value.Count).Select(i => i - 1);
 
         #endregion

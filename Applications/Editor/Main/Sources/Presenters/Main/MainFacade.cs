@@ -188,7 +188,7 @@ namespace Cube.Pdf.Editor
         /// <param name="src">Extract options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Extract(ExtractOption src) => Invoke(
+        public void Extract(SaveOption src) => Invoke(
             () => this.ExtractAs(src),
             Properties.Resources.MessageSaved, src.Destination
         );

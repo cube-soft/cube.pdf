@@ -17,50 +17,53 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.String;
+using System;
+using System.Linq;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ExtractOption
+    /// SaveOption
     ///
     /// <summary>
     /// Represents the extract option.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class ExtractOption : ObservableBase
+    public sealed class SaveOption : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ExtractOption
+        /// SaveOption
         ///
         /// <summary>
-        /// Initializes a new instance of the ExtractOption class with
-        /// the specified arguments.
+        /// Initializes a new instance of the SaveOption class with the
+        /// specified arguments.
         /// </summary>
         ///
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ExtractOption(IO io) : this(io, Invoker.Vanilla) { }
+        public SaveOption(IO io) : this(io, Invoker.Vanilla) { }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ExtractOption
+        /// SaveOption
         ///
         /// <summary>
-        /// Initializes a new instance of the ExtractOption class with
-        /// the specified arguments.
+        /// Initializes a new instance of the SaveOption class with the
+        /// specified arguments.
         /// </summary>
         ///
         /// <param name="io">I/O handler.</param>
         /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ExtractOption(IO io, Invoker invoker) : base(invoker) { IO = io; }
+        public SaveOption(IO io, Invoker invoker) : base(invoker) { IO = io; }
 
         #endregion
 
@@ -71,14 +74,14 @@ namespace Cube.Pdf.Editor
         /// Destination
         ///
         /// <summary>
-        /// Gets or sets the path to save the extracted pages.
+        /// Gets or sets the path to save the target pages.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public string Destination
         {
             get => GetProperty<string>();
-            set => SetProperty(value);
+            set { if (SetProperty(value)) SetFormat(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -90,10 +93,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ExtractFormat Format
+        public SaveFormat Format
         {
-            get => GetProperty<ExtractFormat>();
-            set => SetProperty(value);
+            get => GetProperty<SaveFormat>();
+            set { if (SetProperty(value)) SetDestination(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -105,9 +108,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ExtractTarget Target
+        public SaveTarget Target
         {
-            get => GetProperty<ExtractTarget>();
+            get => GetProperty<SaveTarget>();
             set => SetProperty(value);
         }
 
@@ -174,19 +177,71 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetFormat
+        ///
+        /// <summary>
+        /// Sets the Format property according to the Destination.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetFormat()
+        {
+            try
+            {
+                var fi = GetEntity(Destination);
+                if (fi == null || !fi.Extension.HasValue()) return;
+
+                Format = Enum.GetValues(typeof(SaveFormat))
+                             .OfType<SaveFormat>()
+                             .First(e => fi.Extension.FuzzyEquals($".{e}"));
+            }
+            catch { /* Not found */ }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetDestination
+        ///
+        /// <summary>
+        /// Sets the Destination property according to the Format.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetDestination()
+        {
+            var fi = GetEntity(Destination);
+            if (fi == null || fi.Extension.FuzzyEquals($".{Format}")) return;
+
+            var name = $"{fi.BaseName}.{Format.ToString().ToLowerInvariant()}";
+            Destination = IO.Combine(fi.DirectoryName, name);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEntity
+        ///
+        /// <summary>
+        /// Creates a new instance of the Entity class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Entity GetEntity(string src) => src.HasValue() ? IO.Get(src) : null;
+
         #endregion
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ExtractFormat
+    /// SaveFormat
     ///
     /// <summary>
     /// Specifies the saving formats.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public enum ExtractFormat
+    public enum SaveFormat
     {
         /// <summary>PDF</summary>
         Pdf,
@@ -196,14 +251,14 @@ namespace Cube.Pdf.Editor
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ExtractTarget
+    /// SaveTarget
     ///
     /// <summary>
-    /// Specifies the target to extract.
+    /// Specifies the target pages to be saved.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public enum ExtractTarget
+    public enum SaveTarget
     {
         /// <summary>All pages</summary>
         All,

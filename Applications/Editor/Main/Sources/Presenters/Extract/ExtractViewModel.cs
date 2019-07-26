@@ -22,6 +22,7 @@ using Cube.Mixin.Syntax;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -55,7 +56,7 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ExtractViewModel(Action<ExtractOption> callback,
+        public ExtractViewModel(Action<SaveOption> callback,
             ImageSelection selection,
             int count,
             IO io,
@@ -86,7 +87,8 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<ExtractFormat> Formats => Facade.Formats;
+        public IEnumerable<SaveFormat> Formats { get; } =
+            Enum.GetValues(typeof(SaveFormat)).OfType<SaveFormat>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -107,7 +109,7 @@ namespace Cube.Pdf.Editor
                 MessageFactory.CreateForExtract(),
                 e => Facade.Value.Destination = e
             ))
-        }).Associate(Facade.Value, nameof(ExtractOption.Destination));
+        }).Associate(Facade.Value, nameof(SaveOption.Destination));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -118,12 +120,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<ExtractFormat> Format => Get(() => new BindableElement<ExtractFormat>(
+        public IElement<SaveFormat> Format => Get(() => new BindableElement<SaveFormat>(
             () => Properties.Resources.MenuFormat,
             () => Facade.Value.Format,
             e  => Facade.Value.Format = e,
             GetInvoker(false)
-        )).Associate(Facade.Value, nameof(ExtractOption.Format));
+        )).Associate(Facade.Value, nameof(SaveOption.Format));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -156,10 +158,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> Selected => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuExtractSelected,
-            () => Facade.Value.Target == ExtractTarget.Selected,
-            e  => e.Then(() => Facade.Value.Target = ExtractTarget.Selected),
+            () => Facade.Value.Target == SaveTarget.Selected,
+            e  => e.Then(() => Facade.Value.Target = SaveTarget.Selected),
             GetInvoker(false)
-        )).Associate(Facade.Value, nameof(ExtractOption.Target));
+        )).Associate(Facade.Value, nameof(SaveOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -173,10 +175,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> All => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuExtractAll,
-            () => Facade.Value.Target == ExtractTarget.All,
-            e  => e.Then(() => Facade.Value.Target = ExtractTarget.All),
+            () => Facade.Value.Target == SaveTarget.All,
+            e  => e.Then(() => Facade.Value.Target = SaveTarget.All),
             GetInvoker(false)
-        )).Associate(Facade.Value, nameof(ExtractOption.Target));
+        )).Associate(Facade.Value, nameof(SaveOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -190,10 +192,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> Specified => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuExtractRange,
-            () => Facade.Value.Target == ExtractTarget.Range,
-            e  => e.Then(() => Facade.Value.Target = ExtractTarget.Range),
+            () => Facade.Value.Target == SaveTarget.Range,
+            e  => e.Then(() => Facade.Value.Target = SaveTarget.Range),
             GetInvoker(false)
-        )).Associate(Facade.Value, nameof(ExtractOption.Target));
+        )).Associate(Facade.Value, nameof(SaveOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -229,8 +231,8 @@ namespace Cube.Pdf.Editor
         ) {
             Command = new DelegateCommand(
                 () => { },
-                () => Facade.Value.Format == ExtractFormat.Pdf
-            ).Associate(Facade.Value, nameof(ExtractOption.Format))
+                () => Facade.Value.Format == SaveFormat.Pdf
+            ).Associate(Facade.Value, nameof(SaveOption.Format))
         });
 
         /* ----------------------------------------------------------------- */
