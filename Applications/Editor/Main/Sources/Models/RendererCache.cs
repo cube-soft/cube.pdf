@@ -27,23 +27,23 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentFolder
+    /// RendererCache
     ///
     /// <summary>
-    /// Represents a collection of PDF documents.
+    /// Represents a cache collection of renderer objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class DocumentFolder
+    public sealed class RendererCache
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DocumentFolder
+        /// RendererCache
         ///
         /// <summary>
-        /// Initializes a new instance of the DocumentFolder class with
+        /// Initializes a new instance of the RendererCache class with
         /// the specified arguments.
         /// </summary>
         ///
@@ -51,7 +51,7 @@ namespace Cube.Pdf.Editor
         /// <param name="query">Function to get the password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentFolder(IO io, Func<IQuery<string>> query)
+        public RendererCache(IO io, Func<IQuery<string>> query)
         {
             _io    = io;
             _query = query;
@@ -123,7 +123,7 @@ namespace Cube.Pdf.Editor
         /// Create
         ///
         /// <summary>
-        /// Creates a new instance of the DocumentReader class with the
+        /// Creates a new instance of the DocumentRenderer class with the
         /// specified arguments.
         /// </summary>
         ///

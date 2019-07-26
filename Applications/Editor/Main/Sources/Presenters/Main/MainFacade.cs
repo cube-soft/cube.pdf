@@ -59,11 +59,11 @@ namespace Cube.Pdf.Editor
             settings.Load();
             settings.PropertyChanged += WhenSettingChanged;
 
-            Documents = new DocumentFolder(settings.IO, () => Value.Query);
-            Settings  = settings;
-            Backup    = new Backup(settings.IO);
-            Value     = new MainBindable(
-                new ImageCollection(e => Documents?.GetOrAdd(e), new ContextInvoker(context, true)),
+            Settings = settings;
+            Cache    = new RendererCache(settings.IO, () => Value.Query);
+            Backup   = new Backup(settings.IO);
+            Value    = new MainBindable(
+                new ImageCollection(e => Cache?.GetOrAdd(e), new ContextInvoker(context, true)),
                 settings,
                 new ContextInvoker(context, false)
             );
@@ -86,7 +86,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Setting
+        /// Settings
         ///
         /// <summary>
         /// Gets user settings.
@@ -108,14 +108,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Documents
+        /// Cache
         ///
         /// <summary>
-        /// Gets the collection of document renderer.
+        /// Gets the collection of renderer objects.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentFolder Documents { get; private set; }
+        public RendererCache Cache { get; private set; }
 
         #endregion
 
@@ -136,10 +136,9 @@ namespace Cube.Pdf.Editor
         {
             if (!src.HasValue()) return;
             if (Value.Source != null) this.OpenProcess(src.Quote());
-            else Invoke(() =>
-            {
+            else Invoke(() => {
                 Value.Set(Properties.Resources.MessageLoading, src);
-                this.Open(Documents.GetOrAdd(src));
+                this.Open(Cache.GetOrAdd(src));
             }, "");
         }
 
@@ -153,7 +152,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void ReOpen(string src) => Invoke(() => {
-            var doc = Documents.GetOrAdd(src, Value.Encryption.OwnerPassword);
+            var doc   = Cache.GetOrAdd(src, Value.Encryption.OwnerPassword);
             var items = doc.Pages.Select((v, i) => new { Value = v, Index = i });
             foreach (var e in items) Value.Images[e.Index].RawObject = e.Value;
             Value.Source = doc.File;
@@ -171,15 +170,11 @@ namespace Cube.Pdf.Editor
         /// <param name="save">Save before closing.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Close(bool save)
+        public void Close(bool save) => Invoke(() =>
         {
             if (save) this.Save(Value.Source.FullName, false);
-            Invoke(() =>
-            {
-                Documents.Clear();
-                this.Close();
-            }, "");
-        }
+            Value.Clear(Cache);
+        }, "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -197,10 +192,11 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Save(IDocumentReader src, SaveOption options, Action<Entity> prev, Action<Entity> next) => Invoke(() =>
         {
-            var reader = src ?? Value.Source.GetItexReader(Value.Query, Value.IO);
-            Value.Set(src.Metadata, src.Encryption);
-            using (var dest = new DocumentWriter(reader, Value.Images, options)) dest.Save(prev, next);
-        }, Properties.Resources.MessageSaving, options.Destination);
+            Value.Set(Properties.Resources.MessageSaving, options.Destination);
+            var itext = src ?? Value.Source.GetItexReader(Value.Query, Value.IO);
+            Value.Set(itext.Metadata, itext.Encryption);
+            using (var dest = new SaveAction(itext, Value.Images, options)) dest.Invoke(prev, next);
+        }, "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -239,17 +235,16 @@ namespace Cube.Pdf.Editor
         /// <param name="src">Inserting files.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, IEnumerable<string> src) => Invoke(() =>
-            Value.Images.InsertAt(
-                Math.Min(Math.Max(index, 0), Value.Images.Count),
-                src.SelectMany(e =>
-                {
-                    Value.Set(Properties.Resources.MessageLoading, e);
-                    if (!this.CanInsert(e)) return new Page[0];
-                    else if (e.IsPdf()) return Documents.GetOrAdd(e).Pages;
-                    else return Settings.IO.GetImagePages(e);
-                })
-            ), "");
+        public void Insert(int index, IEnumerable<string> src) => Invoke(() => Value.Images.InsertAt(
+            Math.Min(Math.Max(index, 0), Value.Images.Count),
+            src.SelectMany(e =>
+            {
+                Value.Set(Properties.Resources.MessageLoading, e);
+                if (!this.CanInsert(e)) return new Page[0];
+                else if (e.IsPdf()) return Cache.GetOrAdd(e).Pages;
+                else return Settings.IO.GetImagePages(e);
+            })
+        ), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -323,7 +318,7 @@ namespace Cube.Pdf.Editor
         /// <param name="value">Metadata object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update(Metadata value) => Invoke(() => this.SetMetadata(value), "");
+        public void Update(Metadata value) => Invoke(() => Value.SetMetadata(value), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -336,7 +331,7 @@ namespace Cube.Pdf.Editor
         /// <param name="value">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update(Encryption value) => Invoke(() => this.SetEncryption(value), "");
+        public void Update(Encryption value) => Invoke(() => Value.SetEncryption(value), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -411,10 +406,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            var docs = Documents;
-            Documents = null;
-            docs?.Clear();
-            this.Close();
+            var cache = Cache;
+            Cache = null;
+            Value.Clear(cache);
             if (disposing) Value.Images.Dispose();
         }
 
@@ -441,7 +435,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action, string format, params object[] args) => Value.Invoke(() =>
         {
-            if (Documents == null) return;
+            if (Cache == null) return;
             action();
             Value.Set(format, args);
         });
@@ -457,15 +451,11 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void WhenSettingChanged(object s, PropertyChangedEventArgs e)
         {
-            var name = e.PropertyName;
-            var src  = Settings.Value;
-            var dic  = new Dictionary<string, Action>
-            {
+            var src = Settings.Value;
+            if (new Dictionary<string, Action> {
                 { nameof(src.ItemSize),  () => this.Zoom() },
                 { nameof(src.FrameOnly), () => Value.Images.Preferences.FrameOnly = src.FrameOnly },
-            };
-
-            if (dic.TryGetValue(name, out var action)) action();
+            }.TryGetValue(e.PropertyName, out var action)) action();
         }
 
         #endregion

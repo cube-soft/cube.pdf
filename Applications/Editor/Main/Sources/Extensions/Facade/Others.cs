@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
-using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Editor
@@ -54,31 +53,6 @@ namespace Cube.Pdf.Editor
             var path = args.FirstPdf();
             if (path.HasValue()) src.Open(path);
             src.Backup.Cleanup();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Close
-        ///
-        /// <summary>
-        /// Closes the current PDF document.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Close(this MainFacade src)
-        {
-            src.Value.Source     = null;
-            src.Value.Metadata   = null;
-            src.Value.Encryption = null;
-
-            src.Value.History.Clear();
-            src.Value.Images.Clear();
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
         }
 
         /* ----------------------------------------------------------------- */
@@ -153,56 +127,6 @@ namespace Cube.Pdf.Editor
             var ext = src.Value.IO.Get(path).Extension.ToLowerInvariant();
             var cmp = new List<string> { ".pdf", ".png", ".jpg", ".jpeg", ".bmp" };
             return cmp.Contains(ext);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetMetadata
-        ///
-        /// <summary>
-        /// Sets the Metadata object.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        /// <param name="value">Metadata object.</param>
-        ///
-        /// <returns>
-        /// History item to execute undo and redo actions.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static HistoryItem SetMetadata(this MainFacade src, Metadata value)
-        {
-            var prev = src.Value.Metadata;
-            return HistoryItem.CreateInvoke(
-                () => src.Value.Metadata = value,
-                () => src.Value.Metadata = prev
-            );
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetEncryption
-        ///
-        /// <summary>
-        /// Sets the Encryption object.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        /// <param name="value">Encryption object.</param>
-        ///
-        /// <returns>
-        /// History item to execute undo and redo actions.
-        /// </returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static HistoryItem SetEncryption(this MainFacade src, Encryption value)
-        {
-            var prev = src.Value.Encryption;
-            return HistoryItem.CreateInvoke(
-                () => src.Value.Encryption = value,
-                () => src.Value.Encryption = prev
-            );
         }
 
         #endregion

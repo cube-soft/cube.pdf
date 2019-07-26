@@ -21,29 +21,28 @@ using Cube.Mixin.Iteration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Engine = Cube.Pdf.Itext.DocumentWriter;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentWriter
+    /// SaveAction
     ///
     /// <summary>
     /// Provides functionality to save the document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class DocumentWriter : DisposableBase
+    public sealed class SaveAction : DisposableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DocumentWriter
+        /// SaveAction
         ///
         /// <summary>
-        /// Initializes a new instance of the DocumentWriter class with
+        /// Initializes a new instance of the SaveAction class with
         /// the specified arguments.
         /// </summary>
         ///
@@ -52,7 +51,7 @@ namespace Cube.Pdf.Editor
         /// <param name="options">Save options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentWriter(IDocumentReader src, ImageCollection images, SaveOption options)
+        public SaveAction(IDocumentReader src, ImageCollection images, SaveOption options)
         {
             Source  = src;
             Images  = images;
@@ -102,17 +101,17 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Save
+        /// Invoke
         ///
         /// <summary>
-        /// Saves PDF pages.
+        /// Invokes the save action.
         /// </summary>
         ///
         /// <param name="prev">Action to be invoked before saving.</param>
         /// <param name="next">Action to be invoked after saving.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save(Action<Entity> prev, Action<Entity> next)
+        public void Invoke(Action<Entity> prev, Action<Entity> next)
         {
             if (Options.Format == SaveFormat.Pdf)
             {
@@ -163,7 +162,7 @@ namespace Cube.Pdf.Editor
 
             try
             {
-                using (var writer = new Engine())
+                using (var writer = new Itext.DocumentWriter())
                 {
                     if (Options.Attachments != null) writer.Add(Options.Attachments);
                     if (Options.Metadata    != null) writer.Set(Options.Metadata);

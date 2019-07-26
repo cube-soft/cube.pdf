@@ -103,14 +103,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Extract() => Open("Sample.pdf", "", vm =>
         {
             Destination = Get(Args("Sample"));
-            Assert.That(IO.Exists(Destination), Is.False);
+            Assert.That(IO.Exists(Destination), Is.False, Destination);
 
-            Assert.That(vm.Ribbon.Extract.Command.CanExecute(), Is.False);
             vm.Value.Images.First().Selected = true;
             Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
 
             vm.Test(vm.Ribbon.Extract);
-            Assert.That(IO.Exists(Destination), Is.True);
+            Assert.That(IO.Exists(Destination), Is.True, Destination);
         });
 
         /* ----------------------------------------------------------------- */

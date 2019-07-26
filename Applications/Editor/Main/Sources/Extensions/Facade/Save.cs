@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Syntax;
 using System;
 
 namespace Cube.Pdf.Editor
@@ -32,7 +33,7 @@ namespace Cube.Pdf.Editor
     /* --------------------------------------------------------------------- */
     internal static class SaveExtension
     {
-        #region Save
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -65,7 +66,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Save(this MainFacade src, string dest, bool reopen) => src.Save(
             dest,
-            e => { src.Backup.Invoke(e); src.Documents?.Clear(); },
+            e => { src.Backup.Invoke(e); src.Cache?.Clear(); },
             e => { if (reopen) src.ReOpen(e.FullName); }
         );
 
@@ -85,20 +86,34 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Save(this MainFacade src, string dest, Action<Entity> prev, Action<Entity> next)
         {
-            var data   = src.Value;
-            var reader = data.Source.GetItexReader(data.Query, data.IO);
-            data.Set(reader.Metadata, reader.Encryption);
+            var obj   = src.Value;
+            var itext = obj.Source.GetItexReader(obj.Query, obj.IO);
+            obj.Set(itext.Metadata, itext.Encryption);
 
-            src.Save(reader, new SaveOption(data.IO)
+            src.Save(itext, new SaveOption(obj.IO)
             {
                 Target      = SaveTarget.All,
                 Split       = false,
                 Destination = dest,
-                Metadata    = data.Metadata,
-                Encryption  = data.Encryption,
-                Attachments = reader.Attachments,
+                Metadata    = obj.Metadata,
+                Encryption  = obj.Encryption,
+                Attachments = itext.Attachments,
             }, prev, next);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Overwrite
+        ///
+        /// <summary>
+        /// Overwrites the PDF document.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Overwrite(this MainFacade src) =>
+            src.Value.History.Undoable.Then(() => src.Save(src.Value.Source.FullName));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -112,13 +127,8 @@ namespace Cube.Pdf.Editor
         /// <param name="options">Save options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Extract(this MainFacade src, SaveOption options)
-        {
-            var data   = src.Value;
-            var reader = data.Source.GetItexReader(data.Query, data.IO);
-            data.Set(reader.Metadata, reader.Encryption);
-            src.Save(reader, options, e => { }, e => { });
-        }
+        public static void Extract(this MainFacade src, SaveOption options) =>
+            src.Save(null, options, e => src.Backup.Invoke(e), e => { });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -136,27 +146,10 @@ namespace Cube.Pdf.Editor
         public static void Extract(this MainFacade src, string dest) =>
             src.Extract(new SaveOption(src.Value.IO)
         {
-            Destination = dest,
-            Format      = SaveFormat.Pdf,
             Target      = SaveTarget.Selected,
             Split       = false,
+            Destination = dest,
         });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Overwrite
-        ///
-        /// <summary>
-        /// Overwrites the PDF document.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Overwrite(this MainFacade src)
-        {
-            if (src.Value.History.Undoable) src.Save(src.Value.Source.FullName);
-        }
 
         #endregion
     }
