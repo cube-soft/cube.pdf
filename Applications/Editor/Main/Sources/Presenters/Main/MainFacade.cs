@@ -49,13 +49,13 @@ namespace Cube.Pdf.Editor
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
+        /// <param name="folder">Folder of user settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingFolder settings, SynchronizationContext context)
+        public MainFacade(SettingFolder folder, SynchronizationContext context)
         {
-            Folder = Setup(settings);
+            Folder = Setup(folder);
             Cache  = new RendererCache(Folder.IO, () => Value.Query);
             Backup = new Backup(Folder.IO);
             Value  = new MainBindable(
@@ -131,7 +131,7 @@ namespace Cube.Pdf.Editor
         public void Open(string src)
         {
             if (!src.HasValue()) return;
-            if (Value.Source != null) this.OpenProcess(src.Quote());
+            if (Value.Source != null) typeof(App).OpenProcess(src.Quote());
             else Invoke(() => this.Load(src));
         }
 

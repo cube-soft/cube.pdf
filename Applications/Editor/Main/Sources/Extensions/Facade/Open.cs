@@ -20,7 +20,6 @@ using Cube.FileSystem;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 
 namespace Cube.Pdf.Editor
 {
@@ -29,13 +28,32 @@ namespace Cube.Pdf.Editor
     /// OpenExtension
     ///
     /// <summary>
-    /// Represents the extended methods to open documents.
+    /// Represents the extended methods to open and close documents.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     static class OpenExtension
     {
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OpenProcess
+        ///
+        /// <summary>
+        /// Starts a new process with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="args">User arguments.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void OpenProcess(this Type src, string args) =>
+            Process.Start(new ProcessStartInfo
+            {
+                FileName  = src.Assembly.Location,
+                Arguments = args
+            });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -63,29 +81,10 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OpenProcess
+        /// Load
         ///
         /// <summary>
-        /// Starts a new process with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        /// <param name="args">User arguments.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void OpenProcess(this MainFacade src, string args) =>
-            Process.Start(new ProcessStartInfo
-        {
-            FileName  = Assembly.GetExecutingAssembly().Location,
-            Arguments = args
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// Sets properties of the specified IDocumentReader.
+        /// Loads properties of the specified file.
         /// </summary>
         ///
         /// <param name="src">Source object.</param>
@@ -127,6 +126,24 @@ namespace Cube.Pdf.Editor
             foreach (var e in items) src.Value.Images[e.Index].RawObject = e.Value;
             src.Value.Source = doc.File;
             src.Value.History.Clear();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Close
+        ///
+        /// <summary>
+        /// Closes the current PDF document.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="save">Save before closing.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Close(this MainFacade src, bool save)
+        {
+            if (save) src.Save(src.Value.Source.FullName, false);
+            src.Close();
         }
 
         #endregion

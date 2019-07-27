@@ -57,24 +57,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Close
-        ///
-        /// <summary>
-        /// Closes the current PDF document.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        /// <param name="save">Save before closing.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Close(this MainFacade src, bool save)
-        {
-            if (save) src.Save(src.Value.Source.FullName, false);
-            src.Close();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Select
         ///
         /// <summary>
