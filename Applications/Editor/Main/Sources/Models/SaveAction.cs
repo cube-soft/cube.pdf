@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.Iteration;
+using Cube.Mixin.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -154,11 +155,14 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveAsDocument(Action<Entity> prev, Action<Entity> next)
-        {
-            var pages = GetTarget(Options).Select(i => Images[i].RawObject);
-            var dest  = Options.IO.Get(Options.Destination);
-            var tmp   = Options.IO.Combine(dest.DirectoryName, Guid.NewGuid().ToString("D"));
+        private void SaveAsDocument(string dest,
+            IDocumentReader src,
+            IEnumerable<Page> pages,
+            Action<Entity> prev,
+            Action<Entity> next
+        ) {
+            var fi  = Options.IO.Get(dest);
+            var tmp = Options.IO.Combine(fi.DirectoryName, Guid.NewGuid().ToString("D"));
 
             try
             {
@@ -167,17 +171,34 @@ namespace Cube.Pdf.Editor
                     if (Options.Attachments != null) writer.Add(Options.Attachments);
                     if (Options.Metadata    != null) writer.Set(Options.Metadata);
                     if (Options.Encryption  != null) writer.Set(Options.Encryption);
-
-                    writer.Add(pages, Source);
+                    if (src != null) writer.Add(pages, Source);
+                    else writer.Add(pages);
                     writer.Save(tmp);
                 }
 
-                prev(dest);
-                Options.IO.Copy(tmp, dest.FullName, true);
-                next(dest);
+                prev(fi);
+                Options.IO.Copy(tmp, fi.FullName, true);
+                next(fi);
             }
             finally { _ = Options.IO.TryDelete(tmp); }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SaveAsDocument
+        ///
+        /// <summary>
+        /// Saves pages as a PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SaveAsDocument(Action<Entity> prev, Action<Entity> next) => SaveAsDocument(
+            Options.Destination,
+            Source,
+            GetTarget(Options).Select(i => Images[i].RawObject),
+            prev,
+            next
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -190,7 +211,14 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SplitAsDocument(Action<Entity> prev, Action<Entity> next)
         {
-
+            var fi = Options.IO.Get(Options.Destination);
+            GetTarget(Options).Each(i => SaveAsDocument(
+                Convert(fi, i, Images.Count),
+                null,
+                new[] { Images[i].RawObject },
+                prev,
+                next
+            ));
         }
 
         /* ----------------------------------------------------------------- */
@@ -204,7 +232,23 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SplitAsImage(Action<Entity> prev, Action<Entity> next)
         {
+            // TODO
+        }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Gets the output path with the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string Convert(Entity src, int index, int count)
+        {
+            var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
+            var name  = string.Format("{0}-{1}{2}", src.BaseName, (index + 1).ToString(digit), src.Extension);
+            return Options.IO.Combine(src.DirectoryName, name);
         }
 
         /* ----------------------------------------------------------------- */
