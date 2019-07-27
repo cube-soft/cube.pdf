@@ -81,7 +81,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(e.Title,        Is.EqualTo("Removal details"));
                 Assert.That(e.Count.Text,   Is.EqualTo("Page count"));
                 Assert.That(e.Count.Value,  Is.AtLeast(1));
-                Assert.That(e.Range.Text,   Is.EqualTo("Removal range"));
+                Assert.That(e.Range.Text,   Is.EqualTo("Target pages"));
                 Assert.That(e.Range.Value,  Is.Empty);
                 Assert.That(e.Example.Text, Is.EqualTo("e.g. 1,2,4-7,9"));
 
