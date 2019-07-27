@@ -87,7 +87,7 @@ namespace Cube.Pdf.Editor
         public static void Save(this MainFacade src, string dest, Action<Entity> prev, Action<Entity> next)
         {
             var obj   = src.Value;
-            var itext = obj.Source.GetItexReader(obj.Query, obj.IO);
+            var itext = obj.Source.GetItext(obj.Query, obj.IO, false);
             obj.Set(itext.Metadata, itext.Encryption);
 
             src.Save(itext, new SaveOption(obj.IO)

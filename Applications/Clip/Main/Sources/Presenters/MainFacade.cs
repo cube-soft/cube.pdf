@@ -152,7 +152,7 @@ namespace Cube.Pdf.Clip
                 else Close();
             }
 
-            var options = new OpenOption { IO = IO, ReduceMemory = true };
+            var options = new OpenOption { IO = IO, SaveMemory = true };
             _source = new DocumentReader(src, "", options);
             Reset();
         });

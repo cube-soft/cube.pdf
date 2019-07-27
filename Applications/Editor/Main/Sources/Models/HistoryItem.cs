@@ -61,10 +61,10 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateInvoke
+        /// Invoke
         ///
         /// <summary>
-        /// Invokes the specified action and Creates a new instance of the
+        /// Invokes the specified action and creates a new instance of the
         /// HistoryItem class with the specified actions.
         /// </summary>
         ///
@@ -74,7 +74,7 @@ namespace Cube.Pdf.Editor
         /// <returns>New instance of the HistoryItem class.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static HistoryItem CreateInvoke(Action action, Action undo)
+        public static HistoryItem Invoke(Action action, Action undo)
         {
             action();
             return new HistoryItem

@@ -74,7 +74,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetItexReader
+        /// GetItext
         ///
         /// <summary>
         /// Creates a new instance of the DocumentReader class with the
@@ -84,23 +84,23 @@ namespace Cube.Pdf.Editor
         /// <param name="src">Source file.</param>
         /// <param name="query">Password query.</param>
         /// <param name="io">I/O handler.</param>
+        /// <param name="partial">
+        /// Value indicating whether to apply the partial mode.
+        /// Note that you must set to false if you use the created
+        /// reader in a DocumentWriter object.
+        /// </param>
         ///
         /// <returns>DocumentReader object.</returns>
         ///
-        /// <remarks>
-        /// Partial モードは必ず無効にする必要があります。有効にした場合、
-        /// ページ回転情報が正常に適用されない可能性があります。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public static Itext.DocumentReader GetItexReader(this Entity src, IQuery<string> query, IO io)
+        public static IDocumentReader GetItext(this Entity src, IQuery<string> query, IO io, bool partial)
         {
             var pass    = (src as PdfFile)?.Password;
             var options = new Itext.OpenOption
             {
-                IO           = io,
-                FullAccess   = !pass.HasValue(),
-                ReduceMemory = false,
+                IO         = io,
+                FullAccess = !pass.HasValue(),
+                SaveMemory = partial,
             };
 
             return pass.HasValue() ?

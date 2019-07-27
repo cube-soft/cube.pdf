@@ -34,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class RendererCache
+    public sealed class RendererCache : DisposableBase
     {
         #region Constructors
 
@@ -94,7 +94,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public DocumentRenderer GetOrAdd(string src, string password)
         {
-            if (!src.IsPdf()) return null;
+            if (Disposed || !src.IsPdf()) return null;
             if (_inner.TryGetValue(src, out var value)) return value;
             return _inner.GetOrAdd(src, e => Create(e, password));
         }
@@ -117,6 +117,26 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) Clear();
+        }
 
         /* ----------------------------------------------------------------- */
         ///

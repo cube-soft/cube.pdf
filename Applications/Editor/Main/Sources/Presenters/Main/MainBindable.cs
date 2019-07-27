@@ -19,7 +19,6 @@
 using Cube.FileSystem;
 using Cube.Mixin.Collections;
 using System;
-using System.Diagnostics;
 
 namespace Cube.Pdf.Editor
 {
@@ -281,20 +280,26 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Set
+        /// Clear
         ///
         /// <summary>
-        /// Sets the metadata and encryption if needed.
+        /// Clears the current properties.
         /// </summary>
         ///
-        /// <param name="metadata">Metadata object.</param>
-        /// <param name="encryption">Encryption object.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public void Set(Metadata metadata, Encryption encryption)
+        public void Clear()
         {
-            if (_metadata   == null) _metadata   = metadata;
-            if (_encryption == null) _encryption = encryption;
+            Source     = null;
+            Metadata   = null;
+            Encryption = null;
+
+            History.Clear();
+            Images.Clear();
+
+            // for cleared images.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
 
         /* ----------------------------------------------------------------- */
@@ -313,6 +318,66 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Set
+        ///
+        /// <summary>
+        /// Sets the Metadata object.
+        /// </summary>
+        ///
+        /// <param name="src">Metadata object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public HistoryItem Set(Metadata src)
+        {
+            var m = Metadata;
+            return HistoryItem.Invoke(() => Metadata = src, () => Metadata = m);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// Sets the Encryption object.
+        /// </summary>
+        ///
+        /// <param name="value">Encryption object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public HistoryItem Set(Encryption value)
+        {
+            var e = Encryption;
+            return HistoryItem.Invoke(() => Encryption = value, () => Encryption = e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// Sets the metadata and encryption if needed.
+        /// </summary>
+        ///
+        /// <param name="metadata">Metadata object.</param>
+        /// <param name="encryption">Encryption object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal void Set(Metadata metadata, Encryption encryption)
+        {
+            if (_metadata   == null) _metadata   = metadata;
+            if (_encryption == null) _encryption = encryption;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Dispose
         ///
         /// <summary>
@@ -326,7 +391,12 @@ namespace Cube.Pdf.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing) return;
+            Clear();
+            Images.Dispose();
+        }
 
         #endregion
 
@@ -343,8 +413,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void LazyLoad()
         {
-            Debug.Assert(Source != null);
-            using (var r = Source.GetItexReader(Query, IO)) Set(r.Metadata, r.Encryption);
+            if (Source == null) return;
+            using (var r = Source.GetItext(Query, IO, true)) Set(r.Metadata, r.Encryption);
         }
 
         #endregion

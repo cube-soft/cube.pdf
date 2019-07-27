@@ -153,7 +153,7 @@ namespace Cube.Pdf.Editor
         {
             var copy    = items.ToList();
             var indices = Enumerable.Range(index, copy.Count);
-            return HistoryItem.CreateInvoke(
+            return HistoryItem.Invoke(
                 () => src.Insert(index, copy),
                 () => src.Remove(indices)
             );
@@ -196,7 +196,7 @@ namespace Cube.Pdf.Editor
         public static HistoryItem RemoveAt(this ImageCollection src, IEnumerable<int> indices)
         {
             var items = GetPair(src, indices.OrderBy(i => i));
-            return HistoryItem.CreateInvoke(
+            return HistoryItem.Invoke(
                 () => src.Remove(indices),
                 () => items.Each(e => src.Insert(e.Key, new[] { e.Value }))
             );
@@ -221,7 +221,7 @@ namespace Cube.Pdf.Editor
         public static HistoryItem Rotate(this ImageCollection src, int degree)
         {
             var indices = src.GetSelectedIndices();
-            return HistoryItem.CreateInvoke(
+            return HistoryItem.Invoke(
                 () => src.Rotate(indices,  degree),
                 () => src.Rotate(indices, -degree)
             );
@@ -247,7 +247,7 @@ namespace Cube.Pdf.Editor
         {
             var indices = src.GetSelectedIndices();
             var cvt     = indices.Select(i => i + delta).ToList();
-            return HistoryItem.CreateInvoke(
+            return HistoryItem.Invoke(
                 () => src.Move(indices, delta),
                 () => src.Move(cvt,    -delta)
             );

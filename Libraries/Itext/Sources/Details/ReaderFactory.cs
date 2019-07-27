@@ -79,7 +79,7 @@ namespace Cube.Pdf.Itext
                 try
                 {
                     var bytes = password.Value.HasValue() ? Encoding.UTF8.GetBytes(password.Value) : null;
-                    var dest  = new PdfReader(src, bytes, options.ReduceMemory);
+                    var dest  = new PdfReader(src, bytes, options.SaveMemory);
                     if (dest.IsOpenedWithFullPermissions || !options.FullAccess) return dest;
                     dest.Dispose();
                     throw new BadPasswordException("FullAccess");

@@ -115,7 +115,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RendererCache Cache { get; private set; }
+        public RendererCache Cache { get; }
 
         #endregion
 
@@ -173,7 +173,8 @@ namespace Cube.Pdf.Editor
         public void Close(bool save) => Invoke(() =>
         {
             if (save) this.Save(Value.Source.FullName, false);
-            Value.Clear(Cache);
+            Cache.Clear();
+            Value.Clear();
         }, "");
 
         /* ----------------------------------------------------------------- */
@@ -193,7 +194,7 @@ namespace Cube.Pdf.Editor
         public void Save(IDocumentReader src, SaveOption options, Action<Entity> prev, Action<Entity> next) => Invoke(() =>
         {
             Value.Set(Properties.Resources.MessageSaving, options.Destination);
-            var itext = src ?? Value.Source.GetItexReader(Value.Query, Value.IO);
+            var itext = src ?? Value.Source.GetItext(Value.Query, Value.IO, false);
             Value.Set(itext.Metadata, itext.Encryption);
             using (var dest = new SaveAction(itext, Value.Images, options)) dest.Invoke(prev, next);
         }, "");
@@ -318,7 +319,7 @@ namespace Cube.Pdf.Editor
         /// <param name="value">Metadata object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update(Metadata value) => Invoke(() => Value.SetMetadata(value), "");
+        public void Update(Metadata value) => Invoke(() => Value.Set(value), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -331,7 +332,7 @@ namespace Cube.Pdf.Editor
         /// <param name="value">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update(Encryption value) => Invoke(() => Value.SetEncryption(value), "");
+        public void Update(Encryption value) => Invoke(() => Value.Set(value), "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -406,10 +407,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            var cache = Cache;
-            Cache = null;
-            Value.Clear(cache);
-            if (disposing) Value.Images.Dispose();
+            if (!disposing) return;
+            Cache.Dispose();
+            Value.Dispose();
         }
 
         /* ----------------------------------------------------------------- */

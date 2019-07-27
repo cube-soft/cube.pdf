@@ -89,7 +89,7 @@ namespace Cube.Pdf.Tests.Itext
             var dest = Path(Args(filename));
             IO.Copy(GetSource(filename), dest, true);
 
-            var op = new OpenOption { ReduceMemory = false };
+            var op = new OpenOption { SaveMemory = false };
             var r  = new DocumentReader(dest, password, op);
             using (var w = new DocumentWriter(IO))
             {
@@ -115,7 +115,7 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("Sample.pdf", "Sample.pdf",          0, ExpectedResult =  4)]
         public int Merge(string f0, string f1, int degree)
         {
-            var op   = new OpenOption { ReduceMemory = false };
+            var op   = new OpenOption { SaveMemory = false };
             var r0   = new DocumentReader(GetSource(f0), "", op);
             var r1   = new DocumentReader(GetSource(f1), "", op);
             var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
@@ -141,7 +141,7 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleBookmark.pdf", "SampleImage01.png", 90, ExpectedResult = 10)]
         public int Merge_Image(string doc, string image, int degree)
         {
-            var op   = new OpenOption { ReduceMemory = false };
+            var op   = new OpenOption { SaveMemory = false };
             var r0   = new DocumentReader(GetSource(doc), "", op);
             var dest = Path(Args(r0.File.BaseName, IO.Get(image).BaseName));
 
@@ -178,7 +178,7 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var w = new DocumentSplitter(IO))
             {
-                var op = new OpenOption { ReduceMemory = false };
+                var op = new OpenOption { SaveMemory = false };
                 w.Add(new DocumentReader(src, password, op));
                 w.Save(dest);
 
@@ -208,7 +208,7 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("SampleAttachment.pdf", "日本語のサンプル.md", ExpectedResult = 3)]
         public int Attach(string doc, string file)
         {
-            var op   = new OpenOption { ReduceMemory = false };
+            var op   = new OpenOption { SaveMemory = false };
             var src  = GetSource(doc);
             var r0   = new DocumentReader(src, "", op);
             var r1   = IO.Get(GetSource(file));
@@ -247,7 +247,7 @@ namespace Cube.Pdf.Tests.Itext
         {
             var src  = GetSource("Sample.pdf");
             var dest = Path(Args(value));
-            var op   = new OpenOption { ReduceMemory = false };
+            var op   = new OpenOption { SaveMemory = false };
             var cmp  = new Metadata
             {
                 Title    = value,
@@ -296,7 +296,7 @@ namespace Cube.Pdf.Tests.Itext
         {
             var src  = GetSource("Sample.pdf");
             var dest = Path(Args(method, permission));
-            var op   = new OpenOption { ReduceMemory = false };
+            var op   = new OpenOption { SaveMemory = false };
             var cmp  = new Encryption
             {
                 OwnerPassword    = "owner",
@@ -350,7 +350,7 @@ namespace Cube.Pdf.Tests.Itext
         {
             var src    = GetSource("Sample.pdf");
             var dest   = Path(Args("Sample"));
-            var op     = new OpenOption { ReduceMemory = false };
+            var op     = new OpenOption { SaveMemory = false };
             var degree = 90;
 
             using (var w = new DocumentWriter(IO))

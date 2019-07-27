@@ -391,7 +391,7 @@ namespace Cube.Pdf.Itext
             var key = src.FullName;
             if (_hints.TryGetValue(key, out var hit)) return hit;
 
-            var options = new OpenOption { IO = IO, ReduceMemory = false };
+            var options = new OpenOption { IO = IO, SaveMemory = false };
             var reader  = new DocumentReader(key, src.Password, options);
             _resources.Add(reader);
             _hints.Add(key, reader.Core);

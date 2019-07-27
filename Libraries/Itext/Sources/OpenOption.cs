@@ -64,6 +64,6 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool ReduceMemory { get; set; } = true;
+        public bool SaveMemory { get; set; } = true;
     }
 }
