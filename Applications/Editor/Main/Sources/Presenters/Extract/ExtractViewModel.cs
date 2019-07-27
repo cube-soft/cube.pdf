@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.Observing;
+using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
 using Cube.Xui;
 using System;
@@ -70,8 +71,8 @@ namespace Cube.Pdf.Editor
                     callback(Facade.Value);
                     Send<CloseMessage>();
                 }),
-                () => true
-            );
+                () => Facade.Value.Destination.HasValue()
+            ).Associate(Facade.Value, nameof(SaveOption.Destination));
         }
 
         #endregion
@@ -126,6 +127,21 @@ namespace Cube.Pdf.Editor
             e  => Facade.Value.Format = e,
             GetInvoker(false)
         )).Associate(Facade.Value, nameof(SaveOption.Format));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Count
+        ///
+        /// <summary>
+        /// Gets the page count menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<int> Count => Get(() => new BindableElement<int>(
+            () => Properties.Resources.MenuPageCount,
+            () => Facade.Count,
+            GetInvoker(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///

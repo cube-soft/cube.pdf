@@ -77,7 +77,7 @@ namespace Cube.Pdf.Editor
         /// Count
         ///
         /// <summary>
-        /// Gets the menu of page count.
+        /// Gets the page count menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -97,7 +97,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Range => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuRemoveRange,
+            () => Properties.Resources.MenuTarget,
             () => Facade.Range,
             e  => Facade.Range = e,
             GetInvoker(false)

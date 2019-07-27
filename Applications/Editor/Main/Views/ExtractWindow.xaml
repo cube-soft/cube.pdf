@@ -24,10 +24,11 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
     xmlns:xc="clr-namespace:Cube.Xui.Converters;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title}"
-    Height="300"
+    Height="330"
     Width="520"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
@@ -64,6 +65,7 @@
         ******************************************************************* -->
         <Grid VerticalAlignment="Center" Margin="20,0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="28" />
                 <RowDefinition Height="28" />
                 <RowDefinition Height="28" />
                 <RowDefinition Height="28" />
@@ -116,16 +118,29 @@
             </ComboBox>
 
             <!-- **************************************************************
+              Count
+            *************************************************************** -->
+            <TextBlock
+                Text="{Binding Count.Text}"
+                Grid.Row="2"
+                Grid.Column="0" />
+            <TextBlock
+                Text="{Binding Count.Value, Converter={my:CountToText}}"
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="2" />
+
+            <!-- **************************************************************
               Target
             *************************************************************** -->
             <TextBlock
                 Text="{Binding Target.Text}"
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="0" />
             <WrapPanel
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="2">
                 <RadioButton
@@ -147,7 +162,7 @@
                 IsEnabled="{Binding Specified.Value}"
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="1"
                 Grid.ColumnSpan="2">
                 <TextBox
@@ -163,13 +178,13 @@
             *************************************************************** -->
             <TextBlock
                 Text="{Binding Option.Text}"
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="0" />
             <CheckBox
                 Content="{Binding Split.Text}"
                 IsChecked="{Binding Split.Value}"
                 Command="{Binding Split.Command}"
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="1"
                 Grid.ColumnSpan="2" />
         </Grid>

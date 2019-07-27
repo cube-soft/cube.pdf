@@ -172,7 +172,7 @@
     <value>アプリケーション</value>
   </data>
   <data name="MenuDestination" xml:space="preserve">
-    <value>保存先</value>
+    <value>出力ファイル</value>
   </data>
   <data name="MenuDetails" xml:space="preserve">
     <value>詳細情報</value>
@@ -223,7 +223,7 @@
     <value>種類</value>
   </data>
   <data name="MenuFormat" xml:space="preserve">
-    <value>保存形式</value>
+    <value>ファイルタイプ</value>
   </data>
   <data name="MenuFrameOnly" xml:space="preserve">
     <value>枠線のみ</value>
@@ -323,9 +323,6 @@
   </data>
   <data name="MenuRemoveOthers" xml:space="preserve">
     <value>範囲を指定して削除</value>
-  </data>
-  <data name="MenuRemoveRange" xml:space="preserve">
-    <value>削除する範囲</value>
   </data>
   <data name="MenuRotateLeft" xml:space="preserve">
     <value>左90度</value>

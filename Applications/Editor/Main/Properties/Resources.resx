@@ -327,9 +327,6 @@
   <data name="MenuRemoveOthers" xml:space="preserve">
     <value>Remove other pages</value>
   </data>
-  <data name="MenuRemoveRange" xml:space="preserve">
-    <value>Removal range</value>
-  </data>
   <data name="MenuRotateLeft" xml:space="preserve">
     <value>Left</value>
   </data>

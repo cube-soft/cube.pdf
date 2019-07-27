@@ -691,15 +691,6 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
-        ///   Removal range に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuRemoveRange {
-            get {
-                return ResourceManager.GetString("MenuRemoveRange", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Left に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRotateLeft {
