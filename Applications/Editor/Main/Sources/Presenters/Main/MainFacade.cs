@@ -21,7 +21,6 @@ using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 
@@ -56,15 +55,12 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public MainFacade(SettingFolder settings, SynchronizationContext context)
         {
-            settings.Load();
-            settings.PropertyChanged += WhenSettingChanged;
-
-            Settings = settings;
-            Cache    = new RendererCache(settings.IO, () => Value.Query);
-            Backup   = new Backup(settings.IO);
-            Value    = new MainBindable(
+            Folder = Setup(settings);
+            Cache  = new RendererCache(Folder.IO, () => Value.Query);
+            Backup = new Backup(Folder.IO);
+            Value  = new MainBindable(
                 new ImageCollection(e => Cache?.GetOrAdd(e), new ContextInvoker(context, true)),
-                settings,
+                Folder,
                 new ContextInvoker(context, false)
             );
         }
@@ -86,14 +82,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Settings
+        /// Folder
         ///
         /// <summary>
-        /// Gets user settings.
+        /// Gets the settings folder.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder Settings { get; }
+        public SettingFolder Folder { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -136,28 +132,8 @@ namespace Cube.Pdf.Editor
         {
             if (!src.HasValue()) return;
             if (Value.Source != null) this.OpenProcess(src.Quote());
-            else Invoke(() => {
-                Value.Set(Properties.Resources.MessageLoading, src);
-                this.Open(Cache.GetOrAdd(src));
-            }, "");
+            else Invoke(() => this.Load(src));
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ReOpen
-        ///
-        /// <summary>
-        /// Resets some inner fields.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void ReOpen(string src) => Invoke(() => {
-            var doc   = Cache.GetOrAdd(src, Value.Encryption.OwnerPassword);
-            var items = doc.Pages.Select((v, i) => new { Value = v, Index = i });
-            foreach (var e in items) Value.Images[e.Index].RawObject = e.Value;
-            Value.Source = doc.File;
-            Value.History.Clear();
-        }, "");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -167,15 +143,8 @@ namespace Cube.Pdf.Editor
         /// Closes the current PDF document.
         /// </summary>
         ///
-        /// <param name="save">Save before closing.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public void Close(bool save) => Invoke(() =>
-        {
-            if (save) this.Save(Value.Source.FullName, false);
-            Cache.Clear();
-            Value.Clear();
-        }, "");
+        public void Close() => Invoke(() => { Cache.Clear(); Value.Clear(); });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -197,7 +166,7 @@ namespace Cube.Pdf.Editor
             var itext = src ?? Value.Source.GetItext(Value.Query, Value.IO, false);
             Value.Set(itext.Metadata, itext.Encryption);
             using (var dest = new SaveAction(itext, Value.Images, options)) dest.Invoke(prev, next);
-        }, "");
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -211,7 +180,7 @@ namespace Cube.Pdf.Editor
         /// <param name="selected">true for selected.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Select(bool selected) => Invoke(() => Value.Images.Select(selected), "");
+        public void Select(bool selected) => Invoke(() => Value.Images.Select(selected));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -222,7 +191,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Flip() => Invoke(() => Value.Images.Flip(), "");
+        public void Flip() => Invoke(Value.Images.Flip);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -236,16 +205,19 @@ namespace Cube.Pdf.Editor
         /// <param name="src">Inserting files.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, IEnumerable<string> src) => Invoke(() => Value.Images.InsertAt(
-            Math.Min(Math.Max(index, 0), Value.Images.Count),
-            src.SelectMany(e =>
-            {
-                Value.Set(Properties.Resources.MessageLoading, e);
-                if (!this.CanInsert(e)) return new Page[0];
-                else if (e.IsPdf()) return Cache.GetOrAdd(e).Pages;
-                else return Settings.IO.GetImagePages(e);
-            })
-        ), "");
+        public void Insert(int index, IEnumerable<string> src)
+        {
+            Invoke(() => Value.Images.InsertAt(
+                Math.Min(Math.Max(index, 0), Value.Images.Count),
+                src.SelectMany(e => {
+                    Value.Set(Properties.Resources.MessageLoading, e);
+                    return !this.CanInsert(e) ? Enumerable.Empty<Page>() :
+                           e.IsPdf()          ? Cache.GetOrAdd(e).Pages  :
+                           Value.IO.GetImagePages(e);
+                })
+            ));
+            Value.Set(string.Empty);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -260,7 +232,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public void Insert(int index, IEnumerable<Page> src) =>
-            Invoke(() => Value.Images.InsertAt(index, src), "");
+            Invoke(() => Value.Images.InsertAt(index, src));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -271,7 +243,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove() => Invoke(() => Value.Images.Remove(), "");
+        public void Remove() => Invoke(() => Value.Images.Remove());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -282,7 +254,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => Invoke(() => Value.Images.RemoveAt(indices), "");
+        public void Remove(IEnumerable<int> indices) => Invoke(() => Value.Images.RemoveAt(indices));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -293,7 +265,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(int delta) => Invoke(() => Value.Images.Move(delta), "");
+        public void Move(int delta) => Invoke(() => Value.Images.Move(delta));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -306,7 +278,7 @@ namespace Cube.Pdf.Editor
         /// <param name="degree">Angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Rotate(int degree) => Invoke(() => Value.Images.Rotate(degree), "");
+        public void Rotate(int degree) => Invoke(() => Value.Images.Rotate(degree));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -316,10 +288,10 @@ namespace Cube.Pdf.Editor
         /// Updates the Metadata object.
         /// </summary>
         ///
-        /// <param name="value">Metadata object.</param>
+        /// <param name="src">Metadata object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update(Metadata value) => Invoke(() => Value.Set(value), "");
+        public void Update(Metadata src) => Invoke(() => Value.Set(src));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -329,32 +301,32 @@ namespace Cube.Pdf.Editor
         /// Updates the Encryption object.
         /// </summary>
         ///
-        /// <param name="value">Encryption object.</param>
+        /// <param name="src">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Update(Encryption value) => Invoke(() => Value.Set(value), "");
+        public void Update(Encryption src) => Invoke(() => Value.Set(src));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Rotate
+        /// Undo
         ///
         /// <summary>
-        /// Rotates the selected items with the specified value.
+        /// Executes the undo action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Undo() => Invoke(() => Value.History.Undo(), "");
+        public void Undo() => Invoke(Value.History.Undo);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Rotate
+        /// Redo
         ///
         /// <summary>
-        /// Rotates the selected items with the specified value.
+        /// Executes the redo action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Redo() => Invoke(() => Value.History.Redo(), "");
+        public void Redo() => Invoke(Value.History.Redo);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -373,7 +345,7 @@ namespace Cube.Pdf.Editor
         {
             Value.Images.Zoom(offset);
             Value.ItemSize = Value.Images.Preferences.ItemSize;
-        }, "");
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -384,7 +356,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Redraw() => Invoke(() => Value.Images.Redraw(), "");
+        public void Redraw() => Invoke(Value.Images.Redraw);
 
         #endregion
 
@@ -421,8 +393,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Invoke(Func<HistoryItem> func, string format, params object[] args) =>
-            Invoke(() => Value.History.Register(func()), format, args);
+        private void Invoke(Func<HistoryItem> func) => Invoke(() => Value.History.Register(func()));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -433,29 +404,37 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Invoke(Action action, string format, params object[] args) => Value.Invoke(() =>
+        private void Invoke(Action action) => Value.Invoke(() =>
         {
-            if (Cache == null) return;
+            if (Disposed) return;
+            Value.Set(string.Empty);
             action();
-            Value.Set(format, args);
         });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WhenSettingChanged
+        /// Setup
         ///
         /// <summary>
-        /// Occurs when the PropertyChanged event is fired.
+        /// Initializes the specified settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void WhenSettingChanged(object s, PropertyChangedEventArgs e)
+        private SettingFolder Setup(SettingFolder src)
         {
-            var src = Settings.Value;
-            if (new Dictionary<string, Action> {
-                { nameof(src.ItemSize),  () => this.Zoom() },
-                { nameof(src.FrameOnly), () => Value.Images.Preferences.FrameOnly = src.FrameOnly },
-            }.TryGetValue(e.PropertyName, out var action)) action();
+            src.Load();
+            src.PropertyChanged += (s, e) => {
+                switch (e.PropertyName)
+                {
+                    case nameof(SettingValue.ItemSize):
+                        this.Zoom();
+                        break;
+                    case nameof(SettingValue.FrameOnly):
+                        Value.Images.Preferences.FrameOnly = src.Value.FrameOnly;
+                        break;
+                }
+            };
+            return src;
         }
 
         #endregion

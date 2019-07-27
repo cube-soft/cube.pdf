@@ -19,6 +19,7 @@
 using Cube.FileSystem;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 
 namespace Cube.Pdf.Editor
@@ -35,31 +36,6 @@ namespace Cube.Pdf.Editor
     static class OpenExtension
     {
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// Sets properties of the specified IDocumentReader.
-        /// </summary>
-        ///
-        /// <param name="src">Source object.</param>
-        /// <param name="doc">Document information.</param>
-        ///
-        /// <remarks>
-        /// PDFium は Metadata や Encryption の情報取得が不完全なため、
-        /// これらの情報は、必要になったタイミングで iTextSharp を用いて
-        /// 取得します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Open(this MainFacade src, IDocumentReader doc)
-        {
-            src.Value.Source = doc.File;
-            if (!doc.Encryption.Enabled) src.Value.Encryption = doc.Encryption;
-            src.Value.Images.Add(doc.Pages);
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -103,6 +79,55 @@ namespace Cube.Pdf.Editor
             FileName  = Assembly.GetExecutingAssembly().Location,
             Arguments = args
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Open
+        ///
+        /// <summary>
+        /// Sets properties of the specified IDocumentReader.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="path">File path to load.</param>
+        ///
+        /// <remarks>
+        /// PDFium は Metadata や Encryption の情報取得が不完全なため、
+        /// これらの情報は、必要になったタイミングで iTextSharp を用いて
+        /// 取得します。
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Load(this MainFacade src, string path)
+        {
+            src.Value.Set(Properties.Resources.MessageLoading, src);
+            var doc = src.Cache.GetOrAdd(path);
+            src.Value.Source = doc.File;
+            if (!doc.Encryption.Enabled) src.Value.Encryption = doc.Encryption;
+            src.Value.Images.Add(doc.Pages);
+            src.Value.Set(string.Empty);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Reload
+        ///
+        /// <summary>
+        /// Reload the specified file information.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="path">File path to load.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Reload(this MainFacade src, string path)
+        {
+            var doc = src.Cache.GetOrAdd(path, src.Value.Encryption.OwnerPassword);
+            var items = doc.Pages.Select((v, i) => new { Value = v, Index = i });
+            foreach (var e in items) src.Value.Images[e.Index].RawObject = e.Value;
+            src.Value.Source = doc.File;
+            src.Value.History.Clear();
+        }
 
         #endregion
     }

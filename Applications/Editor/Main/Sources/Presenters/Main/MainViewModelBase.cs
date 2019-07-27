@@ -379,7 +379,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void SendSetting() => Send(new SettingViewModel(Facade.Settings, Context));
+        protected void SendSetting() => Send(new SettingViewModel(Facade.Folder, Context));
 
         #endregion
     }

@@ -49,10 +49,28 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Setup(this MainFacade src, IEnumerable<string> args)
         {
-            foreach (var ps in src.Settings.GetSplashProcesses()) ps.Kill();
+            foreach (var ps in src.Folder.GetSplashProcesses()) ps.Kill();
             var path = args.FirstPdf();
             if (path.HasValue()) src.Open(path);
             src.Backup.Cleanup();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Close
+        ///
+        /// <summary>
+        /// Closes the current PDF document.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="save">Save before closing.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Close(this MainFacade src, bool save)
+        {
+            if (save) src.Save(src.Value.Source.FullName, false);
+            src.Close();
         }
 
         /* ----------------------------------------------------------------- */
@@ -85,7 +103,7 @@ namespace Cube.Pdf.Editor
         {
             var items = src.Value.Images.Preferences.ItemSizeOptions;
             var prev  = src.Value.Images.Preferences.ItemSizeIndex;
-            var next  = items.LastIndex(x => x <= src.Settings.Value.ItemSize);
+            var next  = items.LastIndex(x => x <= src.Folder.Value.ItemSize);
             src.Zoom(next - prev);
         }
 

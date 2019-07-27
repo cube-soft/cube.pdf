@@ -67,7 +67,10 @@ namespace Cube.Pdf.Editor
         public static void Save(this MainFacade src, string dest, bool reopen) => src.Save(
             dest,
             e => { src.Backup.Invoke(e); src.Cache?.Clear(); },
-            e => { if (reopen) src.ReOpen(e.FullName); }
+            e => {
+                if (reopen) src.Reload(e.FullName);
+                src.Value.Set(Properties.Resources.MessageSaved, e.FullName);
+            }
         );
 
         /* ----------------------------------------------------------------- */
@@ -127,8 +130,12 @@ namespace Cube.Pdf.Editor
         /// <param name="options">Save options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Extract(this MainFacade src, SaveOption options) =>
-            src.Save(null, options, e => src.Backup.Invoke(e), e => { });
+        public static void Extract(this MainFacade src, SaveOption options) => src.Save(
+            null,
+            options,
+            e => src.Backup.Invoke(e),
+            e => src.Value.Set(Properties.Resources.MessageSaved, e.FullName)
+        );
 
         /* ----------------------------------------------------------------- */
         ///
