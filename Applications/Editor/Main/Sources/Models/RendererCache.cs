@@ -156,6 +156,7 @@ namespace Cube.Pdf.Editor
                        new DocumentRenderer(src, _query(), opt);
 
             dest.RenderOption.Background = Color.White;
+            dest.RenderOption.Annotation = true;
             return dest;
         }
 
