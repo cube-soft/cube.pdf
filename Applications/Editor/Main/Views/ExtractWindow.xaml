@@ -146,7 +146,7 @@
                 <RadioButton
                     Content="{Binding Selected.Text}"
                     IsChecked="{Binding Selected.Value}"
-                    IsEnabled="{Binding Target.Value}" />
+                    Command="{Binding Selected.Command}" />
                 <RadioButton
                     Content="{Binding All.Text}"
                     IsChecked="{Binding All.Value}" />

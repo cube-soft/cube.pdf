@@ -156,9 +156,8 @@ namespace Cube.Pdf.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<bool> Target => Get(() => new BindableElement<bool>(
+        public IElement Target => Get(() => new BindableElement(
             () => Properties.Resources.MenuTarget,
-            () => Facade.Selection.Count > 0,
             GetInvoker(false)
         ));
 
@@ -177,7 +176,12 @@ namespace Cube.Pdf.Editor
             () => Facade.Value.Target == SaveTarget.Selected,
             e  => e.Then(() => Facade.Value.Target = SaveTarget.Selected),
             GetInvoker(false)
-        )).Associate(Facade.Value, nameof(SaveOption.Target));
+        ) {
+            Command = new DelegateCommand(
+                () => { },
+                () => Facade.Selection.Count > 0
+            )
+        }).Associate(Facade.Value, nameof(SaveOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///

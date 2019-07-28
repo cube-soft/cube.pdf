@@ -31,10 +31,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RemoveTest
+    /// InsertTest
     ///
     /// <summary>
-    /// Tests for Remove commands and the InsertViewModel class.
+    /// Tests the Insert commands and the InsertViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

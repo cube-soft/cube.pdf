@@ -91,29 +91,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Extract
-        ///
-        /// <summary>
-        /// Executes the test for extracting selected items as a new PDF
-        /// document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Extract() => Open("Sample.pdf", "", vm =>
-        {
-            Destination = Get(Args("Sample"));
-            Assert.That(IO.Exists(Destination), Is.False, Destination);
-
-            vm.Value.Images.First().Selected = true;
-            Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
-
-            vm.Test(vm.Ribbon.Extract);
-            Assert.That(IO.Exists(Destination), Is.True, Destination);
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Rotate
         ///
         /// <summary>
