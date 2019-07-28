@@ -21,6 +21,7 @@ using Cube.Mixin.Iteration;
 using Cube.Mixin.Syntax;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 
 namespace Cube.Pdf.Editor
@@ -232,7 +233,17 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SplitAsImage(Action<Entity> prev, Action<Entity> next)
         {
-            // TODO
+            var fi = Options.IO.Get(Options.Destination);
+            foreach (var i in GetTarget(Options))
+            {
+                using (var image = Images.GetImage(i, 2.0)) // 144dpi
+                {
+                    var dest = Options.IO.Get(Convert(fi, i, Images.Count));
+                    prev(dest);
+                    image.Save(dest.FullName, ImageFormat.Png);
+                    next(dest);
+                }
+            }
         }
 
         /* ----------------------------------------------------------------- */
