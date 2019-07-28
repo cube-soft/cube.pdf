@@ -18,12 +18,15 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Collections;
 using Cube.Mixin.Collections;
+using Cube.Mixin.Drawing;
 using Cube.Mixin.Logging;
+using Cube.Mixin.Syntax;
 using Cube.Mixin.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,27 +63,22 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ImageCollection(Func<string, IDocumentRenderer> getter, Invoker invoker)
         {
-            void update(string s) { if (s == nameof(Preferences.VisibleLast)) Reschedule(null); };
-            ImageSource create(ImageItem e) => getter(e.RawObject.File.FullName).Create(e);
-            ImageSource create_by_index(int i, double ratio)
-            {
-                if (i < 0 || i >= Count) return null;
-                var src = _inner[i].RawObject;
-                return getter(src.File.FullName).Create(src, ratio);
-            }
+            _getter = getter;
 
             _inner = new ObservableCollection<ImageItem>();
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
 
-            _cache = new CacheCollection<ImageItem, ImageSource>(create);
+            _cache = new CacheCollection<ImageItem, ImageSource>(e =>
+                getter(e.RawObject.File.FullName).Create(e).ToBitmapImage(true));
             _cache.Created += (s, e) => e.Key.Refresh();
             _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
-            Create      = create_by_index;
             Invoker     = invoker;
             Selection   = new ImageSelection(invoker);
             Preferences = new ImagePreference(invoker);
-            Preferences.PropertyChanged += (s, e) => update(e.PropertyName);
+            Preferences.PropertyChanged += (s, e) => {
+                if (e.PropertyName == nameof(Preferences.VisibleLast)) Reschedule(null);
+            };
         }
 
         #endregion
@@ -131,18 +129,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ImagePreference Preferences { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Gets the function to create a new image with the specified
-        /// arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Func<int, double, ImageSource> Create { get; }
-
         #endregion
 
         #region Methods
@@ -158,10 +144,7 @@ namespace Cube.Pdf.Editor
         /// <param name="items">Page collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IEnumerable<Page> items)
-        {
-            foreach (var item in items) _inner.Add(this.NewItem(Count, item));
-        }
+        public void Add(IEnumerable<Page> items) => items.Each(e => _inner.Add(this.NewItem(Count, e)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -311,7 +294,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Redraw() => Reschedule(() => _cache.Clear());
+        public void Redraw() => Reschedule(_cache.Clear);
 
         #endregion
 
@@ -320,18 +303,21 @@ namespace Cube.Pdf.Editor
         /// GetImage
         ///
         /// <summary>
-        /// Gets the ImageSource object from the specified item.
+        /// Gets an Image object accroding to the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">Source item.</param>
+        /// <param name="index">Index of the image collection.</param>
+        /// <param name="ratio">Image ratio.</param>
         ///
-        /// <returns>ImageSource object.</returns>
+        /// <returns>Image object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageSource GetImage(ImageItem src) =>
-            Preferences.FrameOnly ? null :
-            _cache.TryGetValue(src, out var dest) ? dest :
-            Preferences.Dummy;
+        public Image GetImage(int index, double ratio)
+        {
+            if (index < 0 || index >= Count) return null;
+            var src = _inner[index].RawObject;
+            return _getter(src.File.FullName).Create(src, ratio);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -434,9 +420,24 @@ namespace Cube.Pdf.Editor
             }).Forget();
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImageSource
+        ///
+        /// <summary>
+        /// Gets the ImageSource object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal ImageSource GetImageSource(ImageItem src) =>
+            Preferences.FrameOnly ? null :
+            _cache.TryGetValue(src, out var dest) ? dest :
+            Preferences.Dummy;
+
         #endregion
 
         #region Fields
+        private readonly Func<string, IDocumentRenderer> _getter;
         private readonly ObservableCollection<ImageItem> _inner;
         private readonly CacheCollection<ImageItem, ImageSource> _cache;
         private CancellationTokenSource _task;

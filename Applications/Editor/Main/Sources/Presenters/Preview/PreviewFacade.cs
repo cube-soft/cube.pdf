@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Drawing;
 using Cube.Mixin.Tasks;
 using System.Threading.Tasks;
 
@@ -88,7 +89,7 @@ namespace Cube.Pdf.Editor
             try
             {
                 Value.Busy  = true;
-                Value.Image = Value.Source.Create(index, 2.0);
+                Value.Image = Value.Source.GetImage(index, 2.0).ToBitmapImage(true);
             }
             finally { Value.Busy = false; }
         }

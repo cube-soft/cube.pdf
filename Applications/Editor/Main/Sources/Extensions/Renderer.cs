@@ -17,11 +17,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Images;
-using Cube.Mixin.Drawing;
 using Cube.Mixin.Pdf;
 using System;
 using System.Drawing;
-using System.Windows.Media;
 
 namespace Cube.Pdf.Editor
 {
@@ -43,8 +41,8 @@ namespace Cube.Pdf.Editor
         /// Create
         ///
         /// <summary>
-        /// Create a new instance of the ImageSource class with the
-        /// specified parameters.
+        /// Create a new instance of the Image class with the specified
+        /// parameters.
         /// </summary>
         ///
         /// <param name="src">Renderer object.</param>
@@ -53,7 +51,7 @@ namespace Cube.Pdf.Editor
         /// <returns>ImageSource object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageSource Create(this IDocumentRenderer src, ImageItem entry) =>
+        public static Image Create(this IDocumentRenderer src, ImageItem entry) =>
             src.Create(entry.RawObject, new SizeF(entry.Width, entry.Height));
 
         /* ----------------------------------------------------------------- */
@@ -61,8 +59,8 @@ namespace Cube.Pdf.Editor
         /// Create
         ///
         /// <summary>
-        /// Create a new instance of the ImageSource class with the
-        /// specified parameters.
+        /// Create a new instance of the Image class with the specified
+        /// parameters.
         /// </summary>
         ///
         /// <param name="src">Renderer object.</param>
@@ -72,7 +70,7 @@ namespace Cube.Pdf.Editor
         /// <returns>ImageSource object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageSource Create(this IDocumentRenderer src, Page page, double ratio) =>
+        public static Image Create(this IDocumentRenderer src, Page page, double ratio) =>
             src.Create(page, page.GetViewSize(ratio));
 
         /* ----------------------------------------------------------------- */
@@ -80,19 +78,19 @@ namespace Cube.Pdf.Editor
         /// Create
         ///
         /// <summary>
-        /// Create a new instance of the ImageSource class with the
-        /// specified parameters.
+        /// Create a new instance of the Image class with the specified
+        /// parameters.
         /// </summary>
         ///
         /// <param name="src">Renderer object.</param>
         /// <param name="page">Page object.</param>
         /// <param name="size">Image size.</param>
         ///
-        /// <returns>ImageSource object.</returns>
+        /// <returns>Image object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageSource Create(this IDocumentRenderer src, Page page, SizeF size) =>
-            page.File is ImageFile f ? Create(f, size) : src?.Render(page, size).ToBitmapImage(true);
+        public static Image Create(this IDocumentRenderer src, Page page, SizeF size) =>
+            page.File is ImageFile f ? Create(f, size) : src?.Render(page, size);
 
         #endregion
 
@@ -108,14 +106,14 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static ImageSource Create(ImageFile src, SizeF size)
+        private static Image Create(ImageFile src, SizeF size)
         {
             using (var obj = new ImageResizer(src.FullName)
             {
                 ResizeMode          = ImageResizeMode.HighSpeed,
                 PreserveAspectRatio = true,
                 LongSide            = (int)Math.Max(size.Width, size.Height),
-            }) return obj.Resized.ToBitmapImage(false);
+            }) return obj.Resized;
         }
 
         #endregion
