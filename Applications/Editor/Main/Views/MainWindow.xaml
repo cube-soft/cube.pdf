@@ -67,8 +67,9 @@
     <r:RibbonWindow.InputBindings>
         <KeyBinding Gesture="F5"            Command="{Binding Ribbon.Redraw.Command}" />
         <KeyBinding Gesture="Insert"        Command="{Binding Ribbon.Insert.Command}" />
+        <KeyBinding Gesture="Ctrl+I"        Command="{Binding Ribbon.Insert.Command}" />
         <KeyBinding Gesture="Delete"        Command="{Binding Ribbon.Remove.Command}" />
-        <KeyBinding Gesture="Backspace"     Command="{Binding Ribbon.Remove.Command}" />
+        <KeyBinding Gesture="Ctrl+D"        Command="{Binding Ribbon.Remove.Command}" />
         <KeyBinding Gesture="Ctrl+E"        Command="{Binding Ribbon.Extract.Command}" />
         <KeyBinding Gesture="Ctrl+O"        Command="{Binding Ribbon.Open.Command}" />
         <KeyBinding Gesture="Ctrl+S"        Command="{Binding Ribbon.Save.Command}" />
@@ -76,12 +77,11 @@
         <KeyBinding Gesture="Ctrl+W"        Command="{Binding Ribbon.Close.Command}" />
         <KeyBinding Gesture="Ctrl+Q"        Command="{Binding Ribbon.Exit.Command}" />
         <KeyBinding Gesture="Ctrl+A"        Command="{Binding Ribbon.SelectAll.Command}" />
-        <KeyBinding Gesture="Ctrl+D"        Command="{Binding Ribbon.SelectClear.Command}" />
         <KeyBinding Gesture="Ctrl+F"        Command="{Binding Ribbon.MoveNext.Command}" />
         <KeyBinding Gesture="Ctrl+B"        Command="{Binding Ribbon.MovePrevious.Command}" />
         <KeyBinding Gesture="Ctrl+L"        Command="{Binding Ribbon.RotateLeft.Command}" />
         <KeyBinding Gesture="Ctrl+R"        Command="{Binding Ribbon.RotateRight.Command}" />
-        <KeyBinding Gesture="Ctrl+I"        Command="{Binding Ribbon.Metadata.Command}" />
+        <KeyBinding Gesture="Ctrl+M"        Command="{Binding Ribbon.Metadata.Command}" />
         <KeyBinding Gesture="Ctrl+K"        Command="{Binding Ribbon.Encryption.Command}" />
         <KeyBinding Gesture="Ctrl+Z"        Command="{Binding Ribbon.Undo.Command}" />
         <KeyBinding Gesture="Ctrl+Y"        Command="{Binding Ribbon.Redo.Command}" />
