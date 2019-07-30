@@ -108,7 +108,7 @@ namespace Cube.Pdf.Editor
         private static string GetFileName(string src)
         {
             var index = src.LastIndexOfAny(new[] { '/', '\\' });
-            return index >= 0 && index + 1 < src.Length ? src.Substring(index) : src;
+            return index >= 0 && index + 1 < src.Length ? src.Substring(index + 1) : src;
         }
 
         #endregion
