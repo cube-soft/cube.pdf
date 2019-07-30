@@ -183,6 +183,9 @@
   <data name="MenuDown" xml:space="preserve">
     <value>Down</value>
   </data>
+  <data name="MenuDpi" xml:space="preserve">
+    <value>dpi</value>
+  </data>
   <data name="MenuEdit" xml:space="preserve">
     <value>Edit</value>
   </data>

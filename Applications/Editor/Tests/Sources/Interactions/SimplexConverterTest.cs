@@ -216,6 +216,23 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
         #endregion
 
+        #region IsImageFormat
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsImageFormat
+        ///
+        /// <summary>
+        /// Tests the IsImageFormat class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(SaveFormat.Pdf, ExpectedResult = false)]
+        [TestCase(SaveFormat.Png, ExpectedResult = true)]
+        public bool IsImageFormat(SaveFormat src) => Convert<bool>(new IsImageFormat(), src);
+
+        #endregion
+
         #region BooleanToCursor
 
         /* ----------------------------------------------------------------- */

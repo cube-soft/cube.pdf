@@ -84,6 +84,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(evm.Format.Text,         Is.EqualTo("Format"));
                 Assert.That(evm.Format.Value,        Is.EqualTo(SaveFormat.Pdf));
                 Assert.That(evm.Format.Command,      Is.Null);
+                Assert.That(evm.Resolution.Text,     Is.EqualTo("dpi"));
+                Assert.That(evm.Resolution.Value,    Is.EqualTo(144));
+                Assert.That(evm.Resolution.Command,  Is.Null);
                 Assert.That(evm.Count.Text,          Is.EqualTo("Page count"));
                 Assert.That(evm.Count.Value,         Is.EqualTo(9), nameof(evm.Count));
                 Assert.That(evm.Count.Command,       Is.Null);

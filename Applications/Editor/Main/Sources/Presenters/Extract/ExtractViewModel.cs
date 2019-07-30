@@ -235,6 +235,22 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Resolution
+        ///
+        /// <summary>
+        /// Gets the resolution menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<int> Resolution => Get(() => new BindableElement<int>(
+            () => Properties.Resources.MenuDpi,
+            () => Facade.Value.Resolution,
+            e  => Facade.Value.Resolution = e,
+            GetInvoker(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Split
         ///
         /// <summary>

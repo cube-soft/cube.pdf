@@ -76,7 +76,6 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
 
             <!-- **************************************************************
@@ -86,36 +85,60 @@
                 Text="{Binding Destination.Text}"
                 Grid.Row="0"
                 Grid.Column="0" />
-            <TextBox
-                Text="{Binding Destination.Value}"
+            <Grid
                 Grid.Row="0"
-                Grid.Column="1" />
-            <Button
-                Content="..."
-                Command="{Binding Destination.Command}"
-                Grid.Row="0"
-                Grid.Column="2"
-                Margin="4,3,0,4" />
+                Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    Text="{Binding Destination.Value}"
+                    Grid.Column="0" />
+                <Button
+                    Content="..."
+                    Command="{Binding Destination.Command}"
+                    Grid.Column="1"
+                    Margin="4,3,0,4" />
+            </Grid>
 
             <!-- **************************************************************
-              Format
+              Format & Resolution
             *************************************************************** -->
             <TextBlock
                 Text="{Binding Format.Text}"
                 Grid.Row="1"
                 Grid.Column="0" />
-            <ComboBox
-                SelectedValue="{Binding Format.Value}"
-                ItemsSource="{Binding Formats}"
+            <Grid
                 Grid.Row="1"
-                Grid.Column="1"
-                Grid.ColumnSpan="2">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={xc:UpperCase}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+                Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox
+                    SelectedValue="{Binding Format.Value}"
+                    ItemsSource="{Binding Formats}"
+                    Grid.Column="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={xc:UpperCase}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox
+                    Text="{Binding Resolution.Value, Mode=TwoWay}"
+                    TextAlignment="Right"
+                    IsEnabled="{Binding Format.Value, Converter={my:IsImageFormat}}"
+                    InputMethod.IsInputMethodEnabled="False"
+                    Margin="4,0,0,0"
+                    Grid.Column="1" />
+                <TextBlock
+                    Text="{Binding Resolution.Text}"
+                    Margin="4,0,4,0"
+                    Grid.Column="2" />
+            </Grid>
 
             <!-- **************************************************************
               Count
@@ -127,8 +150,7 @@
             <TextBlock
                 Text="{Binding Count.Value, Converter={my:CountToText}}"
                 Grid.Row="2"
-                Grid.Column="1"
-                Grid.ColumnSpan="2" />
+                Grid.Column="1" />
 
             <!-- **************************************************************
               Target
@@ -141,8 +163,7 @@
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
                 Grid.Row="3"
-                Grid.Column="1"
-                Grid.ColumnSpan="2">
+                Grid.Column="1">
                 <RadioButton
                     Content="{Binding Selected.Text}"
                     IsChecked="{Binding Selected.Value}"
@@ -163,10 +184,10 @@
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
                 Grid.Row="4"
-                Grid.Column="1"
-                Grid.ColumnSpan="2">
+                Grid.Column="1">
                 <TextBox
-                    Text="{Binding Range.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Range.Value, Mode=TwoWay}"
+                    InputMethod.IsInputMethodEnabled="False"
                     Width="200" />
                 <TextBlock
                     Text="{Binding Range.Text}"
@@ -185,8 +206,7 @@
                 IsChecked="{Binding Split.Value}"
                 Command="{Binding Split.Command}"
                 Grid.Row="5"
-                Grid.Column="1"
-                Grid.ColumnSpan="2" />
+                Grid.Column="1" />
         </Grid>
 
         <!-- ******************************************************************

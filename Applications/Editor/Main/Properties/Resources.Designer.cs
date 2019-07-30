@@ -259,6 +259,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   dpi に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuDpi {
+            get {
+                return ResourceManager.GetString("MenuDpi", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Edit に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuEdit {
@@ -808,7 +817,7 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
-        ///   Target に類似しているローカライズされた文字列を検索します。
+        ///   Target pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuTarget {
             get {

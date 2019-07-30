@@ -64,7 +64,11 @@ namespace Cube.Pdf.Editor
         /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SaveOption(IO io, Invoker invoker) : base(invoker) { IO = io; }
+        public SaveOption(IO io, Invoker invoker) : base(invoker)
+        {
+            IO = io;
+            Resolution = 144;
+        }
 
         #endregion
 
@@ -127,6 +131,21 @@ namespace Cube.Pdf.Editor
         public string Range
         {
             get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Resolution
+        ///
+        /// <summary>
+        /// Gets or sets the resolution of saved image.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Resolution
+        {
+            get => GetProperty<int>();
             set => SetProperty(value);
         }
 

@@ -236,7 +236,8 @@ namespace Cube.Pdf.Editor
             var fi = Options.IO.Get(Options.Destination);
             foreach (var i in GetTarget(Options))
             {
-                using (var image = Images.GetImage(i, 2.0)) // 144dpi
+                var ratio = Options.Resolution / Images[i].RawObject.Resolution.X;
+                using (var image = Images.GetImage(i, ratio))
                 {
                     var dest = Options.IO.Get(Convert(fi, i, Images.Count));
                     prev(dest);

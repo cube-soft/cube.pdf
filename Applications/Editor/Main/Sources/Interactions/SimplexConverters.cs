@@ -249,6 +249,34 @@ namespace Cube.Pdf.Editor
 
     #endregion
 
+    #region IsImageFormat
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// IsImageFormat
+    ///
+    /// <summary>
+    /// Provides functionality to determine the provided value is
+    /// SaveFormat.Png.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class IsImageFormat : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsImageFormat
+        ///
+        /// <summary>
+        /// Initializes a new instance of the IsImageFormat class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IsImageFormat() : base(e => e is SaveFormat fmt && fmt == SaveFormat.Png) { }
+    }
+
+    #endregion
+
     #region BooleanToCursor
 
     /* --------------------------------------------------------------------- */
