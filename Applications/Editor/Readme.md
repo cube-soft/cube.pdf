@@ -16,6 +16,60 @@ The download links are as follows:
 * Download .NET Framework  
   https://dotnet.microsoft.com/download/dotnet-framework
 
+## How to use
+
+First, open a PDF file that you want to edit.
+Note that input the owner password in the displayed dialog if the specified PDF file is encrypted.
+Then make some changes in the main window and finally click the Save or Overwrite button.
+
+The available operations in the CubePDF Utility are as follows:
+
+1. Page editing
+    - Insert
+    - Remove
+    - Extract
+    - Change page order
+    - Rotate
+2. PDF metadata
+    - Title
+    - Author
+    - Subject (Subtitle)
+    - Keywords
+    - Creator
+    - PDF version
+    - Page layout (a.k.a viewer preferences)
+3. Security (Encryption)
+    - Owner password
+    - User password
+    - Allow printing
+    - Allow copying text and images
+    - Allow inserting and removing pages
+    - Allow using contents for accessibility
+    - Allow filling in form fields
+    - Allow creating and editing annotations
+
+## Keyboard shortcuts
+
+* Ctrl + O ... Open a PDF file
+* Ctrl + S ... Overwrite the current PDF file
+* Ctrl + Shift + S ... Save as a new file
+* Ctrl + W ... Close the current PDF file
+* Ctrl + Q ... Exit the application
+* Ctrl + I or Insert ... Insert PDF/PNG/JPEG/BMP files at the selected position
+* Ctrl + D or Delete ... Remove the selected pages
+* Ctrl + E ... Extract the selected pages
+* Ctrl + B ... Move the selected pages one page previous
+* Ctrl + F ... Move the selected pages one page forward
+* Ctrl + L ... Rotate the selected pages 90 degrees left
+* Ctrl + R ... Rotate the selected pages 90 degrees right
+* Ctrl + M ... Show the dialog to edit the PDF metadata
+* Ctrl + K ... Show the dialog to edit the security (encryption)
+* Ctrl + A ... Select all pages
+* Ctrl + Z ... Undo
+* Ctrl + Y ... Redo
+* Ctrl + + ... Zoom in
+* Ctrl + - ... Zoom out
+
 ## Support
 
 CubePDF Utility outputs the log to the following directory.  
