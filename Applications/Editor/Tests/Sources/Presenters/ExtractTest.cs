@@ -110,6 +110,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(evm.Option.Text,         Is.EqualTo("Options"));
                 Assert.That(evm.Option.Command,      Is.Null);
 
+                evm.Destination.Value = Results;
+                Assert.That(evm.OK.Command.CanExecute(), Is.False);
+
                 evm.Cancel.Command.Execute();
                 cts.Cancel();
             })) {

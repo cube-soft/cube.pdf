@@ -71,7 +71,8 @@ namespace Cube.Pdf.Editor
                     callback(Facade.Value);
                     Send<CloseMessage>();
                 }),
-                () => Facade.Value.Destination.HasValue()
+                () => Facade.Value.Destination.HasValue() &&
+                      !io.Get(Facade.Value.Destination).IsDirectory
             ).Associate(Facade.Value, nameof(SaveOption.Destination));
         }
 
