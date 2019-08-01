@@ -101,7 +101,7 @@ CubePDF Utility は、以下のライブラリを利用しています。
 * PDFium
     - 3-clause BSD License
     - https://pdfium.googlesource.com/pdfium/
-    - https://www.nuget.org/packages/Cube.Native.Pdfium/
+    - https://github.com/cube-soft/Cube.Native.Pdfium
     - https://www.nuget.org/packages/Cube.Native.Pdfium.Lite/
 * log4net
     - Apache License, Version 2.0
@@ -127,6 +127,7 @@ CubePDF Utility は、以下のライブラリを利用しています。
     - サムネイル画像が不明瞭な問題を改善
     - サムネイル画像に抽出内容を表示するように修正
     - メモリが開放されない問題を改善
+    - PDFium を Chromium 76 相当に更新
 * 2019/04/15 version 0.5.3β
     - PDF ファイルに関連付けられたアイコンを表示する時の不都合を修正
     - Ctrl クリックで複数の項目を選択する時の不都合を修正

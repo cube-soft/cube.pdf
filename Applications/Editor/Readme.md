@@ -94,12 +94,20 @@ Dependencies of the CubePDF Utility are as follows.
 * PDFium
     - 3-clause BSD License
     - https://pdfium.googlesource.com/pdfium/
-    - https://www.nuget.org/packages/Cube.Native.Pdfium/
+    - https://github.com/cube-soft/Cube.Native.Pdfium
     - https://www.nuget.org/packages/Cube.Native.Pdfium.Lite/
 * log4net
     - Apache License, Version 2.0
     - http://logging.apache.org/log4net/
     - https://www.nuget.org/packages/log4net/
+* Fluent.Ribbon
+    - MIT License
+    - https://fluentribbon.github.io/
+    - https://www.nuget.org/packages/Fluent.Ribbon/
+* GongSolutions.WPF.DragDrop
+    - 3-clause BSD License
+    - https://github.com/punker76/gong-wpf-dragdrop
+    - https://www.nuget.org/packages/gong-wpf-dragdrop/
 * AsyncBridge (.NET Framework 3.5)
     - MIT License
     - http://omermor.github.io/AsyncBridge/
@@ -107,7 +115,13 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
-* 2019/04/15 version 0.5.4β
+* 2019/08/02 version 0.5.4β
+    - Add menu of "Extract with other settings".
+    - Fix the problem that thumbnail images are ugly.
+    - Fix to draw annotations in thumbnail images.
+    - Improve memory consumption.
+    - Update PDFium to Chromium 76 compatible.
+* 2019/04/15 version 0.5.3β
     - Fix errors when showing icons that are associated with PDF files.
     - Fix a problem when selecting with Ctrl-click.
 * 2018/12/10 version 0.5.2β
@@ -118,7 +132,7 @@ Dependencies of the CubePDF Utility are as follows.
     - Fix to use associated file icon.
     - Add a keyboard shortcut of Ctrl+Q that exits the application.
 * 2018/10/25 version 0.5.1β
-    - Add menu of "Insertion details".
+    - Add menu of "Insert at other position".
     - Fix to insert PDF pages from another process by Drag&Drop operation.
     - Fix to insert image files (PNG, JPEG, BMP) as PDF pages.
     - Fix to confirm the owner password when opening All encrypted files.
