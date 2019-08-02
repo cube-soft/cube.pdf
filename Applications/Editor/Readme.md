@@ -56,8 +56,11 @@ The available operations in the CubePDF Utility are as follows:
 * Ctrl + W ... Close the current PDF file
 * Ctrl + Q ... Exit the application
 * Ctrl + I or Insert ... Insert PDF/PNG/JPEG/BMP files at the selected position
+* Ctrl + Shift + I ... Insert at other position
 * Ctrl + D or Delete ... Remove the selected pages
+* Ctrl + Shift + D ... Remove other pages
 * Ctrl + E ... Extract the selected pages
+* Ctrl + Shift + E ... Extract with other settings
 * Ctrl + B ... Move the selected pages one page previous
 * Ctrl + F ... Move the selected pages one page forward
 * Ctrl + L ... Rotate the selected pages 90 degrees left

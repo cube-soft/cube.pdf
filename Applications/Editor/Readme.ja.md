@@ -12,7 +12,7 @@ CubPDF Utility は、既存の PDF ファイルのページ挿入や削除、文
 各種セキュリティ機能などの設定を変更するためのソフトウェアです。
 
 CubePDF Utility を使用するためには、.NET Framework 3.5 以降が
-インストールされている必要があります（4.5.2 以降を推奨）。
+インストールされている必要があります（4.5.2 以降を強く推奨）。
 .NET Framework は、以下の URL からダウンロードして下さい。
 
 * Download .NET Framework  
@@ -62,8 +62,11 @@ CubePDF Utility で利用可能なショートカットキーは以下の通り�
 * Ctrl + W ... PDF ファイルを閉じる
 * Ctrl + Q ... アプリケーションを終了
 * Ctrl + I or Insert ... 選択位置に PDF, PNG, JPEG, BMP ファイルを挿入
+* Ctrl + Shift +I ... 詳細を設定して挿入
 * Ctrl + D or Delete ... 選択ページを削除
+* Ctrl + Shift + D ... 範囲を指定して削除
 * Ctrl + E ... 選択ページを抽出
+* Ctrl + Shift + E ... 詳細を設定して抽出
 * Ctrl + B ... 選択ページを 1 ページ分前に移動
 * Ctrl + F ... 選択ページを 1 ページ分後ろに移動
 * Ctrl + L ... 選択ページを左 90 度回転

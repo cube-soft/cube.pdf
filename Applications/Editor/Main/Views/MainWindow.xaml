@@ -68,9 +68,12 @@
         <KeyBinding Gesture="F5"            Command="{Binding Ribbon.Redraw.Command}" />
         <KeyBinding Gesture="Insert"        Command="{Binding Ribbon.Insert.Command}" />
         <KeyBinding Gesture="Ctrl+I"        Command="{Binding Ribbon.Insert.Command}" />
+        <KeyBinding Gesture="Ctrl+Shift+I"  Command="{Binding Ribbon.InsertOthers.Command}" />
         <KeyBinding Gesture="Delete"        Command="{Binding Ribbon.Remove.Command}" />
         <KeyBinding Gesture="Ctrl+D"        Command="{Binding Ribbon.Remove.Command}" />
+        <KeyBinding Gesture="Ctrl+Shift+D"  Command="{Binding Ribbon.RemoveOthers.Command}" />
         <KeyBinding Gesture="Ctrl+E"        Command="{Binding Ribbon.Extract.Command}" />
+        <KeyBinding Gesture="Ctrl+Shift+E"  Command="{Binding Ribbon.ExtractOthers.Command}" />
         <KeyBinding Gesture="Ctrl+O"        Command="{Binding Ribbon.Open.Command}" />
         <KeyBinding Gesture="Ctrl+S"        Command="{Binding Ribbon.Save.Command}" />
         <KeyBinding Gesture="Ctrl+Shift+S"  Command="{Binding Ribbon.SaveAs.Command}" />
